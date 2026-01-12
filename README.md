@@ -41,9 +41,12 @@ com2020/
 ## CI/CD and testing
 We will use GitHub Actions for CI/CD.
 
+## Style guide
+- Python: PEP8 style guide ([link](https://peps.python.org/pep-0008/))
+- Java: Google Java style guide ([link](https://peps.python.org/pep-0008/))
+
 ## Meeting minutes 
 Find meeting minutes and project specification [here](/meetings/)
-
 
 ## Jira
 [Link to Jira Kanban board](https://comm2020-thespecialcharacters.atlassian.net/jira/software/projects/COMM2020/boards/2)
