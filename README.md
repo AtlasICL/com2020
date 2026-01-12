@@ -30,12 +30,16 @@ com2020/
 │               └── resources/
 │                   └── gameTestResources.csv
 ├── tel/
-│   └── telemetry.py
+│   ├── telemetry.py
+│   └── requirements.txt
 ├── meetings/
 │   └── meeting_info
 ├── README.md
 └── .gitignore
 ```
+
+## CI/CD and testing
+We will use GitHub Actions for CI/CD.
 
 ## Meeting minutes 
 Find meeting minutes and project specification [here](/meetings/)
