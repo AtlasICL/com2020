@@ -7,12 +7,14 @@
 
 
 ## Team members:
-- Harry Taylor (ht555@exeter.ac.uk)
-- Luca Pacitti (ljmp201@exeter.ac.uk)
-- Emre Acarsoy (ea616@exeter.ac.uk)
-- Tom Croft (tjc227@exeter.ac.uk)
-- Luca Croci (lc1107@exeter.ac.uk)
-- Will Finney (wjf207@exeter.ac.uk)
+| Name         | Email                  |
+| ------------ | ---------------------- |
+| Harry Taylor | (ht555@exeter.ac.uk)   |
+| Luca Pacitti | (ljmp201@exeter.ac.uk) |
+| Emre Acarsoy | (ea616@exeter.ac.uk)   |
+| Tom Croft    | (tjc227@exeter.ac.uk)  |
+| Luca Croci   | (lc1107@exeter.ac.uk)  |
+| Will Finney  | (wjf207@exeter.ac.uk)  |
 
 ## Folder structure
 ```
