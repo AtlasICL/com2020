@@ -1,6 +1,7 @@
 # Team Project for COM2020
 - [Team members](#team-members)
 - [Folder structure](#folder-structure)
+- [Requirements](#requirements)
 - [Meeting minutes](#meeting-minutes)
 - [Jira](#jira)
 
@@ -38,8 +39,13 @@ com2020/
 └── .gitignore
 ```
 
+## Requirements
+The game module requires **Java** and **Maven**.  
+The telemetry module require **Python3**, and additional Python libraries, which may be
+installed using `python -m pip install -r requirements.txt`.
+
 ## CI/CD and testing
-We will use GitHub Actions for CI/CD.
+This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
 - Python: PEP8 style guide ([link](https://peps.python.org/pep-0008/))
