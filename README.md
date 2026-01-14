@@ -3,7 +3,6 @@
 - [Folder structure](#folder-structure)
 - [Requirements](#requirements)
 - [Meeting minutes](#meeting-minutes)
-- [Jira](#jira)
 
 
 ## Team members:
@@ -57,5 +56,3 @@ This project uses GitHub Actions for CI/CD and running automated tests.
 ## Meeting minutes 
 Find meeting minutes and project specification [here](/meetings/)
 
-## Jira
-[Link to Jira Kanban board](https://comm2020-thespecialcharacters.atlassian.net/jira/software/projects/COMM2020/boards/2)
