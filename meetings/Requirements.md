@@ -1,6 +1,5 @@
 # Requirements 
 ## Must (Before CA 1)
-
 - Have a java video game application that
     - has 2 or more levels, one of which contains a boss fight
     - must log the following telemetry (6 or more of these)
@@ -52,6 +51,11 @@
 - Have a python application that 
     - reads in the telemetry from a well defined JSON schema
     - displays 3 different dashboard/funnel views of the data
+        - Funnel view: graph showing drop off as players fail
+        - Difficulty spikes: show stages with high retry rates/completion times
+        - Progression curves: show resources gained over time. Show time to complete stage over level
+        - Fairness indicators: compare different runs of the same level (fast vs slow, aggressive vs defensive )
+        - Compare 
     - automated tests (up to 5, including the ones for the java application)
     - can detect malformed telemetry and cleans/recovers it where possible 
 - Heave a report containing
