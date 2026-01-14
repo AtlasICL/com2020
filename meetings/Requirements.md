@@ -18,13 +18,13 @@
         - SessionID: int
         - Timestamp: (ss:mm:hh dd/mm/yyyy)
         - StageName: Stage(Enum)
+    - should check telemetry is valid before sending it, and attempt to only send valid telemetry. 
     - have the following mechanics
         - coins
         - health points
         - lives
         - magic  
         - items 
-
     - Has the following game loop
         1. Sign in as a username
         2. Start a game/run 
@@ -55,7 +55,7 @@
         - Difficulty spikes: show stages with high retry rates/completion times
         - Progression curves: show resources gained over time. Show time to complete stage over level
         - Fairness indicators: compare different runs of the same level (fast vs slow, aggressive vs defensive )
-        - Compare 
+        - Compare difficulty modes with different metrics
     - automated tests (up to 5, including the ones for the java application)
     - can detect malformed telemetry and cleans/recovers it where possible 
 - Heave a report containing
@@ -75,6 +75,7 @@
         - provenance (who develops it, where its stored)
         - cost model (how they make money if it's not non-profit)
         - version in use 
+- 800 telemetry events across 50 sessions and 25 users including 80 malformed data
 ## Should (Before CA 2)
 - Java application
     - all 12 telemetry types
@@ -113,6 +114,7 @@
         - what changed as a result of them
     - What ethical/legal area you focused on and how it was mitigated
     - AI-minimal compliance statement 
+- 1500 telemetry events across 80 sessions and 40 users including 150 malformed data
 ## Could 
 - Ability to sell items
 - Enemy quantity multiplier 
