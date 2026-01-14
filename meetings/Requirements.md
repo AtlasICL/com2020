@@ -3,21 +3,21 @@
 - Have a java video game application that
     - has 2 or more levels, one of which contains a boss fight
     - must log the following telemetry (6 or more of these)
-        - EncounterStart(Boss: bool)
-        - NormalEncounterComplete(PlayerHPRemaining: int)
-        - NormalEncounterFail()
-        - NormalEncounterRetry()
-        - GainCoins(NumberOfCoins: int)
-        - BuyUpgrade(UpgradeName: Upgrade(Enum), Cost: int)
-        - Quit()
-        - SettingsChange(Setting: Setting(Enum), Value: str)
-        - KillEnemy(EnemyType: EnemyType(Enum))
+        - SessionStart()
+        - NormalEncounterStart(EncounterName: Encounter (Enum))
+        - NormalEncounterComplete(PlayerHPRemaining: int, EncounterName: Encounter (Enum))
+        - NormalEncounterFail(EncounterName: Encounter (Enum))
+        - NormalEncounterRetry(EncounterName: Encounter (Enum))
+        - GainCoins(NumberOfCoins: int, EncounterName: Encounter (Enum))
+        - BuyUpgrade(UpgradeName: Upgrade(Enum), Cost: int, EncounterName: Encounter (Enum))
+        - EndSession()
+        - SettingsChange(Setting: Setting(Enum), Value: str, EncounterName: Encounter (Enum))
+        - KillEnemy(EnemyType: EnemyType(Enum), EncounterName: Encounter (Enum))
         - Checks to ensure the telemetry contains correct information, and arrives in an order that makes sense. 
     - all telemetry must contain the following
         - Username: str
         - SessionID: int
         - Timestamp: (ss:mm:hh dd/mm/yyyy)
-        - StageName: Stage(Enum)
     - should check telemetry is valid before sending it, and attempt to only send valid telemetry. 
     - have the following mechanics
         - coins
