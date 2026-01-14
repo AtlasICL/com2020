@@ -13,6 +13,7 @@
         - Quit()
         - SettingsChange(Setting: Setting(Enum), Value: str)
         - KillEnemy(EnemyType: EnemyType(Enum))
+        - Checks to ensure the telemetry contains correct information, and arrives in an order that makes sense. 
     - all telemetry must contain the following
         - Username: str
         - SessionID: int
@@ -21,10 +22,96 @@
     - have the following mechanics
         - coins
         - health points
-        - lives 
-    - 
+        - lives
+        - magic  
+        - items 
+
+    - Has the following game loop
+        1. Sign in as a username
+        2. Start a game/run 
+        3. Enter an encounter. If they lose the encounter they lose a life. If they lose all their lives they go back to step 2. If they win they go sto step 4
+        4. Obtain coins from the encounter
+        5. Enter the shop and optionally buy items (upgrades)
+        6. Go back to step 3 with another encounter. Every few levels fight a boss.
+        7. Once all levels are complete, show player statistics read from the telemetry store. 
+    - Player settings
+        - Ability to opt out of telemetry 
+    - Include 5 automated tests
+    - Include 1 manual test
+        - Log in as a player and beat both levels
+        - Provide evidence in test_evidence.pdf
+    - 1 adjustable parameter
+        - Enemy HP multiplier
+        - Player HP multiplier: multiplies hp granted by upgrades, and max hp.
+        - Price multiplier
+        - Enemy damage multiplier
+        - Starting lives
+        - magic cost multiplier
+        - maximum magic
+        - magic regeneration rate 
 - Have a python application that 
-    - 
+    - reads in the telemetry from a well defined JSON schema
+    - displays 3 different dashboard/funnel views of the data
+    - automated tests (up to 5, including the ones for the java application)
+    - can detect malformed telemetry and cleans/recovers it where possible 
+- Heave a report containing
+    - report summary 
+    - Requirements prioritized for the sprint
+    - Design architecture
+    - telemetry schema
+    - evidence of the initial analysis
+    - sprint plan for CA 2
+    - ethical/legal considerations 
+        - telemetry privacy
+        - consent and disclosure of the telemetry
+        - accessability of the software
+        - intellectual property/licensing implications 
+    - Bill of materials containing
+        - license of the artifact 
+        - provenance (who develops it, where its stored)
+        - cost model (how they make money if it's not non-profit)
+        - version in use 
 ## Should (Before CA 2)
+- Java application
+    - all 12 telemetry types
+    - all 10 stages/encounters
+    - all 8 parameters are editable 
+    - simulation mode using agents
+    - decision log, logging parameter changes and reasons 
+    - handover pack
+        - deployment instructions
+        - operations that can be performed with the software (how to use)
+        - maintenance guidelines: architecture, what does what, etc.
+    - Tests
+        - 15+ automated tests
+        - 8+ manual tests
+            - View telemetry as each role (3)
+            - account creation
+            - log in as each role (3)
+            - beat the game as user
+            - adjust parameter as analyst 
+            - beat the game as developer 
+        - pass/fail evidence included in testing_evidence.pdf
+        - running instructions
+- Python application
+    - 6+ rule based suggestions
+    - all dashboards
+- Report
+    - report success measures with methodology and the limitations of that method
+    - discussion on the game's fairness, and the unintended consequences of balance changes
+    - update the ethical/legal information with all changes
+- individual reflection (per person)
+    - role and contribution: what you owned with evidence
+    - what you learned: 3+ technical or professional learning points linked with module outcomes
+    - challenges
+        - 1 technical challenge
+        - 1 teamwork/process challenge
+        - what changed as a result of them
+    - What ethical/legal area you focused on and how it was mitigated
+    - AI-minimal compliance statement 
 ## Could 
+- Ability to sell items
+- Enemy quantity multiplier 
+- Enemy Coin multiplier
+- Boss Coin multiplier 
 ## Wont 
