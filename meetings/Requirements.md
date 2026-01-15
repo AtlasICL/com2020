@@ -7,11 +7,15 @@
         - NormalEncounterStart(EncounterName: Encounter (Enum))
         - NormalEncounterComplete(PlayerHPRemaining: int, EncounterName: Encounter (Enum))
         - NormalEncounterFail(EncounterName: Encounter (Enum))
-        - NormalEncounterRetry(EncounterName: Encounter (Enum))
+        - NormalEncounterRetry(EncounterName: Encounter (Enum), LivesLeft: int)
+        - BossEncounterStart(EncounterName: Encounter (Enum))
+        - BossEncounterComplete(PlayerHPRemaining: int, EncounterName: Encounter (Enum))
+        - BossEncounterFail(EncounterName: Encounter (Enum))
+        - BossEncounterRetry(EncounterName: Encounter (Enum), LivesLeft: int)
         - GainCoins(NumberOfCoins: int, EncounterName: Encounter (Enum))
         - BuyUpgrade(UpgradeName: Upgrade(Enum), Cost: int, EncounterName: Encounter (Enum))
         - EndSession()
-        - SettingsChange(Setting: Setting(Enum), Value: str, EncounterName: Encounter (Enum))
+        - SettingsChange(Setting: Setting (Enum), Value: str, EncounterName: Encounter (Enum))
         - KillEnemy(EnemyType: EnemyType(Enum), EncounterName: Encounter (Enum))
         - Checks to ensure the telemetry contains correct information, and arrives in an order that makes sense. 
     - all telemetry must contain the following

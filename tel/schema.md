@@ -1,25 +1,25 @@
 # Definition of json schema
-1) [Definition of json schema](#definition-of-json-schema)
-2) [List of valid event types](#list-of-valid-event-types)
-3) [List of valid encounter names](#list-of-valid-encounter-names)
-4) [List of valid upgrade names](#list-of-valid-upgrade-names)
-5) [List of valid enemy names](#list-of-valid-enemy-names)
-6) [List of valid settings](#list-of-valid-settings)
-7) [Example logging event jsons](#example-logging-event-jsons)
-    - [SessionStart](#1-sessionstart)
-    - [NormalEncounterStart](#2-normalencounterstart)
-    - [NormalEncounterComplete](#3-normalencountercomplete)
-    - [NormalEncounterFail](#4-normalencounterfail)
-    - [NormalEncounterRetry](#5-normalencounterretry)
-    - [BossEncounterStart](#6-bossencounterstart)
-    - [BossEncounterComplete](#7-bossencountercomplete)
-    - [BossEncounterFail](#8-bossencounterfail)
-    - [BossEncounterRetry](#9-bossencounterretry)
-    - [GainCoin](#10-gaincoin)
-    - [BuyUpgrade](#11-buyupgrade)
-    - [EndSession](#12-endsession)
-    - [SettingsChange](#13-settingschange)
-    - [KillEnemy](#14-killenemy)
+- [Definition of json schema](#definition-of-json-schema)
+- [List of valid event types](#list-of-valid-event-types)
+- [List of valid encounter names](#list-of-valid-encounter-names)
+- [List of valid upgrade names](#list-of-valid-upgrade-names)
+- [List of valid enemy names](#list-of-valid-enemy-names)
+- [List of valid settings](#list-of-valid-settings)
+- [Example logging event jsons](#example-logging-event-jsons)
+    - [1) SessionStart](#1-sessionstart)
+    - [2) NormalEncounterStart](#2-normalencounterstart)
+    - [3) NormalEncounterComplete](#3-normalencountercomplete)
+    - [4) NormalEncounterFail](#4-normalencounterfail)
+    - [5) NormalEncounterRetry](#5-normalencounterretry)
+    - [6) BossEncounterStart](#6-bossencounterstart)
+    - [7) BossEncounterComplete](#7-bossencountercomplete)
+    - [8) BossEncounterFail](#8-bossencounterfail)
+    - [9) BossEncounterRetry](#9-bossencounterretry)
+    - [10) GainCoin](#10-gaincoin)
+    - [11) BuyUpgrade](#11-buyupgrade)
+    - [12) EndSession](#12-endsession)
+    - [13) SettingsChange](#13-settingschange)
+    - [14) KillEnemy](#14-killenemy)
 
 # List of valid event types 
 Here are the possible event types:
@@ -81,7 +81,7 @@ To be defined at a later date.
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     event: "NormalEncounterComplete",
-    playerHPRemaining: int, 
+    player_HP_Remaining: int, 
 }
 ```
 
@@ -104,6 +104,7 @@ To be defined at a later date.
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     event: "NormalEncounterRetry"
+    lives_left: int
 }
 ```
 
@@ -126,6 +127,7 @@ To be defined at a later date.
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     event: "BossEncounterComplete"
+    player_HP_Remaining: int
 }
 ```
 
@@ -148,6 +150,7 @@ To be defined at a later date.
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     event: "BossEncounterRetry"
+    lives_left: int
 }
 ```
 
