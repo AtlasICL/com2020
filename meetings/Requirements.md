@@ -104,7 +104,7 @@ Start: Login screen. Log in valid -> Title Screen, Log in invalid -> Login Scree
 
 User Creation Screen. Invalid account details -> User Creation Screen, Valid account details -> Title Screen.
 
-Title Screen. Start game -> Encounter 1.
+Title Screen. Start game (with difficulty option) -> Encounter 1.
 
 Encounter 1. Die and out of lives -> Title Screen, Die with lives -> Encounter , Kill all enemies -> Shop 1.
 
@@ -123,6 +123,178 @@ Win Screen. Restart -> Title Screen.
 *As a developer I want a simple gameplay loop so I can extend it and implement mechanics around it.*
 ### Following player settings
 Players should have the following settings
-## Python Application
+- Whether they send telemetry (default on, communicated in the title screen)
+
+*As a player, I would like the option to opt-out of telemetry as privacy is important to me.*
+### 3 difficulty settings
+The game should include easy, balanced, and hard difficulties.
+
+*As a player, I want a range of difficulty settings so the game can be a challenge to me while still being fun.*
+### 8+ Design parameters
+The game should have the following parameters that designers can tweak:
+- Enemy health point multiplier
+- Player maximum health points (and upgrades that increase their maximum health points) multiplier
+- Upgrade price multiplier 
+- Enemy damage multiplier
+- Starting lives
+- Magic cost multiplier: multiplies the cost of magic using abilities
+- Maximum magic amount
+- Magic regeneration rate: amount gained each turn 
+
+These should be saved in a configuration file, and be per difficulty. 
+
+*As a designer I want many different parameters to alter, to allow me to fine tune the balance of the game.*
+### Design log
+When a change to the game's balancing parameters is made, this should be logged in a design log with a reason.
+
+*As a lead designer, I want to see what changes other designers are making and why to remain up to date with the project.*
+### User authentication and roles
+The game should authenticate it's users, requiring a username and password. The password should be hashed and salted before storage. User should have exclusively 1 of the following roles:
+- Player: can play the game, but cannot modify it's difficulty parameters or read telemetry.
+- Designer: can play the game and modify it's difficulty parameters as well as read telemetry.
+
+*As a designer, I want to ensure my account is secure so no one else can use my privileges to damage the game.*
+### Automated tests 
+Between this and the python application, there must be at least 15 automated tests
+Every method of every class should have at least 1 method for testing it. 
+
+*As a designer I want to ensure the program works correctly, so I need testing to provide this assurance.*
+### Manual tests
+Between this and the python application, there must be at least 8 manual tests, with evidence of their success.
+- Create an account
+- Resetting a password 
+- Log in as a player
+- Log in as a designer
+- Beat the game as a player
+- Adjust a parameter as a designer and see the result reflected in game
+- Lose all lives and go back to the start as a developer
+
+Should include in test evidence expected results, success and failure cases, and screenshots/logs of them. 
+*As a designer I want to make sure all paths through the system work as intended so my balancing changes are not affected by the system working incorrectly. *
+### Automated player agent
+An automated player agent that can simulate runs of the game to provide feedback on design changes.
+
+*As a designer I would like instant feedback on my design decisions to help me evaluate them.*
+## Python application
+### Read in telemetry from the JSON file that the Java application writes to
+*As a designer, I want to be able to view the telemetry data so I can use it to influence design decisions*
+### Clean read-in telemetry
+The system should detect malformed telemetry and attempt to recover it where possible, and otherwise ignore it.
+
+*As a designer, I want to see as much telemetry as possible, while still keeping it accurate, so recoverability of the data is important to me.*
+### Dashboard views of the telemetry 
+The program should be able to display the telemetry information as follows:
+- Funnel View: Show the completion rate of each stage, and its failure rate
+- Difficulty Spikes: highlight stages with high fail rates and completion times
+- Progression Curve: show the time to complete throughout the game and the resource accumulation throughout the game 
+- Fairness Indicators: compare between 2+ play styles for the same encounter:
+    - Defensive vs Aggressive
+    - Fast vs Slow
+- Comparison Mode: compare easy, balanced, and hard runs against each other on key metrics:
+    - Completion time
+    - Number of retries
+    - Average encounter end health points
+
+*As a designer I want several perspectives on the game so I can see it from different angles to inform my design decisions.*
+### Telemetry sample set
+1500 seeded telemetry events, spread across 80 sessions with 40 different users.
+Must include 150 malformed telemetry events.
+
+*As a tester I want a sample telemetry set I can use to test the application functions correctly.*
+### Rule based suggestions
+The application should check the data, and if it matches one of the 6+ predefined rules it will make a design recommendation to the designer about a potential change to the game that would improve it.
+
+*As a designer it is helpful to get design suggestions as these can be implemented and improve the game and player experience.*
+### Automated testing
+The application should have automated tests testing each class and method.
+
+*As a developer I want to make sure my application produces the correct results as to give my client the best experience.*
+### Manual testing
+The application should include the following manual tests with evidence:
+- Attempting to log in as a player
+- Logging in as a designer 
+- Viewing each dashboard view with the seeded telemetry
+
+This should contain expected results, as well as success and failure cases and screenshots/logs of completed runs.
+*As a designer I want to know that the application works as I want so I can be as productive with it as possible and use it to my advantage.*
 ## Project Report
-## Individual Report
+### A summary of the report
+*As an evaluator a brief overview of the report will prepare me for what its about.*
+### List of requirements prioritized for that sprint  
+*As an evaluator I want to see what the team has worked on during each sprint*
+### Design architecture
+This should include a overall diagram detailing how the Java and python application work together. It should also include UML for both the Java and Python applications, and a written explanation of what each class is responsible for. 
+
+*As an evaluator I want to see what components are responsible for what to better understand the system.*
+### Telemetry schema
+*As a developer I want to see what the schema is so I can interface with it.*
+### Evidence of initial analysis 
+*As an evaluator I want to see that the requirements have been thoroughly considered.*
+### Sprint plan for both sprints
+*As an evaluator I want to see that the project has been planned out, and is progressing well.*
+### Success measures
+Report how well the system scores on the following success measures, as well as what methodology was used to produce these scores and any limitations with that methodology:
+- Detection validity: do the difficulty spike detection rules correctly identify difficulty spikes in the seeded data?
+- Fairness Analysis: do different play styles have different outcomes? Are those differences explained and mitigations proposed by the system?
+- Balancing Effectiveness: do the suggested parameter changes reduce spikes in difficulty, in the simulation or in pilot runs?
+- Usability: can designers locate issues and make informed design changes within a short timeframe?
+
+*As a developer I want to evaluate the project to determine what can be improved in further iterations, and what has been learnt from the creation of this project.*
+### Fairness discussion
+A discussion on the game's fairness and on any unintended consequences of balancing changes or of the systems within the game.
+
+*As a designer I want to see a discussion around the fairness of the game to identify what can be improved with further design changes.*
+### Ethical and Legal considerations of the project
+This should consider the implication of the following:
+- Privacy of the telemetry
+- Consent for the capture of telemetry
+- Disclosure telemetry is being captured
+- Accessability of the software
+- Intellectual property of the software, and their implications on it's licensing 
+
+*As an evaluator I want to know that the team has considered the ethics and legality of their software so I can trust this software to be safe.*
+### A software bill of materials 
+Should contain all components of the both the Python and Java application, and the following properties of each component:
+- It's license 
+- It's developer
+- Where it's obtained from
+- What cost model it uses
+- What version the software makes use of
+
+*As a developer I want to know exactly what requirements the software has, so I can ensure supply chain security and maintain the software.*
+## Handover pack
+A handover pack should be included detailing the following information to maintainers and developers of the system once it's handed over to them:
+- Instructions for deploying both softwares
+- Operations that can be performed in each software, and how to do so
+- Maintenance guidelines on the architecture of the system, what each class is responsible for, how to extend classes and add additional functionality, etc.
+- How to run the automated tests for both applications
+## Individual Report (Individual)
+### Role and contribution
+What roles the person undertook throughout the project, and what they've contributed to it.
+
+*As an evaluator I want to see that each person has contributed to the team, and see what they've contributed to it.*
+### What was learnt
+3 technical or professional learning points linked with the module outcomes, that the writer has learned in working on this project.
+
+*As a developer it's important to reflect on what I've learnt to show my own growth within the subject.*
+### What challenges the writer has faced
+Must include 1 technical challenge and 1 teamwork/process challenge. Should explain what changed as a result of these challenges.
+
+*As a developer it's important to acknowledge what challenges ive faced so when I face them again i know what changes need to be made to overcome them.*
+### What ethical/legal considerations you made in relation to what you worked on
+*As an evaluator it's important to me that developers are aware of the legal and ethical implications of their work to ensure their software is ethical and safe.*
+### An AI-minimal compliance statement
+It should state what AI was used for (checking of spelling and grammar), and that the writer adhered to the requirements of this brief. 
+
+*As an evaluator it's important that developers don't use AI to generate their code as then their code shows their level of understanding.*
+# Implementation Plan
+## Sprint 1
+### Must
+### Should
+### Could 
+### Wont
+## Sprint 2
+### Must 
+### Should
+### Could
+### Wont 
