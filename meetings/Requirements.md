@@ -4,83 +4,100 @@
 *As a player I want to have 10 levels worth of gameplay so the game is a gradual challenge to beat.*
 #### Boss encounters on levels 3, 6, 9, with a final Boss on Level 10. 
 *As a player I want big climatic boss fights to challenge myself, and provide milestones.*
-#### 14 telemetry events including the specified fields
+#### Telemetry events including the specified fields
 The system should implements the following telemetry events:
 - Start Session
-    - Username
+    - User ID
     - Session ID
     - Timestamp
+- Run Start
+    - User ID
+    - Session ID
+    - Timestamp 
+    - Difficulty
 - Normal Encounter Start
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Normal Encounter Complete
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Player HP Remaining
+    - Stage
 - Normal Encounter Fail
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Normal Encounter Retry
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Boss Encounter Start
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Boss Encounter Complete
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Boss Encounter Fail
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Boss Encounter Retry
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
+    - Stage
 - Gain Coin
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Coins Gained
+    - Stage
 - Buy Upgrade
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Upgrade Bought
+    - Stage
 - End Session
-    - Username
+    - User ID
     - Session ID
     - Timestamp
 - Settings Change
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Setting
     - Value
 - Kill Enemy
-    - Username
+    - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Enemy Type
+    - Stage 
 
+Note: Some telemetry events do not include stage information because they are sourced outside a stage (e.g. settings change)
 *As a designer I want to see what areas of the game are too easy and what are too hard, so I can improve the game's balance.*
 ### Validate and write telemetry events to a JSON file
-Telemetry events that are produced in an impossible order should not be written. Telemetry events with missing data should be recovered before writing where possible and otherwise discarded. 
+Telemetry events that are produced in an impossible order should not be written. Telemetry events with missing data or with invalid data should be recovered before writing where possible and otherwise discarded. 
 
 *As a developer it is useful to have the data in a transportable format so other systems can interface with it.*
 ### Implements coins as a resource for buying upgrades
@@ -92,8 +109,12 @@ The shop should provide a random assortment of available upgrades, with varying 
 
 *As a player I want ways to upgrade and modify my character so each run feels different and my character feels like they're getting stronger.*
 ### Health points are used to determine how close to death a player character is
+Player characters should have a maximum health points and a current health points. When their current health points reaches 0 they should die. 
+
 *As a player I want to see how close to death my character, and my enemies are so I can determine what risks I can take.*
 ### Lives are used to determine how many times a character can die before having to restart their run
+Player characters should start runs with some value of lives and each time they die their number of lives should reduce by 1. When they have 0 lives they restart the game rather than the encounter. 
+
 *As a player I want to have multiple lives so I have a safety net to learn the mechanics of the game so I can enjoy it more and play to higher levels.*
 ### Magic is used to fuel high power abilities
 Magic should increase by a set amount each turn, and can be spent to use high power abilities.
@@ -104,7 +125,9 @@ Start: Login screen. Log in valid -> Title Screen, Log in invalid -> Login Scree
 
 User Creation Screen. Invalid account details -> User Creation Screen, Valid account details -> Title Screen.
 
-Title Screen. Start game (with difficulty option) -> Encounter 1.
+Title Screen. Start game (with difficulty option) -> Encounter 1, Edit settings -> Settings
+
+Settings. Save changes -> Title Screen.
 
 Encounter 1. Die and out of lives -> Title Screen, Die with lives -> Encounter , Kill all enemies -> Shop 1.
 
@@ -121,16 +144,23 @@ Encounter 10. Die and out of lives -> Title Screen, Die with lives -> Encounter 
 Win Screen. Restart -> Title Screen. 
 
 *As a developer I want a simple gameplay loop so I can extend it and implement mechanics around it.*
-### Following player settings
+### Player settings
 Players should have the following settings
 - Whether they send telemetry (default on, communicated in the title screen)
 
 *As a player, I would like the option to opt-out of telemetry as privacy is important to me.*
-### 3 difficulty settings
+### End Screen
+The game should display an end screen when a run ends (either by winning or running out of lives). This should include the following information:
+- Run Time
+- Number of deaths
+- Coins
+- Upgrades
+- Completion: Either the encounter they lost at, or complete if they won
+### Difficulty settings
 The game should include easy, balanced, and hard difficulties.
 
 *As a player, I want a range of difficulty settings so the game can be a challenge to me while still being fun.*
-### 8+ Design parameters
+### Design parameters
 The game should have the following parameters that designers can tweak:
 - Enemy health point multiplier
 - Player maximum health points (and upgrades that increase their maximum health points) multiplier
@@ -145,18 +175,24 @@ These should be saved in a configuration file, and be per difficulty.
 
 *As a designer I want many different parameters to alter, to allow me to fine tune the balance of the game.*
 ### Design log
-When a change to the game's balancing parameters is made, this should be logged in a design log with a reason.
+When a change to the game's balancing parameters is made, this should be logged in a design log with a reason that links back to dashboard evidence. There should also be 30 seeded decisions within this log (some good, some flawed). 
 
 *As a lead designer, I want to see what changes other designers are making and why to remain up to date with the project.*
 ### User authentication and roles
 The game should authenticate it's users, requiring a username and password. The password should be hashed and salted before storage. User should have exclusively 1 of the following roles:
 - Player: can play the game, but cannot modify it's difficulty parameters or read telemetry.
 - Designer: can play the game and modify it's difficulty parameters as well as read telemetry.
+- Developer: same as a designer, can modify the application as well
 
 *As a designer, I want to ensure my account is secure so no one else can use my privileges to damage the game.*
 ### Automated tests 
 Between this and the python application, there must be at least 15 automated tests
-Every method of every class should have at least 1 method for testing it. 
+Every method of every class should have at least 1 method for testing it. These should cover the following areas:
+- Telemetry event validation
+- Data storage
+- Changing balancing parameters 
+- Simulation mode
+- Writing and reading from the decision log
 
 *As a designer I want to ensure the program works correctly, so I need testing to provide this assurance.*
 ### Manual tests
@@ -170,16 +206,25 @@ Between this and the python application, there must be at least 8 manual tests, 
 - Lose all lives and go back to the start as a developer
 
 Should include in test evidence expected results, success and failure cases, and screenshots/logs of them. 
-*As a designer I want to make sure all paths through the system work as intended so my balancing changes are not affected by the system working incorrectly. *
+
+*As a designer I want to make sure all paths through the system work as intended so my balancing changes are not affected by the system working incorrectly.*
 ### Automated player agent
 An automated player agent that can simulate runs of the game to provide feedback on design changes.
 
 *As a designer I would like instant feedback on my design decisions to help me evaluate them.*
+### Accessible design
+The software should:
+- Have high contrast between UI elements
+- Allow tab and shift-tab navigation of elements
+- Have a resizable GUI that scales with window size and works on most desktop environments
+- Have sufficiently large GUI elements that they are clearly visible, including text.  
+
+*As a player I require software to have good accessability in order for it to be playable to me.*
 ## Python application
 ### Read in telemetry from the JSON file that the Java application writes to
 *As a designer, I want to be able to view the telemetry data so I can use it to influence design decisions*
 ### Clean read-in telemetry
-The system should detect malformed telemetry and attempt to recover it where possible, and otherwise ignore it.
+The system should detect malformed telemetry and attempt to recover it where possible, and otherwise ignore it. This should include telemetry thats in an impossible order, has missing fields or out-of-range values.  
 
 *As a designer, I want to see as much telemetry as possible, while still keeping it accurate, so recoverability of the data is important to me.*
 ### Dashboard views of the telemetry 
@@ -196,8 +241,12 @@ The program should be able to display the telemetry information as follows:
     - Average encounter end health points
 
 *As a designer I want several perspectives on the game so I can see it from different angles to inform my design decisions.*
+### CSV Export of telemetry
+The data should be able to be exported as a CSV file with a specified format. 
+
+*As a designer I would like to be able to export the data as a CSV so I can view and process it in other applications, improving my productivity.*
 ### Telemetry sample set
-1500 seeded telemetry events, spread across 80 sessions with 40 different users.
+1500 seeded telemetry events, spread across 80 sessions with 40 different users. This should be across all 10 levels, on each difficulty setting. 
 Must include 150 malformed telemetry events.
 
 *As a tester I want a sample telemetry set I can use to test the application functions correctly.*
@@ -206,7 +255,12 @@ The application should check the data, and if it matches one of the 6+ predefine
 
 *As a designer it is helpful to get design suggestions as these can be implemented and improve the game and player experience.*
 ### Automated testing
-The application should have automated tests testing each class and method.
+The application should have automated tests testing each class and method. These should cover the following areas:
+- Telemetry event validation
+- Data retrieval 
+- Dashboard computations
+- Rule-based suggestions
+- Exports of data as CSV
 
 *As a developer I want to make sure my application produces the correct results as to give my client the best experience.*
 ### Manual testing
@@ -216,7 +270,16 @@ The application should include the following manual tests with evidence:
 - Viewing each dashboard view with the seeded telemetry
 
 This should contain expected results, as well as success and failure cases and screenshots/logs of completed runs.
+
 *As a designer I want to know that the application works as I want so I can be as productive with it as possible and use it to my advantage.*
+### Accessible design
+The software should:
+- Have high contrast between UI elements
+- Allow tab and shift-tab navigation of elements
+- Have a resizable GUI that scales with window size and works on most desktop environments
+- Have sufficiently large GUI elements that they are clearly visible, including text.  
+
+*As a user I require software to have good accessability in order to be able to use it effectively.*
 ## Project Report
 ### A summary of the report
 *As an evaluator a brief overview of the report will prepare me for what its about.*
@@ -268,6 +331,8 @@ A handover pack should be included detailing the following information to mainta
 - Operations that can be performed in each software, and how to do so
 - Maintenance guidelines on the architecture of the system, what each class is responsible for, how to extend classes and add additional functionality, etc.
 - How to run the automated tests for both applications
+
+*As a maintainer it's important for me to have a handover pack so I can understand how to maintain the software and use it.*
 ## Individual Report (Individual)
 ### Role and contribution
 What roles the person undertook throughout the project, and what they've contributed to it.
