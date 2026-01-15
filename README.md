@@ -20,23 +20,26 @@
 ```
 com2020/
 ├── game/
-│   ├── pom.xml
-│   └── src/
-│       ├── main/
-│       │   └── java/
-│       │       └── gameName/
-│       │           └── gameFile.java
-│       └── test/
-│           └── java/
-│               ├── gameName/
-│               │   └── gameTestFile.java
-│               └── resources/
-│                   └── gameTestResources.csv
+│   ├── src/
+│   │   ├── main/
+│   │   │   └── java/
+│   │   │       └── gameName/
+│   │   │           └── game.java
+│   │   └── test/
+│   │       └── java/
+│   │           ├── gameName/
+│   │           │   └── test.java
+│   │           └── resources/
+│   │               └── testResources.csv
+│   └── pom.xml    
 ├── tel/
+│   ├── __init__.py
 │   ├── telemetry.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── schema.md
 ├── meetings/
-│   └── meeting_info
+│   ├── meeting_minutes.md
+│   └── project_spec.pdf
 ├── README.md
 └── .gitignore
 ```
