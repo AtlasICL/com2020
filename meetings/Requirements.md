@@ -1,6 +1,8 @@
 # Features
 ## Java Application
 #### 10 Levels of encounters
+Each stage should draw an encounter of suitable difficulty from a pool of pre-made encounters.
+
 *As a player I want to have 10 levels worth of gameplay so the game is a gradual challenge to beat.*
 #### Boss encounters on levels 3, 6, 9, with a final Boss on Level 10. 
 *As a player I want big climatic boss fights to challenge myself, and provide milestones.*
@@ -171,7 +173,7 @@ The game should have the following parameters that designers can tweak:
 - Maximum magic amount
 - Magic regeneration rate: amount gained each turn 
 
-These should be saved in a configuration file, and be per difficulty. 
+These should be saved in a configuration file, and be per difficulty. Changes to them she be able to be made in game by designers, and update the game when it is restarted. 
 
 *As a designer I want many different parameters to alter, to allow me to fine tune the balance of the game.*
 ### Design log
@@ -185,7 +187,7 @@ The game should authenticate it's users, requiring a username and password. The 
 - Developer: same as a designer, can modify the application as well
 
 *As a designer, I want to ensure my account is secure so no one else can use my privileges to damage the game.*
-### Automated tests 
+### Java automated tests 
 Between this and the python application, there must be at least 15 automated tests
 Every method of every class should have at least 1 method for testing it. These should cover the following areas:
 - Telemetry event validation
@@ -195,7 +197,7 @@ Every method of every class should have at least 1 method for testing it. These 
 - Writing and reading from the decision log
 
 *As a designer I want to ensure the program works correctly, so I need testing to provide this assurance.*
-### Manual tests
+### Java manual tests
 Between this and the python application, there must be at least 8 manual tests, with evidence of their success.
 - Create an account
 - Resetting a password 
@@ -212,7 +214,7 @@ Should include in test evidence expected results, success and failure cases, and
 An automated player agent that can simulate runs of the game to provide feedback on design changes.
 
 *As a designer I would like instant feedback on my design decisions to help me evaluate them.*
-### Accessible design
+### Java accessible design
 The software should:
 - Have high contrast between UI elements
 - Allow tab and shift-tab navigation of elements
@@ -250,11 +252,11 @@ The data should be able to be exported as a CSV file with a specified format.
 Must include 150 malformed telemetry events.
 
 *As a tester I want a sample telemetry set I can use to test the application functions correctly.*
-### Rule based suggestions
+### Rule based suggestion system
 The application should check the data, and if it matches one of the 6+ predefined rules it will make a design recommendation to the designer about a potential change to the game that would improve it.
 
 *As a designer it is helpful to get design suggestions as these can be implemented and improve the game and player experience.*
-### Automated testing
+### Python automated tests
 The application should have automated tests testing each class and method. These should cover the following areas:
 - Telemetry event validation
 - Data retrieval 
@@ -263,7 +265,7 @@ The application should have automated tests testing each class and method. These
 - Exports of data as CSV
 
 *As a developer I want to make sure my application produces the correct results as to give my client the best experience.*
-### Manual testing
+### Python manual tests
 The application should include the following manual tests with evidence:
 - Attempting to log in as a player
 - Logging in as a designer 
@@ -272,7 +274,7 @@ The application should include the following manual tests with evidence:
 This should contain expected results, as well as success and failure cases and screenshots/logs of completed runs.
 
 *As a designer I want to know that the application works as I want so I can be as productive with it as possible and use it to my advantage.*
-### Accessible design
+### Python accessible design
 The software should:
 - Have high contrast between UI elements
 - Allow tab and shift-tab navigation of elements
@@ -355,11 +357,216 @@ It should state what AI was used for (checking of spelling and grammar), and tha
 # Implementation Plan
 ## Sprint 1
 ### Must
+#### Java application must contain a user login page
+It will allow players, designers and developers as specified [here](#user-authentication-and-roles)
+#### Java application must contain 2 stages
+Each stage must have at least 1 encounter it can pull from. See [here](#10-levels-of-encounters) for more information.
+#### Java application must implement 6 telemetry types
+See [here](#telemetry-events-including-the-specified-fields) for list of telemetry events. They should be sent during the runtime of the system in all completed stages.
+#### Java application must implement 1 balancing parameter
+See parameters [here](#design-parameters)
+#### Java application must implement player-agent simulation
+[More information](#automated-player-agent)
+#### Python application must read 6 telemetry types
+See [here](#telemetry-events-including-the-specified-fields) for list of telemetry events. 
+#### Python application should display 3 dashboard views
+See views [here](#dashboard-views-of-the-telemetry)
+#### Between the Python and Java applications there must be at least 5 automated tests
+[Python tests](#python-automated-tests)
+
+[Java tests](#java-automated-tests)
+#### Between the Python and Java applications there must be 1 manual test
+This should include fail/success cases, expected results, and screenshots/logs of completion in test_evidence.pdf.
+
+[Python tests](#python-manual-tests)
+
+[Java tests](#java-manual-tests)
+#### Deployment Guide
+Containing information on running the tests
+#### Prototype report
+[Summary](#a-summary-of-the-report)
+
+[Requirements](#list-of-requirements-prioritized-for-that-sprint)
+
+[Architecture](#design-architecture)
+
+[Telemetry schema](#telemetry-schema)
+
+[Initial evaluation evidence](#evidence-of-initial-analysis)
+
+[Sprint plan for sprint 2](#sprint-plan-for-both-sprints)
+
+[Ethical and legal considerations](#ethical-and-legal-considerations-of-the-project)
+
+[Software bill of materials](#a-software-bill-of-materials)
+#### Coins and Upgrades systems
+[Coins](#implements-coins-as-a-resource-for-buying-upgrades)
+
+[Upgrades can be bought](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+#### Implement health points and lives
+[Health points](#health-points-are-used-to-determine-how-close-to-death-a-player-character-is)
+
+[Lives](#lives-are-used-to-determine-how-many-times-a-character-can-die-before-having-to-restart-their-run)
+#### 2 Normal Encounters
+#### 1 Normal Enemy
 ### Should
+#### Java application should contain 3 stages
+Stage 3 should be a boss fight, in line with [here](#10-levels-of-encounters)
+#### Java application should validate telemetry before storing it
+[More information](#validate-and-write-telemetry-events-to-a-json-file)
+#### Python application should clean telemetry before displaying it
+[More information](#clean-read-in-telemetry)
+#### 300 Seeded telemetry events
+Including 30 anomalous, across 16 sessions and 8 users. More information [here](#telemetry-sample-set)
+#### 4+ Normal Encounters
+#### 2+ Normal Enemies 
+#### 1 Boss Encounter
+#### Magic system
+[More information](#magic-is-used-to-fuel-high-power-abilities)
+#### Accessible design
+[Python](#python-accessible-design)
+
+[Java](#java-accessible-design)
+#### Different difficulties
+[More information](#difficulty-settings)
 ### Could 
+#### Decision log
+[More information](#decision-log)
+#### 12 telemetry events
+[More information](#telemetry-events-including-the-specified-fields)
+#### 15+ automated tests
+[Java information](#java-automated-tests)
+
+[Python information](#python-automated-tests)
+#### Provide Handover pack
+[More information](#handover-pack)
+#### 2+ Boss Encounters
+#### 6+ Normal Enemies
 ### Wont
+#### All telemetry events
+#### 1500 seeded telemetry events
+#### 10 stages
+#### 6 dashboard views
+#### Rule based suggestions
+#### Multiplayer
+#### Encounter builder
+#### Dynamic Encounter generation
+#### Dynamic Enemy generation
+#### Centralized scoring
+#### An additional resource alongside magic
+#### Custom upgrade builder
+#### More than 10 levels
+#### Dynamic Difficulty
+#### Mid run difficulty adjustment
 ## Sprint 2
 ### Must 
+#### Implement 10 levels including bosses
+[Level specification](#10-levels-of-encounters)
+
+[Boss specification](#boss-encounters-on-levels-3-6-9-with-a-final-boss-on-level-10)
+#### Implement health and lives
+[Health points](#health-points-are-used-to-determine-how-close-to-death-a-player-character-is)
+
+[Lives](#lives-are-used-to-determine-how-many-times-a-character-can-die-before-having-to-restart-their-run)
+#### Implement coins and upgrades
+[Coins](#implements-coins-as-a-resource-for-buying-upgrades)
+
+[Upgrades can be bought](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+#### 12 Telemetry events
+[Events](#telemetry-events-including-the-specified-fields)
+
+The java application should validate and write them to a JSON file ([Specification](#validate-and-write-telemetry-events-to-a-json-file)). The Python application should read and clean them, then display them([reading](#read-in-telemetry-from-the-json-file-that-the-java-application-writes-to), [cleaning](#clean-read-in-telemetry)). 
+#### Authenticated Python and Java applications
+[More Information](#user-authentication-and-roles)
+#### Magic fuels abilities
+[More information](#magic-is-used-to-fuel-high-power-abilities)
+#### 20+ Upgrades
+#### 7+ Bosses Encounters
+#### 12+ Normal Encounters
+#### All stages of the gameplay loop
+[Loop information](#the-game-should-have-the-gameplay-loop-described-below)
+
+[End screen information](#end-screen)
+#### Game settings
+[Settings information](#player-settings)
+#### Difficulty modes
+[More information](#difficulty-settings)
+#### 8+ Design parameters
+[More information](#design-parameters)
+#### Design Decision Log
+[More information](#design-log)
+#### 15+ Automated tests
+[Java](#java-automated-tests)
+
+[Python](#python-automated-tests)
+#### 8+ Manual tests
+[Java](#java-manual-tests)
+
+[Python](#python-manual-tests)
+#### Simulation mode
+[More information](#automated-player-agent)
+#### Accessible design
+[Java](#java-accessible-design)
+
+[Python](#python-accessible-design)
+#### 6+ dashboard views
+[More information](#dashboard-views-of-the-telemetry)
+#### CSV telemetry export
+[More information](#csv-export-of-telemetry)
+#### Seeded telemetry set
+[More information](#telemetry-sample-set)
+#### Python application should give rule-based suggestions
+[More information](#rule-based-suggestion-system)
+#### Project report
+[Summary](#a-summary-of-the-report)
+
+[Requirements](#list-of-requirements-prioritized-for-that-sprint)
+
+[Architecture](#design-architecture)
+
+[Telemetry schema](#telemetry-schema)
+
+[Initial evaluation evidence](#evidence-of-initial-analysis)
+
+[Sprint plan for sprint 2](#sprint-plan-for-both-sprints)
+
+[Success measures](#success-measures)
+
+[Discussion on fairness](#fairness-discussion)
+
+[Ethical and legal considerations](#ethical-and-legal-considerations-of-the-project)
+
+[Software bill of materials](#a-software-bill-of-materials)
+#### A handover pack
+[More information](#handover-pack)
+#### Individual reports
+[Role and contribution](#role-and-contribution)
+
+[Learning](#what-was-learnt)
+
+[Challenges](#what-challenges-the-writer-has-faced)
+
+[Ethical/legal considerations](#what-ethicallegal-considerations-you-made-in-relation-to-what-you-worked-on)
+
+[AI-minimal compliance statement](#an-ai-minimal-compliance-statement)
+#### 6+ Normal Enemy types
 ### Should
+#### All Telemetry events
+[Events](#telemetry-events-including-the-specified-fields)
+#### 9+ Normal Enemy Types
+#### 18+ Normal Encounters
 ### Could
+#### Upgrades can be sold
+[More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+#### 30+ upgrades
 ### Wont 
+#### Multiplayer
+#### Encounter builder
+#### Dynamic Encounter generation
+#### Dynamic Enemy generation
+#### Centralized scoring
+#### An additional resource alongside magic
+#### Custom upgrade builder
+#### More than 10 levels
+#### Dynamic Difficulty
+#### Mid run difficulty adjustment
