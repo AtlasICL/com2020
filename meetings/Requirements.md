@@ -482,7 +482,9 @@ The java application should validate and write them to a JSON file ([Specificati
 [More information](#magic-is-used-to-fuel-high-power-abilities)
 #### 20+ Upgrades
 #### 7+ Bosses Encounters
+2 choices for level 3, 2 choices for level 6, 2 choices for level 9 and the final boss on level 10. 
 #### 12+ Normal Encounters
+4 choices for levels 1 and 2, 4 choices for levels 4 and 5, and 4 choices for levels 7 and 8. 
 #### All stages of the gameplay loop
 [Loop information](#the-game-should-have-the-gameplay-loop-described-below)
 
@@ -555,6 +557,7 @@ The java application should validate and write them to a JSON file ([Specificati
 [Events](#telemetry-events-including-the-specified-fields)
 #### 9+ Normal Enemy Types
 #### 18+ Normal Encounters
+6 to pull from for each pair of levels. (1&2, 4&5, 7&8)
 ### Could
 #### Upgrades can be sold
 [More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
