@@ -20,6 +20,7 @@
     - [12) EndSession](#12-endsession)
     - [13) SettingsChange](#13-settingschange)
     - [14) KillEnemy](#14-killenemy)
+    - [15) StartTelemetry](#15-starttelemetry)
 
 # List of valid event types 
 Here are the possible event types:
@@ -37,6 +38,7 @@ Here are the possible event types:
 12) `EndSession`
 13) `SettingsChange`
 14) `KillEnemy`
+15) `StartTelemetry`
 
 # List of valid encounter names
 To be defined at a later date.
@@ -55,7 +57,7 @@ To be defined at a later date.
 ### 1) SessionStart
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "SessionStart"
@@ -65,10 +67,11 @@ To be defined at a later date.
 ### 2) NormalEncounterStart
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "NormalEncounterStart"
 }
 ```
@@ -76,10 +79,11 @@ To be defined at a later date.
 ### 3) NormalEncounterComplete
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "NormalEncounterComplete",
     player_HP_Remaining: int, 
 }
@@ -88,10 +92,11 @@ To be defined at a later date.
 ### 4) NormalEncounterFail
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "NormalEncounterFail"
 }
 ```
@@ -99,10 +104,11 @@ To be defined at a later date.
 ### 5) NormalEncounterRetry
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "NormalEncounterRetry"
     lives_left: int
 }
@@ -111,10 +117,11 @@ To be defined at a later date.
 ### 6) BossEncounterStart
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "BossEncounterStart"
 }
 ```
@@ -122,10 +129,11 @@ To be defined at a later date.
 ### 7) BossEncounterComplete
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "BossEncounterComplete"
     player_HP_Remaining: int
 }
@@ -134,10 +142,11 @@ To be defined at a later date.
 ### 8) BossEncounterFail
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "BossEncounterFail"
 }
 ```
@@ -145,11 +154,12 @@ To be defined at a later date.
 ### 9) BossEncounterRetry
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
-    event: "BossEncounterRetry"
+    stage_number: int,
+    event: "BossEncounterRetry",
     lives_left: int
 }
 ```
@@ -157,10 +167,11 @@ To be defined at a later date.
 ### 10) GainCoin
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "GainCoin",
     coins_gained: int
 }
@@ -169,10 +180,11 @@ To be defined at a later date.
 ### 11) BuyUpgrade
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    stage_number: int,
     event: "BuyUpgrade",
     upgrade_bought: string [must be in list of upgrades]
 }
@@ -181,7 +193,7 @@ To be defined at a later date.
 ### 12) EndSession
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "EndSession"
@@ -191,22 +203,35 @@ To be defined at a later date.
 ### 13) SettingsChange
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
-    setting: string [must be in list of valid settings]
-    value: int
+    setting: string [must be in list of valid settings],
+    value: int,
+    event: "SettingsChange"
 }
 ```
 
 ### 14) KillEnemy
 ```
 {
-    username: string,
+    userID: int,
     session_id: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
-    enemy_type: string
+    stage_number: int,
+    enemy_type: string,
+    event: "KillEnemy"
+}
+```
+
+### 15) StartTelemetry
+```
+{
+    userID: int,
+    session_id: int,
+    timestamp: YYYY/MM/DD/HH/MM/SS,
+    event: "StartTelemetry"
 }
 ```
