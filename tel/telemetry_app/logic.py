@@ -4,12 +4,24 @@ from typing import TypeAlias
 from events import EventType, EncounterName, EventParameter, UpgradeName, EnemyType, SettingName
 
 class SessionStart:
+    """
+    SessionStart object represents an instance of a 
+    SessionStart event.
+    """
     def __init__(
             self,
             userID: int,
             sessionID: int,
             timestamp: str
     ):
+        """      
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS
+        :type timestamp: str
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
