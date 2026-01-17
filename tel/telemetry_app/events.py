@@ -64,3 +64,465 @@ class EnemyType(str, Enum):
 class SettingName(str, Enum):
     SETTING_1 = "SETTING_1"
     SETTING_2 = "SETTING_2"
+
+class SessionStart:
+    """
+    SessionStart object represents an instance of a 
+    SessionStart event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str
+    ):
+        """ 
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+
+class NormalEncounterStart:
+    """
+    NormalEncounterStart object represents an instance of a
+    NormalEncounterStart event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is starting.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is starting.
+        :type stage_number: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+
+class NormalEncounterComplete:
+    """
+    NormalEncounterComplete object represents an instance of a
+    NormalEncounterComplete event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            player_HP_remaining: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player has completed.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player has completed.
+        :type stage_number: int
+        :param player_HP_remaining: Number of HP points users character has remaining.
+        :type player_HP_remaining: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.player_HP_remaining = player_HP_remaining
+
+class NormalEncounterFail:
+    """
+    NormalEncounterFail object represents an instance of a
+    NormalEncounterFail event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player has failed.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player has failed.
+        :type stage_number: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+
+class NormalEncounterRetry:
+    """
+    NormalEncounterRetry object represents an instance of a
+    NormalEncounterRetry event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            lives_left: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is retrying.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is retrying.
+        :type stage_number: int
+        :param lives_left: Number of lives a player has left for next try.
+        :type lives_left: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.lives_left = lives_left
+
+class BossEncounterStart:
+    """
+    BossEncounterStart object represents an instance of a
+    BossEncounterStart event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is starting.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is starting.
+        :type stage_number: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+
+class BossEncounterComplete:
+    """
+    BossEncounterComplete object represents an instance of a
+    BossEncounterComplete event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            player_HP_remaining: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player has completed.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player has completed.
+        :type stage_number: int
+        :param player_HP_remaining: Current stage player has completed.
+        :type player_HP_remaining: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.player_HP_remaining = player_HP_remaining
+        
+class BossEncounterFail:
+    """
+    BossEncounterFail object represents an instance of a
+    BossEncounterFail event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player has failed.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player has failed.
+        :type stage_number: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+
+class BossEncounterRetry:
+    """
+    BossEncounterRetry object represents an instance of a
+    BossEncounterRetry event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            lives_left: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is retrying.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is retrying.
+        :type stage_number: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.lives_left = lives_left
+
+class GainCoin:
+    """
+    GainCoin object represents an instance of a GainCoin event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            coins_gained: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param coins_gained: Number of coins gained.
+        :type coins_gained: int
+        """        
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.coins_gained = coins_gained
+
+class BuyUpgrade:
+    """
+    BuyUpgrade object represents an instance of an BuyUpgrade event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str,
+            encounter_name: EncounterName,
+            stage_number: int,
+            coins_spent: int,
+            upgrade_bought: UpgradeName
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param coins_spent: Description
+        :type coins_spent: int
+        :param upgrade_bought: Description
+        :type upgrade_bought: UpgradeName
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.coins_spent = coins_spent
+        self.upgrade_bought = upgrade_bought
+
+class EndSession:
+    """
+    EndSession object represents an instance of an EndSession event.
+    """
+    def __init__(
+            self,
+            userID: int,
+            sessionID: int,
+            timestamp: str
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+
+class SettingsChange:
+    """
+    SettingsChange object represents an instance of a SettingsChange event.
+    """
+    def __init__(
+        self,
+        userID: int,
+        sessionID: int,
+        timestamp: str,
+        encounter_name: EncounterName,
+        setting: SettingName,
+        value: int
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param setting: The setting which was changed.
+        :type setting: SettingName
+        :param value: The new value to which the changed setting was set. 
+        :type value: int
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.setting = setting
+        self.value = value
+
+class KillEnemy:
+    """
+    KillEnemy object represents an instance of a KillEnemy event.
+    """
+    def __init__(
+        self,
+        userID: int,
+        sessionID: int,
+        timestamp: str,
+        encounter_name: EncounterName,
+        stage_number: int,
+        enemy_type: EnemyType
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param enemy_type: Type of enemy which was killed.
+        :type enemy_type: EnemyType
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+        self.encounter_name = encounter_name
+        self.stage_number = stage_number
+        self.enemy_type = enemy_type
+
+class StartTelemetry:
+    """
+    StartTelemetry object represents an instance of a StartTelemetry event.
+    """
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str
+    ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        """
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
