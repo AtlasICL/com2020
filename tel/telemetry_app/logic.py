@@ -24,7 +24,7 @@ class SessionStart:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         """
         self.userID = userID
@@ -32,6 +32,10 @@ class SessionStart:
         self.timestamp = timestamp
 
 class NormalEncounterStart:
+    """
+    NormalEncounterStart object represents an instance of a
+    NormalEncounterStart event.
+    """
     def __init__(self,
             userID: int,
             sessionID: int,
@@ -39,6 +43,20 @@ class NormalEncounterStart:
             encounter_name: EncounterName,
             stage_number: int
     ):
+        """
+        Docstring for __init__
+        
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is starting.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is starting.
+        :type stage_number: int
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -46,6 +64,10 @@ class NormalEncounterStart:
         self.stage_number = stage_number
 
 class NormalEncounterComplete:
+    """
+    NormalEncounterComplete object represents an instance of a
+    NormalEncounterComplete event.
+    """
     def __init__(self,
             userID: int,
             sessionID: int,
@@ -54,6 +76,22 @@ class NormalEncounterComplete:
             stage_number: int,
             player_HP_remaining: int
     ):
+        """
+        Docstring for __init__
+      
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param player_HP_remaining: Number of HP points users character has remaining.
+        :type player_HP_remaining: int
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -62,6 +100,10 @@ class NormalEncounterComplete:
         self.player_HP_remaining = player_HP_remaining
 
 class NormalEncounterFail:
+    """
+    NormalEncounterFail object represents an instance of a
+    NormalEncounterFail event.
+    """
     def __init__(self,
             userID: int,
             sessionID: int,
@@ -69,6 +111,20 @@ class NormalEncounterFail:
             encounter_name: EncounterName,
             stage_number: int
     ):
+        """
+        Docstring for __init__
+        
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Description
+        :type sessionID: int
+        :param timestamp: Description
+        :type timestamp: str
+        :param encounter_name: Description
+        :type encounter_name: EncounterName
+        :param stage_number: Description
+        :type stage_number: int
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
