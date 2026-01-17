@@ -20,8 +20,7 @@ class EventType(str, Enum):
     SETTINGS_CHANGE = "SettingsChange"
     KILL_ENEMY = "KillEnemy"
 
-
-class EventParameter:
+class EventParameter():
     USER_ID = "userID"
     SESSION_ID = "sessionID"
     TIMESTAMP = "timestamp"
