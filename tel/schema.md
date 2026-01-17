@@ -24,7 +24,7 @@
 
 # List of valid event types 
 Here are the possible event types:
-1) `startSession`
+1) `SessionStart`
 2) `NormalEncounterStart`
 3) `NormalEncounterComplete`
 4) `NormalEncounterFail`
@@ -58,7 +58,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "SessionStart"
 }
@@ -68,7 +68,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -80,7 +80,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -93,7 +93,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -105,7 +105,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -118,7 +118,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -130,7 +130,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -143,7 +143,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -155,7 +155,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -168,7 +168,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -181,12 +181,13 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
     event: "BuyUpgrade",
-    upgrade_bought: string [must be in list of upgrades]
+    upgrade_bought: string [must be in list of upgrades],
+    coins_spent: int
 }
 ```
 
@@ -194,7 +195,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "EndSession"
 }
@@ -204,11 +205,11 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     setting: string [must be in list of valid settings],
-    value: int,
+    setting_value: int,
     event: "SettingsChange"
 }
 ```
@@ -217,7 +218,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
@@ -230,7 +231,7 @@ To be defined at a later date.
 ```
 {
     userID: int,
-    session_id: int,
+    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "StartTelemetry"
 }
