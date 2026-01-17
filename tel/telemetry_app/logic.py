@@ -210,6 +210,9 @@ class BossEncounterRetry:
         self.lives_left = lives_left
 
 class GainCoin:
+    """
+    GainCoin object represents an instance of a GainCoin event.
+    """
     def __init__(
             self,
             userID: int,
@@ -219,6 +222,20 @@ class GainCoin:
             stage_number: int,
             coins_gained: int
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param coins_gained: Number of coins gained.
+        :type coins_gained: int
+        """        
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -227,6 +244,9 @@ class GainCoin:
         self.coins_gained = coins_gained
 
 class BuyUpgrade:
+    """
+    BuyUpgrade object represents an instance of an BuyUpgrade event.
+    """
     def __init__(
             self,
             userID: int,
@@ -237,6 +257,22 @@ class BuyUpgrade:
             coins_spent: int,
             upgrade_bought: UpgradeName
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param coins_spent: Description
+        :type coins_spent: int
+        :param upgrade_bought: Description
+        :type upgrade_bought: UpgradeName
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -246,17 +282,31 @@ class BuyUpgrade:
         self.upgrade_bought = upgrade_bought
 
 class EndSession:
+    """
+    EndSession object represents an instance of an EndSession event.
+    """
     def __init__(
             self,
             userID: int,
             sessionID: int,
             timestamp: str
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
 
 class SettingsChange:
+    """
+    SettingsChange object represents an instance of a SettingsChange event.
+    """
     def __init__(
         self,
         userID: int,
@@ -266,6 +316,20 @@ class SettingsChange:
         setting: SettingName,
         value: int
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param setting: The setting which was changed.
+        :type setting: SettingName
+        :param value: The new value to which the changed setting was set. 
+        :type value: int
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -274,6 +338,9 @@ class SettingsChange:
         self.value = value
 
 class KillEnemy:
+    """
+    KillEnemy object represents an instance of a KillEnemy event.
+    """
     def __init__(
         self,
         userID: int,
@@ -283,6 +350,20 @@ class KillEnemy:
         stage_number: int,
         enemy_type: EnemyType
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        :param encounter_name: Name of the encounter player is complete.
+        :type encounter_name: EncounterName
+        :param stage_number: Current stage player is complete.
+        :type stage_number: int
+        :param enemy_type: Type of enemy which was killed.
+        :type enemy_type: EnemyType
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
@@ -291,17 +372,44 @@ class KillEnemy:
         self.enemy_type = enemy_type
 
 class StartTelemetry:
+    """
+    StartTelemetry object represents an instance of a StartTelemetry event.
+    """
     def __init__(self,
             userID: int,
             sessionID: int,
             timestamp: str
     ):
+        """
+        :param userID: Unique ID of the user.
+        :type userID: int
+        :param sessionID: Unique ID for the session.
+        :type sessionID: int
+        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :type timestamp: str
+        """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
 
 
-ValidEvent: TypeAlias = SessionStart | NormalEncounterStart | NormalEncounterComplete | NormalEncounterFail | NormalEncounterRetry | BossEncounterStart | BossEncounterComplete | BossEncounterFail | BossEncounterRetry | GainCoin | BuyUpgrade | EndSession | SettingsChange | KillEnemy | StartTelemetry 
+ValidEvent: TypeAlias = (
+    SessionStart
+    | NormalEncounterStart
+    | NormalEncounterComplete
+    | NormalEncounterFail
+    | NormalEncounterRetry
+    | BossEncounterStart
+    | BossEncounterComplete
+    | BossEncounterFail
+    | BossEncounterRetry
+    | GainCoin
+    | BuyUpgrade
+    | EndSession
+    | SettingsChange
+    | KillEnemy
+    | StartTelemetry
+) 
 
 def get_file(filename: str) -> list[dict]:
     try: 
