@@ -1,3 +1,8 @@
+"""
+This file defines the Enums and constants used in the logic
+of our telemetry app.
+"""
+
 from enum import Enum
 
 class EventType(str, Enum):

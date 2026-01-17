@@ -1,3 +1,8 @@
+"""
+This file contains the core logic for parsing game output 
+json files.
+"""
+
 import json
 from typing import TypeAlias
 
@@ -14,7 +19,7 @@ class SessionStart:
             sessionID: int,
             timestamp: str
     ):
-        """      
+        """ 
         :param userID: Unique ID of the user.
         :type userID: int
         :param sessionID: Unique ID for the session.
