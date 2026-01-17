@@ -104,6 +104,16 @@ class BossEncounterComplete:
         self.stage_number = stage_number
         self.player_HP_remaining = player_HP_remaining
 
+class StartTelemetry:
+    def __init__(self,
+            userID: int,
+            sessionID: int,
+            timestamp: str
+    ):
+        self.userID = userID
+        self.sessionID = sessionID
+        self.timestamp = timestamp
+
 
 ValidEvent: TypeAlias = SessionStart | NormalEncounterStart | NormalEncounterComplete | NormalEncounterFail | NormalEncounterRetry | BossEncounterStart | BossEncounterComplete | BossEncounterFail | BossEncounterRetry | GainCoin | BuyUpgrade | EndSession | SettingsChange | KillEnemy | StartTelemetry 
 
