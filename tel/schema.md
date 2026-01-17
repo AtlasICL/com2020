@@ -209,7 +209,7 @@ To be defined at a later date.
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
     setting: string [must be in list of valid settings],
-    value: int,
+    setting_value: int,
     event: "SettingsChange"
 }
 ```
