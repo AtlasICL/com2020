@@ -24,7 +24,7 @@
 
 # List of valid event types 
 Here are the possible event types:
-1) `startSession`
+1) `SessionStart`
 2) `NormalEncounterStart`
 3) `NormalEncounterComplete`
 4) `NormalEncounterFail`
