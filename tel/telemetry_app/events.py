@@ -12,7 +12,7 @@ class EventType(str, Enum):
 
     BOSS_ENCOUNTER_START = "BossEncounterStart"
     BOSS_ENCOUNTER_COMPLETE = "BossEncounterComplete"
-    BOSS_ENCOUNTER_FAIL = "BOSS_ENCOUNTER_RETRY"
+    BOSS_ENCOUNTER_FAIL = "BossEncounterFail"
     BOSS_ENCOUNTER_RETRY = "BossEncounterRetry"
 
     GAIN_COIN = "GainCoin"
