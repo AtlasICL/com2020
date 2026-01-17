@@ -1,20 +1,20 @@
 [
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/03/10",
     "event": "StartTelemetry"
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/03/12",
     "event": "SessionStart"
   },
 
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/03/25",
     "encounter_name": "ENCOUNTER_1",
     "stage_number": 1,
@@ -22,7 +22,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/03/47",
     "encounter_name": "ENCOUNTER_1",
     "stage_number": 1,
@@ -31,7 +31,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/03/55",
     "encounter_name": "ENCOUNTER_1",
     "stage_number": 1,
@@ -40,17 +40,17 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/04/08",
     "encounter_name": "ENCOUNTER_1",
     "stage_number": 1,
     "event": "NormalEncounterComplete",
-    "player_HP_Remaining": 78
+    "player_HP_remaining": 78
   },
 
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/04/22",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
@@ -58,7 +58,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/04/40",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
@@ -67,7 +67,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/05/10",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
@@ -75,7 +75,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/05/15",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
@@ -84,7 +84,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/05/28",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
@@ -93,36 +93,37 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/05/35",
     "encounter_name": "ENCOUNTER_2",
     "setting": "SETTING_1",
-    "value": 7,
+    "setting_value": 7,
     "event": "SettingsChange"
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/06/02",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
     "event": "NormalEncounterComplete",
-    "player_HP_Remaining": 41
+    "player_HP_remaining": 41
   },
 
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/06/20",
     "encounter_name": "ENCOUNTER_2",
     "stage_number": 2,
     "event": "BuyUpgrade",
-    "upgrade_bought": "UPGRADE_1"
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 2
   },
 
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/06/45",
     "encounter_name": "BOSS_1",
     "stage_number": 3,
@@ -130,7 +131,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/07/05",
     "encounter_name": "BOSS_1",
     "stage_number": 3,
@@ -139,7 +140,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/07/32",
     "encounter_name": "BOSS_1",
     "stage_number": 3,
@@ -147,7 +148,7 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/07/40",
     "encounter_name": "BOSS_1",
     "stage_number": 3,
@@ -156,17 +157,17 @@
   },
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/08/22",
     "encounter_name": "BOSS_1",
     "stage_number": 3,
     "event": "BossEncounterComplete",
-    "player_HP_Remaining": 9
+    "player_HP_remaining": 9
   },
 
   {
     "userID": 10042,
-    "session_id": 987654,
+    "sessionID": 987654,
     "timestamp": "2026/01/17/14/08/40",
     "event": "EndSession"
   }
