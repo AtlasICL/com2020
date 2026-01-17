@@ -21,6 +21,22 @@ class EventType(str, Enum):
     KILL_ENEMY = "KillEnemy"
 
 
+class EventParameter:
+    USER_ID = "userID"
+    SESSION_ID = "sessionID"
+    TIMESTAMP = "timestamp"
+    ENCOUNTER = "encounter_name"
+    STAGE_NUMBER = "stage_number"
+    LIVES_LEFT = "lives_left"
+    COINS_GAINED = "coins_gained"
+    UPGRADE_BOUGHT = "upgrade_bought"
+    COINS_SPENT = "coins_spent"
+    PLAYER_HP_REMAINING = "player_HP_remaining"
+    SETTING = "setting"
+    SETTING_VALUE= "setting_value"
+    ENEMY_TYPE= "enemy_type"
+
+
 # TODO: To be updated when encounter names are defined.
 class EncounterName(str, Enum):
     ENCOUNTER_1 = "ENCOUNTER_1"

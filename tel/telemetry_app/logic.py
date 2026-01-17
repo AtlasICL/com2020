@@ -1,7 +1,7 @@
 import json
 from typing import TypeAlias
 
-from events import EventType, EncounterName, UpgradeName, EnemyType, SettingName
+from events import EventType, EncounterName, EventParameter, UpgradeName, EnemyType, SettingName
 
 class SessionStart:
     def __init__(
@@ -228,7 +228,9 @@ class StartTelemetry:
         self.timestamp = timestamp
 
 
-ValidEvent: TypeAlias = SessionStart | NormalEncounterStart | NormalEncounterComplete | NormalEncounterFail | NormalEncounterRetry | BossEncounterStart | BossEncounterComplete | BossEncounterFail | BossEncounterRetry | GainCoin | BuyUpgrade | EndSession | SettingsChange | KillEnemy | StartTelemetry 
+# ValidEvent: TypeAlias = SessionStart | NormalEncounterStart | NormalEncounterComplete | NormalEncounterFail | NormalEncounterRetry | BossEncounterStart | BossEncounterComplete | BossEncounterFail | BossEncounterRetry | GainCoin | BuyUpgrade | EndSession | SettingsChange | KillEnemy | StartTelemetry 
+
+
 
 def parse_file(filename: str):
     try: 
@@ -239,13 +241,18 @@ def parse_file(filename: str):
     except json.JSONDecodeError:
         raise RuntimeError(f"Could not parse - invalid json.")
 
-def parse_event(event: dict) -> ValidEvent:
-    return StartTelemetryEvent()
+def parse_event(event: dict):
+    match event.get("event"):
+        case EventType.START_TELEMETRY:
+            return StartTelemetry(
+                event.get(EventParameter.USER_ID),
+                event.get(EventParameter.SESSION_ID),
+                event.get(EventParameter.TIMESTAMP)
+            )
     
 def main():
     events = parse_file("example_data.json")
-    print(type(events))
-    print(events)
+    parse_event(events[0])
 
 if __name__ == "__main__":
     main()
