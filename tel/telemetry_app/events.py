@@ -37,8 +37,8 @@ class EventParameter():
     COINS_SPENT = "coins_spent"
     PLAYER_HP_REMAINING = "player_HP_remaining"
     SETTING = "setting"
-    SETTING_VALUE= "setting_value"
-    ENEMY_TYPE= "enemy_type"
+    SETTING_VALUE = "setting_value"
+    ENEMY_TYPE = "enemy_type"
 
 
 # TODO: To be updated when encounter names are defined.
@@ -270,7 +270,8 @@ class BossEncounterComplete:
         :type encounter_name: EncounterName
         :param stage_number: Current stage player has completed.
         :type stage_number: int
-        :param player_HP_remaining: Current stage player has completed.
+        :param player_HP_remaining: Player HP reamaining once boss encounter
+        is complete.
         :type player_HP_remaining: int
         """
         self.userID = userID
@@ -336,6 +337,8 @@ class BossEncounterRetry:
         :type encounter_name: EncounterName
         :param stage_number: Current stage player is retrying.
         :type stage_number: int
+        :param lives_left: Lives left at end of encounter.
+        :type lives_left: int
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -364,9 +367,9 @@ class GainCoin:
         :type sessionID: int
         :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is in.
         :type encounter_name: EncounterName
-        :param stage_number: Current stage player is complete.
+        :param stage_number: Current stage number.
         :type stage_number: int
         :param coins_gained: Number of coins gained.
         :type coins_gained: int
@@ -387,7 +390,6 @@ class BuyUpgrade:
             userID: int,
             sessionID: int,
             timestamp: str,
-            encounter_name: EncounterName,
             stage_number: int,
             coins_spent: int,
             upgrade_bought: UpgradeName
@@ -399,19 +401,16 @@ class BuyUpgrade:
         :type sessionID: int
         :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
-        :type encounter_name: EncounterName
         :param stage_number: Current stage player is complete.
         :type stage_number: int
-        :param coins_spent: Description
+        :param coins_spent: Number of coins spent on buying this upgrade.
         :type coins_spent: int
-        :param upgrade_bought: Description
+        :param upgrade_bought: The upgrade which was bought.
         :type upgrade_bought: UpgradeName
         """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
-        self.encounter_name = encounter_name
         self.stage_number = stage_number
         self.coins_spent = coins_spent
         self.upgrade_bought = upgrade_bought
@@ -458,7 +457,7 @@ class SettingsChange:
         :type sessionID: int
         :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is in.
         :type encounter_name: EncounterName
         :param setting: The setting which was changed.
         :type setting: SettingName
@@ -492,9 +491,10 @@ class KillEnemy:
         :type sessionID: int
         :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is in at time 
+        of kill.
         :type encounter_name: EncounterName
-        :param stage_number: Current stage player is complete.
+        :param stage_number: Current stage player is in at time of kill.
         :type stage_number: int
         :param enemy_type: Type of enemy which was killed.
         :type enemy_type: EnemyType
