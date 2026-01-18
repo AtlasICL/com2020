@@ -199,7 +199,11 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENEMY_TYPE]
                 )
             case _:
-                raise RuntimeError("Unexpected event type: {event_type}")
+                raise RuntimeError(
+                    "Unexpected event type: {event_type}"
+                )
     except KeyError as e:
-        raise RuntimeError(f"An event of type {event_type} is missing the field {e}")
+        raise RuntimeError(
+            f"An event of type {event_type} is missing the field {e}"
+        )
             
