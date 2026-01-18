@@ -69,7 +69,7 @@ def parse_event(event: dict) -> ValidEvent:
     a required field is missing.
     """
     try:
-        event_type = event["event"]
+        event_type = event[EventParameter.EVENT_TYPE]
     except KeyError:
         raise RuntimeError("Event must have an \"event\" field")
     

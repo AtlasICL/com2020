@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import tkinter.font as tkfont
 
-# Settings for selection window
+# Settings for main/entry window
 class GUI_SELECTION_settings:
     WINDOW_TITLE: str = "Telemetry App"
     WINDOW_GEOMETRY: str = "600x500"
@@ -11,9 +11,9 @@ class GUI_SELECTION_settings:
     DATA_ENTRY_FONT_SIZE: int = 12
     BACKGROUND_COLOR: str = "#f5f0e1"  # Light brown/cream background
 
-# Settings for results window
+# Settings for secondary tab
 class GUI_RESULTS_settings:
-    WINDOW_TITLE: str = "Block Allocations"
+    WINDOW_TITLE: str = "Some tab title"
     WINDOW_GEOMETRY: str = "600x600"
     FONT_FAMILY: str = "Arial"
     FONT_SIZE: int = 14
@@ -25,7 +25,7 @@ class GUI_RESULTS_settings:
     BACKGROUND_COLOR: str = "#f5f0e1"  # Light brown/cream background matching selection window
 
 
-class BlockAllocatorGUI(tk.Tk):
+class TelemetryAppGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title(GUI_SELECTION_settings.WINDOW_TITLE)
@@ -37,9 +37,29 @@ class BlockAllocatorGUI(tk.Tk):
             style.theme_use("clam")
         except tk.TclError:
             style.theme_use(style.theme_names()[0])
-        style.configure('.', font=(GUI_SELECTION_settings.FONT_FAMILY, GUI_SELECTION_settings.FONT_SIZE), padding=6)
+        style.configure(
+            '.', 
+            font=(
+                GUI_SELECTION_settings.FONT_FAMILY, 
+                GUI_SELECTION_settings.FONT_SIZE
+            ), 
+            padding=6
+        )
+        
         # Configure ttk frame background
-        style.configure('TFrame', background=GUI_SELECTION_settings.BACKGROUND_COLOR)
-        style.configure('TLabel', background=GUI_SELECTION_settings.BACKGROUND_COLOR)
-        style.configure('TButton', background=GUI_SELECTION_settings.BACKGROUND_COLOR)
-        entry_font = tkfont.Font(family=GUI_SELECTION_settings.FONT_FAMILY, size=GUI_SELECTION_settings.DATA_ENTRY_FONT_SIZE)
+        style.configure(
+            'TFrame', 
+            background=GUI_SELECTION_settings.BACKGROUND_COLOR
+        )
+        style.configure(
+            'TLabel', 
+            background=GUI_SELECTION_settings.BACKGROUND_COLOR
+        )
+        style.configure(
+            'TButton', 
+            background=GUI_SELECTION_settings.BACKGROUND_COLOR
+        )
+        entry_font = tkfont.Font(
+            family=GUI_SELECTION_settings.FONT_FAMILY, 
+            size=GUI_SELECTION_settings.DATA_ENTRY_FONT_SIZE
+        )

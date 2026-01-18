@@ -26,6 +26,7 @@ class EventType(str, Enum):
     KILL_ENEMY = "KillEnemy"
 
 class EventParameter():
+    EVENT_TYPE = "event"
     USER_ID = "userID"
     SESSION_ID = "sessionID"
     TIMESTAMP = "timestamp"
