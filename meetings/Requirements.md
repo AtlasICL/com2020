@@ -458,6 +458,7 @@ Including 30 anomalous, across 16 sessions and 8 users. More information [here](
 #### More than 10 levels
 #### Dynamic Difficulty
 #### Mid run difficulty adjustment
+#### Mid run saves
 ## Sprint 2
 ### Must 
 #### Implement 10 levels including bosses
@@ -573,3 +574,4 @@ The java application should validate and write them to a JSON file ([Specificati
 #### More than 10 levels
 #### Dynamic Difficulty
 #### Mid run difficulty adjustment
+#### Mid run saves
