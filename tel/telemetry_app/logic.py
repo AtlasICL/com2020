@@ -1,6 +1,5 @@
 """
-This file contains the core logic for parsing game output 
-json files.
+This file contains the core logic for parsing game output json files.
 """
 
 import json
@@ -45,7 +44,7 @@ def get_file(filename: str) -> list[dict]:
 
 def parse_file(filename: str) -> list[ValidEvent]:
     """
-    Creates a list of valid event objects from the json file.
+    Creates a list of ValidEvent objects from a json file.
     
     :param filename: filename for json to be parsed.
     :type filename: str
@@ -60,136 +59,150 @@ def parse_file(filename: str) -> list[ValidEvent]:
 
 def parse_event(event: dict) -> ValidEvent:
     """
-    Creates a valid event object from a json object.
+    Creates a ValidEvent object from a json object.
     
     :param event: json object for a single event.
     :type event: dict
     :return: Valid event object translated from the json object.
     :rtype: ValidEvent
+    :raises RuntimeError: If an event of an unknown type is found, or 
+    a required field is missing.
     """
-    match event["event"]:
-        case EventType.START_TELEMETRY:
-            return StartTelemetry(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP]
-            )
-        case EventType.SESSION_START:
-            return SessionStart(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP]
-            )
-        case EventType.END_SESSION:
-            return EndSession(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP]
-            )
-        case EventType.NORMAL_ENCOUNTER_START:
-            return NormalEncounterStart(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER]
-            )
-        case EventType.NORMAL_ENCOUNTER_COMPLETE:
-            return NormalEncounterComplete(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.PLAYER_HP_REMAINING]
-            )
-        case EventType.NORMAL_ENCOUNTER_FAIL:
-            return NormalEncounterFail(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER]
-            )
-        case EventType.NORMAL_ENCOUNTER_RETRY:
-            return NormalEncounterRetry(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.LIVES_LEFT]
-            )
-        case EventType.BOSS_ENCOUNTER_START:
-            return BossEncounterStart(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER]
-            )
-        case EventType.BOSS_ENCOUNTER_COMPLETE:
-            return BossEncounterComplete(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.PLAYER_HP_REMAINING]
-            )
-        case EventType.BOSS_ENCOUNTER_FAIL:
-            return BossEncounterFail(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER]
-            )
-        case EventType.BOSS_ENCOUNTER_RETRY:
-            return BossEncounterRetry(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.LIVES_LEFT]
-            )
-        case EventType.GAIN_COIN:
-            return GainCoin(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.COINS_GAINED]
-            )
-        case EventType.BUY_UPGRADE:
-            return BuyUpgrade(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.COINS_SPENT],
-                event[EventParameter.UPGRADE_BOUGHT]
-            )
-        case EventType.SETTINGS_CHANGE:
-            return SettingsChange(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.SETTING],
-                event[EventParameter.SETTING_VALUE]
-            )
-        case EventType.KILL_ENEMY:
-            return KillEnemy(
-                event[EventParameter.USER_ID],
-                event[EventParameter.SESSION_ID],
-                event[EventParameter.TIMESTAMP],
-                event[EventParameter.ENCOUNTER],
-                event[EventParameter.STAGE_NUMBER],
-                event[EventParameter.ENEMY_TYPE]
-            )
-        case _:
-            raise RuntimeError("Error parsing json.")
+    try:
+        event_type = event["event"]
+    except KeyError:
+        raise RuntimeError("Event must have an \"event\" field")
+    
+    try:
+        match event_type:
+            case EventType.START_TELEMETRY:
+                return StartTelemetry(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP]
+                )
+            case EventType.SESSION_START:
+                return SessionStart(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP]
+                )
+            case EventType.END_SESSION:
+                return EndSession(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP]
+                )
+            case EventType.NORMAL_ENCOUNTER_START:
+                return NormalEncounterStart(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER]
+                )
+            case EventType.NORMAL_ENCOUNTER_COMPLETE:
+                return NormalEncounterComplete(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.PLAYER_HP_REMAINING]
+                )
+            case EventType.NORMAL_ENCOUNTER_FAIL:
+                return NormalEncounterFail(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER]
+                )
+            case EventType.NORMAL_ENCOUNTER_RETRY:
+                return NormalEncounterRetry(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.LIVES_LEFT]
+                )
+            case EventType.BOSS_ENCOUNTER_START:
+                return BossEncounterStart(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER]
+                )
+            case EventType.BOSS_ENCOUNTER_COMPLETE:
+                return BossEncounterComplete(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.PLAYER_HP_REMAINING]
+                )
+            case EventType.BOSS_ENCOUNTER_FAIL:
+                return BossEncounterFail(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER]
+                )
+            case EventType.BOSS_ENCOUNTER_RETRY:
+                return BossEncounterRetry(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.LIVES_LEFT]
+                )
+            case EventType.GAIN_COIN:
+                return GainCoin(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.COINS_GAINED]
+                )
+            case EventType.BUY_UPGRADE:
+                return BuyUpgrade(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.COINS_SPENT],
+                    event[EventParameter.UPGRADE_BOUGHT]
+                )
+            case EventType.SETTINGS_CHANGE:
+                return SettingsChange(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.SETTING],
+                    event[EventParameter.SETTING_VALUE]
+                )
+            case EventType.KILL_ENEMY:
+                return KillEnemy(
+                    event[EventParameter.USER_ID],
+                    event[EventParameter.SESSION_ID],
+                    event[EventParameter.TIMESTAMP],
+                    event[EventParameter.ENCOUNTER],
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.ENEMY_TYPE]
+                )
+            case _:
+                raise RuntimeError(
+                    "Unexpected event type: {event_type}"
+                )
+    except KeyError as e:
+        raise RuntimeError(
+            f"An event of type {event_type} is missing the field {e}"
+        )
+            

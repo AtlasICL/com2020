@@ -1,6 +1,6 @@
 """
-This file defines the Enums and constants used in the logic
-of our telemetry app.
+This file defines the Enums and constants used in the logic of the 
+telemetry app.
 """
 
 from enum import Enum
@@ -37,8 +37,8 @@ class EventParameter():
     COINS_SPENT = "coins_spent"
     PLAYER_HP_REMAINING = "player_HP_remaining"
     SETTING = "setting"
-    SETTING_VALUE= "setting_value"
-    ENEMY_TYPE= "enemy_type"
+    SETTING_VALUE = "setting_value"
+    ENEMY_TYPE = "enemy_type"
 
 
 # TODO: To be updated when encounter names are defined.
@@ -81,7 +81,8 @@ class SessionStart:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         """
         self.userID = userID
@@ -105,7 +106,8 @@ class NormalEncounterStart:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         :param encounter_name: Name of the encounter player is starting.
         :type encounter_name: EncounterName
@@ -136,13 +138,16 @@ class NormalEncounterComplete:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player has completed.
+        :param encounter_name: Name of the encounter player 
+        has completed.
         :type encounter_name: EncounterName
         :param stage_number: Current stage player has completed.
         :type stage_number: int
-        :param player_HP_remaining: Number of HP points users character has remaining.
+        :param player_HP_remaining: Number of HP points users 
+        character has remaining.
         :type player_HP_remaining: int
         """
         self.userID = userID
@@ -169,9 +174,11 @@ class NormalEncounterFail:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player has failed.
+        :param encounter_name: Name of the encounter player 
+        has failed.
         :type encounter_name: EncounterName
         :param stage_number: Current stage player has failed.
         :type stage_number: int
@@ -200,13 +207,15 @@ class NormalEncounterRetry:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         :param encounter_name: Name of the encounter player is retrying.
         :type encounter_name: EncounterName
         :param stage_number: Current stage player is retrying.
         :type stage_number: int
-        :param lives_left: Number of lives a player has left for next try.
+        :param lives_left: Number of lives a player has 
+        left for next try.
         :type lives_left: int
         """
         self.userID = userID
@@ -233,7 +242,8 @@ class BossEncounterStart:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         :param encounter_name: Name of the encounter player is starting.
         :type encounter_name: EncounterName
@@ -264,13 +274,16 @@ class BossEncounterComplete:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player has completed.
+        :param encounter_name: Name of the encounter player 
+        has completed.
         :type encounter_name: EncounterName
         :param stage_number: Current stage player has completed.
         :type stage_number: int
-        :param player_HP_remaining: Current stage player has completed.
+        :param player_HP_remaining: Player HP reamaining once 
+        boss encounter is complete.
         :type player_HP_remaining: int
         """
         self.userID = userID
@@ -298,7 +311,8 @@ class BossEncounterFail:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         :param encounter_name: Name of the encounter player has failed.
         :type encounter_name: EncounterName
@@ -330,12 +344,15 @@ class BossEncounterRetry:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         :param encounter_name: Name of the encounter player is retrying.
         :type encounter_name: EncounterName
         :param stage_number: Current stage player is retrying.
         :type stage_number: int
+        :param lives_left: Lives left at end of encounter.
+        :type lives_left: int
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -362,11 +379,12 @@ class GainCoin:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is in.
         :type encounter_name: EncounterName
-        :param stage_number: Current stage player is complete.
+        :param stage_number: Current stage number.
         :type stage_number: int
         :param coins_gained: Number of coins gained.
         :type coins_gained: int
@@ -387,7 +405,6 @@ class BuyUpgrade:
             userID: int,
             sessionID: int,
             timestamp: str,
-            encounter_name: EncounterName,
             stage_number: int,
             coins_spent: int,
             upgrade_bought: UpgradeName
@@ -397,21 +414,20 @@ class BuyUpgrade:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
-        :type encounter_name: EncounterName
         :param stage_number: Current stage player is complete.
         :type stage_number: int
-        :param coins_spent: Description
+        :param coins_spent: Number of coins spent on 
+        buying this upgrade.
         :type coins_spent: int
-        :param upgrade_bought: Description
+        :param upgrade_bought: The upgrade which was bought.
         :type upgrade_bought: UpgradeName
         """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
-        self.encounter_name = encounter_name
         self.stage_number = stage_number
         self.coins_spent = coins_spent
         self.upgrade_bought = upgrade_bought
@@ -431,7 +447,8 @@ class EndSession:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         """
         self.userID = userID
@@ -440,7 +457,8 @@ class EndSession:
 
 class SettingsChange:
     """
-    SettingsChange object represents an instance of a SettingsChange event.
+    SettingsChange object represents an instance of a 
+    SettingsChange event.
     """
     def __init__(
         self,
@@ -456,13 +474,15 @@ class SettingsChange:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is in.
         :type encounter_name: EncounterName
         :param setting: The setting which was changed.
         :type setting: SettingName
-        :param value: The new value to which the changed setting was set. 
+        :param value: The new value to which the changed 
+        setting was set to. 
         :type value: int
         """
         self.userID = userID
@@ -490,11 +510,13 @@ class KillEnemy:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is complete.
+        :param encounter_name: Name of the encounter player is 
+        in at time of kill.
         :type encounter_name: EncounterName
-        :param stage_number: Current stage player is complete.
+        :param stage_number: Current stage player is in at time of kill.
         :type stage_number: int
         :param enemy_type: Type of enemy which was killed.
         :type enemy_type: EnemyType
@@ -508,7 +530,8 @@ class KillEnemy:
 
 class StartTelemetry:
     """
-    StartTelemetry object represents an instance of a StartTelemetry event.
+    StartTelemetry object represents an instance of a 
+    StartTelemetry event.
     """
     def __init__(self,
             userID: int,
@@ -520,7 +543,8 @@ class StartTelemetry:
         :type userID: int
         :param sessionID: Unique ID for the session.
         :type sessionID: int
-        :param timestamp: Timestamp of the event. Format: YYYY/MM/DD/HH/MM/SS.
+        :param timestamp: Timestamp of the event. 
+        Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
         """
         self.userID = userID
