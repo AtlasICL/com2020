@@ -53,8 +53,8 @@ installed using `python -m pip install -r requirements.txt`.
 This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
-- Python: PEP8 style guide ([link](https://peps.python.org/pep-0008/))
-- Java: Google Java style guide ([link](https://peps.python.org/pep-0008/))
+- Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
+- Java: [Google Java style guide](https://peps.python.org/pep-0008/)
 
 ## Meeting minutes 
 Find meeting minutes and project specification [here](/meetings/)
