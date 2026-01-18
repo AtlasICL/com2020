@@ -1,6 +1,6 @@
 """
-This file defines the Enums and constants used in the logic
-of our telemetry app.
+This file defines the Enums and constants used in the logic of the 
+telemetry app.
 """
 
 from enum import Enum
