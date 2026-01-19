@@ -59,10 +59,6 @@ class TelemetryAppGUI(tk.Tk):
             'TButton', 
             background=GUI_SELECTION_settings.BACKGROUND_COLOR
         )
-        entry_font = tkfont.Font(
-            family=GUI_SELECTION_settings.FONT_FAMILY, 
-            size=GUI_SELECTION_settings.DATA_ENTRY_FONT_SIZE
-        )
 
         # Create scrollable frame for main content
         outer_frame = ttk.Frame(self)

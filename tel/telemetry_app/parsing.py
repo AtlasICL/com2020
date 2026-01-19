@@ -1,5 +1,5 @@
 """
-This file contains the core logic for parsing game output json files.
+This file contains the logic for parsing game output json files.
 """
 
 import json
