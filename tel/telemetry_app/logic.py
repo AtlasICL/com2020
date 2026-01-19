@@ -4,8 +4,7 @@ from dataclasses import dataclass, field
 from events import *
 from parsing import parse_file, ValidEvent
 
-
-class LogicEngine:
+class EventLogicEngine:
     def __init__(self):
         self.start_telemetry_events: set[StartTelemetry] = set()
         self.session_start_events: set[SessionStart] = set()
@@ -22,6 +21,24 @@ class LogicEngine:
         self.buy_upgrade_events: set[BuyUpgrade] = set()
         self.settings_change_events: set[SettingsChange] = set()
         self.kill_enemy_events: set[KillEnemy] = set()
+
+        self._attributes = [
+            self.start_telemetry_events, 
+            self.session_start_events, 
+            self.end_session_events,
+            self.normal_encounter_start_events,
+            self.normal_encounter_complete_events,
+            self.normal_encounter_fail_events,
+            self.normal_encounter_retry_events,
+            self.boss_encounter_start_events,
+            self.boss_encounter_complete_events,
+            self.boss_encounter_fail_events,
+            self.boss_encounter_retry_events,
+            self.gain_coin_events,
+            self.buy_upgrade_events,
+            self.settings_change_events,
+            self.kill_enemy_events
+        ]
 
     def categorise_events(self, filename: str) -> None:
         events: list[ValidEvent] = parse_file(filename)
@@ -58,11 +75,12 @@ class LogicEngine:
                 self.kill_enemy_events.add(event)
 
 def main():
-    le = LogicEngine()
-    le.categorise_events("example_data.json")
+    LogicEngine = EventLogicEngine()
+    LogicEngine.categorise_events("example_data.json")
+    for attr in LogicEngine._attributes:
+        for event in attr:
+            print(repr(event))
 
-    for e in le.boss_encounter_complete_events:
-        print(repr(e))
 
 
 if __name__ == "__main__":

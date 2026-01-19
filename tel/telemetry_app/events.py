@@ -662,3 +662,9 @@ class StartTelemetry:
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
+
+    def __repr__(self):
+        return f"""StartTelemetryObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}"""
