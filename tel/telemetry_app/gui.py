@@ -93,5 +93,8 @@ class TelemetryAppGUI(tk.Tk):
         
         # Configure canvas
         canvas.configure(yscrollcommand=scrollbar.set)
-        canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.bind(
+            '<Configure>', 
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
 
