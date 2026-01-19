@@ -183,7 +183,6 @@ To be defined at a later date.
     userID: int,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
-    encounter_name: string [must be in list of valid encounter names],
     stage_number: int,
     event: "BuyUpgrade",
     upgrade_bought: string [must be in list of upgrades],
