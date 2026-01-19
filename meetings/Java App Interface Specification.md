@@ -1,3 +1,6 @@
+# Explanation
+Each subheading is the specified type (e.g. interface or enum). If unspecified it is a class. Anything in italics is a comment or description about a component. If a heading (e.g. methods) is not present for an interface, it means there is nothing there (e.g. it has no methods). If an interface extends or implements another, all inherited methods are present but are not explicitly stated. 
+# Interfaces
 ## GameManager
 *Acts as an interface between the front and back end. Is a singleton*
 ### Constructors
@@ -5,9 +8,9 @@ private GameManager()
 ### Fields
 private static GameManager
 
-private Settings
+private Settings settings
 
-private TelemetryListener
+private TelemetryListener telemetryListener
 
 private GameRun currentGame
 
@@ -36,7 +39,7 @@ private Encounter[] phase3BossEncounters *drawn from for stage 9*
 
 private Encounter finalBoss *draw from for stage 10*
 
-private UpgradeType[] shopUpgrades *drawn from to populate the shop*
+private UpgradeType[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
 
 private Player player
 
@@ -52,13 +55,19 @@ public void purchaseUpgrade(UpgradeType) *buys and removes it from the shop and 
 
 public Player getPlayer() 
 
+public void nextStage()
+
+public int getStage()
+
 ## TelemetryListener
-*Is notified of telemetry events, validates them, and writes them to the telemetry store. Use Jackson to write to the JSON file*
+*Is notified of telemetry events, validates them, and writes them to the telemetry store. Use Jackson to write to the JSON file. Is a singleton*
 ### Constructors
 public TelemetryListener()
 ### Fields
 private File JSONFile
 ### Methods
+public TelemetryListener getTelemetryListener()
+
 public void onSessionStart(SessionStartEvent e)
 
 public void onNormalEncounterStart(NormalEncounterStartEvent e)
@@ -108,9 +117,6 @@ public String getTimestamp()
 *Contains fields for sessions start*
 ### Constructors
 public SessionStartEvent(int userID, int sessionID, String timestamp)
-### Fields
-### Methods
-
 ## NormalEncounterStartEvent extends TelemetryEvent
 *Contains fields for normal encounter start*
 ### Constructors
@@ -272,9 +278,6 @@ public UpgradeType getUpgradeBought()
 *Contains fields for end session*
 ### Constructors
 public EndSessionEvent(int userID, int sessionID, String timestamp)
-### Fields
-### Methods
-
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
@@ -313,9 +316,6 @@ public String getEnemyType()
 *Contains fields for gain coin*
 ### Constructors
 public EndSessionEvent(int userID, int sessionID, String timestamp)
-### Fields
-### Methods
-
 ## Settings
 *Stores user settings as a singleton*
 ### Constructors
@@ -397,77 +397,164 @@ public float getMagicRegenRate(Difficulty difficulty)
 ## Encounter
 *Stores all the enemies in an encounter, and information about said encounter*
 ### Constructors
+public Encounter(EncounterType type)
 ### Fields
+private Entity[] enemies 
+
+private bool completed
+
+private EncounterType encounterType
 ### Methods
+public Entity[] getEnemies()
+
+public bool isComplete()
+
+public void setComplete()
+
+pubic EncounterType getType()
 
 ## enum DamageType
 *Stores all the type of damage*
-### Constructors
 ### Fields
-### Methods
+PHYSICAL, FIRE, COLD, ACID, POISON, SONIC, ELECTRIC, RADIANT, NECROTIC, PSYCHIC, ABSOLUTE
 
 ## enum AbilityType
 *Stores all the types of ability*
-### Constructors
 ### Fields
-### Methods
+BOW, SWORD, etc. *placeholders, enemies TBD*
 
 ## enum UpgradeType
 *Stores all the types of player upgrade*
-### Constructors
+### Constructor
+private UpgradeType(int price)
 ### Fields
+HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
+
+private final int price
 ### Methods
+public int getPrice()
+
+public Player applyUpgrade(Player player) *done using reflection*
 
 ## enum Difficulty
 *Stores all the types levels of difficulty*
-### Constructors
 ### Fields
-### Methods
+EASY, MEDIUM, HARD
 
 ## enum EncounterType
 *Stores all the types of encounter*
 ### Constructors
+private EncounterType(EntityType[] enemies)
 ### Fields
+ZOMBIE_HORDE, SKELETON_RANGERS, etc. *placeholder, encounters TBD*
 ### Methods
+public EntityType[] getEnemies()
+
+public Encounter createEncounter() *done using reflection via EntityType*
+
+## enum EntityType
+*different entities within the game*
+### Constructor
+private EntityType(Class<? extends Entity> entityClass)
+### Fields
+ZOMBIE_HORDE, SKELETON_RANGERS, etc. *placeholder, encounters TBD*
+
+private final Class<? extends Entity> entityClass
+### Methods
+public Entity createEnemy() *Done using reflection on entityClass*
 
 ## interface Entity
 *Contains all methods all entities have*
 ### Methods
+public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
 
+public void gainHealth(int amount) throws IllegalArgumentException *amount cannot be negative, can have health exceed maxHealth*
+
+public int getHealth()
+
+public int getMaxHealth()
+
+public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
+
+public List\<Ability> getAbilities()
+
+public EntityType getType()
 ## interface Player extends Entity
 *Contains all methods all the player has*
 ### Methods
+public int getCoins()
 
+public void loseCoins(int amount) throws IllegalArgumentException *amount cannot be negative*
+
+public void gainCoins(int amount) throws IllegalArgumentException *amount cannot be negative*
+
+public int getMagic()
+
+public int getMaxMagic()
+
+public int getMagicRegenRate()
+
+public void gainMagic(int amount) throws IllegalArgumentException *amount cannot be negative, can exceed maximum*
+
+public void loseMagic(int amount) throws IllegalArgumentException *amount cannot be negative*
+
+public int getLives()
+
+public void gainLives(int amount) throws IllegalArgumentException *amount cannot be negative*
+
+public void loseLives(int amount) throws IllegalArgumentException *amount cannot be negative*
+
+List\<UpgradeType> getUpgrades()
 ## ConcretePlayer implements Player
 *Contains the concrete implementation of the player*
 ### Constructors
+public Player() *reads values from settings, making changes where needed*
 ### Fields
-### Methods
+private int maxMagic
+
+private int maxHealth
+
+private int health
+
+private int magic
+
+private int coins
+
+private int lives
+
+private List\<Ability> abilities
 
 ## abstract Enemy implements Entity
 *Contains an implementation of health points that all enemies use*
 ### Constructors
+public Enemy() *reads values from settings, making changes where needed*
 ### Fields
-### Methods
+private int health
+
+private int maxHealth
 
 ## ConcreteEnemy extends Enemy
 *Each enemy would have its own class, for example SkeletonEnemy, ZombieEnemy*
 ### Constructors
-### Fields
-### Methods
+public ConcreteEnemy() *reads values from settings, making changes where needed*
 
 ## interface Ability
 *Interface all abilities implement*
 ### Methods
+public void execute(Entity source, Entity[] targets)
+
+public bool isOffensive()
 
 ## ConcreteAbility implements Ability
 *Different implementations for each ability*
 ### Constructors
+public Ability()
 ### Fields
-### Methods
+final static bool offensive
 
 ## ConcreteUpgrade implements Player
 *Decorates the player, giving their methods additional abilities and effects*
 ### Constructors
+ConcreteUpgrade(Player player)
 ### Fields
-### Methods
+private Player player
