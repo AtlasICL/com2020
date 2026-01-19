@@ -1,8 +1,3 @@
-"""
-This file defines the Enums and constants used in the logic of the 
-telemetry app.
-"""
-
 from enum import Enum
 
 class EventType(str, Enum):
@@ -90,6 +85,12 @@ class SessionStart:
         self.sessionID = sessionID
         self.timestamp = timestamp
 
+    def __repr__(self):
+        return f"""SessionStartObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}"""
+
 class NormalEncounterStart:
     """
     NormalEncounterStart object represents an instance of a
@@ -120,6 +121,14 @@ class NormalEncounterStart:
         self.timestamp = timestamp
         self.encounter_name = encounter_name
         self.stage_number = stage_number
+
+    def __repr__(self):
+        return f"""NormalEncounterStartObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}"""
 
 class NormalEncounterComplete:
     """
@@ -158,6 +167,15 @@ class NormalEncounterComplete:
         self.stage_number = stage_number
         self.player_HP_remaining = player_HP_remaining
 
+    def __repr__(self):
+        return f"""NormalEncounterCompleteObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.player_HP_remaining=}"""
+
 class NormalEncounterFail:
     """
     NormalEncounterFail object represents an instance of a
@@ -189,6 +207,14 @@ class NormalEncounterFail:
         self.timestamp = timestamp
         self.encounter_name = encounter_name
         self.stage_number = stage_number
+
+    def __repr__(self):
+        return f"""NormalEncounterFailObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}"""
 
 class NormalEncounterRetry:
     """
@@ -226,6 +252,15 @@ class NormalEncounterRetry:
         self.stage_number = stage_number
         self.lives_left = lives_left
 
+    def __repr__(self):
+        return f"""NormalEncounterRetryObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.lives_left=}"""
+        
 class BossEncounterStart:
     """
     BossEncounterStart object represents an instance of a
@@ -256,6 +291,14 @@ class BossEncounterStart:
         self.timestamp = timestamp
         self.encounter_name = encounter_name
         self.stage_number = stage_number
+
+    def __repr__(self):
+        return f"""BossEncounterStartObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}"""
 
 class BossEncounterComplete:
     """
@@ -293,6 +336,15 @@ class BossEncounterComplete:
         self.encounter_name = encounter_name
         self.stage_number = stage_number
         self.player_HP_remaining = player_HP_remaining
+
+    def __repr__(self):
+        return f"""BossEncounterObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.player_HP_remaining=}"""
         
 class BossEncounterFail:
     """
@@ -325,6 +377,14 @@ class BossEncounterFail:
         self.timestamp = timestamp
         self.encounter_name = encounter_name
         self.stage_number = stage_number
+
+    def __repr__(self):
+        return f"""BossEncounterFailObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}"""
 
 class BossEncounterRetry:
     """
@@ -362,6 +422,15 @@ class BossEncounterRetry:
         self.stage_number = stage_number
         self.lives_left = lives_left
 
+    def __repr__(self):
+        return f"""BossEncounterRetryObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.lives_left=}"""
+
 class GainCoin:
     """
     GainCoin object represents an instance of a GainCoin event.
@@ -396,6 +465,15 @@ class GainCoin:
         self.encounter_name = encounter_name
         self.stage_number = stage_number
         self.coins_gained = coins_gained
+
+    def __repr__(self):
+        return f"""GainCoinObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.coins_gained=}"""
 
 class BuyUpgrade:
     """
@@ -433,6 +511,15 @@ class BuyUpgrade:
         self.coins_spent = coins_spent
         self.upgrade_bought = upgrade_bought
 
+    def __repr__(self):
+        return f"""BuyUpgradeObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.stage_number=}
+            {self.coins_spent=}
+            {self.upgrade_bought=}"""
+
 class EndSession:
     """
     EndSession object represents an instance of an EndSession event.
@@ -455,6 +542,12 @@ class EndSession:
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
+
+    def __repr__(self):
+        return f"""EndSessionObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}"""
 
 class SettingsChange:
     """
@@ -493,6 +586,15 @@ class SettingsChange:
         self.setting = setting
         self.value = value
 
+    def __repr__(self):
+        return f"""SettingsChangeObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.setting=}
+            {self.value=}"""
+
 class KillEnemy:
     """
     KillEnemy object represents an instance of a KillEnemy event.
@@ -528,6 +630,15 @@ class KillEnemy:
         self.encounter_name = encounter_name
         self.stage_number = stage_number
         self.enemy_type = enemy_type
+
+    def __repr__(self):
+        return f"""KillEnemyObject
+            {self.userID=}
+            {self.sessionID=}
+            {self.timestamp=}
+            {self.encounter_name=}
+            {self.stage_number=}
+            {self.enemy_type=}"""
 
 class StartTelemetry:
     """
