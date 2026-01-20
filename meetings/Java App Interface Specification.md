@@ -281,7 +281,7 @@ public EndSessionEvent(int userID, int sessionID, String timestamp)
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
-public EndSessionEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, String setting, String settingValue)
+public SettingsChangeEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, String setting, String settingValue)
 ### Fields
 private EncounterTYpe encounterName
 
@@ -298,24 +298,25 @@ public String getSettingValue()
 ## KillEnemyEvent extends TelemetryEvent
 *Contains fields for kill enemy*
 ### Constructors
-public EndSessionEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, String enemyType)
+public KillEnemyEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType)
 ### Fields
 private EncounterType encounterName
 
 private int stageNumber
 
-private String enemyType
+private EntityType enemyType
 ### Methods
-public EncounterTYpe getEncounterName()
+public EncounterType getEncounterName()
 
 public int getStageNumber()
 
-public String getEnemyType()
+public EntityType getEnemyType()
 
 ## StartTelemetryEvent extends TelemetryEvent
-*Contains fields for gain coin*
+*Contains fields for starting sending telemetry*
 ### Constructors
-public EndSessionEvent(int userID, int sessionID, String timestamp)
+public StartTelemetryEvent(int userID, int sessionID, String timestamp)
+
 ## Settings
 *Stores user settings as a singleton*
 ### Constructors
@@ -323,7 +324,7 @@ private Settings()
 ### Fields
 private static Settings settings
 
-private bool sendTelemetry
+private bool telemetryEnabled
 
 *integer values multiplied by these parameters are rounded*
 
@@ -376,7 +377,7 @@ private float normalMagicRegenRate
 private float easyMagicRegenRate
 
 ### Methods
-public bool getSendTelemetry()
+public bool isTelemetryEnabled()
 
 public float getEnemyMaxHealthMultiplier(Difficulty difficulty)
 
@@ -409,40 +410,48 @@ public Entity[] getEnemies()
 
 public bool isComplete()
 
-public void setComplete()
+public void markComplete()
 
 pubic EncounterType getType()
 
 ## enum DamageType
-*Stores all the type of damage*
+*Enumerates all the type of damage*
 ### Fields
 PHYSICAL, FIRE, COLD, ACID, POISON, SONIC, ELECTRIC, RADIANT, NECROTIC, PSYCHIC, ABSOLUTE
 
 ## enum AbilityType
-*Stores all the types of ability*
+*Enumerates the game's abilities*
+### Constructors
+private AbilityType(Constructor abilityConstructor)
 ### Fields
-BOW, SWORD, etc. *placeholders, enemies TBD*
+BOW, SWORD, etc. *placeholders, abilities TBD*
+
+private final Constructor abilityConstructor
+### Methods
+public Ability getAbility()
 
 ## enum UpgradeType
-*Stores all the types of player upgrade*
+*Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price)
+private UpgradeType(int price, Constructor upgradeConstructor)
 ### Fields
 HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
 
 private final int price
+
+private final Constructor upgradeConstructor
 ### Methods
 public int getPrice()
 
 public Player applyUpgrade(Player player) *done using reflection*
 
 ## enum Difficulty
-*Stores all the types levels of difficulty*
+*Enumerates the different levels of difficulty*
 ### Fields
 EASY, MEDIUM, HARD
 
 ## enum EncounterType
-*Stores all the types of encounter*
+*Enumerates the games encounters*
 ### Constructors
 private EncounterType(EntityType[] enemies)
 ### Fields
@@ -453,15 +462,15 @@ public EntityType[] getEnemies()
 public Encounter createEncounter() *done using reflection via EntityType*
 
 ## enum EntityType
-*different entities within the game*
+*Enumerates the games entities*
 ### Constructor
-private EntityType(Class<? extends Entity> entityClass)
+private EntityType(Constructor entityConstructor)
 ### Fields
-ZOMBIE_HORDE, SKELETON_RANGERS, etc. *placeholder, encounters TBD*
+ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
 
-private final Class<? extends Entity> entityClass
+private final Constructor entityConstructor
 ### Methods
-public Entity createEnemy() *Done using reflection on entityClass*
+public Entity createEnemy() *Done using reflection*
 
 ## interface Entity
 *Contains all methods all entities have*
@@ -508,7 +517,7 @@ List\<UpgradeType> getUpgrades()
 ## ConcretePlayer implements Player
 *Contains the concrete implementation of the player*
 ### Constructors
-public Player() *reads values from settings, making changes where needed*
+public Player() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 ### Fields
 private int maxMagic
 
@@ -527,7 +536,7 @@ private List\<Ability> abilities
 ## abstract Enemy implements Entity
 *Contains an implementation of health points that all enemies use*
 ### Constructors
-public Enemy() *reads values from settings, making changes where needed*
+public Enemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 ### Fields
 private int health
 
@@ -536,7 +545,7 @@ private int maxHealth
 ## ConcreteEnemy extends Enemy
 *Each enemy would have its own class, for example SkeletonEnemy, ZombieEnemy*
 ### Constructors
-public ConcreteEnemy() *reads values from settings, making changes where needed*
+public ConcreteEnemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
 ## interface Ability
 *Interface all abilities implement*
@@ -545,16 +554,28 @@ public void execute(Entity source, Entity[] targets)
 
 public bool isOffensive()
 
+public String getDescription()
+
+public int getNumberOfTargets()
+
+public AbilityType getType()
+
 ## ConcreteAbility implements Ability
 *Different implementations for each ability*
 ### Constructors
 public Ability()
 ### Fields
-final static bool offensive
+private final static bool offensive
+
+private final static String description
+
+private final static int numberOfTargets
+
+private final static AbilityType type
 
 ## ConcreteUpgrade implements Player
 *Decorates the player, giving their methods additional abilities and effects*
 ### Constructors
-ConcreteUpgrade(Player player)
+public ConcreteUpgrade(Player player)
 ### Fields
 private Player player
