@@ -1,208 +1,87 @@
-"""
-This file contains the core logic for parsing game output json files.
-"""
-
-import json
-from typing import TypeAlias
+import os
+from dataclasses import dataclass, field
 
 from events import *
+from parsing import parse_file, ValidEvent
 
-ValidEvent: TypeAlias = (
-    SessionStart
-    | NormalEncounterStart
-    | NormalEncounterComplete
-    | NormalEncounterFail
-    | NormalEncounterRetry
-    | BossEncounterStart
-    | BossEncounterComplete
-    | BossEncounterFail
-    | BossEncounterRetry
-    | GainCoin
-    | BuyUpgrade
-    | EndSession
-    | SettingsChange
-    | KillEnemy
-    | StartTelemetry
-) 
+class EventLogicEngine:
+    def __init__(self):
+        self.start_telemetry_events: set[StartTelemetry] = set()
+        self.session_start_events: set[SessionStart] = set()
+        self.end_session_events: set[EndSession] = set()
+        self.normal_encounter_start_events: set[NormalEncounterStart] = set()
+        self.normal_encounter_complete_events: set[NormalEncounterComplete] = set()
+        self.normal_encounter_fail_events: set[NormalEncounterFail] = set()
+        self.normal_encounter_retry_events: set[NormalEncounterRetry] = set()
+        self.boss_encounter_start_events: set[BossEncounterStart] = set()
+        self.boss_encounter_complete_events: set[BossEncounterComplete] = set()
+        self.boss_encounter_fail_events: set[BossEncounterFail] = set()
+        self.boss_encounter_retry_events: set[BossEncounterRetry] = set()
+        self.gain_coin_events: set[GainCoin] = set()
+        self.buy_upgrade_events: set[BuyUpgrade] = set()
+        self.settings_change_events: set[SettingsChange] = set()
+        self.kill_enemy_events: set[KillEnemy] = set()
 
-def get_file(filename: str) -> list[dict]:
-    """
-    This function parses a json file and returns a list of json objects.
-    
-    :param filename: filename for json to be parsed.
-    :type filename: str
-    :return: List of json objects.
-    :rtype: list[dict[str, Any]]
-    """
-    try: 
-        with open(filename, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Could not find file: {filename}")
-    except json.JSONDecodeError:
-        raise RuntimeError(f"Could not parse - invalid json.")
+        self._attributes = [
+            self.start_telemetry_events, 
+            self.session_start_events, 
+            self.end_session_events,
+            self.normal_encounter_start_events,
+            self.normal_encounter_complete_events,
+            self.normal_encounter_fail_events,
+            self.normal_encounter_retry_events,
+            self.boss_encounter_start_events,
+            self.boss_encounter_complete_events,
+            self.boss_encounter_fail_events,
+            self.boss_encounter_retry_events,
+            self.gain_coin_events,
+            self.buy_upgrade_events,
+            self.settings_change_events,
+            self.kill_enemy_events
+        ]
 
-def parse_file(filename: str) -> list[ValidEvent]:
-    """
-    Creates a list of ValidEvent objects from a json file.
-    
-    :param filename: filename for json to be parsed.
-    :type filename: str
-    :return: List of valid event objects.
-    :rtype: list[ValidEvent]
-    """
-    events = get_file(filename)
-    event_objects = []
-    for event in events:
-        event_objects.append(parse_event(event))
-    return event_objects
+    def categorise_events(self, filename: str) -> None:
+        events: list[ValidEvent] = parse_file(filename)
+        for event in events:
+            if isinstance(event, StartTelemetry):
+                self.start_telemetry_events.add(event)
+            elif isinstance(event, SessionStart):
+                self.session_start_events.add(event)
+            elif isinstance(event, EndSession):
+                self.end_session_events.add(event)
+            elif isinstance(event, NormalEncounterStart):
+                self.normal_encounter_start_events.add(event)
+            elif isinstance(event, NormalEncounterComplete):
+                self.normal_encounter_complete_events.add(event)
+            elif isinstance(event, NormalEncounterFail):
+                self.normal_encounter_fail_events.add(event)
+            elif isinstance(event, NormalEncounterRetry):
+                self.normal_encounter_retry_events.add(event)
+            elif isinstance(event, BossEncounterStart):
+                self.boss_encounter_start_events.add(event)
+            elif isinstance(event, BossEncounterComplete):
+                self.boss_encounter_complete_events.add(event)
+            elif isinstance(event, BossEncounterFail):
+                self.boss_encounter_fail_events.add(event)
+            elif isinstance(event, BossEncounterRetry):
+                self.boss_encounter_retry_events.add(event)
+            elif isinstance(event, GainCoin):
+                self.gain_coin_events.add(event)
+            elif isinstance(event, BuyUpgrade):
+                self.buy_upgrade_events.add(event)
+            elif isinstance(event, SettingsChange):
+                self.settings_change_events.add(event)
+            elif isinstance(event, KillEnemy):
+                self.kill_enemy_events.add(event)
 
-def parse_event(event: dict) -> ValidEvent:
-    """
-    Creates a ValidEvent object from a json object.
-    
-    :param event: json object for a single event.
-    :type event: dict
-    :return: Valid event object translated from the json object.
-    :rtype: ValidEvent
-    :raises RuntimeError: If an event of an unknown type is found, or 
-    a required field is missing.
-    """
-    try:
-        event_type = event["event"]
-    except KeyError:
-        raise RuntimeError("Event must have an \"event\" field")
-    
-    try:
-        match event_type:
-            case EventType.START_TELEMETRY:
-                return StartTelemetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
-                )
-            case EventType.SESSION_START:
-                return SessionStart(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
-                )
-            case EventType.END_SESSION:
-                return EndSession(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
-                )
-            case EventType.NORMAL_ENCOUNTER_START:
-                return NormalEncounterStart(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.NORMAL_ENCOUNTER_COMPLETE:
-                return NormalEncounterComplete(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING]
-                )
-            case EventType.NORMAL_ENCOUNTER_FAIL:
-                return NormalEncounterFail(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.NORMAL_ENCOUNTER_RETRY:
-                return NormalEncounterRetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.LIVES_LEFT]
-                )
-            case EventType.BOSS_ENCOUNTER_START:
-                return BossEncounterStart(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.BOSS_ENCOUNTER_COMPLETE:
-                return BossEncounterComplete(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING]
-                )
-            case EventType.BOSS_ENCOUNTER_FAIL:
-                return BossEncounterFail(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.BOSS_ENCOUNTER_RETRY:
-                return BossEncounterRetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.LIVES_LEFT]
-                )
-            case EventType.GAIN_COIN:
-                return GainCoin(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.COINS_GAINED]
-                )
-            case EventType.BUY_UPGRADE:
-                return BuyUpgrade(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.COINS_SPENT],
-                    event[EventParameter.UPGRADE_BOUGHT]
-                )
-            case EventType.SETTINGS_CHANGE:
-                return SettingsChange(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.SETTING],
-                    event[EventParameter.SETTING_VALUE]
-                )
-            case EventType.KILL_ENEMY:
-                return KillEnemy(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.ENEMY_TYPE]
-                )
-            case _:
-                raise RuntimeError(
-                    "Unexpected event type: {event_type}"
-                )
-    except KeyError as e:
-        raise RuntimeError(
-            f"An event of type {event_type} is missing the field {e}"
-        )
-            
+def main():
+    LogicEngine = EventLogicEngine()
+    LogicEngine.categorise_events("example_data.json")
+    for attr in LogicEngine._attributes:
+        for event in attr:
+            print(repr(event))
+
+
+
+if __name__ == "__main__":
+    main()
