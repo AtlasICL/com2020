@@ -1,63 +1,66 @@
 # Explanation
 Each subheading is the specified type (e.g. interface or enum). If unspecified it is a class. Anything in italics is a comment or description about a component. If a heading (e.g. methods) is not present for an interface, it means there is nothing there (e.g. it has no methods). If an interface extends or implements another, all inherited methods are present but are not explicitly stated. 
 # Interfaces
-## GameManager
-*Acts as an interface between the front and back end. Is a singleton*
-### Constructors
-private GameManager()
-### Fields
-private static GameManager
-
-private Settings settings
-
-private TelemetryListener telemetryListener
-
-private GameRun currentGame
-
-private Encounter currentEncounter
+## GameManagerInterface
+*Interface for the game manager*
 ### Methods
 public static GameManager getGameManager()
 
 %%To be designed by Luca C%%
-
-## GameRun 
-*Stores information relating to a single run of the game*
+## GameManager implements GameManagerInterface
+*Acts as an interface between the front and back end. Is a singleton*
 ### Constructors
-public GameRun(Difficulty difficulty) *creates a fresh game run*
+private GameManager()
 ### Fields
-private Encounter[] phase1NormalEncounters *drawn from for stages 1 and 2*
+private static GameManagerInterface gameManager
 
-private Encounter[] phase2NormalEncounters *drawn from for stages 4 and 5*
+private GameRun currentGame
 
-private Encounter[] phase3NormalEncounters *drawn from for stages 7 and 8*
+private Encounter currentEncounter
 
-private Encounter[] phase1BossEncounters *drawn from for stage 3*
-
-private Encounter[] phase2BossEncounters *drawn from for stage 6*
-
-private Encounter[] phase3BossEncounters *drawn from for stage 9*
-
-private Encounter finalBoss *draw from for stage 10*
-
-private UpgradeType[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
-
-private Player player
-
-private int currentStage
-
-private Difficulty currentDifficulty
+## GameRunInterface
+*Interface for a run of the game*
 ### Methods
-public Encounter pickEncounter() *returns a random encounter based on currentStage*
+public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
 
 public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
 
 public void purchaseUpgrade(UpgradeType) *buys and removes it from the shop and gives it to the player*
 
-public Player getPlayer() 
+public PlayerInterface getPlayer() 
 
 public void nextStage()
 
 public int getStage()
+
+
+## GameRun implements GameRunInterface
+*Stores information relating to a single run of the game*
+### Constructors
+public GameRun(Difficulty difficulty) *creates a fresh game run*
+### Fields
+private EncounterInterface[] phase1NormalEncounters *drawn from for stages 1 and 2*
+
+private EncounterInterface[] phase2NormalEncounters *drawn from for stages 4 and 5*
+
+private EncounterInterface[] phase3NormalEncounters *drawn from for stages 7 and 8*
+
+private EncounterInterface[] phase1BossEncounters *drawn from for stage 3*
+
+private EncounterInterface[] phase2BossEncounters *drawn from for stage 6*
+
+private EncounterInterface[] phase3BossEncounters *drawn from for stage 9*
+
+private EncounterInterface finalBoss *draw from for stage 10*
+
+private UpgradeType[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
+
+private PlayerInterface player
+
+private int currentStage
+
+private Difficulty currentDifficulty
+
 
 ## TelemetryListener
 *Is notified of telemetry events, validates them, and writes them to the telemetry store. Use Jackson to write to the JSON file. Is a singleton*
@@ -394,8 +397,18 @@ public float getMagicCostMultiplier(Difficulty difficulty)
 public float getMaxMagicMultiplier(Difficulty difficulty)
 
 public float getMagicRegenRate(Difficulty difficulty)
+## EncounterInterface
+*Interface for encounters*
+### Methods
+public Entity[] getEnemies()
 
-## Encounter
+public bool isComplete()
+
+public void markComplete()
+
+public EncounterType getType()
+
+## Encounter implements EncounterInterface
 *Stores all the enemies in an encounter, and information about said encounter*
 ### Constructors
 public Encounter(EncounterType type)
@@ -405,14 +418,6 @@ private Entity[] enemies
 private bool completed
 
 private EncounterType encounterType
-### Methods
-public Entity[] getEnemies()
-
-public bool isComplete()
-
-public void markComplete()
-
-public EncounterType getType()
 
 ## enum DamageType
 *Enumerates all the type of damage*
@@ -472,7 +477,7 @@ private final Constructor entityConstructor
 ### Methods
 public Entity createEnemy() *Done using reflection*
 
-## interface Entity
+## interface EntityInterface
 *Contains all methods all entities have*
 ### Methods
 public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
@@ -488,7 +493,7 @@ public int calcDamage(int base, DamageType type) *applies modifiers to damage ty
 public List\<Ability> getAbilities()
 
 public EntityType getType()
-## interface Player extends Entity
+## interface PlayerInterface extends EntityInterface
 *Contains all methods all the player has*
 ### Methods
 public int getCoins()
@@ -514,7 +519,7 @@ public void gainLives(int amount) throws IllegalArgumentException *amount cannot
 public void loseLives(int amount) throws IllegalArgumentException *amount cannot be negative*
 
 List\<UpgradeType> getUpgrades()
-## ConcretePlayer implements Player
+## Player implements PlayerInterface
 *Contains the concrete implementation of the player*
 ### Constructors
 public Player() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
@@ -533,7 +538,7 @@ private int lives
 
 private List\<Ability> abilities
 
-## abstract Enemy implements Entity
+## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
 public Enemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
@@ -573,9 +578,9 @@ private final static int numberOfTargets
 
 private final static AbilityType type
 
-## ConcreteUpgrade implements Player
+## ConcreteUpgrade implements PlayerInterface
 *Decorates the player, giving their methods additional abilities and effects*
 ### Constructors
-public ConcreteUpgrade(Player player)
+public ConcreteUpgrade(PlayerInterface player)
 ### Fields
-private Player player
+private PlayerInterface player
