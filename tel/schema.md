@@ -204,9 +204,8 @@ To be defined at a later date.
     userID: int,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
-    encounter_name: string [must be in list of valid encounter names],
     setting: string [must be in list of valid settings],
-    setting_value: int,
+    setting_value: string,
     event: "SettingsChange"
 }
 ```

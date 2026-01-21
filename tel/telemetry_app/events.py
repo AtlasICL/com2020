@@ -559,7 +559,6 @@ class SettingsChange:
         userID: int,
         sessionID: int,
         timestamp: str,
-        encounter_name: EncounterName,
         setting: SettingName,
         value: int
     ):
@@ -571,8 +570,6 @@ class SettingsChange:
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: str
-        :param encounter_name: Name of the encounter player is in.
-        :type encounter_name: EncounterName
         :param setting: The setting which was changed.
         :type setting: SettingName
         :param value: The new value to which the changed 
@@ -582,7 +579,6 @@ class SettingsChange:
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
-        self.encounter_name = encounter_name
         self.setting = setting
         self.value = value
 
@@ -591,7 +587,6 @@ class SettingsChange:
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}
-            {self.encounter_name=}
             {self.setting=}
             {self.value=}"""
 

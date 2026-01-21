@@ -177,7 +177,6 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
                     event[EventParameter.SETTING],
                     event[EventParameter.SETTING_VALUE]
                 )
