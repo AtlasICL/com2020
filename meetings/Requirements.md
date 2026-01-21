@@ -171,7 +171,8 @@ The game should have the following parameters that designers can tweak:
 - Starting lives
 - Magic cost multiplier: multiplies the cost of magic using abilities
 - Maximum magic amount
-- Magic regeneration rate: amount gained each turn 
+- Magic regeneration rate: amount gained each turn
+- Number of in each shop 
 
 These should be saved in a configuration file, and be per difficulty. Changes to them she be able to be made in game by designers, and update the game when it is restarted. 
 
@@ -564,6 +565,8 @@ The java application should validate and write them to a JSON file ([Specificati
 #### Upgrades can be sold
 [More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
 #### 30+ upgrades
+#### All parameters
+[parameter information](#design-parameters)
 ### Wont 
 #### Multiplayer
 #### Encounter builder
