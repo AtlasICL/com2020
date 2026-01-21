@@ -22,7 +22,6 @@ ValidEvent: TypeAlias = (
     | EndSession
     | SettingsChange
     | KillEnemy
-    | StartTelemetry
 ) 
 
 def get_file(filename: str) -> list[dict]:
@@ -75,12 +74,6 @@ def parse_event(event: dict) -> ValidEvent:
     
     try:
         match event_type:
-            case EventType.START_TELEMETRY:
-                return StartTelemetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
-                )
             case EventType.SESSION_START:
                 return SessionStart(
                     event[EventParameter.USER_ID],

@@ -326,7 +326,7 @@ class BossEncounterComplete:
         :type encounter_name: EncounterName
         :param stage_number: Current stage player has completed.
         :type stage_number: int
-        :param player_HP_remaining: Player HP reamaining once 
+        :param player_HP_remaining: Player HP remaining once 
         boss encounter is complete.
         :type player_HP_remaining: int
         """
@@ -640,31 +640,3 @@ class KillEnemy:
             {self.stage_number=}
             {self.enemy_type=}"""
 
-class StartTelemetry:
-    """
-    StartTelemetry object represents an instance of a 
-    StartTelemetry event.
-    """
-    def __init__(self,
-            userID: int,
-            sessionID: int,
-            timestamp: str
-    ):
-        """
-        :param userID: Unique ID of the user.
-        :type userID: int
-        :param sessionID: Unique ID for the session.
-        :type sessionID: int
-        :param timestamp: Timestamp of the event. 
-        Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
-        """
-        self.userID = userID
-        self.sessionID = sessionID
-        self.timestamp = timestamp
-
-    def __repr__(self):
-        return f"""StartTelemetryObject
-            {self.userID=}
-            {self.sessionID=}
-            {self.timestamp=}"""

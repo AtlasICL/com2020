@@ -20,7 +20,6 @@
     - [12) EndSession](#12-endsession)
     - [13) SettingsChange](#13-settingschange)
     - [14) KillEnemy](#14-killenemy)
-    - [15) StartTelemetry](#15-starttelemetry)
 
 # List of valid event types 
 Here are the possible event types:
@@ -38,7 +37,6 @@ Here are the possible event types:
 12) `EndSession`
 13) `SettingsChange`
 14) `KillEnemy`
-15) `StartTelemetry`
 
 # List of valid encounter names
 To be defined at a later date.
@@ -223,15 +221,5 @@ To be defined at a later date.
     stage_number: int,
     enemy_type: string,
     event: "KillEnemy"
-}
-```
-
-### 15) StartTelemetry
-```
-{
-    userID: int,
-    sessionID: int,
-    timestamp: YYYY/MM/DD/HH/MM/SS,
-    event: "StartTelemetry"
 }
 ```
