@@ -347,7 +347,7 @@ private EncounterType encounterType
 ## enum DamageType
 *Enumerates all the type of damage*
 ### Fields
-PHYSICAL, FIRE, COLD, ACID, POISON, SONIC, ELECTRIC, RADIANT, NECROTIC, PSYCHIC, ABSOLUTE
+PHYSICAL, FIRE, COLD, TOXIC, SONIC, ELECTRIC, RADIANT, NECROTIC, PSYCHIC, ABSOLUTE
 
 ## enum AbilityType
 *Enumerates the game's abilities*
@@ -358,7 +358,7 @@ BOW, SWORD, etc. *placeholders, abilities TBD*
 
 private final Constructor abilityConstructor
 ### Methods
-public Ability getAbility()
+public AbilityInterface getAbility()
 
 ## enum UpgradeType
 *Enumerates the game's upgrades*
@@ -415,7 +415,7 @@ public int getMaxHealth()
 
 public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
 
-public List\<Ability> getAbilities()
+public List\<AbilityInterface> getAbilities()
 
 public EntityType getType()
 ## interface PlayerInterface extends EntityInterface
@@ -461,7 +461,7 @@ private int coins
 
 private int lives
 
-private List\<Ability> abilities
+private List\<AbilityInterface> abilities
 
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
@@ -477,10 +477,10 @@ private int maxHealth
 ### Constructors
 public ConcreteEnemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
-## interface Ability
+## interface AbilityInterface
 *Interface all abilities implement*
 ### Methods
-public void execute(Entity source, Entity[] targets)
+public void execute(Entity source, Entity[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
 
 public bool isOffensive()
 
@@ -490,10 +490,19 @@ public int getNumberOfTargets()
 
 public AbilityType getType()
 
-## ConcreteAbility implements Ability
+## LackingResourceException extends Exception
+*Exception for when an ability is attempted without sufficient resources*
+### Constructor
+public LackingResourceException()
+
+public LackingResourceException(String message)
+
+public LackingResourceException(String message, Throwable cause)
+
+## ConcreteAbility implements AbilityInterface
 *Different implementations for each ability*
 ### Constructors
-public Ability()
+public ConcreteAbility()
 ### Fields
 private final static bool offensive
 
