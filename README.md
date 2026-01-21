@@ -26,20 +26,24 @@ com2020/
 │   │   │       └── gameName/
 │   │   │           └── game.java
 │   │   └── test/
-│   │       └── java/
-│   │           ├── gameName/
-│   │           │   └── test.java
-│   │           └── resources/
-│   │               └── testResources.csv
-│   └── pom.xml    
-├── tel/
-│   ├── __init__.py
-│   ├── telemetry.py
+│   │       ├── java/
+│   │       │   └── gameName/
+│   │       │       └── test.java
+│   │       └── resources/
+│   │           └── testResources.csv
+│   └── pom.xml
+├── telemetry/
+│   ├── telemetry_app/
+│   │   ├── __init__.py
+│   │   ├── events.py
+│   │   ├── logic.py
+│   │   └── gui.py
+│   ├── schema.md
 │   ├── requirements.txt
-│   └── schema.md
+│   └── telemetry_app.py
 ├── meetings/
 │   ├── meeting_minutes.md
-│   └── project_spec.pdf
+│   └── project_specification.pdf
 ├── README.md
 └── .gitignore
 ```
@@ -53,8 +57,8 @@ installed using `python -m pip install -r requirements.txt`.
 This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
-- Python: PEP8 style guide ([link](https://peps.python.org/pep-0008/))
-- Java: Google Java style guide ([link](https://peps.python.org/pep-0008/))
+- Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
+- Java: [Google Java style guide](https://peps.python.org/pep-0008/)
 
 ## Meeting minutes 
 Find meeting minutes and project specification [here](/meetings/)
