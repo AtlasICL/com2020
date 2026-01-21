@@ -172,7 +172,7 @@ The game should have the following parameters that designers can tweak:
 - Magic cost multiplier: multiplies the cost of magic using abilities
 - Maximum magic amount
 - Magic regeneration rate: amount gained each turn
-- Number of in each shop 
+- Number of items in each shop 
 
 These should be saved in a configuration file, and be per difficulty. Changes to them she be able to be made in game by designers, and update the game when it is restarted. 
 
