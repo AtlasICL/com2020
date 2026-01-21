@@ -412,7 +412,7 @@ public bool isComplete()
 
 public void markComplete()
 
-pubic EncounterType getType()
+public EncounterType getType()
 
 ## enum DamageType
 *Enumerates all the type of damage*
