@@ -1,6 +1,7 @@
 # Definition of json schema
 - [Definition of json schema](#definition-of-json-schema)
 - [List of valid event types](#list-of-valid-event-types)
+- [List of valid difficulties](#list-of-valid-difficulties)
 - [List of valid encounter names](#list-of-valid-encounter-names)
 - [List of valid upgrade names](#list-of-valid-upgrade-names)
 - [List of valid enemy names](#list-of-valid-enemy-names)
@@ -20,7 +21,6 @@
     - [12) EndSession](#12-endsession)
     - [13) SettingsChange](#13-settingschange)
     - [14) KillEnemy](#14-killenemy)
-    - [15) StartTelemetry](#15-starttelemetry)
 
 # List of valid event types 
 Here are the possible event types:
@@ -38,7 +38,11 @@ Here are the possible event types:
 12) `EndSession`
 13) `SettingsChange`
 14) `KillEnemy`
-15) `StartTelemetry`
+
+# List of valid difficulties
+1) `Easy`
+2) `Normal`
+3) `Hard`
 
 # List of valid encounter names
 To be defined at a later date.
@@ -71,6 +75,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "NormalEncounterStart"
 }
@@ -83,6 +88,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "NormalEncounterComplete",
     player_HP_Remaining: int, 
@@ -96,6 +102,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "NormalEncounterFail"
 }
@@ -108,6 +115,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "NormalEncounterRetry"
     lives_left: int
@@ -121,6 +129,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterStart"
 }
@@ -133,6 +142,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterComplete"
     player_HP_Remaining: int
@@ -146,6 +156,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterFail"
 }
@@ -158,6 +169,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterRetry",
     lives_left: int
@@ -171,6 +183,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "GainCoin",
     coins_gained: int
@@ -206,9 +219,8 @@ To be defined at a later date.
     userID: int,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
-    encounter_name: string [must be in list of valid encounter names],
     setting: string [must be in list of valid settings],
-    setting_value: int,
+    setting_value: string,
     event: "SettingsChange"
 }
 ```
@@ -220,18 +232,9 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
+    difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     enemy_type: string,
     event: "KillEnemy"
-}
-```
-
-### 15) StartTelemetry
-```
-{
-    userID: int,
-    sessionID: int,
-    timestamp: YYYY/MM/DD/HH/MM/SS,
-    event: "StartTelemetry"
 }
 ```

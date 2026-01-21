@@ -22,7 +22,6 @@ ValidEvent: TypeAlias = (
     | EndSession
     | SettingsChange
     | KillEnemy
-    | StartTelemetry
 ) 
 
 def get_file(filename: str) -> list[dict]:
@@ -75,12 +74,6 @@ def parse_event(event: dict) -> ValidEvent:
     
     try:
         match event_type:
-            case EventType.START_TELEMETRY:
-                return StartTelemetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
-                )
             case EventType.SESSION_START:
                 return SessionStart(
                     event[EventParameter.USER_ID],
@@ -99,6 +92,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.NORMAL_ENCOUNTER_COMPLETE:
@@ -107,6 +101,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.PLAYER_HP_REMAINING]
                 )
@@ -116,6 +111,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.NORMAL_ENCOUNTER_RETRY:
@@ -124,6 +120,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.LIVES_LEFT]
                 )
@@ -133,6 +130,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.BOSS_ENCOUNTER_COMPLETE:
@@ -141,6 +139,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.PLAYER_HP_REMAINING]
                 )
@@ -150,6 +149,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.BOSS_ENCOUNTER_RETRY:
@@ -158,6 +158,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.LIVES_LEFT]
                 )
@@ -167,6 +168,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.COINS_GAINED]
                 )
@@ -184,7 +186,6 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
-                    event[EventParameter.ENCOUNTER],
                     event[EventParameter.SETTING],
                     event[EventParameter.SETTING_VALUE]
                 )
@@ -194,12 +195,13 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     event[EventParameter.TIMESTAMP],
                     event[EventParameter.ENCOUNTER],
+                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.ENEMY_TYPE]
                 )
             case _:
                 raise RuntimeError(
-                    "Unexpected event type: {event_type}"
+                    f"Unexpected event type: {event_type}"
                 )
     except KeyError as e:
         raise RuntimeError(
