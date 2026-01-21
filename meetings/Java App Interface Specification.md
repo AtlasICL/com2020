@@ -255,7 +255,9 @@ public float getMagicCostMultiplier(Difficulty difficulty)
 
 public float getMaxMagicMultiplier(Difficulty difficulty)
 
-public float getMagicRegenRate(Difficulty difficulty)
+public int getMagicRegenRate(Difficulty difficulty)
+
+public int getShopItemCount(Difficulty difficulty)
 ## Settings implements SettingsInterface
 *Stores user settings as a singleton*
 ### Constructors
@@ -309,11 +311,17 @@ private float normalMaxMagicMultiplier
 
 private float easyMaxMagicMultiplier
 
-private float hardMagicRegenRate
+private int hardMagicRegenRate
 
-private float normalMagicRegenRate
+private int normalMagicRegenRate
 
-private float easyMagicRegenRate
+private int easyMagicRegenRate
+
+private int hardShopItemCount
+
+private int normalShopItemCount
+
+private int easyShopItemCount
 ## EncounterInterface
 *Interface for encounters*
 ### Methods

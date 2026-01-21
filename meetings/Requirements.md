@@ -170,7 +170,7 @@ The game should have the following parameters that designers can tweak:
 - Enemy damage multiplier
 - Starting lives
 - Magic cost multiplier: multiplies the cost of magic using abilities
-- Maximum magic amount
+- Maximum magic multiplier: multiplies amount of max magic is increased by in upgrades as well
 - Magic regeneration rate: amount gained each turn
 - Number of items in each shop 
 
