@@ -106,7 +106,7 @@ Telemetry events that are produced in an impossible order should not be written.
 Coins should be obtained from completing encounters, with bosses giving more coins. Coins can then be spent at the shop to buy upgrades.
 
 *As a developer I want a way to incentivize play and reward players, to encourage them to continue playing the game.*
-### Upgrades are purchasable in the shop and can be sold for coins
+### Upgrades are purchasable in the shop for coins
 The shop should provide a random assortment of available upgrades, with varying power levels and prices. They can be bought with coins and increase the power of the player's character. Already purchased upgrades can be sold in the shop for coins. 
 
 *As a player I want ways to upgrade and modify my character so each run feels different and my character feels like they're getting stronger.*
@@ -165,13 +165,13 @@ The game should include easy, balanced, and hard difficulties.
 ### Design parameters
 The game should have the following parameters that designers can tweak:
 - Enemy health point multiplier
-- Player maximum health points (and upgrades that increase their maximum health points) multiplier
+- Player maximum health points 
 - Upgrade price multiplier 
 - Enemy damage multiplier
 - Starting lives
 - Magic cost multiplier: multiplies the cost of magic using abilities
 - Maximum magic amount
-- Magic regeneration rate: amount gained each turn 
+- Magic generation rate: amount gained each turn 
 
 These should be saved in a configuration file, and be per difficulty. Changes to them she be able to be made in game by designers, and update the game when it is restarted. 
 
@@ -561,9 +561,8 @@ The java application should validate and write them to a JSON file ([Specificati
 #### 18+ Normal Encounters
 6 to pull from for each pair of levels. (1&2, 4&5, 7&8)
 ### Could
-#### Upgrades can be sold
 [More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
-#### 30+ upgrades
+#### 25+ upgrades
 ### Wont 
 #### Multiplayer
 #### Encounter builder
