@@ -120,17 +120,21 @@ public String getTimestamp()
 ## abstract EncounterEvent extends TelemetryEvent
 *Contains information relating to encounters*
 ### COnstructors
-public EncounterEvent(int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber)
+public EncounterEvent(int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 ### Fields
 private int stageNumber
 
 private EncounterType encounterName
+
+private Difficulty difficulty
 ### Methods
 public int getStageNumber()
 
 public EncounterType getEncounterName()
+
+public Difficulty getDifficulty()
 ## SessionStartEvent extends TelemetryEvent
-*Contains fields for sessions start*
+*Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
 public SessionStartEvent(int userID, int sessionID, String timestamp)
 ## NormalEncounterStartEvent extends EncounterEvent
@@ -212,7 +216,7 @@ public int getCoinsSpent()
 public UpgradeType getUpgradeBought()
 
 ## EndSessionEvent extends TelemetryEvent
-*Contains fields for end session*
+*Contains fields for end session, sent when telemetry is disabled.*
 ### Constructors
 public EndSessionEvent(int userID, int sessionID, String timestamp)
 ## SettingsChangeEvent extends TelemetryEvent
