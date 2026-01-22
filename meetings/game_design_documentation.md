@@ -1,15 +1,15 @@
 # Game Design Documentation
 
-This document serves as a non-technical overview of the game's design.
+This document serves as a non-technical overview of the game's design. Please note that any numbers mentioned here aren't final, but provide a strong starting point, and illustrate the distance between values in some cases.
 
 ## Level Structure
 The game will exist in two parts: combat encounters and shops. There are 10 combat encounters in the game, and a shop will follow each one, excluding the final combat encounter.
 
 ## Combat Encounter Design
-When in a combat encounter, the game functions as turn-based. The player will always move first. The player will be able to see a simple representation of their character and their undefeated opponent(s), as well as a dialogue box/interface. This box has two purposes: to narrate the scene ("You encounter a Fish Man!", "You were hit for 20 damage point(s)", "You won the battle", etc.), and to serve as the player's interface, allowing the player to select from their available attack abilities (with information such as magic cost and damage type). Once an attack is selected, the player is prompted to select which opponent they wish to damage. Following this, the opponent's turn takes place, where, like the player, an opponent will select from one of their abilities to use on the player.
+When in a combat encounter, the game functions as turn-based. The player will always move first. The player gains 15 magic points at the beginning of each turn. The player will be able to see a simple representation of their character and their undefeated opponent(s), as well as a dialogue box/interface. This box has two purposes: to narrate the scene ("You encounter a Fish Man!", "You were hit for 20 damage point(s)", "You won the battle", etc.), and to serve as the player's interface, allowing the player to select from their available attack abilities (with information such as magic cost and damage type). Once an attack is selected, the player is prompted to select which opponent they wish to damage. Following this, the opponent's turn takes place, where, like the player, an opponent will select from one of their abilities to use on the player.
 
 ## Damage Types
-Both the player and the enemies that they can encounter are affected differently by different damage types. For example, if the player were to cast a water-based spell at a "pyromancer" enemy, the attack would be more effective than if it were cast on a "Fish Man" enemy.
+Both the player and the enemies that they can encounter are affected differently by different damage types. For example, if the player were to cast a water-based spell at a "Pyromancer" enemy, the attack would be more effective than if it were cast on a "Fish Man" enemy.
 
 Each attack ability in the game has a damage type. The damage types are as follows: Physical, Fire, Water, Thunder, Absolute.
 
@@ -25,7 +25,7 @@ Within the shop screens in between encounters, players can exchange their coins 
 | Name | Shop Cost (coins) | Magic Points | Damage Type | Notes |
 |------|-------------------|--------------|-------------|-------|
 | Absolute Pulse | 10 | 20 | Absolute | |
-| Slash | 15 | 0 | Physical | Slash > Punch |
+| Slash | 15 | 0 | Physical | more powerful than punch |
 | Water Jet | 20 | 20 | Water | |
 | Thunder Storm | 25 | 30 | Thunder | Hits all opponents |
 | Fire Ball | 30 | 40 | Fire | High damage |
