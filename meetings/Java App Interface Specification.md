@@ -46,7 +46,7 @@ public TimeManagerInterface getTimeManager()
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public void useAbility(Ability[] abilities, Entity self, Entity[] allies, Entity[] enemies) 
+public void useAbility(Ability[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) 
 
 public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
 
@@ -447,7 +447,7 @@ PLAYER, DESIGNER, DEVELOPER
 ## EncounterInterface
 *Interface for encounters*
 ### Methods
-public Entity[] getEnemies()
+public EntityInterface[] getEnemies()
 
 public bool isComplete()
 
@@ -455,12 +455,14 @@ public void markComplete()
 
 public EncounterType getType()
 
+public void reset()
+
 ## Encounter implements EncounterInterface
 *Stores all the enemies in an encounter, and information about said encounter*
 ### Constructors
 public Encounter(EncounterType type)
 ### Fields
-private Entity[] enemies 
+private EntityInterface[] enemies 
 
 private bool completed
 
@@ -522,7 +524,7 @@ ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
 
 private final Constructor entityConstructor
 ### Methods
-public Entity createEnemy() *Done using reflection*
+public EntityInterface createEnemy() *Done using reflection*
 
 ## interface EntityInterface
 *Contains all methods all entities have*
@@ -602,7 +604,7 @@ public ConcreteEnemy() *reads values from settings, and adjusting it's statistic
 ## interface AbilityInterface
 *Interface all abilities implement*
 ### Methods
-public void execute(Entity source, Entity[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
+public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
 
 public bool isOffensive()
 
