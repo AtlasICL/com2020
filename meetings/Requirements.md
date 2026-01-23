@@ -26,6 +26,7 @@ The system should implements the following telemetry events:
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Normal Encounter Complete
     - User ID
     - Session ID
@@ -33,54 +34,63 @@ The system should implements the following telemetry events:
     - Encounter Name
     - Player HP Remaining
     - Stage
+    - Difficulty
 - Normal Encounter Fail
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Normal Encounter Retry
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Boss Encounter Start
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Boss Encounter Complete
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Boss Encounter Fail
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Boss Encounter Retry
     - User ID
     - Session ID
     - Timestamp
     - Encounter Name
     - Stage
+    - Difficulty
 - Gain Coin
     - User ID
     - Session ID
     - Timestamp
     - Coins Gained
     - Stage
+    - Difficulty
 - Buy Upgrade
     - User ID
     - Session ID
     - Timestamp
     - Upgrade Bought
     - Stage
+    - Difficulty
 - End Session
     - User ID
     - Session ID
@@ -98,6 +108,7 @@ The system should implements the following telemetry events:
     - Encounter Name
     - Enemy Type
     - Stage 
+    - Difficulty
 
 Note: Some telemetry events do not include stage information because they are sourced outside a stage (e.g. settings change)
 
@@ -188,11 +199,11 @@ The game should display an end screen when a run ends (either by winning or runn
 
 **Value:** 2
 ### Difficulty settings
-The game should include easy, balanced, and hard difficulties.
+The game should include easy, balanced, and hard difficulties. When selecting a difficulty the game should show the user's personal best for how far they've progressed in that difficulty. 
 
 *As a player, I want a range of difficulty settings so the game can be a challenge to me while still being fun.*
 
-**Value:** 1
+**Value:** 2
 ### Design parameters
 The game should have the following parameters that designers can tweak:
 - Enemy health point multiplier
