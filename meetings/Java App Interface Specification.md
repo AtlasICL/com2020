@@ -161,7 +161,7 @@ public TelemetryListenerInterface getTelemetryListener()
 ## abstract TelemetryEvent extends EventObject
 *Contains fields all telemetry events contain*
 ### Constructors
-public TelemetryEvent(int userID, int sessionID, String timestamp)
+public TelemetryEvent(Object source, int userID, int sessionID, String timestamp)
 ### Fields
 private int userID
 
@@ -177,7 +177,7 @@ public String getTimestamp()
 ## abstract EncounterEvent extends TelemetryEvent
 *Contains information relating to encounters*
 ### COnstructors
-public EncounterEvent(int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public EncounterEvent(Object source, int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 ### Fields
 private int stageNumber
 
@@ -193,16 +193,16 @@ public Difficulty getDifficulty()
 ## SessionStartEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
-public SessionStartEvent(int userID, int sessionID, String timestamp)
+public SessionStartEvent(Object source, int userID, int sessionID, String timestamp)
 ## NormalEncounterStartEvent extends EncounterEvent
 *Contains fields for normal encounter start*
 ### Constructors
-public NormalEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public NormalEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## NormalEncounterCompleteEvent extends EncounterEvent
 *Contains fields for normal encounter complete*
 ### Constructors
-public NormalEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
+public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
 private int playerHPRemaining
 ### Methods
@@ -211,12 +211,12 @@ public int getPlayerHPRemaining()
 ## NormalEncounterFailEvent extends EncounterEvent
 *Contains fields for normal encounter fail*
 ### Constructors
-public NormalEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## NormalEncounterRetryEvent extends EncounterEvent
 *Contains fields for normal encounter retry*
 ### Constructors
-public NormalEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
+public NormalEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
 private int livesLeft
 ### Methods
@@ -224,12 +224,12 @@ public int getLivesLeft()
 ## BossEncounterStartEvent extends EncounterEvent
 *Contains fields for boss encounter start*
 ### Constructors
-public BossEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public BossEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## BossEncounterCompleteEvent extends EncounterEvent
 *Contains fields for boss encounter complete*
 ### Constructors
-public BossEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
+public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
 private int playerHPRemaining
 ### Methods
@@ -237,12 +237,12 @@ public int getPlayerHPRemaining()
 ## BossEncounterFailEvent extends EncounterEvent
 *Contains fields for boss encounter fail*
 ### Constructors
-public BossEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## BossEncounterRetryEvent extends EncounterEvent
 *Contains fields for boss encounter retry*
 ### Constructors
-public BossEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
+public BossEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
 private int livesLeft
 ### Methods
@@ -251,7 +251,7 @@ public int getLivesLeft()
 ## GainCoinEvent extends EncounterEvent
 *Contains fields for gain coin*
 ### Constructors
-public GainCoinEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int coinsGained, Difficulty difficulty)
+public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int coinsGained, Difficulty difficulty)
 ### Fields
 private int coinsGained
 
@@ -261,7 +261,7 @@ public int getCoinsGained()
 ## BuyUpgradeEvent extends EncounterEvent
 *Contains fields for buy upgrade*
 ### Constructors
-public BuyUpgradeEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, UpgradeType upgradeBought, int coinsSpent, Difficulty difficulty)
+public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, UpgradeType upgradeBought, int coinsSpent, Difficulty difficulty)
 ### Fields
 private int coinsSpent
 
@@ -275,11 +275,11 @@ public UpgradeType getUpgradeBought()
 ## EndSessionEvent extends TelemetryEvent
 *Contains fields for end session, sent when telemetry is disabled.*
 ### Constructors
-public EndSessionEvent(int userID, int sessionID, String timestamp)
+public EndSessionEvent(Object source, int userID, int sessionID, String timestamp)
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
-public SettingsChangeEvent(int userID, int sessionID, String timestamp, String setting, String settingValue)
+public SettingsChangeEvent(iObject source, nt userID, int sessionID, String timestamp, String setting, String settingValue)
 ### Fields
 private String setting
 
@@ -292,7 +292,7 @@ public String getSettingValue()
 ## KillEnemyEvent extends EncounterEvent
 *Contains fields for kill enemy*
 ### Constructors
-public KillEnemyEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType, Difficulty difficulty)
+public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType, Difficulty difficulty)
 ### Fields
 private EntityType enemyType
 ### Methods
