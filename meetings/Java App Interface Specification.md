@@ -301,23 +301,23 @@ public EntityType getEnemyType()
 ## SettingsInterface
 *Interface for settings*
 ### Methods
-public void createNewUser(String username, String password) throws AuthenticationException
+public void createNewUser(String username, String password, Role role) throws AuthenticationException
 
 public void authenticateUser(String username, String password) throws AuthenticationException
 
-public Role getUserRole()
+public Role getUserRole() throws AuthenticationException
 
-public String getUsername()
+public String getUsername() throws AuthenticationException
 
-public int getSessionID()
+public int getSessionID() throws AuthenticationException
 
-public int getUserID() *performs a hash function on the username to generate their ID*
+public int getUserID() throws AuthenticationException *performs a hash function on the username to generate their ID*
 
-public bool isTelemetryEnabled()
+public bool isTelemetryEnabled() throws AuthenticationException
 
-public int getMaxStageReached(Difficulty difficulty)
+public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException
 
-public float getEnemyMaxHealthMultiplier(Difficulty difficulty)
+public float getEnemyMaxHealthMultiplier(Difficulty difficulty) 
 
 public float getPlayerMaxHealthMultiplier(Difficulty difficulty)
 
@@ -380,7 +380,7 @@ private float normalEnemyMaxHealthMultiplier
 
 private float easyEnemyMaxHealthMultiplier
 
-private float hardPlayerMaxHealthMultiplier *also affects upgrades that increase their max HP*
+private float hardPlayerMaxHealthMultiplier
 
 private float normalPlayerMaxHealthMultiplier
 
@@ -404,7 +404,7 @@ private int normalStartingLives
 
 private int easyStartingLives
 
-private float hardMaxMagicMultiplier *also affects upgrades that increase their max Magic*
+private float hardMaxMagicMultiplier
 
 private float normalMaxMagicMultiplier
 
