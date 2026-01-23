@@ -676,8 +676,8 @@ The java application should validate and write them to a JSON file ([Specificati
 #### 18+ Normal Encounters
 6 to pull from for each pair of levels. (1&2, 4&5, 7&8)
 ### Could
-[More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
 #### 25+ upgrades
+[More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
 ### Wont 
 #### Multiplayer
 #### Encounter builder
