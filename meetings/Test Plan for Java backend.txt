@@ -5,7 +5,24 @@
 ----- UNIT AND INTEGRATION TESTS -----
 
 GameManagerInterface
-GameManager implements GameManagerInterface
+GameManager implements GameManagerInterface nested in GameManagerSingleton
+GameManagerSingleton()
+	testSingleInstance()	        
+	testConstructorIsPrivate()	
+	testInstanceExists()
+interface TimeManagerInterface
+private TimeManager implements TimeManagerInterface nested in TimeManagerSingleton
+TimeManagerSingleton
+	testSingleInstance()	        
+	testConstructorIsPrivate()	
+	testInstanceExists()
+interface EntityAIInterface
+	testAbilityUsedIsValid()
+	testDefensiveAbilityImpactsAllies()
+	testOffensiveAbilityImpactsEnemies()
+	testUpgradePickedIsValidAndAffordable()
+private RandomEntityAI implements EntityAIInterface nested in EntityAISingleton
+EntityAISingleton
 	testSingleInstance()	        
 	testConstructorIsPrivate()	
 	testInstanceExists()
@@ -13,8 +30,11 @@ GameRunInterface
 	testEncounterPickedFromCorrectPhase()
 	testCorrectNumberOfRandomUpgradesInShop()
 	testUpgradeRemovedFromShopWhenBought()
+	testAttemptPurchaseOfNonAffordableUpgrade()
 	testUpgradeAppliedToPlayer()
-	testCurrentStageAndNextStage()		
+	testCurrentStageAndNextStage()
+	testValidRunStartTime()
+	testDeathCount()		
 GameRun implements GameRunInterface
 	testDifficultySet()	                
 TelemetryListenerInterface
@@ -36,7 +56,11 @@ TelemetryListenerInterface
 	testSettingsChangeWrite()
 	testKillEnemyWrite()
 	testAttemptedInvalidJSONSend()
-TelemetryListener implements TelemetryListenerInterface
+private TelemetryListener implements TelemetryListenerInterface nested in TelemetryListenerSingleton
+TelemetryListenerSingleton
+	testSingleInstance()	        
+	testConstructorIsPrivate()	
+	testInstanceExists()
 abstract TelemetryEvent extends EventObject
 	testUserIDValidation()
 	testSessionIDValidation()
@@ -71,19 +95,32 @@ KillEnemyEvent extends TelemetryEvent
 	testStageNumberValidation()
 	testEnemyTypeValidation()
 SettingsInterface
-	testEnabledAndDisabledTelemetry()    
-	testEnemyMaxHealthMultiplier()		   
+	testUsernameCannotBeNull()
+	testPasswordCannotBeNull()
+	testValidUserID()
+	testSecureAuthenticationWithSessionIDCreated()
+	testUserRoleExists()
+	testEnabledAndDisabledTelemetry()	// Reads from config file and compares
+	testEnemyMaxHealthMultiplier()		// Ensure each multiplier varies between different difficulties
 	testPlayerMaxHealthMultiplier()
 	testUpgradePriceMultipler()
 	testEnemyDamageMultiplier()
 	testStartingLives()
 	testMaxMagicMultiplier()
 	testMagicRegenRate()
-Settings implements SettingsInterface
+	testShopItemCount()
+private Settings implements SettingsInterface nested in SettingsSingleton
+SettingsSingleton
+	testSingleInstance()	        
+	testConstructorIsPrivate()	
+	testInstanceExists()
+AuthenticationException extends Exception
+Enum Role
 EncounterInterface
 	testEnemiesExist()
 	testCompletionStatus()
 	testValidEncounterType()
+	testEnemyHealthResets()
 Encounter implements EncounterInterface
 Enum DamageType
 Enum AbilityType
@@ -112,12 +149,13 @@ interface PlayerInterface extends EntityInterface
 Player implements PlayerInterface
 abstract Enemy implements EntityInterface
 ConcreteEnemy extends Enemy
-interface Ability
+interface AbilityInterface
 	testSourceExecuteDefensiveAbility()
 	testSourceExecuteOffensiveAbility()
 	testDescriptionExistsForPlayerAbilities()
 	testNumOfTargetsMatchesExecution()
 	testGetAssociatedAbilityType()
+LackingResourceException extends Exception
 ConcreteAbility implements Ability
 ConcreteUpgrade implements PlayerInterface
 
@@ -131,45 +169,14 @@ testPlayerWinsBossEncounter()
 testPlayerLosesBossEncounterWithLivesLeft()
 testPlayerLosesBossEncounterWithoutLivesLeft()
 testPlayerWinsFinalEncounter()
-	
-	
-
-	
-	
-	
-	
-	
-	
 
 
+----- NOTES -----
 
-
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-NOTES:
 - We don't need to verify that the global point of access methods in Singleton classes are public. This is implicitly validated as the method can be successfully called from our Test class.
-- Discussion point for 21/01 - should we introduce 'NormalEncounterEvent extends TelemetryEvent', as all Normal Encounter based events have two common attributes?
 - Enums do not need unit testing, as they have no logic - they simply define named constants.
-- TimeManager singleton to be added, to facilitate testing of bogus timestamps
+- Constructors only need testing when there is logic involved in the assignment of values.
+- Any exception classes will be tested in the testing of any methods that throw it.
 
 	
 	
