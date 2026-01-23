@@ -11,9 +11,9 @@ Each subheading represents a component of the game system. Unless explicitly sta
 ### Constructors
 public GameManager()
 ### Fields
-private GameRun currentGame
+private GameRunInterface currentGame
 
-private Encounter currentEncounter
+private EncounterInterface currentEncounter
 
 ## GameManagerSingleton
 *Acts as a singleton holder for GameManager*
