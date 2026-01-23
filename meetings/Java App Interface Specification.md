@@ -1,36 +1,47 @@
 # Explanation
-Each subheading is the specified type (e.g. interface or enum). If unspecified it is a class. Anything in italics is a comment or description about a component. If a heading (e.g. methods) is not present for an interface, it means there is nothing there (e.g. it has no methods). If an interface extends or implements another, all inherited methods are present but are not explicitly stated. 
+Each subheading represents a component of the game system. Unless explicitly stated the components type is a class and it's access specifier is public and it is in the top level of the package (unnested). The heading also states what it extends and implements. In the cases of extension and implementation all methods in the parent components are also in the child, but are not explicitly stated. If unspecified it extends object. Anything in italics is a comment or description of a component. 
 # Interfaces
-## GameManagerInterface
+## GameManagerInterface 
 *Interface for the game manager*
 ### Methods
-public static GameManager getGameManager()
 
 %%To be designed by Luca C%%
-## GameManager implements GameManagerInterface
-*Acts as an interface between the front and back end. Is a singleton*
+## private GameManager implements GameManagerInterface nested in GameMangerSingleton
+*Acts as an interface between the front and back end.*
 ### Constructors
-private GameManager()
+public GameManager()
 ### Fields
-private static GameManagerInterface gameManager
-
 private GameRun currentGame
 
 private Encounter currentEncounter
+
+## GameManagerSingleton
+*Acts as a singleton holder for GameManager*
+### Contractors
+private GameManagerSingleton()
+### Fields
+private static GameManagerInterface gameManager
+### Methods
+public GameManagerInterface getGameManager()
 
 ## interface TimeManagerInterface
 *Interface for the time manager*
 ### Methods
 public LocalDate getCurrentTime()
 
-public TimeManagerInterface getTimeManager()
-
-## TimeManager implements TimeManagerInterface
-*Time manager, that provide the time for all gameplay systems. Is a singleton*
+## private TimeManager implements TimeManagerInterface nested in TimeManagerSingleton
+*Time manager, that provide the time for all gameplay systems.*
 ### Constructors
-private TimeManager()
+public TimeManager()
+
+## TimeManagerSingleton
+*Acts as a singleton holder for TimeManager*
+### Constructors
+private TimeManagerSingleton
 ### Fields
-private TimeManagerInterface timeManager
+private static TimeManagerInterface timeManager
+### Methods
+public TimeManagerInterface getTimeManager()
 
 ## GameRunInterface
 *Interface for a run of the game*
@@ -56,18 +67,23 @@ public void incrementDeathCount() *Only increments death count. A player running
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public EntityAIInterface getEntityAI()
-
 public void useAbility(Ability[] abilities, Entity self, Entity[] allies, Entity[] enemies) 
 
 public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
 
-## RandomEntityAI
-*EntityAI that picks a random ability or upgrade when the relevant method is used. Is a singleton*
+## private RandomEntityAI implements EntityAIInterface nested in EntityAISingleton
+*EntityAI that picks a random ability or upgrade when the relevant method is used. *
 ### Constructors
-private EntityAIInterface()
+public EntityAIInterface()
+
+## EntityAISingleton
+*Provides singleton access to the entity AI system*
+### Constructors
+private EntityAISingleton()
 ### Fields
-private EntityAIInterface entityAI
+private static EntityAIInterface entityAI
+### Methods
+public EntityAIInterface getEntityAI()
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
@@ -98,8 +114,6 @@ private Difficulty currentDifficulty
 ## TelemetryListenerInterface
 *Interface for the telemetry listener*
 ### Methods
-public TelemetryListener getTelemetryListener()
-
 public void onSessionStart(SessionStartEvent e)
 
 public void onNormalEncounterStart(NormalEncounterStartEvent e)
@@ -128,12 +142,21 @@ public void onSettingsChange(SettingsChangeEvent e)
 
 public void onKillEnemy(KillEnemyEvent e)
 
-## TelemetryListener implements TelemetryListenerInterface
-*Is notified of telemetry events, validates them, and writes them to the telemetry store. Use Jackson to write to the JSON file. Is a singleton*
+## private TelemetryListener implements TelemetryListenerInterface nested in TelemetryListenerSingleton
+*Is notified of telemetry events, validates them, and writes them to the telemetry store. Use Jackson to write to the JSON file*
 ### Constructors
 public TelemetryListener()
 ### Fields
 private File JSONFile
+
+## TelemetryListenerSingleton
+*Singleton access to the telemetry listener*
+### Constructors
+private TelemetryListenerSingleton()
+### Fields
+private static TelemetryListenerInterface telemetryListener
+### Methods
+public TelemetryListenerInterface getTelemetryListener()
 
 ## abstract TelemetryEvent extends EventObject
 *Contains fields all telemetry events contain*
@@ -274,9 +297,18 @@ public KillEnemyEvent(int userID, int sessionID, String timestamp, EncounterType
 private EntityType enemyType
 ### Methods
 public EntityType getEnemyType()
+
 ## SettingsInterface
 *Interface for settings*
 ### Methods
+public void createNewUser(String username, String password) throws AuthenticationException
+
+public void authenticateUser(String username, String password) throws AuthenticationException
+
+public Role getUserRole()
+
+public String getUsername()
+
 public bool isTelemetryEnabled()
 
 public int getMaxStageReached(Difficulty difficulty)
@@ -317,14 +349,16 @@ public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
 
 public void setShopItemCount(Difficulty difficulty, int shopItemCount)
 
-## Settings implements SettingsInterface
-*Stores user settings as a singleton*
+## private Settings implements SettingsInterface nested in SettingsSingleton
+*Stores user settings and statistics*
 ### Constructors
-private Settings()
+public Settings()
 ### Fields
-private static Settings settings
-
 private bool telemetryEnabled
+
+private String username
+
+private Role userRole
 
 private int hardMaxStageReached
 
@@ -381,6 +415,29 @@ private int hardShopItemCount
 private int normalShopItemCount
 
 private int easyShopItemCount
+## SettingsSingleton
+*Provides singleton access to the user's settings*
+### Constructors
+private SettingsSingleton()
+### Fields
+private static SettingsInterface settings
+### Methods
+pubic SettingsInterface getSettings()
+
+## AuthenticationException extends Exception
+*Exception for failed authentication*
+### Constructors
+public AuthenticationException()
+
+public AuthenticationException(String message)
+
+public AuthenticationException(String message, Throwable cause)
+
+## enum Role
+*Enumerates all user roles*
+### Fields
+PLAYER, DESIGNER, DEVELOPER
+
 ## EncounterInterface
 *Interface for encounters*
 ### Methods
@@ -551,7 +608,7 @@ public AbilityType getType()
 
 ## LackingResourceException extends Exception
 *Exception for when an ability is attempted without sufficient resources*
-### Constructor
+### Constructors
 public LackingResourceException()
 
 public LackingResourceException(String message)
