@@ -1,10 +1,10 @@
-package com.thespecialcharacters.WizardQuest;
+package WizardQuest;
 
+/**
+ * Interface the game manager implements. Acts as a interface between the front
+ * and back end.
+ */
 public interface GameManagerInterface {
-    /**
-     * Provides access to the game manager, providing a single access point between the front and back end.
-     * 
-     * @return returns a reference to the game manager singleton.
-     */
-    public static GameManagerInterface getGameManager()
+    // to be built by Luca C
+
 }

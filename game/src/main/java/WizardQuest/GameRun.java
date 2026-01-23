@@ -2,11 +2,45 @@ package WizardQuest;
 
 import java.time.LocalDateTime;
 
-/**
- * Provides the interface for a game run. A game run stores information about a
- * single run of the game, including the encounters in that run and the player.
- */
-public interface GameRunInterface {
+public class GameRun implements GameRunInterface {
+    //Drawn from for stages 1 and 2.
+    private EncounterInterface[] phase1NormalEncounters; 
+
+    //Drawn from for stages 4 and 5.
+    private EncounterInterface[] phase2NormalEncounters; 
+
+    //Drawn from for stages 7 and 8.
+    private EncounterInterface[] phase3NormalEncounters; 
+
+    //Drawn from for stage 3.
+    private EncounterInterface[] phase1BossEncounters; 
+
+    //Drawn from for stage 6.
+    private EncounterInterface[] phase2BossEncounters; 
+
+    //Drawn from for stage 9.
+    private EncounterInterface[] phase3BossEncounters; 
+
+    //Drawn from for stage 10.
+    private EncounterInterface finalBoss;
+
+    //Pool upgrades for the shop are chosen from. When bought they're removed from this pool.
+    private UpgradeType[] shopUpgrades;
+    
+    private PlayerInterface player
+
+    private int currentStage
+
+    private Difficulty currentDifficulty
+
+    /**
+     * Creates a run for the game in the specified difficulty. Also takes note of
+     * when the run started.
+     * 
+     * @param Difficulty the difficulty setting for the run. 
+     */
+    public GameRun(Difficulty Difficulty);
+
     /**
      * Picks a random encounter for the current stage from the encounter pool for
      * that stage and returns a reference to it. It is the resonsiblity of the
@@ -15,6 +49,7 @@ public interface GameRunInterface {
      * 
      * @return a reference to the chosen encounter.
      */
+    @Override
     public EncounterInterface pickEncounter();
 
     /**
@@ -23,6 +58,7 @@ public interface GameRunInterface {
      * 
      * @return an array of references to the upgrades.
      */
+    @Override
     public UpgradeType[] viewShop();
 
     /**
@@ -35,6 +71,7 @@ public interface GameRunInterface {
      * @throws NotEnoughResourceException if the player doesn't have enough coins to
      *                                    buy the upgrade.
      */
+    @Override
     public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException;
 
     /**
@@ -42,12 +79,14 @@ public interface GameRunInterface {
      * 
      * @return a reference to the player.
      */
+    @Override
     public PlayerInterface getPlayer();
 
     /**
      * Increments the stage count, so the pickEncounter method can draw from the
      * encounter pool for the correct stage.
      */
+    @Override
     public void nextStage();
 
     /**
@@ -55,6 +94,7 @@ public interface GameRunInterface {
      * 
      * @return the current stage number (between 1 and 10 inclusive).
      */
+    @Override
     public int getStage();
 
     /**
@@ -63,6 +103,7 @@ public interface GameRunInterface {
      * 
      * @return the LocalDateTime of when the run started.
      */
+    @Override
     public LocalDateTime getRunStartTime();
 
     /**
@@ -70,6 +111,7 @@ public interface GameRunInterface {
      * 
      * @return the number of time the player's died this run.
      */
+    @Override
     public int getDeathCount();
 
     /**
@@ -77,5 +119,6 @@ public interface GameRunInterface {
      * the player's lives and register when their health reaches 0 to call this
      * method.
      */
+    @Override
     public void incrementDeathCount();
 }
