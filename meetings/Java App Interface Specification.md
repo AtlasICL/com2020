@@ -102,7 +102,7 @@ private EncounterInterface[] phase2BossEncounters *drawn from for stage 6*
 
 private EncounterInterface[] phase3BossEncounters *drawn from for stage 9*
 
-private EncounterInterface finalBoss *draw from for stage 10*
+private EncounterInterface finalBoss *drawn from for stage 10*
 
 private UpgradeType[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
 
@@ -309,6 +309,10 @@ public Role getUserRole()
 
 public String getUsername()
 
+public int getSessionID()
+
+public int getUserID() *performs a hash function on the username to generate their ID*
+
 public bool isTelemetryEnabled()
 
 public int getMaxStageReached(Difficulty difficulty)
@@ -357,6 +361,8 @@ public Settings()
 private bool telemetryEnabled
 
 private String username
+
+private int sessionID *generated when the user logs in or when telemetry is enabled*
 
 private Role userRole
 
