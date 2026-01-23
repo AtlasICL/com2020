@@ -18,6 +18,20 @@ private GameRun currentGame
 
 private Encounter currentEncounter
 
+## interface TimeManagerInterface
+*Interface for the time manager*
+### Methods
+public LocalDate getCurrentTime()
+
+public TimeManagerInterface getTimeManager()
+
+## TimeManager implements TimeManagerInterface
+*Time manager, that provide the time for all gameplay systems. Is a singleton*
+### Constructors
+private TimeManager()
+### Fields
+private TimeManagerInterface timeManager
+
 ## GameRunInterface
 *Interface for a run of the game*
 ### Methods
@@ -33,6 +47,27 @@ public void nextStage()
 
 public int getStage()
 
+public LocalDate getRunStartTime()
+
+public int getDeathCount()
+
+public void incrementDeathCount() *Only increments death count. A player running out of lives and the decrement of their lives should be handled by GameManger*
+
+## interface EntityAIInterface
+*Interface for entity AI*
+### Methods
+public EntityAIInterface getEntityAI()
+
+public void useAbility(Ability[] abilities, Entity self, Entity[] allies, Entity[] enemies) 
+
+public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
+
+## RandomEntityAI
+*EntityAI that picks a random ability or upgrade when the relevant method is used. Is a singleton*
+### Constructors
+private EntityAIInterface()
+### Fields
+private EntityAIInterface entityAI
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
@@ -100,7 +135,6 @@ public TelemetryListener()
 ### Fields
 private File JSONFile
 
-
 ## abstract TelemetryEvent extends EventObject
 *Contains fields all telemetry events contain*
 ### Constructors
@@ -140,12 +174,12 @@ public SessionStartEvent(int userID, int sessionID, String timestamp)
 ## NormalEncounterStartEvent extends EncounterEvent
 *Contains fields for normal encounter start*
 ### Constructors
-public NormalEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber)
+public NormalEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## NormalEncounterCompleteEvent extends EncounterEvent
 *Contains fields for normal encounter complete*
 ### Constructors
-public NormalEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining)
+public NormalEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
 private int playerHPRemaining
 ### Methods
@@ -154,12 +188,12 @@ public int getPlayerHPRemaining()
 ## NormalEncounterFailEvent extends EncounterEvent
 *Contains fields for normal encounter fail*
 ### Constructors
-public NormalEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber)
+public NormalEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## NormalEncounterRetryEvent extends EncounterEvent
 *Contains fields for normal encounter retry*
 ### Constructors
-public NormalEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft)
+public NormalEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
 private int livesLeft
 ### Methods
@@ -167,12 +201,12 @@ public int getLivesLeft()
 ## BossEncounterStartEvent extends EncounterEvent
 *Contains fields for boss encounter start*
 ### Constructors
-public BossEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber)
+public BossEncounterStartEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## BossEncounterCompleteEvent extends EncounterEvent
 *Contains fields for boss encounter complete*
 ### Constructors
-public BossEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining)
+public BossEncounterCompleteEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
 private int playerHPRemaining
 ### Methods
@@ -180,12 +214,12 @@ public int getPlayerHPRemaining()
 ## BossEncounterFailEvent extends EncounterEvent
 *Contains fields for boss encounter fail*
 ### Constructors
-public BossEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber)
+public BossEncounterFailEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## BossEncounterRetryEvent extends EncounterEvent
 *Contains fields for boss encounter retry*
 ### Constructors
-public BossEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft)
+public BossEncounterRetryEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
 private int livesLeft
 ### Methods
@@ -194,7 +228,7 @@ public int getLivesLeft()
 ## GainCoinEvent extends EncounterEvent
 *Contains fields for gain coin*
 ### Constructors
-public GainCoinEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int coinsGained)
+public GainCoinEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int coinsGained, Difficulty difficulty)
 ### Fields
 private int coinsGained
 
@@ -204,7 +238,7 @@ public int getCoinsGained()
 ## BuyUpgradeEvent extends EncounterEvent
 *Contains fields for buy upgrade*
 ### Constructors
-public BuyUpgradeEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, UpgradeType upgradeBought, int coinsSpent)
+public BuyUpgradeEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, UpgradeType upgradeBought, int coinsSpent, Difficulty difficulty)
 ### Fields
 private int coinsSpent
 
@@ -235,7 +269,7 @@ public String getSettingValue()
 ## KillEnemyEvent extends EncounterEvent
 *Contains fields for kill enemy*
 ### Constructors
-public KillEnemyEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType)
+public KillEnemyEvent(int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType, Difficulty difficulty)
 ### Fields
 private EntityType enemyType
 ### Methods
@@ -244,6 +278,8 @@ public EntityType getEnemyType()
 *Interface for settings*
 ### Methods
 public bool isTelemetryEnabled()
+
+public int getMaxStageReached(Difficulty difficulty)
 
 public float getEnemyMaxHealthMultiplier(Difficulty difficulty)
 
@@ -255,13 +291,32 @@ public float getEnemyDamageMultiplier(Difficulty difficulty)
 
 public int getStartingLives(Difficulty difficulty)
 
-public float getMagicCostMultiplier(Difficulty difficulty)
-
 public float getMaxMagicMultiplier(Difficulty difficulty)
 
 public int getMagicRegenRate(Difficulty difficulty)
 
 public int getShopItemCount(Difficulty difficulty)
+
+public void setTelemetryEnabled(bool telemetryEnabled)
+
+public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
+
+public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
+
+public void setPlayerMaxHealthMultiplier(Difficulty difficulty, float playerMaxHealthMultiplier)
+
+public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
+
+public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier)
+
+public void setStartingLives(Difficulty difficulty, int startingLives)
+
+public void setMaxMagicMultiplier(Difficulty difficulty, float maxMagicMultiplier)
+
+public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
+
+public void setShopItemCount(Difficulty difficulty, int shopItemCount)
+
 ## Settings implements SettingsInterface
 *Stores user settings as a singleton*
 ### Constructors
@@ -270,6 +325,12 @@ private Settings()
 private static Settings settings
 
 private bool telemetryEnabled
+
+private int hardMaxStageReached
+
+private int normaMaxStageReached
+
+private int easyMaxStageReached
 
 *integer values multiplied by these parameters are rounded*
 
@@ -302,12 +363,6 @@ private int hardStartingLives
 private int normalStartingLives
 
 private int easyStartingLives
-
-private float hardMagicCostMultiplier
-
-private float normalMagicCostMultiplier
-
-private float easyMagicCostMultiplier
 
 private float hardMaxMagicMultiplier *also affects upgrades that increase their max Magic*
 
