@@ -163,11 +163,11 @@ public TelemetryListenerInterface getTelemetryListener()
 ### Constructors
 public TelemetryEvent(Object source, int userID, int sessionID, String timestamp)
 ### Fields
-private int userID
+private final int userID
 
-private int sessionID
+private final int sessionID
 
-private String timestamp
+private final String timestamp
 ### Methods
 public int getUserID()
 
@@ -179,11 +179,11 @@ public String getTimestamp()
 ### COnstructors
 public EncounterEvent(Object source, int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 ### Fields
-private int stageNumber
+private final int stageNumber
 
-private EncounterType encounterName
+private final EncounterType encounterName
 
-private Difficulty difficulty
+private final Difficulty difficulty
 ### Methods
 public int getStageNumber()
 
@@ -204,7 +204,7 @@ public NormalEncounterStartEvent(Object source, int userID, int sessionID, Strin
 ### Constructors
 public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
-private int playerHPRemaining
+private final int playerHPRemaining
 ### Methods
 public int getPlayerHPRemaining()
 
@@ -218,7 +218,7 @@ public NormalEncounterFailEvent(Object source, int userID, int sessionID, String
 ### Constructors
 public NormalEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
-private int livesLeft
+private final int livesLeft
 ### Methods
 public int getLivesLeft()
 ## BossEncounterStartEvent extends EncounterEvent
@@ -231,7 +231,7 @@ public BossEncounterStartEvent(Object source, int userID, int sessionID, String 
 ### Constructors
 public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int playerHPRemaining, Difficulty difficulty)
 ### Fields
-private int playerHPRemaining
+private final int playerHPRemaining
 ### Methods
 public int getPlayerHPRemaining()
 ## BossEncounterFailEvent extends EncounterEvent
@@ -244,7 +244,7 @@ public BossEncounterFailEvent(Object source, int userID, int sessionID, String t
 ### Constructors
 public BossEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int livesLeft, Difficulty difficulty)
 ### Fields
-private int livesLeft
+private final int livesLeft
 ### Methods
 public int getLivesLeft()
 
@@ -253,7 +253,7 @@ public int getLivesLeft()
 ### Constructors
 public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, int coinsGained, Difficulty difficulty)
 ### Fields
-private int coinsGained
+private final int coinsGained
 
 ### Methods
 public int getCoinsGained()
@@ -263,9 +263,9 @@ public int getCoinsGained()
 ### Constructors
 public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, UpgradeType upgradeBought, int coinsSpent, Difficulty difficulty)
 ### Fields
-private int coinsSpent
+private final int coinsSpent
 
-private UpgradeType upgradeBought
+private final UpgradeType upgradeBought
 
 ### Methods
 public int getCoinsSpent()
@@ -281,9 +281,9 @@ public EndSessionEvent(Object source, int userID, int sessionID, String timestam
 ### Constructors
 public SettingsChangeEvent(iObject source, nt userID, int sessionID, String timestamp, String setting, String settingValue)
 ### Fields
-private String setting
+private final String setting
 
-private String settingValue
+private final String settingValue
 ### Methods
 public String getSetting()
 
@@ -294,7 +294,7 @@ public String getSettingValue()
 ### Constructors
 public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, EntityType enemyType, Difficulty difficulty)
 ### Fields
-private EntityType enemyType
+private final EntityType enemyType
 ### Methods
 public EntityType getEnemyType()
 
