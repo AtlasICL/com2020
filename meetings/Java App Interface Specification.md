@@ -455,7 +455,7 @@ public void markComplete()
 
 public EncounterType getType()
 
-public void reset()
+public void resetEnemyHealth()
 
 ## Encounter implements EncounterInterface
 *Stores all the enemies in an encounter, and information about said encounter*
@@ -540,6 +540,8 @@ public int getMaxHealth()
 public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
 
 public List\<AbilityInterface> getAbilities()
+
+public void resetHealth()
 
 public EntityType getType()
 ## interface PlayerInterface extends EntityInterface
