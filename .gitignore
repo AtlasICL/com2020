@@ -1,3 +1,4 @@
 tel/venv
 
 **/__pycache__/
+**/target/
