@@ -406,7 +406,7 @@ private EncounterType encounterType
 ## enum DamageType
 *Enumerates all the type of damage*
 ### Fields
-PHYSICAL, FIRE, COLD, TOXIC, ELECTRIC, NECROTIC, ABSOLUTE
+PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 
 ## enum AbilityType
 *Enumerates the game's abilities*
