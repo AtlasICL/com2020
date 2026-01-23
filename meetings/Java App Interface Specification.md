@@ -43,27 +43,6 @@ private static TimeManagerInterface timeManager
 ### Methods
 public TimeManagerInterface getTimeManager()
 
-## GameRunInterface
-*Interface for a run of the game*
-### Methods
-public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
-
-public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
-
-public void purchaseUpgrade(UpgradeType) *buys and removes it from the shop and gives it to the player*
-
-public PlayerInterface getPlayer() 
-
-public void nextStage()
-
-public int getStage()
-
-public LocalDate getRunStartTime()
-
-public int getDeathCount()
-
-public void incrementDeathCount() *Only increments death count. A player running out of lives and the decrement of their lives should be handled by GameManger*
-
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
@@ -84,6 +63,27 @@ private EntityAISingleton()
 private static EntityAIInterface entityAI
 ### Methods
 public EntityAIInterface getEntityAI()
+
+## GameRunInterface
+*Interface for a run of the game*
+### Methods
+public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
+
+public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
+
+public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException *buys and removes it from the shop and gives it to the player*
+
+public PlayerInterface getPlayer() 
+
+public void nextStage()
+
+public int getStage()
+
+public LocalDateTime getRunStartTime()
+
+public int getDeathCount()
+
+public void incrementDeathCount() *Only increments death count. A player running out of lives and the decrement of their lives should be handled by GameManger*
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
@@ -489,7 +489,7 @@ private final Constructor upgradeConstructor
 ### Methods
 public int getPrice()
 
-public Player applyUpgrade(Player player) *done using reflection*
+public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
 
 ## enum Difficulty
 *Enumerates the different levels of difficulty*
