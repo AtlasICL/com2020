@@ -98,10 +98,10 @@ class EventLogicEngine:
     
     def funnel_view(self) -> dict[int, int]:
         funnel = {stage_number: 0 for stage_number in range(1,11)}
-        num_of_players: int = len(self.get_unique_userIDs())
-        for key, value in self.fail_difficulty_spikes().items():
-            funnel[key] = num_of_players - value
-            num_of_players = num_of_players - value
+        players_remaining: int = len(self.get_unique_userIDs())
+        for stage, number_of_fails in self.fail_difficulty_spikes().items():
+            players_remaining -= number_of_fails
+            funnel[stage] = players_remaining
         return funnel
 
 def main():
