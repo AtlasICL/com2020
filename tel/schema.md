@@ -65,6 +65,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "SessionStart"
+    difficulty: string [must be in list of valid difficulties]
 }
 ```
 
