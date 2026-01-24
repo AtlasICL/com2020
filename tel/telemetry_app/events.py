@@ -2,7 +2,6 @@ from enum import Enum
 from datetime import datetime
 
 class EventType(str, Enum):
-    START_TELEMETRY = "StartTelemetry"
     SESSION_START = "SessionStart"
     END_SESSION = "EndSession"
 
@@ -77,7 +76,8 @@ class SessionStart:
             self,
             userID: int,
             sessionID: int,
-            timestamp: datetime
+            timestamp: datetime,
+            difficulty: Difficulty
     ):
         """ 
         :param userID: Unique ID of the user.
@@ -87,6 +87,8 @@ class SessionStart:
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: datetime
+        :param difficulty: Difficulty of the session.
+        :type difficulty: Difficulty
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -122,7 +124,7 @@ class NormalEncounterStart:
         :param encounter_name: Name of the encounter player is starting.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
-        :type difficulty: DifficultyName
+        :type difficulty: Difficulty
         :param stage_number: Current stage player is starting.
         :type stage_number: int
         """
