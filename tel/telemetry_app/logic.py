@@ -129,7 +129,7 @@ class EventLogicEngine:
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
                 health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
-        for event in self.boss_encounter_complete_events:
+        for event in self.normal_encounter_complete_events:
             if event.sessionID == sessionID:
                 health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
         return health_remaining_per_stage
