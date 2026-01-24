@@ -75,16 +75,12 @@ class EventLogicEngine:
                 self.normal_encounter_complete_events.add(event)
             elif isinstance(event, NormalEncounterFail):
                 self.normal_encounter_fail_events.add(event)
-            elif isinstance(event, NormalEncounterRetry):
-                self.normal_encounter_retry_events.add(event)
             elif isinstance(event, BossEncounterStart):
                 self.boss_encounter_start_events.add(event)
             elif isinstance(event, BossEncounterComplete):
                 self.boss_encounter_complete_events.add(event)
             elif isinstance(event, BossEncounterFail):
                 self.boss_encounter_fail_events.add(event)
-            elif isinstance(event, BossEncounterRetry):
-                self.boss_encounter_retry_events.add(event)
             elif isinstance(event, GainCoin):
                 self.gain_coin_events.add(event)
             elif isinstance(event, BuyUpgrade):
