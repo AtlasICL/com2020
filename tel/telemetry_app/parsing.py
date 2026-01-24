@@ -88,7 +88,8 @@ def parse_event(event: dict) -> ValidEvent:
                 return SessionStart(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    convert_time(event[EventParameter.TIMESTAMP])
+                    convert_time(event[EventParameter.TIMESTAMP]),
+                    event[EventParameter.DIFFICULTY]
                 )
             case EventType.END_SESSION:
                 return EndSession(
