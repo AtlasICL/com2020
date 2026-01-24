@@ -84,10 +84,20 @@ class EventLogicEngine:
             uniqueIDs.add(event.userID)
         return uniqueIDs
 
+    
+    def funnel_view(self) -> dict[int, int]:
+        funnel = {stage_number: 0 for stage_number in range(1,11)}
+        num_of_players: int = len(self.get_unique_userIDs())
+        for key, value in self.fail_difficulty_spikes().items():
+            funnel[key] = num_of_players - value
+            num_of_players = num_of_players - value
+        return funnel
+
 def main():
     LogicEngine = EventLogicEngine()
     LogicEngine.categorise_events("example_data.json")
     print(LogicEngine.fail_difficulty_spikes())
+    print(LogicEngine.funnel_view())
     # for attr in LogicEngine._attributes:
     #     for event in attr:
     #         print(repr(event))
