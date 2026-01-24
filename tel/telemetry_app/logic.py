@@ -204,6 +204,7 @@ def main():
     LogicEngine.categorise_events("example_data.json")
     print(LogicEngine.fail_difficulty_spikes())
     print(LogicEngine.funnel_view())
+    print(LogicEngine.compare_health_per_stage_per_difficulty())
     # for attr in LogicEngine._attributes:
     #     for event in attr:
     #         print(repr(event))
