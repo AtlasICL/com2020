@@ -205,8 +205,6 @@ class EventLogicEngine:
         return difficulty_sessionIDs
         
 
-    def 
-
     def get_health_per_stage_by_difficulty(
             self,
             difficulty: Difficulty
@@ -225,6 +223,7 @@ class EventLogicEngine:
         for sessionID in self.get_sessionIDs_of_difficulty(difficulty):
             health_per_stage.append(self.health_per_stage(sessionID))
         return health_per_stage
+    
 
     def compare_health_per_stage_per_difficulty(
             self
@@ -239,7 +238,65 @@ class EventLogicEngine:
         difficulty level.
         :rtype: dict[Difficulty, list[dict[int, int]]]
         """
-        return {diff: self.get_health_per_stage_by_difficulty(diff) for diff in Difficulty}
+        return {diff: self.get_health_per_stage_by_difficulty(diff) 
+                for diff in Difficulty}
+    
+
+    def get_coins_gained_per_stage(
+            self, 
+            sessionID: int
+    ) -> dict[int, int]:
+        """
+        Get the number of coins gained at each stage for a given 
+        session.
+        
+        :param sessionID: sessionID in question.
+        :type sessionID: int
+        :return: Stage number -> coins gained at that stage.
+        :rtype: dict[int, int]
+        """
+        coins_gained_per_stage: dict[int, int] = {i: 0 for i in range(1, 11)}
+        for event in self.gain_coin_events:
+            if event.sessionID == sessionID:
+                coins_gained_per_stage[event.stage_number] += event.coins_gained
+        return coins_gained_per_stage
+    
+
+    def get_coins_per_stage_by_difficulty(
+            self,
+            difficulty: Difficulty
+    ) -> list[dict[int, int]]:
+        """
+        Returns the coins gained per stage dictionary for all sessions 
+        with a given difficulty.
+        
+        :param difficulty: Given difficulty.
+        :type difficulty: Difficulty
+        :return: List of coins per stage for each session with the
+        specified difficulty level.
+        :rtype: list[dict[int, int]]
+        """
+        coins_per_stage = []
+        for sessionID in self.get_sessionIDs_of_difficulty(difficulty):
+            coins_per_stage.append(self.get_coins_gained_per_stage(sessionID))
+        return coins_per_stage
+    
+
+    def compare_coins_per_stage_per_difficulty(
+            self
+    ) -> dict[Difficulty, list[dict[int, int]]]:
+        """
+        Get a dictionary with difficulty level as the key, and the list 
+        of the coins gained per stage dictionary objects of all sessions
+        with that difficulty level as the value.
+        
+        :return: Dictionary of difficulty level to list of all 
+        coins gained per stage dictionaries of all sessions with the 
+        given difficulty level.
+        :rtype: dict[Difficulty, list[dict[int, int]]]
+        """
+        return {diff: self.get_coins_per_stage_by_difficulty(diff) 
+                for diff in Difficulty}
 
 
 def main():
