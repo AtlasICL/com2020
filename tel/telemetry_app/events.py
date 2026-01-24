@@ -93,6 +93,7 @@ class SessionStart:
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
+        self.difficulty = difficulty
 
     def __repr__(self):
         return f"""SessionStartObject
