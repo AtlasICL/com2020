@@ -39,6 +39,12 @@ class EventLogicEngine:
         ]
 
     def categorise_events(self, filename: str) -> None:
+        """
+        Creates objects from the json file provided. 
+
+        :param filename: json file with custom schema.
+        :type filename: str
+        """
         events: list[ValidEvent] = parse_file(filename)
         for event in events:
             if isinstance(event, SessionStart):
@@ -79,11 +85,16 @@ class EventLogicEngine:
         return difficulty_output
     
     def get_unique_userIDs(self) -> set[int]:
+        """
+        Returns the set of unique user IDs.
+        
+        :return: set of unique user IDs
+        :rtype: set[int]
+        """
         uniqueIDs = set()
         for event in self.session_start_events:
             uniqueIDs.add(event.userID)
         return uniqueIDs
-
     
     def funnel_view(self) -> dict[int, int]:
         funnel = {stage_number: 0 for stage_number in range(1,11)}
