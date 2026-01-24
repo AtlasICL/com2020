@@ -128,14 +128,14 @@ class EventLogicEngine:
         remaining.
         :rtype: dict[int, int]
         """
-        health_remaining_stage = {stage_number: 0 for stage_number in range(1,11)}
+        health_remaining_per_stage = {stage_number: 0 for stage_number in range(1,11)}
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_stage[event.stage_number] = event.player_HP_remaining
+                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_stage[event.stage_number] = event.player_HP_remaining
-        return health_remaining_stage
+                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
+        return health_remaining_per_stage
 
 def main():
     LogicEngine = EventLogicEngine()
