@@ -146,7 +146,7 @@ To be defined at a later date.
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterComplete"
-    player_HP_Remaining: int
+    player_HP_remaining: int
 }
 ```
 
