@@ -4,6 +4,7 @@ This file contains the logic for parsing game output json files.
 
 import json
 from typing import TypeAlias
+from datetime import datetime
 
 from events import *
 
@@ -22,7 +23,11 @@ ValidEvent: TypeAlias = (
     | EndSession
     | SettingsChange
     | KillEnemy
-) 
+)
+
+def convert_time(timeString: str) -> datetime:
+    datetimeOutput: datetime = datetime.strptime(timeString, "%Y/%m/%d/%H/%M/%S")
+    return datetimeOutput
 
 def get_file(filename: str) -> list[dict]:
     """
@@ -78,19 +83,19 @@ def parse_event(event: dict) -> ValidEvent:
                 return SessionStart(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
+                    convert_time(event[EventParameter.TIMESTAMP])
                 )
             case EventType.END_SESSION:
                 return EndSession(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP]
+                    convert_time(event[EventParameter.TIMESTAMP])
                 )
             case EventType.NORMAL_ENCOUNTER_START:
                 return NormalEncounterStart(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
@@ -99,7 +104,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return NormalEncounterComplete(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -109,7 +114,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return NormalEncounterFail(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
@@ -118,7 +123,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return NormalEncounterRetry(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -128,7 +133,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return BossEncounterStart(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
@@ -137,7 +142,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return BossEncounterComplete(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -147,7 +152,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return BossEncounterFail(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
@@ -156,7 +161,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return BossEncounterRetry(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -166,7 +171,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return GainCoin(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -176,7 +181,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return BuyUpgrade(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.COINS_SPENT],
                     event[EventParameter.UPGRADE_BOUGHT]
@@ -185,7 +190,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return SettingsChange(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.SETTING],
                     event[EventParameter.SETTING_VALUE]
                 )
@@ -193,7 +198,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return KillEnemy(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
-                    event[EventParameter.TIMESTAMP],
+                    convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
@@ -207,4 +212,3 @@ def parse_event(event: dict) -> ValidEvent:
         raise RuntimeError(
             f"An event of type {event_type} is missing the field {e}"
         )
-            
