@@ -77,6 +77,12 @@ class EventLogicEngine:
         for event in self.boss_encounter_fail_events:
             difficulty_output[event.stage_number] += 1
         return difficulty_output
+    
+    def get_unique_userIDs(self) -> set[int]:
+        uniqueIDs = set()
+        for event in self.session_start_events:
+            uniqueIDs.add(event.userID)
+        return uniqueIDs
 
 def main():
     LogicEngine = EventLogicEngine()
