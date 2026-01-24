@@ -476,24 +476,24 @@ PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 ## enum AbilityType
 *Enumerates the game's abilities*
 ### Constructors
-private AbilityType(Constructor abilityConstructor)
+private AbilityType(Class<? extends AbilityInterface> abilityClass)
 ### Fields
 BOW, SWORD, etc. *placeholders, abilities TBD*
 
-private final Constructor abilityConstructor
+private final Class<? extends AbilityInterface> abilityClass
 ### Methods
 public AbilityInterface getAbility()
 
 ## enum UpgradeType
 *Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price, Constructor upgradeConstructor)
+private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass)
 ### Fields
 HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
 
 private final int price
 
-private final Constructor upgradeConstructor
+private final Class<? extends PlayerInterface> upgradeClass
 ### Methods
 public int getPrice()
 
@@ -518,11 +518,11 @@ public Encounter createEncounter() *done using reflection via EntityType*
 ## enum EntityType
 *Enumerates the games entities*
 ### Constructor
-private EntityType(Constructor entityConstructor)
+private EntityType(Class<? extends EntityInterface> enemyClass)
 ### Fields
 ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
 
-private final Constructor entityConstructor
+private final Class<? extends EntityInterface> enemyClass
 ### Methods
 public EntityInterface createEnemy() *Done using reflection*
 
