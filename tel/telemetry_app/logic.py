@@ -118,9 +118,24 @@ class EventLogicEngine:
             funnel[stage] = players_remaining
         return funnel
     
-    def health_per_stage(self, userID: int) -> dict[int, int]:
-        return {}
-
+    def health_per_stage(self, sessionID: int) -> dict[int, int]:
+        """
+        Output the health a session has per stage.
+        
+        :param sessionID: session stage to check.
+        :type sessionID: int
+        :return: dictionary of key stage number and value player HP
+        remaining.
+        :rtype: dict[int, int]
+        """
+        health_remaining_stage = {stage_number: 0 for stage_number in range(1,11)}
+        for event in self.boss_encounter_complete_events:
+            if event.sessionID == sessionID:
+                health_remaining_stage[event.stage_number] = event.player_HP_remaining
+        for event in self.boss_encounter_complete_events:
+            if event.sessionID == sessionID:
+                health_remaining_stage[event.stage_number] = event.player_HP_remaining
+        return health_remaining_stage
 
 def main():
     LogicEngine = EventLogicEngine()
