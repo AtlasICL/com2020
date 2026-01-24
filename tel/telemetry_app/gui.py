@@ -60,9 +60,25 @@ class TelemetryAppGUI(tk.Tk):
             background=GUI_SELECTION_settings.BACKGROUND_COLOR
         )
 
+        def global_enter(event=None):
+            focused_widget = self.focus_get()
+            if isinstance(focused_widget, ttk.Button):
+                focused_widget.invoke()
+
+        self.bind('<Return>', global_enter)
+        
+        def handle_click(event=None):
+            print("Button Pressed!")
+
+        def click_this(event=None):
+            print("Button pressed again")
+        
         # Create scrollable frame for main content
         outer_frame = ttk.Frame(self)
-        outer_frame.pack(fill=tk.BOTH, expand=True)
+        outer_frame.grid(row=0, column=0, sticky='nsew')
+        
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
         
         # Add canvas for scrolling with background color
         canvas = tk.Canvas(
@@ -70,27 +86,22 @@ class TelemetryAppGUI(tk.Tk):
             highlightthickness=0, 
             background=GUI_SELECTION_settings.BACKGROUND_COLOR
         )
-        canvas.pack(
-            side=tk.LEFT, 
-            fill=tk.BOTH, 
-            expand=True
-        )
-        
-        # Add scrollbar
-        scrollbar = ttk.Scrollbar(
-            outer_frame, 
-            orient=tk.VERTICAL, 
-            command=canvas.yview
-        )
-        scrollbar.pack(
-            side=tk.RIGHT, 
-            fill=tk.Y
-        )
-        
+
+        canvas.grid(row=0, column=0, sticky='nsew')
+        ttk.Button(outer_frame, text="Funnel View", command=handle_click, width=20).grid(row=1, column=0, sticky='ew')
+        ttk.Button(outer_frame, text="Difficulty Spike View", command = handle_click, width=20).grid(row=2, column=0, sticky='ew')
+        ttk.Button(outer_frame, text="Progression Curves", command = handle_click, width=20).grid(row=3, column=0, sticky='ew')
+        ttk.Button(outer_frame, text="Fairness Indicators", command = click_this, width=20).grid(row=4, column=0, sticky='ew')
+        ttk.Button(outer_frame, text="Comparison Mode", command = click_this, width=20).grid(row=5, column=0, sticky='ew')
+                
+        self.focus_force()
+
+        outer_frame.grid_rowconfigure(0, weight=1)
+        outer_frame.grid_columnconfigure(0, weight=1)
+
         # Configure canvas
-        canvas.configure(yscrollcommand=scrollbar.set)
+        # canvas.configure(yscrollcommand=scrollbar.set)
         canvas.bind(
             '<Configure>', 
             lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
         )
-

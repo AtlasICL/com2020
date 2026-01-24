@@ -18,9 +18,6 @@ class EventLogicEngine:
         self.normal_encounter_fail_events: set[
             NormalEncounterFail
         ] = set()
-        self.normal_encounter_retry_events: set[
-            NormalEncounterRetry
-        ] = set()
         self.boss_encounter_start_events: set[
             BossEncounterStart
         ] = set()
@@ -29,9 +26,6 @@ class EventLogicEngine:
         ] = set()
         self.boss_encounter_fail_events: set[
             BossEncounterFail
-        ] = set()
-        self.boss_encounter_retry_events: set[
-            BossEncounterRetry
         ] = set()
         self.gain_coin_events: set[
             GainCoin
@@ -52,11 +46,9 @@ class EventLogicEngine:
             self.normal_encounter_start_events,
             self.normal_encounter_complete_events,
             self.normal_encounter_fail_events,
-            self.normal_encounter_retry_events,
             self.boss_encounter_start_events,
             self.boss_encounter_complete_events,
             self.boss_encounter_fail_events,
-            self.boss_encounter_retry_events,
             self.gain_coin_events,
             self.buy_upgrade_events,
             self.settings_change_events,
@@ -83,16 +75,12 @@ class EventLogicEngine:
                 self.normal_encounter_complete_events.add(event)
             elif isinstance(event, NormalEncounterFail):
                 self.normal_encounter_fail_events.add(event)
-            elif isinstance(event, NormalEncounterRetry):
-                self.normal_encounter_retry_events.add(event)
             elif isinstance(event, BossEncounterStart):
                 self.boss_encounter_start_events.add(event)
             elif isinstance(event, BossEncounterComplete):
                 self.boss_encounter_complete_events.add(event)
             elif isinstance(event, BossEncounterFail):
                 self.boss_encounter_fail_events.add(event)
-            elif isinstance(event, BossEncounterRetry):
-                self.boss_encounter_retry_events.add(event)
             elif isinstance(event, GainCoin):
                 self.gain_coin_events.add(event)
             elif isinstance(event, BuyUpgrade):
@@ -118,6 +106,16 @@ class EventLogicEngine:
             difficulty_output[event.stage_number] += 1
         return difficulty_output
     
+
+    def get_number_of_session_starts(self) -> int:
+        """
+        Get the number of session start events.        
+
+        :return: Returns the number of unique session start events.
+        :rtype: int
+        """
+        return len(self.session_start_events)
+    
     
     def get_unique_userIDs(self) -> set[int]:
         """
@@ -131,6 +129,42 @@ class EventLogicEngine:
             uniqueIDs.add(event.userID)
         return uniqueIDs
     
+
+    def count_starts(self, stage_number) -> int:
+        """
+        Counts the number of starts of a given stage.
+        
+        :param stage_number: stage number in question.
+        :return: number of starts of that stage.
+        :rtype: int
+        """
+        start_count = 0
+        if stage_number in [3, 6, 9, 10]:
+            for start_event in self.boss_encounter_start_events:
+                start_count += start_event.stage_number == stage_number
+            return start_count
+        for start_event in self.normal_encounter_start_events:
+            start_count += start_event.stage_number == stage_number
+        return start_count     
+       
+
+    def count_fails(self, stage_number) -> int:
+        """
+        Counts the number of failures on a given stage.
+        
+        :param stage_number: stage number in question.
+        :return: number of fails at that stage.
+        :rtype: int
+        """
+        fail_count = 0
+        if stage_number in [3, 6, 9, 10]:
+            for fail_event in self.boss_encounter_fail_events:
+                fail_count += fail_event.stage_number == stage_number
+            return fail_count
+        for fail_event in self.normal_encounter_fail_events:
+            fail_count += fail_event.stage_number == stage_number
+        return fail_count
+    
     
     def funnel_view(self) -> dict[int, int]:
         """
@@ -140,12 +174,11 @@ class EventLogicEngine:
         players left.
         :rtype: dict[int, int]
         """
-        funnel = {stage_number: 0 for stage_number in range(1,11)}
-        players_remaining: int = len(self.get_unique_userIDs())
-        for stage, number_of_fails in self.fail_difficulty_spikes().items():
-            players_remaining -= number_of_fails
-            funnel[stage] = players_remaining
-        return funnel
+        return {
+            stage_number: 
+            self.count_starts(stage_number) - self.count_fails(stage_number) 
+            for stage_number in range(1,11)
+        }
     
     
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
@@ -301,7 +334,7 @@ class EventLogicEngine:
 
 def main():
     LogicEngine = EventLogicEngine()
-    LogicEngine.categorise_events("example_data.json")
+    LogicEngine.categorise_events("example_data3.json")
     print(LogicEngine.fail_difficulty_spikes())
     print(LogicEngine.funnel_view())
     # for attr in LogicEngine._attributes:

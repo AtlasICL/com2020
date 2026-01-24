@@ -8,12 +8,10 @@ class EventType(str, Enum):
     NORMAL_ENCOUNTER_START = "NormalEncounterStart"
     NORMAL_ENCOUNTER_COMPLETE = "NormalEncounterComplete"
     NORMAL_ENCOUNTER_FAIL = "NormalEncounterFail"
-    NORMAL_ENCOUNTER_RETRY = "NormalEncounterRetry"
 
     BOSS_ENCOUNTER_START = "BossEncounterStart"
     BOSS_ENCOUNTER_COMPLETE = "BossEncounterComplete"
     BOSS_ENCOUNTER_FAIL = "BossEncounterFail"
-    BOSS_ENCOUNTER_RETRY = "BossEncounterRetry"
 
     GAIN_COIN = "GainCoin"
     BUY_UPGRADE = "BuyUpgrade"
@@ -207,7 +205,8 @@ class NormalEncounterFail:
             timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
-            stage_number: int
+            stage_number: int,
+            lives_left: int
     ):
         """
         :param userID: Unique ID of the user.
@@ -224,53 +223,7 @@ class NormalEncounterFail:
         :type difficulty: Difficulty
         :param stage_number: Current stage player has failed.
         :type stage_number: int
-        """
-        self.userID = userID
-        self.sessionID = sessionID
-        self.timestamp = timestamp
-        self.encounter_name = encounter_name
-        self.difficulty = difficulty
-        self.stage_number = stage_number
-
-    def __repr__(self):
-        return f"""NormalEncounterFailObject
-            {self.userID=}
-            {self.sessionID=}
-            {self.timestamp=}
-            {self.encounter_name=}
-            {self.difficulty=}
-            {self.stage_number=}"""
-
-class NormalEncounterRetry:
-    """
-    NormalEncounterRetry object represents an instance of a
-    NormalEncounterRetry event.
-    """
-    def __init__(self,
-            userID: int,
-            sessionID: int,
-            timestamp: datetime,
-            encounter_name: EncounterName,
-            difficulty: Difficulty,
-            stage_number: int,
-            lives_left: int
-    ):
-        """
-        :param userID: Unique ID of the user.
-        :type userID: int
-        :param sessionID: Unique ID for the session.
-        :type sessionID: int
-        :param timestamp: Timestamp of the event. 
-        Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: datetime
-        :param encounter_name: Name of the encounter player is retrying.
-        :type encounter_name: EncounterName
-        :param difficulty: Difficulty level of the encounter.
-        :type difficulty: Difficulty
-        :param stage_number: Current stage player is retrying.
-        :type stage_number: int
-        :param lives_left: Number of lives a player has 
-        left for next try.
+        :param lives_left: Lives left at the end of an encounter.
         :type lives_left: int
         """
         self.userID = userID
@@ -282,7 +235,7 @@ class NormalEncounterRetry:
         self.lives_left = lives_left
 
     def __repr__(self):
-        return f"""NormalEncounterRetryObject
+        return f"""NormalEncounterFailObject
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}
@@ -383,58 +336,12 @@ class BossEncounterComplete:
             {self.timestamp=}
             {self.encounter_name=}
             {self.difficulty=}
-            {self.stage_number=}
-            {self.player_HP_remaining=}"""
+            {self.stage_number=}"""
         
 class BossEncounterFail:
     """
     BossEncounterFail object represents an instance of a
     BossEncounterFail event.
-    """
-    def __init__(
-            self,
-            userID: int,
-            sessionID: int,
-            timestamp: datetime,
-            encounter_name: EncounterName,
-            difficulty: Difficulty,
-            stage_number: int
-    ):
-        """
-        :param userID: Unique ID of the user.
-        :type userID: int
-        :param sessionID: Unique ID for the session.
-        :type sessionID: int
-        :param timestamp: Timestamp of the event. 
-        Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: datetime
-        :param encounter_name: Name of the encounter player has failed.
-        :type encounter_name: EncounterName
-        :param difficulty: Difficulty level of the encounter.
-        :type difficulty: Difficulty
-        :param stage_number: Current stage player has failed.
-        :type stage_number: int
-        """
-        self.userID = userID
-        self.sessionID = sessionID
-        self.timestamp = timestamp
-        self.encounter_name = encounter_name
-        self.difficulty = difficulty
-        self.stage_number = stage_number
-
-    def __repr__(self):
-        return f"""BossEncounterFailObject
-            {self.userID=}
-            {self.sessionID=}
-            {self.timestamp=}
-            {self.encounter_name=}
-            {self.difficulty=}
-            {self.stage_number=}"""
-
-class BossEncounterRetry:
-    """
-    BossEncounterRetry object represents an instance of a
-    BossEncounterRetry event.
     """
     def __init__(
             self,
@@ -454,13 +361,13 @@ class BossEncounterRetry:
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: datetime
-        :param encounter_name: Name of the encounter player is retrying.
+        :param encounter_name: Name of the encounter player has failed.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
         :type difficulty: Difficulty
-        :param stage_number: Current stage player is retrying.
+        :param stage_number: Current stage player has failed.
         :type stage_number: int
-        :param lives_left: Lives left at end of encounter.
+        :param lives_left: Lives left at the end of an encounter.
         :type lives_left: int
         """
         self.userID = userID
@@ -472,7 +379,7 @@ class BossEncounterRetry:
         self.lives_left = lives_left
 
     def __repr__(self):
-        return f"""BossEncounterRetryObject
+        return f"""BossEncounterFailObject
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}

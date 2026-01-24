@@ -13,17 +13,16 @@ ValidEvent: TypeAlias = (
     | NormalEncounterStart
     | NormalEncounterComplete
     | NormalEncounterFail
-    | NormalEncounterRetry
     | BossEncounterStart
     | BossEncounterComplete
     | BossEncounterFail
-    | BossEncounterRetry
     | GainCoin
     | BuyUpgrade
     | EndSession
     | SettingsChange
     | KillEnemy
 )
+
     
 def convert_time(time_string: str) -> datetime:
     """
@@ -33,6 +32,7 @@ def convert_time(time_string: str) -> datetime:
     :rtype: datetime
     """
     return datetime.strptime(time_string, "%Y/%m/%d/%H/%M/%S")
+
 
 def get_file(filename: str) -> list[dict]:
     """
@@ -51,6 +51,7 @@ def get_file(filename: str) -> list[dict]:
     except json.JSONDecodeError:
         raise RuntimeError(f"Could not parse - invalid json.")
 
+
 def parse_file(filename: str) -> list[ValidEvent]:
     """
     Creates a list of ValidEvent objects from a json file.
@@ -65,6 +66,7 @@ def parse_file(filename: str) -> list[ValidEvent]:
     for event in events:
         event_objects.append(parse_event(event))
     return event_objects
+
 
 def parse_event(event: dict) -> ValidEvent:
     """
@@ -123,15 +125,6 @@ def parse_event(event: dict) -> ValidEvent:
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.NORMAL_ENCOUNTER_RETRY:
-                return NormalEncounterRetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.LIVES_LEFT]
                 )
@@ -156,15 +149,6 @@ def parse_event(event: dict) -> ValidEvent:
                 )
             case EventType.BOSS_ENCOUNTER_FAIL:
                 return BossEncounterFail(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.BOSS_ENCOUNTER_RETRY:
-                return BossEncounterRetry(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
