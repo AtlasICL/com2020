@@ -1,25 +1,50 @@
-import os
-from dataclasses import dataclass, field
-
 from events import *
 from parsing import parse_file, ValidEvent
 
 class EventLogicEngine:
     def __init__(self):
-        self.session_start_events: set[SessionStart] = set()
-        self.end_session_events: set[EndSession] = set()
-        self.normal_encounter_start_events: set[NormalEncounterStart] = set()
-        self.normal_encounter_complete_events: set[NormalEncounterComplete] = set()
-        self.normal_encounter_fail_events: set[NormalEncounterFail] = set()
-        self.normal_encounter_retry_events: set[NormalEncounterRetry] = set()
-        self.boss_encounter_start_events: set[BossEncounterStart] = set()
-        self.boss_encounter_complete_events: set[BossEncounterComplete] = set()
-        self.boss_encounter_fail_events: set[BossEncounterFail] = set()
-        self.boss_encounter_retry_events: set[BossEncounterRetry] = set()
-        self.gain_coin_events: set[GainCoin] = set()
-        self.buy_upgrade_events: set[BuyUpgrade] = set()
-        self.settings_change_events: set[SettingsChange] = set()
-        self.kill_enemy_events: set[KillEnemy] = set()
+        self.session_start_events: set[
+            SessionStart
+        ] = set()
+        self.end_session_events: set[
+            EndSession
+        ] = set()
+        self.normal_encounter_start_events: set[
+            NormalEncounterStart
+        ] = set()
+        self.normal_encounter_complete_events: set[
+            NormalEncounterComplete
+        ] = set()
+        self.normal_encounter_fail_events: set[
+            NormalEncounterFail
+        ] = set()
+        self.normal_encounter_retry_events: set[
+            NormalEncounterRetry
+        ] = set()
+        self.boss_encounter_start_events: set[
+            BossEncounterStart
+        ] = set()
+        self.boss_encounter_complete_events: set[
+            BossEncounterComplete
+        ] = set()
+        self.boss_encounter_fail_events: set[
+            BossEncounterFail
+        ] = set()
+        self.boss_encounter_retry_events: set[
+            BossEncounterRetry
+        ] = set()
+        self.gain_coin_events: set[
+            GainCoin
+        ] = set()
+        self.buy_upgrade_events: set[
+            BuyUpgrade
+        ] = set()
+        self.settings_change_events: set[
+            SettingsChange
+        ] = set()
+        self.kill_enemy_events: set[
+            KillEnemy
+        ] = set()
 
         self._attributes = [ 
             self.session_start_events, 
@@ -128,13 +153,18 @@ class EventLogicEngine:
         remaining.
         :rtype: dict[int, int]
         """
-        health_remaining_per_stage = {stage_number: 0 for stage_number in range(1,11)}
+        health_remaining_per_stage = {stage_number: 0 
+                                      for stage_number in range(1,11)}
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
+                health_remaining_per_stage[
+                    event.stage_number
+                ] = event.player_HP_remaining
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
+                health_remaining_per_stage[
+                    event.stage_number
+                ] = event.player_HP_remaining
         return health_remaining_per_stage
     
     def get_difficulty(self, sessionID: int) -> Difficulty:
