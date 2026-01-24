@@ -102,12 +102,12 @@ Note: Some telemetry events do not include stage information because they are so
 Telemetry events that are produced in an impossible order should not be written. Telemetry events with missing data or with invalid data should be recovered before writing where possible and otherwise discarded. 
 
 *As a developer it is useful to have the data in a transportable format so other systems can interface with it.*
-### Implements coins as a resource for buying upgrades
-Coins should be obtained from completing encounters, with bosses giving more coins. Coins can then be spent at the shop to buy upgrades.
+### Implements coins as a resource for buying abilities
+Coins should be obtained from completing encounters, with bosses giving more coins. Coins can then be spent at the shop to buy abilities.
 
 *As a developer I want a way to incentivize play and reward players, to encourage them to continue playing the game.*
-### Upgrades are purchasable in the shop for coins
-The shop should provide a random assortment of available upgrades, with varying power levels and prices. They can be bought with coins and increase the power of the player's character. Already purchased upgrades can be sold in the shop for coins. 
+### Abilities are purchasable in the shop for coins
+The shop should provide a random assortment of available abilities, with varying prices. They can be bought with coins and increase the power of the player's character.
 
 *As a player I want ways to upgrade and modify my character so each run feels different and my character feels like they're getting stronger.*
 ### Health points are used to determine how close to death a player character is
@@ -118,8 +118,8 @@ Player characters should have a maximum health points and a current health point
 Player characters should start runs with some value of lives and each time they die their number of lives should reduce by 1. When they have 0 lives they restart the game rather than the encounter. 
 
 *As a player I want to have multiple lives so I have a safety net to learn the mechanics of the game so I can enjoy it more and play to higher levels.*
-### Magic is used to fuel high power abilities
-Magic should increase by a set amount each turn, and can be spent to use high power abilities.
+### Magic is used to fuel high power attacking abilities
+Magic should increase by a set amount each turn, and can be spent to use high power attacking abilities.
 
 *As a developer I want a resource that allows me to make strong abilities without breaking the game, so i can add additional strategy and cinematic moments to the game.*
 ### The game should have the gameplay loop described below
@@ -156,7 +156,7 @@ The game should display an end screen when a run ends (either by winning or runn
 - Run Time
 - Number of deaths
 - Coins
-- Upgrades
+- Attacking and Passive Abilities
 - Completion: Either the encounter they lost at, or complete if they won
 ### Difficulty settings
 The game should include easy, balanced, and hard difficulties.
@@ -169,7 +169,7 @@ The game should have the following parameters that designers can tweak:
 - Upgrade price multiplier 
 - Enemy damage multiplier
 - Starting lives
-- Magic cost multiplier: multiplies the cost of magic using abilities
+- Magic cost multiplier: multiplies the ammount of magic points the use of non-physical attacking abilities use
 - Maximum magic amount
 - Magic generation rate: amount gained each turn 
 
@@ -399,10 +399,10 @@ Containing information on running the tests
 [Ethical and legal considerations](#ethical-and-legal-considerations-of-the-project)
 
 [Software bill of materials](#a-software-bill-of-materials)
-#### Coins and Upgrades systems
-[Coins](#implements-coins-as-a-resource-for-buying-upgrades)
+#### Coins and Abilities systems
+[Coins](#implements-coins-as-a-resource-for-buying-abilities)
 
-[Upgrades can be bought](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+[Abilities can be bought](#abilities-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
 #### Implement health points and lives
 [Health points](#health-points-are-used-to-determine-how-close-to-death-a-player-character-is)
 
@@ -422,7 +422,7 @@ Including 30 anomalous, across 16 sessions and 8 users. More information [here](
 #### 2+ Normal Enemies 
 #### 1 Boss Encounter
 #### Magic system
-[More information](#magic-is-used-to-fuel-high-power-abilities)
+[More information](#magic-is-used-to-fuel-high-power-attacking-abilities)
 #### Accessible design
 [Python](#python-accessible-design)
 
@@ -445,7 +445,7 @@ Including 30 anomalous, across 16 sessions and 8 users. More information [here](
 ### Wont
 #### All telemetry events
 #### 1500 seeded telemetry events
-#### 10 stages
+#### 10 levels
 #### 6 dashboard views
 #### Rule based suggestions
 #### Multiplayer
@@ -459,7 +459,7 @@ Including 30 anomalous, across 16 sessions and 8 users. More information [here](
 #### Dynamic Difficulty
 #### Mid run difficulty adjustment
 #### Mid run saves
-The player's progress and purchased upgrades during a run will not be saved. Their game settings, and any changes to their design parameters, will be retained.
+The player's progress and purchased abilities during a run will not be saved. Their game settings, and any changes to their design parameters, will be retained.
 ## Sprint 2
 ### Must 
 #### Implement 10 levels including bosses
@@ -470,10 +470,10 @@ The player's progress and purchased upgrades during a run will not be saved. The
 [Health points](#health-points-are-used-to-determine-how-close-to-death-a-player-character-is)
 
 [Lives](#lives-are-used-to-determine-how-many-times-a-character-can-die-before-having-to-restart-their-run)
-#### Implement coins and upgrades
-[Coins](#implements-coins-as-a-resource-for-buying-upgrades)
+#### Implement coins and abilities
+[Coins](#implements-coins-as-a-resource-for-buying-abilities)
 
-[Upgrades can be bought](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+[Abilities can be bought](#abilities-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
 #### 12 Telemetry events
 [Events](#telemetry-events-including-the-specified-fields)
 
@@ -482,11 +482,11 @@ The java application should validate and write them to a JSON file ([Specificati
 [More Information](#user-authentication-and-roles)
 #### Magic fuels abilities
 [More information](#magic-is-used-to-fuel-high-power-abilities)
-#### 20+ Upgrades
-#### 7+ Bosses Encounters
-2 choices for level 3, 2 choices for level 6, 2 choices for level 9 and the final boss on level 10. 
+#### 5+ Passive Abilities
+#### 4+ Bosses Encounters
+one on level 3, one on level 6, one on level 9 and the final boss on level 10. 
 #### 12+ Normal Encounters
-4 choices for levels 1 and 2, 4 choices for levels 4 and 5, and 4 choices for levels 7 and 8. 
+3 choices for levels 1 and 2, 3 choices for levels 4 and 5, and 3 choices for levels 7 and 8. 
 #### All stages of the gameplay loop
 [Loop information](#the-game-should-have-the-gameplay-loop-described-below)
 
@@ -553,16 +553,15 @@ The java application should validate and write them to a JSON file ([Specificati
 [Ethical/legal considerations](#what-ethicallegal-considerations-you-made-in-relation-to-what-you-worked-on)
 
 [AI-minimal compliance statement](#an-ai-minimal-compliance-statement)
-#### 6+ Normal Enemy types
+#### 3+ Normal Enemy types
 ### Should
 #### All Telemetry events
 [Events](#telemetry-events-including-the-specified-fields)
-#### 9+ Normal Enemy Types
-#### 18+ Normal Encounters
-6 to pull from for each pair of levels. (1&2, 4&5, 7&8)
+#### 4+ Normal Enemy Types
+#### 12+ Normal Encounters
 ### Could
-[More information](#upgrades-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
-#### 25+ upgrades
+[More information](#abilities-are-purchasable-in-the-shop-and-can-be-sold-for-coins)
+#### 10+ Passive Abilities
 ### Wont 
 #### Multiplayer
 #### Encounter builder
@@ -575,4 +574,4 @@ The java application should validate and write them to a JSON file ([Specificati
 #### Dynamic Difficulty
 #### Mid run difficulty adjustment
 #### Mid run saves
-The player's progress and purchased upgrades during a run will not be saved. Their game settings, and any changes to their design parameters, will be retained.
+The player's progress and purchased Attacking Abilities nor Passive Abilities during a run will not be saved. Their game settings, and any changes to their design parameters, will be retained.
