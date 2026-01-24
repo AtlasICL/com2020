@@ -63,6 +63,7 @@ class EventLogicEngine:
             self.kill_enemy_events
         ]
 
+
     def categorise_events(self, filename: str) -> None:
         """
         Creates objects from the json file provided. 
@@ -101,6 +102,7 @@ class EventLogicEngine:
             elif isinstance(event, KillEnemy):
                 self.kill_enemy_events.add(event)
 
+
     def fail_difficulty_spikes(self) -> dict[int, int]:
         """
         Output failure rate by stage.
@@ -116,6 +118,7 @@ class EventLogicEngine:
             difficulty_output[event.stage_number] += 1
         return difficulty_output
     
+    
     def get_unique_userIDs(self) -> set[int]:
         """
         Returns the set of unique user IDs.
@@ -127,6 +130,7 @@ class EventLogicEngine:
         for event in self.session_start_events:
             uniqueIDs.add(event.userID)
         return uniqueIDs
+    
     
     def funnel_view(self) -> dict[int, int]:
         """
@@ -142,6 +146,7 @@ class EventLogicEngine:
             players_remaining -= number_of_fails
             funnel[stage] = players_remaining
         return funnel
+    
     
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
         """
@@ -167,6 +172,7 @@ class EventLogicEngine:
                 ] = event.player_HP_remaining
         return health_remaining_per_stage
     
+    
     def get_difficulty(self, sessionID: int) -> Difficulty:
         """
         Get the difficulty for a given session.
@@ -182,6 +188,7 @@ class EventLogicEngine:
         raise RuntimeError("No session start event for provided " \
         f"session ID: {sessionID}")
     
+    
     def get_sessionIDs_of_difficulty(self, difficulty: Difficulty) -> list[int]:
         """
         Get the list of all sessionIDs of a given difficulty.
@@ -196,7 +203,10 @@ class EventLogicEngine:
             if start_event.difficulty == difficulty:
                 difficulty_sessionIDs.append(start_event.sessionID)
         return difficulty_sessionIDs
-    
+        
+
+    def 
+
     def get_health_per_stage_by_difficulty(
             self,
             difficulty: Difficulty
