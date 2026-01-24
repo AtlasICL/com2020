@@ -24,6 +24,7 @@ ValidEvent: TypeAlias = (
     | SettingsChange
     | KillEnemy
 )
+
     
 def convert_time(time_string: str) -> datetime:
     """
@@ -33,6 +34,7 @@ def convert_time(time_string: str) -> datetime:
     :rtype: datetime
     """
     return datetime.strptime(time_string, "%Y/%m/%d/%H/%M/%S")
+
 
 def get_file(filename: str) -> list[dict]:
     """
@@ -51,6 +53,7 @@ def get_file(filename: str) -> list[dict]:
     except json.JSONDecodeError:
         raise RuntimeError(f"Could not parse - invalid json.")
 
+
 def parse_file(filename: str) -> list[ValidEvent]:
     """
     Creates a list of ValidEvent objects from a json file.
@@ -65,6 +68,7 @@ def parse_file(filename: str) -> list[ValidEvent]:
     for event in events:
         event_objects.append(parse_event(event))
     return event_objects
+
 
 def parse_event(event: dict) -> ValidEvent:
     """
