@@ -80,7 +80,8 @@ class EventLogicEngine:
         """
         Output failure rate by stage.
         
-        :return: dictionary of key stage number and value number of failures.
+        :return: dictionary of key stage number and value number of 
+        failures.
         :rtype: dict[int, int]
         """
         difficulty_output = {stage_number: 0 for stage_number in range(1,11)}
@@ -106,7 +107,8 @@ class EventLogicEngine:
         """
         Output number of players passing a given stage.
         
-        :return: dictionary of key stage number and value number of players left.
+        :return: dictionary of key stage number and value number of 
+        players left.
         :rtype: dict[int, int]
         """
         funnel = {stage_number: 0 for stage_number in range(1,11)}
@@ -115,6 +117,10 @@ class EventLogicEngine:
             players_remaining -= number_of_fails
             funnel[stage] = players_remaining
         return funnel
+    
+    def health_per_stage(self, userID: int) -> dict[int, int]:
+        return {}
+
 
 def main():
     LogicEngine = EventLogicEngine()
