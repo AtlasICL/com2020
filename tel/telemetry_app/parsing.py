@@ -129,16 +129,6 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
                 )
-            case EventType.NORMAL_ENCOUNTER_RETRY:
-                return NormalEncounterRetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.LIVES_LEFT]
-                )
             case EventType.BOSS_ENCOUNTER_START:
                 return BossEncounterStart(
                     event[EventParameter.USER_ID],
@@ -166,16 +156,6 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER]
-                )
-            case EventType.BOSS_ENCOUNTER_RETRY:
-                return BossEncounterRetry(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
-                    convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.LIVES_LEFT]
                 )
             case EventType.GAIN_COIN:
                 return GainCoin(

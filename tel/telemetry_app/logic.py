@@ -18,9 +18,6 @@ class EventLogicEngine:
         self.normal_encounter_fail_events: set[
             NormalEncounterFail
         ] = set()
-        self.normal_encounter_retry_events: set[
-            NormalEncounterRetry
-        ] = set()
         self.boss_encounter_start_events: set[
             BossEncounterStart
         ] = set()
@@ -29,9 +26,6 @@ class EventLogicEngine:
         ] = set()
         self.boss_encounter_fail_events: set[
             BossEncounterFail
-        ] = set()
-        self.boss_encounter_retry_events: set[
-            BossEncounterRetry
         ] = set()
         self.gain_coin_events: set[
             GainCoin
@@ -52,11 +46,9 @@ class EventLogicEngine:
             self.normal_encounter_start_events,
             self.normal_encounter_complete_events,
             self.normal_encounter_fail_events,
-            self.normal_encounter_retry_events,
             self.boss_encounter_start_events,
             self.boss_encounter_complete_events,
             self.boss_encounter_fail_events,
-            self.boss_encounter_retry_events,
             self.gain_coin_events,
             self.buy_upgrade_events,
             self.settings_change_events,
