@@ -13,11 +13,9 @@ ValidEvent: TypeAlias = (
     | NormalEncounterStart
     | NormalEncounterComplete
     | NormalEncounterFail
-    | NormalEncounterRetry
     | BossEncounterStart
     | BossEncounterComplete
     | BossEncounterFail
-    | BossEncounterRetry
     | GainCoin
     | BuyUpgrade
     | EndSession
@@ -118,7 +116,8 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING]
+                    event[EventParameter.PLAYER_HP_REMAINING],
+                    event[EventParameter.LIVES_LEFT]
                 )
             case EventType.NORMAL_ENCOUNTER_FAIL:
                 return NormalEncounterFail(
@@ -127,7 +126,8 @@ def parse_event(event: dict) -> ValidEvent:
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER]
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.LIVES_LEFT]
                 )
             case EventType.BOSS_ENCOUNTER_START:
                 return BossEncounterStart(
@@ -146,7 +146,8 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING]
+                    event[EventParameter.PLAYER_HP_REMAINING],
+                    event[EventParameter.LIVES_LEFT]
                 )
             case EventType.BOSS_ENCOUNTER_FAIL:
                 return BossEncounterFail(
@@ -155,7 +156,8 @@ def parse_event(event: dict) -> ValidEvent:
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
-                    event[EventParameter.STAGE_NUMBER]
+                    event[EventParameter.STAGE_NUMBER],
+                    event[EventParameter.LIVES_LEFT]
                 )
             case EventType.GAIN_COIN:
                 return GainCoin(
