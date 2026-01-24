@@ -118,6 +118,16 @@ class EventLogicEngine:
             difficulty_output[event.stage_number] += 1
         return difficulty_output
     
+
+    def get_number_of_session_starts(self) -> int:
+        """
+        Get the number of session start events.        
+
+        :return: Returns the number of unique session start events.
+        :rtype: int
+        """
+        return len(self.session_start_events)
+    
     
     def get_unique_userIDs(self) -> set[int]:
         """
@@ -141,7 +151,7 @@ class EventLogicEngine:
         :rtype: dict[int, int]
         """
         funnel = {stage_number: 0 for stage_number in range(1,11)}
-        players_remaining: int = len(self.get_unique_userIDs())
+        players_remaining: int = self.get_number_of_session_starts()
         for stage, number_of_fails in self.fail_difficulty_spikes().items():
             players_remaining -= number_of_fails
             funnel[stage] = players_remaining
@@ -301,7 +311,7 @@ class EventLogicEngine:
 
 def main():
     LogicEngine = EventLogicEngine()
-    LogicEngine.categorise_events("example_data.json")
+    LogicEngine.categorise_events("example_data2.json")
     print(LogicEngine.fail_difficulty_spikes())
     print(LogicEngine.funnel_view())
     # for attr in LogicEngine._attributes:
