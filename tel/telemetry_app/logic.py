@@ -196,6 +196,40 @@ class EventLogicEngine:
             if start_event.difficulty == difficulty:
                 difficulty_sessionIDs.append(start_event.sessionID)
         return difficulty_sessionIDs
+    
+    def get_health_per_stage_by_difficulty(
+            self,
+            difficulty: Difficulty
+    ) -> list[dict[int, int]]:
+        """
+        Returns a health_per_stage dictionary for all sessions with a
+        given difficulty.
+        
+        :param difficulty: Given difficulty.
+        :type difficulty: Difficulty
+        :return: List of health per stage for each session with the
+        specified difficulty level.
+        :rtype: list[dict[int, int]]
+        """
+        health_per_stage = []
+        for sessionID in self.get_sessionIDs_of_difficulty(difficulty):
+            health_per_stage.append(self.health_per_stage(sessionID))
+        return health_per_stage
+
+    def compare_health_per_stage_per_difficulty(
+            self
+    ) -> dict[Difficulty, list[dict[int, int]]]:
+        """
+        Get a dictionary with difficulty level as the key, and the list 
+        of the health_per_stage objects of all sessions with that 
+        difficulty level as the value.
+        
+        :return: Dictionary of difficulty level to list of all 
+        health_per_stage dictionaries of all sessions with the given
+        difficulty level.
+        :rtype: dict[Difficulty, list[dict[int, int]]]
+        """
+        return {diff: self.get_health_per_stage_by_difficulty(diff) for diff in Difficulty}
 
 
 def main():
