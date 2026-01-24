@@ -77,6 +77,12 @@ class EventLogicEngine:
                 self.kill_enemy_events.add(event)
 
     def fail_difficulty_spikes(self) -> dict[int, int]:
+        """
+        Output failure rate by stage.
+        
+        :return: dictionary of key stage number and value number of failures.
+        :rtype: dict[int, int]
+        """
         difficulty_output = {stage_number: 0 for stage_number in range(1,11)}
         for event in self.normal_encounter_fail_events:
             difficulty_output[event.stage_number] += 1
@@ -88,7 +94,7 @@ class EventLogicEngine:
         """
         Returns the set of unique user IDs.
         
-        :return: set of unique user IDs
+        :return: set of unique user IDs.
         :rtype: set[int]
         """
         uniqueIDs = set()
@@ -97,6 +103,12 @@ class EventLogicEngine:
         return uniqueIDs
     
     def funnel_view(self) -> dict[int, int]:
+        """
+        Output number of players passing a given stage.
+        
+        :return: dictionary of key stage number and value number of players left.
+        :rtype: dict[int, int]
+        """
         funnel = {stage_number: 0 for stage_number in range(1,11)}
         players_remaining: int = len(self.get_unique_userIDs())
         for stage, number_of_fails in self.fail_difficulty_spikes().items():
