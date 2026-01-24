@@ -24,10 +24,15 @@ ValidEvent: TypeAlias = (
     | SettingsChange
     | KillEnemy
 )
-
-def convert_time(timeString: str) -> datetime:
-    datetimeOutput: datetime = datetime.strptime(timeString, "%Y/%m/%d/%H/%M/%S")
-    return datetimeOutput
+    
+def convert_time(time_string: str) -> datetime:
+    """
+    :param time_string: Custom formatted string of timestamp.
+    :type time_string: str
+    :return: Datetime version of time_string.
+    :rtype: datetime
+    """
+    return datetime.strptime(time_string, "%Y/%m/%d/%H/%M/%S")
 
 def get_file(filename: str) -> list[dict]:
     """
