@@ -20,9 +20,6 @@ plot_widget = canvas.get_tk_widget()
 
 def update():
     pass
-    # s = np.cos(np.pi*t)
-    # plt.plot(t,s)
-    # fig.canvas.draw()
 
 plot_widget.grid(row=0, column=0, sticky='nsew')
 tk.Button(root,text="Update",command=update).grid(row=1, column=0, sticky='ew')
