@@ -3,20 +3,48 @@ from parsing import parse_file, ValidEvent
 
 class EventLogicEngine:
     def __init__(self):
-        self.session_start_events: set[SessionStart] = set()
-        self.end_session_events: set[EndSession] = set()
-        self.normal_encounter_start_events: set[NormalEncounterStart] = set()
-        self.normal_encounter_complete_events: set[NormalEncounterComplete] = set()
-        self.normal_encounter_fail_events: set[NormalEncounterFail] = set()
-        self.normal_encounter_retry_events: set[NormalEncounterRetry] = set()
-        self.boss_encounter_start_events: set[BossEncounterStart] = set()
-        self.boss_encounter_complete_events: set[BossEncounterComplete] = set()
-        self.boss_encounter_fail_events: set[BossEncounterFail] = set()
-        self.boss_encounter_retry_events: set[BossEncounterRetry] = set()
-        self.gain_coin_events: set[GainCoin] = set()
-        self.buy_upgrade_events: set[BuyUpgrade] = set()
-        self.settings_change_events: set[SettingsChange] = set()
-        self.kill_enemy_events: set[KillEnemy] = set()
+        self.session_start_events: set[
+            SessionStart
+        ] = set()
+        self.end_session_events: set[
+            EndSession
+        ] = set()
+        self.normal_encounter_start_events: set[
+            NormalEncounterStart
+        ] = set()
+        self.normal_encounter_complete_events: set[
+            NormalEncounterComplete
+        ] = set()
+        self.normal_encounter_fail_events: set[
+            NormalEncounterFail
+        ] = set()
+        self.normal_encounter_retry_events: set[
+            NormalEncounterRetry
+        ] = set()
+        self.boss_encounter_start_events: set[
+            BossEncounterStart
+        ] = set()
+        self.boss_encounter_complete_events: set[
+            BossEncounterComplete
+        ] = set()
+        self.boss_encounter_fail_events: set[
+            BossEncounterFail
+        ] = set()
+        self.boss_encounter_retry_events: set[
+            BossEncounterRetry
+        ] = set()
+        self.gain_coin_events: set[
+            GainCoin
+        ] = set()
+        self.buy_upgrade_events: set[
+            BuyUpgrade
+        ] = set()
+        self.settings_change_events: set[
+            SettingsChange
+        ] = set()
+        self.kill_enemy_events: set[
+            KillEnemy
+        ] = set()
 
         self._attributes = [ 
             self.session_start_events, 
@@ -125,13 +153,18 @@ class EventLogicEngine:
         remaining.
         :rtype: dict[int, int]
         """
-        health_remaining_per_stage = {stage_number: 0 for stage_number in range(1,11)}
+        health_remaining_per_stage = {stage_number: 0 
+                                      for stage_number in range(1,11)}
         for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
-        for event in self.normal_encounter_complete_events:
+                health_remaining_per_stage[
+                    event.stage_number
+                ] = event.player_HP_remaining
+        for event in self.boss_encounter_complete_events:
             if event.sessionID == sessionID:
-                health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
+                health_remaining_per_stage[
+                    event.stage_number
+                ] = event.player_HP_remaining
         return health_remaining_per_stage
     
     def get_difficulty(self, sessionID: int) -> Difficulty:
@@ -163,40 +196,6 @@ class EventLogicEngine:
             if start_event.difficulty == difficulty:
                 difficulty_sessionIDs.append(start_event.sessionID)
         return difficulty_sessionIDs
-    
-    def get_health_per_stage_by_difficulty(
-            self,
-            difficulty: Difficulty
-    ) -> list[dict[int, int]]:
-        """
-        Returns a health_per_stage dictionary for all sessions with a
-        given difficulty.
-        
-        :param difficulty: Given difficulty.
-        :type difficulty: Difficulty
-        :return: List of health per stage for each session with the
-        specified difficulty level.
-        :rtype: list[dict[int, int]]
-        """
-        health_per_stage = []
-        for sessionID in self.get_sessionIDs_of_difficulty(difficulty):
-            health_per_stage.append(self.health_per_stage(sessionID))
-        return health_per_stage
-
-    def compare_health_per_stage_per_difficulty(
-            self
-    ) -> dict[Difficulty, list[dict[int, int]]]:
-        """
-        Get a dictionary with difficulty level as the key, and the list 
-        of the health_per_stage objects of all sessions with that 
-        difficulty level as the value.
-        
-        :return: Dictionary of difficulty level to list of all 
-        health_per_stage dictionaries of all sessions with the given
-        difficulty level.
-        :rtype: dict[Difficulty, list[dict[int, int]]]
-        """
-        return {diff: self.get_health_per_stage_by_difficulty(diff) for diff in Difficulty}
 
 
 def main():
@@ -204,7 +203,6 @@ def main():
     LogicEngine.categorise_events("example_data.json")
     print(LogicEngine.fail_difficulty_spikes())
     print(LogicEngine.funnel_view())
-    print(LogicEngine.compare_health_per_stage_per_difficulty())
     # for attr in LogicEngine._attributes:
     #     for event in attr:
     #         print(repr(event))
