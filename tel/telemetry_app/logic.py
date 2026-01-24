@@ -129,6 +129,42 @@ class EventLogicEngine:
             uniqueIDs.add(event.userID)
         return uniqueIDs
     
+
+    def count_starts(self, stage_number) -> int:
+        """
+        Counts the number of starts of a given stage.
+        
+        :param stage_number: stage number in question.
+        :return: number of starts of that stage.
+        :rtype: int
+        """
+        start_count = 0
+        if stage_number in [3, 6, 9, 10]:
+            for start_event in self.boss_encounter_start_events:
+                start_count += start_event.stage_number == stage_number
+            return start_count
+        for start_event in self.normal_encounter_start_events:
+            start_count += start_event.stage_number == stage_number
+        return start_count     
+       
+
+    def count_fails(self, stage_number) -> int:
+        """
+        Counts the number of failures on a given stage.
+        
+        :param stage_number: stage number in question.
+        :return: number of fails at that stage.
+        :rtype: int
+        """
+        fail_count = 0
+        if stage_number in [3, 6, 9, 10]:
+            for fail_event in self.boss_encounter_fail_events:
+                fail_count += fail_event.stage_number == stage_number
+            return fail_count
+        for fail_event in self.normal_encounter_fail_events:
+            fail_count += fail_event.stage_number == stage_number
+        return fail_count
+    
     
     def funnel_view(self) -> dict[int, int]:
         """
@@ -138,12 +174,11 @@ class EventLogicEngine:
         players left.
         :rtype: dict[int, int]
         """
-        funnel = {stage_number: 0 for stage_number in range(1,11)}
-        players_remaining: int = self.get_number_of_session_starts()
-        for stage, number_of_fails in self.fail_difficulty_spikes().items():
-            players_remaining -= number_of_fails
-            funnel[stage] = players_remaining
-        return funnel
+        return {
+            stage_number: 
+            self.count_starts(stage_number) - self.count_fails(stage_number) 
+            for stage_number in range(1,11)
+        }
     
     
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
@@ -299,7 +334,7 @@ class EventLogicEngine:
 
 def main():
     LogicEngine = EventLogicEngine()
-    LogicEngine.categorise_events("example_data2.json")
+    LogicEngine.categorise_events("example_data3.json")
     print(LogicEngine.fail_difficulty_spikes())
     print(LogicEngine.funnel_view())
     # for attr in LogicEngine._attributes:

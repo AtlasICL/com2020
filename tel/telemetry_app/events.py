@@ -155,8 +155,7 @@ class NormalEncounterComplete:
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
-            player_HP_remaining: int,
-            lives_left: int
+            player_HP_remaining: int
     ):
         """
         :param userID: Unique ID of the user.
@@ -176,8 +175,6 @@ class NormalEncounterComplete:
         :param player_HP_remaining: Number of HP points users 
         character has remaining.
         :type player_HP_remaining: int
-        :param lives_left: Lives left at the end of an encounter.
-        :type lives_left: int
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -186,7 +183,6 @@ class NormalEncounterComplete:
         self.difficulty = difficulty
         self.stage_number = stage_number
         self.player_HP_remaining = player_HP_remaining
-        self.lives_left = lives_left
 
     def __repr__(self):
         return f"""NormalEncounterCompleteObject
@@ -196,8 +192,7 @@ class NormalEncounterComplete:
             {self.encounter_name=}
             {self.difficulty=}
             {self.stage_number=}
-            {self.player_HP_remaining=}
-            {self.lives_left=}"""
+            {self.player_HP_remaining=}"""
 
 class NormalEncounterFail:
     """
@@ -305,8 +300,7 @@ class BossEncounterComplete:
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
-            player_HP_remaining: int,
-            lives_left: int
+            player_HP_remaining: int
     ):
         """
         :param userID: Unique ID of the user.
@@ -326,8 +320,6 @@ class BossEncounterComplete:
         :param player_HP_remaining: Player HP remaining once 
         boss encounter is complete.
         :type player_HP_remaining: int
-        :param lives_left: Lives left at the end of an encounter.
-        :type lives_left: int
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -336,7 +328,6 @@ class BossEncounterComplete:
         self.difficulty = difficulty
         self.stage_number = stage_number
         self.player_HP_remaining = player_HP_remaining
-        self.lives_left = lives_left
 
     def __repr__(self):
         return f"""BossEncounterObject
@@ -345,8 +336,7 @@ class BossEncounterComplete:
             {self.timestamp=}
             {self.encounter_name=}
             {self.difficulty=}
-            {self.stage_number=}
-            {self.player_HP_remaining=}"""
+            {self.stage_number=}"""
         
 class BossEncounterFail:
     """

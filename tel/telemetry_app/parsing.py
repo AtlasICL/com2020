@@ -116,8 +116,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING],
-                    event[EventParameter.LIVES_LEFT]
+                    event[EventParameter.PLAYER_HP_REMAINING]
                 )
             case EventType.NORMAL_ENCOUNTER_FAIL:
                 return NormalEncounterFail(
@@ -146,8 +145,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.ENCOUNTER],
                     event[EventParameter.DIFFICULTY],
                     event[EventParameter.STAGE_NUMBER],
-                    event[EventParameter.PLAYER_HP_REMAINING],
-                    event[EventParameter.LIVES_LEFT]
+                    event[EventParameter.PLAYER_HP_REMAINING]
                 )
             case EventType.BOSS_ENCOUNTER_FAIL:
                 return BossEncounterFail(
