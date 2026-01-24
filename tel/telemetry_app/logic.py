@@ -69,13 +69,14 @@ class EventLogicEngine:
                 self.settings_change_events.add(event)
             elif isinstance(event, KillEnemy):
                 self.kill_enemy_events.add(event)
+
     def fail_difficulty_spikes(self) -> dict[int, int]:
-        difficultyOutput = {stage_number: 0 for stage_number in range(1,11)}
+        difficulty_output = {stage_number: 0 for stage_number in range(1,11)}
         for event in self.normal_encounter_fail_events:
-            difficultyOutput[event.stage_number] += 1
+            difficulty_output[event.stage_number] += 1
         for event in self.boss_encounter_fail_events:
-            difficultyOutput[event.stage_number] += 1
-        return difficultyOutput
+            difficulty_output[event.stage_number] += 1
+        return difficulty_output
 
 def main():
     LogicEngine = EventLogicEngine()
