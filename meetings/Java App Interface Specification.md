@@ -46,7 +46,7 @@ public TimeManagerInterface getTimeManager()
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public void useAbility(Ability[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) 
+public void useAbility(AbilityInterface[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) 
 
 public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
 
