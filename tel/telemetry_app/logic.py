@@ -136,6 +136,37 @@ class EventLogicEngine:
             if event.sessionID == sessionID:
                 health_remaining_per_stage[event.stage_number] = event.player_HP_remaining
         return health_remaining_per_stage
+    
+    def get_difficulty(self, sessionID: int) -> Difficulty:
+        """
+        Get the difficulty for a given session.
+        
+        :param sessionID: sessionID of the session to get difficulty of.
+        :type sessionID: int
+        :return: Difficulty value of the session.
+        :rtype: Difficulty
+        """
+        for start_event in self.session_start_events:
+            if start_event.sessionID == sessionID:
+                return start_event.difficulty
+        raise RuntimeError("No session start event for provided " \
+        f"session ID: {sessionID}")
+    
+    def get_sessionIDs_of_difficulty(self, difficulty: Difficulty) -> list[int]:
+        """
+        Get the list of all sessionIDs of a given difficulty.
+        
+        :param difficulty: The difficulty level to search for.
+        :type difficulty: Difficulty
+        :return: The list of sessionIDs with the given difficulty.
+        :rtype: list[int]
+        """
+        difficulty_sessionIDs: list[int] = []
+        for start_event in self.session_start_events:
+            if start_event.difficulty == difficulty:
+                difficulty_sessionIDs.append(start_event.sessionID)
+        return difficulty_sessionIDs
+
 
 def main():
     LogicEngine = EventLogicEngine()
