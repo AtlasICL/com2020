@@ -161,23 +161,27 @@ public TelemetryListenerInterface getTelemetryListener()
 ## abstract TelemetryEvent extends EventObject
 *Contains fields all telemetry events contain*
 ### Constructors
-public TelemetryEvent(Object source, int userID, int sessionID, String timestamp)
+public TelemetryEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 ### Fields
 private final int userID
 
 private final int sessionID
 
 private final String timestamp
+
+private final String telemetryName
 ### Methods
 public int getUserID()
 
 public int getSessionID()
 
 public String getTimestamp()
+
+public String getTelemetryName() *gets the name of the telemetry event according to the specification*
 ## abstract EncounterEvent extends TelemetryEvent
 *Contains information relating to encounters*
 ### COnstructors
-public EncounterEvent(Object source, int userId, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public EncounterEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 ### Fields
 private final int stageNumber
 
@@ -319,7 +323,7 @@ public int getMaxStageReached(Difficulty difficulty) throws AuthenticationExcept
 
 public float getEnemyMaxHealthMultiplier(Difficulty difficulty) 
 
-public float getPlayerMaxHealthMultiplier(Difficulty difficulty)
+public int getPlayerMaxHealth(Difficulty difficulty)
 
 public float getUpgradePriceMultiplier(Difficulty difficulty)
 
@@ -327,7 +331,7 @@ public float getEnemyDamageMultiplier(Difficulty difficulty)
 
 public int getStartingLives(Difficulty difficulty)
 
-public float getMaxMagicMultiplier(Difficulty difficulty)
+public int getMaxMagic(Difficulty difficulty)
 
 public int getMagicRegenRate(Difficulty difficulty)
 
@@ -339,7 +343,7 @@ public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
 
 public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealthMultiplier(Difficulty difficulty, float playerMaxHealthMultiplier)
+public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealthMultiplier)
 
 public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
 
@@ -347,7 +351,7 @@ public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMul
 
 public void setStartingLives(Difficulty difficulty, int startingLives)
 
-public void setMaxMagicMultiplier(Difficulty difficulty, float maxMagicMultiplier)
+public void setMaxMagic(Difficulty difficulty, int maxMagicMultiplier)
 
 public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
 
@@ -380,11 +384,11 @@ private float normalEnemyMaxHealthMultiplier
 
 private float easyEnemyMaxHealthMultiplier
 
-private float hardPlayerMaxHealthMultiplier
+private int hardPlayerMaxHealth
 
-private float normalPlayerMaxHealthMultiplier
+private int normalPlayerMaxHealth
 
-private float easyPlayerMaxHealthMultiplier
+private int easyPlayerMaxHealth
 
 private float hardUpgradePriceMultiplier
 
@@ -404,11 +408,11 @@ private int normalStartingLives
 
 private int easyStartingLives
 
-private float hardMaxMagicMultiplier
+private int hardMaxMagic
 
-private float normalMaxMagicMultiplier
+private int normalMaxMagic
 
-private float easyMaxMagicMultiplier
+private int easyMaxMagic
 
 private int hardMagicRegenRate
 
@@ -487,45 +491,63 @@ public AbilityInterface getAbility()
 ## enum UpgradeType
 *Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass)
+private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName)
 ### Fields
 HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
 
 private final int price
 
 private final Class<? extends PlayerInterface> upgradeClass
+
+private final String telemetryName
 ### Methods
 public int getPrice()
 
 public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
 
+public String getTelemetryName()
 ## enum Difficulty
 *Enumerates the different levels of difficulty*
+### Constructors 
+private Difficulty(String telemetryName)
 ### Fields
 EASY, MEDIUM, HARD
+
+private final String telemetryName
+### Methods
+public String getTelemetryName() *provides the name for the difficulty according to the telemetry schema*
 
 ## enum EncounterType
 *Enumerates the games encounters*
 ### Constructors
-private EncounterType(EntityType[] enemies)
+private EncounterType(EntityType[] enemies, String telemetryName)
 ### Fields
 ZOMBIE_HORDE, SKELETON_RANGERS, etc. *placeholder, encounters TBD*
+
+private final EntityType[] enemies
+
+private final String telemetryName
 ### Methods
 public EntityType[] getEnemies()
 
 public Encounter createEncounter() *done using reflection via EntityType*
 
+public String getTelemetryName()
+
 ## enum EntityType
 *Enumerates the games entities*
 ### Constructor
-private EntityType(Class<? extends EntityInterface> enemyClass)
+private EntityType(Class<? extends EntityInterface> enemyClass, String telemetryName)
 ### Fields
 ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
 
 private final Class<? extends EntityInterface> enemyClass
+
+private final String telemetryName
 ### Methods
 public EntityInterface createEnemy() *Done using reflection*
 
+public String getTelemetryName()
 ## interface EntityInterface
 *Contains all methods all entities have*
 ### Methods
