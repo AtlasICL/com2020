@@ -2,6 +2,8 @@ tel/venv
 
 **/__pycache__/
 
+**/venv
+
 game/target
 
 .vscode

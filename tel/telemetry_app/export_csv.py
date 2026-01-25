@@ -1,2 +1,0 @@
-class CSVExporter:
-    pass
