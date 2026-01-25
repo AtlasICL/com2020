@@ -1,5 +1,4 @@
 # Definition of json schema
-- [Definition of json schema](#definition-of-json-schema)
 - [List of valid event types](#list-of-valid-event-types)
 - [List of valid difficulties](#list-of-valid-difficulties)
 - [List of valid encounter names](#list-of-valid-encounter-names)
@@ -11,16 +10,15 @@
     - [2) NormalEncounterStart](#2-normalencounterstart)
     - [3) NormalEncounterComplete](#3-normalencountercomplete)
     - [4) NormalEncounterFail](#4-normalencounterfail)
-    - [5) NormalEncounterRetry](#5-normalencounterretry)
-    - [6) BossEncounterStart](#6-bossencounterstart)
-    - [7) BossEncounterComplete](#7-bossencountercomplete)
-    - [8) BossEncounterFail](#8-bossencounterfail)
-    - [9) BossEncounterRetry](#9-bossencounterretry)
-    - [10) GainCoin](#10-gaincoin)
-    - [11) BuyUpgrade](#11-buyupgrade)
-    - [12) EndSession](#12-endsession)
-    - [13) SettingsChange](#13-settingschange)
-    - [14) KillEnemy](#14-killenemy)
+    - [5) BossEncounterStart](#5-bossencounterstart)
+    - [6) BossEncounterComplete](#7-bossencountercomplete)
+    - [7) BossEncounterFail](#8-bossencounterfail)
+    - [8) GainCoin](#10-gaincoin)
+    - [9) BuyUpgrade](#11-buyupgrade)
+    - [10) EndSession](#12-endsession)
+    - [11) SettingsChange](#13-settingschange)
+    - [12) KillEnemy](#14-killenemy)
+
 
 # List of valid event types 
 Here are the possible event types:
@@ -28,35 +26,33 @@ Here are the possible event types:
 2) `NormalEncounterStart`
 3) `NormalEncounterComplete`
 4) `NormalEncounterFail`
-5) `NormalEncounterRetry`
-6) `BossEncounterStart`
-7) `BossEncounterComplete`
-8) `BossEncounterFail`
-9) `BossEncounterRetry`
-10) `GainCoin`
-11) `BuyUpgrade`
-12) `EndSession`
-13) `SettingsChange`
-14) `KillEnemy`
+5) `BossEncounterStart`
+6) `BossEncounterComplete`
+7) `BossEncounterFail`
+8)  `GainCoin`
+9)  `BuyUpgrade`
+10) `EndSession`
+11) `SettingsChange`
+12) `KillEnemy`
 
-# List of valid difficulties
+## List of valid difficulties
 1) `Easy`
 2) `Normal`
 3) `Hard`
 
-# List of valid encounter names
+## List of valid encounter names
 To be defined at a later date.
 
-# List of valid upgrade names
+## List of valid upgrade names
 To be defined at a later date.
 
-# List of valid enemy names
+## List of valid enemy names
 To be defined at a later date.
 
-# List of valid settings
+## List of valid settings
 To be defined at a later date.
 
-# Example logging event jsons
+## Example logging event jsons
 
 ### 1) SessionStart
 ```
@@ -65,6 +61,7 @@ To be defined at a later date.
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "SessionStart"
+    difficulty: string [must be in list of valid difficulties]
 }
 ```
 
@@ -91,7 +88,7 @@ To be defined at a later date.
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "NormalEncounterComplete",
-    player_HP_Remaining: int, 
+    player_HP_remaining: int
 }
 ```
 
@@ -104,25 +101,12 @@ To be defined at a later date.
     encounter_name: string [must be in list of valid encounter names],
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
-    event: "NormalEncounterFail"
-}
-```
-
-### 5) NormalEncounterRetry
-```
-{
-    userID: int,
-    sessionID: int,
-    timestamp: YYYY/MM/DD/HH/MM/SS,
-    encounter_name: string [must be in list of valid encounter names],
-    difficulty: string [must be in list of valid difficulties],
-    stage_number: int,
-    event: "NormalEncounterRetry"
+    event: "NormalEncounterFail",
     lives_left: int
 }
 ```
 
-### 6) BossEncounterStart
+### 5) BossEncounterStart
 ```
 {
     userID: int,
@@ -135,7 +119,7 @@ To be defined at a later date.
 }
 ```
 
-### 7) BossEncounterComplete
+### 6) BossEncounterComplete
 ```
 {
     userID: int,
@@ -145,11 +129,11 @@ To be defined at a later date.
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
     event: "BossEncounterComplete"
-    player_HP_Remaining: int
+    player_HP_remaining: int
 }
 ```
 
-### 8) BossEncounterFail
+### 7) BossEncounterFail
 ```
 {
     userID: int,
@@ -158,25 +142,12 @@ To be defined at a later date.
     encounter_name: string [must be in list of valid encounter names],
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
-    event: "BossEncounterFail"
-}
-```
-
-### 9) BossEncounterRetry
-```
-{
-    userID: int,
-    sessionID: int,
-    timestamp: YYYY/MM/DD/HH/MM/SS,
-    encounter_name: string [must be in list of valid encounter names],
-    difficulty: string [must be in list of valid difficulties],
-    stage_number: int,
-    event: "BossEncounterRetry",
+    event: "BossEncounterFail",
     lives_left: int
 }
 ```
 
-### 10) GainCoin
+### 8) GainCoin
 ```
 {
     userID: int,
@@ -190,7 +161,7 @@ To be defined at a later date.
 }
 ```
 
-### 11) BuyUpgrade
+### 9) BuyUpgrade
 ```
 {
     userID: int,
@@ -203,7 +174,7 @@ To be defined at a later date.
 }
 ```
 
-### 12) EndSession
+### 10) EndSession
 ```
 {
     userID: int,
@@ -213,7 +184,7 @@ To be defined at a later date.
 }
 ```
 
-### 13) SettingsChange
+### 11) SettingsChange
 ```
 {
     userID: int,
@@ -225,7 +196,7 @@ To be defined at a later date.
 }
 ```
 
-### 14) KillEnemy
+### 12) KillEnemy
 ```
 {
     userID: int,

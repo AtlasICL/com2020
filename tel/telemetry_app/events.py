@@ -1,19 +1,17 @@
 from enum import Enum
+from datetime import datetime
 
 class EventType(str, Enum):
-    START_TELEMETRY = "StartTelemetry"
     SESSION_START = "SessionStart"
     END_SESSION = "EndSession"
 
     NORMAL_ENCOUNTER_START = "NormalEncounterStart"
     NORMAL_ENCOUNTER_COMPLETE = "NormalEncounterComplete"
     NORMAL_ENCOUNTER_FAIL = "NormalEncounterFail"
-    NORMAL_ENCOUNTER_RETRY = "NormalEncounterRetry"
 
     BOSS_ENCOUNTER_START = "BossEncounterStart"
     BOSS_ENCOUNTER_COMPLETE = "BossEncounterComplete"
     BOSS_ENCOUNTER_FAIL = "BossEncounterFail"
-    BOSS_ENCOUNTER_RETRY = "BossEncounterRetry"
 
     GAIN_COIN = "GainCoin"
     BUY_UPGRADE = "BuyUpgrade"
@@ -76,7 +74,8 @@ class SessionStart:
             self,
             userID: int,
             sessionID: int,
-            timestamp: str
+            timestamp: datetime,
+            difficulty: Difficulty
     ):
         """ 
         :param userID: Unique ID of the user.
@@ -85,11 +84,14 @@ class SessionStart:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
+        :param difficulty: Difficulty of the session.
+        :type difficulty: Difficulty
         """
         self.userID = userID
         self.sessionID = sessionID
         self.timestamp = timestamp
+        self.difficulty = difficulty
 
     def __repr__(self):
         return f"""SessionStartObject
@@ -105,7 +107,7 @@ class NormalEncounterStart:
     def __init__(self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: str,
             stage_number: int
@@ -117,11 +119,11 @@ class NormalEncounterStart:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player is starting.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
-        :type difficulty: DifficultyName
+        :type difficulty: Difficulty
         :param stage_number: Current stage player is starting.
         :type stage_number: int
         """
@@ -149,7 +151,7 @@ class NormalEncounterComplete:
     def __init__(self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
@@ -162,7 +164,7 @@ class NormalEncounterComplete:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player 
         has completed.
         :type encounter_name: EncounterName
@@ -200,52 +202,7 @@ class NormalEncounterFail:
     def __init__(self,
             userID: int,
             sessionID: int,
-            timestamp: str,
-            encounter_name: EncounterName,
-            difficulty: Difficulty,
-            stage_number: int
-    ):
-        """
-        :param userID: Unique ID of the user.
-        :type userID: int
-        :param sessionID: Unique ID for the session.
-        :type sessionID: int
-        :param timestamp: Timestamp of the event. 
-        Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
-        :param encounter_name: Name of the encounter player 
-        has failed.
-        :type encounter_name: EncounterName
-        :param difficulty: Difficulty level of the encounter.
-        :type difficulty: Difficulty
-        :param stage_number: Current stage player has failed.
-        :type stage_number: int
-        """
-        self.userID = userID
-        self.sessionID = sessionID
-        self.timestamp = timestamp
-        self.encounter_name = encounter_name
-        self.difficulty = difficulty
-        self.stage_number = stage_number
-
-    def __repr__(self):
-        return f"""NormalEncounterFailObject
-            {self.userID=}
-            {self.sessionID=}
-            {self.timestamp=}
-            {self.encounter_name=}
-            {self.difficulty=}
-            {self.stage_number=}"""
-
-class NormalEncounterRetry:
-    """
-    NormalEncounterRetry object represents an instance of a
-    NormalEncounterRetry event.
-    """
-    def __init__(self,
-            userID: int,
-            sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
@@ -258,15 +215,15 @@ class NormalEncounterRetry:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
-        :param encounter_name: Name of the encounter player is retrying.
+        :type timestamp: datetime
+        :param encounter_name: Name of the encounter player 
+        has failed.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
         :type difficulty: Difficulty
-        :param stage_number: Current stage player is retrying.
+        :param stage_number: Current stage player has failed.
         :type stage_number: int
-        :param lives_left: Number of lives a player has 
-        left for next try.
+        :param lives_left: Lives left at the end of an encounter.
         :type lives_left: int
         """
         self.userID = userID
@@ -278,7 +235,7 @@ class NormalEncounterRetry:
         self.lives_left = lives_left
 
     def __repr__(self):
-        return f"""NormalEncounterRetryObject
+        return f"""NormalEncounterFailObject
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}
@@ -295,7 +252,7 @@ class BossEncounterStart:
     def __init__(self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int
@@ -307,7 +264,7 @@ class BossEncounterStart:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player is starting.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
@@ -339,7 +296,7 @@ class BossEncounterComplete:
     def __init__(self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
@@ -352,7 +309,7 @@ class BossEncounterComplete:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player 
         has completed.
         :type encounter_name: EncounterName
@@ -379,8 +336,7 @@ class BossEncounterComplete:
             {self.timestamp=}
             {self.encounter_name=}
             {self.difficulty=}
-            {self.stage_number=}
-            {self.player_HP_remaining=}"""
+            {self.stage_number=}"""
         
 class BossEncounterFail:
     """
@@ -391,52 +347,7 @@ class BossEncounterFail:
             self,
             userID: int,
             sessionID: int,
-            timestamp: str,
-            encounter_name: EncounterName,
-            difficulty: Difficulty,
-            stage_number: int
-    ):
-        """
-        :param userID: Unique ID of the user.
-        :type userID: int
-        :param sessionID: Unique ID for the session.
-        :type sessionID: int
-        :param timestamp: Timestamp of the event. 
-        Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
-        :param encounter_name: Name of the encounter player has failed.
-        :type encounter_name: EncounterName
-        :param difficulty: Difficulty level of the encounter.
-        :type difficulty: Difficulty
-        :param stage_number: Current stage player has failed.
-        :type stage_number: int
-        """
-        self.userID = userID
-        self.sessionID = sessionID
-        self.timestamp = timestamp
-        self.encounter_name = encounter_name
-        self.difficulty = difficulty
-        self.stage_number = stage_number
-
-    def __repr__(self):
-        return f"""BossEncounterFailObject
-            {self.userID=}
-            {self.sessionID=}
-            {self.timestamp=}
-            {self.encounter_name=}
-            {self.difficulty=}
-            {self.stage_number=}"""
-
-class BossEncounterRetry:
-    """
-    BossEncounterRetry object represents an instance of a
-    BossEncounterRetry event.
-    """
-    def __init__(
-            self,
-            userID: int,
-            sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
@@ -449,14 +360,14 @@ class BossEncounterRetry:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
-        :param encounter_name: Name of the encounter player is retrying.
+        :type timestamp: datetime
+        :param encounter_name: Name of the encounter player has failed.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
         :type difficulty: Difficulty
-        :param stage_number: Current stage player is retrying.
+        :param stage_number: Current stage player has failed.
         :type stage_number: int
-        :param lives_left: Lives left at end of encounter.
+        :param lives_left: Lives left at the end of an encounter.
         :type lives_left: int
         """
         self.userID = userID
@@ -468,7 +379,7 @@ class BossEncounterRetry:
         self.lives_left = lives_left
 
     def __repr__(self):
-        return f"""BossEncounterRetryObject
+        return f"""BossEncounterFailObject
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}
@@ -485,7 +396,7 @@ class GainCoin:
             self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             encounter_name: EncounterName,
             difficulty: Difficulty,
             stage_number: int,
@@ -498,7 +409,7 @@ class GainCoin:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player is in.
         :type encounter_name: EncounterName
         :param difficulty: Difficulty level of the encounter.
@@ -534,7 +445,7 @@ class BuyUpgrade:
             self,
             userID: int,
             sessionID: int,
-            timestamp: str,
+            timestamp: datetime,
             stage_number: int,
             coins_spent: int,
             upgrade_bought: UpgradeName
@@ -546,7 +457,7 @@ class BuyUpgrade:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param stage_number: Current stage player is complete.
         :type stage_number: int
         :param coins_spent: Number of coins spent on 
@@ -579,7 +490,7 @@ class EndSession:
             self,
             userID: int,
             sessionID: int,
-            timestamp: str
+            timestamp: datetime
     ):
         """
         :param userID: Unique ID of the user.
@@ -588,7 +499,7 @@ class EndSession:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         """
         self.userID = userID
         self.sessionID = sessionID
@@ -609,7 +520,7 @@ class SettingsChange:
         self,
         userID: int,
         sessionID: int,
-        timestamp: str,
+        timestamp: datetime,
         setting: SettingName,
         value: int
     ):
@@ -620,7 +531,7 @@ class SettingsChange:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param setting: The setting which was changed.
         :type setting: SettingName
         :param value: The new value to which the changed 
@@ -649,7 +560,7 @@ class KillEnemy:
         self,
         userID: int,
         sessionID: int,
-        timestamp: str,
+        timestamp: datetime,
         encounter_name: EncounterName,
         difficulty: Difficulty,
         stage_number: int,
@@ -662,7 +573,7 @@ class KillEnemy:
         :type sessionID: int
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
-        :type timestamp: str
+        :type timestamp: datetime
         :param encounter_name: Name of the encounter player is 
         in at time of kill.
         :type encounter_name: EncounterName

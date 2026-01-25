@@ -1,4 +1,5 @@
 tel/venv
 
 **/__pycache__/
-**/target/
+
+game/target
