@@ -19,9 +19,9 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param timeStamp the time the event was constructed in the format
      *                  yyy/mm/dd/hh/mm/ss
      */
-    public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, EncounterType encounterName,
+    public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
             int stageNumber, Difficulty difficulty) {
-        super(source, userID, sessionID, timeStamp);
+        super(source, userID, sessionID, timeStamp, telemetryName);
         this.stageNumber = stageNumber;
         this.encounterName = encounterName;
         this.difficulty = difficulty;
