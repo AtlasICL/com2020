@@ -98,13 +98,13 @@ public interface SettingsInterface {
     public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
 
     /**
-     * Gets the value of the player max health multiplier design parameter for the
+     * Gets the value of the player max health design parameter for the
      * specified difficulty. 
      * 
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public float getPlayerMaxHealthMultiplier(Difficulty difficulty);
+    public int getPlayerMaxHealth(Difficulty difficulty);
 
     /**
      * Gets the value of the upgrade price multiplier design parameter for the
@@ -134,13 +134,13 @@ public interface SettingsInterface {
     public int getStartingLives(Difficulty difficulty);
 
     /**
-     * Gets the value of the max magic multiplier design parameter for the
+     * Gets the value of the max magic design parameter for the
      * specified difficulty. 
      * 
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public float getMaxMagicMultiplier(Difficulty difficulty);
+    public int getMaxMagic(Difficulty difficulty);
 
     /**
      * Gets the value of the magic regeneration rate design parameter for the
@@ -197,16 +197,16 @@ public interface SettingsInterface {
      * specified difficulty. 
      * 
      * @param difficulty               the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
+     * @param playerMaxHealth the value it's being set to.
      */
-    public void setPlayerMaxHealthMultiplier(Difficulty difficulty, float playerMaxHealthMultiplier);
+    public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth);
 
     /**
      * Sets the value of the upgrade price multiplier design parameter for the
      * specified difficulty.
      * 
      * @param difficulty               the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
+     * @param upgradePriceMultiplier the value it's being set to.
      */
     public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier);
 
@@ -233,9 +233,9 @@ public interface SettingsInterface {
      * specified difficulty. 
      * 
      * @param difficulty         the difficulty it's being set for.
-     * @param maxMagicMultiplier the value it's being set to.
+     * @param maxMagic the value it's being set to.
      */
-    public void setMaxMagicMultiplier(Difficulty difficulty, float maxMagicMultiplier);
+    public void setMaxMagic(Difficulty difficulty, int maxMagic);
 
     /**
      * Sets the value of the starting lives design parameter for the

@@ -8,34 +8,34 @@ import javax.management.relation.Role;
 public class SettingsSingleton {
     private SettingsInterface settings = new Settings();
 
-    private SettingsSingleton(){}
+    private SettingsSingleton() {
+    }
 
-    private static class Settings implements SettingsInterface{
+    private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
 
         private String username;
 
-        //ID for the current session, generated when a user enables telemetry or log in with telemetry enabled.
-        private int sessionID; 
+        // ID for the current session, generated when a user enables telemetry or log in
+        // with telemetry enabled.
+        private int sessionID;
 
         private Role userRole;
 
         private int hardMaxStageReached;
-
         private int normaMaxStageReached;
-
         private int easyMaxStageReached;
 
-        //design parameters: integer values multiplied by these parameters are to be rounded.
+        // design parameters: integer values multiplied by these parameters are to be
+        // rounded.
 
         private float hardEnemyMaxHealthMultiplier;
         private float normalEnemyMaxHealthMultiplier;
         private float easyEnemyMaxHealthMultiplier;
 
-        // Also affects upgrades that increase player max health.
-        private float hardPlayerMaxHealthMultiplier; 
-        private float normalPlayerMaxHealthMultiplier;
-        private float easyPlayerMaxHealthMultiplier;
+        private int hardPlayerMaxHealth;
+        private int normalPlayerMaxHealth;
+        private int easyPlayerMaxHealth;
 
         private float hardUpgradePriceMultiplier;
         private float normalUpgradePriceMultiplier;
@@ -49,10 +49,9 @@ public class SettingsSingleton {
         private int normalStartingLives;
         private int easyStartingLives;
 
-        //Also affects upgrades that increase max magic. 
-        private float hardMaxMagicMultiplier;
-        private float normalMaxMagicMultiplier;
-        private float easyMaxMagicMultiplier;
+        private int hardMaxMagic;
+        private int normalMaxMagic;
+        private int easyMaxMagic;
 
         private int hardMagicRegenRate;
         private int normalMagicRegenRate;
@@ -168,14 +167,14 @@ public class SettingsSingleton {
         public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
 
         /**
-         * Gets the value of the player max health multiplier design parameter for the
-         * specified difficulty. 
+         * Gets the value of the player max health design parameter for the
+         * specified difficulty.
          * 
          * @param difficulty the difficulty being queried.
          * @return the value of the design parameter.
          */
         @Override
-        public float getPlayerMaxHealthMultiplier(Difficulty difficulty);
+        public int getPlayerMaxHealth(Difficulty difficulty);
 
         /**
          * Gets the value of the upgrade price multiplier design parameter for the
@@ -208,14 +207,14 @@ public class SettingsSingleton {
         public int getStartingLives(Difficulty difficulty);
 
         /**
-         * Gets the value of the max magic multiplier design parameter for the
-         * specified difficulty. 
+         * Gets the value of the max magic design parameter for the
+         * specified difficulty.
          * 
          * @param difficulty the difficulty being queried.
          * @return the value of the design parameter.
          */
         @Override
-        public float getMaxMagicMultiplier(Difficulty difficulty);
+        public int getMaxMagic(Difficulty difficulty);
 
         /**
          * Gets the value of the magic regeneration rate design parameter for the
@@ -274,20 +273,20 @@ public class SettingsSingleton {
 
         /**
          * Sets the value of the player max health multiplier design parameter for the
-         * specified difficulty. 
+         * specified difficulty.
          * 
-         * @param difficulty               the difficulty it's being set for.
-         * @param enemyMaxHealthMultiplier the value it's being set to.
+         * @param difficulty      the difficulty it's being set for.
+         * @param playerMaxHealth the value it's being set to.
          */
         @Override
-        public void setPlayerMaxHealthMultiplier(Difficulty difficulty, float playerMaxHealthMultiplier);
+        public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth);
 
         /**
          * Sets the value of the upgrade price multiplier design parameter for the
          * specified difficulty.
          * 
-         * @param difficulty               the difficulty it's being set for.
-         * @param enemyMaxHealthMultiplier the value it's being set to.
+         * @param difficulty             the difficulty it's being set for.
+         * @param upgradePriceMultiplier the value it's being set to.
          */
         @Override
         public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier);
@@ -314,13 +313,13 @@ public class SettingsSingleton {
 
         /**
          * Sets the value of the max magic multiplier design parameter for the
-         * specified difficulty. 
+         * specified difficulty.
          * 
-         * @param difficulty         the difficulty it's being set for.
-         * @param maxMagicMultiplier the value it's being set to.
+         * @param difficulty the difficulty it's being set for.
+         * @param maxMagic   the value it's being set to.
          */
         @Override
-        public void setMaxMagicMultiplier(Difficulty difficulty, float maxMagicMultiplier);
+        public void setMaxMagic(Difficulty difficulty, int maxMagic);
 
         /**
          * Sets the value of the starting lives design parameter for the
