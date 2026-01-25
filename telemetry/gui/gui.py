@@ -140,19 +140,29 @@ class TelemetryAppGUI(tk.Tk):
         )
     
 
-    def _average_stage_dicts(
+    def get_average_dict_of_stage_dicts(
             self, 
-            dicts: list[dict[int, int]]
+            per_stage_data: list[dict[int, int]]
     ) -> dict[int, float]:
         """
         Helper function to get the average of a list of dictionaries
         which map stage numbers to values like HP remaining or coins
         gained.
+        Example: Given a list of dictionaries of health per stage data,
+        this function would return a dictionary which maps the stage
+        number to the average of health at that stage. 
+        
+        :param per_stage_data: List of dictionaries which represent 
+        "x per stage" data. 
+        :type per_stage_data: list[dict[int, int]]
+        :return: Average of the given data per stage. 
+        :rtype: dict[int, float]
         """
         stages = range(1, 11)
         averages: dict[int, float] = {}
         for stage in stages:
-            vals = [d.get(stage, 0) for d in dicts]
+            vals = [dictionary.get(stage, 0) 
+                    for dictionary in per_stage_data]
             averages[stage] = (sum(vals) / len(vals)) if vals else 0.0
         return averages
     
@@ -166,7 +176,7 @@ class TelemetryAppGUI(tk.Tk):
 
         series = []
         for difficulty, list_of_dicts in health_by_difficulty.items():
-            averages = self._average_stage_dicts(list_of_dicts)
+            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
             x = averages.keys()
             y = averages.values()
             series.append((x, y, str(difficulty.value)))
@@ -184,7 +194,7 @@ class TelemetryAppGUI(tk.Tk):
 
         series = []
         for difficulty, list_of_dicts in coins_by_difficulty.items():
-            averages = self._average_stage_dicts(list_of_dicts)
+            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
             x = averages.keys()
             y = averages.values()
             series.append((x, y, str(difficulty.value)))
