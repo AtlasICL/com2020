@@ -445,8 +445,14 @@ public AuthenticationException(String message, Throwable cause)
 
 ## enum Role
 *Enumerates all user roles*
+### Constructors
+private Role(String JSONName)
 ### Fields
 PLAYER, DESIGNER, DEVELOPER
+
+private final String JSONName
+### Methods
+public String getJSONName
 
 ## EncounterInterface
 *Interface for encounters*
