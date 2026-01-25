@@ -33,14 +33,20 @@ com2020/
 │   │           └── testResources.csv
 │   └── pom.xml
 ├── telemetry/
-│   ├── telemetry_app/
-│   │   ├── __init__.py
+│   ├── core/
+│   │   ├── __init__
 │   │   ├── events.py
+│   │   ├── parsing.py
 │   │   ├── logic.py
-│   │   └── gui.py
+│   │   └── export.py
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   ├── gui.py
+│   │   └── plotting.py
+│   ├── telemetry_app.py
+│   ├── example_data.json
 │   ├── schema.md
-│   ├── requirements.txt
-│   └── telemetry_app.py
+│   └── requirements.txt
 ├── meetings/
 │   ├── meeting_minutes.md
 │   └── project_specification.pdf

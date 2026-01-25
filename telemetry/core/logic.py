@@ -1,5 +1,5 @@
-from events import *
-from parsing import parse_file, ValidEvent
+from core.events import *
+from core.parsing import parse_file, ValidEvent
 
 class EventLogicEngine:
     def __init__(self):
@@ -63,6 +63,13 @@ class EventLogicEngine:
         :param filename: json file with custom schema.
         :type filename: str
         """
+        # TODO: We would need to implement __eq__ methods for our 
+        # event classes if we want the set() functionality of 
+        # avoiding duplicates. Until then, temporary fix: clear the 
+        # attributes before reading them back in again.
+        for attr in self._attributes:
+            attr.clear()
+        
         events: list[ValidEvent] = parse_file(filename)
         for event in events:
             if isinstance(event, SessionStart):
@@ -193,7 +200,7 @@ class EventLogicEngine:
         """
         health_remaining_per_stage = {stage_number: 0 
                                       for stage_number in range(1,11)}
-        for event in self.boss_encounter_complete_events:
+        for event in self.normal_encounter_complete_events:
             if event.sessionID == sessionID:
                 health_remaining_per_stage[
                     event.stage_number
