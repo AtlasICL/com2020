@@ -1,0 +1,3981 @@
+[
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/00/00",
+    "event": "SessionStart",
+    "difficulty": "Easy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/00/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/00/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/01/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/01/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/02/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 35
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/02/05",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 95
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/02/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/03/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/03/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/03/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/04/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 40
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/04/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 88
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/04/45",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/05/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/06/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/08/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 100
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/08/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 65
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/08/30",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/09/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/09/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/09/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/10/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/10/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 45
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/10/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 72
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/11/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/11/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/12/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/13/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 55
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/13/05",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 58
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/13/30",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/14/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/16/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/18/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "GainCoin",
+    "coins_gained": 150
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/18/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 35
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/18/30",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/18/45",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/19/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/19/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/20/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/20/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/21/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/21/05",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 70
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/21/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/22/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/22/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/23/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "GainCoin",
+    "coins_gained": 65
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/23/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 45
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/23/45",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/24/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/28/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/28/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "GainCoin",
+    "coins_gained": 300
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/28/35",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 12
+  },
+  {
+    "userID": 1001,
+    "sessionID": 50001,
+    "timestamp": "2026/01/24/09/29/00",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/15/00",
+    "event": "SessionStart",
+    "difficulty": "Normal"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/15/10",
+    "setting": "SETTING_1",
+    "setting_value": "0.7",
+    "event": "SettingsChange"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/15/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/15/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/16/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/16/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/17/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/17/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 45
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/17/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 78
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/18/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/18/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/19/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/19/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/20/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 50
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/20/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 55
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/20/50",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/21/15",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/24/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/24/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/27/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/28/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 120
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/28/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 22
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/28/30",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/28/45",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/29/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/29/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/30/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/30/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/31/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/31/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 55
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/31/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 68
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/32/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/32/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/33/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/34/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterFail",
+    "lives_left": 1
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/34/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/35/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/36/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/36/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/36/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 35
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/37/15",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/37/45",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/41/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterFail",
+    "lives_left": 0
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50002,
+    "timestamp": "2026/01/24/09/42/00",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/00/00",
+    "event": "SessionStart",
+    "difficulty": "Hard"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/00/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/00/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/01/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/01/55",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/02/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/03/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/03/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/03/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 55
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/04/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/04/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/05/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/06/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/06/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/07/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/07/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/08/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/09/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/09/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 70
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/09/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 30
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/10/10",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/10/25",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/10/45",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/14/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterFail",
+    "lives_left": 1
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/15/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/19/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterFail",
+    "lives_left": 0
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50003,
+    "timestamp": "2026/01/24/10/19/30",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/30/00",
+    "event": "SessionStart",
+    "difficulty": "Normal"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/30/10",
+    "setting": "SETTING_1",
+    "setting_value": "0.9",
+    "event": "SettingsChange"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/30/15",
+    "setting": "SETTING_2",
+    "setting_value": "1.2",
+    "event": "SettingsChange"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/30/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/31/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/31/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/32/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/32/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/33/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/33/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/34/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/34/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/35/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/35/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 45
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/35/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 70
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/36/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/36/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/37/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/37/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/38/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 50
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/38/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 52
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/38/45",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/39/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/42/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/43/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 120
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/43/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 28
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/43/30",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/43/45",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/44/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/44/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/45/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/45/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/46/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/46/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 55
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/46/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 75
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/47/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/47/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/48/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/49/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/49/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/49/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 48
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/50/15",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/50/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/54/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/54/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "GainCoin",
+    "coins_gained": 180
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/54/35",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 20
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/55/00",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/55/15",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/55/30",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/56/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/56/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/57/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/57/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/58/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/58/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "GainCoin",
+    "coins_gained": 70
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/58/55",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 62
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/59/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/10/59/55",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/00/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/01/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/01/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "GainCoin",
+    "coins_gained": 80
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/01/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 38
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/02/15",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/02/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/07/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterFail",
+    "lives_left": 1
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/07/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/12/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/13/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "GainCoin",
+    "coins_gained": 350
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/13/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 5
+  },
+  {
+    "userID": 1004,
+    "sessionID": 50004,
+    "timestamp": "2026/01/24/11/13/30",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/00/00",
+    "event": "SessionStart",
+    "difficulty": "Hard"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/00/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/00/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/01/25",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/02/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/02/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/03/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/03/40",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/03/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 48
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/04/10",
+    "stage_number": 1,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/04/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/05/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/05/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/06/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/07/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/07/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/08/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 70
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/08/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 35
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/08/50",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/09/05",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/09/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/13/45",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/14/15",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 150
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/14/20",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 18
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/14/45",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/15/00",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/15/15",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/15/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/16/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/17/05",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/17/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/18/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/19/05",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/19/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 75
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/19/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 55
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/20/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/20/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/21/40",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/22/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/23/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/23/40",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 80
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/23/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 28
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/24/10",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/24/25",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/24/45",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/29/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "event": "BossEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/30/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/35/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/35/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "event": "GainCoin",
+    "coins_gained": 200
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/35/35",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 6,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 8
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/36/00",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/36/15",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/36/30",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/37/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/37/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/38/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/39/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/40/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/40/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/41/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "event": "GainCoin",
+    "coins_gained": 90
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/41/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 7,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 52
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/41/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/42/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/43/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/44/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/45/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/45/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "event": "GainCoin",
+    "coins_gained": 100
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/45/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 8,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/46/00",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/46/15",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/46/45",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/52/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "event": "BossEncounterFail",
+    "lives_left": 1
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/53/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/11/59/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/12/00/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "event": "GainCoin",
+    "coins_gained": 500
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/12/00/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Hard",
+    "stage_number": 9,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 3
+  },
+  {
+    "userID": 1005,
+    "sessionID": 50005,
+    "timestamp": "2026/01/24/12/00/30",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/30/00",
+    "event": "SessionStart",
+    "difficulty": "Easy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/30/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/30/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/31/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/31/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/32/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 35
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/32/05",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 92
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/32/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/33/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/33/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/33/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/34/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 40
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/34/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 85
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/34/45",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/35/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/37/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/38/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 100
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/38/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 60
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/38/30",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/38/45",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/39/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/39/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/39/55",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/40/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/40/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 45
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/40/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 78
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/41/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/41/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/42/25",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/42/55",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 55
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/43/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 65
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/43/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/46/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/47/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "GainCoin",
+    "coins_gained": 150
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/47/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 6,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 40
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/47/30",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/47/45",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/48/00",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/48/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/49/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/49/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/50/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/50/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/50/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Easy",
+    "stage_number": 7,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 72
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/51/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/51/35",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/52/10",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/52/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "GainCoin",
+    "coins_gained": 65
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/52/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Easy",
+    "stage_number": 8,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 55
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/53/15",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/53/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/57/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/58/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "GainCoin",
+    "coins_gained": 300
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/58/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Easy",
+    "stage_number": 9,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 22
+  },
+  {
+    "userID": 1002,
+    "sessionID": 50006,
+    "timestamp": "2026/01/24/12/58/30",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/00/00",
+    "event": "SessionStart",
+    "difficulty": "Hard"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/00/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/01/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/01/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/02/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/03/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/03/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/04/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/05/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/06/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/06/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/07/15",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/07/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Hard",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 38
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/07/45",
+    "stage_number": 1,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/08/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/08/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/09/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/10/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterFail",
+    "lives_left": 1
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/11/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/11/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/12/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/13/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Hard",
+    "stage_number": 2,
+    "event": "NormalEncounterFail",
+    "lives_left": 0
+  },
+  {
+    "userID": 1006,
+    "sessionID": 50007,
+    "timestamp": "2026/01/24/13/14/00",
+    "event": "EndSession"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/00/00",
+    "event": "SessionStart",
+    "difficulty": "Normal"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/00/10",
+    "setting": "SETTING_1",
+    "setting_value": "0.3",
+    "event": "SettingsChange"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/00/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/01/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/01/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/02/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/02/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/03/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "GainCoin",
+    "coins_gained": 45
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/03/05",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 1,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 72
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/03/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/04/05",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/04/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/05/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/05/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/06/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "GainCoin",
+    "coins_gained": 50
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/06/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 2,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 58
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/06/50",
+    "stage_number": 2,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/07/15",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/10/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/11/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "GainCoin",
+    "coins_gained": 120
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/11/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 3,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 35
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/11/30",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/11/45",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/12/00",
+    "stage_number": 3,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 75
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/12/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/13/05",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/13/40",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_1",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/14/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/14/50",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/15/20",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "GainCoin",
+    "coins_gained": 55
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/15/25",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 4,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 68
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/15/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/16/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/17/20",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/18/00",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/18/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "GainCoin",
+    "coins_gained": 60
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/18/35",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 5,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 48
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/19/00",
+    "stage_number": 5,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/19/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/23/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/24/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "GainCoin",
+    "coins_gained": 180
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/24/05",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 6,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 22
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/24/30",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/24/45",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_1",
+    "coins_spent": 25
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/25/00",
+    "stage_number": 6,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 100
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/25/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/26/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/26/50",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/27/30",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/28/10",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/28/40",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "GainCoin",
+    "coins_gained": 70
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/28/45",
+    "encounter_name": "ENCOUNTER_1",
+    "difficulty": "Normal",
+    "stage_number": 7,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 60
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/29/15",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "NormalEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/30/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/30/45",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/31/30",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "enemy_type": "ENEMY_TYPE_2",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/32/00",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "GainCoin",
+    "coins_gained": 80
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/32/05",
+    "encounter_name": "ENCOUNTER_2",
+    "difficulty": "Normal",
+    "stage_number": 8,
+    "event": "NormalEncounterComplete",
+    "player_HP_remaining": 42
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/32/30",
+    "stage_number": 8,
+    "event": "BuyUpgrade",
+    "upgrade_bought": "UPGRADE_2",
+    "coins_spent": 50
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/33/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/37/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterFail",
+    "lives_left": 2
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/38/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterStart"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/43/00",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "enemy_type": "ENEMY_TYPE_3",
+    "event": "KillEnemy"
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/43/30",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "GainCoin",
+    "coins_gained": 350
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/43/35",
+    "encounter_name": "BOSS_1",
+    "difficulty": "Normal",
+    "stage_number": 9,
+    "event": "BossEncounterComplete",
+    "player_HP_remaining": 15
+  },
+  {
+    "userID": 1003,
+    "sessionID": 50008,
+    "timestamp": "2026/01/24/14/44/00",
+    "event": "EndSession"
+  }
+]
