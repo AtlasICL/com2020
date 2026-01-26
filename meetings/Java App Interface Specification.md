@@ -305,11 +305,13 @@ public EntityType getEnemyType()
 ## SettingsInterface
 *Interface for settings*
 ### Methods
-public void createNewUser(String username, String password, Role role) throws AuthenticationException
+public void createNewUser(String username, String password) throws AuthenticationException *Username must consist only of alphanumeric characters and underscores. If the JSON DB is empty, the created user should have the developer role, and otherwise player role*
 
-public void authenticateUser(String username, String password) throws AuthenticationException
+public void authenticateUser(String username, String password) throws AuthenticationException  
 
 public Role getUserRole() throws AuthenticationException
+
+public void setUserRole(String username, Role role) throws AuthenticationException *Throws the exception if lacking permission ( not a developer) or username doesn't exist*
 
 public String getUsername() throws AuthenticationException
 
