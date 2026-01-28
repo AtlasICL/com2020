@@ -122,15 +122,11 @@ public void onNormalEncounterComplete(NormalEncounterCompleteEvent e)
 
 public void onNormalEncounterFail(NormalEncounterFailEvent e)
 
-public void onNormalEncounterRetry(NormalEncounterRetryEvent e)
-
 public void onBossEncounterStart(BossEncounterStartEvent e)
 
 public void onBossEncounterComplete(BossEncounterCompleteEvent e)
 
 public void onBossEncounterFail(BossEncounterFailEvent e)
-
-public void onBossEncounterRetry(BossEncounterRetryEvent e)
 
 public void onGainCoin(GainCoinEvent e)
 
@@ -209,19 +205,10 @@ private int playerHPRemaining
 ### Methods
 public int getPlayerHPRemaining()
 
-## abstract EncounterRetryEvent extends EncounterEvent
-*Stores information for telemetry events for when an encounter is retried*
-### Constructors
-public EncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
-### Fields
-private int livesLeft
-### Methods
-public int getLivesLeft()
-
 ## abstract EncounterFailEvent extends EncounterEvent
 *Stores information for telemetry events for when an encounter is failed*
 ### Constructors
-public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
 
 ## SessionStartEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
@@ -241,12 +228,7 @@ public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, St
 ## NormalEncounterFailEvent extends EncounterFailEvent
 *Contains fields for normal encounter fail*
 ### Constructors
-public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
-
-## NormalEncounterRetryEvent extends EncounterRetryEvent
-*Contains fields for normal encounter retry*
-### Constructors
-public NormalEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
 
 ## BossEncounterStartEvent extends EncounterStartEvent
 *Contains fields for boss encounter start*
@@ -261,12 +243,7 @@ public BossEncounterCompleteEvent(Object source, int userID, int sessionID, Stri
 ## BossEncounterFailEvent extends EncounterFailEvent
 *Contains fields for boss encounter fail*
 ### Constructors
-public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
-
-## BossEncounterRetryEvent extends EncounterRetryEvent
-*Contains fields for boss encounter retry*
-### Constructors
-public BossEncounterRetryEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
 
 ## GainCoinEvent extends EncounterEvent
 *Contains fields for gain coin*

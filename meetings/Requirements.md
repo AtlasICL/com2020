@@ -15,11 +15,6 @@ The system should implements the following telemetry events:
     - User ID
     - Session ID
     - Timestamp
-- Run Start
-    - User ID
-    - Session ID
-    - Timestamp 
-    - Difficulty
 - Normal Encounter Start
     - User ID
     - Session ID
@@ -42,13 +37,7 @@ The system should implements the following telemetry events:
     - Encounter Name
     - Stage
     - Difficulty
-- Normal Encounter Retry
-    - User ID
-    - Session ID
-    - Timestamp
-    - Encounter Name
-    - Stage
-    - Difficulty
+    - Lives Left
 - Boss Encounter Start
     - User ID
     - Session ID
@@ -70,13 +59,7 @@ The system should implements the following telemetry events:
     - Encounter Name
     - Stage
     - Difficulty
-- Boss Encounter Retry
-    - User ID
-    - Session ID
-    - Timestamp
-    - Encounter Name
-    - Stage
-    - Difficulty
+    - Lives Left
 - Gain Coin
     - User ID
     - Session ID
@@ -475,8 +458,16 @@ It will allow players, designers and developers as specified [here](#user-authen
 #### Java application must contain 2 stages
 Each stage must have at least 1 encounter it can pull from. See [here](#10-levels-of-encounters) for more information.
 #### Java application must implement 6 telemetry types
+The app should have the following telemetry events:
+- SessionStart
+- NormalEncounterStart
+- NormalEncounterComplete
+- NormalEncounterFail
+- EndSession
+- SettingsChange
 See [here](#telemetry-events-including-the-specified-fields) for list of telemetry events. They should be sent during the runtime of the system in all completed stages.
 #### Java application must implement 1 balancing parameter
+This design parameter is the number of starting lives
 See parameters [here](#design-parameters)
 #### Java application must implement player-agent simulation
 [More information](#automated-player-agent)
