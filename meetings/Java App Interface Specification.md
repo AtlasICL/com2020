@@ -96,11 +96,11 @@ private EncounterInterface[] phase2NormalEncounters *drawn from for stages 4 and
 
 private EncounterInterface[] phase3NormalEncounters *drawn from for stages 7 and 8*
 
-private EncounterInterface[] phase1BossEncounters *drawn from for stage 3*
+private EncounterInterface phase1Boss *drawn from for stage 3*
 
-private EncounterInterface[] phase2BossEncounters *drawn from for stage 6*
+private EncounterInterface phase2Boss *drawn from for stage 6*
 
-private EncounterInterface[] phase3BossEncounters *drawn from for stage 9*
+private EncounterInterface phase3Boss *drawn from for stage 9*
 
 private EncounterInterface finalBoss *drawn from for stage 10*
 
@@ -631,8 +631,6 @@ public ConcreteEnemy() *reads values from settings, and adjusting it's statistic
 ### Methods
 public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
 
-public bool isOffensive()
-
 public String getDescription()
 
 public int getNumberOfTargets()
@@ -653,7 +651,6 @@ public LackingResourceException(String message, Throwable cause)
 ### Constructors
 public ConcreteAbility()
 ### Fields
-private final static bool offensive
 
 private final static String description
 
