@@ -13,13 +13,13 @@ public class GameRun implements GameRunInterface {
     private EncounterInterface[] phase3NormalEncounters; 
 
     //Drawn from for stage 3.
-    private EncounterInterface[] phase1BossEncounters; 
+    private EncounterInterface phase1Boss; 
 
     //Drawn from for stage 6.
-    private EncounterInterface[] phase2BossEncounters; 
+    private EncounterInterface phase2Boss; 
 
     //Drawn from for stage 9.
-    private EncounterInterface[] phase3BossEncounters; 
+    private EncounterInterface phase3Boss; 
 
     //Drawn from for stage 10.
     private EncounterInterface finalBoss;
