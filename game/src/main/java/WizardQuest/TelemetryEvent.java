@@ -5,7 +5,7 @@ import java.util.EventObject;
 public abstract class TelemetryEvent extends EventObject {
     private final int userID;
     private final int sessionID;
-    private final String timesTamp;
+    private final String timeStamp;
     private final String telemetryName;
 
     /**
@@ -28,7 +28,7 @@ public abstract class TelemetryEvent extends EventObject {
         super(source);
         this.userID = userID;
         this.sessionID = sessionID;
-        this.timesTamp = timeStamp;
+        this.timeStamp = timeStamp;
         this.telemetryName = telemetryName;
     }
 
@@ -56,7 +56,7 @@ public abstract class TelemetryEvent extends EventObject {
      * @return the timestamp.
      */
     public String getTimestamp() {
-        return this.timesTamp;
+        return this.timeStamp;
     }
 
     /**

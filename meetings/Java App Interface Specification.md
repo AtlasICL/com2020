@@ -209,11 +209,15 @@ public int getPlayerHPRemaining()
 *Stores information for telemetry events for when an encounter is failed*
 ### Constructors
 public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+### Fields
+private int livesLeft
+### Methods
+public int getLivesLeft()
 
 ## SessionStartEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
-public SessionStartEvent(Object source, int userID, int sessionID, String timestamp)
+public SessionStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 
 ## NormalEncounterStartEvent extends EncounterStartEvent
 *Contains fields for normal encounter start*

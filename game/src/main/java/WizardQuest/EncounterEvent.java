@@ -8,7 +8,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
     private final Difficulty difficulty;
 
     /**
-     * Constructor for the base telemetry event. Produces a telemetry event storing
+     * Constructor for the encounter telemetry event. Produces a telemetry event storing
      * common data.
      * 
      * @param source    the object that constructed the telemetry event.
