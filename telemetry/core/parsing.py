@@ -6,7 +6,7 @@ import json
 from typing import TypeAlias
 from datetime import datetime
 
-from events import *
+from core.events import *
 
 ValidEvent: TypeAlias = (
     SessionStart

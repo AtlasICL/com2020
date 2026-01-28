@@ -1,4 +1,4 @@
-from telemetry_app.gui import TelemetryAppGUI
+from gui.gui import TelemetryAppGUI
 
 def main() -> None:
     app = TelemetryAppGUI()
