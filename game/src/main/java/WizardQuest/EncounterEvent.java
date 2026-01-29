@@ -19,8 +19,8 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param timeStamp     the time the event was constructed in the format
      *                      yyy/mm/dd/hh/mm/ss
      * @param telemetryName name of the type of encounter event.
-     * @param difficulty    the difficulty used for the players session.
      * @param stageNumber   the current stage player is attempting.
+     * @param difficulty    the difficulty used for the players session.
      */
     public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
             int stageNumber, Difficulty difficulty) {
@@ -31,26 +31,26 @@ public abstract class EncounterEvent extends TelemetryEvent {
     }
 
     /**
-     * Gets the stage number the player is on when this event was created.
-     * @return the stage number stored in the event.
-     */
-    public int GetStageNumber() {
-        return this.stageNumber;
-    }
-
-    /**
      * Gets the name for the encounter this event was generated on.
      * @return the encounter's name.
      */
-    public EncounterType GetEncounterName(){
+    public EncounterType getEncounterName(){
         return this.encounterName;
+    }
+
+    /**
+     * Gets the stage number the player is on when this event was created.
+     * @return the stage number stored in the event.
+     */
+    public int getStageNumber() {
+        return this.stageNumber;
     }
 
     /**
      * Gets the difficulty setting for the run that generated this event.
      * @return the difficulty setting. 
      */
-    public Difficulty GetDifficulty(){
+    public Difficulty getDifficulty(){
         return this.difficulty;
     }
 }
