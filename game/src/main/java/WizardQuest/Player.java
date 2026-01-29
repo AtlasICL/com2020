@@ -86,9 +86,6 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public void gainLives(int amount) throws IllegalArgumentException {}
-
-    @Override
     public void loseLives(int amount) throws IllegalArgumentException {}
 
     @Override

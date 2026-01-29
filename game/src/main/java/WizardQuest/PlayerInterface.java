@@ -71,14 +71,6 @@ public interface PlayerInterface extends EntityInterface {
     public int getLives();
 
     /**
-     * Increases a player's remaining lives by a given amount.
-     *
-     * @param amount the total lives that the player will gain.
-     * @throws IllegalArgumentException if amount is not a non-negative number.
-     */
-    public void gainLives(int amount) throws IllegalArgumentException;
-
-    /**
      * Decrements a player's remaining lives by a given amount.
      *
      * @param amount the total lives that the player will lose.

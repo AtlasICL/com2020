@@ -25,10 +25,6 @@ public class SettingsSingleton {
 
         // DESIGN PARAMETERS: Integer values multiplied by these parameters to be rounded.
 
-        private float hardEnemyMaxHealthMultiplier;
-        private float mediumEnemyMaxHealthMultiplier;
-        private float easyEnemyMaxHealthMultiplier;
-
         private int hardPlayerMaxHealth;
         private int mediumPlayerMaxHealth;
         private int easyPlayerMaxHealth;
@@ -99,11 +95,6 @@ public class SettingsSingleton {
         }
 
         @Override
-        public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
-            return -1;
-        }
-
-        @Override
         public int getPlayerMaxHealth(Difficulty difficulty) {
             return -1;
         }
@@ -145,9 +136,6 @@ public class SettingsSingleton {
 
         @Override
         public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {}
-
-        @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier) {}
 
         @Override
         public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth) {}

@@ -89,15 +89,6 @@ public interface SettingsInterface {
     public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException;
 
     /**
-     * Gets the value of the enemy max health multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty the difficulty being queried.
-     * @return the value of the design parameter.
-     */
-    public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
-
-    /**
      * Gets the value of the player max health design parameter for the
      * specified difficulty. 
      * 
@@ -182,15 +173,6 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated.
      */
     public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException;
-
-    /**
-     * Sets the value of the enemy max health multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty               the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
-     */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
 
     /**
      * Sets the value of the player max health multiplier design parameter for the
