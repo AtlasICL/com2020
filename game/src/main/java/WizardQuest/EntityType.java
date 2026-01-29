@@ -1,5 +1,9 @@
 package WizardQuest;
 
+/**
+ * Enumerates all entity types in the game.
+ */
+
 public enum EntityType {
     ENTITYTYPE_1(),
     ENTITYTYPE_2(),

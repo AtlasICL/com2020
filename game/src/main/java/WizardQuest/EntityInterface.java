@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import java.util.List;
+
 /**
  * Interface for entities.
  * Provides methods for damage calculation and health management.
@@ -16,15 +18,6 @@ public interface EntityInterface {
     public void loseHealth(int amount, DamageType type) throws IllegalArgumentException;
 
     /**
-     * Increases an entity's health by a given amount.
-     * An entity's health may exceed their maximum health.
-     *
-     * @param amount the total health that the entity will gain.
-     * @throws IllegalArgumentException if amount is not a non-negative number.
-     */
-    public void gainHealth(int amount);
-
-    /**
      * Gets an entity's current health.
      *
      * @return the entity's current health.
@@ -32,7 +25,7 @@ public interface EntityInterface {
     public int getHealth();
 
     /**
-     * Gets an entity's maximum health. Their current health may exceed this.
+     * Gets an entity's maximum health.
      *
      * @return the entity's maximum health.
      */
@@ -56,7 +49,7 @@ public interface EntityInterface {
     public List<AbilityInterface> getAbilities();
 
     /**
-     * Reset an entity's health to the maximum value.
+     * Reset an entity's health to its starting value.
      */
     public void resetHealth();
 

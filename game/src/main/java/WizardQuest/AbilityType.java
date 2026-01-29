@@ -1,5 +1,8 @@
 package WizardQuest;
 
+/**
+ * Enumerates all ability types in the game.
+ */
 public enum AbilityType{
     PUNCH(), 
     ABSOLUTE_PULSE(),

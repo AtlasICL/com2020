@@ -1,5 +1,8 @@
 package WizardQuest;
 
+/**
+ * Enumerates all encounter types in the game.
+ */
 public enum EncounterType {
     ENCOUNTERTYPE_1(),
     ENCOUNTERTYPE_2(),
@@ -9,6 +12,7 @@ public enum EncounterType {
     private final String telemetryName;
 
     private EncounterType(EntityType[] enemies, String telemetryName) {
+        this.enemies = enemies;
         this.telemetryName = telemetryName;
     }
 

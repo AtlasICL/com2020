@@ -11,7 +11,7 @@ public enum UpgradeType {
 
     private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName) {
         this.price = price;
-        this.abiilityClass = abiilityClass;
+        this.upgradeClass = upgradeClass;
         this.telemetryName = telemetryName;
     }
 

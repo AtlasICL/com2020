@@ -71,7 +71,7 @@ public EncounterInterface pickEncounter() *returns a random encounter based on c
 
 public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
 
-public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException *buys and removes it from the shop and gives it to the player*
+public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException *buys and removes it from the shop and gives it to the player*
 
 public PlayerInterface getPlayer() 
 
@@ -557,8 +557,6 @@ public String getTelemetryName()
 *Contains all methods all entities have*
 ### Methods
 public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
-
-public void gainHealth(int amount) throws IllegalArgumentException *amount cannot be negative, can have health exceed maxHealth*
 
 public int getHealth()
 

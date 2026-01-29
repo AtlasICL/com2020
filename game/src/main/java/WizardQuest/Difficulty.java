@@ -1,5 +1,8 @@
 package WizardQuest;
 
+/**
+ * Enumerates all difficulty levels in the game.
+ */
 public enum Difficulty {
     EASY(),
     MEDIUM(),

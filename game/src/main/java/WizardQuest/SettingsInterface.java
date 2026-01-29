@@ -1,5 +1,6 @@
 package WizardQuest;
 
+import javax.management.relation.Role;
 /**
  * Interface for settings. Provides access to user settings and properties, as
  * well as the ability to authenticate and create users.
