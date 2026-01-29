@@ -28,7 +28,7 @@ public class SettingsChangeEvent extends TelemetryEvent{
      * 
      * @return setting being changed in event.
      */
-    public Setting GetSetting(){
+    public Setting getSetting(){
         return this.setting;
     }
     /**
@@ -36,7 +36,7 @@ public class SettingsChangeEvent extends TelemetryEvent{
      * 
      * @return setting value being changed to.
      */
-    public String GetSettingValue(){
+    public String getSettingValue(){
         return this.settingValue;
     }
 

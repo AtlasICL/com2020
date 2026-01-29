@@ -14,7 +14,7 @@ public abstract class EncounterFailEvent extends EncounterEvent{
      *                      TelemetryListenerInterface for information about
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss.
      * @param telemetryName name of the type of encounter event.
      * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.

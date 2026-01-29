@@ -13,7 +13,7 @@ public class KillEnemyEvent extends EncounterEvent{
      *                      TelemetryListenerInterface for information about
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.
      * @param stageNumber   the stage player has completed.
@@ -22,7 +22,7 @@ public class KillEnemyEvent extends EncounterEvent{
     public KillEnemyEvent(Object source, int userID, int sessionID, 
             String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, 
             EnemyType enemyType){
-                super(source, userID, sessionID, timeStamp, "KillEnemy", encounterName, stageNumber, difficulty);
+                super(source, userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);
                 this.enemyType = enemyType;
     }
     /**
@@ -30,7 +30,7 @@ public class KillEnemyEvent extends EncounterEvent{
      * 
      * @return enemy type killed.
      */
-    public EnemyType GetEnemyType(){
+    public EnemyType getEnemyType(){
         return this.enemyType;
     }
 }
