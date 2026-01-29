@@ -13,7 +13,6 @@ public class EndSessionEvent extends TelemetryEvent{
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
-     * @param difficulty    the difficulty used for the players session.
      */
     public EndSessionEvent(Object source, int userID, int sessionID, String timeStamp){
         super(source, userID, sessionID, timeStamp, "EndSession");
