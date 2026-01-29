@@ -11,13 +11,16 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * Constructor for the base telemetry event. Produces a telemetry event storing
      * common data.
      * 
-     * @param source    the object that constructed the telemetry event.
-     * @param userID    the ID of the user who is playing the game when the event is
-     *                  constructed.
-     * @param sessionID the ID of the session the user is currently playing. See
-     *                  TelemetryListenerInterface for information about sessions.
-     * @param timeStamp the time the event was constructed in the format
-     *                  yyy/mm/dd/hh/mm/ss
+     * @param source        the object that constructed the telemetry event.
+     * @param userID        the ID of the user who is playing the game when the event is
+     *                      constructed.
+     * @param sessionID     the ID of the session the user is currently playing. See
+     *                      TelemetryListenerInterface for information about sessions.
+     * @param timeStamp     the time the event was constructed in the format
+     *                      yyy/mm/dd/hh/mm/ss
+     * @param telemetryName name of the type of encounter event.
+     * @param difficulty    the difficulty used for the players session.
+     * @param stageNumber   the current stage player is attempting.
      */
     public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
             int stageNumber, Difficulty difficulty) {
@@ -31,7 +34,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * Gets the stage number the player is on when this event was created.
      * @return the stage number stored in the event.
      */
-    public int getStageNumber() {
+    public int GetStageNumber() {
         return this.stageNumber;
     }
 
@@ -39,7 +42,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * Gets the name for the encounter this event was generated on.
      * @return the encounter's name.
      */
-    public EncounterType getEncounterName(){
+    public EncounterType GetEncounterName(){
         return this.encounterName;
     }
 
@@ -47,7 +50,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * Gets the difficulty setting for the run that generated this event.
      * @return the difficulty setting. 
      */
-    public Difficulty getDifficulty(){
+    public Difficulty GetDifficulty(){
         return this.difficulty;
     }
 }
