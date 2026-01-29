@@ -1,23 +1,24 @@
 # Definition of json schema
+- [Definition of json schema](#definition-of-json-schema)
 - [List of valid event types](#list-of-valid-event-types)
-- [List of valid difficulties](#list-of-valid-difficulties)
-- [List of valid encounter names](#list-of-valid-encounter-names)
-- [List of valid upgrade names](#list-of-valid-upgrade-names)
-- [List of valid enemy names](#list-of-valid-enemy-names)
-- [List of valid settings](#list-of-valid-settings)
-- [Example logging event jsons](#example-logging-event-jsons)
+  - [List of valid difficulties](#list-of-valid-difficulties)
+  - [List of valid encounter names](#list-of-valid-encounter-names)
+  - [List of valid upgrade names](#list-of-valid-upgrade-names)
+  - [List of valid enemy names](#list-of-valid-enemy-names)
+  - [List of valid settings](#list-of-valid-settings)
+  - [Example logging event jsons](#example-logging-event-jsons)
     - [1) SessionStart](#1-sessionstart)
     - [2) NormalEncounterStart](#2-normalencounterstart)
     - [3) NormalEncounterComplete](#3-normalencountercomplete)
     - [4) NormalEncounterFail](#4-normalencounterfail)
     - [5) BossEncounterStart](#5-bossencounterstart)
-    - [6) BossEncounterComplete](#7-bossencountercomplete)
-    - [7) BossEncounterFail](#8-bossencounterfail)
-    - [8) GainCoin](#10-gaincoin)
-    - [9) BuyUpgrade](#11-buyupgrade)
-    - [10) EndSession](#12-endsession)
-    - [11) SettingsChange](#13-settingschange)
-    - [12) KillEnemy](#14-killenemy)
+    - [6) BossEncounterComplete](#6-bossencountercomplete)
+    - [7) BossEncounterFail](#7-bossencounterfail)
+    - [8) GainCoin](#8-gaincoin)
+    - [9) BuyUpgrade](#9-buyupgrade)
+    - [10) EndSession](#10-endsession)
+    - [11) SettingsChange](#11-settingschange)
+    - [12) KillEnemy](#12-killenemy)
 
 
 # List of valid event types 
@@ -205,7 +206,7 @@ To be defined at a later date.
     encounter_name: string [must be in list of valid encounter names],
     difficulty: string [must be in list of valid difficulties],
     stage_number: int,
-    enemy_type: string,
+    enemy_type: string [must be in list of valid enemy names],
     event: "KillEnemy"
 }
 ```
