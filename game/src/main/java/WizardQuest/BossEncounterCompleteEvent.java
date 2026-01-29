@@ -1,7 +1,6 @@
 package WizardQuest;
 
-public class BossEncounterCompleteEvent extends EncounterEvent{
-    private final int playerHPRemaining;
+public class BossEncounterCompleteEvent extends EncounterCompleteEvent{
     /**
      * Constructor for BossEncounterCompleteEvent.
      * 
@@ -13,7 +12,7 @@ public class BossEncounterCompleteEvent extends EncounterEvent{
      *                          TelemetryListenerInterface for information about
      *                          sessions.
      * @param timeStamp         the time the event was constructed in the format
-     *                          yyyy/mm/dd/hh/mm/ss
+     *                          yyyy/mm/dd/hh/mm/ss.
      * @param encounterName     the name of the encounter a player is fighting.
      * @param difficulty        the difficulty used for the players session.
      * @param stageNumber       the stage player has completed.
@@ -22,15 +21,6 @@ public class BossEncounterCompleteEvent extends EncounterEvent{
     public BossEncounterCompleteEvent(Object source, int userID, int sessionID, 
             String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int playerHPRemaining){
         super(source, userID, sessionID, timeStamp, "BossEncounterComplete", 
-            encounterName, stageNumber, difficulty);
-        this.playerHPRemaining = playerHPRemaining;
-    }
-    /**
-     * Gets stored player HP.
-     * 
-     * @return player HP remaining after encounter complete.
-     */
-    public int GetPlayerHPRemaining(){
-        return this.playerHPRemaining;
+            encounterName, difficulty, stageNumber, playerHPRemaining);
     }
 }

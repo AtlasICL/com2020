@@ -1,7 +1,6 @@
 package WizardQuest;
 
-public class BossEncounterFailEvent extends EncounterEvent{
-    final int livesLeft;
+public class BossEncounterFailEvent extends EncounterFailEvent{
     /**
      * Constructor for BossEncounterFailEvent.
      * 
@@ -13,24 +12,15 @@ public class BossEncounterFailEvent extends EncounterEvent{
      *                      TelemetryListenerInterface for information about
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.
      * @param stageNumber   the stage player has completed.
-     * @param livesLeft     player HP remaining after completion.
+     * @param livesLeft     player lives remaining after completion.
      */
     public BossEncounterFailEvent(Object source, int userID, int sessionID, 
             String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int livesLeft){
         super(source, userID, sessionID, timeStamp, "BossEncounterFail", 
-            encounterName, stageNumber, difficulty);
-        this.livesLeft = livesLeft;
-    }
-    /**
-     * Gets stored lives left.
-     * 
-     * @return lives left after encounter failure.
-     */
-    public int GetLivesLeft(){
-        return this.livesLeft;
+            encounterName, difficulty, stageNumber, livesLeft);
     }
 }

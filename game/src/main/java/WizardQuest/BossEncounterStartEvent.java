@@ -12,13 +12,14 @@ public class BossEncounterStartEvent extends EncounterEvent{
      *                      TelemetryListenerInterface for information about
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.
      * @param stageNumber   the current stage player is attempting.
      */
     public BossEncounterStartEvent(Object source, int userID, int sessionID, 
             String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber){
-        super(source, userID, sessionID, timeStamp, "BossEncounterStart", encounterName, stageNumber, difficulty);
+        super(source, userID, sessionID, timeStamp, "BossEncounterStart", 
+            encounterName, difficulty, stageNumber);
     }
 }
