@@ -1,5 +1,17 @@
 package WizardQuest;
 
 public enum Difficulty {
-    EASY, NORMAL, HARD;
+    EASY("Easy"),
+    NORMAL("Normal"), 
+    HARD("Hard");
+
+    private final String telemetryName;
+
+    private Difficulty(String telemetryName){
+        this.telemetryName = telemetryName;
+    }
+
+    public String getTelemetryName(){
+        return this.telemetryName;
+    }
 }
