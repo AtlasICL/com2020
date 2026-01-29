@@ -15,7 +15,7 @@ public class BossEncounterFailEvent extends EncounterFailEvent{
      *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.
-     * @param stageNumber   the stage player has completed.
+     * @param stageNumber   the stage player has failed.
      * @param livesLeft     player lives remaining after completion.
      */
     public BossEncounterFailEvent(Object source, int userID, int sessionID, 

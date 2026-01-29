@@ -17,7 +17,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param sessionID     the ID of the session the user is currently playing. See
      *                      TelemetryListenerInterface for information about sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss.
      * @param telemetryName name of the type of encounter event.
      * @param encounterName the name of the encounter a player is fighting.
      * @param stageNumber   the current stage player is attempting.
