@@ -630,7 +630,7 @@ public void execute(EntityInterface source, EntityInterface[] targets) throws La
 
 public String getDescription()
 
-public int getNumberOfTargets()
+public bool isMultiTarget()
 
 public AbilityType getType()
 
@@ -651,7 +651,7 @@ public ConcreteAbility()
 
 private final static String description
 
-private final static int numberOfTargets
+private final static bool multiTarget
 
 private final static AbilityType type
 
