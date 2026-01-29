@@ -25,6 +25,11 @@ public class NormalEncounterCompleteEvent extends EncounterEvent{
             encounterName, stageNumber, difficulty);
         this.playerHPRemaining = playerHPRemaining;
     }
+    /**
+     * Gets stored player HP.
+     * 
+     * @return player HP remaining after encounter complete.
+     */
     public int GetPlayerHPRemaining(){
         return this.playerHPRemaining;
     }

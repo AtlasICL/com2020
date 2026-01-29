@@ -25,6 +25,11 @@ public class NormalEncounterFailEvent extends EncounterEvent{
             encounterName, stageNumber, difficulty);
         this.livesLeft = livesLeft;
     }
+    /**
+     * Gets stored lives left.
+     * 
+     * @return lives left after encounter failure.
+     */
     public int GetLivesLeft(){
         return this.livesLeft;
     }
