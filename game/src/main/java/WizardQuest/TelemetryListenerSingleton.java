@@ -60,15 +60,6 @@ public class TelemetryListenerSingleton {
         public void onNormalEncounterFail(NormalEncounterFailEvent e);
 
         /**
-         * Called when a normal encounter is retried as the player has died and has
-         * lives remaining.
-         * 
-         * @param e the NormalEncounterRetryEvent to be recorded to the JSON database.
-         */
-        @Override
-        public void onNormalEncounterRetry(NormalEncounterRetryEvent e);
-
-        /**
          * Called when a boss encounter is started.
          * 
          * @param e the BossEncounterStartEvent to be recorded to the JSON database.
@@ -92,15 +83,6 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterFail(BossEncounterFailEvent e);
-
-        /**
-         * Called when a boss encounter is retried as the player has died and has lives
-         * remaining.
-         * 
-         * @param e the BossEncounterRetryEvent to be recorded to the JSON database.
-         */
-        @Override
-        public void onBossEncounterRetry(BossEncounterRetryEvent e);
 
         /**
          * Called when the player gains coins.
