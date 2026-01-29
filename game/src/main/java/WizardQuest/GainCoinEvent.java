@@ -20,7 +20,7 @@ public class GainCoinEvent extends EncounterEvent{
      */
     public GainCoinEvent(Object source, int userID, int sessionID, 
         String timeStamp, Difficulty difficulty, EncounterType encounterName, int stageNumber, int coinsGained){
-        super(source, userID, sessionID, timeStamp, "BossEncounterStart", encounterName, stageNumber, difficulty);
+        super(source, userID, sessionID, timeStamp, "GainCoin", encounterName, stageNumber, difficulty);
         this.coinsGained = coinsGained;
     }
     /**
