@@ -29,6 +29,7 @@ public GameManagerInterface getGameManager()
 ### Methods
 public LocalDateTime getCurrentTime()
 
+public static String convertDateTime(LocalDateTime time)
 ## private TimeManager implements TimeManagerInterface nested in TimeManagerSingleton
 *Time manager, that provide the time for all gameplay systems.*
 ### Constructors
