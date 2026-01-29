@@ -626,11 +626,9 @@ public ConcreteEnemy() *reads values from settings, and adjusting it's statistic
 ## interface AbilityInterface
 *Interface all abilities implement*
 ### Methods
-public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
+public void execute(EntityInterface source, EntityInterface target) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
 
 public String getDescription()
-
-public bool isMultiTarget()
 
 public AbilityType getType()
 
@@ -650,8 +648,6 @@ public ConcreteAbility()
 ### Fields
 
 private final static String description
-
-private final static bool multiTarget
 
 private final static AbilityType type
 
