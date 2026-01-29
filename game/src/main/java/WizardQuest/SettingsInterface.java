@@ -2,8 +2,7 @@ package WizardQuest;
 
 /**
  * Interface for settings. Provides access to user settings and properties, as
- * well as the ability to
- * authenticate and create users.
+ * well as the ability to authenticate and create users.
  */
 public interface SettingsInterface {
     /**
