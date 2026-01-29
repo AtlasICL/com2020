@@ -24,9 +24,9 @@ public class SessionStartEvent extends TelemetryEvent {
     /**
      * Gets the stored difficulty.
      * 
-     * @return session difficulty
+     * @return session difficulty.
      */
-    public Difficulty GetDifficulty(){
+    public Difficulty getDifficulty(){
         return this.difficulty;
     }
 }
