@@ -626,7 +626,7 @@ public ConcreteEnemy() *reads values from settings, and adjusting it's statistic
 ## interface AbilityInterface
 *Interface all abilities implement*
 ### Methods
-public void execute(EntityInterface source, EntityInterface target) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
+public void execute(EntityInterface source, EntityInterface target) throws LackingResourceException, IllegalArgumentException *throws LackingResourceException if the source doesn't have enough resource to use the ability, and throws IllegalArgumentException if the source doesn't support the resource used by the ability (e.g. magic)*
 
 public String getDescription()
 
