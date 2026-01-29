@@ -69,7 +69,7 @@ public EntityAIInterface getEntityAI()
 ### Methods
 public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
 
-public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
+public UpgradeType[] viewShop() *returns N random upgrades in the shop*
 
 public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException *buys and removes it from the shop and gives it to the player*
 
@@ -83,7 +83,7 @@ public LocalDateTime getRunStartTime()
 
 public int getDeathCount()
 
-public void incrementDeathCount() *Only increments death count. A player running out of lives and the decrement of their lives should be handled by GameManger*
+public void incrementDeathCount() *Only increments death count. A player running out of lives, and the decrement of their lives should be handled by GameManger*
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
@@ -338,7 +338,7 @@ public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
 
 public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealthMultiplier)
+public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth)
 
 public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
 
@@ -346,7 +346,7 @@ public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMul
 
 public void setStartingLives(Difficulty difficulty, int startingLives)
 
-public void setMaxMagic(Difficulty difficulty, int maxMagicMultiplier)
+public void setMaxMagic(Difficulty difficulty, int maxMagic)
 
 public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
 
@@ -483,7 +483,7 @@ PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 ### Constructors
 private AbilityType(Class<? extends AbilityInterface> abilityClass)
 ### Fields
-BOW, SWORD, etc. *placeholders, abilities TBD*
+PUNCH, ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL
 
 private final Class<? extends AbilityInterface> abilityClass
 ### Methods
@@ -494,7 +494,7 @@ public AbilityInterface getAbility()
 ### Constructor
 private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName)
 ### Fields
-HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
+ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL, PHYSICAL_DAMAGE_RESISTANCE, FIRE_DAMAGE_RESISTANCE, WATER_DAMAGE_RESISTANCE, THUNDER_DAMAGE_RESISTANCE, IMPROVED_PHYSICAL_DAMAGE, IMPROVED_FIRE_DAMAGE, IMPROVED_WATER_DAMAGE, IMPROVED_THUNDER_DAMAGE
 
 private final int price
 
@@ -540,7 +540,7 @@ public String getTelemetryName()
 ### Constructor
 private EntityType(Class<? extends EntityInterface> enemyClass, String telemetryName)
 ### Fields
-ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
+GOBLIN, FISH_MAN, PYROMANCER, EVIL_WIZARD, ARMOURED_GOBLIN, GHOST, BLACK_KNIGHT, DRAGON
 
 private final Class<? extends EntityInterface> enemyClass
 
@@ -553,8 +553,6 @@ public String getTelemetryName()
 *Contains all methods all entities have*
 ### Methods
 public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
-
-public void gainHealth(int amount) throws IllegalArgumentException *amount cannot be negative, can have health exceed maxHealth*
 
 public int getHealth()
 
@@ -587,8 +585,6 @@ public void gainMagic(int amount) throws IllegalArgumentException *amount cannot
 public void loseMagic(int amount) throws IllegalArgumentException *amount cannot be negative*
 
 public int getLives()
-
-public void gainLives(int amount) throws IllegalArgumentException *amount cannot be negative*
 
 public void loseLives(int amount) throws IllegalArgumentException *amount cannot be negative*
 
