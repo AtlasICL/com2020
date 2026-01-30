@@ -1,36 +1,21 @@
 package WizardQuest;
 
-public abstract class EncounterCompleteEvent extends EncounterEvent{
+public abstract class EncounterCompleteEvent extends EncounterEvent {
     private final int playerHPRemaining;
     /**
-     * Constructor for EncounterCompleteEvent.
-     * 
-     * @param source            the object that constructed the telemetry event.
-     * @param userID            the ID of the user who is playing the game when the
-     *                          event is
-     *                          constructed.
-     * @param sessionID         the ID of the session the user is currently playing. See
-     *                          TelemetryListenerInterface for information about
-     *                          sessions.
-     * @param timeStamp         the time the event was constructed in the format
-     *                          yyyy/mm/dd/hh/mm/ss.
-     * @param telemetryName     name of the type of encounter event.
-     * @param encounterName     the name of the encounter a player is fighting.
-     * @param difficulty        the difficulty used for the players session.
-     * @param stageNumber       the stage player has completed.
-     * @param playerHPRemaining player HP remaining after completion.
+     * Constructor for the encounter complete telemetry event. Produces a telemetry event storing
+     * common data.
+     * @param playerHPRemaining     A player's health points at the end of an encounter.
      */
-    public EncounterCompleteEvent(Object source, int userID, int sessionID, 
-            String timeStamp, String telemetryName, EncounterType encounterName, Difficulty difficulty, int stageNumber, int playerHPRemaining) {
-        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
+    public EncounterCompleteEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
+                               int stageNumber, Difficulty difficulty, int playerHPRemaining) {
+        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, stageNumber, difficulty);
         this.playerHPRemaining = playerHPRemaining;
     }
+
     /**
-     * Gets stored player HP.
-     * 
-     * @return player HP remaining after encounter complete.
+     * Gets the remaining health points of the player when this event was created.
+     * @return the remaining player HP stored in the event.
      */
-    public int getPlayerHPRemaining(){
-        return this.playerHPRemaining;
-    }
+    public int getPlayerHPRemaining() {return playerHPRemaining;}
 }

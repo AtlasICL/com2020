@@ -72,7 +72,7 @@ public EncounterInterface pickEncounter() *returns a random encounter based on c
 
 public UpgradeType[] viewShop() *returns N random upgrades in the shop*
 
-public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException *buys and removes it from the shop and gives it to the player*
+public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException *buys and removes it from the shop and gives it to the player*
 
 public PlayerInterface getPlayer() 
 
@@ -210,46 +210,50 @@ public int getPlayerHPRemaining()
 *Stores information for telemetry events for when an encounter is failed*
 ### Constructors
 public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+### Fields
+private int livesLeft
+### Methods
+public int getLivesLeft()
 
 ## SessionStartEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
-public SessionStartEvent(Object source, int userID, int sessionID, String timestamp)
+public SessionStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 
 ## NormalEncounterStartEvent extends EncounterStartEvent
 *Contains fields for normal encounter start*
 ### Constructors
-public NormalEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public NormalEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## NormalEncounterCompleteEvent extends EncounterCompleteEvent
 *Contains fields for normal encounter complete*
 ### Constructors
-public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
+public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
 
 ## NormalEncounterFailEvent extends EncounterFailEvent
 *Contains fields for normal encounter fail*
 ### Constructors
-public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
 
 ## BossEncounterStartEvent extends EncounterStartEvent
 *Contains fields for boss encounter start*
 ### Constructors
-public BossEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public BossEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
 
 ## BossEncounterCompleteEvent extends EncounterCompleteEvent
 *Contains fields for boss encounter complete*
 ### Constructors
-public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
+public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
 
 ## BossEncounterFailEvent extends EncounterFailEvent
 *Contains fields for boss encounter fail*
 ### Constructors
-public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
 
 ## GainCoinEvent extends EncounterEvent
 *Contains fields for gain coin*
 ### Constructors
-public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber,  Difficulty difficulty, int coinsGained)
+public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber,  Difficulty difficulty, int coinsGained)
 ### Fields
 private final int coinsGained
 
@@ -259,7 +263,7 @@ public int getCoinsGained()
 ## BuyUpgradeEvent extends EncounterEvent
 *Contains fields for buy upgrade*
 ### Constructors
-public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber,  Difficulty difficulty, UpgradeType upgradeBought, int coinsSpent)
+public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber,  Difficulty difficulty, UpgradeType upgradeBought, int coinsSpent)
 ### Fields
 private final int coinsSpent
 
@@ -273,7 +277,7 @@ public UpgradeType getUpgradeBought()
 ## EndSessionEvent extends TelemetryEvent
 *Contains fields for end session, sent when telemetry is disabled.*
 ### Constructors
-public EndSessionEvent(Object source, int userID, int sessionID, String timestamp)
+public EndSessionEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
@@ -290,7 +294,7 @@ public String getSettingValue()
 ## KillEnemyEvent extends EncounterEvent
 *Contains fields for kill enemy*
 ### Constructors
-public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, EncounterType encounterName, int stageNumber, Difficulty difficulty, EntityType enemyType)
+public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, EntityType enemyType)
 ### Fields
 private final EntityType enemyType
 ### Methods

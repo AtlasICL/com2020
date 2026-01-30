@@ -1,7 +1,7 @@
 package WizardQuest;
 
 /**
- * Enumerates all of the game's settings.
+ * Enumerates all settings types in the game.
  */
 public enum SettingsType {
     TELEMETRY_ENABLED("TelemetryEnabled");
@@ -12,12 +12,7 @@ public enum SettingsType {
         this.telemetryName = telemetryName;
     }
 
-    /**
-     * Gets the name of the setting as specified by the telemetry schema.
-     * 
-     * @return the setting's telemetry schema name.
-     */
     public String getTelemetryName() {
-        return this.telemetryName;
+        return telemetryName;
     }
 }

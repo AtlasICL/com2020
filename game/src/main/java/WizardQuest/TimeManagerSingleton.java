@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 public class TimeManagerSingleton {
     private static TimeManagerInterface timeManager = new TimeManager();
 
-    private TimeManagerSingleton() {
-    }
+    private TimeManagerSingleton() {}
 
     /**
      * Returns a reference to the time manager.
@@ -19,14 +18,8 @@ public class TimeManagerSingleton {
     }
 
     private static class TimeManager implements TimeManagerInterface {
-        public TimeManager() {
-        }
+        public TimeManager() {}
 
-        /**
-         * Gives the current time.
-         * 
-         * @return the current time. 
-         */
         @Override
         public LocalDateTime getCurrentTime() {
             return LocalDateTime.now();
