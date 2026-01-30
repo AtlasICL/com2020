@@ -116,6 +116,15 @@ public interface SettingsInterface {
     public float getEnemyDamageMultiplier(Difficulty difficulty);
 
     /**
+     * Gets the value of the enemy health multiplier design parameter for the
+     * specified difficulty.
+     *
+     * @param difficulty the difficulty being queried.
+     * @return the value of the design parameter.
+     */
+    public float getEnemyHealthMultiplier(Difficulty difficulty);
+
+    /**
      * Gets the value of the starting lives design parameter for the
      * specified difficulty.
      * 
@@ -200,6 +209,15 @@ public interface SettingsInterface {
      * @param enemyDamageMultiplier the value it's being set to.
      */
     public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier);
+
+    /**
+     * Sets the value of the enemy health multiplier design parameter for the
+     * specified difficulty.
+     *
+     * @param difficulty            the difficulty it's being set for.
+     * @param enemyHealthMultiplier the value it's being set to.
+     */
+    public void setEnemyHealthMultiplier(Difficulty difficulty, float enemyHealthMultiplier);
 
     /**
      * Sets the value of the starting lives design parameter for the

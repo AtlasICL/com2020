@@ -37,6 +37,10 @@ public class SettingsSingleton {
         private float mediumEnemyDamageMultiplier;
         private float easyEnemyDamageMultiplier;
 
+        private float hardEnemyHealthMultiplier;
+        private float mediumEnemyHealthMultiplier;
+        private float easyEnemyHealthMultiplier;
+
         private int hardStartingLives;
         private int mediumStartingLives;
         private int easyStartingLives;
@@ -110,6 +114,11 @@ public class SettingsSingleton {
         }
 
         @Override
+        public float getEnemyHealthMultiplier(Difficulty difficulty) {
+            return -1;
+        }
+
+        @Override
         public int getStartingLives(Difficulty difficulty) {
             return -1;
         }
@@ -145,6 +154,9 @@ public class SettingsSingleton {
 
         @Override
         public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier) {}
+
+        @Override
+        public void setEnemyHealthMultiplier(Difficulty difficulty, float enemyHealthMultiplier) {}
 
         @Override
         public void setStartingLives(Difficulty difficulty, int startingLives) {}
