@@ -20,7 +20,7 @@ public abstract class TelemetryEvent extends EventObject {
      *                      TelemetryListenerInterface for information about
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
-     *                      yyy/mm/dd/hh/mm/ss
+     *                      yyyy/mm/dd/hh/mm/ss
      * @param telemetryName the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */

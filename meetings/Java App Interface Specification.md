@@ -29,6 +29,7 @@ public GameManagerInterface getGameManager()
 ### Methods
 public LocalDateTime getCurrentTime()
 
+public static String convertDateTime(LocalDateTime time)
 ## private TimeManager implements TimeManagerInterface nested in TimeManagerSingleton
 *Time manager, that provide the time for all gameplay systems.*
 ### Constructors
@@ -46,7 +47,7 @@ public TimeManagerInterface getTimeManager()
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public void useAbility(AbilityInterface[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) 
+public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies) 
 
 public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
 
@@ -69,7 +70,7 @@ public EntityAIInterface getEntityAI()
 ### Methods
 public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
 
-public UpgradeType[] viewShop() *returns 3 random upgrades in the shop*
+public UpgradeType[] viewShop() *returns N random upgrades in the shop*
 
 public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException *buys and removes it from the shop and gives it to the player*
 
@@ -83,7 +84,7 @@ public LocalDateTime getRunStartTime()
 
 public int getDeathCount()
 
-public void incrementDeathCount() *Only increments death count. A player running out of lives and the decrement of their lives should be handled by GameManger*
+public void incrementDeathCount() *Only increments death count. A player running out of lives, and the decrement of their lives should be handled by GameManger*
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
@@ -280,13 +281,13 @@ public EndSessionEvent(Object source, int userID, int sessionID, String timestam
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
-public SettingsChangeEvent(iObject source, int userID, int sessionID, String timestamp, String telemetryName, String setting, String settingValue)
+public SettingsChangeEvent(iObject source, nt userID, int sessionID, String timestamp, SettingType setting, String settingValue)
 ### Fields
-private final String setting
+private final SettingType setting
 
 private final String settingValue
 ### Methods
-public String getSetting()
+public SettingType getSetting()
 
 public String getSettingValue()
 
@@ -342,7 +343,7 @@ public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
 
 public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealthMultiplier)
+public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth)
 
 public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
 
@@ -350,7 +351,7 @@ public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMul
 
 public void setStartingLives(Difficulty difficulty, int startingLives)
 
-public void setMaxMagic(Difficulty difficulty, int maxMagicMultiplier)
+public void setMaxMagic(Difficulty difficulty, int maxMagic)
 
 public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
 
@@ -485,20 +486,36 @@ PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 ## enum AbilityType
 *Enumerates the game's abilities*
 ### Constructors
-private AbilityType(Class<? extends AbilityInterface> abilityClass)
+private AbilityType(String description, int baseDamage, int magicCost, DamageType damageType)
 ### Fields
-BOW, SWORD, etc. *placeholders, abilities TBD*
+PUNCH, ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL
 
-private final Class<? extends AbilityInterface> abilityClass
+private final String description
+
+private final int baseDamage
+
+private final int magicCost
+
+private final DamageType damageType
+
 ### Methods
-public AbilityInterface getAbility()
+
+public String getDescription
+
+public int getBaseDamage
+
+public int getMagicCost
+
+public DamageType getDamageType
+
+public void execute(EntityInterface source, EntityInterface target)
 
 ## enum UpgradeType
 *Enumerates the game's upgrades*
 ### Constructor
 private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName)
 ### Fields
-HEALTH_BOOST, POTENT_MAGIC, etc. *placeholders, upgrades TBD*
+ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL, PHYSICAL_DAMAGE_RESISTANCE, FIRE_DAMAGE_RESISTANCE, WATER_DAMAGE_RESISTANCE, THUNDER_DAMAGE_RESISTANCE, IMPROVED_PHYSICAL_DAMAGE, IMPROVED_FIRE_DAMAGE, IMPROVED_WATER_DAMAGE, IMPROVED_THUNDER_DAMAGE
 
 private final int price
 
@@ -511,6 +528,7 @@ public int getPrice()
 public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
 
 public String getTelemetryName()
+
 ## enum Difficulty
 *Enumerates the different levels of difficulty*
 ### Constructors 
@@ -522,6 +540,16 @@ private final String telemetryName
 ### Methods
 public String getTelemetryName() *provides the name for the difficulty according to the telemetry schema*
 
+## enum SettingsType
+*Enumerates the names of the different game settings that are per user*
+### Constructors
+private SettingsType(String telemetryName)
+### Fields
+TELEMETRY_ENABLED
+
+private final String telemetryName
+### Methods
+public String getTelemetryName()
 ## enum EncounterType
 *Enumerates the games encounters*
 ### Constructors
@@ -544,7 +572,7 @@ public String getTelemetryName()
 ### Constructor
 private EntityType(Class<? extends EntityInterface> enemyClass, String telemetryName)
 ### Fields
-ZOMBIE, SKELETON, etc. *placeholder, entities TBD*
+GOBLIN, FISH_MAN, PYROMANCER, EVIL_WIZARD, ARMOURED_GOBLIN, GHOST, BLACK_KNIGHT, DRAGON
 
 private final Class<? extends EntityInterface> enemyClass
 
@@ -564,7 +592,7 @@ public int getMaxHealth()
 
 public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
 
-public List\<AbilityInterface> getAbilities()
+public List\<AbilityType> getAbilities()
 
 public void resetHealth()
 
@@ -590,8 +618,6 @@ public void loseMagic(int amount) throws IllegalArgumentException *amount cannot
 
 public int getLives()
 
-public void gainLives(int amount) throws IllegalArgumentException *amount cannot be negative*
-
 public void loseLives(int amount) throws IllegalArgumentException *amount cannot be negative*
 
 List\<UpgradeType> getUpgrades()
@@ -612,7 +638,7 @@ private int coins
 
 private int lives
 
-private List\<AbilityInterface> abilities
+private List\<AbilityType> abilities
 
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
@@ -628,17 +654,6 @@ private int maxHealth
 ### Constructors
 public ConcreteEnemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
-## interface AbilityInterface
-*Interface all abilities implement*
-### Methods
-public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException *throws error when the creature attempting to use it doesn't have enough resource to do so*
-
-public String getDescription()
-
-public int getNumberOfTargets()
-
-public AbilityType getType()
-
 ## LackingResourceException extends Exception
 *Exception for when an ability is attempted without sufficient resources*
 ### Constructors
@@ -647,18 +662,6 @@ public LackingResourceException()
 public LackingResourceException(String message)
 
 public LackingResourceException(String message, Throwable cause)
-
-## ConcreteAbility implements AbilityInterface
-*Different implementations for each ability*
-### Constructors
-public ConcreteAbility()
-### Fields
-
-private final static String description
-
-private final static int numberOfTargets
-
-private final static AbilityType type
 
 ## ConcreteUpgrade implements PlayerInterface
 *Decorates the player, giving their methods additional abilities and effects*

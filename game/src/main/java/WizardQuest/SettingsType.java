@@ -3,7 +3,6 @@ package WizardQuest;
 /**
  * Enumerates all settings types in the game.
  */
-
 public enum SettingsType {
     TELEMETRY_ENABLED("TelemetryEnabled");
 
@@ -17,5 +16,3 @@ public enum SettingsType {
         return telemetryName;
     }
 }
-
-
