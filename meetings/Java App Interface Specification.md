@@ -47,7 +47,7 @@ public TimeManagerInterface getTimeManager()
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public void useAbility(AbilityInterface[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) 
+public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies) 
 
 public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
 
@@ -482,13 +482,29 @@ PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 ## enum AbilityType
 *Enumerates the game's abilities*
 ### Constructors
-private AbilityType(Class<? extends AbilityInterface> abilityClass)
+private AbilityType(String description, int baseDamage, int magicCost, DamageType damageType)
 ### Fields
 PUNCH, ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL
 
-private final Class<? extends AbilityInterface> abilityClass
+private final String description
+
+private final int baseDamage
+
+private final int magicCost
+
+private final DamageType damageType
+
 ### Methods
-public AbilityInterface getAbility()
+
+public String getDescription
+
+public int getBaseDamage
+
+public int getMagicCost
+
+public DamageType getDamageType
+
+public void execute(EntityInterface source, EntityInterface target)
 
 ## enum UpgradeType
 *Enumerates the game's upgrades*
@@ -572,7 +588,7 @@ public int getMaxHealth()
 
 public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
 
-public List\<AbilityInterface> getAbilities()
+public List\<AbilityType> getAbilities()
 
 public void resetHealth()
 
@@ -618,7 +634,7 @@ private int coins
 
 private int lives
 
-private List\<AbilityInterface> abilities
+private List\<AbilityType> abilities
 
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
@@ -634,15 +650,6 @@ private int maxHealth
 ### Constructors
 public ConcreteEnemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
-## interface AbilityInterface
-*Interface all abilities implement*
-### Methods
-public void execute(EntityInterface source, EntityInterface target) throws LackingResourceException, IllegalArgumentException *throws LackingResourceException if the source doesn't have enough resource to use the ability, and throws IllegalArgumentException if the source doesn't support the resource used by the ability (e.g. magic)*
-
-public String getDescription()
-
-public AbilityType getType()
-
 ## LackingResourceException extends Exception
 *Exception for when an ability is attempted without sufficient resources*
 ### Constructors
@@ -651,16 +658,6 @@ public LackingResourceException()
 public LackingResourceException(String message)
 
 public LackingResourceException(String message, Throwable cause)
-
-## ConcreteAbility implements AbilityInterface
-*Different implementations for each ability*
-### Constructors
-public ConcreteAbility()
-### Fields
-
-private final static String description
-
-private final static AbilityType type
 
 ## ConcreteUpgrade implements PlayerInterface
 *Decorates the player, giving their methods additional abilities and effects*
