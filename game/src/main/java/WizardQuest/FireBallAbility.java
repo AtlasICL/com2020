@@ -4,9 +4,11 @@ public class FireBallAbility extends ConcreteAbility {
         getNumberOfTargets = 1;
         type = AbilityType.FIRE_BALL;
     }
-    //Base Damage = 35
+    private static final int baseDamage = 35;
+    private static final int baseMagicPoints = 40;
+    private static final int damageType = DamageType.FIRE;
     @Override
     public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException{
-        //TODO: implement me
+        useAbility(source, targets[0], baseDamage, baseMagicPoints, damageType);
     }
 }

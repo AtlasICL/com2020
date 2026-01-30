@@ -4,9 +4,11 @@ public class SlashAbility extends ConcreteAbility {
         getNumberOfTargets = 1;
         type = AbilityType.SLASH;
     }
-    //Base Damage = 20
+    private static final int baseDamage = 20;
+    private static final int baseMagicPoints = 0;
+    private static final int damageType = DamageType.PHYSICAL;
     @Override
     public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException{
-        //TODO: implement me
+        useAbility(source, targets[0], baseDamage, baseMagicPoints, damageType);
     }
 }

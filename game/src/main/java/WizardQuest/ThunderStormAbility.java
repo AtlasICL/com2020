@@ -4,9 +4,11 @@ public class ThunderStorm extends ConcreteAbility {
         getNumberOfTargets = 1;
         type = AbilityType.THUNDER_STORM;
     }
-    //Base Damage = 25
+    private static final int baseDamage = 25;
+    private static final int baseMagicPoints = 30;
+    private static final int damageType = DamageType.THUNDER;
     @Override
     public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException{
-        //TODO: implement me
+        useAbility(source, targets[0], baseDamage, baseMagicPoints, damageType);
     }
 }
