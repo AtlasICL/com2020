@@ -277,13 +277,13 @@ public EndSessionEvent(Object source, int userID, int sessionID, String timestam
 ## SettingsChangeEvent extends TelemetryEvent
 *Contains fields for settings change*
 ### Constructors
-public SettingsChangeEvent(iObject source, nt userID, int sessionID, String timestamp, String setting, String settingValue)
+public SettingsChangeEvent(iObject source, nt userID, int sessionID, String timestamp, SettingType setting, String settingValue)
 ### Fields
-private final String setting
+private final SettingType setting
 
 private final String settingValue
 ### Methods
-public String getSetting()
+public SettingType getSetting()
 
 public String getSettingValue()
 
@@ -508,6 +508,7 @@ public int getPrice()
 public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
 
 public String getTelemetryName()
+
 ## enum Difficulty
 *Enumerates the different levels of difficulty*
 ### Constructors 
@@ -519,6 +520,16 @@ private final String telemetryName
 ### Methods
 public String getTelemetryName() *provides the name for the difficulty according to the telemetry schema*
 
+## enum SettingsType
+*Enumerates the names of the different game settings that are per user*
+### Constructors
+private SettingsType(String telemetryName)
+### Fields
+TELEMETRY_ENABLED
+
+private final String telemetryName
+### Methods
+public String getTelemetryName()
 ## enum EncounterType
 *Enumerates the games encounters*
 ### Constructors
