@@ -554,8 +554,6 @@ public String getTelemetryName()
 ### Methods
 public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
 
-public void gainHealth(int amount) throws IllegalArgumentException *amount cannot be negative, can have health exceed maxHealth*
-
 public int getHealth()
 
 public int getMaxHealth()

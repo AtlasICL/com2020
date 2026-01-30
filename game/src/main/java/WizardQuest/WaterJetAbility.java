@@ -1,10 +1,10 @@
-public class PunchAbility extends ConcreteAbility {
+public class WaterJetAbility extends ConcreteAbility {
     static {
-        description = "A simple punch.";
+        description = "A magical (and high-velocity) jet of water.";
         getNumberOfTargets = 1;
-        type = AbilityType.PUNCH;
+        type = AbilityType.WATER_JET;
     }
-    //Base Damage = 10
+    //Base Damage = 15
     @Override
     public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException{
         //TODO: implement me

@@ -1,10 +1,10 @@
-public class PunchAbility extends ConcreteAbility {
+public class AbsolutePulseAbility extends ConcreteAbility {
     static {
-        description = "A simple punch.";
+        description = "A magical pulse that no-one can defend against.";
         getNumberOfTargets = 1;
-        type = AbilityType.PUNCH;
+        type = AbilityType.ABSOLUTE_PULSE;
     }
-    //Base Damage = 10
+    //Base Damage = 15
     @Override
     public void execute(EntityInterface source, EntityInterface[] targets) throws LackingResourceException{
         //TODO: implement me
