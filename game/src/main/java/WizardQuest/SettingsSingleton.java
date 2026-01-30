@@ -1,7 +1,5 @@
 package WizardQuest;
 
-import javax.management.relation.Role;
-
 /**
  * Provides singleton access to settings and user properties
  */
@@ -37,9 +35,9 @@ public class SettingsSingleton {
         private float mediumEnemyDamageMultiplier;
         private float easyEnemyDamageMultiplier;
 
-        private float hardEnemyHealthMultiplier;
-        private float mediumEnemyHealthMultiplier;
-        private float easyEnemyHealthMultiplier;
+        private float hardEnemyMaxHealthMultiplier;
+        private float mediumEnemyMaxHealthMultiplier;
+        private float easyEnemyMaxHealthMultiplier;
 
         private int hardStartingLives;
         private int mediumStartingLives;
@@ -72,6 +70,9 @@ public class SettingsSingleton {
         public Role getUserRole() throws AuthenticationException {
             return userRole;
         }
+
+        @Override
+        public void setUserRole(String username, Role role) throws AuthenticationException {}
 
         @Override
         public String getUsername() throws AuthenticationException {
@@ -114,7 +115,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public float getEnemyHealthMultiplier(Difficulty difficulty) {
+        public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
             return -1;
         }
 
@@ -156,7 +157,7 @@ public class SettingsSingleton {
         public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier) {}
 
         @Override
-        public void setEnemyHealthMultiplier(Difficulty difficulty, float enemyHealthMultiplier) {}
+        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier) {}
 
         @Override
         public void setStartingLives(Difficulty difficulty, int startingLives) {}
