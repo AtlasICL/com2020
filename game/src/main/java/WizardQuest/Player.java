@@ -50,10 +50,14 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public void loseCoins(int amount) throws IllegalArgumentException {}
+    public void loseCoins(int amount) throws IllegalArgumentException {
+        coins -= amount; // PLACEHOLDER
+    }
 
     @Override
-    public void gainCoins(int amount) throws IllegalArgumentException {}
+    public void gainCoins(int amount) throws IllegalArgumentException {
+        coins += amount; // PLACEHOLDER
+    }
 
     @Override
     public int getMagic() {
@@ -72,12 +76,12 @@ public class Player implements PlayerInterface {
 
     @Override
     public void gainMagic(int amount) throws IllegalArgumentException {
-        magic += amount;
+        magic += amount; // PLACEHOLDER
     }
 
     @Override
     public void loseMagic(int amount) throws IllegalArgumentException {
-        magic -= amount;
+        magic -= amount; // PLACEHOLDER
     }
 
     @Override
@@ -86,7 +90,9 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public void loseLives(int amount) throws IllegalArgumentException {}
+    public void loseLives(int amount) throws IllegalArgumentException {
+        lives -= amount; // PLACEHOLDER
+    }
 
     @Override
     public List<UpgradeType> getUpgrades() {

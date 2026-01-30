@@ -5,7 +5,7 @@ package WizardQuest;
  */
 
 public enum SettingsType {
-    TELEMETRY_ENABLED("Telemetry Enabled");
+    TELEMETRY_ENABLED("TelemetryEnabled");
 
     private final String telemetryName;
 
