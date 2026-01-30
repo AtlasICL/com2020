@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public interface GameRunInterface {
     /**
      * Picks a random encounter for the current stage from the encounter pool for
-     * that stage and returns a reference to it. It is the responsiblity of the
+     * that stage and returns a reference to it. It is the responsibility of the
      * caller to keep track of the encounter, mark it as complete when it is
      * finished, and reset it if the player retries it after dying.
      * 

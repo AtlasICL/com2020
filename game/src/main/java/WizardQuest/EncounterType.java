@@ -4,9 +4,9 @@ package WizardQuest;
  * Enumerates all encounter types in the game.
  */
 public enum EncounterType {
-    ENCOUNTERTYPE_1(),
-    ENCOUNTERTYPE_2(),
-    ENCOUNTERTYPE_3();
+    ENCOUNTERTYPE_1(null, "Name TBC"), // PLACEHOLDER
+    ENCOUNTERTYPE_2(null, "Name TBC"), // PLACEHOLDER
+    ENCOUNTERTYPE_3(null, "Name TBC"); // PLACEHOLDER
 
     private final EntityType[] enemies;
     private final String telemetryName;
@@ -21,7 +21,7 @@ public enum EncounterType {
     }
 
     public Encounter createEncounter() {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     public String getTelemetryName() {

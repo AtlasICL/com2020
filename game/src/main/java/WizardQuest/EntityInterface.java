@@ -46,7 +46,7 @@ public interface EntityInterface {
      *
      * @return a list of abilities.
      */
-    public List<AbilityInterface> getAbilities();
+    public List<AbilityType> getAbilities();
 
     /**
      * Reset an entity's health to its starting value.

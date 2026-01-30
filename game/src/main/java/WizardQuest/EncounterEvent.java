@@ -2,9 +2,7 @@ package WizardQuest;
 
 public abstract class EncounterEvent extends TelemetryEvent {
     private final int stageNumber;
-
     private final EncounterType encounterName;
-
     private final Difficulty difficulty;
 
     /**

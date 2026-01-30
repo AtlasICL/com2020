@@ -9,7 +9,7 @@ public class Player implements PlayerInterface {
     private int magic;
     private int coins;
     private int lives;
-    private List<AbilityInterface> abilities;
+    private List<AbilityType> abilities;
 
     public Player() {}
 
@@ -28,11 +28,11 @@ public class Player implements PlayerInterface {
 
     @Override
     public int calcDamage(int base, DamageType type) {
-        return -1;
+        return -1; // PLACEHOLDER
     }
 
     @Override
-    public List<AbilityInterface> getAbilities() {
+    public List<AbilityType> getAbilities() {
         return abilities;
     }
 
@@ -41,7 +41,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public EntityType getType() {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return magic;
+        return magic; // PLACEHOLDER
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<UpgradeType> getUpgrades() {
-        return null;
+        return null; // PLACEHOLDER
     }
 }
 

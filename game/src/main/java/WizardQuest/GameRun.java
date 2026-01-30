@@ -41,12 +41,12 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public EncounterInterface pickEncounter() {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     @Override
     public UpgradeType[] viewShop() {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     @Override
@@ -67,12 +67,12 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public LocalDateTime getRunStartTime() {
-        return LocalDateTime.now();
+        return LocalDateTime.now(); // PLACEHOLDER
     }
 
     @Override
     public int getDeathCount() {
-        return -1;
+        return -1; // PLACEHOLDER
     }
 
     @Override

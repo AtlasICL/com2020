@@ -5,9 +5,14 @@ package WizardQuest;
  */
 
 public enum EntityType {
-    ENTITYTYPE_1(),
-    ENTITYTYPE_2(),
-    ENTITYTYPE_3();
+    GOBLIN(null, "Goblin"), // PLACEHOLDER ARGS
+    FISH_MAN(null, "Fish Man"), // PLACEHOLDER ARGS
+    PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
+    EVIL_WIZARD(null, "Evil Wizard"), // PLACEHOLDER ARGS
+    ARMOURED_GOBLIN(null, "Armoured Goblin"), // PLACEHOLDER ARGS
+    GHOST(null, "Ghost"), // PLACEHOLDER ARGS
+    BLACK_KNIGHT(null, "Black Knight"), // PLACEHOLDER ARGS
+    DRAGON(null, "Dragon"),; // PLACEHOLDER ARGS
 
     private final Class<? extends EntityInterface> enemyClass;
     private final String telemetryName;
@@ -18,7 +23,7 @@ public enum EntityType {
     }
 
     public EntityInterface createEnemy() {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     public String getTelemetryName() {

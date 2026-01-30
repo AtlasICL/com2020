@@ -1,9 +1,19 @@
 package WizardQuest;
 
 public enum UpgradeType {
-    UPGRADE_1(),
-    UPGRADE_2(),
-    UPGRADE_3();
+    ABSOLUTE_PULSE(-1, null, "Absolute Pulse"), // PLACEHOLDER ARGS
+    SLASH(-1, null, "Slash"), // PLACEHOLDER ARGS
+    WATER_JET(-1, null, "Water Jet"), // PLACEHOLDER ARGS
+    THUNDER_STORM(-1, null, "Thunder Storm"), // PLACEHOLDER ARGS
+    FIRE_BALL(-1, null, "Fire Ball"), // PLACEHOLDER ARGS
+    PHYSICAL_DAMAGE_RESISTANCE(-1, null, "Physical Damage Resistance"), // PLACEHOLDER ARGS
+    FIRE_DAMAGE_RESISTANCE(-1, null, "Fire Damage Resistance"), // PLACEHOLDER ARGS
+    WATER_DAMAGE_RESISTANCE(-1, null, "Water Damage Resistance"), // PLACEHOLDER ARGS
+    THUNDER_DAMAGE_RESISTANCE(-1, null, "Thunder Damage Resistance"), // PLACEHOLDER ARGS
+    IMPROVED_PHYSICAL_DAMAGE(-1, null, "Improved Physical Damage"), // PLACEHOLDER ARGS
+    IMPROVED_FIRE_DAMAGE(-1, null, "Improved Fire Damage"), // PLACEHOLDER ARGS
+    IMPROVED_WATER_DAMAGE(-1, null, "Improved Water Damage"), // PLACEHOLDER ARGS
+    IMPROVED_THUNDER_DAMAGE(-1, null, "Improved Thunder Damage"),; // PLACEHOLDER ARGS
 
     private final int price;
     private final Class<? extends PlayerInterface> upgradeClass;
@@ -20,7 +30,7 @@ public enum UpgradeType {
     }
 
     public PlayerInterface applyUpgrade(PlayerInterface player) {
-        return null;
+        return null; // PLACEHOLDER
     }
 
     private String getTelemetryName() {

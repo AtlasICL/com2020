@@ -3,6 +3,9 @@ package WizardQuest;
 /**
  * Provides a single global access point to the telemetry listener for notifying
  * it.
+ *
+ * NOTE: Some of the ConcreteEvent classes have not yet been created, this is because
+ * they are not required for Sprint 1 (e.g., BossEncounterStartEvent)
  */
 public class TelemetryListenerSingleton {
     private static TelemetryListenerInterface telemetryListener = new TelemetryListener();

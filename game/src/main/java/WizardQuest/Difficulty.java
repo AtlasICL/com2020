@@ -4,9 +4,9 @@ package WizardQuest;
  * Enumerates all difficulty levels in the game.
  */
 public enum Difficulty {
-    EASY(),
-    MEDIUM(),
-    HARD();
+    EASY("Easy"),
+    MEDIUM("Medium"),
+    HARD("Hard");
 
     private final String telemetryName;
 

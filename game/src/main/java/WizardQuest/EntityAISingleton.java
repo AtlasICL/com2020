@@ -4,7 +4,7 @@ package WizardQuest;
  * Provides global access to the random entity AI.
  */
 public class EntityAISingleton {
-    private static EntityAIInterface RandomEntityAI = new RandomEntityAI();
+    private static EntityAIInterface randomEntityAI = new RandomEntityAI();
 
     private EntityAISingleton() {
     }
@@ -15,7 +15,7 @@ public class EntityAISingleton {
      * @return a reference to the entity AI singleton.
      */
     public static EntityAIInterface getEntityAI() {
-        return RandomEntityAI;
+        return randomEntityAI;
     }
 
     /**
@@ -27,10 +27,10 @@ public class EntityAISingleton {
         }
 
         @Override
-        public void useAbility(AbilityInterface[] abilities, EntityInterface self, EntityInterface[] allies, EntityInterface[] enemies) {}
+        public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies) {}
 
         @Override
-        public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) {return null;}
+        public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) {return null;} // PLACEHOLDER
     }
 }
 

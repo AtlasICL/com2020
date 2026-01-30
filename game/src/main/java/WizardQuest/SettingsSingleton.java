@@ -96,47 +96,47 @@ public class SettingsSingleton {
 
         @Override
         public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public int getPlayerMaxHealth(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public float getUpgradePriceMultiplier(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public float getEnemyDamageMultiplier(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public int getStartingLives(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public int getMaxMagic(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public int getMagicRegenRate(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
         public int getShopItemCount(Difficulty difficulty) {
-            return -1;
+            return -1; // PLACEHOLDER
         }
 
         @Override
