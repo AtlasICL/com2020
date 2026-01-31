@@ -663,7 +663,7 @@ public LackingResourceException(String message)
 
 public LackingResourceException(String message, Throwable cause)
 
-## ConcreteUpgrade implements PlayerInterface
+## ConcreteUpgrade extends Player
 *Decorates the player, giving their methods additional abilities and effects*
 ### Constructors
 public ConcreteUpgrade(PlayerInterface player)
