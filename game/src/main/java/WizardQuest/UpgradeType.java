@@ -1,5 +1,6 @@
 public enum UpgradeType{ //"Upgrade" is refered to as "passive ability externally"
     //organised as price, class, telemetry name
+    //add abilities
     PHYSICAL_DAMAGE_RESISTANCE(20, PhysicalDamageResistance.class, "PhysicalDamageResistance"),
     FIRE_DAMAGE_RESISTANCE(10, FireDamageResistance.class, "FireDamageResistance"),
     WATER_DAMAGE_RESISTANCE(5, WaterDamageResistance.class, "WaterDamageResistance"),
