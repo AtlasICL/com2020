@@ -1,4 +1,4 @@
-public class PunchUnlockUpgrade implements PlayerInterface {
+public class PunchUnlockUpgrade extends Player {
     public PunchUnlockUpgrade(PlayerInterface player){
         super(player);
     }

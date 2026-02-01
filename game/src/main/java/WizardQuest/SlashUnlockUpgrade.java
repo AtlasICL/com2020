@@ -1,4 +1,4 @@
-public class SlashUnlockUpgrade implements PlayerInterface {
+public class SlashUnlockUpgrade extends Player {
     public SlashUnlockUpgrade(PlayerInterface player){
         super(player);
     }

@@ -1,4 +1,4 @@
-public class WaterJetUnlockUpgrade implements PlayerInterface {
+public class WaterJetUnlockUpgrade extends Player {
     public WaterJetUnlockUpgrade(PlayerInterface player){
         super(player);
     }

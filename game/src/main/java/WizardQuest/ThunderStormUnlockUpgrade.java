@@ -1,4 +1,4 @@
-public class ThunderStormUnlockUpgrade implements PlayerInterface {
+public class ThunderStormUnlockUpgrade extends Player {
     public ThunderStormUnlockUpgrade(PlayerInterface player){
         super(player);
     }
