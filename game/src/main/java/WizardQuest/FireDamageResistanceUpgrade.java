@@ -7,10 +7,10 @@ public class FireDamageResistanceUpgrade extends Player {
     @Override
     public int loseHealth(int amount, DamageType type) {
         if (type == DamageType.FIRE){
-            player.loseHealth(amount/2, type);   
+            return player.loseHealth(amount/2, type);   
         } 
         else {
-            player.loseHealth(amount, type); 
+            return player.loseHealth(amount, type); 
         }
     }
 
