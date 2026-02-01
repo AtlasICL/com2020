@@ -1,4 +1,4 @@
-public class WaterDamageResistanceUpgrade extends ConcreteUpgrade {
+public class WaterDamageResistanceUpgrade implements PlayerInterface {
 
     public WaterDamageResistanceUpgrade(PlayerInterface player) {
         super(player);

@@ -1,4 +1,4 @@
-public class AbsolutePulseUnlockUpgrade extends ConcreteUpgrade {
+public class AbsolutePulseUnlockUpgrade implements PlayerInterface {
     public AbsolutePulseUnlockUpgrade(PlayerInterface player){
         super(player);
     }

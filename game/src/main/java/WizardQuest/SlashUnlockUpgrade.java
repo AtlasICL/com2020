@@ -1,9 +1,9 @@
-public class SlashUnlockUpgrade extends ConcreteUpgrade {
+public class SlashUnlockUpgrade implements PlayerInterface {
     public SlashUnlockUpgrade(PlayerInterface player){
         super(player);
     }
 
-    @Override
+    @Override //TODO change getters so they don't modify state.
     public List<UpgradeType> getUpgrades(){
         List u = player.getUpgrades();
         if (!u.contains(UpgradeType.SLASH_UNLOCK)){

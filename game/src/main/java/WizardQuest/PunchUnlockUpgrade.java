@@ -1,4 +1,4 @@
-public class PunchUnlockUpgrade extends ConcreteUpgrade {
+public class PunchUnlockUpgrade implements PlayerInterface {
     public PunchUnlockUpgrade(PlayerInterface player){
         super(player);
     }

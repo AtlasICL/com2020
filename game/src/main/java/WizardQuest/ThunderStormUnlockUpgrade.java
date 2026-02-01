@@ -1,4 +1,4 @@
-public class ThunderStormUnlockUpgrade extends ConcreteUpgrade {
+public class ThunderStormUnlockUpgrade implements PlayerInterface {
     public ThunderStormUnlockUpgrade(PlayerInterface player){
         super(player);
     }

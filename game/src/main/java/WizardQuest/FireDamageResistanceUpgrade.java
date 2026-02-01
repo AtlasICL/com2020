@@ -1,4 +1,4 @@
-public class FireDamageResistanceUpgrade extends ConcreteUpgrade {
+public class FireDamageResistanceUpgrade implements PlayerInterface{
 
     public FireDamageResistanceUpgrade(PlayerInterface player) {
         super(player);

@@ -1,4 +1,4 @@
-public class FireBallUnlockUpgrade extends ConcreteUpgrade {
+public class FireBallUnlockUpgrade implements PlayerInterface {
     public FireBallUnlockUpgrade(PlayerInterface player){
         super(player);
     }

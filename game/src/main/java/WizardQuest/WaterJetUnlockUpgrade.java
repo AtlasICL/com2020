@@ -1,4 +1,4 @@
-public class WaterJetUnlockUpgrade extends ConcreteUpgrade {
+public class WaterJetUnlockUpgrade implements PlayerInterface {
     public WaterJetUnlockUpgrade(PlayerInterface player){
         super(player);
     }
