@@ -1,12 +1,12 @@
-public class WaterDamageResistanceUpgrade extends ConcreteUpgrade {
+public class PhysicalDamageResistanceUpgrade extends ConcreteUpgrade {
 
-    public WaterDamageResistanceUpgrade(PlayerInterface player) {
+    public PhysicalDamageResistanceUpgrade(PlayerInterface player) {
         super(player);
     }
 
     @Override
     public int loseHealth(int amount, DamageType type) {
-        if (type == DamageType.WATER){
+        if (type == DamageType.PHYSICAL){
             player.loseHealth(amount/2, type);   
         } 
         else {
@@ -17,8 +17,8 @@ public class WaterDamageResistanceUpgrade extends ConcreteUpgrade {
     @Override
     public List<UpgradeType> getUpgrades(){
         List u = player.getUpgrades();
-        if (!u.contains(UpgradeType.WATER_DAMAGE_RESISTANCE)){
-            u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
+        if (!u.contains(UpgradeType.PHYSICAL_DAMAGE_RESISTANCE)){
+            u.add(UpgradeType.PHYSICAL_DAMAGE_RESISTANCE);
         }
         return u;
     }
