@@ -184,16 +184,5 @@ public class TelemetryListenerSingleton {
         public void onKillEnemy(KillEnemyEvent e){
             saveEvent(e);
         }
-    }
-
-    public static void main(String[] args){
-        Object mockSource = new Object();
-        SessionStartEvent testEvent = new SessionStartEvent(
-            mockSource, 123, 1, 
-            "2026/02/02/14/30/00", Difficulty.NORMAL
-        );
-        TelemetryListenerInterface listener = getTelemetryListener();
-        listener.onSessionStart(testEvent);
-        System.out.println("Test event written to events.json");
-    }
+    }  
 }
