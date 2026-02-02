@@ -5,6 +5,7 @@ package WizardQuest;
  */
 
 public enum EntityType {
+    PLAYER(Player.class, "Player"),
     GOBLIN(null, "Goblin"), // PLACEHOLDER ARGS
     FISH_MAN(null, "Fish Man"), // PLACEHOLDER ARGS
     PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
