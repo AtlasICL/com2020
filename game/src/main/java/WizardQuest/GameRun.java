@@ -109,7 +109,8 @@ public class GameRun implements GameRunInterface {
     public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException {
         // If upgrade is unaffordable, throw the relevant exception
         if (upgrade.getPrice() > this.player.getCoins()) {
-            throw new LackingResourceException("Not enough coins to purchase this upgrade.");
+            int difference = upgrade.getPrice() - this.player.getCoins();
+            throw new LackingResourceException(String.format("Not enough coins to purchase this upgrade. %d more coins needed.", difference));
         } else {
             // Remove the upgrade from the pool of shop upgrades.
             removeUpgradeFromPool(upgrade);
