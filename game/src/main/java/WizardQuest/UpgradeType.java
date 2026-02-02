@@ -1,6 +1,5 @@
-package WizardQuest;
-
-public enum UpgradeType {
+public enum UpgradeType{ //"Upgrade" is referred to as "passive ability externally"
+    //organized as price, class, telemetry name
     ABSOLUTE_PULSE(-1, null, "Absolute Pulse"), // PLACEHOLDER ARGS
     SLASH(-1, null, "Slash"), // PLACEHOLDER ARGS
     WATER_JET(-1, null, "Water Jet"), // PLACEHOLDER ARGS
@@ -25,15 +24,19 @@ public enum UpgradeType {
         this.telemetryName = telemetryName;
     }
 
-    public int getPrice() {
+    public int getPrice(){
         return price;
     }
 
-    public PlayerInterface applyUpgrade(PlayerInterface player) {
-        return null; // PLACEHOLDER
+    public PlayerInterface applyUpgrade(playerInterface player){
+        try {
+            return upgradeClass.getConstructor(PlayerInterface.class).newInstance(player);
+        } catch (ReflectiveOperationException e) {
+            throw new WrapperException();
+        }
     }
 
-    private String getTelemetryName() {
+    public String getTelemetryName(){
         return telemetryName;
     }
 }
