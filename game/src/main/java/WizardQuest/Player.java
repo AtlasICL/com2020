@@ -1,5 +1,6 @@
 package WizardQuest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements PlayerInterface {
@@ -10,11 +11,27 @@ public class Player implements PlayerInterface {
     private int coins;
     private int lives;
     private List<AbilityType> abilities;
+    private Difficulty difficulty;
 
-    public Player() {}
+    public Player(Difficulty difficulty) {
+        SettingsInterface settings = SettingsSingleton.getSettings();
+        this.maxMagic = settings.getMaxMagic(difficulty);
+        this.maxHealth = settings.getPlayerMaxHealth(difficulty);
+        this.health = maxHealth;
+        this.magic = 0;
+        this.coins = 0;
+        this.lives = settings.getStartingLives(difficulty);
+        this.abilities = new LinkedList<AbilityType>();
+        this.abilities.add(AbilityType.PUNCH);
+    }
 
     @Override
-    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException {}
+    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException {
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of health: %d", amount));
+        }
+        this.health -= amount;
+    }
 
     @Override
     public int getHealth() {
@@ -28,7 +45,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int calcDamage(int base, DamageType type) {
-        return -1; // PLACEHOLDER
+        return base;
     }
 
     @Override
@@ -37,11 +54,13 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public void resetHealth() {}
+    public void resetHealth() {
+        this.health = this.maxHealth;
+    }
 
     @Override
     public EntityType getType() {
-        return null; // PLACEHOLDER
+        return EntityType.PLAYER;
     }
 
     @Override
@@ -51,12 +70,18 @@ public class Player implements PlayerInterface {
 
     @Override
     public void loseCoins(int amount) throws IllegalArgumentException {
-        coins -= amount; // PLACEHOLDER
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of coins: %d", amount));
+        }
+        this.coins -= amount;
     }
 
     @Override
     public void gainCoins(int amount) throws IllegalArgumentException {
-        coins += amount; // PLACEHOLDER
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player gain a negative amount of coins: %d", amount));
+        }
+        this.coins += amount;
     }
 
     @Override
@@ -71,17 +96,23 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return magic; // PLACEHOLDER
+        return SettingsSingleton.getSettings().getMagicRegenRate(this.difficulty);
     }
 
     @Override
     public void gainMagic(int amount) throws IllegalArgumentException {
-        magic += amount; // PLACEHOLDER
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player gain a negative amount of magic: %d", amount));
+        }
+        this.magic += amount;
     }
 
     @Override
     public void loseMagic(int amount) throws IllegalArgumentException {
-        magic -= amount; // PLACEHOLDER
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of magic: %d", amount));
+        }
+        this.magic -= amount;
     }
 
     @Override
@@ -91,12 +122,15 @@ public class Player implements PlayerInterface {
 
     @Override
     public void loseLives(int amount) throws IllegalArgumentException {
-        lives -= amount; // PLACEHOLDER
+        if (amount < 0){
+            throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of lives: %d", amount));
+        }
+        this.lives -= amount;
     }
 
     @Override
     public List<UpgradeType> getUpgrades() {
-        return null; // PLACEHOLDER
+        return new LinkedList<UpgradeType>();
     }
 }
 
