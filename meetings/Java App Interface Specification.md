@@ -624,7 +624,7 @@ List\<UpgradeType> getUpgrades()
 ## Player implements PlayerInterface
 *Contains the concrete implementation of the player*
 ### Constructors
-public Player() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public Player(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 ### Fields
 private int maxMagic
 
@@ -643,7 +643,7 @@ private List\<AbilityType> abilities
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
-public Enemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public Enemy(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 ### Fields
 private int health
 
@@ -652,7 +652,7 @@ private int maxHealth
 ## ConcreteEnemy extends Enemy
 *Each enemy would have its own class, for example SkeletonEnemy, ZombieEnemy*
 ### Constructors
-public ConcreteEnemy() *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public ConcreteEnemy(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
 ## LackingResourceException extends Exception
 *Exception for when an ability is attempted without sufficient resources*
