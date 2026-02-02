@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import com.sun.scenario.Settings;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Random;
@@ -88,36 +90,29 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public UpgradeType[] viewShop() {
-        // Initialise a new array which will only store the upgrades displayed to the user.
-        int totalPurchasableUpgrades = getTotalRemainingUpgrades();
-        int shopItemCount;
-        // The shop item count is defined in the settings.
-        // However, if there are fewer remaining purchasable upgrades than this count,
-        // then the shop item count is reduced to this value.
-        if (totalPurchasableUpgrades < SettingsSingleton.getSettings().getShopItemCount(this.currentDifficulty)) {
-            shopItemCount = totalPurchasableUpgrades;
-        } else {
-            shopItemCount = SettingsSingleton.getSettings().getShopItemCount(this.currentDifficulty);
-        }
-        UpgradeType[] selectedShopUpgrades = new UpgradeType[shopItemCount];
-        // If no purchasable upgrades remain, no need to process any selection logic.
-        if (shopItemCount == 0) {
-            return selectedShopUpgrades;
-        }
+        // Fisher-Yates shuffling algorithm used to randomise order of upgrade pool
         Random r = new Random();
-        int rInt;
-        for (int i = 0; i < shopItemCount; i++) {
-            // Select a random upgrade from the pool.
-            // The selected upgrade must not be null (already purchased in this run).
-            // It also must not already exist in this shop.
-            // In terms of performance, this loop is acceptable because the shopUpgrades array is small, the function only
-            // runs once between each pair of stages, and the loop only runs if at least 1 valid option exists.
-            do {
-                rInt = r.nextInt(this.shopUpgrades.length);
-            } while (this.shopUpgrades[rInt] == null || Arrays.asList(selectedShopUpgrades).contains(this.shopUpgrades[rInt]));
-            selectedShopUpgrades[i] = this.shopUpgrades[rInt];
+        for (int i = this.shopUpgrades.length - 1; i > 0; i--) {
+            int j = r.nextInt(i + 1);
+            UpgradeType temp = this.shopUpgrades[i];
+            this.shopUpgrades[i] = this.shopUpgrades[j];
+            this.shopUpgrades[j] = temp;
         }
-        return selectedShopUpgrades;
+        int totalUpgradesInShop = SettingsSingleton.getSettings().getShopItemCount(this.currentDifficulty);
+        UpgradeType[] shop = new UpgradeType[totalUpgradesInShop];
+        int i = 0;
+        // Loop through the shuffled array of upgrades, adding each element to the shop until the shop item count has
+        // been reached. Skip over any null values - these are upgrades that have already been purchased during the run.
+        for (int j = 0; j < this.shopUpgrades.length; j++) {
+            if (this.shopUpgrades[j] != null) {
+                shop[i] = this.shopUpgrades[j];
+                i++;
+                if (i == totalUpgradesInShop) {
+                    break;
+                }
+            }
+        }
+        return shop;
     }
 
     @Override
@@ -181,20 +176,4 @@ public class GameRun implements GameRunInterface {
             }
         }
     }
-
-    /**
-     * Get the remaining upgrades in the pool that are yet to be purchased in this run.
-     *
-     * @return the number of unpurchased upgrades in this run.
-     */
-    private int getTotalRemainingUpgrades() {
-        int count = 0;
-        for (int i = 0; i < this.shopUpgrades.length; i++) {
-            if (this.shopUpgrades[i] != null) {
-                count++;
-            }
-        }
-        return count;
-    }
-
 }
