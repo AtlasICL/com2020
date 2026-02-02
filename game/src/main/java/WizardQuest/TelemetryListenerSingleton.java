@@ -3,7 +3,6 @@ package WizardQuest;
 import java.io.File;
 import java.io.IOException;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -40,8 +39,11 @@ public class TelemetryListenerSingleton {
     private static class TelemetryListener implements TelemetryListenerInterface {
         public TelemetryListener() {
         }
-
-        
+        /**
+         * Called by all event listeners to save to json file
+         * 
+         * @param e the event to be recorded to the JSON database.
+         */
         private void saveEvent(Object e){
             try{
                 mapper.writeValue(DESTINATION_FILE, e);
