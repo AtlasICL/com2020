@@ -640,6 +640,8 @@ private int lives
 
 private List\<AbilityType> abilities
 
+private Difficulty difficulty
+
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
