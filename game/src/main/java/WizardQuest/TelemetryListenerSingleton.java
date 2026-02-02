@@ -45,6 +45,16 @@ public class TelemetryListenerSingleton {
          * @param e the event to be recorded to the JSON database.
          */
         private void saveEvent(Object e){
+            try {
+                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+                    return; 
+                }
+            }
+            catch(AuthenticationException ex){
+                System.err.println("No user authenticated: " + ex.getMessage());
+            }
+            
+            
             try{
                 mapper.writeValue(DESTINATION_FILE, e);
             } catch (IOException ex){
