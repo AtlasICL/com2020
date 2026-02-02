@@ -4,9 +4,13 @@ package WizardQuest;
  * Provides singleton access to settings and user properties
  */
 public class SettingsSingleton {
-    private SettingsInterface settings = new Settings();
+    private static SettingsInterface settings = new Settings();
 
     private SettingsSingleton() {}
+
+    public static SettingsInterface getSettings(){
+        return settings;
+    }
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
