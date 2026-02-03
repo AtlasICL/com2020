@@ -33,7 +33,7 @@ public interface GameManagerInterface {
      * Returns the current player.
      * @return the current player.
      */
-    public String getCurrentPlayer();
+    public PlayerInterface getCurrentPlayer();
 
     /**
      * Picks a new (random) encounter/fight for the current level.
@@ -42,18 +42,11 @@ public interface GameManagerInterface {
      */
     public EncounterInterface setNewEncounter();
 
-
     /**
      * Returns the current encounter/fight within a level.
      * @return the current encounter/fight within a level.
      */
     public EncounterInterface getCurrentEncounter();
-
-    /**
-     * Removes current encounter/fight within a level.
-     * Returns null state.
-     */
-    public void removeCurrentEncounter();
 
     /**
      * Resets the current encounter if failed.
