@@ -6,9 +6,13 @@ import javax.management.relation.Role;
  * Provides singleton access to settings and user properties
  */
 public class SettingsSingleton {
-    private SettingsInterface settings = new Settings();
+    private static SettingsInterface settings = new Settings();
 
     private SettingsSingleton() {
+    }
+    
+    public static SettingsInterface getSettingsSingleton(){
+        return settings;
     }
 
     private static class Settings implements SettingsInterface {
