@@ -665,9 +665,14 @@ public LackingResourceException(String message)
 
 public LackingResourceException(String message, Throwable cause)
 
-## ConcreteUpgrade extends Player
+## ConcreteUpgrade extends UpgradeBase
 *Decorates the player, giving their methods additional abilities and effects*
 ### Constructors
 public ConcreteUpgrade(PlayerInterface player)
-### Fields
-private PlayerInterface player
+
+## abstract UpgradeBase implements PlayerInterface 
+*Holds the player instance and forwards method calls to them*
+### Constructors 
+public UpgradeBase(PlayerInterface player)
+### Fields 
+protected PlayerInterface player
