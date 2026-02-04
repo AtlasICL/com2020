@@ -35,12 +35,13 @@ public interface GameManagerInterface {
      */
     public PlayerInterface getCurrentPlayer();
 
+
     /**
      * Picks a new (random) encounter/fight for the current level.
      * Stored as the current encounter.
      * @return the new chosen encounter.
      */
-    public EncounterInterface setNewEncounter();
+    public EncounterInterface pickEncounter();
 
     /**
      * Returns the current encounter/fight within a level.
