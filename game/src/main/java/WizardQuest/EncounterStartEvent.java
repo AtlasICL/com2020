@@ -6,7 +6,7 @@ public abstract class EncounterStartEvent extends EncounterEvent {
      * common data.
      */
     public EncounterStartEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
-                          int stageNumber, Difficulty difficulty) {
-        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, stageNumber, difficulty);
+                          Difficulty difficulty, int stageNumber) {
+        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
     }
 }

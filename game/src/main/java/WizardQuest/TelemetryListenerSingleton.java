@@ -8,7 +8,7 @@ package WizardQuest;
  * they are not required for Sprint 1 (e.g., BossEncounterStartEvent)
  */
 public class TelemetryListenerSingleton {
-    private static TelemetryListenerInterface telemetryListener = new TelemetryListener();
+    private static final TelemetryListenerInterface telemetryListener = new TelemetryListener();
 
     private TelemetryListenerSingleton() {
     }

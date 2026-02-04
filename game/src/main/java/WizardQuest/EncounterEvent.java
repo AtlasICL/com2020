@@ -19,7 +19,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param telemetryName name of the type of encounter event.
      * @param encounterName the name of the encounter a player is fighting.
      * @param stageNumber   the current stage player is attempting.
-     * @param difficulty    the difficulty used for the players session.
+     * @param difficulty    the difficulty used for the player's session.
      */
     public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
             Difficulty difficulty, int stageNumber) {

@@ -3,7 +3,7 @@ package WizardQuest;
 public class Encounter implements EncounterInterface {
     private EntityInterface[] enemies;
     private boolean completed;
-    private EncounterType type;
+    private final EncounterType type;
 
     public Encounter(EncounterType type) {
         this.type = type;

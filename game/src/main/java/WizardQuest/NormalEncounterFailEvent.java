@@ -6,8 +6,8 @@ public class NormalEncounterFailEvent extends EncounterFailEvent {
      * common data.
      */
     public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
-                              int stageNumber, Difficulty difficulty, int livesLeft) {
-        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, stageNumber, difficulty, livesLeft);
+                              Difficulty difficulty, int stageNumber, int livesLeft) {
+        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber, livesLeft);
     }
 }
 

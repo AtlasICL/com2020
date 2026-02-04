@@ -4,7 +4,7 @@ package WizardQuest;
  * Provides global access to the random entity AI.
  */
 public class EntityAISingleton {
-    private static EntityAIInterface randomEntityAI = new RandomEntityAI();
+    private static final EntityAIInterface randomEntityAI = new RandomEntityAI();
 
     private EntityAISingleton() {
     }

@@ -8,8 +8,8 @@ public abstract class EncounterCompleteEvent extends EncounterEvent {
      * @param playerHPRemaining     A player's health points at the end of an encounter.
      */
     public EncounterCompleteEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
-                               int stageNumber, Difficulty difficulty, int playerHPRemaining) {
-        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, stageNumber, difficulty);
+                               Difficulty difficulty, int stageNumber, int playerHPRemaining) {
+        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.playerHPRemaining = playerHPRemaining;
     }
 

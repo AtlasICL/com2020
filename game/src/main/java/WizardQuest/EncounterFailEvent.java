@@ -8,8 +8,8 @@ public abstract class EncounterFailEvent extends EncounterEvent {
      * @param livesLeft     A player's remaining lives upon failing an encounter.
      */
     public EncounterFailEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
-                                  int stageNumber, Difficulty difficulty, int livesLeft) {
-        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, stageNumber, difficulty);
+                                  Difficulty difficulty, int stageNumber, int livesLeft) {
+        super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.livesLeft = livesLeft;
     }
 

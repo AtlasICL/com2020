@@ -1,4 +1,6 @@
-public enum UpgradeType{ //"Upgrade" is referred to as "passive ability externally"
+package WizardQuest;
+
+public enum UpgradeType { //"Upgrade" is referred to as "passive ability externally"
     //organized as price, class, telemetry name
     ABSOLUTE_PULSE(-1, null, "Absolute Pulse"), // PLACEHOLDER ARGS
     SLASH(-1, null, "Slash"), // PLACEHOLDER ARGS
@@ -28,7 +30,7 @@ public enum UpgradeType{ //"Upgrade" is referred to as "passive ability external
         return price;
     }
 
-    public PlayerInterface applyUpgrade(playerInterface player){
+    public PlayerInterface applyUpgrade(PlayerInterface player){
         try {
             return upgradeClass.getConstructor(PlayerInterface.class).newInstance(player);
         } catch (ReflectiveOperationException e) {
