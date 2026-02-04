@@ -72,11 +72,11 @@ public enum UpgradeType{ //"Upgrade" is refered to as "passive ability externall
         return price;
     }
 
-    public PlayerInterface applyUpgrade(playerInterface player){
+    public PlayerInterface applyUpgrade(PlayerInterface player){
         try {
             return upgradeClass.getConstructor(PlayerInterface.class).newInstance(player);
         } catch (ReflectiveOperationException e) {
-            throw new WrapperException();
+            throw new IllegalStateException();
         }
     }
 
