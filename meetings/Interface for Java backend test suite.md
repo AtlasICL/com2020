@@ -1,7 +1,7 @@
 # Java Backend Test Suite Interface
 
 ## Explanation
-Each subheading represents a single class within the program. Within each class, there can be unit tests - these test the behaviour of a class in isolation. There can also be integrated tests - these test the behaviour of a class when interacting with the logic of other classes in the program. The interface also contains several end-to-end tests - these test the behaviour of the program as a whole in appropriate scenarios.
+Each subheading represents a single class within the program. Within each class, there can be unit tests - these test the behaviour of a class in isolation. There can also be integration tests - these test the behaviour of a class when interacting with the logic of other classes in the program. The interface also contains several end-to-end tests - these test the behaviour of the program as a whole in appropriate scenarios.
 
 ## Approach
 JUnit (v5.10.1) will be used as the framework for this test suite. Java Reflection will be used to create and assess mock objects at runtime, and to facilitate the testing of private methods and attributes.
