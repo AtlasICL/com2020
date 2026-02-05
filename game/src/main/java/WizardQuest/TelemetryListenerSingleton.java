@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +33,8 @@ public class TelemetryListenerSingleton {
      * Internal telemetry listener implementation
      */
     private static class TelemetryListener implements TelemetryListenerInterface {
+        private int currentSessionID = -1;
+        private int currentUserID = -1;
         private static final ObjectMapper mapper = new ObjectMapper();
         private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
         
@@ -43,12 +47,41 @@ public class TelemetryListenerSingleton {
         }
         public TelemetryListener() {
         }
+
+        private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
+            if(currentSessionID != e.getSessionID()){
+                throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
+                                                    " " + e.getSessionID() + " not equal to current sessionID of "
+                                                     + currentSessionID);
+            }
+        }
+
+        private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
+            if(currentUserID != e.getUserID()){
+                throw new UserValidationException("UserID of event " + e.getTelemetryName() + 
+                                                    " " + e.getUserID() + " not equal to current sessionID of "
+                                                     + currentUserID);
+            }
+        }
+
+        private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
+            try{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
+                LocalDateTime eventTime = LocalDateTime.parse(e.getTimestamp(), formatter);
+                if(eventTime.isAfter(LocalDateTime.now())){
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + " " + e.getTimestamp() + " is in the future");
+                }
+            } catch (java.time.format.DateTimeParseException ex) {
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + " " + e.getTimestamp() + " is of invalid format");
+            }
+        }
+
         /**
          * Called by all event listeners to save to json file
          * 
          * @param e the event to be recorded to the JSON database.
          */
-        private void saveEvent(Object e){
+        private void saveEvent(TelemetryEvent e){
             // try {
             //     if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
             //         return; 
