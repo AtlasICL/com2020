@@ -30,6 +30,7 @@ public class SettingsSingleton {
         private int easyMaxStageReached;
 
         // DESIGN PARAMETERS: Integer values multiplied by these parameters to be rounded.
+        // TODO: change these to dictionaries.
 
         private int hardPlayerMaxHealth;
         private int mediumPlayerMaxHealth;
