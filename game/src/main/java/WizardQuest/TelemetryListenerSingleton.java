@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,16 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class TelemetryListenerSingleton {
     private static TelemetryListenerInterface telemetryListener = new TelemetryListener();
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
     
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
-    abstract static class ignoreSourceMixin {}
-    
-    static{
-        mapper.addMixIn(java.util.EventObject.class, ignoreSourceMixin.class);
-        mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
-    }
 
     private TelemetryListenerSingleton() {
     }
@@ -43,6 +31,16 @@ public class TelemetryListenerSingleton {
      * Internal telemetry listener implementation
      */
     private static class TelemetryListener implements TelemetryListenerInterface {
+        private static final ObjectMapper mapper = new ObjectMapper();
+        private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
+        
+        @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
+        abstract static class ignoreSourceMixin {}
+        
+        static{
+            mapper.addMixIn(java.util.EventObject.class, ignoreSourceMixin.class);
+            mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
+        }
         public TelemetryListener() {
         }
         /**
