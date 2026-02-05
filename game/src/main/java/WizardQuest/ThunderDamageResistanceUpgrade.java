@@ -1,3 +1,5 @@
+package WizardQuest;
+
 public class ThunderDamageResistanceUpgrade extends ConcreteUpgrade {
 
     public ThunderDamageResistanceUpgrade(PlayerInterface player) {
