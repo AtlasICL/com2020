@@ -1,4 +1,4 @@
-public class ThunderDamageResistanceUpgrade extends Player {
+public class ThunderDamageResistanceUpgrade extends UpgradeBase {
 
     public ThunderDamageResistanceUpgrade(PlayerInterface player) {
         super(player);

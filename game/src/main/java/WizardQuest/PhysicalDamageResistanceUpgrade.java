@@ -1,4 +1,4 @@
-public class PhysicalDamageResistanceUpgrade extends Player {
+public class PhysicalDamageResistanceUpgrade extends UpgradeBase {
 
     public PhysicalDamageResistanceUpgrade(PlayerInterface player) {
         super(player);

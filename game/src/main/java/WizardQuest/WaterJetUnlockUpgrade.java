@@ -1,4 +1,4 @@
-public class WaterJetUnlockUpgrade extends Player {
+public class WaterJetUnlockUpgrade extends UpgradeBase {
     public WaterJetUnlockUpgrade(PlayerInterface player){
         super(player);
     }

@@ -1,4 +1,4 @@
-public class FireBallUnlockUpgrade extends Player {
+public class FireBallUnlockUpgrade extends UpgradeBase {
     public FireBallUnlockUpgrade(PlayerInterface player){
         super(player);
     }

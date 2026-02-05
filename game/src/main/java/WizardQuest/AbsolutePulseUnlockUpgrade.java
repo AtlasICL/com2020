@@ -1,4 +1,4 @@
-public class AbsolutePulseUnlockUpgrade extends Player {
+public class AbsolutePulseUnlockUpgrade extends UpgradeBase {
     public AbsolutePulseUnlockUpgrade(PlayerInterface player){
         super(player);
     }
