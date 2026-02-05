@@ -11,6 +11,10 @@ public class SettingsSingleton {
     public static SettingsInterface getSettings(){
         return settings;
     }
+    
+    public static SettingsInterface getSettingsSingleton(){
+        return settings;
+    }
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
