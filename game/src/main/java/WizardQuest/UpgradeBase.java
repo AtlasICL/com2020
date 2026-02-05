@@ -6,5 +6,78 @@ public abstract class UpgradeBase implements PlayerInterface {
         } else 
         throw new IllegalArgumentException();
     }
-    //getters?
+    @Override
+    public int getHealth() {
+        return player.getHealth();
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return player.getMaxHealth();
+    }
+
+    @Override
+    public void takeDamage(int amount) {
+        player.takeDamage(amount);
+    }
+
+    @Override
+    public void heal(int amount) {
+        player.heal(amount);
+    }
+
+    @Override
+    public int getCoins() {
+        return player.getCoins();
+    }
+
+    @Override
+    public void loseCoins(int amount) {
+        player.loseCoins(amount);
+    }
+
+    @Override
+    public void gainCoins(int amount) {
+        player.gainCoins(amount);
+    }
+
+    @Override
+    public int getMagic() {
+        return player.getMagic();
+    }
+
+    @Override
+    public int getMaxMagic() {
+        return player.getMaxMagic();
+    }
+
+    @Override
+    public int getMagicRegenRate() {
+        return player.getMagicRegenRate();
+    }
+
+    @Override
+    public void gainMagic(int amount) {
+        player.gainMagic(amount);
+    }
+
+    @Override
+    public void loseMagic(int amount) {
+        player.loseMagic(amount);
+    }
+
+    @Override
+    public int getLives() {
+        return player.getLives();
+    }
+
+    @Override
+    public void loseLives(int amount) {
+        player.loseLives(amount);
+    }
+
+    @Override
+    public List<UpgradeType> getUpgrades() {
+        return player.getUpgrades();
+    }
 }
