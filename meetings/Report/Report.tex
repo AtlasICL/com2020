@@ -36,16 +36,74 @@ Authenticated users must be assigned one of the following roles. Each role has i
 \end{description}
 
 \noindent\textit{As a designer I want to make sure my game is safe from unauthorised modification, so I can develop the game without worry of my progress being damaged by malicious users.}
-
+\\
 \noindent\textbf{Value:} 3
+\pagebreak
 \subsubsection{User Settings (Must)}
+The game must contain a settings screen the following user Settings.
+\begin{description}
+    \item[\textbf{Telemetry Enabled}] - whether the game records telemetry events or not. On be default. The menu screen should display a warning notifying users when telemetry is enabled.
+\end{description}
+
+\noindent The settings screen should also allow designers to adjust the design parameters and developers to assign roles to other users. 
+\\
+\\
+\noindent\textit{As a user I want to be able to control what data about my game experience is recorded.}
+\\
+\noindent\textbf{Value:} 1
 \subsubsection{Two Stages (Must)}
+The game must contain 2 stages. A stage is the combination of an encounter and trip to the shop in between encounters. 
+\\
+\\
+\textit{As a player I want several levels worth of gameplay so I can enjoy the game for longer.}
+\\
+\textbf{Value:} 3
 \subsubsection{Six Telemetry Events (Must)}
+The game must feature 6 telemetry events. It should track when these events are triggered and when this happens write the event's information to the shared storage file that holds them. The events should follow the format designated in the telemetry schema. The events are as follows:
+\begin{description}
+    \item[\textbf{SessionStartEvent}] - sent when a session is established, either by a user with telemetry enabled logging in, or by a user enabling telemetry.
+    \item[\textbf{NormalEncounterStartEvent}] - sent when a normal encounter is started. The encounter could have started before and this would be sent after retrying the encounter.
+    \item[\textbf{NormalEncounterCompleteEvent}] - sent when the player defeats all enemies in a normal encounter, completing it. They then move onto the shop.
+    \item[\textbf{NormalEncounterFaileEvent}] - sent when a player dies in an encounter, and contains information about how many lives they have left.
+    \item[\textbf{EndSessionEvent}] - sent when a session ends, either by a user with telemetry enabled logging out, or by a user disabling telemetry.
+    \item[\textbf{SettingsChangeEvent}] - sent when a user changes one of the game's settings, and contains what setting was changed and to what value.  
+\end{description}
+
+\noindent\textit{As a designer I want to see a variety of telemetry events recorded, so I can see as much data as possible to make the most informed design decisions.}
+\\
+\noindent\textbf{Value:} 1
 \subsubsection{One Design Parameter (Must)}
+The game must allow the editing of one design parameter in the settings window. Changes to this parameter are stored in a storage file, and reflected in new runs. Each design parameter allows a different value for each Difficulty. The chosen design parameters should be effective at changing the game's balance.
+\begin{description}
+    \item[\textbf{StartingLives}] - the number of lives the player starts with when they start a run.
+\end{description}
+
+\noindent\textit{As a designer I want to have a simple parameter I can tweak that can affect the balance of the game, to allow me to make quick broad stroke changes to the game's balance.}
+\\
+\noindent\textbf{Value:} 2
 \subsubsection{PLayer-Agent Simulation (Must)}
+The game should allow the running of an automated player-agent simulation from settings. The agent should attempt to complete a run under the specified settings and difficulty, and should return the results of it's attempt.
+\\
+\\
+\noindent\textit{As a designer I want a way to get quick and instant feedback on my design changes, so I can evaluate them quickly.}
+\\
+\noindent\textbf{Value:} 2
 \subsubsection{Five Automated Tests (Must)}
-\subsubsection{Coins and Shop(Must)}
+The java game should have a testing suite containing 5 automated tests. These should follow A-TRIP principles.
+\\
+\\
+\noindent\textit{As a developer I want ensure the system behaves as expected and testing allows us to identify issues quickly and solve them before they become expensive.}
+\\
+\noindent\textbf{Value:} 2
+\subsubsection{Coins and Shop (Must)}
+The game must reward players with coins upon completing an encounter. These coins can then be spent in the shop to buy upgrades.
+\\
+\\
+\noindent\textit{As a designer I want to have a mechanism to reward players to keep them incentivise play.}
+\\
+\noindent\textbf{Value:} 1
 \subsubsection{Four Purchasable Upgrades (Must)}
+The game should contain 4 upgrades that can be purchased in the shop for coins, following the specified game design.
 \subsubsection{Text Based User Interface (Must)}
 \subsubsection{One Manual End-To-End Test (Must)}
 \subsubsection{Accessable User Interface (Must)}
@@ -108,6 +166,8 @@ Authenticated users must be assigned one of the following roles. Each role has i
 TODO tom
 \section{Telemetry Schema}
 TODO tom 
+\section{Game Design}
+TODO will 
 \section{Ethical and Legal Analysis}
 TODO will
 \section{Testing Architecture}
