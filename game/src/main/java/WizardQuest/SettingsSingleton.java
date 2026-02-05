@@ -47,9 +47,9 @@ public class SettingsSingleton {
         private float mediumEnemyMaxHealthMultiplier;
         private float easyEnemyMaxHealthMultiplier;
 
-        private int hardStartingLives;
-        private int mediumStartingLives;
-        private int easyStartingLives;
+        private int hardStartingLives = 1;
+        private int mediumStartingLives = 3;
+        private int easyStartingLives = 5;
 
         private int hardMaxMagic;
         private int mediumMaxMagic;
@@ -156,27 +156,42 @@ public class SettingsSingleton {
         public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {}
 
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth) {}
+        public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) {}
 
         @Override
-        public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier) {}
+        public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier) {}
 
         @Override
-        public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier) {}
+        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) {}
 
         @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier) {}
+        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) {}
 
         @Override
-        public void setStartingLives(Difficulty difficulty, int startingLives) {}
+        public void setStartingLives(Difficulty difficulty, int newStartingLives) {
+            switch (difficulty) { 
+                case EASY: 
+                    easyStartingLives = newStartingLives;
+                case MEDIUM:
+                    mediumStartingLives = newStartingLives;
+                case HARD:
+                    hardStartingLives = newStartingLives;
+            }
+        }
 
         @Override
-        public void setMaxMagic(Difficulty difficulty, int maxMagic) {}
+        public void setMaxMagic(Difficulty difficulty, int newMaxMagic) {
+            return;
+        }
 
         @Override
-        public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate) {}
+        public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) {
+            return;
+        }
 
         @Override
-        public void setShopItemCount(Difficulty difficulty, int shopItemCount) {}
+        public void setShopItemCount(Difficulty difficulty, int newShopItemCount) {
+            return;
+        }
     }
 }

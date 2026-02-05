@@ -198,70 +198,70 @@ public interface SettingsInterface {
      * specified difficulty. 
      * 
      * @param difficulty               the difficulty it's being set for.
-     * @param playerMaxHealth the value it's being set to.
+     * @param newPlayerMaxHealth the value it's being set to.
      */
-    public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth);
+    public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth);
 
     /**
      * Sets the value of the upgrade price multiplier design parameter for the
      * specified difficulty.
      * 
      * @param difficulty               the difficulty it's being set for.
-     * @param upgradePriceMultiplier the value it's being set to.
+     * @param newUpgradePriceMultiplier the value it's being set to.
      */
-    public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier);
+    public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier);
 
     /**
      * Sets the value of the enemy damage multiplier design parameter for the
      * specified difficulty.
      * 
      * @param difficulty            the difficulty it's being set for.
-     * @param enemyDamageMultiplier the value it's being set to.
+     * @param newEnemyDamageMultiplier the value it's being set to.
      */
-    public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier);
+    public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier);
 
     /**
      * Sets the value of the enemy max health multiplier design parameter for the
      * specified difficulty.
      *
      * @param difficulty            the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
+     * @param newEnemyMaxHealthMultiplier the value it's being set to.
      */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
+    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier);
 
     /**
      * Sets the value of the starting lives design parameter for the
      * specified difficulty.
      * 
      * @param difficulty    the difficulty it's being set for.
-     * @param startingLives the value it's being set to.
+     * @param newStartingLives the value it's being set to.
      */
-    public void setStartingLives(Difficulty difficulty, int startingLives);
+    public void setStartingLives(Difficulty difficulty, int newStartingLives);
 
     /**
      * Sets the value of the max magic multiplier design parameter for the
      * specified difficulty. 
      * 
      * @param difficulty         the difficulty it's being set for.
-     * @param maxMagic the value it's being set to.
+     * @param newMaxMagic the value it's being set to.
      */
-    public void setMaxMagic(Difficulty difficulty, int maxMagic);
+    public void setMaxMagic(Difficulty difficulty, int newMaxMagic);
 
     /**
      * Sets the value of the starting lives design parameter for the
      * specified difficulty.
      * 
      * @param difficulty     the difficulty it's being set for.
-     * @param magicRegenRate the value it's being set to.
+     * @param newMagicRegenRate the value it's being set to.
      */
-    public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate);
+    public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate);
 
     /**
      * Sets the value of the shop item count design parameter for the
      * specified difficulty.
      * 
      * @param difficulty    the difficulty it's being set for.
-     * @param shopItemCount the value it's being set to.
+     * @param newShopItemCount the value it's being set to.
      */
-    public void setShopItemCount(Difficulty difficulty, int shopItemCount);
+    public void setShopItemCount(Difficulty difficulty, int newShopItemCount);
 }
