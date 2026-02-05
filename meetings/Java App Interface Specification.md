@@ -86,6 +86,8 @@ public int getDeathCount()
 
 public void incrementDeathCount() *Only increments death count. A player running out of lives, and the decrement of their lives should be handled by GameManger*
 
+public Difficulty getDifficulty()
+
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
 ### Constructors

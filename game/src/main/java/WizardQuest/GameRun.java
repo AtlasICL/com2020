@@ -159,6 +159,11 @@ public class GameRun implements GameRunInterface {
     public void incrementDeathCount() {
         this.player.loseLives(1);
     }
+    
+    @Override
+    public Difficulty getDifficulty(){
+        return this.currentDifficulty;
+    }
 
     /**
      * Iterates through the pool of upgrades displayable in the shop, and set the

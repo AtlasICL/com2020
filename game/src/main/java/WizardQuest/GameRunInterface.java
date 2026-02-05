@@ -33,7 +33,7 @@ public interface GameRunInterface {
      * 
      * @param upgrade the upgrade being bought from the shop.
      * @throws LackingResourceException if the player doesn't have enough coins to
-     *                                    buy the upgrade.
+     *                                  buy the upgrade.
      */
     public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException;
 
@@ -78,4 +78,10 @@ public interface GameRunInterface {
      * method.
      */
     public void incrementDeathCount();
+
+    /**
+     * Gets the difficulty of the run.
+     * @return the difficulty setting for this run.
+     */
+    public Difficulty getDifficulty();
 }
