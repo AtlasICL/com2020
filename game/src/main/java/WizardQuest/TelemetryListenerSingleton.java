@@ -49,7 +49,11 @@ public class TelemetryListenerSingleton {
         }
 
         private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
-            if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("SessionStart")){
+            if(e.getTelemetryName().equals("EndSession") && currentSessionID == -1){
+                throw new SessionValidationException("SessionEnd for session " + e.getSessionID() + 
+                                                    " occurs before it's StartSession");
+            }
+            else if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("SessionStart")){
                 throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
                                                     " " + e.getSessionID() + " not equal to current sessionID of "
                                                      + currentSessionID);
@@ -281,11 +285,12 @@ public class TelemetryListenerSingleton {
         @Override
         public void onEndSession(EndSessionEvent e){
             try {
-                currentSessionID = -1;
-                currentUserID = -1;
+                isCorrectSession(e);
                 isCorrectTimeStamp(e);
                 saveEvent(e);
-            } catch (TimestampValidationException ex) {
+                currentSessionID = -1;
+                currentUserID = -1;
+            } catch (TimestampValidationException | SessionValidationException ex) {
                 System.err.println(ex.getMessage());
             }
             
