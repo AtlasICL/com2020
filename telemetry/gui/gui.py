@@ -5,7 +5,7 @@ import seaborn as sns
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
 
-TMP_FILENAME: str = "example_data.json"
+TMP_FILENAME: str = "logs.json"
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
@@ -99,17 +99,26 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_coins_gained_plots()
 
 
-    def show_tab(self, tab_frame: ttk.Frame):
-        self.notebook.select(tab_frame)
-
-
     def make_welcome_screen(self):
         welcome = ttk.Label(
             self.tab_home,
             text="Welcome to the Telemetry App",
-            justify="center",
+            justify="center"
         )
         welcome.pack(pady=(30, 15))
+
+        sign_in_button = ttk.Button(
+            self.tab_home,
+            text="Sign in with Google",
+            command=self.google_auth
+        )
+        sign_in_button.pack(pady=(10, 20))
+
+
+    def google_auth(self):
+        print("Sign in requested")
+        return
+
 
 
     def refresh_funnel_graph(self):
