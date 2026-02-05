@@ -9,7 +9,7 @@ public enum AbilityType{
     SLASH("Slash", -1, -1, null), // PLACEHOLDER ARGS
     WATER_JET("Water Jet", -1, -1, null), // PLACEHOLDER ARGS
     THUNDER_STORM("Thunder Storm", -1, -1, null), // PLACEHOLDER ARGS
-    FIRE_BALL("Fire Ball", -1, -1, null),; // PLACEHOLDER ARGS
+    FIRE_BALL("Fire Ball", -1, -1, null); // PLACEHOLDER ARGS
 
     private final String description;
     private final int baseDamage;
