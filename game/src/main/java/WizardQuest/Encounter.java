@@ -3,32 +3,44 @@ package WizardQuest;
 public class Encounter implements EncounterInterface {
     private EntityInterface[] enemies;
     private boolean completed;
-    private final EncounterType type;
+    private EncounterType type;
 
-    public Encounter(EncounterType type) {
-        this.type = type;
-    }
+    /**
+     * Builds the encounter based on the specified type
+     * 
+     * @param type the name for the encounter.
+     */
+    public Encounter(EncounterType type);
 
-    @Override
-    public EntityInterface[] getEnemies() {
-        return enemies;
-    }
+    /**
+     * Provides a reference to all enemies in the encounter.
+     * 
+     * @return an array of references to the enemies in the encounter.
+     */
+    public EntityInterface[] getEnemies();
 
-    @Override
-    public boolean isComplete() {
-        return completed;
-    }
+    /**
+     * Gives whether the encounter has been marked as complete or not.
+     * 
+     * @return Whether the encounter is complete.
+     */
+    public boolean isComplete();
 
-    @Override
-    public void markComplete() {
-        completed = true;
-    }
+    /**
+     * Marks the encounter as complete, meaning all entities within it are dead.
+     */
+    public void markComplete();
 
-    @Override
-    public EncounterType getType() {
-        return type;
-    }
+    /**
+     * returns the type (name) of the encounter.
+     * 
+     * @return the encounter's type.
+     */
+    public EncounterType getType();
 
-    @Override
-    public void resetEnemyHealth() {}
+    /**
+     * Resets the health of all enemies in the encounter. Should be called when the
+     * encounter is retried.
+     */
+    public void resetEnemyHealth();
 }

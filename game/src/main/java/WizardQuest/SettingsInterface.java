@@ -2,14 +2,15 @@ package WizardQuest;
 
 /**
  * Interface for settings. Provides access to user settings and properties, as
- * well as the ability to authenticate and create users.
+ * well as the ability to
+ * authenticate and create users.
  */
 public interface SettingsInterface {
     /**
      * Attempts to create a new user with the given parameters. On success will add
      * this user to the user JSON database.
      * 
-     * @param username the user's username. Must consist exclusively of
+     * @param username the user's username. Must consists exclusively of
      *                 alphanumeric characters, underscores or hyphens.
      * @param password the user's password. It is hashed and salted before being
      *                 stored.
@@ -22,7 +23,7 @@ public interface SettingsInterface {
     /**
      * Attempts to authenticate the specified user, logging in as them on success.
      * 
-     * @param username the user's username. Must consist exclusively of
+     * @param username the user's username. Must consists exclusively of
      *                 alphanumeric characters, underscores or hyphens.
      * @param password the user's password. It is hashed and salted with the user's
      *                 salt before being looked up in the database.
@@ -39,17 +40,6 @@ public interface SettingsInterface {
      * @return the user's role.
      */
     public Role getUserRole() throws AuthenticationException;
-
-    /**
-     * Sets the role of the specified user or throws an exception
-     * if the authenticated user is not a developer.
-     *
-     * @param username the user to have their role modified.
-     * @param role the new role that they will hold.
-     * @throws AuthenticationException if no user is authenticated,
-     *                                 or the authenticated user calling the method is not of the Developer role.
-     */
-    public void setUserRole(String username, Role role) throws AuthenticationException;
 
     /**
      * Returns the username of the currently authenticated user.
@@ -99,6 +89,15 @@ public interface SettingsInterface {
     public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException;
 
     /**
+     * Gets the value of the enemy max health multiplier design parameter for the
+     * specified difficulty.
+     * 
+     * @param difficulty the difficulty being queried.
+     * @return the value of the design parameter.
+     */
+    public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
+
+    /**
      * Gets the value of the player max health design parameter for the
      * specified difficulty. 
      * 
@@ -124,15 +123,6 @@ public interface SettingsInterface {
      * @return the value of the design parameter.
      */
     public float getEnemyDamageMultiplier(Difficulty difficulty);
-
-    /**
-     * Gets the value of the enemy max health multiplier design parameter for the
-     * specified difficulty.
-     *
-     * @param difficulty the difficulty being queried.
-     * @return the value of the design parameter.
-     */
-    public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
 
     /**
      * Gets the value of the starting lives design parameter for the
@@ -194,6 +184,15 @@ public interface SettingsInterface {
     public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException;
 
     /**
+     * Sets the value of the enemy max health multiplier design parameter for the
+     * specified difficulty.
+     * 
+     * @param difficulty               the difficulty it's being set for.
+     * @param enemyMaxHealthMultiplier the value it's being set to.
+     */
+    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
+
+    /**
      * Sets the value of the player max health multiplier design parameter for the
      * specified difficulty. 
      * 
@@ -219,15 +218,6 @@ public interface SettingsInterface {
      * @param enemyDamageMultiplier the value it's being set to.
      */
     public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier);
-
-    /**
-     * Sets the value of the enemy max health multiplier design parameter for the
-     * specified difficulty.
-     *
-     * @param difficulty            the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
-     */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
 
     /**
      * Sets the value of the starting lives design parameter for the

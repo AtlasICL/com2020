@@ -1,5 +1,3 @@
-package WizardQuest;
-
 public class FireDamageResistanceUpgrade extends ConcreteUpgrade {
 
     public FireDamageResistanceUpgrade(PlayerInterface player) {
