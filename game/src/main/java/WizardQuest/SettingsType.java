@@ -1,16 +1,14 @@
 package WizardQuest;
 
 /**
- * Enumerates all difficulty levels in the game.
+ * Enumerates all settings types in the game.
  */
-public enum Difficulty {
-    EASY("Easy"),
-    MEDIUM("Medium"),
-    HARD("Hard");
+public enum SettingsType {
+    TELEMETRY_ENABLED("TelemetryEnabled");
 
     private final String telemetryName;
 
-    private Difficulty(String telemetryName) {
+    private SettingsType(String telemetryName) {
         this.telemetryName = telemetryName;
     }
 

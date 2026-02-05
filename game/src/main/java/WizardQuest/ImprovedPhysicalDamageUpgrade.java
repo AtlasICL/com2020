@@ -1,3 +1,5 @@
+package WizardQuest;
+
 public class ImprovedPhysicalDamageUpgrade extends ConcreteUpgrade {
 
     public ImprovedPhysicalDamageUpgrade(PlayerInterface player) {
