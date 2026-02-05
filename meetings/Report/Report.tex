@@ -18,7 +18,92 @@
 \section{Initial Analysis}
 TODO will
 \section{Prioritised Requirements}
-TODO tom
+For the first sprint we were required to build a vertical slice of the system. This meant we had to prioritise building the core components of the system that many things depended on. We split the system into 2 different applications, a Python application that read the telemetry events and implemented the data visualisation portion of the system, and a Java application which ran the game and produced the telemetry events. The requirements listed in each section are in priority order, being assigned one of 4 priorities: Must, Should, Could and Wont. Each requirement is also given a value based on several factors: the amount of work required to fulfill the requirement, the risk associated with the requirement, the technical changes needing to be made to implement the requirement, how much the requirement depends on, how complex to fulfill the requirement is, and how much value to the system the requirement's fulfillment adds. 
+\subsection{Java Application Requirements}
+\subsubsection{User Authentication (Must)}
+Any user of the Java Application must be authenticated before they can play the game.
+\\
+\\
+\textit{As a designer I need user information to keep record of how users behave in my game.}
+\\
+\textbf{Value:} 3
+\subsubsection{Role Based Access Control (Must)}
+Authenticated users must be assigned one of the following roles. Each role has it's own permissions.
+\begin{description}
+    \item[\textbf{Player}] - players should be able to log into the game and play as many runs as they wish.
+    \item[\textbf{Designer}] - designers should be able to edit the game's design parameters in Settings, as well as perform any action a player may perform.
+    \item[\textbf{Developer}] - Developers should be able to assign roles to other users including other developers, as well as perform any action a designer may perform. 
+\end{description}
+
+\noindent\textit{As a designer I want to make sure my game is safe from unauthorised modification, so I can develop the game without worry of my progress being damaged by malicious users.}
+
+\noindent\textbf{Value:} 3
+\subsubsection{User Settings (Must)}
+\subsubsection{Two Stages (Must)}
+\subsubsection{Six Telemetry Events (Must)}
+\subsubsection{One Design Parameter (Must)}
+\subsubsection{PLayer-Agent Simulation (Must)}
+\subsubsection{Five Automated Tests (Must)}
+\subsubsection{Coins and Shop(Must)}
+\subsubsection{Four Purchasable Upgrades (Must)}
+\subsubsection{Text Based User Interface (Must)}
+\subsubsection{One Manual End-To-End Test (Must)}
+\subsubsection{Accessable User Interface (Must)}
+\subsubsection{Different Difficulty Levels (Must)}
+\subsubsection{Progression Feedback (Must)}
+
+\subsubsection{Three Stages (Should)}
+\subsubsection{Validation Of Telemetry Events (Should)}
+\subsubsection{Four Or More Normal Encounters (Should)}
+\subsubsection{Two Or More Normal Enemies (Should)}
+\subsubsection{One Boss Encounter (Should)}
+\subsubsection{Magic System (Should)}
+
+\subsubsection{Responsive User Interface (Could)}
+\subsubsection{Decision Log (Could)}
+\subsubsection{Twelve Telemetry Events (Could)}
+\subsubsection{Fifteen Or More Automted Tests (Could)}
+\subsubsection{Two Or More Boss Encounters (Could)}
+\subsubsection{Six Or More Normal Encounters (Could)}
+
+\subsubsection{Ten Stages (Wont)}
+\subsubsection{Multiple Target Abilities (Wont)}
+\subsubsection{Multiple Players (Wont)}
+\subsubsection{Encounter Creator (Wont)}
+\subsubsection{Dynamic Encounter Generation (Wont)}
+\subsubsection{Dynamic Enemy Generation (Wont)}
+\subsubsection{Scoring System (Wont)}
+\subsubsection{Additional Ability Resources (Wont)}
+\subsubsection{Upgrade Creator (Wont)}
+\subsubsection{More Than Ten Levels (Wont)}
+\subsubsection{Mid Run Difficulty Adjustment}
+\subsubsection{Dynamically Adjusting Difficulty (Wont)}
+\subsubsection{Mid Run Game Saves}
+
+\subsection{Python Application Requirements}
+\subsubsection{Lives System (Must)}
+\subsubsection{Health System (must)}
+\subsubsection{Two Normal Encounters (Must)}
+\subsubsection{One Normal Enemy (Must)}
+\subsection{Python Application Requirements}
+\subsubsection{User Authentication (Must)}
+\subsubsection{Role Based Access Control (Must)}
+\subsubsection{Six Telemetry Events (Must)}
+\subsubsection{Three Dashboard Views (Must)}
+\subsubsection{Validation Of Telemetry Events (Must)}
+\subsubsection{Accessable User Interface (Must)}
+
+\subsubsection{Repair Invalid Telemetry Events (Should)}
+\subsubsection{300 Sample Telemetry Events (Should)}
+
+\subsubsection{Responsive User Interface (Could)}
+
+\subsubsection{1500 Sample Telemetry Events (Wont)}
+\subsubsection{Six Dashboard Views (Wont)}
+\subsubsection{Rule Bassed Suggestions (Wont)}
+
+
+
 \section{System Architecture}
 TODO tom
 \section{Telemetry Schema}
