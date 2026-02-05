@@ -49,10 +49,14 @@ public class TelemetryListenerSingleton {
         }
 
         private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
-            if(currentSessionID != e.getSessionID()){
+            if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("SessionStart")){
                 throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
                                                     " " + e.getSessionID() + " not equal to current sessionID of "
                                                      + currentSessionID);
+            }
+            else if(e.getTelemetryName().equals("SessionStart") && currentSessionID != -1){
+                throw new SessionValidationException("SessionStart for session " + e.getSessionID() + 
+                                                    " occurs before EndSession of " + currentSessionID);
             }
         }
 
@@ -69,10 +73,12 @@ public class TelemetryListenerSingleton {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
                 LocalDateTime eventTime = LocalDateTime.parse(e.getTimestamp(), formatter);
                 if(eventTime.isAfter(LocalDateTime.now())){
-                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + " " + e.getTimestamp() + " is in the future");
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                            " " + e.getTimestamp() + " is in the future");
                 }
             } catch (java.time.format.DateTimeParseException ex) {
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + " " + e.getTimestamp() + " is of invalid format");
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                        " " + e.getTimestamp() + " is of invalid format");
             }
         }
 
