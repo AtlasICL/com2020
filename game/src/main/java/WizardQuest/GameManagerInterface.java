@@ -6,7 +6,7 @@ package WizardQuest;
  */
 public interface GameManagerInterface {
     /**
-     * Retruns whether there is a instance of the game running.
+     * Returns whether there is a instance of the game running.
      * @return true if there is a game running, false if not.
      */
     public boolean isGameRunning();
@@ -80,7 +80,7 @@ public interface GameManagerInterface {
      *                                    buy the upgrade.
      */
 
-    public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException;
+    public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException;
 
 
     /**

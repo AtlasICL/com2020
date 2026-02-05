@@ -1,43 +1,22 @@
 package WizardQuest;
 
-public class SettingsChangeEvent extends TelemetryEvent{
-    private final Setting setting;
+public class SettingsChangeEvent extends TelemetryEvent {
+    private final String setting;
     private final String settingValue;
     /**
-     * Constructor for SettingsChangeEvent.
-     * 
-     * @param source        the object that constructed the telemetry event.
-     * @param userID        the ID of the user who is playing the game when the
-     *                      event is
-     *                      constructed.
-     * @param sessionID     the ID of the session the user is currently playing. See
-     *                      TelemetryListenerInterface for information about
-     *                      sessions.
-     * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss.
-     * @param setting       setting being changed.
-     * @param settingValue  new setting value being set.
+     * Constructor for the settings change telemetry event. Produces a telemetry event storing
+     * common data.
+     *
+     * @param setting           The setting being changed in this event.
+     * @param settingValue      The value that the setting is set to in this event.
      */
-    public SettingsChangeEvent(Object source, int userID, int sessionID, String timeStamp, Setting setting, String settingValue) {
-        super(source, userID, sessionID, timeStamp, "SettingsChange");
+    public SettingsChangeEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, String setting, String settingValue) {
+        super(source, userID, sessionID, timeStamp, telemetryName);
         this.setting = setting;
         this.settingValue = settingValue;
     }
-    /**
-     * Gets setting.
-     * 
-     * @return setting being changed in event.
-     */
-    public Setting getSetting(){
-        return this.setting;
-    }
-    /**
-     * Gets setting value.
-     * 
-     * @return setting value being changed to.
-     */
-    public String getSettingValue(){
-        return this.settingValue;
-    }
 
+    public String getSetting() {return setting;}
+
+    public String getSettingValue() {return settingValue;}
 }

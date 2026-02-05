@@ -1,3 +1,5 @@
+package WizardQuest;
+
 public class WaterDamageResistanceUpgrade extends ConcreteUpgrade {
 
     public WaterDamageResistanceUpgrade(PlayerInterface player) {
