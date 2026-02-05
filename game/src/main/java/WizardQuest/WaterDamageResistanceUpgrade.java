@@ -7,16 +7,16 @@ public class WaterDamageResistanceUpgrade extends UpgradeBase {
     @Override
     public int loseHealth(int amount, DamageType type) {
         if (type == DamageType.WATER){
-            return player.loseHealth(amount/2, type);   
+            return super.player.loseHealth(amount/2, type);   
         } 
         else {
-            return player.loseHealth(amount, type); 
+            return super.player.loseHealth(amount, type); 
         }
     }
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = player.getUpgrades();
+        List u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.WATER_DAMAGE_RESISTANCE)){
             u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
         }

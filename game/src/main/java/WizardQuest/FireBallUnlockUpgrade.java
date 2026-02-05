@@ -5,7 +5,7 @@ public class FireBallUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = player.getUpgrades();
+        List u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.FIRE_BALL_UNLOCK)){
             u.add(UpgradeType.FIRE_BALL_UNLOCK);
         }
@@ -14,7 +14,7 @@ public class FireBallUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = player.getAbilities();
+        List a = super.player.getAbilities();
         if (!a.contains(AbilityType.FIRE_BALL)){
             a.add(AbilityType.FIRE_BALL);
         }

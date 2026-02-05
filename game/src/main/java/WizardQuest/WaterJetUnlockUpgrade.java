@@ -5,7 +5,7 @@ public class WaterJetUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = player.getUpgrades();
+        List u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.WATER_JET_UNLOCK)){
             u.add(UpgradeType.WATER_JET_UNLOCK);
         }
@@ -14,7 +14,7 @@ public class WaterJetUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = player.getAbilities();
+        List a = super.player.getAbilities();
         if (!a.contains(AbilityType.WATER_JET)){
             a.add(AbilityType.WATER_JET);
         }

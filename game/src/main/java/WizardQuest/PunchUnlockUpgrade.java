@@ -5,7 +5,7 @@ public class PunchUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = player.getUpgrades();
+        List u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.PUNCH_UNLOCK)){
             u.add(UpgradeType.PUNCH_UNLOCK);
         }
@@ -14,7 +14,7 @@ public class PunchUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = player.getAbilities();
+        List a = super.player.getAbilities();
         if (!a.contains(AbilityType.PUNCH)){
             a.add(AbilityType.PUNCH);
         }

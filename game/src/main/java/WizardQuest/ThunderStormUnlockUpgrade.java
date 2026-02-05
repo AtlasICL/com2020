@@ -5,7 +5,7 @@ public class ThunderStormUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = player.getUpgrades();
+        List u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.THUNDER_STORM_UNLOCK)){
             u.add(UpgradeType.THUNDER_STORM_UNLOCK);
         }
@@ -14,7 +14,7 @@ public class ThunderStormUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = player.getAbilities();
+        List a = super.player.getAbilities();
         if (!a.contains(AbilityType.THUNDER_STORM)){
             a.add(AbilityType.THUNDER_STORM);
         }
