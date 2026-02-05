@@ -122,7 +122,15 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onSessionStart(SessionStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                currentSessionID = e.getSessionID();
+                currentUserID = e.getUserID();
+                saveEvent(e);
+            } catch (TimestampValidationException | SessionValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -132,7 +140,15 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterStart(NormalEncounterStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
+            
         }
 
         /**
@@ -143,7 +159,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterComplete(NormalEncounterCompleteEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -154,7 +177,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterFail(NormalEncounterFailEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -164,7 +194,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterStart(BossEncounterStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -174,7 +211,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterComplete(BossEncounterCompleteEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -185,7 +229,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterFail(BossEncounterFailEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -195,7 +246,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onGainCoin(GainCoinEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -205,7 +263,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBuyUpgrade(BuyUpgradeEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -215,7 +280,15 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onEndSession(EndSessionEvent e){
-            saveEvent(e);
+            try {
+                currentSessionID = -1;
+                currentUserID = -1;
+                isCorrectTimeStamp(e);
+                saveEvent(e);
+            } catch (TimestampValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
+            
         }
 
         /**
@@ -225,7 +298,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onSettingsChange(SettingsChangeEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -235,7 +315,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onKillEnemy(KillEnemyEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }  
     public static void main(String[] args){
