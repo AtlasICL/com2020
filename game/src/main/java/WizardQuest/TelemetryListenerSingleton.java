@@ -2,6 +2,12 @@ package WizardQuest;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,18 +51,28 @@ public class TelemetryListenerSingleton {
          * @param e the event to be recorded to the JSON database.
          */
         private void saveEvent(Object e){
-            try {
-                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
-                    return; 
-                }
-            }
-            catch(AuthenticationException ex){
-                System.err.println("No user authenticated: " + ex.getMessage());
-            }
-            
+            // try {
+            //     if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+            //         return; 
+            //     }
+            // }
+            // catch(AuthenticationException ex){
+            //     System.err.println("No user authenticated: " + ex.getMessage());
+            // }
             
             try{
-                mapper.writeValue(DESTINATION_FILE, e);
+                String jsonLine = mapper.writeValueAsString(e);
+                if(DESTINATION_FILE.length() == 0){
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESTINATION_FILE))){
+                        writer.write("[\n" + jsonLine + "\n]");
+                    }
+                } else{
+                    try (RandomAccessFile raf = new RandomAccessFile(DESTINATION_FILE, "rw")){
+                        raf.seek(raf.length()-1);
+                        String jsonToAppend = ",\n" + jsonLine + "\n]";
+                        raf.write(jsonToAppend.getBytes());
+                    }
+                }
             } catch (IOException ex){
                 System.err.println("Error writing to JSON: " + ex.getMessage());
             }
@@ -185,4 +201,15 @@ public class TelemetryListenerSingleton {
             saveEvent(e);
         }
     }  
+    public static void main(String[] args){
+        TelemetryListenerInterface listener = getTelemetryListener();
+        Object mockSource = new Object();
+        SessionStartEvent testStartEvent = new SessionStartEvent(
+            mockSource, 123, 1, 
+            "2026/02/02/14/30/00", Difficulty.NORMAL
+        );
+        listener.onSessionStart(testStartEvent);
+        EndSessionEvent testEndEvent = new EndSessionEvent(mockSource, 123, 1, "2026/02/02/14/30/01");
+        listener.onEndSession(testEndEvent);
+    }
 }
