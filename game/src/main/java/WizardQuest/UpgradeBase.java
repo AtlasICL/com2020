@@ -27,12 +27,12 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void loseCoins(int amount) {
+    public void loseCoins(int amount) throws IllegalArgumentException {
         player.loseCoins(amount);
     }
 
     @Override
-    public void gainCoins(int amount) {
+    public void gainCoins(int amount) throws IllegalArgumentException  {
         player.gainCoins(amount);
     }
 
@@ -52,12 +52,12 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void gainMagic(int amount) {
+    public void gainMagic(int amount) throws IllegalArgumentException {
         player.gainMagic(amount);
     }
 
     @Override
-    public void loseMagic(int amount) {
+    public void loseMagic(int amount) throws IllegalArgumentException {
         player.loseMagic(amount);
     }
 
