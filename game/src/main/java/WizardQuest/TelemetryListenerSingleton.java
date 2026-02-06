@@ -1,12 +1,12 @@
 package WizardQuest;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * it.
  */
 public class TelemetryListenerSingleton {
-    private static TelemetryListenerInterface telemetryListener = new TelemetryListener();
+    private static final TelemetryListenerInterface telemetryListener = new TelemetryListener();
     private TelemetryListenerSingleton() {
     }
 
@@ -333,7 +333,7 @@ public class TelemetryListenerSingleton {
         Object mockSource = new Object();
         SessionStartEvent testStartEvent = new SessionStartEvent(
             mockSource, 123, 1, 
-            "2026/02/02/14/30/00", Difficulty.NORMAL
+            "2026/02/02/14/30/00", Difficulty.MEDIUM
         );
         listener.onSessionStart(testStartEvent);
         EndSessionEvent testEndEvent = new EndSessionEvent(mockSource, 123, 1, "2026/02/02/14/30/01");
