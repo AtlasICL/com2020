@@ -22,11 +22,6 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void heal(int amount) {
-        player.heal(amount);
-    }
-
-    @Override
     public int getCoins() {
         return player.getCoins();
     }
