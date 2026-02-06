@@ -5,12 +5,12 @@ public class FireDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public int loseHealth(int amount, DamageType type) {
+    public void loseHealth(int amount, DamageType type) {
         if (type == DamageType.FIRE){
-            return super.player.loseHealth(amount/2, type);   
+            super.player.loseHealth(amount/2, type);   
         } 
         else {
-            return super.player.loseHealth(amount, type); 
+            super.player.loseHealth(amount, type); 
         }
     }
 
