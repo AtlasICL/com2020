@@ -33,6 +33,8 @@ public class TelemetryListenerSingleton {
     private static class TelemetryListener implements TelemetryListenerInterface {
         private int currentSessionID = -1;
         private int currentUserID = -1;
+        private LocalDateTime mostRecentTimeStamp;
+        private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
         private static final ObjectMapper mapper = new ObjectMapper();
         private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
         
@@ -45,7 +47,14 @@ public class TelemetryListenerSingleton {
         }
         public TelemetryListener() {
         }
-
+        /**
+         * Checks if session related to an event is valid. Checks for session ending when no session is established,
+         * checks for events sessionID not corresponding with the current session being ran 
+         * and new session starts occurring before the current session has ended.
+         * 
+         * @param e event being checked.
+         * @throws SessionValidationException exception used to specify invalid sessions.
+         */
         private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
             if(e.getTelemetryName().equals("EndSession") && currentSessionID == -1){
                 throw new SessionValidationException("SessionEnd for session " + e.getSessionID() + 
@@ -61,7 +70,12 @@ public class TelemetryListenerSingleton {
                                                     " occurs before EndSession of " + currentSessionID);
             }
         }
-
+        /**
+         * Checks if user related to an event is valid for the current session established.
+         * 
+         * @param e event being checked.
+         * @throws UserValidationException exception used to specify invalid users
+         */
         private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
             if(currentUserID != e.getUserID()){
                 throw new UserValidationException("UserID of event " + e.getTelemetryName() + 
@@ -70,13 +84,22 @@ public class TelemetryListenerSingleton {
             }
         }
 
+        /**
+         * Checks if timestamp related to an event is valid.
+         * 
+         * @param e
+         * @throws TimestampValidationException
+         */
         private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
             try{
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
                 LocalDateTime eventTime = LocalDateTime.parse(e.getTimestamp(), formatter);
                 if(eventTime.isAfter(LocalDateTime.now())){
                     throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
                                                             " " + e.getTimestamp() + " is in the future");
+                }
+                else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                            " " + e.getTimestamp() + " is not current");
                 }
             } catch (java.time.format.DateTimeParseException ex) {
                 throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
@@ -90,14 +113,15 @@ public class TelemetryListenerSingleton {
          * @param e the event to be recorded to the JSON database.
          */
         private void saveEvent(TelemetryEvent e){
-            // try {
-            //     if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
-            //         return; 
-            //     }
-            // }
-            // catch(AuthenticationException ex){
-            //     System.err.println("No user authenticated: " + ex.getMessage());
-            // }
+            this.mostRecentTimeStamp = LocalDateTime.parse(e.getTimestamp(), formatter);
+            try {
+                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+                    return; 
+                }
+            }
+            catch(AuthenticationException ex){
+                System.err.println("No user authenticated: " + ex.getMessage());
+            }
             
             try{
                 String jsonLine = mapper.writeValueAsString(e);
@@ -286,8 +310,8 @@ public class TelemetryListenerSingleton {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
                 saveEvent(e);
-                currentSessionID = -1;
-                currentUserID = -1;
+                this.currentSessionID = -1;
+                this.currentUserID = -1;
             } catch (TimestampValidationException | SessionValidationException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -327,16 +351,5 @@ public class TelemetryListenerSingleton {
                 System.err.println(ex.getMessage());
             }
         }
-    }  
-    public static void main(String[] args){
-        TelemetryListenerInterface listener = getTelemetryListener();
-        Object mockSource = new Object();
-        SessionStartEvent testStartEvent = new SessionStartEvent(
-            mockSource, 123, 1, 
-            "2026/02/02/14/30/00", Difficulty.MEDIUM
-        );
-        listener.onSessionStart(testStartEvent);
-        EndSessionEvent testEndEvent = new EndSessionEvent(mockSource, 123, 1, "2026/02/02/14/30/01");
-        listener.onEndSession(testEndEvent);
     }
 }
