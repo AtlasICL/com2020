@@ -8,7 +8,7 @@ import java.util.EnumMap;
 public class SettingsSingleton {
     private static SettingsInterface settings = new Settings();
 
-    public static SettingsInterface getSettings(){
+    public static SettingsInterface getInstance() {
         return settings;
     }
 
