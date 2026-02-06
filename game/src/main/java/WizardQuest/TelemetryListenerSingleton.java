@@ -2,6 +2,11 @@ package WizardQuest;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,17 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class TelemetryListenerSingleton {
     private static TelemetryListenerInterface telemetryListener = new TelemetryListener();
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
-    
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
-    abstract static class ignoreSourceMixin {}
-    
-    static{
-        mapper.addMixIn(java.util.EventObject.class, ignoreSourceMixin.class);
-        mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
-    }
-
     private TelemetryListenerSingleton() {
     }
 
@@ -37,26 +31,87 @@ public class TelemetryListenerSingleton {
      * Internal telemetry listener implementation
      */
     private static class TelemetryListener implements TelemetryListenerInterface {
+        private int currentSessionID = -1;
+        private int currentUserID = -1;
+        private static final ObjectMapper mapper = new ObjectMapper();
+        private static final File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
+        
+        @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
+        abstract static class ignoreSourceMixin {}
+        
+        static{
+            mapper.addMixIn(java.util.EventObject.class, ignoreSourceMixin.class);
+            mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
+        }
         public TelemetryListener() {
         }
+
+        private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
+            if(e.getTelemetryName().equals("EndSession") && currentSessionID == -1){
+                throw new SessionValidationException("SessionEnd for session " + e.getSessionID() + 
+                                                    " occurs before it's StartSession");
+            }
+            else if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("SessionStart")){
+                throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
+                                                    " " + e.getSessionID() + " not equal to current sessionID of "
+                                                     + currentSessionID);
+            }
+            else if(e.getTelemetryName().equals("SessionStart") && currentSessionID != -1){
+                throw new SessionValidationException("SessionStart for session " + e.getSessionID() + 
+                                                    " occurs before EndSession of " + currentSessionID);
+            }
+        }
+
+        private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
+            if(currentUserID != e.getUserID()){
+                throw new UserValidationException("UserID of event " + e.getTelemetryName() + 
+                                                    " " + e.getUserID() + " not equal to current sessionID of "
+                                                     + currentUserID);
+            }
+        }
+
+        private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
+            try{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
+                LocalDateTime eventTime = LocalDateTime.parse(e.getTimestamp(), formatter);
+                if(eventTime.isAfter(LocalDateTime.now())){
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                            " " + e.getTimestamp() + " is in the future");
+                }
+            } catch (java.time.format.DateTimeParseException ex) {
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                        " " + e.getTimestamp() + " is of invalid format");
+            }
+        }
+
         /**
          * Called by all event listeners to save to json file
          * 
          * @param e the event to be recorded to the JSON database.
          */
-        private void saveEvent(Object e){
-            try {
-                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
-                    return; 
-                }
-            }
-            catch(AuthenticationException ex){
-                System.err.println("No user authenticated: " + ex.getMessage());
-            }
-            
+        private void saveEvent(TelemetryEvent e){
+            // try {
+            //     if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+            //         return; 
+            //     }
+            // }
+            // catch(AuthenticationException ex){
+            //     System.err.println("No user authenticated: " + ex.getMessage());
+            // }
             
             try{
-                mapper.writeValue(DESTINATION_FILE, e);
+                String jsonLine = mapper.writeValueAsString(e);
+                if(DESTINATION_FILE.length() == 0){
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESTINATION_FILE))){
+                        writer.write("[\n" + jsonLine + "\n]");
+                    }
+                } else{
+                    try (RandomAccessFile raf = new RandomAccessFile(DESTINATION_FILE, "rw")){
+                        raf.seek(raf.length()-1);
+                        String jsonToAppend = ",\n" + jsonLine + "\n]";
+                        raf.write(jsonToAppend.getBytes());
+                    }
+                }
             } catch (IOException ex){
                 System.err.println("Error writing to JSON: " + ex.getMessage());
             }
@@ -69,7 +124,15 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onSessionStart(SessionStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                currentSessionID = e.getSessionID();
+                currentUserID = e.getUserID();
+                saveEvent(e);
+            } catch (TimestampValidationException | SessionValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -79,7 +142,15 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterStart(NormalEncounterStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
+            
         }
 
         /**
@@ -90,7 +161,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterComplete(NormalEncounterCompleteEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -101,7 +179,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onNormalEncounterFail(NormalEncounterFailEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -111,7 +196,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterStart(BossEncounterStartEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -121,7 +213,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterComplete(BossEncounterCompleteEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -132,7 +231,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBossEncounterFail(BossEncounterFailEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -142,7 +248,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onGainCoin(GainCoinEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -152,7 +265,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onBuyUpgrade(BuyUpgradeEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -162,7 +282,16 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onEndSession(EndSessionEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                saveEvent(e);
+                currentSessionID = -1;
+                currentUserID = -1;
+            } catch (TimestampValidationException | SessionValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
+            
         }
 
         /**
@@ -172,7 +301,14 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onSettingsChange(SettingsChangeEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
 
         /**
@@ -182,7 +318,25 @@ public class TelemetryListenerSingleton {
          */
         @Override
         public void onKillEnemy(KillEnemyEvent e){
-            saveEvent(e);
+            try {
+                isCorrectSession(e);
+                isCorrectTimeStamp(e);
+                isCorrectUser(e);
+                saveEvent(e);
+            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }  
+    public static void main(String[] args){
+        TelemetryListenerInterface listener = getTelemetryListener();
+        Object mockSource = new Object();
+        SessionStartEvent testStartEvent = new SessionStartEvent(
+            mockSource, 123, 1, 
+            "2026/02/02/14/30/00", Difficulty.NORMAL
+        );
+        listener.onSessionStart(testStartEvent);
+        EndSessionEvent testEndEvent = new EndSessionEvent(mockSource, 123, 1, "2026/02/02/14/30/01");
+        listener.onEndSession(testEndEvent);
+    }
 }
