@@ -66,7 +66,7 @@ public enum AbilityType{
         return type;
     }
 
-    protected final void execute(EntityInterface source, EntityInterface target) throws LackingResourceException{
+    public final void execute(EntityInterface source, EntityInterface target) throws LackingResourceException{
         if (source instanceof PlayerInterface player) {
             if (player.getMagic() >= baseMagicPoints) {
                 player.loseMagic(baseMagicPoints);
