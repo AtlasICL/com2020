@@ -1,12 +1,19 @@
 package WizardQuest;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.EnumMap;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Provides singleton access to settings and user properties
  */
 public class SettingsSingleton {
     private static SettingsInterface settings = new Settings();
+
+    private SettingsSingleton() {}
 
     public static SettingsInterface getInstance() {
         return settings;
@@ -16,9 +23,6 @@ public class SettingsSingleton {
         private boolean telemetryEnabled;
         private int userID;
         private Role userRole;
-
-        // ID for the current session, generated when a user enables telemetry or log in
-        // with telemetry enabled.
         private int sessionID;
 
         private EnumMap<Difficulty, Integer> maxStageReached;
@@ -31,6 +35,10 @@ public class SettingsSingleton {
         private EnumMap<Difficulty, Integer> magicRegenRate;
         private EnumMap<Difficulty, Integer> shopItemCount;
 
+        private static final File SETTINGS_FILE = new File("settings_file.json");
+        private static final ObjectMapper jsonMapper = new ObjectMapper();
+
+
         /**
          * Reads in settings from user database and populates the game settings.
          */
@@ -38,6 +46,9 @@ public class SettingsSingleton {
             loadDefaults();
         }
 
+        /**
+         * Loads in default configs for settings.
+         */
         private void loadDefaults() {
             maxStageReached = new EnumMap<>(Difficulty.class);
             playerMaxHealth = new EnumMap<>(Difficulty.class);
@@ -84,6 +95,33 @@ public class SettingsSingleton {
             shopItemCount.put(Difficulty.EASY, 3);
             shopItemCount.put(Difficulty.MEDIUM, 2);
             shopItemCount.put(Difficulty.HARD, 1);
+        }
+
+        /**
+         * Load the settings of a given player from the settings file (.json).
+         * If the user settings file does not exist, cannot be read, or does not
+         * contain the necessary settings values, the function will keep default
+         * values instead as a fallback.
+         * If the user settings file does not have an entry for the given userID, 
+         * a profile will be created in the file for the user, initially
+         * populated with the default values.
+         * NOTE: this function requires that the settings file exists before
+         * it is called.
+         */
+        private void loadSettingsFromJson(int userID) {
+            if (!SETTINGS_FILE.exists()) {
+                loadDefaults();
+                return;
+            }
+
+            try {
+                JsonNode allUserSettings = jsonMapper.readTree(SETTINGS_FILE);
+                JsonNode userSettings = allUserSettings.get(userID);
+                
+
+            } catch (IOException e) {
+                System.out.println("ERROR! Error reading settings from settings file.");
+            }
         }
 
         @Override
