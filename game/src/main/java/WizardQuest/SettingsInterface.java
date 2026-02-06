@@ -52,14 +52,6 @@ public interface SettingsInterface {
     public void setUserRole(String username, Role role) throws AuthenticationException;
 
     /**
-     * Returns the username of the currently authenticated user.
-     * 
-     * @throws AuthenticationException if no user is authenticated.
-     * @return the user's username.
-     */
-    public String getUsername() throws AuthenticationException;
-
-    /**
      * Returns the session id of the currently authenticated user and session, or
      * throws an exception if the user is unauthenticated or no session is
      * established. A session is only established for users who have telemetry

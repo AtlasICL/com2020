@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import java.util.EnumMap;
+
 /**
  * Provides singleton access to settings and user properties
  */
@@ -18,56 +20,77 @@ public class SettingsSingleton {
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
-        private String username;
+        private int userID;
         private Role userRole;
 
         // ID for the current session, generated when a user enables telemetry or log in
         // with telemetry enabled.
         private int sessionID;
 
-        private int hardMaxStageReached;
-        private int mediumMaxStageReached;
-        private int easyMaxStageReached;
-
-        // DESIGN PARAMETERS: Integer values multiplied by these parameters to be rounded.
-        // TODO: change these to dictionaries.
-
-        private int hardPlayerMaxHealth;
-        private int mediumPlayerMaxHealth;
-        private int easyPlayerMaxHealth;
-
-        private float hardUpgradePriceMultiplier;
-        private float mediumUpgradePriceMultiplier;
-        private float easyUpgradePriceMultiplier;
-
-        private float hardEnemyDamageMultiplier;
-        private float mediumEnemyDamageMultiplier;
-        private float easyEnemyDamageMultiplier;
-
-        private float hardEnemyMaxHealthMultiplier;
-        private float mediumEnemyMaxHealthMultiplier;
-        private float easyEnemyMaxHealthMultiplier;
-
-        private int hardStartingLives = 1;
-        private int mediumStartingLives = 3;
-        private int easyStartingLives = 5;
-
-        private int hardMaxMagic;
-        private int mediumMaxMagic;
-        private int easyMaxMagic;
-
-        private int hardMagicRegenRate;
-        private int mediumMagicRegenRate;
-        private int easyMagicRegenRate;
-
-        private int hardShopItemCount;
-        private int mediumShopItemCount;
-        private int easyShopItemCount;
+        private EnumMap<Difficulty, Integer> maxStageReached;
+        private EnumMap<Difficulty, Integer> playerMaxHealth;
+        private EnumMap<Difficulty, Float> upgradePriceMultiplier;
+        private EnumMap<Difficulty, Float> enemyDamageMultiplier;
+        private EnumMap<Difficulty, Float> enemyMaxHealthMultiplier;
+        private EnumMap<Difficulty, Integer> startingLives;
+        private EnumMap<Difficulty, Integer> maxMagic;
+        private EnumMap<Difficulty, Integer> magicRegenRate;
+        private EnumMap<Difficulty, Integer> shopItemCount;
 
         /**
          * Reads in settings from user database and populates the game settings.
          */
-        public Settings() {}
+        public Settings() {
+            loadDefaults();
+        }
+
+        private void loadDefaults() {
+            maxStageReached = new EnumMap<>(Difficulty.class);
+            playerMaxHealth = new EnumMap<>(Difficulty.class);
+            upgradePriceMultiplier = new EnumMap<>(Difficulty.class);
+            enemyDamageMultiplier = new EnumMap<>(Difficulty.class);
+            enemyMaxHealthMultiplier = new EnumMap<>(Difficulty.class);
+            startingLives = new EnumMap<>(Difficulty.class);
+            maxMagic = new EnumMap<>(Difficulty.class);
+            magicRegenRate = new EnumMap<>(Difficulty.class);
+            shopItemCount = new EnumMap<>(Difficulty.class);
+
+            maxStageReached.put(Difficulty.EASY, 0);
+            maxStageReached.put(Difficulty.MEDIUM, 0);
+            maxStageReached.put(Difficulty.HARD, 0);
+
+            playerMaxHealth.put(Difficulty.EASY, 200);
+            playerMaxHealth.put(Difficulty.MEDIUM, 100);
+            playerMaxHealth.put(Difficulty.HARD, 50);
+
+            upgradePriceMultiplier.put(Difficulty.EASY, 1.0f);
+            upgradePriceMultiplier.put(Difficulty.MEDIUM, 1.5f);
+            upgradePriceMultiplier.put(Difficulty.HARD, 2.0f);
+
+            enemyDamageMultiplier.put(Difficulty.EASY, 0.5f);
+            enemyDamageMultiplier.put(Difficulty.MEDIUM, 1.0f);
+            enemyDamageMultiplier.put(Difficulty.HARD, 2.0f);
+
+            enemyMaxHealthMultiplier.put(Difficulty.EASY, 1.0f);
+            enemyMaxHealthMultiplier.put(Difficulty.MEDIUM, 1.5f);
+            enemyMaxHealthMultiplier.put(Difficulty.HARD, 2.0f);
+
+            startingLives.put(Difficulty.EASY, 5);
+            startingLives.put(Difficulty.MEDIUM, 3);
+            startingLives.put(Difficulty.HARD, 1);
+
+            maxMagic.put(Difficulty.EASY, 200);
+            maxMagic.put(Difficulty.MEDIUM, 100);
+            maxMagic.put(Difficulty.HARD, 50);
+
+            magicRegenRate.put(Difficulty.EASY, 5);
+            magicRegenRate.put(Difficulty.MEDIUM, 3);
+            magicRegenRate.put(Difficulty.HARD, 1);
+
+            shopItemCount.put(Difficulty.EASY, 3);
+            shopItemCount.put(Difficulty.MEDIUM, 2);
+            shopItemCount.put(Difficulty.HARD, 1);
+        }
 
         @Override
         public void createNewUser(String username, String password, Role role) throws AuthenticationException {}
@@ -84,68 +107,49 @@ public class SettingsSingleton {
         public void setUserRole(String username, Role role) throws AuthenticationException {}
 
         @Override
-        public String getUsername() throws AuthenticationException {
-            return username;
-        }
-
-        @Override
-        public int getSessionID() throws AuthenticationException {
-            return sessionID;
-        }
-
-        @Override
-        public int getUserID() throws AuthenticationException {
-            return sessionID;
-        }
-
-        @Override
-        public boolean isTelemetryEnabled() throws AuthenticationException {
-            return telemetryEnabled;
-        }
-
-        @Override
         public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
-            return -1; // PLACEHOLDER
+
+            return maxStageReached.get(difficulty);
         }
 
         @Override
         public int getPlayerMaxHealth(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return playerMaxHealth.get(difficulty);
         }
 
         @Override
         public float getUpgradePriceMultiplier(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return upgradePriceMultiplier.get(difficulty);
         }
 
         @Override
         public float getEnemyDamageMultiplier(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return enemyDamageMultiplier.get(difficulty);
         }
 
         @Override
         public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return enemyMaxHealthMultiplier.get(difficulty);
         }
 
         @Override
         public int getStartingLives(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return startingLives.get(difficulty);
         }
 
         @Override
         public int getMaxMagic(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return maxMagic.get(difficulty);
         }
 
         @Override
         public int getMagicRegenRate(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return magicRegenRate.get(difficulty);
         }
 
         @Override
         public int getShopItemCount(Difficulty difficulty) {
-            return -1; // PLACEHOLDER
+            return shopItemCount.get(difficulty);
         }
 
         @Override
@@ -154,45 +158,63 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {}
+        public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {
+            this.maxStageReached.put(difficulty, maxStageReached);
+        }
 
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) {}
+        public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) {
+            this.playerMaxHealth.put(difficulty, newPlayerMaxHealth);
+        }
 
         @Override
-        public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier) {}
+        public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier) {
+            this.upgradePriceMultiplier.put(difficulty, newUpgradePriceMultiplier);
+        }
 
         @Override
-        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) {}
+        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) {
+            this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
+        }
 
         @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) {}
+        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) {
+            this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
+        }
 
         @Override
         public void setStartingLives(Difficulty difficulty, int newStartingLives) {
-            switch (difficulty) { 
-                case EASY: 
-                    easyStartingLives = newStartingLives;
-                case MEDIUM:
-                    mediumStartingLives = newStartingLives;
-                case HARD:
-                    hardStartingLives = newStartingLives;
-            }
+            this.startingLives.put(difficulty, newStartingLives);
         }
 
         @Override
         public void setMaxMagic(Difficulty difficulty, int newMaxMagic) {
-            return;
+            this.maxMagic.put(difficulty, newMaxMagic);
         }
 
         @Override
         public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) {
-            return;
+            this.magicRegenRate.put(difficulty, newMagicRegenRate);
         }
 
         @Override
         public void setShopItemCount(Difficulty difficulty, int newShopItemCount) {
-            return;
+            this.shopItemCount.put(difficulty, newShopItemCount);
+        }
+
+        @Override
+        public int getSessionID() throws AuthenticationException {
+            return this.sessionID;
+        }
+
+        @Override
+        public int getUserID() throws AuthenticationException {
+            return this.userID;
+        }
+
+        @Override
+        public boolean isTelemetryEnabled() throws AuthenticationException {
+            return this.telemetryEnabled;
         }
     }
 }
