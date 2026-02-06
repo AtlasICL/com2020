@@ -1,5 +1,5 @@
 {
-    "00001": {
+    "0000000001": {
         "role": "player",
         "telemetryEnabled": true,
         "furthestLevel": {
@@ -17,7 +17,56 @@
             "medium": 1.0,
             "hard": 1.2
         },
-        "shopPriceMultiplier": {
+        "shopItemCount": {
+            "easy": 0.8,
+            "medium": 1.0,
+            "hard": 1.2
+        },
+        "enemyDamageMultiplier": {
+            "easy": 0.8,
+            "medium": 1.0,
+            "hard": 1.2
+        },
+        "startingLives": {
+            "easy": 5,
+            "medium": 3,
+            "hard": 1
+        },
+        "magicCostMultiplier": {
+            "easy": 0.8,
+            "medium": 1.0,
+            "hard": 1.2
+        },
+        "maxMagic": {
+            "easy": 150,
+            "medium": 100,
+            "hard": 50
+        },
+        "magicGenerationRate": {
+            "easy": 40,
+            "medium": 20,
+            "hard": 10
+        }
+    },
+    "12345678": {
+        "role": "developer",
+        "telemetryEnabled": true,
+        "furthestLevel": {
+            "easy": 7,
+            "medium": 7,
+            "hard": 5
+        },
+        "enemyHealthMultiplier": {
+            "easy": 2.0,
+            "medium": 3.0,
+            "hard": 4.0
+        },
+        "playerHealthMultiplier": {
+            "easy": 0.8,
+            "medium": 1.0,
+            "hard": 1.2
+        },
+        "shopItemCount": {
             "easy": 0.8,
             "medium": 1.0,
             "hard": 1.2

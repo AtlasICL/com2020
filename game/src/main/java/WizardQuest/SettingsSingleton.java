@@ -6,6 +6,7 @@ import java.util.EnumMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Provides singleton access to settings and user properties
@@ -117,10 +118,77 @@ public class SettingsSingleton {
             try {
                 JsonNode allUserSettings = jsonMapper.readTree(SETTINGS_FILE);
                 JsonNode userSettings = allUserSettings.get(userID);
-                
+
+                // Case that no personalised settings exist for give user yet.
+                // Therefore we create one, and initialise it with defaults.
+                if (userSettings == null) {
+                    // TODO
+                    return;
+                }
+
+                loadIntNode(userSettings, "furthestLevel", maxStageReached);
+                loadIntNode(userSettings, "playerHealthMultiplier", playerMaxHealth);
+                loadIntNode(userSettings, "shopItemCount", shopItemCount);
+                loadFloatNode(userSettings, "enemyDamageMultiplier", enemyDamageMultiplier);
+                loadFloatNode(userSettings, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
+                loadIntNode(userSettings, "startingLives", startingLives);
+                loadIntNode(userSettings, "maxMagic", maxMagic);
+                loadIntNode(userSettings, "magicGenerationRate", magicRegenRate);
+
+                // TODO: Get telemetry enabled from settings json
+
+                // TODO: Get role from settings json
 
             } catch (IOException e) {
-                System.out.println("ERROR! Error reading settings from settings file.");
+                System.out.println("ERROR! Error reading settings from settings file." + e.toString());
+            }
+        }
+
+        /**
+         * Helper function for creating a json object to represent an **int** 
+         * settings field.
+         */
+        private ObjectNode createIntNode(EnumMap<Difficulty, Integer> settingsMap) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            for (Difficulty difficulty : Difficulty.values()) {
+                newNode.put(difficulty.toString(), settingsMap.get(difficulty));
+            }
+            return newNode;
+        }
+
+        /**
+         * Helper function for creating a json object to represent a **float** 
+         * settings field.
+         */
+        private ObjectNode createFloatNode(EnumMap<Difficulty, Float> settingsMap) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            for (Difficulty difficulty : Difficulty.values()) {
+                newNode.put(difficulty.toString(), settingsMap.get(difficulty));
+            }
+            return newNode;
+        }
+
+        /**
+         * Helper function for reading in / loading the json settings for an **int**
+         * settings field.
+         */
+        private void loadIntNode(JsonNode userSettings, String field, EnumMap<Difficulty, Integer> settingsMap) {
+            JsonNode newNode = userSettings.get(field);
+            for (Difficulty difficulty : Difficulty.values()) {
+                JsonNode value = newNode.get(difficulty.toString());
+                settingsMap.put(difficulty, value.asInt());
+            }
+        }
+
+        /**
+         * Helper function for reading in / loading the json settings for an **float**
+         * settings field.
+         */
+        private void loadFloatNode(JsonNode userSettings, String field, EnumMap<Difficulty, Float> settingsMap) {
+            JsonNode newNode = userSettings.get(field);
+            for (Difficulty difficulty : Difficulty.values()) {
+                JsonNode value = newNode.get(difficulty.toString());
+                settingsMap.put(difficulty, (float)value.asDouble());
             }
         }
 
