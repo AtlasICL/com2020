@@ -57,7 +57,7 @@ public enum UpgradeType{ //"Upgrade" is refered to as "passive ability externall
     );
 
     private final int price;
-    private final Class<? extends PlayerInterface> upgradeClass;
+    private final Class<? extends UpgradeBase> upgradeClass;
     private final String telemetryName;
 
     private UpgradeType(
