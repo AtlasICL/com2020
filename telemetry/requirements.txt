@@ -3,4 +3,6 @@ numpy
 pandas
 seaborn
 pytest
-logto
+authlib
+requests
+google-auth
