@@ -1,66 +1,61 @@
 {
-  "global": {
-    "designParameters": {
-      "enemyHealthMultiplier": {
-        "easy": 0.8,
-        "medium": 1.0,
-        "hard": 1.2
-      },
-      "playerHealthMultiplier": {
-        "easy": 0.8,
-        "medium": 1.0,
-        "hard": 1.2
-      },
-      "shopPriceMultiplier": {
-        "easy": 0.8,
-        "medium": 1.0,
-        "hard": 1.2
-      },
-      "enemyDamageMultiplier": {
-        "easy": 0.8,
-        "medium": 1.0,
-        "hard": 1.2
-      },
-      "startingLives": {
-        "easy": 5,
-        "medium": 3,
-        "hard": 1
-      },
-      "magicCostMultiplier": {
-        "easy": 0.8,
-        "medium": 1.0,
-        "hard": 1.2
-      },
-        "maxMagic": {
-        "easy": 150,
-        "medium": 100,
-        "hard": 50
-      },
-        "maxMagic": {
-        "easy": 150,
-        "medium": 100,
-        "hard": 50
-      },
-        "magicGenerationRate": {
-        "easy": 40,
-        "medium": 20,
-        "hard": 10
-      },
+    "global": {
+        "designParameters": {
+            "enemyHealthMultiplier": {
+                "easy": 0.8,
+                "medium": 1.0,
+                "hard": 1.2
+            },
+            "playerHealthMultiplier": {
+                "easy": 0.8,
+                "medium": 1.0,
+                "hard": 1.2
+            },
+            "shopPriceMultiplier": {
+                "easy": 0.8,
+                "medium": 1.0,
+                "hard": 1.2
+            },
+            "enemyDamageMultiplier": {
+                "easy": 0.8,
+                "medium": 1.0,
+                "hard": 1.2
+            },
+            "startingLives": {
+                "easy": 5,
+                "medium": 3,
+                "hard": 1
+            },
+            "magicCostMultiplier": {
+                "easy": 0.8,
+                "medium": 1.0,
+                "hard": 1.2
+            },
+            "maxMagic": {
+                "easy": 150,
+                "medium": 100,
+                "hard": 50
+            },
+            "maxMagic": {
+                "easy": 150,
+                "medium": 100,
+                "hard": 50
+            },
+            "magicGenerationRate": {
+                "easy": 40,
+                "medium": 20,
+                "hard": 10
+            }
+        }
     },
-    "mostRecentSessionId": 1234
-  },
 
-  "users": {
-    "usernameA": {
-      "salt": "salt",
-      "passwordHash": "hashed pword",
-      "role": "player",
-      "telemetryEnabled": true,
-      "furthestLevel": {
-        "easy": 9,
-        "medium": 6,
-        "hard": 3
-      }
+    "userID": {
+        "role": "player",
+        "telemetryEnabled": true,
+        "furthestLevel": {
+            "easy": 9,
+            "medium": 6,
+            "hard": 3
+        }
     }
-  }
 }
