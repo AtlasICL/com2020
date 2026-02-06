@@ -4,8 +4,32 @@ Each subheading represents a component of the game system. Unless explicitly sta
 ## GameManagerInterface 
 *Interface for the game manager*
 ### Methods
+public boolean isGameRunning()
 
-%%To be designed by Luca C%%
+public Difficulty getCurrentDifficulty()
+
+public void startNewGame(Difficulty difficulty)
+
+public GameRunInterface getCurrentRun()
+
+public PlayerInterface getCurrentPlayer()
+
+public EncounterInterface pickEncounter()
+
+public EncounterInterface getCurrentEncounter()
+
+public void resetFailedEncounter()
+
+public void completeCurrentEncounter()
+
+public void advanceToNextLevel()
+
+public UpgradeType[] viewShop()
+
+public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException
+
+public void endGame()
+
 ## private GameManager implements GameManagerInterface nested in GameMangerSingleton
 *Acts as an interface between the front and back end.*
 ### Constructors
