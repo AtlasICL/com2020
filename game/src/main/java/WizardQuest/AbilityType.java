@@ -66,6 +66,18 @@ public enum AbilityType{
         return type;
     }
 
+        public String getBaseDamage() {
+        return baseDamage;
+    }
+
+    public String getMagicCost() {
+        return baseMagicPoints;
+    }
+
+    public AbilityType getDamageType() {
+        return damageType;
+    }
+
     public final void execute(EntityInterface source, EntityInterface target) throws LackingResourceException{
         if (source instanceof PlayerInterface player) {
             if (player.getMagic() >= baseMagicPoints) {
