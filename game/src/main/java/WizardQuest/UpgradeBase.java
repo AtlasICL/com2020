@@ -24,8 +24,13 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void takeDamage(int amount) {
-        player.takeDamage(amount);
+    public void loseHealth(int amount) throws IllegalArgumentException {
+        player.loseHealth();
+    }
+
+    @Override
+    public void resetHealth(){
+        player.resetHealth();
     }
 
     @Override
@@ -74,7 +79,7 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void loseLives(int amount) {
+    public void loseLives(int amount) throws IllegalArgumentException {
         player.loseLives(amount);
     }
 

@@ -66,11 +66,11 @@ public enum AbilityType{
         return type;
     }
 
-        public String getBaseDamage() {
+    public int getBaseDamage() {
         return baseDamage;
     }
 
-    public String getMagicCost() {
+    public int getMagicCost() {
         return baseMagicPoints;
     }
 
