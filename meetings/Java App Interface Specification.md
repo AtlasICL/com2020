@@ -647,7 +647,7 @@ private Difficulty difficulty
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
-public Enemy(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public Enemy(int maxHealth) *specified by the ConcreteEnemy*
 ### Fields
 private int health
 
