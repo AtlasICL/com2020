@@ -1,6 +1,13 @@
+/**
+ * Holds the player instance and forwards method calls to them
+ * 
+ * @param player player to decorate
+ * 
+ * @throws IllegalArgumentException if player doesn't exist
+ * */
 public abstract class UpgradeBase implements PlayerInterface {
     protected final PlayerInterface player;
-        protected UpgradeBase(PlayerInterface player) {
+    protected UpgradeBase(PlayerInterface player) throws IllegalArgumentException {
         if (player != null) {
             this.player = player;
         } else 
