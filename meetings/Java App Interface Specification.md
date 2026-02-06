@@ -515,19 +515,19 @@ public void execute(EntityInterface source, EntityInterface target)
 ## enum UpgradeType
 *Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName)
+private UpgradeType(int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName)
 ### Fields
 ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL, PHYSICAL_DAMAGE_RESISTANCE, FIRE_DAMAGE_RESISTANCE, WATER_DAMAGE_RESISTANCE, THUNDER_DAMAGE_RESISTANCE, IMPROVED_PHYSICAL_DAMAGE, IMPROVED_FIRE_DAMAGE, IMPROVED_WATER_DAMAGE, IMPROVED_THUNDER_DAMAGE
 
 private final int price
 
-private final Class<? extends PlayerInterface> upgradeClass
+private final Class<? extends UpgradeBase> upgradeClass
 
 private final String telemetryName
 ### Methods
 public int getPrice()
 
-public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
+public PlayerInterface applyUpgrade(PlayerInterface player) throws IllegalStateException, IllegalArgumentException *done using reflection, throws IllegalState if reflection fails, throws IllegalArgument if the player is null.*
 
 public String getTelemetryName()
 
@@ -675,6 +675,6 @@ public ConcreteUpgrade(PlayerInterface player)
 ## abstract UpgradeBase implements PlayerInterface 
 *Holds the player instance and forwards method calls to them*
 ### Constructors 
-public UpgradeBase(PlayerInterface player)
+public UpgradeBase(PlayerInterface player) throws IllegalArgumentException *if the given player is null*
 ### Fields 
 protected PlayerInterface player
