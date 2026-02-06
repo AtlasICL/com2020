@@ -46,7 +46,7 @@ public class TelemetryListenerSingleton {
          */
         private void saveEvent(Object e){
             try {
-                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+                if (!SettingsSingleton.getInstance().isTelemetryEnabled()) {
                     return; 
                 }
             }
