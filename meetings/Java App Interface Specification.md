@@ -565,7 +565,7 @@ private final String telemetryName
 ### Methods
 public EntityType[] getEnemies()
 
-public Encounter createEncounter() *done using reflection via EntityType*
+public EncounterInterface createEncounter() *done using reflection via EntityType*
 
 public String getTelemetryName()
 
