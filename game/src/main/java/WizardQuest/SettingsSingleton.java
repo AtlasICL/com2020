@@ -122,6 +122,7 @@ public class SettingsSingleton {
                 // Case that no personalised settings exist for give user yet.
                 // Therefore we create one, and initialise it with defaults.
                 if (userSettings == null) {
+                    ObjectNode allUsers = (ObjectNode) allUserSettings;
                     ObjectNode newProfileObjectNode = jsonMapper.createObjectNode();
 
                     newProfileObjectNode.set("furthestLevel", createIntNode(maxStageReached));
@@ -132,11 +133,12 @@ public class SettingsSingleton {
                     newProfileObjectNode.set("startingLives", createIntNode(startingLives));
                     newProfileObjectNode.set("maxMagic", createIntNode(maxMagic));
                     newProfileObjectNode.set("magicGenerationRate", createIntNode(magicRegenRate));
+                    newProfileObjectNode.set("upgradePriceMultiplier", createFloatNode(upgradePriceMultiplier));
+                    
+                    newProfileObjectNode.put("telemetryEnabled", true);
+                    newProfileObjectNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
 
-                    newProfileObjectNode.set("telemetryEnabled", createTelemetryNode(true));
-
-                    newProfileObjectNode.set("role", createRoleNode(userRole != null ? userRole : Role.PLAYER));
-
+                    allUsers.set(String.valueOf(userID), newProfileObjectNode);
                     jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, newProfileObjectNode);;
                     return;
                 }
@@ -149,6 +151,7 @@ public class SettingsSingleton {
                 loadIntNode(userSettings, "startingLives", startingLives);
                 loadIntNode(userSettings, "maxMagic", maxMagic);
                 loadIntNode(userSettings, "magicGenerationRate", magicRegenRate);
+                loadFloatNode(userSettings, "upgradePriceMultiplier", upgradePriceMultiplier);
 
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
                 userRole = Role.valueOf(userSettings.get("role").asText());
@@ -225,6 +228,34 @@ public class SettingsSingleton {
             }
         }
 
+        /**
+         * Helper function which saves the current profile to the settings file.
+         */
+        public void saveProfile() {
+            try {
+                ObjectNode allUsers = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode profileNode = jsonMapper.createObjectNode();
+
+                profileNode.set("furthestLevel", createIntNode(maxStageReached));
+                profileNode.set("playerMaxHealth", createIntNode(playerMaxHealth));
+                profileNode.set("upgradePriceMultiplier", createFloatNode(upgradePriceMultiplier));
+                profileNode.set("shopItemCount", createIntNode(shopItemCount));
+                profileNode.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
+                profileNode.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
+                profileNode.set("startingLives", createIntNode(startingLives));
+                profileNode.set("maxMagic", createIntNode(maxMagic));
+                profileNode.set("magicGenerationRate", createIntNode(magicRegenRate));
+
+                profileNode.put("telemetryEnabled", telemetryEnabled);
+                profileNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+
+                allUsers.set(String.valueOf(userID), profileNode);
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, allUsers);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error saving settings to settings file. " + e.toString());
+            }
+        }
+
         @Override
         public void createNewUser(String username, String password, Role role) throws AuthenticationException {}
 
@@ -288,51 +319,61 @@ public class SettingsSingleton {
         @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
             this.telemetryEnabled = telemetryEnabled;
+            saveProfile();
         }
 
         @Override
         public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {
             this.maxStageReached.put(difficulty, maxStageReached);
+            saveProfile();
         }
 
         @Override
         public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) {
             this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
+            saveProfile();
         }
 
         @Override
         public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier) {
             this.upgradePriceMultiplier.put(difficulty, newUpgradePriceMultiplier);
+            saveProfile();
         }
 
         @Override
         public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) {
             this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
+            saveProfile();
         }
 
         @Override
         public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) {
             this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
+            saveProfile();
         }
 
         @Override
         public void setStartingLives(Difficulty difficulty, int newStartingLives) {
             this.startingLives.put(difficulty, newStartingLives);
+            saveProfile();
         }
 
         @Override
         public void setMaxMagic(Difficulty difficulty, int newMaxMagic) {
             this.maxMagic.put(difficulty, newMaxMagic);
+            saveProfile();
         }
 
         @Override
         public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) {
             this.magicRegenRate.put(difficulty, newMagicRegenRate);
+            saveProfile();
         }
 
         @Override
         public void setShopItemCount(Difficulty difficulty, int newShopItemCount) {
             this.shopItemCount.put(difficulty, newShopItemCount);
+            saveProfile();
         }
 
         @Override
