@@ -100,15 +100,6 @@ public interface SettingsInterface {
     public int getPlayerMaxHealth(Difficulty difficulty);
 
     /**
-     * Gets the value of the upgrade price multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty the difficulty being queried.
-     * @return the value of the design parameter.
-     */
-    public float getUpgradePriceMultiplier(Difficulty difficulty);
-
-    /**
      * Gets the value of the enemy damage multiplier design parameter for the
      * specified difficulty.
      * 
@@ -192,16 +183,7 @@ public interface SettingsInterface {
      * @param difficulty               the difficulty it's being set for.
      * @param newPlayerMaxHealth the value it's being set to.
      */
-    public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth);
-
-    /**
-     * Sets the value of the upgrade price multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty               the difficulty it's being set for.
-     * @param newUpgradePriceMultiplier the value it's being set to.
-     */
-    public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier);
+    public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy damage multiplier design parameter for the
@@ -210,7 +192,7 @@ public interface SettingsInterface {
      * @param difficulty            the difficulty it's being set for.
      * @param newEnemyDamageMultiplier the value it's being set to.
      */
-    public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier);
+    public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy max health multiplier design parameter for the
@@ -219,7 +201,7 @@ public interface SettingsInterface {
      * @param difficulty            the difficulty it's being set for.
      * @param newEnemyMaxHealthMultiplier the value it's being set to.
      */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier);
+    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
@@ -228,7 +210,7 @@ public interface SettingsInterface {
      * @param difficulty    the difficulty it's being set for.
      * @param newStartingLives the value it's being set to.
      */
-    public void setStartingLives(Difficulty difficulty, int newStartingLives);
+    public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException;
 
     /**
      * Sets the value of the max magic multiplier design parameter for the
@@ -237,7 +219,7 @@ public interface SettingsInterface {
      * @param difficulty         the difficulty it's being set for.
      * @param newMaxMagic the value it's being set to.
      */
-    public void setMaxMagic(Difficulty difficulty, int newMaxMagic);
+    public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
@@ -246,7 +228,7 @@ public interface SettingsInterface {
      * @param difficulty     the difficulty it's being set for.
      * @param newMagicRegenRate the value it's being set to.
      */
-    public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate);
+    public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException;
 
     /**
      * Sets the value of the shop item count design parameter for the
@@ -255,5 +237,5 @@ public interface SettingsInterface {
      * @param difficulty    the difficulty it's being set for.
      * @param newShopItemCount the value it's being set to.
      */
-    public void setShopItemCount(Difficulty difficulty, int newShopItemCount);
+    public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException;
 }

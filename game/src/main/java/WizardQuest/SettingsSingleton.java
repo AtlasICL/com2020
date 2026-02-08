@@ -28,7 +28,6 @@ public class SettingsSingleton {
 
         private EnumMap<Difficulty, Integer> maxStageReached;
         private EnumMap<Difficulty, Integer> playerMaxHealth;
-        private EnumMap<Difficulty, Float> upgradePriceMultiplier;
         private EnumMap<Difficulty, Float> enemyDamageMultiplier;
         private EnumMap<Difficulty, Float> enemyMaxHealthMultiplier;
         private EnumMap<Difficulty, Integer> startingLives;
@@ -55,7 +54,6 @@ public class SettingsSingleton {
         private void loadDefaults() {
             maxStageReached = new EnumMap<>(Difficulty.class);
             playerMaxHealth = new EnumMap<>(Difficulty.class);
-            upgradePriceMultiplier = new EnumMap<>(Difficulty.class);
             enemyDamageMultiplier = new EnumMap<>(Difficulty.class);
             enemyMaxHealthMultiplier = new EnumMap<>(Difficulty.class);
             startingLives = new EnumMap<>(Difficulty.class);
@@ -70,10 +68,6 @@ public class SettingsSingleton {
             playerMaxHealth.put(Difficulty.EASY, 200);
             playerMaxHealth.put(Difficulty.MEDIUM, 100);
             playerMaxHealth.put(Difficulty.HARD, 50);
-
-            upgradePriceMultiplier.put(Difficulty.EASY, 1.0f);
-            upgradePriceMultiplier.put(Difficulty.MEDIUM, 1.5f);
-            upgradePriceMultiplier.put(Difficulty.HARD, 2.0f);
 
             enemyDamageMultiplier.put(Difficulty.EASY, 0.5f);
             enemyDamageMultiplier.put(Difficulty.MEDIUM, 1.0f);
@@ -135,7 +129,6 @@ public class SettingsSingleton {
                     newProfileObjectNode.set("startingLives", createIntNode(startingLives));
                     newProfileObjectNode.set("maxMagic", createIntNode(maxMagic));
                     newProfileObjectNode.set("magicGenerationRate", createIntNode(magicRegenRate));
-                    newProfileObjectNode.set("upgradePriceMultiplier", createFloatNode(upgradePriceMultiplier));
                     
                     newProfileObjectNode.put("telemetryEnabled", true);
                     newProfileObjectNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
@@ -153,7 +146,6 @@ public class SettingsSingleton {
                 loadIntNode(userSettings, "startingLives", startingLives);
                 loadIntNode(userSettings, "maxMagic", maxMagic);
                 loadIntNode(userSettings, "magicGenerationRate", magicRegenRate);
-                loadFloatNode(userSettings, "upgradePriceMultiplier", upgradePriceMultiplier);
 
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
                 userRole = Role.valueOf(userSettings.get("role").asText());
@@ -240,7 +232,6 @@ public class SettingsSingleton {
 
                 profileNode.set("furthestLevel", createIntNode(maxStageReached));
                 profileNode.set("playerMaxHealth", createIntNode(playerMaxHealth));
-                profileNode.set("upgradePriceMultiplier", createFloatNode(upgradePriceMultiplier));
                 profileNode.set("shopItemCount", createIntNode(shopItemCount));
                 profileNode.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
                 profileNode.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
@@ -303,10 +294,16 @@ public class SettingsSingleton {
             }
         }
 
+        /**
+         * Verifies the currently authenticated user is a developer (role).
+         */
         private boolean currentUserIsDeveloper() {
             return userRole == Role.DEVELOPER;
         }
 
+        /**
+         * Verifies the currently authenticated user is a designer (role).
+         */
         private boolean currentUserIsDesigner() {
             return userRole == Role.DESIGNER;
         }
@@ -327,11 +324,6 @@ public class SettingsSingleton {
         @Override
         public int getPlayerMaxHealth(Difficulty difficulty) {
             return playerMaxHealth.get(difficulty);
-        }
-
-        @Override
-        public float getUpgradePriceMultiplier(Difficulty difficulty) {
-            return upgradePriceMultiplier.get(difficulty);
         }
 
         @Override
@@ -366,60 +358,81 @@ public class SettingsSingleton {
 
         @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
         }
 
         @Override
         public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.maxStageReached.put(difficulty, maxStageReached);
             saveProfile();
         }
 
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) {
+        public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
             saveProfile();
         }
 
         @Override
-        public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier) {
-            this.upgradePriceMultiplier.put(difficulty, newUpgradePriceMultiplier);
-            saveProfile();
-        }
-
-        @Override
-        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) {
+        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
             saveProfile();
         }
 
         @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) {
+        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
             saveProfile();
         }
 
         @Override
-        public void setStartingLives(Difficulty difficulty, int newStartingLives) {
+        public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.startingLives.put(difficulty, newStartingLives);
             saveProfile();
         }
 
         @Override
-        public void setMaxMagic(Difficulty difficulty, int newMaxMagic) {
+        public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.maxMagic.put(difficulty, newMaxMagic);
             saveProfile();
         }
 
         @Override
-        public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) {
+        public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.magicRegenRate.put(difficulty, newMagicRegenRate);
             saveProfile();
         }
 
         @Override
-        public void setShopItemCount(Difficulty difficulty, int newShopItemCount) {
+        public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
             this.shopItemCount.put(difficulty, newShopItemCount);
             saveProfile();
         }
