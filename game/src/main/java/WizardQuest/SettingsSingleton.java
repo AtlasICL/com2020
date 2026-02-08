@@ -290,6 +290,11 @@ public class SettingsSingleton {
                 }
 
                 userID = username.hashCode();
+
+                // TODO: I think there is a bug here, mapping from the json
+                // to the Role enum. 
+                // Potentially make a helper function to convert from string to 
+                // Role? Idk
                 userRole = Role.valueOf(userNode.get("role").asText());
 
                 loadSettingsFromJson(userID);
