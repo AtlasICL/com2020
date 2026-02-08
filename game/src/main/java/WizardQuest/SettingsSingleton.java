@@ -24,7 +24,7 @@ public class SettingsSingleton {
         private boolean telemetryEnabled;
         private int userID;
         private Role userRole;
-        private int sessionID;
+        private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
         private EnumMap<Difficulty, Integer> maxStageReached;
         private EnumMap<Difficulty, Integer> playerMaxHealth;
@@ -303,6 +303,14 @@ public class SettingsSingleton {
             }
         }
 
+        private boolean currentUserIsDeveloper() {
+            return userRole == Role.DEVELOPER;
+        }
+
+        private boolean currentUserIsDesigner() {
+            return userRole == Role.DESIGNER;
+        }
+
         @Override
         public Role getUserRole() throws AuthenticationException {
             return userRole;
@@ -313,7 +321,6 @@ public class SettingsSingleton {
 
         @Override
         public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
-
             return maxStageReached.get(difficulty);
         }
 
