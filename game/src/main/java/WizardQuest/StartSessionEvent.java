@@ -4,7 +4,7 @@ package WizardQuest;
 public class StartSessionEvent extends TelemetryEvent {
     private final Difficulty difficulty;
     /**
-     * Constructor for SessionStartEvent.
+     * Constructor for StartSessionEvent.
      * 
      * @param source        the object that constructed the telemetry event.
      * @param userID        the ID of the user who is playing the game when the
