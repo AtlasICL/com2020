@@ -1,6 +1,7 @@
 package WizardQuest;
 
 import java.time.LocalDateTime;
+
 /**
  * Provides a singleton global access point to the time manager
  */
