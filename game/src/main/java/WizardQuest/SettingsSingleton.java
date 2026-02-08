@@ -117,17 +117,32 @@ public class SettingsSingleton {
 
             try {
                 JsonNode allUserSettings = jsonMapper.readTree(SETTINGS_FILE);
-                JsonNode userSettings = allUserSettings.get(userID);
+                JsonNode userSettings = allUserSettings.get(String.valueOf(userID));
 
                 // Case that no personalised settings exist for give user yet.
                 // Therefore we create one, and initialise it with defaults.
                 if (userSettings == null) {
-                    // TODO
+                    ObjectNode newProfileObjectNode = jsonMapper.createObjectNode();
+
+                    newProfileObjectNode.set("furthestLevel", createIntNode(maxStageReached));
+                    newProfileObjectNode.set("playerMaxHealth", createIntNode(playerMaxHealth));
+                    newProfileObjectNode.set("shopItemCount", createIntNode(shopItemCount));
+                    newProfileObjectNode.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
+                    newProfileObjectNode.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
+                    newProfileObjectNode.set("startingLives", createIntNode(startingLives));
+                    newProfileObjectNode.set("maxMagic", createIntNode(maxMagic));
+                    newProfileObjectNode.set("magicGenerationRate", createIntNode(magicRegenRate));
+
+                    newProfileObjectNode.set("telemetryEnabled", createTelemetryNode(true));
+
+                    newProfileObjectNode.set("role", createRoleNode(userRole != null ? userRole : Role.PLAYER));
+
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, newProfileObjectNode);;
                     return;
                 }
 
                 loadIntNode(userSettings, "furthestLevel", maxStageReached);
-                loadIntNode(userSettings, "playerHealthMultiplier", playerMaxHealth);
+                loadIntNode(userSettings, "playerMaxHealth", playerMaxHealth);
                 loadIntNode(userSettings, "shopItemCount", shopItemCount);
                 loadFloatNode(userSettings, "enemyDamageMultiplier", enemyDamageMultiplier);
                 loadFloatNode(userSettings, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
@@ -135,10 +150,8 @@ public class SettingsSingleton {
                 loadIntNode(userSettings, "maxMagic", maxMagic);
                 loadIntNode(userSettings, "magicGenerationRate", magicRegenRate);
 
-                // TODO: Get telemetry enabled from settings json
-
-                // TODO: Get role from settings json
-
+                telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
+                userRole = Role.valueOf(userSettings.get("role").asText());
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
             }
@@ -165,6 +178,26 @@ public class SettingsSingleton {
             for (Difficulty difficulty : Difficulty.values()) {
                 newNode.put(difficulty.toString(), settingsMap.get(difficulty));
             }
+            return newNode;
+        }
+
+        /**
+         * Helper function which creates a json object to represent the 
+         * telemetryEnabled setting for a user.
+         */
+        private ObjectNode createTelemetryNode(boolean val) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            newNode.put("telemetryEnabled", val);
+            return newNode;
+        }
+
+        /**
+         * Helper function which creates a json object to represent the 
+         * role setting for a user.
+         */
+        private ObjectNode createRoleNode(Role role) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            newNode.put("role", role.toString());
             return newNode;
         }
 
@@ -263,8 +296,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) {
-            this.playerMaxHealth.put(difficulty, newPlayerMaxHealth);
+        public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) {
+            this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
         }
 
         @Override
