@@ -150,7 +150,7 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public int getDeathCount() {
-        int startingLives = SettingsSingleton.getSettings().getStartingLives(this.currentDifficulty);
+        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.currentDifficulty);
         int currentLives = this.player.getLives();
         return startingLives - currentLives;
     }

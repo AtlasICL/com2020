@@ -96,7 +96,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return SettingsSingleton.getSettings().getMagicRegenRate(this.difficulty);
+        return SettingsSingleton.getInstance().getMagicRegenRate(this.difficulty);
     }
 
     @Override
