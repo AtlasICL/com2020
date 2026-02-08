@@ -39,6 +39,8 @@ public class SettingsSingleton {
         private static final File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
+        // TEMPORARY
+        private static final File LOGINS_FILE = new File("logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -257,10 +259,44 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void createNewUser(String username, String password, Role role) throws AuthenticationException {}
+        public void createNewUser(String username, String password, Role role) throws AuthenticationException {
+            try {
+                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
+
+                ObjectNode userNode = jsonMapper.createObjectNode();
+                userNode.put("password", password);
+                userNode.put("role", role.getJSONName());
+
+                allLogins.set(username, userNode);
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
+            } catch (IOException e) {
+                System.out.println("Failed to save new user to logins file." + e.toString());
+            }
+        }
 
         @Override
-        public void authenticateUser(String username, String password) throws AuthenticationException {}
+        public void authenticateUser(String username, String password) throws AuthenticationException {
+            try {
+                JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
+                JsonNode userNode = allLogins.get(username);
+
+                if (userNode == null) {
+                    throw new AuthenticationException("User does not exist.");
+                }
+
+                String storedPassword = userNode.get("password").asText();
+                if (!storedPassword.equals(password)) {
+                    throw new AuthenticationException("Incorrect password");
+                }
+
+                userID = username.hashCode();
+                userRole = Role.valueOf(userNode.get("role").asText());
+
+                loadSettingsFromJson(userID);
+            } catch (IOException e) {
+                System.out.println("Error reading login file" + e);
+            }
+        }
 
         @Override
         public Role getUserRole() throws AuthenticationException {
