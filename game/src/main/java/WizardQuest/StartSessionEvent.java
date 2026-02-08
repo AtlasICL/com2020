@@ -1,7 +1,7 @@
 package WizardQuest;
 
 
-public class SessionStartEvent extends TelemetryEvent {
+public class StartSessionEvent extends TelemetryEvent {
     private final Difficulty difficulty;
     /**
      * Constructor for SessionStartEvent.
@@ -17,8 +17,8 @@ public class SessionStartEvent extends TelemetryEvent {
      *                      yyyy/mm/dd/hh/mm/ss.
      * @param difficulty    the difficulty used for the players session.
      */
-    public SessionStartEvent(Object source, int userID, int sessionID, String timeStamp, Difficulty difficulty){
-        super(source, userID, sessionID, timeStamp, "SessionStart");
+    public StartSessionEvent(Object source, int userID, int sessionID, String timeStamp, Difficulty difficulty){
+        super(source, userID, sessionID, timeStamp, "StartSession");
         this.difficulty = difficulty;
     }
     /**

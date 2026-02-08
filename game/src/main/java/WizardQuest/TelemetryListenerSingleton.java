@@ -147,7 +147,7 @@ public class TelemetryListenerSingleton {
          * @param e the SessionStartEvent to be recorded to the JSON database.
          */
         @Override
-        public void onSessionStart(SessionStartEvent e){
+        public void onStartSession(StartSessionEvent e){
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);

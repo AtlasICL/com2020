@@ -141,7 +141,7 @@ private Difficulty currentDifficulty
 ## TelemetryListenerInterface
 *Interface for the telemetry listener*
 ### Methods
-public void onSessionStart(SessionStartEvent e)
+public void onStartSession(StartSessionEvent e)
 
 public void onNormalEncounterStart(NormalEncounterStartEvent e)
 
@@ -241,10 +241,10 @@ private int livesLeft
 ### Methods
 public int getLivesLeft()
 
-## SessionStartEvent extends TelemetryEvent
+## StartSessionEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
-public SessionStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
+public StartSessionEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 
 ## NormalEncounterStartEvent extends EncounterStartEvent
 *Contains fields for normal encounter start*

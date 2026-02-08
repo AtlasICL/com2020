@@ -7,7 +7,7 @@
   - [List of valid enemy names](#list-of-valid-enemy-names)
   - [List of valid settings](#list-of-valid-settings)
   - [Example logging event jsons](#example-logging-event-jsons)
-    - [1) SessionStart](#1-sessionstart)
+    - [1) StartSession](#1-sessionstart)
     - [2) NormalEncounterStart](#2-normalencounterstart)
     - [3) NormalEncounterComplete](#3-normalencountercomplete)
     - [4) NormalEncounterFail](#4-normalencounterfail)
@@ -23,7 +23,7 @@
 
 # List of valid event types 
 Here are the possible event types:
-1) `SessionStart`
+1) `StartSession`
 2) `NormalEncounterStart`
 3) `NormalEncounterComplete`
 4) `NormalEncounterFail`
@@ -55,13 +55,13 @@ To be defined at a later date.
 
 ## Example logging event jsons
 
-### 1) SessionStart
+### 1) StartSession
 ```
 {
     userID: int,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
-    event: "SessionStart"
+    event: "StartSession"
     difficulty: string [must be in list of valid difficulties]
 }
 ```
