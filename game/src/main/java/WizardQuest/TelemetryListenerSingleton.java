@@ -57,16 +57,16 @@ public class TelemetryListenerSingleton {
          */
         private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
             if(e.getTelemetryName().equals("EndSession") && currentSessionID == -1){
-                throw new SessionValidationException("SessionEnd for session " + e.getSessionID() + 
+                throw new SessionValidationException("EndSession for session " + e.getSessionID() + 
                                                     " occurs before it's StartSession");
             }
-            else if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("SessionStart")){
+            else if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("StartSession")){
                 throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
                                                     " " + e.getSessionID() + " not equal to current sessionID of "
                                                      + currentSessionID);
             }
-            else if(e.getTelemetryName().equals("SessionStart") && currentSessionID != -1){
-                throw new SessionValidationException("SessionStart for session " + e.getSessionID() + 
+            else if(e.getTelemetryName().equals("StartSession") && currentSessionID != -1){
+                throw new SessionValidationException("StartSession for session " + e.getSessionID() + 
                                                     " occurs before EndSession of " + currentSessionID);
             }
         }
@@ -144,10 +144,10 @@ public class TelemetryListenerSingleton {
         /**
          * Called when a user logs in or enables telemetry.
          * 
-         * @param e the SessionStartEvent to be recorded to the JSON database.
+         * @param e the StartSessionEvent to be recorded to the JSON database.
          */
         @Override
-        public void onSessionStart(SessionStartEvent e){
+        public void onStartSession(StartSessionEvent e){
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
