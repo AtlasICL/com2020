@@ -141,7 +141,7 @@ public class SettingsSingleton {
                     newProfileObjectNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
 
                     allUsers.set(String.valueOf(userID), newProfileObjectNode);
-                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, newProfileObjectNode);;
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, allUsers);
                     return;
                 }
 
