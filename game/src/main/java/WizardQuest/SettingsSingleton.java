@@ -317,8 +317,22 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setUserRole(String username, Role role) throws AuthenticationException {
-            // TODO
+        public void setUserRole(int userID, Role role) throws AuthenticationException {
+            if (!currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+
+                JsonNode targetUser = usersNode.get(String.valueOf(userID));
+
+                ((ObjectNode) targetUser).put("role", role.toString());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error updating user role in settings file. " + e.toString());
+            }
         }
 
         @Override

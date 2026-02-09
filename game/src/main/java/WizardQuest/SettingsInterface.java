@@ -44,12 +44,12 @@ public interface SettingsInterface {
      * Sets the role of the specified user or throws an exception
      * if the authenticated user is not a developer.
      *
-     * @param username the user to have their role modified.
+     * @param userID the user to have their role modified.
      * @param role the new role that they will hold.
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(String username, Role role) throws AuthenticationException;
+    public void setUserRole(int userID, Role role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or
