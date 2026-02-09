@@ -96,14 +96,12 @@ public class SettingsSingleton {
 
         /**
          * Load the settings of a given player from the settings file (.json).
-         * If the user settings file does not exist, cannot be read, or does not
-         * contain the necessary settings values, the function will keep default
-         * values instead as a fallback.
-         * If the user settings file does not have an entry for the given userID, 
-         * a profile will be created in the file for the user, initially
-         * populated with the default values.
-         * NOTE: this function requires that the settings file exists before
-         * it is called.
+         * Design parameters (global, affecting all users) loaded from
+         * "designParameters" key. 
+         * User-specific data is loaded from "users", with the key being 
+         * their userID. Reminder that an example settings.json file is provided.
+         * If a profile for a user does not yet exist, it will be created with
+         * default values.
          */
         private void loadSettingsFromJson(int userID) {
             if (!SETTINGS_FILE.exists()) {
@@ -112,43 +110,43 @@ public class SettingsSingleton {
             }
 
             try {
-                JsonNode allUserSettings = jsonMapper.readTree(SETTINGS_FILE);
-                JsonNode userSettings = allUserSettings.get(String.valueOf(userID));
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
 
-                // Case that no personalised settings exist for give user yet.
-                // Therefore we create one, and initialise it with defaults.
+                JsonNode designParams = root.get("designParameters");
+                if (designParams == null) {
+                    root.set("designParameters", createDesignParametersNode());
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                } else {
+                    loadIntNode(designParams, "playerMaxHealth", playerMaxHealth);
+                    loadIntNode(designParams, "shopItemCount", shopItemCount);
+                    loadFloatNode(designParams, "enemyDamageMultiplier", enemyDamageMultiplier);
+                    loadFloatNode(designParams, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
+                    loadIntNode(designParams, "startingLives", startingLives);
+                    loadIntNode(designParams, "maxMagic", maxMagic);
+                    loadIntNode(designParams, "magicGenerationRate", magicRegenRate);
+                }
+
+                // Load per-user data.
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+                JsonNode userSettings = usersNode.get(String.valueOf(userID));
+
+                // If the user did not have a section in the file, create it.
                 if (userSettings == null) {
-                    ObjectNode allUsers = (ObjectNode) allUserSettings;
-                    ObjectNode newProfileObjectNode = jsonMapper.createObjectNode();
+                    ObjectNode newProfile = jsonMapper.createObjectNode();
+                    newProfile.put("telemetryEnabled", true);
+                    newProfile.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                    newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
-                    newProfileObjectNode.set("furthestLevel", createIntNode(maxStageReached));
-                    newProfileObjectNode.set("playerMaxHealth", createIntNode(playerMaxHealth));
-                    newProfileObjectNode.set("shopItemCount", createIntNode(shopItemCount));
-                    newProfileObjectNode.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
-                    newProfileObjectNode.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
-                    newProfileObjectNode.set("startingLives", createIntNode(startingLives));
-                    newProfileObjectNode.set("maxMagic", createIntNode(maxMagic));
-                    newProfileObjectNode.set("magicGenerationRate", createIntNode(magicRegenRate));
-                    
-                    newProfileObjectNode.put("telemetryEnabled", true);
-                    newProfileObjectNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
-
-                    allUsers.set(String.valueOf(userID), newProfileObjectNode);
-                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, allUsers);
+                    usersNode.set(String.valueOf(userID), newProfile);
+                    root.set("users", usersNode);
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
                     return;
                 }
 
-                loadIntNode(userSettings, "furthestLevel", maxStageReached);
-                loadIntNode(userSettings, "playerMaxHealth", playerMaxHealth);
-                loadIntNode(userSettings, "shopItemCount", shopItemCount);
-                loadFloatNode(userSettings, "enemyDamageMultiplier", enemyDamageMultiplier);
-                loadFloatNode(userSettings, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
-                loadIntNode(userSettings, "startingLives", startingLives);
-                loadIntNode(userSettings, "maxMagic", maxMagic);
-                loadIntNode(userSettings, "magicGenerationRate", magicRegenRate);
-
+                // Load user's (user-specific / non-global) data.
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
                 userRole = Role.valueOf(userSettings.get("role").asText());
+                loadIntNode(userSettings, "furthestLevel", maxStageReached);
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
             }
@@ -179,23 +177,18 @@ public class SettingsSingleton {
         }
 
         /**
-         * Helper function which creates a json object to represent the 
-         * telemetryEnabled setting for a user.
+         * Creates a JSON node containing all shared design parameters.
          */
-        private ObjectNode createTelemetryNode(boolean val) {
-            ObjectNode newNode = jsonMapper.createObjectNode();
-            newNode.put("telemetryEnabled", val);
-            return newNode;
-        }
-
-        /**
-         * Helper function which creates a json object to represent the 
-         * role setting for a user.
-         */
-        private ObjectNode createRoleNode(Role role) {
-            ObjectNode newNode = jsonMapper.createObjectNode();
-            newNode.put("role", role.toString());
-            return newNode;
+        private ObjectNode createDesignParametersNode() {
+            ObjectNode node = jsonMapper.createObjectNode();
+            node.set("playerMaxHealth", createIntNode(playerMaxHealth));
+            node.set("shopItemCount", createIntNode(shopItemCount));
+            node.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
+            node.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
+            node.set("startingLives", createIntNode(startingLives));
+            node.set("maxMagic", createIntNode(maxMagic));
+            node.set("magicGenerationRate", createIntNode(magicRegenRate));
+            return node;
         }
 
         /**
@@ -223,29 +216,39 @@ public class SettingsSingleton {
         }
 
         /**
-         * Helper function which saves the current profile to the settings file.
+         * Saves USER-SPECIFIC info:
+         * - telemetryEnabled
+         * - role
+         * - furthestLevel (per difficulty)
          */
         public void saveProfile() {
             try {
-                ObjectNode allUsers = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+
                 ObjectNode profileNode = jsonMapper.createObjectNode();
-
-                profileNode.set("furthestLevel", createIntNode(maxStageReached));
-                profileNode.set("playerMaxHealth", createIntNode(playerMaxHealth));
-                profileNode.set("shopItemCount", createIntNode(shopItemCount));
-                profileNode.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
-                profileNode.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
-                profileNode.set("startingLives", createIntNode(startingLives));
-                profileNode.set("maxMagic", createIntNode(maxMagic));
-                profileNode.set("magicGenerationRate", createIntNode(magicRegenRate));
-
                 profileNode.put("telemetryEnabled", telemetryEnabled);
                 profileNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                profileNode.set("furthestLevel", createIntNode(maxStageReached));
 
-                allUsers.set(String.valueOf(userID), profileNode);
-                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, allUsers);
+                usersNode.set(String.valueOf(userID), profileNode);
+                root.set("users", usersNode);
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
             } catch (IOException e) {
                 System.out.println("ERROR! Error saving settings to settings file. " + e.toString());
+            }
+        }
+
+        /**
+         * Saves (global) design parameters to the settings file.
+         */
+        private void saveDesignParameters() {
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                root.set("designParameters", createDesignParametersNode());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error saving design parameters to settings file. " + e.toString());
             }
         }
 
@@ -314,7 +317,9 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setUserRole(String username, Role role) throws AuthenticationException {}
+        public void setUserRole(String username, Role role) throws AuthenticationException {
+            // TODO
+        }
 
         @Override
         public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
@@ -380,7 +385,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -389,7 +394,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -398,7 +403,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -407,7 +412,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.startingLives.put(difficulty, newStartingLives);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -416,7 +421,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.maxMagic.put(difficulty, newMaxMagic);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -425,7 +430,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.magicRegenRate.put(difficulty, newMagicRegenRate);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
@@ -434,7 +439,7 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.shopItemCount.put(difficulty, newShopItemCount);
-            saveProfile();
+            saveDesignParameters();
         }
 
         @Override
