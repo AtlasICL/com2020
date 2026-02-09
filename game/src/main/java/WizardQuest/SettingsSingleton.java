@@ -333,6 +333,12 @@ public class SettingsSingleton {
             } catch (IOException e) {
                 System.out.println("ERROR! Error updating user role in settings file. " + e.toString());
             }
+
+            // If user whose role was updated is the current user, then update
+            // the value of role in memory also.
+            if (userID == this.userID) {
+                userRole = role;
+            }
         }
 
         @Override
