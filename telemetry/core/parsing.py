@@ -9,7 +9,7 @@ from datetime import datetime
 from core.events import *
 
 ValidEvent: TypeAlias = (
-    SessionStart
+    StartSession
     | NormalEncounterStart
     | NormalEncounterComplete
     | NormalEncounterFail
@@ -86,8 +86,8 @@ def parse_event(event: dict) -> ValidEvent:
     
     try:
         match event_type:
-            case EventType.SESSION_START:
-                return SessionStart(
+            case EventType.START_SESSION:
+                return StartSession(
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),

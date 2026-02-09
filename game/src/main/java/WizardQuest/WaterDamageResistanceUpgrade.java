@@ -1,18 +1,29 @@
 package WizardQuest;
 
-public class WaterDamageResistanceUpgrade extends ConcreteUpgrade {
+import java.util.List;
+
+public class WaterDamageResistanceUpgrade extends UpgradeBase {
 
     public WaterDamageResistanceUpgrade(PlayerInterface player) {
         super(player);
     }
 
     @Override
-    public int loseHealth(int amount, DamageType type) {
+    public void loseHealth(int amount, DamageType type) {
         if (type == DamageType.WATER){
-            player.loseHealth(amount/2, type);   
+            super.player.loseHealth(amount/2, type);   
         } 
         else {
-            player.loseHealth(amount, type); 
+            super.player.loseHealth(amount, type); 
         }
+    }
+
+    @Override
+    public List<UpgradeType> getUpgrades(){
+        List<UpgradeType> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeType.WATER_DAMAGE_RESISTANCE)){
+            u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
+        }
+        return u;
     }
 }

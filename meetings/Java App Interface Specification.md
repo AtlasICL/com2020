@@ -4,8 +4,32 @@ Each subheading represents a component of the game system. Unless explicitly sta
 ## GameManagerInterface 
 *Interface for the game manager*
 ### Methods
+public boolean isGameRunning()
 
-%%To be designed by Luca C%%
+public Difficulty getCurrentDifficulty()
+
+public void startNewGame(Difficulty difficulty)
+
+public GameRunInterface getCurrentRun()
+
+public PlayerInterface getCurrentPlayer()
+
+public EncounterInterface pickEncounter()
+
+public EncounterInterface getCurrentEncounter()
+
+public void resetFailedEncounter()
+
+public void completeCurrentEncounter()
+
+public void advanceToNextLevel()
+
+public UpgradeType[] viewShop()
+
+public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException
+
+public void endGame()
+
 ## private GameManager implements GameManagerInterface nested in GameMangerSingleton
 *Acts as an interface between the front and back end.*
 ### Constructors
@@ -117,7 +141,7 @@ private Difficulty currentDifficulty
 ## TelemetryListenerInterface
 *Interface for the telemetry listener*
 ### Methods
-public void onSessionStart(SessionStartEvent e)
+public void onStartSession(StartSessionEvent e)
 
 public void onNormalEncounterStart(NormalEncounterStartEvent e)
 
@@ -217,10 +241,10 @@ private int livesLeft
 ### Methods
 public int getLivesLeft()
 
-## SessionStartEvent extends TelemetryEvent
+## StartSessionEvent extends TelemetryEvent
 *Contains fields for sessions start, sent when telemetry is enabled. When telemetry is enabled a new session ID is generated.*
 ### Constructors
-public SessionStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
+public StartSessionEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName)
 
 ## NormalEncounterStartEvent extends EncounterStartEvent
 *Contains fields for normal encounter start*
@@ -343,21 +367,21 @@ public void setTelemetryEnabled(bool telemetryEnabled)
 
 public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
 
-public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
+public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth)
+public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth)
 
-public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
+public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier)
 
-public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier)
+public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier)
 
-public void setStartingLives(Difficulty difficulty, int startingLives)
+public void setStartingLives(Difficulty difficulty, int newStartingLives)
 
-public void setMaxMagic(Difficulty difficulty, int maxMagic)
+public void setMaxMagic(Difficulty difficulty, int newMaxMagic)
 
-public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
+public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate)
 
-public void setShopItemCount(Difficulty difficulty, int shopItemCount)
+public void setShopItemCount(Difficulty difficulty, int newShopItemCount)
 
 ## private Settings implements SettingsInterface nested in SettingsSingleton
 *Stores user settings and statistics*
@@ -515,19 +539,19 @@ public void execute(EntityInterface source, EntityInterface target)
 ## enum UpgradeType
 *Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price, Class<? extends PlayerInterface> upgradeClass, String telemetryName)
+private UpgradeType(int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName)
 ### Fields
 ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL, PHYSICAL_DAMAGE_RESISTANCE, FIRE_DAMAGE_RESISTANCE, WATER_DAMAGE_RESISTANCE, THUNDER_DAMAGE_RESISTANCE, IMPROVED_PHYSICAL_DAMAGE, IMPROVED_FIRE_DAMAGE, IMPROVED_WATER_DAMAGE, IMPROVED_THUNDER_DAMAGE
 
 private final int price
 
-private final Class<? extends PlayerInterface> upgradeClass
+private final Class<? extends UpgradeBase> upgradeClass
 
 private final String telemetryName
 ### Methods
 public int getPrice()
 
-public PlayerInterface applyUpgrade(PlayerInterface player) *done using reflection*
+public PlayerInterface applyUpgrade(PlayerInterface player) throws IllegalStateException, IllegalArgumentException *done using reflection, throws IllegalState if reflection fails, throws IllegalArgument if the player is null.*
 
 public String getTelemetryName()
 
@@ -565,7 +589,7 @@ private final String telemetryName
 ### Methods
 public EntityType[] getEnemies()
 
-public Encounter createEncounter() *done using reflection via EntityType*
+public EncounterInterface createEncounter() *done using reflection via EntityType*
 
 public String getTelemetryName()
 
@@ -640,14 +664,12 @@ private int coins
 
 private int lives
 
-private List\<AbilityType> abilities
-
 private Difficulty difficulty
 
 ## abstract Enemy implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
-public Enemy(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public Enemy(int maxHealth) *specified by the ConcreteEnemy*
 ### Fields
 private int health
 
@@ -675,6 +697,6 @@ public ConcreteUpgrade(PlayerInterface player)
 ## abstract UpgradeBase implements PlayerInterface 
 *Holds the player instance and forwards method calls to them*
 ### Constructors 
-public UpgradeBase(PlayerInterface player)
+public UpgradeBase(PlayerInterface player) throws IllegalArgumentException *if the given player is null*
 ### Fields 
 protected PlayerInterface player

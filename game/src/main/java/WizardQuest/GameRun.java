@@ -95,7 +95,7 @@ public class GameRun implements GameRunInterface {
             this.shopUpgrades[i] = this.shopUpgrades[j];
             this.shopUpgrades[j] = temp;
         }
-        int totalUpgradesInShop = SettingsSingleton.getSettings().getShopItemCount(this.currentDifficulty);
+        int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.currentDifficulty);
         UpgradeType[] shop = new UpgradeType[totalUpgradesInShop];
         int i = 0;
         // Loop through the shuffled array of upgrades, adding each element to the shop until the shop item count has
@@ -150,7 +150,7 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public int getDeathCount() {
-        int startingLives = SettingsSingleton.getSettings().getStartingLives(this.currentDifficulty);
+        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.currentDifficulty);
         int currentLives = this.player.getLives();
         return startingLives - currentLives;
     }

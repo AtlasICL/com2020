@@ -10,19 +10,16 @@ public class Player implements PlayerInterface {
     private int magic;
     private int coins;
     private int lives;
-    private List<AbilityType> abilities;
     private Difficulty difficulty;
 
     public Player(Difficulty difficulty) {
-        SettingsInterface settings = SettingsSingleton.getSettings();
+        SettingsInterface settings = SettingsSingleton.getInstance();
         this.maxMagic = settings.getMaxMagic(difficulty);
         this.maxHealth = settings.getPlayerMaxHealth(difficulty);
         this.health = maxHealth;
         this.magic = 0;
         this.coins = 0;
         this.lives = settings.getStartingLives(difficulty);
-        this.abilities = new LinkedList<AbilityType>();
-        this.abilities.add(AbilityType.PUNCH);
     }
 
     @Override
@@ -50,7 +47,9 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<AbilityType> getAbilities() {
-        return abilities;
+        List<AbilityType> l =  new LinkedList<AbilityType>();
+        l.add(AbilityType.PUNCH);
+        return l;
     }
 
     @Override
@@ -96,7 +95,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return SettingsSingleton.getSettings().getMagicRegenRate(this.difficulty);
+        return SettingsSingleton.getInstance().getMagicRegenRate(this.difficulty);
     }
 
     @Override
