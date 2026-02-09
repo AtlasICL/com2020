@@ -27,6 +27,10 @@ Any user of the Java Application must be authenticated before they can play the 
 \textit{As a designer I need user information to keep record of how users behave in my game.}
 \\
 \textbf{Value:} 5
+\\
+\textbf{Acceptance Criteria} 
+\\ 
+Given a user doesn't have an account, they can create an account by entering a username and password. Given a user does have an account they can sign in using their username and password. Given a user is signed in they can chose to start a game, view and edit their settings, or sign out. 
 \subsubsection{Role Based Access Control (Must)}
 Authenticated users must be assigned one of the following roles. Each role has it's own permissions.
 \begin{description}
@@ -39,10 +43,14 @@ Authenticated users must be assigned one of the following roles. Each role has i
 \\
 \noindent\textbf{Value:} 3
 \pagebreak
+\\
+\textbf{Acceptance Criteria} 
+\\ 
+Given a user has been authenticated with the player role, they can play the game and toggle their telemetry enabled setting. Given a user has been authenticated with the designer role, they can do anything a player can, as well as change the design parameter values in settings. Given a user has been authenticated with the developer role, they can do anything a designer can do, and assign roles to other users in settings. 
 \subsubsection{User Settings (Must)}
 The game must contain a settings screen the following user Settings.
 \begin{description}
-    \item[\textbf{Telemetry Enabled}] - whether the game records telemetry events or not. On be default. The menu screen should display a warning notifying users when telemetry is enabled.
+    \item[\textbf{Telemetry Enabled}] - whether the game records telemetry events or not. On by default. The menu screen should display a warning notifying users when telemetry is enabled.
 \end{description}
 
 \noindent The settings screen should also allow designers to adjust the design parameters and developers to assign roles to other users. 
@@ -51,6 +59,10 @@ The game must contain a settings screen the following user Settings.
 \noindent\textit{As a user I want to be able to control what data about my game experience is recorded.}
 \\
 \noindent\textbf{Value:} 1
+\\
+\noindent\textbf{Acceptance Criteria}
+\\
+Given a user is authenticated and in the main menu, they can access the settings screen. While in the main menu they are notified if they have telemetry enabled. Given a user is in settings they can toggle whether they send telemetry events or not, this is by default on. Given the user is a designer they can edit the design parameter values and save those changes. Given the user is a developer they can assign roles to any other user. 
 \subsubsection{Two Stages (Must)}
 The game must contain 2 stages. A stage is the combination of an encounter and trip to the shop in between encounters. 
 \\
