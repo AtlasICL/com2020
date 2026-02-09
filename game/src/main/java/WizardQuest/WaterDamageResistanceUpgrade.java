@@ -1,3 +1,7 @@
+package WizardQuest;
+
+import java.util.List;
+
 public class WaterDamageResistanceUpgrade extends UpgradeBase {
 
     public WaterDamageResistanceUpgrade(PlayerInterface player) {
@@ -16,10 +20,10 @@ public class WaterDamageResistanceUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = super.player.getUpgrades();
+        List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.WATER_DAMAGE_RESISTANCE)){
             u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
         }
         return u;
-    }
+    
 }

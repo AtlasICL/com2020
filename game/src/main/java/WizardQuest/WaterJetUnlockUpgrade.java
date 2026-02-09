@@ -1,3 +1,7 @@
+package WizardQuest;
+
+import java.util.List;
+
 public class WaterJetUnlockUpgrade extends UpgradeBase {
     public WaterJetUnlockUpgrade(PlayerInterface player){
         super(player);
@@ -5,7 +9,7 @@ public class WaterJetUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = super.player.getUpgrades();
+        List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.WATER_JET_UNLOCK)){
             u.add(UpgradeType.WATER_JET_UNLOCK);
         }
@@ -14,7 +18,7 @@ public class WaterJetUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = super.player.getAbilities();
+        List<AbilityType> a = super.player.getAbilities();
         if (!a.contains(AbilityType.WATER_JET)){
             a.add(AbilityType.WATER_JET);
         }

@@ -68,11 +68,11 @@ public class GameRun implements GameRunInterface {
      * of upgrades the shop selects from and decorates the player with it.
      * 
      * @param upgrade the upgrade being bought from the shop.
-     * @throws NotEnoughResourceException if the player doesn't have enough coins to
+     * @throws LackingResourceException if the player doesn't have enough coins to
      *                                    buy the upgrade.
      */
     @Override
-    public void purchaseUpgrade(UpgradeType upgrade) throws NotEnoughResourceException;
+    public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException;
 
     /**
      * Returns a reference to the player.

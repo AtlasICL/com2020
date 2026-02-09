@@ -1,3 +1,7 @@
+package WizardQuest;
+
+import java.util.List;
+
 public class PunchUnlockUpgrade extends UpgradeBase {
     public PunchUnlockUpgrade(PlayerInterface player){
         super(player);
@@ -5,7 +9,7 @@ public class PunchUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = super.player.getUpgrades();
+        List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.PUNCH_UNLOCK)){
             u.add(UpgradeType.PUNCH_UNLOCK);
         }
@@ -14,7 +18,7 @@ public class PunchUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = super.player.getAbilities();
+        List<AbilityType> a = super.player.getAbilities();
         if (!a.contains(AbilityType.PUNCH)){
             a.add(AbilityType.PUNCH);
         }

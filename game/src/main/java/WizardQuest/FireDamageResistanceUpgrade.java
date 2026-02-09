@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class FireDamageResistanceUpgrade extends UpgradeBase {
 
     public FireDamageResistanceUpgrade(PlayerInterface player) {
@@ -16,7 +18,7 @@ public class FireDamageResistanceUpgrade extends UpgradeBase {
 
     @Override
     public List<UpgradeType> getUpgrades(){
-        List u = super.player.getUpgrades();
+        List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.FIRE_DAMAGE_RESISTANCE)){
             u.add(UpgradeType.FIRE_DAMAGE_RESISTANCE);
         }

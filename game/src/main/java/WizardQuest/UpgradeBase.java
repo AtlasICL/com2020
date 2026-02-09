@@ -1,3 +1,7 @@
+package WizardQuest;
+
+import java.util.List;
+
 /**
  * Holds the player instance and forwards method calls to them
  * 
@@ -7,12 +11,18 @@
  * */
 public abstract class UpgradeBase implements PlayerInterface {
     protected final PlayerInterface player;
+    /**
+     * Constructs an upgrade from a player, decorating them.
+     * @param player the player to decorate.
+     * @throws IllegalArgumentException if the player is null.
+     */
     protected UpgradeBase(PlayerInterface player) throws IllegalArgumentException {
         if (player != null) {
             this.player = player;
         } else 
         throw new IllegalArgumentException();
     }
+
     @Override
     public int getHealth() {
         return player.getHealth();

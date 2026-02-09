@@ -1,3 +1,7 @@
+package WizardQuest;
+
+import java.util.List;
+
 public class SlashUnlockUpgrade extends UpgradeBase {
     public SlashUnlockUpgrade(PlayerInterface player){
         super(player);
@@ -5,7 +9,7 @@ public class SlashUnlockUpgrade extends UpgradeBase {
 
     @Override //TODO change getters so they don't modify state.
     public List<UpgradeType> getUpgrades(){
-        List u = super.player.getUpgrades();
+        List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.SLASH_UNLOCK)){
             u.add(UpgradeType.SLASH_UNLOCK);
         }
@@ -14,7 +18,7 @@ public class SlashUnlockUpgrade extends UpgradeBase {
 
     @Override
     public List<AbilityType> getAbilities(){
-        List a = super.player.getAbilities();
+        List<AbilityType> a = super.player.getAbilities();
         if (!a.contains(AbilityType.SLASH)){
             a.add(AbilityType.SLASH);
         }
