@@ -115,7 +115,7 @@ public class TelemetryListenerSingleton {
         private void saveEvent(TelemetryEvent e){
             this.mostRecentTimeStamp = LocalDateTime.parse(e.getTimestamp(), formatter);
             try {
-                if (!SettingsSingleton.getSettingsSingleton().isTelemetryEnabled()) {
+                if (!SettingsSingleton.getInstance().isTelemetryEnabled()) {
                     return; 
                 }
             }

@@ -14,7 +14,7 @@ public class Player implements PlayerInterface {
     private Difficulty difficulty;
 
     public Player(Difficulty difficulty) {
-        SettingsInterface settings = SettingsSingleton.getSettings();
+        SettingsInterface settings = SettingsSingleton.getInstance();
         this.maxMagic = settings.getMaxMagic(difficulty);
         this.maxHealth = settings.getPlayerMaxHealth(difficulty);
         this.health = maxHealth;
@@ -96,7 +96,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return SettingsSingleton.getSettings().getMagicRegenRate(this.difficulty);
+        return SettingsSingleton.getInstance().getMagicRegenRate(this.difficulty);
     }
 
     @Override

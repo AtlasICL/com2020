@@ -367,21 +367,21 @@ public void setTelemetryEnabled(bool telemetryEnabled)
 
 public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
 
-public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier)
+public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth)
+public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth)
 
-public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier)
+public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier)
 
-public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier)
+public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier)
 
-public void setStartingLives(Difficulty difficulty, int startingLives)
+public void setStartingLives(Difficulty difficulty, int newStartingLives)
 
-public void setMaxMagic(Difficulty difficulty, int maxMagic)
+public void setMaxMagic(Difficulty difficulty, int newMaxMagic)
 
-public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate)
+public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate)
 
-public void setShopItemCount(Difficulty difficulty, int shopItemCount)
+public void setShopItemCount(Difficulty difficulty, int newShopItemCount)
 
 ## private Settings implements SettingsInterface nested in SettingsSingleton
 *Stores user settings and statistics*

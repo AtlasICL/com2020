@@ -44,20 +44,12 @@ public interface SettingsInterface {
      * Sets the role of the specified user or throws an exception
      * if the authenticated user is not a developer.
      *
-     * @param username the user to have their role modified.
+     * @param userID the user to have their role modified.
      * @param role the new role that they will hold.
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(String username, Role role) throws AuthenticationException;
-
-    /**
-     * Returns the username of the currently authenticated user.
-     * 
-     * @throws AuthenticationException if no user is authenticated.
-     * @return the user's username.
-     */
-    public String getUsername() throws AuthenticationException;
+    public void setUserRole(int userID, Role role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or
@@ -106,15 +98,6 @@ public interface SettingsInterface {
      * @return the value of the design parameter.
      */
     public int getPlayerMaxHealth(Difficulty difficulty);
-
-    /**
-     * Gets the value of the upgrade price multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty the difficulty being queried.
-     * @return the value of the design parameter.
-     */
-    public float getUpgradePriceMultiplier(Difficulty difficulty);
 
     /**
      * Gets the value of the enemy damage multiplier design parameter for the
@@ -198,70 +181,61 @@ public interface SettingsInterface {
      * specified difficulty. 
      * 
      * @param difficulty               the difficulty it's being set for.
-     * @param playerMaxHealth the value it's being set to.
+     * @param newPlayerMaxHealth the value it's being set to.
      */
-    public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth);
-
-    /**
-     * Sets the value of the upgrade price multiplier design parameter for the
-     * specified difficulty.
-     * 
-     * @param difficulty               the difficulty it's being set for.
-     * @param upgradePriceMultiplier the value it's being set to.
-     */
-    public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier);
+    public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy damage multiplier design parameter for the
      * specified difficulty.
      * 
      * @param difficulty            the difficulty it's being set for.
-     * @param enemyDamageMultiplier the value it's being set to.
+     * @param newEnemyDamageMultiplier the value it's being set to.
      */
-    public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier);
+    public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy max health multiplier design parameter for the
      * specified difficulty.
      *
      * @param difficulty            the difficulty it's being set for.
-     * @param enemyMaxHealthMultiplier the value it's being set to.
+     * @param newEnemyMaxHealthMultiplier the value it's being set to.
      */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
+    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
      * specified difficulty.
      * 
      * @param difficulty    the difficulty it's being set for.
-     * @param startingLives the value it's being set to.
+     * @param newStartingLives the value it's being set to.
      */
-    public void setStartingLives(Difficulty difficulty, int startingLives);
+    public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException;
 
     /**
      * Sets the value of the max magic multiplier design parameter for the
      * specified difficulty. 
      * 
      * @param difficulty         the difficulty it's being set for.
-     * @param maxMagic the value it's being set to.
+     * @param newMaxMagic the value it's being set to.
      */
-    public void setMaxMagic(Difficulty difficulty, int maxMagic);
+    public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
      * specified difficulty.
      * 
      * @param difficulty     the difficulty it's being set for.
-     * @param magicRegenRate the value it's being set to.
+     * @param newMagicRegenRate the value it's being set to.
      */
-    public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate);
+    public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException;
 
     /**
      * Sets the value of the shop item count design parameter for the
      * specified difficulty.
      * 
      * @param difficulty    the difficulty it's being set for.
-     * @param shopItemCount the value it's being set to.
+     * @param newShopItemCount the value it's being set to.
      */
-    public void setShopItemCount(Difficulty difficulty, int shopItemCount);
+    public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException;
 }
