@@ -5,6 +5,8 @@
 -   The program will not store any user data that is not relevant to gameplay, or the balancing of gameplay
     
 -   Any data relevant to the player will be anonymised. For example, player sessions will be identified by a generated identifier.
+
+-   Players will sign using Google, meaning the code has minimal access to the player's sign in info. (not in prototype)
     
 
 ## Consent and Disclosure
@@ -45,3 +47,4 @@
     
 
 -   While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons & Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic gameplay.
+
