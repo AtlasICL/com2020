@@ -33,10 +33,11 @@ public enum EncounterType {
     /**
      * This creates a new instance of an Encounter of this type
      * Uses EntityType reflection for the instantiation of the actual encounters.
-     * @return a new Encounter with specified enemies
+     * @return a new EncounterInterface with specified enemies
      */
-    public Encounter createEncounter() {
-        return new Encounter(this);
+    public EncounterInterface createEncounter() {
+        return new Encounter(this) {
+        };
     }
 
     /**

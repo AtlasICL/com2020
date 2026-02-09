@@ -8,10 +8,10 @@ package WizardQuest;
 public enum EntityType {
     PLAYER(Player.class, "Player"),
     GOBLIN(Goblin.class, "Goblin"), // enemy 1
-    FISH_MAN(FishMan.class, "Fish Man"), // enemy 2
+    FISH_MAN(FishMan.class, "FishMan"), // enemy 2
     PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
-    EVIL_WIZARD(null, "Evil Wizard"), // PLACEHOLDER ARGS
-    ARMOURED_GOBLIN(null, "Armoured Goblin"), // PLACEHOLDER ARGS
+    EVIL_WIZARD(null, "EvilWizard"), // PLACEHOLDER ARGS
+    ARMOURED_GOBLIN(null, "ArmouredGoblin"), // PLACEHOLDER ARGS
     GHOST(null, "Ghost"), // PLACEHOLDER ARGS
     BLACK_KNIGHT(null, "Black Knight"), // PLACEHOLDER ARGS
     DRAGON(null, "Dragon"),; // PLACEHOLDER ARGS

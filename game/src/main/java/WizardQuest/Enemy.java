@@ -11,24 +11,15 @@ import java.util.List;
 public abstract class Enemy implements EntityInterface {
     private int health;
     private int maxHealth;
-    private List<AbilityType> abilities;
 
-    /**
-     * Enemy Constructor.
-     * The base values from settings are adjusted based on difficulty levels.
-     */
-    public Enemy() {
-        this.abilities = new ArrayList<>();
-        this.maxHealth = 100;
-        this.health = maxHealth;
-    }
+    @Override
+    public abstract List<AbilityType> getAbilities();
 
     /**
      * Constructor with specified max health.
      * @param maxHealth the maximum health for this enemy
      */
     public Enemy(int maxHealth){
-        this.abilities = new ArrayList<>();
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }
@@ -49,10 +40,6 @@ public abstract class Enemy implements EntityInterface {
         return 0; // PLACEHOLDER
     }
 
-    @Override
-    public List<AbilityType> getAbilities() {
-        return abilities;
-    }
 
     @Override
     public int getMaxHealth() {
@@ -63,12 +50,4 @@ public abstract class Enemy implements EntityInterface {
         this.health = this.maxHealth;
     }
 
-    /**
-     * Sets the maximum health.
-     * This gets called within the constructor of concrete enemy classes
-     * @param maxHealth defines the maximum health
-     */
-    public void setMaxHealth(int maxHealth){
-        this.maxHealth = maxHealth;
-    }
 }
