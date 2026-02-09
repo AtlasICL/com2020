@@ -1,7 +1,5 @@
 package WizardQuest;
 
-import java.lang.reflect.Constructor;
-
 public enum AbilityType {
     // Organised by description, damage type, base damage, base magic points.
     PUNCH(

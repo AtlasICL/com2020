@@ -25,5 +25,5 @@ public class WaterDamageResistanceUpgrade extends UpgradeBase {
             u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
         }
         return u;
-    
+    }
 }

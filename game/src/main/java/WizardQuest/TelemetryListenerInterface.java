@@ -5,6 +5,9 @@ package WizardQuest;
  * events, writing them to the JSON store of telemetry events. When a method is
  * called the listener should verify telemetry is enabled before writing to the
  * database.
+ *
+ * NOTE: Some of the ConcreteEvent classes have not yet been created, this is because
+ * they are not required for Sprint 1 (e.g., BossEncounterStartEvent)
  */
 public interface TelemetryListenerInterface {
     /**
@@ -12,7 +15,7 @@ public interface TelemetryListenerInterface {
      * 
      * @param e the SessionStartEvent to be recorded to the JSON database.
      */
-    public void onSessionStart(SessionStartEvent e);
+    public void onStartSession(StartSessionEvent e);
 
     /**
      * Called when a normal encounter starts.

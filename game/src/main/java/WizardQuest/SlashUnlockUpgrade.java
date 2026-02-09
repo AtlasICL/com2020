@@ -7,7 +7,7 @@ public class SlashUnlockUpgrade extends UpgradeBase {
         super(player);
     }
 
-    @Override //TODO change getters so they don't modify state.
+    @Override
     public List<UpgradeType> getUpgrades(){
         List<UpgradeType> u = super.player.getUpgrades();
         if (!u.contains(UpgradeType.SLASH_UNLOCK)){

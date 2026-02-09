@@ -1,3 +1,5 @@
+package WizardQuest;
+
 import java.util.List;
 
 public class FireBallUnlockUpgrade extends UpgradeBase {

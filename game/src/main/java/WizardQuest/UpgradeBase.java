@@ -34,8 +34,8 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void loseHealth(int amount) throws IllegalArgumentException {
-        player.loseHealth();
+    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException {
+        player.loseHealth(amount, type);
     }
 
     @Override
@@ -96,5 +96,20 @@ public abstract class UpgradeBase implements PlayerInterface {
     @Override
     public List<UpgradeType> getUpgrades() {
         return player.getUpgrades();
+    }
+
+    @Override
+    public int calcDamage(int amount, DamageType type){
+        return player.calcDamage(amount, type);
+    }
+
+    @Override
+    public EntityType getType(){
+        return player.getType();
+    }
+
+    @Override
+    public List<AbilityType> getAbilities(){
+        return player.getAbilities();
     }
 }

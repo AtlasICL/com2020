@@ -1,344 +1,480 @@
 package WizardQuest;
 
-import javax.management.relation.Role;
+import java.io.File;
+import java.io.IOException;
+import java.util.EnumMap;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Provides singleton access to settings and user properties
  */
 public class SettingsSingleton {
-    private SettingsInterface settings = new Settings();
+    private static SettingsInterface settings = new Settings();
 
-    private SettingsSingleton() {
+    private SettingsSingleton() {}
+
+    public static SettingsInterface getInstance() {
+        return settings;
     }
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
-
-        private String username;
-
-        // ID for the current session, generated when a user enables telemetry or log in
-        // with telemetry enabled.
-        private int sessionID;
-
+        private int userID;
         private Role userRole;
+        private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
-        private int hardMaxStageReached;
-        private int normaMaxStageReached;
-        private int easyMaxStageReached;
+        private EnumMap<Difficulty, Integer> maxStageReached;
+        private EnumMap<Difficulty, Integer> playerMaxHealth;
+        private EnumMap<Difficulty, Float> enemyDamageMultiplier;
+        private EnumMap<Difficulty, Float> enemyMaxHealthMultiplier;
+        private EnumMap<Difficulty, Integer> startingLives;
+        private EnumMap<Difficulty, Integer> maxMagic;
+        private EnumMap<Difficulty, Integer> magicRegenRate;
+        private EnumMap<Difficulty, Integer> shopItemCount;
 
-        // design parameters: integer values multiplied by these parameters are to be
-        // rounded.
+        private static final File SETTINGS_FILE = new File("settings_file.json");
+        private static final ObjectMapper jsonMapper = new ObjectMapper();
 
-        private float hardEnemyMaxHealthMultiplier;
-        private float normalEnemyMaxHealthMultiplier;
-        private float easyEnemyMaxHealthMultiplier;
-
-        private int hardPlayerMaxHealth;
-        private int normalPlayerMaxHealth;
-        private int easyPlayerMaxHealth;
-
-        private float hardUpgradePriceMultiplier;
-        private float normalUpgradePriceMultiplier;
-        private float easyUpgradePriceMultiplier;
-
-        private float hardEnemyDamageMultiplier;
-        private float normalEnemyDamageMultiplier;
-        private float easyEnemyDamageMultiplier;
-
-        private int hardStartingLives;
-        private int normalStartingLives;
-        private int easyStartingLives;
-
-        private int hardMaxMagic;
-        private int normalMaxMagic;
-        private int easyMaxMagic;
-
-        private int hardMagicRegenRate;
-        private int normalMagicRegenRate;
-        private int easyMagicRegenRate;
-
-        private int hardShopItemCount;
-        private int normalShopItemCount;
-        private int easyShopItemCount;
+        // TEMPORARY
+        private static final File LOGINS_FILE = new File("logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
          */
-        public Settings();
+        public Settings() {
+            loadDefaults();
+        }
 
         /**
-         * Attempts to create a new user with the given parameters. On success will add
-         * this user to the user JSON database.
-         * 
-         * @param username the user's username. Must consists exclusively of
-         *                 alphanumeric characters, underscores or hyphens.
-         * @param password the user's password. It is hashed and salted before being
-         *                 stored.
-         * @param role     the role for the user.
-         * @throws AuthenticationException if there is a user with the same username or
-         *                                 the username is invalid.
+         * Loads in default configs for settings.
          */
-        @Override
-        public void createNewUser(String username, String password, Role role) throws AuthenticationException;
+        private void loadDefaults() {
+            maxStageReached = new EnumMap<>(Difficulty.class);
+            playerMaxHealth = new EnumMap<>(Difficulty.class);
+            enemyDamageMultiplier = new EnumMap<>(Difficulty.class);
+            enemyMaxHealthMultiplier = new EnumMap<>(Difficulty.class);
+            startingLives = new EnumMap<>(Difficulty.class);
+            maxMagic = new EnumMap<>(Difficulty.class);
+            magicRegenRate = new EnumMap<>(Difficulty.class);
+            shopItemCount = new EnumMap<>(Difficulty.class);
+
+            maxStageReached.put(Difficulty.EASY, 0);
+            maxStageReached.put(Difficulty.MEDIUM, 0);
+            maxStageReached.put(Difficulty.HARD, 0);
+
+            playerMaxHealth.put(Difficulty.EASY, 200);
+            playerMaxHealth.put(Difficulty.MEDIUM, 100);
+            playerMaxHealth.put(Difficulty.HARD, 50);
+
+            enemyDamageMultiplier.put(Difficulty.EASY, 0.5f);
+            enemyDamageMultiplier.put(Difficulty.MEDIUM, 1.0f);
+            enemyDamageMultiplier.put(Difficulty.HARD, 2.0f);
+
+            enemyMaxHealthMultiplier.put(Difficulty.EASY, 1.0f);
+            enemyMaxHealthMultiplier.put(Difficulty.MEDIUM, 1.5f);
+            enemyMaxHealthMultiplier.put(Difficulty.HARD, 2.0f);
+
+            startingLives.put(Difficulty.EASY, 5);
+            startingLives.put(Difficulty.MEDIUM, 3);
+            startingLives.put(Difficulty.HARD, 1);
+
+            maxMagic.put(Difficulty.EASY, 200);
+            maxMagic.put(Difficulty.MEDIUM, 100);
+            maxMagic.put(Difficulty.HARD, 50);
+
+            magicRegenRate.put(Difficulty.EASY, 5);
+            magicRegenRate.put(Difficulty.MEDIUM, 3);
+            magicRegenRate.put(Difficulty.HARD, 1);
+
+            shopItemCount.put(Difficulty.EASY, 3);
+            shopItemCount.put(Difficulty.MEDIUM, 2);
+            shopItemCount.put(Difficulty.HARD, 1);
+        }
 
         /**
-         * Attempts to authenticate the specified user, logging in as them on success.
-         * 
-         * @param username the user's username. Must consists exclusively of
-         *                 alphanumeric characters, underscores or hyphens.
-         * @param password the user's password. It is hashed and salted with the user's
-         *                 salt before being looked up in the database.
-         * @throws AuthenticationException if the user does not exist or their login
-         *                                 credentials are invalid or incorrect.
+         * Load the settings of a given player from the settings file (.json).
+         * Design parameters (global, affecting all users) loaded from
+         * "designParameters" key. 
+         * User-specific data is loaded from "users", with the key being 
+         * their userID. Reminder that an example settings.json file is provided.
+         * If a profile for a user does not yet exist, it will be created with
+         * default values.
          */
-        @Override
-        public void authenticateUser(String username, String password) throws AuthenticationException;
+        private void loadSettingsFromJson(int userID) {
+            if (!SETTINGS_FILE.exists()) {
+                loadDefaults();
+                return;
+            }
+
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+
+                JsonNode designParams = root.get("designParameters");
+                if (designParams == null) {
+                    root.set("designParameters", createDesignParametersNode());
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                } else {
+                    loadIntNode(designParams, "playerMaxHealth", playerMaxHealth);
+                    loadIntNode(designParams, "shopItemCount", shopItemCount);
+                    loadFloatNode(designParams, "enemyDamageMultiplier", enemyDamageMultiplier);
+                    loadFloatNode(designParams, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
+                    loadIntNode(designParams, "startingLives", startingLives);
+                    loadIntNode(designParams, "maxMagic", maxMagic);
+                    loadIntNode(designParams, "magicGenerationRate", magicRegenRate);
+                }
+
+                // Load per-user data.
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+                JsonNode userSettings = usersNode.get(String.valueOf(userID));
+
+                // If the user did not have a section in the file, create it.
+                if (userSettings == null) {
+                    ObjectNode newProfile = jsonMapper.createObjectNode();
+                    newProfile.put("telemetryEnabled", true);
+                    newProfile.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                    newProfile.set("furthestLevel", createIntNode(maxStageReached));
+
+                    usersNode.set(String.valueOf(userID), newProfile);
+                    root.set("users", usersNode);
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                    return;
+                }
+
+                // Load user's (user-specific / non-global) data.
+                telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
+                userRole = Role.valueOf(userSettings.get("role").asText());
+                loadIntNode(userSettings, "furthestLevel", maxStageReached);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error reading settings from settings file." + e.toString());
+            }
+        }
 
         /**
-         * Returns the role of the currently authenticated user or throws an exception
-         * if no user is authenticated.
-         * 
-         * @throws AuthenticationException if no user is authenticated.
-         * @return the user's role.
+         * Helper function for creating a json object to represent an **int** 
+         * settings field.
          */
-        @Override
-        public Role getUserRole() throws AuthenticationException;
+        private ObjectNode createIntNode(EnumMap<Difficulty, Integer> settingsMap) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            for (Difficulty difficulty : Difficulty.values()) {
+                newNode.put(difficulty.toString(), settingsMap.get(difficulty));
+            }
+            return newNode;
+        }
 
         /**
-         * Returns the username of the currently authenticated user.
-         * 
-         * @throws AuthenticationException if no user is authenticated.
-         * @return the user's username.
+         * Helper function for creating a json object to represent a **float** 
+         * settings field.
          */
-        @Override
-        public String getUsername() throws AuthenticationException;
+        private ObjectNode createFloatNode(EnumMap<Difficulty, Float> settingsMap) {
+            ObjectNode newNode = jsonMapper.createObjectNode();
+            for (Difficulty difficulty : Difficulty.values()) {
+                newNode.put(difficulty.toString(), settingsMap.get(difficulty));
+            }
+            return newNode;
+        }
 
         /**
-         * Returns the session id of the currently authenticated user and session, or
-         * throws an exception if the user is unauthenticated or no session is
-         * established. A session is only established for users who have telemetry
-         * enabled.
-         * 
-         * @throws AuthenticationException if no user is authenticated or session
-         *                                 established.
-         * @return the current session's ID
+         * Creates a JSON node containing all shared design parameters.
          */
-        @Override
-        public int getSessionID() throws AuthenticationException;
+        private ObjectNode createDesignParametersNode() {
+            ObjectNode node = jsonMapper.createObjectNode();
+            node.set("playerMaxHealth", createIntNode(playerMaxHealth));
+            node.set("shopItemCount", createIntNode(shopItemCount));
+            node.set("enemyDamageMultiplier", createFloatNode(enemyDamageMultiplier));
+            node.set("enemyHealthMultiplier", createFloatNode(enemyMaxHealthMultiplier));
+            node.set("startingLives", createIntNode(startingLives));
+            node.set("maxMagic", createIntNode(maxMagic));
+            node.set("magicGenerationRate", createIntNode(magicRegenRate));
+            return node;
+        }
 
         /**
-         * Hashes the username of the currently authenticated user and returns it (as
-         * their ID).
-         * 
-         * @throws AuthenticationException if no user is authenticated.
-         * @return the user's ID.
+         * Helper function for reading in / loading the json settings for an **int**
+         * settings field.
          */
-        @Override
-        public int getUserID() throws AuthenticationException;
+        private void loadIntNode(JsonNode userSettings, String field, EnumMap<Difficulty, Integer> settingsMap) {
+            JsonNode newNode = userSettings.get(field);
+            for (Difficulty difficulty : Difficulty.values()) {
+                JsonNode value = newNode.get(difficulty.toString());
+                settingsMap.put(difficulty, value.asInt());
+            }
+        }
 
         /**
-         * Returns whether the user has telemetry enabled.
-         * 
-         * @throws AuthenticationException if no user is authenticated.
-         * @return whether the user has telemetry enabled or not.
+         * Helper function for reading in / loading the json settings for an **float**
+         * settings field.
          */
-        @Override
-        public boolean isTelemetryEnabled() throws AuthenticationException;
+        private void loadFloatNode(JsonNode userSettings, String field, EnumMap<Difficulty, Float> settingsMap) {
+            JsonNode newNode = userSettings.get(field);
+            for (Difficulty difficulty : Difficulty.values()) {
+                JsonNode value = newNode.get(difficulty.toString());
+                settingsMap.put(difficulty, (float)value.asDouble());
+            }
+        }
 
         /**
-         * Gets the user's personal best for the furthest stage they've reached of the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @throws AuthenticationException if no user is authenticated.
-         * @return the furthest stage the user has got on the specified difficulty.
+         * Saves USER-SPECIFIC info:
+         * - telemetryEnabled
+         * - role
+         * - furthestLevel (per difficulty)
          */
-        @Override
-        public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException;
+        public void saveProfile() {
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+
+                ObjectNode profileNode = jsonMapper.createObjectNode();
+                profileNode.put("telemetryEnabled", telemetryEnabled);
+                profileNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                profileNode.set("furthestLevel", createIntNode(maxStageReached));
+
+                usersNode.set(String.valueOf(userID), profileNode);
+                root.set("users", usersNode);
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error saving settings to settings file. " + e.toString());
+            }
+        }
 
         /**
-         * Gets the value of the enemy max health multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
+         * Saves (global) design parameters to the settings file.
          */
+        private void saveDesignParameters() {
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                root.set("designParameters", createDesignParametersNode());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error saving design parameters to settings file. " + e.toString());
+            }
+        }
+
         @Override
-        public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
+        public void createNewUser(String username, String password, Role role) throws AuthenticationException {
+            try {
+                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
+
+                ObjectNode userNode = jsonMapper.createObjectNode();
+                userNode.put("password", password);
+                userNode.put("role", role.getJSONName());
+
+                allLogins.set(username, userNode);
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
+            } catch (IOException e) {
+                System.out.println("Failed to save new user to logins file." + e.toString());
+            }
+        }
+
+        @Override
+        public void authenticateUser(String username, String password) throws AuthenticationException {
+            try {
+                JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
+                JsonNode userNode = allLogins.get(username);
+
+                if (userNode == null) {
+                    throw new AuthenticationException("User does not exist.");
+                }
+
+                String storedPassword = userNode.get("password").asText();
+                if (!storedPassword.equals(password)) {
+                    throw new AuthenticationException("Incorrect password");
+                }
+
+                userID = username.hashCode();
+
+                // TODO: I think there is a bug here, mapping from the json
+                // to the Role enum. 
+                // Potentially make a helper function to convert from string to 
+                // Role? Idk
+                userRole = Role.valueOf(userNode.get("role").asText());
+
+                loadSettingsFromJson(userID);
+            } catch (IOException e) {
+                System.out.println("Error reading login file" + e);
+            }
+        }
 
         /**
-         * Gets the value of the player max health design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
+         * Verifies the currently authenticated user is a developer (role).
          */
-        @Override
-        public int getPlayerMaxHealth(Difficulty difficulty);
+        private boolean currentUserIsDeveloper() {
+            return userRole == Role.DEVELOPER;
+        }
 
         /**
-         * Gets the value of the upgrade price multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
+         * Verifies the currently authenticated user is a designer (role).
          */
-        @Override
-        public float getUpgradePriceMultiplier(Difficulty difficulty);
+        private boolean currentUserIsDesigner() {
+            return userRole == Role.DESIGNER;
+        }
 
-        /**
-         * Gets the value of the enemy damage multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
-         */
         @Override
-        public float getEnemyDamageMultiplier(Difficulty difficulty);
+        public Role getUserRole() throws AuthenticationException {
+            return userRole;
+        }
 
-        /**
-         * Gets the value of the starting lives design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
-         */
         @Override
-        public int getStartingLives(Difficulty difficulty);
+        public void setUserRole(int userID, Role role) throws AuthenticationException {
+            if (!currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
 
-        /**
-         * Gets the value of the max magic design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
-         */
-        @Override
-        public int getMaxMagic(Difficulty difficulty);
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
 
-        /**
-         * Gets the value of the magic regeneration rate design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
-         */
-        @Override
-        public int getMagicRegenRate(Difficulty difficulty);
+                JsonNode targetUser = usersNode.get(String.valueOf(userID));
 
-        /**
-         * Gets the value of the shop item count design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty being queried.
-         * @return the value of the design parameter.
-         */
-        @Override
-        public int getShopItemCount(Difficulty difficulty);
+                ((ObjectNode) targetUser).put("role", role.toString());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error updating user role in settings file. " + e.toString());
+            }
 
-        /**
-         * Attempts to set the user's preference for whether they have telemetry
-         * enabled, writing this to their settings in the user database JSON. Will throw
-         * an exception if no user is authenticated.
-         * 
-         * @param telemetryEnabled whether the user has telemetry enabled or not.
-         *                         Setting this to false will send an EndSession event
-         *                         and setting this to true will send a StartSession
-         *                         event with a new session ID.
-         * @throws AuthenticationException if the user cannot be authenticated.
-         */
-        @Override
-        public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException;
+            // If user whose role was updated is the current user, then update
+            // the value of role in memory also.
+            if (userID == this.userID) {
+                userRole = role;
+            }
+        }
 
-        /**
-         * Sets the value for the furthest stage the user has gotten to for th specified
-         * difficulty.
-         * 
-         * @param difficulty      the difficulty the run was on.
-         * @param maxStageReached the furthest stage the user reached.
-         * @throws AuthenticationException if no user is authenticated.
-         */
         @Override
-        public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException;
+        public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
+            return maxStageReached.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the enemy max health multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty               the difficulty it's being set for.
-         * @param enemyMaxHealthMultiplier the value it's being set to.
-         */
         @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float enemyMaxHealthMultiplier);
+        public int getPlayerMaxHealth(Difficulty difficulty) {
+            return playerMaxHealth.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the player max health multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty      the difficulty it's being set for.
-         * @param playerMaxHealth the value it's being set to.
-         */
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int playerMaxHealth);
+        public float getEnemyDamageMultiplier(Difficulty difficulty) {
+            return enemyDamageMultiplier.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the upgrade price multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty             the difficulty it's being set for.
-         * @param upgradePriceMultiplier the value it's being set to.
-         */
         @Override
-        public void setUpgradePriceMultiplier(Difficulty difficulty, float upgradePriceMultiplier);
+        public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
+            return enemyMaxHealthMultiplier.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the enemy damage multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty            the difficulty it's being set for.
-         * @param enemyDamageMultiplier the value it's being set to.
-         */
         @Override
-        public void setEnemyDamageMultiplier(Difficulty difficulty, float enemyDamageMultiplier);
+        public int getStartingLives(Difficulty difficulty) {
+            return startingLives.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the starting lives design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty    the difficulty it's being set for.
-         * @param startingLives the value it's being set to.
-         */
         @Override
-        public void setStartingLives(Difficulty difficulty, int startingLives);
+        public int getMaxMagic(Difficulty difficulty) {
+            return maxMagic.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the max magic multiplier design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty the difficulty it's being set for.
-         * @param maxMagic   the value it's being set to.
-         */
         @Override
-        public void setMaxMagic(Difficulty difficulty, int maxMagic);
+        public int getMagicRegenRate(Difficulty difficulty) {
+            return magicRegenRate.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the starting lives design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty     the difficulty it's being set for.
-         * @param magicRegenRate the value it's being set to.
-         */
         @Override
-        public void setMagicRegenRate(Difficulty difficulty, int magicRegenRate);
+        public int getShopItemCount(Difficulty difficulty) {
+            return shopItemCount.get(difficulty);
+        }
 
-        /**
-         * Sets the value of the shop item count design parameter for the
-         * specified difficulty.
-         * 
-         * @param difficulty    the difficulty it's being set for.
-         * @param shopItemCount the value it's being set to.
-         */
         @Override
-        public void setShopItemCount(Difficulty difficulty, int shopItemCount);
+        public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.telemetryEnabled = telemetryEnabled;
+            saveProfile();
+        }
+
+        @Override
+        public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.maxStageReached.put(difficulty, maxStageReached);
+            saveProfile();
+        }
+
+        @Override
+        public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.startingLives.put(difficulty, newStartingLives);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.maxMagic.put(difficulty, newMaxMagic);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.magicRegenRate.put(difficulty, newMagicRegenRate);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException {
+            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+                throw new AuthenticationException();
+            }
+            this.shopItemCount.put(difficulty, newShopItemCount);
+            saveDesignParameters();
+        }
+
+        @Override
+        public int getSessionID() throws AuthenticationException {
+            return this.sessionID;
+        }
+
+        @Override
+        public int getUserID() throws AuthenticationException {
+            return this.userID;
+        }
+
+        @Override
+        public boolean isTelemetryEnabled() throws AuthenticationException {
+            return this.telemetryEnabled;
+        }
     }
 }
