@@ -17,7 +17,7 @@ public class GameUserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String MAGENTA = "\u001B[35m";
 
-    public GameUserInterface() {
+    private GameUserInterface() {
         this.gameManager = GameManagerSingleton.getGameManager();
         this.scanner = new Scanner(System.in);
     }
