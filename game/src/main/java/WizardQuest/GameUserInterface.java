@@ -281,12 +281,33 @@ public class GameUserInterface {
     }
 
     private AbilityType[] getPlayerAbilities(PlayerInterface player) {
-        return new AbilityType[] { AbilityType.PUNCH };
+
+        if (player == null || player.getAbilities().isEmpty()) {
+            return new AbilityType[0];
+        }
+
+        AbilityType[] abilities = new AbilityType[player.getAbilities().size()];
+
+        for (int i = 0; i < player.getAbilities().size(); i++) {
+            abilities[i] = player.getAbilities().get(i);
+        }
+
+        return abilities;
     }
 
-    //enemy abilities(placeholder until Enemy exposes ability list)
-    private AbilityType[] getEnemyAbilities(EntityInterface enemy) {
-        return new AbilityType[] { AbilityType.PUNCH };
+        private AbilityType[] getEnemyAbilities(EntityInterface enemy) {
+
+        if (enemy == null || enemy.getAbilities().isEmpty()) {
+            return new AbilityType[0];
+        }
+
+        AbilityType[] abilities = new AbilityType[enemy.getAbilities().size()];
+
+        for (int i = 0; i < enemy.getAbilities().size(); i++) {
+            abilities[i] = enemy.getAbilities().get(i);
+        }
+
+        return abilities;
     }
 
     private EntityInterface selectEnemyTarget(EntityInterface[] enemies) {
