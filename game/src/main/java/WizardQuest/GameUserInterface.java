@@ -17,11 +17,6 @@ public class GameUserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String MAGENTA = "\u001B[35m";
 
-    // Google SSO template
-
-    //private String currentUserId = null; //ID is just email?
-    //private boolean ssoPlanned = true;
-
     public GameUserInterface() {
         this.gameManager = GameManagerSingleton.getGameManager();
         this.scanner = new Scanner(System.in);
@@ -34,42 +29,28 @@ public class GameUserInterface {
 
     public void start() {
         showTitle();
-        //loginScreen(); only needed once sso is properly implemented
         showMenu();
     }
 
     private void showTitle() {
-        //aspect ratio may affect how this looks on different screens, can remove if needed
-        System.out.println(MAGENTA + 
-            " _    _   _                            _   _____                        _   \n" +
-            "| |  | | (_)                          | | |  _  |                      | |  \n" +
-            "| |  | |  _   ____   __ _   _ __    __| | | | | |  _   _    ___   ___  | |_ \n" +
-            "| |/\\| | | | |_  /  / _` | | '__|  / _` | | | | | | | | |  / _ \\ / __| | __|\n" +
-            "\\  /\\  / | |  / /  | (_| | | |    | (_| | \\ \\/' / | |_| | |  __/ \\__ \\ | |_ \n" +
-            " \\/  \\/  |_| /___|  \\__,_| |_|     \\__,_|  \\_/\\_\\  \\__,_|  \\___| |___/  \\__|\n"
-            + RESET
+        System.out.println(MAGENTA +
+                " _    _   _                            _   _____                        _   \n" +
+                "| |  | | (_)                          | | |  _  |                      | |  \n" +
+                "| |  | |  _   ____   __ _   _ __    __| | | | | |  _   _    ___   ___  | |_ \n" +
+                "| |/\\| | | | |_  /  / _` | | '__|  / _` | | | | | | | | |  / _ \\ / __| | __|\n" +
+                "\\  /\\  / | |  / /  | (_| | | |    | (_| | \\ \\/' / | |_| | |  __/ \\__ \\ | |_ \n" +
+                " \\/  \\/  |_| /___|  \\__,_| |_|     \\__,_|  \\_/\\_\\  \\__,_|  \\___| |___/  \\__|\n"
+                + RESET
         );
-
-    System.out.println();
-}
-
-    /**
-     *placeholder for google sso implementation
-     *ID will be provided by google sso
-     */
-    //private void loginScreen() {
-   // }
-
-
-
+        System.out.println();
+    }
 
     private void showMenu() {
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
             System.out.println();
             System.out.println(BOLD + "Main Menu" + RESET);
             System.out.println("1. " + YELLOW + "Start New Game" + RESET);
-            System.err.println("2. " + YELLOW + "Settings" + RESET);
+            System.out.println("2. " + YELLOW + "Settings" + RESET);
             System.out.println("3. Quit");
 
             System.out.print(BLUE + ">>> " + RESET);
@@ -95,27 +76,11 @@ public class GameUserInterface {
         Difficulty difficulty = selectDifficulty();
 
         if (difficulty == null) {
-            return; //back to main menu
+            return;
         }
 
         gameManager.startNewGame(difficulty);
         gameLoop();
-    }
-
-    /**
-     * Checks whether a difficulty has available encounters.
-     */
-    private boolean hasAvailableEncounters(Difficulty difficulty) {
-        try {
-            gameManager.startNewGame(difficulty);
-            gameManager.pickEncounter();
-            gameManager.endGame();
-            return true;
-        }
-        catch (Exception e) {
-            gameManager.endGame();
-            return false;
-        }
     }
 
     private String difficultyLabel(Difficulty difficulty) {
@@ -129,21 +94,13 @@ public class GameUserInterface {
     }
 
     private Difficulty selectDifficulty() {
-
-        boolean easyAvailable = hasAvailableEncounters(Difficulty.EASY);
-        boolean mediumAvailable = hasAvailableEncounters(Difficulty.MEDIUM);
-        boolean hardAvailable = hasAvailableEncounters(Difficulty.HARD);
-
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
             System.out.println();
             System.out.println(BOLD + "Select Difficulty" + RESET);
 
-            String noEnc = MAGENTA + BOLD + " [NO AVAILABLE ENCOUNTERS]" + RESET;
-
-            System.out.println("1. " + difficultyLabel(Difficulty.EASY) + (easyAvailable ? "" : noEnc));
-            System.out.println("2. " + difficultyLabel(Difficulty.MEDIUM) + (mediumAvailable ? "" : noEnc));
-            System.out.println("3. " + difficultyLabel(Difficulty.HARD) + (hardAvailable ? "" : noEnc));
+            System.out.println("1. " + difficultyLabel(Difficulty.EASY));
+            System.out.println("2. " + difficultyLabel(Difficulty.MEDIUM));
+            System.out.println("3. " + difficultyLabel(Difficulty.HARD));
             System.out.println("0. Go Back");
 
             System.out.print(BLUE + ">>> " + RESET);
@@ -152,47 +109,29 @@ public class GameUserInterface {
             switch (input) {
                 case "0":
                     return null;
-
                 case "1":
-                    if (easyAvailable) {
-                        return Difficulty.EASY;
-                    }
-                    System.out.println(RED + "Easy is not available yet." + RESET);
-                    break;
-
+                    return Difficulty.EASY;
                 case "2":
-                    if (mediumAvailable) {
-                        return Difficulty.MEDIUM;
-                    }
-                    System.out.println(RED + "Medium is not available yet." + RESET);
-                    break;
-
+                    return Difficulty.MEDIUM;
                 case "3":
-                    if (hardAvailable) {
-                        return Difficulty.HARD;
-                    }
-                    System.out.println(RED + "Hard is not available yet." + RESET);
-                    break;
-
+                    return Difficulty.HARD;
                 default:
                     System.out.println(RED + "Invalid option." + RESET);
             }
         }
-
-        return null;
     }
 
     private void gameLoop() {
         while (gameManager.isGameRunning()) {
 
-            boolean encounterStarted = playEncounter();
+            boolean encounterWon = playEncounter();
 
             if (!gameManager.isGameRunning()) {
                 return;
             }
 
-            if (!encounterStarted) {
-                return;
+            if (!encounterWon) {
+                continue;
             }
 
             openShop();
@@ -208,6 +147,7 @@ public class GameUserInterface {
     }
 
     private boolean playEncounter() {
+
         EncounterInterface encounter;
 
         try {
@@ -215,8 +155,7 @@ public class GameUserInterface {
         }
         catch (Exception e) {
             System.out.println();
-            System.out.println(RED + BOLD + "No encounters available for this difficulty yet." + RESET);
-            System.out.println("Please try another difficulty.");
+            System.out.println(RED + BOLD + "No encounters available right now." + RESET);
             System.out.println("Ending run.");
             gameManager.endGame();
             return false;
@@ -225,40 +164,180 @@ public class GameUserInterface {
         System.out.println();
         System.out.println(BOLD + "Stage " + gameManager.getCurrentRun().getStage() + RESET);
         System.out.println("Encounter: " + CYAN + encounter.getType() + RESET);
-        System.out.println();
 
-        while (!encounter.isComplete()) {
+        while (true) {
 
             PlayerInterface player = gameManager.getCurrentPlayer();
 
-            if (player != null) {
-                System.out.println("HP: " + GREEN + player.getHealth() + RESET + " / " + player.getMaxHealth());
-                System.out.println("Magic: " + CYAN + player.getMagic() + RESET);
-                System.out.println("Lives: " + YELLOW + player.getLives() + RESET);
-                System.out.println("Coins: " + YELLOW + player.getCoins() + RESET);
+            if (player == null) {
+                gameManager.endGame();
+                return false;
+            }
+
+            EntityInterface[] enemies = encounter.getEnemies();
+
+            if (allEnemiesDead(enemies)) {
+                //win case, encounter completed
+                gameManager.completeCurrentEncounter();
+                System.out.println(GREEN + "Encounter complete." + RESET);
+                return true;
+            }
+
+            //lose case (health <= 0)
+            if (player.getHealth() <= 0) {
+                System.out.println(RED + BOLD + "You died." + RESET);
+
+                gameManager.resetFailedEncounter();
+
+                //lose game case (no lives left)
+                if (player.getLives() == 0) {
+                    System.out.println(RED + "Out of lives." + RESET);
+                    gameManager.endGame();
+                }
+
+                return false;
             }
 
             System.out.println();
-            System.out.println("1. " + YELLOW + "Attack" + RESET);
-            System.out.println("2. Quit Run");
+            System.out.println("HP: " + GREEN + player.getHealth() + RESET + " / " + player.getMaxHealth());
+            System.out.println("Magic: " + CYAN + player.getMagic() + RESET + " / " + player.getMaxMagic());
+            System.out.println("Lives: " + YELLOW + player.getLives() + RESET);
+            System.out.println("Coins: " + YELLOW + player.getCoins() + RESET);
+
+            AbilityType[] abilities = getPlayerAbilities(player);
+
+            if (abilities == null || abilities.length == 0) {
+                System.out.println(RED + "No abilities available." + RESET);
+                gameManager.endGame(); //end game if no abilities to use, player can't do anything
+                return false;
+            }
+
+            System.out.println();
+            System.out.println(BOLD + "Choose an ability:" + RESET);
+
+            for (int i = 0; i < abilities.length; i++) {
+                System.out.println((i + 1) + ". " + abilities[i].getDescription()
+                        + " (Cost: " + abilities[i].getMagicCost() + ")");
+            }
+
+            System.out.println("0. Quit Run");
 
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
-            if (input.equals("1")) {
-                System.out.println(YELLOW + "You attack..." + RESET);
-                gameManager.completeCurrentEncounter();
+            int abilityChoice;
+            try {
+                abilityChoice = Integer.parseInt(input);
             }
-            else if (input.equals("2")) {
+            catch (NumberFormatException e) {
+                System.out.println(RED + "Enter a number." + RESET);
+                continue;
+            }
+
+            if (abilityChoice == 0) {
                 gameManager.endGame();
+                return false;
+            }
+
+            if (abilityChoice < 1 || abilityChoice > abilities.length) {
+                System.out.println(RED + "Invalid choice." + RESET);
+                continue;
+            }
+
+            AbilityType chosenAbility = abilities[abilityChoice - 1];
+
+            EntityInterface target = selectEnemyTarget(enemies);
+
+            if (target == null) {
+                System.out.println(RED + "No valid target." + RESET);
+                continue;
+            }
+
+            chosenAbility.execute(player, target);
+
+            if (allEnemiesDead(enemies)) {
+                //win case, complete encounter, will advance to shop/next level
+                gameManager.completeCurrentEncounter();
+                System.out.println(GREEN + "Encounter complete." + RESET);
                 return true;
             }
-            else {
-                System.out.println(RED + "Invalid option." + RESET);
+
+            //enemy turn
+            EntityAIInterface ai = EntityAISingleton.getEntityAI();
+
+            for (EntityInterface enemy : enemies) {
+                if (enemy == null) continue;
+                if (enemy.getHealth() <= 0) continue;
+
+                AbilityType[] enemyAbilities = getEnemyAbilities(enemy);
+
+                if (enemyAbilities == null || enemyAbilities.length == 0) {
+                    continue;
+                }
+
+                ai.useAbility(enemyAbilities, enemy, new EntityInterface[] { player });
             }
         }
+    }
 
-        System.out.println(GREEN + "Encounter complete." + RESET);
+    private AbilityType[] getPlayerAbilities(PlayerInterface player) {
+        return new AbilityType[] { AbilityType.PUNCH };
+    }
+
+    //enemy abilities(placeholder until Enemy exposes ability list)
+    private AbilityType[] getEnemyAbilities(EntityInterface enemy) {
+        return new AbilityType[] { AbilityType.PUNCH };
+    }
+
+    private EntityInterface selectEnemyTarget(EntityInterface[] enemies) {
+
+        System.out.println();
+        System.out.println(BOLD + "Choose a target:" + RESET); //for multi-enemy encounters (single-case too)
+        int shown = 0;
+
+        for (int i = 0; i < enemies.length; i++) {
+            EntityInterface enemy = enemies[i];
+            if (enemy == null) continue;
+            if (enemy.getHealth() <= 0) continue;
+
+            shown++;
+            System.out.println((i + 1) + ". " + enemy.getType() + " (HP: " + enemy.getHealth() + ")");
+        }
+
+        if (shown == 0) {
+            return null;
+        }
+
+        System.out.print(BLUE + ">>> " + RESET);
+        String input = scanner.nextLine();
+
+        int choice;
+        try {
+            choice = Integer.parseInt(input);
+        }
+        catch (NumberFormatException e) {
+            return null;
+        }
+
+        if (choice < 1 || choice > enemies.length) {
+            return null;
+        }
+
+        EntityInterface chosen = enemies[choice - 1];
+
+        if (chosen == null) return null;
+        if (chosen.getHealth() <= 0) return null;
+
+        return chosen;
+    }
+
+    private boolean allEnemiesDead(EntityInterface[] enemies) {
+        for (EntityInterface enemy : enemies) {
+            if (enemy == null) continue;
+            if (enemy.getHealth() > 0) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -287,8 +366,8 @@ public class GameUserInterface {
         }
 
         System.out.println("0. Leave shop");
-        boolean isRunning = true;
-        while (isRunning ) {
+
+        while (true) {
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
@@ -314,7 +393,7 @@ public class GameUserInterface {
                 gameManager.purchaseUpgrade(upgrades[choice - 1]);
                 System.out.println(GREEN + "Upgrade purchased." + RESET);
             }
-            catch (NotEnoughResourceException e) {
+            catch (LackingResourceException e) {
                 System.out.println(RED + "Not enough coins." + RESET);
             }
             catch (Exception e) {
@@ -362,3 +441,4 @@ public class GameUserInterface {
         scanner.close();
     }
 }
+
