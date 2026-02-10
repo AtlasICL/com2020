@@ -263,7 +263,7 @@ public class GameUserInterface {
             }
 
             //enemy turn
-            EntityAIInterface ai = EntityAISingleton.getEntityAI();
+            EntityAIInterface ai = EntityAISingleton.getInstance();
 
             for (EntityInterface enemy : enemies) {
                 if (enemy == null) continue;
