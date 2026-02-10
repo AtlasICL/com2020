@@ -14,7 +14,7 @@ public class EntityAISingleton {
      *
      * @return a reference to the entity AI singleton.
      */
-    public static EntityAIInterface getEntityAI() {
+    public static EntityAIInterface getInstance() {
         return randomEntityAI;
     }
 
@@ -27,10 +27,10 @@ public class EntityAISingleton {
         }
 
         @Override
-        public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies) {}
+        public void useAbility(AbilityEnum[] abilities, EntityInterface self, EntityInterface[] enemies) {}
 
         @Override
-        public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) {return null;} // PLACEHOLDER
+        public UpgradeEnum pickUpgrade(UpgradeEnum[] upgrades, int coins) {return null;} // PLACEHOLDER
     }
 }
 

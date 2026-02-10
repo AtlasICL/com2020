@@ -3,20 +3,20 @@ package WizardQuest;
 /**
  * Enumerates all encounter types in the game.
  */
-public enum EncounterType {
+public enum EncounterEnum {
     ENCOUNTERTYPE_1(null, "Name TBC"), // PLACEHOLDER
     ENCOUNTERTYPE_2(null, "Name TBC"), // PLACEHOLDER
     ENCOUNTERTYPE_3(null, "Name TBC"); // PLACEHOLDER
 
-    private final EntityType[] enemies;
+    private final EntityEnum[] enemies;
     private final String telemetryName;
 
-    private EncounterType(EntityType[] enemies, String telemetryName) {
+    private EncounterEnum(EntityEnum[] enemies, String telemetryName) {
         this.enemies = enemies;
         this.telemetryName = telemetryName;
     }
 
-    public EntityType[] getEnemies() {
+    public EntityEnum[] getEnemies() {
         return enemies;
     }
 

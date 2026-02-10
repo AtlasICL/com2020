@@ -9,8 +9,8 @@ public class WaterDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) {
-        if (type == DamageType.WATER){
+    public void loseHealth(int amount, DamageEnum type) {
+        if (type == DamageEnum.WATER){
             super.player.loseHealth(amount/2, type);   
         } 
         else {
@@ -19,10 +19,10 @@ public class WaterDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.WATER_DAMAGE_RESISTANCE)){
-            u.add(UpgradeType.WATER_DAMAGE_RESISTANCE);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.WATER_DAMAGE_RESISTANCE)){
+            u.add(UpgradeEnum.WATER_DAMAGE_RESISTANCE);
         }
         return u;
     }

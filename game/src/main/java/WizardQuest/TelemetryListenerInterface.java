@@ -9,7 +9,7 @@ package WizardQuest;
  * NOTE: Some of the ConcreteEvent classes have not yet been created, this is because
  * they are not required for Sprint 1 (e.g., BossEncounterStartEvent)
  */
-public interface TelemetryListenerInterface {
+public interface TelemetryListenerInterface extends FileIOInterface {
     /**
      * Called when a user logs in or enables telemetry. 
      * 

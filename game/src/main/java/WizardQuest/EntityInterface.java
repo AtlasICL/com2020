@@ -15,7 +15,7 @@ public interface EntityInterface {
      * @param type the inflicted damage type that has caused this health loss.
      * @throws IllegalArgumentException if amount is not a non-negative number.
      */
-    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException;
+    public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException;
 
     /**
      * Gets an entity's current health.
@@ -39,14 +39,14 @@ public interface EntityInterface {
      * @param type the damage type of the entity's attack.
      * @return the total damage inflicted by this attack.
      */
-    public int calcDamage(int base, DamageType type);
+    public int calcDamage(int base, DamageEnum type);
 
     /**
      * List the abilities that are currently usable by the entity.
      *
      * @return a list of abilities.
      */
-    public List<AbilityType> getAbilities();
+    public List<AbilityEnum> getAbilities();
 
     /**
      * Reset an entity's health to its starting value.
@@ -58,5 +58,5 @@ public interface EntityInterface {
      *
      * @return the entity type.
      */
-    public EntityType getType();
+    public EntityEnum getType();
 }

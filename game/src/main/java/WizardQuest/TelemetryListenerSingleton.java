@@ -23,7 +23,7 @@ public class TelemetryListenerSingleton {
      * Returns a reference to the telemetry listener. 
      * @return a reference to the telemetry listener. 
      */
-    public static TelemetryListenerInterface getTelemetryListener() {
+    public static TelemetryListenerInterface getInstance() {
         return telemetryListener;
     }
 

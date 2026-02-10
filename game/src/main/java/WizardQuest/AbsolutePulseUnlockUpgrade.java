@@ -8,19 +8,19 @@ public class AbsolutePulseUnlockUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.ABSOLUTE_PULSE_UNLOCK)){
-            u.add(UpgradeType.ABSOLUTE_PULSE_UNLOCK);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK)){
+            u.add(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK);
         }
         return u;
     }
 
     @Override
-    public List<AbilityType> getAbilities(){
-        List<AbilityType> a = super.player.getAbilities();
-        if (!a.contains(AbilityType.ABSOLUTE_PULSE)){
-            a.add(AbilityType.ABSOLUTE_PULSE);
+    public List<AbilityEnum> getAbilities(){
+        List<AbilityEnum> a = super.player.getAbilities();
+        if (!a.contains(AbilityEnum.ABSOLUTE_PULSE)){
+            a.add(AbilityEnum.ABSOLUTE_PULSE);
         }
         return a;
     }

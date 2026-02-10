@@ -8,19 +8,19 @@ public class SlashUnlockUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.SLASH_UNLOCK)){
-            u.add(UpgradeType.SLASH_UNLOCK);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.SLASH_UNLOCK)){
+            u.add(UpgradeEnum.SLASH_UNLOCK);
         }
         return u;
     }
 
     @Override
-    public List<AbilityType> getAbilities(){
-        List<AbilityType> a = super.player.getAbilities();
-        if (!a.contains(AbilityType.SLASH)){
-            a.add(AbilityType.SLASH);
+    public List<AbilityEnum> getAbilities(){
+        List<AbilityEnum> a = super.player.getAbilities();
+        if (!a.contains(AbilityEnum.SLASH)){
+            a.add(AbilityEnum.SLASH);
         }
         return a;
     }

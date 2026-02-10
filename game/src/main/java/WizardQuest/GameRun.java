@@ -26,11 +26,11 @@ public class GameRun implements GameRunInterface {
     private EncounterInterface finalBoss;
 
     // Pool upgrades for the shop are chosen from. When bought they're removed from this pool.
-    private UpgradeType[] shopUpgrades;
+    private UpgradeEnum[] shopUpgrades;
     
     private PlayerInterface player;
     private int currentStage;
-    private Difficulty currentDifficulty;
+    private DifficultyEnum currentDifficulty;
     private LocalDateTime startTime;
 
     /**
@@ -39,7 +39,7 @@ public class GameRun implements GameRunInterface {
      *
      * @param difficulty the difficulty setting for the run.
      */
-    public GameRun(Difficulty difficulty) {
+    public GameRun(DifficultyEnum difficulty) {
         phase1NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
         phase2NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
         phase3NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
@@ -47,7 +47,7 @@ public class GameRun implements GameRunInterface {
         phase2Boss = new Encounter(null); // Placeholder, contents are TBC
         phase3Boss = new Encounter(null); // Placeholder, contents are TBC
         finalBoss = new Encounter(null); // Placeholder, contents are TBC
-        shopUpgrades = new UpgradeType[] {}; // Contents of this array are TBC
+        shopUpgrades = new UpgradeEnum[] {}; // Contents of this array are TBC
 
         this.player = new Player(difficulty);
         this.currentStage = 1;
@@ -86,17 +86,17 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public UpgradeType[] viewShop() {
+    public UpgradeEnum[] viewShop() {
         // Fisher-Yates shuffling algorithm used to randomise order of upgrade pool
         Random r = new Random();
         for (int i = this.shopUpgrades.length - 1; i > 0; i--) {
             int j = r.nextInt(i + 1);
-            UpgradeType temp = this.shopUpgrades[i];
+            UpgradeEnum temp = this.shopUpgrades[i];
             this.shopUpgrades[i] = this.shopUpgrades[j];
             this.shopUpgrades[j] = temp;
         }
         int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.currentDifficulty);
-        UpgradeType[] shop = new UpgradeType[totalUpgradesInShop];
+        UpgradeEnum[] shop = new UpgradeEnum[totalUpgradesInShop];
         int i = 0;
         // Loop through the shuffled array of upgrades, adding each element to the shop until the shop item count has
         // been reached. Skip over any null values - these are upgrades that have already been purchased during the run.
@@ -113,7 +113,7 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException {
+    public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
         // If upgrade is unaffordable, throw the relevant exception
         if (upgrade.getPrice() > this.player.getCoins()) {
             int difference = upgrade.getPrice() - this.player.getCoins();
@@ -161,7 +161,7 @@ public class GameRun implements GameRunInterface {
     }
     
     @Override
-    public Difficulty getDifficulty(){
+    public DifficultyEnum getDifficulty(){
         return this.currentDifficulty;
     }
 
@@ -171,7 +171,7 @@ public class GameRun implements GameRunInterface {
      *
      * @param upgrade the upgrade to remove from the pool.
      */
-    private void removeUpgradeFromPool(UpgradeType upgrade) {
+    private void removeUpgradeFromPool(UpgradeEnum upgrade) {
         for (int i = 0; i < this.shopUpgrades.length; i++) {
             if (this.shopUpgrades[i] == upgrade) {
                 this.shopUpgrades[i] = null;

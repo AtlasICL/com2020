@@ -15,13 +15,13 @@ public interface GameManagerInterface {
      * Returns the current difficulty of the current run.
      * @return the current difficulty of the current run.
      */
-    public Difficulty getCurrentDifficulty();
+    public DifficultyEnum getCurrentDifficulty();
 
     /**
      * Starts a new game, with difficulty.
      * @param difficulty the difficulty to start the game on.
      */
-    public void startNewGame(Difficulty difficulty);
+    public void startNewGame(DifficultyEnum difficulty);
 
     /** 
      * Returns the current game run.
@@ -69,7 +69,7 @@ public interface GameManagerInterface {
      * Returns all upgrades available in the shop.
      * @return all upgrades available in the shop.
      */
-    public UpgradeType[] viewShop();
+    public UpgradeEnum[] viewShop();
 
     /**
      * Attempts to purchase an upgrade from the shop.
@@ -80,7 +80,7 @@ public interface GameManagerInterface {
      *                                    buy the upgrade.
      */
 
-    public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException;
+    public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException;
 
 
     /**

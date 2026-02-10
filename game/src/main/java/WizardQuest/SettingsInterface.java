@@ -4,7 +4,7 @@ package WizardQuest;
  * Interface for settings. Provides access to user settings and properties, as
  * well as the ability to authenticate and create users.
  */
-public interface SettingsInterface {
+public interface SettingsInterface extends FileIOInterface {
     /**
      * Attempts to create a new user with the given parameters. On success will add
      * this user to the user JSON database.
@@ -17,7 +17,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if there is a user with the same username or
      *                                 the username is invalid.
      */
-    public void createNewUser(String username, String password, Role role) throws AuthenticationException;
+    public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException;
 
     /**
      * Attempts to authenticate the specified user, logging in as them on success.
@@ -38,7 +38,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated.
      * @return the user's role.
      */
-    public Role getUserRole() throws AuthenticationException;
+    public RoleEnum getUserRole() throws AuthenticationException;
 
     /**
      * Sets the role of the specified user or throws an exception
@@ -49,7 +49,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(int userID, Role role) throws AuthenticationException;
+    public void setUserRole(int userID, RoleEnum role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or
@@ -88,7 +88,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated.
      * @return the furthest stage the user has got on the specified difficulty.
      */
-    public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException;
+    public int getMaxStageReached(DifficultyEnum difficulty) throws AuthenticationException;
 
     /**
      * Gets the value of the player max health design parameter for the
@@ -97,7 +97,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public int getPlayerMaxHealth(Difficulty difficulty);
+    public int getPlayerMaxHealth(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the enemy damage multiplier design parameter for the
@@ -106,7 +106,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public float getEnemyDamageMultiplier(Difficulty difficulty);
+    public float getEnemyDamageMultiplier(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the enemy max health multiplier design parameter for the
@@ -115,7 +115,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public float getEnemyMaxHealthMultiplier(Difficulty difficulty);
+    public float getEnemyMaxHealthMultiplier(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the starting lives design parameter for the
@@ -124,7 +124,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public int getStartingLives(Difficulty difficulty);
+    public int getStartingLives(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the max magic design parameter for the
@@ -133,7 +133,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public int getMaxMagic(Difficulty difficulty);
+    public int getMaxMagic(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the magic regeneration rate design parameter for the
@@ -142,7 +142,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public int getMagicRegenRate(Difficulty difficulty);
+    public int getMagicRegenRate(DifficultyEnum difficulty);
 
     /**
      * Gets the value of the shop item count design parameter for the
@@ -151,7 +151,7 @@ public interface SettingsInterface {
      * @param difficulty the difficulty being queried.
      * @return the value of the design parameter.
      */
-    public int getShopItemCount(Difficulty difficulty);
+    public int getShopItemCount(DifficultyEnum difficulty);
 
     /**
      * Attempts to set the user's preference for whether they have telemetry
@@ -174,7 +174,7 @@ public interface SettingsInterface {
      * @param maxStageReached the furthest stage the user reached.
      * @throws AuthenticationException if no user is authenticated.
      */
-    public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException;
+    public void setMaxStageReached(DifficultyEnum difficulty, int maxStageReached) throws AuthenticationException;
 
     /**
      * Sets the value of the player max health multiplier design parameter for the
@@ -183,7 +183,7 @@ public interface SettingsInterface {
      * @param difficulty               the difficulty it's being set for.
      * @param newPlayerMaxHealth the value it's being set to.
      */
-    public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth) throws AuthenticationException;
+    public void setPlayerMaxHealth(DifficultyEnum difficulty, int newPlayerMaxHealth) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy damage multiplier design parameter for the
@@ -192,7 +192,7 @@ public interface SettingsInterface {
      * @param difficulty            the difficulty it's being set for.
      * @param newEnemyDamageMultiplier the value it's being set to.
      */
-    public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException;
+    public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the enemy max health multiplier design parameter for the
@@ -201,7 +201,7 @@ public interface SettingsInterface {
      * @param difficulty            the difficulty it's being set for.
      * @param newEnemyMaxHealthMultiplier the value it's being set to.
      */
-    public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException;
+    public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
@@ -210,7 +210,7 @@ public interface SettingsInterface {
      * @param difficulty    the difficulty it's being set for.
      * @param newStartingLives the value it's being set to.
      */
-    public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException;
+    public void setStartingLives(DifficultyEnum difficulty, int newStartingLives) throws AuthenticationException;
 
     /**
      * Sets the value of the max magic multiplier design parameter for the
@@ -219,7 +219,7 @@ public interface SettingsInterface {
      * @param difficulty         the difficulty it's being set for.
      * @param newMaxMagic the value it's being set to.
      */
-    public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException;
+    public void setMaxMagic(DifficultyEnum difficulty, int newMaxMagic) throws AuthenticationException;
 
     /**
      * Sets the value of the starting lives design parameter for the
@@ -228,7 +228,7 @@ public interface SettingsInterface {
      * @param difficulty     the difficulty it's being set for.
      * @param newMagicRegenRate the value it's being set to.
      */
-    public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException;
+    public void setMagicRegenRate(DifficultyEnum difficulty, int newMagicRegenRate) throws AuthenticationException;
 
     /**
      * Sets the value of the shop item count design parameter for the
@@ -237,5 +237,5 @@ public interface SettingsInterface {
      * @param difficulty    the difficulty it's being set for.
      * @param newShopItemCount the value it's being set to.
      */
-    public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException;
+    public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException;
 }

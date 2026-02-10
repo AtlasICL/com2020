@@ -19,7 +19,7 @@ public class BossEncounterCompleteEvent extends EncounterCompleteEvent{
      * @param playerHPRemaining player HP remaining after completion.
      */
     public BossEncounterCompleteEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int playerHPRemaining){
+            String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining){
         super(source, userID, sessionID, timeStamp, "BossEncounterComplete", 
             encounterName, difficulty, stageNumber, playerHPRemaining);
     }

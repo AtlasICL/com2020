@@ -1,7 +1,7 @@
 package WizardQuest;
 
 public class BuyUpgradeEvent extends EncounterEvent{
-    private final UpgradeType upgradeBought;
+    private final UpgradeEnum upgradeBought;
     private final int coinsSpent;
     /**
      * Constructor for BuyUpgradeEvent.
@@ -22,7 +22,7 @@ public class BuyUpgradeEvent extends EncounterEvent{
      * @param coinsSpent    the number of coins spent by the player on an upgrade.
      */
     public BuyUpgradeEvent(Object source, int userID, int sessionID, 
-        String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, UpgradeType upgradeBought, int coinsSpent){
+        String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, UpgradeEnum upgradeBought, int coinsSpent){
         super(source, userID, sessionID, timeStamp, "BuyUpgrade", encounterName, difficulty, stageNumber);
         this.upgradeBought = upgradeBought; 
         this.coinsSpent = coinsSpent;    
@@ -32,7 +32,7 @@ public class BuyUpgradeEvent extends EncounterEvent{
      * 
      * @return upgrade a player has purchased.
      */
-    public UpgradeType getUpgradeBought() {
+    public UpgradeEnum getUpgradeBought() {
         return upgradeBought;
     }
     /**

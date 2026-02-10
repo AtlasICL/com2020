@@ -3,14 +3,14 @@ package WizardQuest;
 /**
  * Enumerates the roles a user can have. A user can have only 1 of these roles.
  */
-public enum Role {
+public enum RoleEnum {
     PLAYER("Player"),
     DESIGNER("Designer"),
     DEVELOPER("Developer");
 
     private final String JSONName;
 
-    private Role(String JSONName) {
+    private RoleEnum(String JSONName) {
         this.JSONName = JSONName;
     }
 
