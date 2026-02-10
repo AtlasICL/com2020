@@ -98,12 +98,10 @@ JUnit (v5.10.1) will be used as the framework for this test suite. Java Reflecti
 
 - testDifficultyValidation()
 
-- testTelemetryWrittenIfUserOptedInToTelemetry()
-
-- testTelemetryNotWrittenIfUserOptedOutOfTelemetry()
-
 #### Integration Tests
-- testSentJSONObjectReceivedByPythonApplication() *- Interacts with logic of Python telemetry application*
+- testTelemetryWrittenIfUserOptedInToTelemetry() *- Interacts with I/O in JSON file*
+
+- testTelemetryNotWrittenIfUserOptedOutOfTelemetry() *- Interacts with I/O in JSON file*
 
 ### TelemetryListenerSingleton
 #### Unit Tests
