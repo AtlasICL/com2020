@@ -7,6 +7,21 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+
+%settings paragraph to allow heading 4
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph}
+  {1em}
+  {}
+
+\titlespacing*{\paragraph}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
 \title{Telemetry Game Report}
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \begin{document}
@@ -17,282 +32,16 @@
 
 \section{Initial Analysis}
 TODO will
-\section{Prioritised Requirements}
-For the first sprint we were required to build a vertical slice of the system. This meant we had to prioritise building the core components of the system that many things depended on. We split the system into 2 different applications, a Python application that read the telemetry events and implemented the data visualisation portion of the system, and a Java application which ran the game and produced the telemetry events. The requirements listed in each section are in priority order, being assigned one of 4 priorities: Must, Should, Could and Wont. Each requirement is also given a value based on several factors: the amount of work required to fulfill the requirement, the risk associated with the requirement, the technical changes needing to be made to implement the requirement, how much the requirement depends on, how complex to fulfill the requirement is, and how much value to the system the requirement's fulfillment adds. 
-\subsection{Java Application Requirements}
-\subsubsection{User Authentication (Must)}
-Any user of the Java Application must be authenticated before they can play the game.
-\\
-\\
-\textit{As a designer I need user information to keep record of how users behave in my game.}
-\\
-\textbf{Value:} 5
-\\
-\textbf{Acceptance Criteria} 
-\\ 
-Given a user doesn't have an account, they can create an account by entering a username and password. Given a user does have an account they can sign in using their username and password. Given a user is signed in they can chose to start a game, view and edit their settings, or sign out. 
-\subsubsection{Role Based Access Control (Must)}
-Authenticated users must be assigned one of the following roles. Each role has it's own permissions.
-\begin{description}
-    \item[\textbf{Player}] - players should be able to log into the game and play as many runs as they wish.
-    \item[\textbf{Designer}] - designers should be able to edit the game's design parameters in Settings, as well as perform any action a player may perform.
-    \item[\textbf{Developer}] - Developers should be able to assign roles to other users including other developers, as well as perform any action a designer may perform. 
-\end{description}
-
-\noindent\textit{As a designer I want to make sure my game is safe from unauthorised modification, so I can develop the game without worry of my progress being damaged by malicious users.}
-\\
-\noindent\textbf{Value:} 3
-\pagebreak
-\\
-\textbf{Acceptance Criteria} 
-\\ 
-Given a user has been authenticated with the player role, they can play the game and toggle their telemetry enabled setting. Given a user has been authenticated with the designer role, they can do anything a player can, as well as change the design parameter values in settings. Given a user has been authenticated with the developer role, they can do anything a designer can do, and assign roles to other users in settings. 
-\subsubsection{User Settings (Must)}
-The game must contain a settings screen the following user Settings.
-\begin{description}
-    \item[\textbf{Telemetry Enabled}] - whether the game records telemetry events or not. On by default. The menu screen should display a warning notifying users when telemetry is enabled.
-\end{description}
-
-\noindent The settings screen should also allow designers to adjust the design parameters and developers to assign roles to other users. 
-\\
-\\
-\noindent\textit{As a user I want to be able to control what data about my game experience is recorded.}
-\\
-\noindent\textbf{Value:} 1
-\\
-\noindent\textbf{Acceptance Criteria}
-\\
-Given a user is authenticated and in the main menu, they can access the settings screen. While in the main menu they are notified if they have telemetry enabled. Given a user is in settings they can toggle whether they send telemetry events or not, this is by default on. Given the user is a designer they can edit the design parameter values and save those changes. Given the user is a developer they can assign roles to any other user. 
-\subsubsection{Two Stages (Must)}
-The game must contain 2 stages. A stage is the combination of an encounter and trip to the shop in between encounters. 
-\\
-\\
-\textit{As a player I want several levels worth of gameplay so I can enjoy the game for longer.}
-\\
-\textbf{Value:} 3
-\subsubsection{Six Telemetry Events (Must)}
-The game must feature 6 telemetry events. It should track when these events are triggered and when this happens write the event's information to the shared storage file that holds them. The events should follow the format designated in the telemetry schema. The events are as follows:
-\begin{description}
-    \item[\textbf{SessionStartEvent}] - sent when a session is established, either by a user with telemetry enabled logging in, or by a user enabling telemetry.
-    \item[\textbf{NormalEncounterStartEvent}] - sent when a normal encounter is started. The encounter could have started before and this would be sent after retrying the encounter.
-    \item[\textbf{NormalEncounterCompleteEvent}] - sent when the player defeats all enemies in a normal encounter, completing it. They then move onto the shop.
-    \item[\textbf{NormalEncounterFaileEvent}] - sent when a player dies in an encounter, and contains information about how many lives they have left.
-    \item[\textbf{EndSessionEvent}] - sent when a session ends, either by a user with telemetry enabled logging out, or by a user disabling telemetry.
-    \item[\textbf{SettingsChangeEvent}] - sent when a user changes one of the game's settings, and contains what setting was changed and to what value.  
-\end{description}
-
-\noindent\textit{As a designer I want to see a variety of telemetry events recorded, so I can see as much data as possible to make the most informed design decisions.}
-\\
-\noindent\textbf{Value:} 1
-\subsubsection{One Design Parameter (Must)}
-The game must allow the editing of one design parameter in the settings window. Changes to this parameter are stored in a storage file, and reflected in new runs. Each design parameter allows a different value for each Difficulty. The chosen design parameters should be effective at changing the game's balance.
-\begin{description}
-    \item[\textbf{StartingLives}] - the number of lives the player starts with when they start a run.
-\end{description}
-
-\noindent\textit{As a designer I want to have a simple parameter I can tweak that can affect the balance of the game, to allow me to make quick broad stroke changes to the game's balance.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{PLayer-Agent Simulation (Must)}
-The game should allow the running of an automated player-agent simulation from settings. The agent should attempt to complete a run under the specified settings and difficulty, and should return the results of it's attempt.
-\\
-\\
-\noindent\textit{As a designer I want a way to get quick and instant feedback on my design changes, so I can evaluate them quickly.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Five Automated Tests (Must)}
-The java game should have a testing suite containing 5 automated tests. These should follow A-TRIP principles.
-\\
-\\
-\noindent\textit{As a developer I want ensure the system behaves as expected and testing allows us to identify issues quickly and solve them before they become expensive.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Coins and Shop (Must)}
-The game must reward players with coins upon completing an encounter. These coins can then be spent in the shop to buy upgrades.
-\\
-\\
-\noindent\textit{As a designer I want to have a mechanism to reward players to keep them incentivise play.}
-\\
-\noindent\textbf{Value:} 1
-\subsubsection{Four Purchasable Upgrades (Must)}
-The game should contain 4 upgrades that can be purchased in the shop for coins, following the specified game design. These upgrades should be as follows:
-\begin{description}
-    \item[\textbf{AbsolutePuleseUnlockUpgrade}] - unlocks the the ability for the player to use the attack ability absolute pulse.
-    \item[\textbf{FireballUnlockUpgrade}] - unlocks the ability for the player to use the attack ability fireball.
-    \item[\textbf{FireDamageResistanceUpgrade}] - halves the amount of damage the player takes from fire damage.
-    \item[\textbf{PhysicalDamageResistanceUpgrade}] - halves the amount of data the player takes from physical damage. 
-\end{description}
-\noindent\textit{As a player I want variety of upgrades so each run can feel unique.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Text Based User Interface (Must)}
-The prototype must feature a text based user interface to allow user interaction with the game. The interface will have the following scenes:
-\begin{description}
-    \item[\textbf{Login}] - authenticates new users and allows them to log into the game.
-    \item[\textbf{Main Menu}] - allows an authenticated user access to their settings or to start a new run.
-    \item[\textbf{Settings}] - allows an authenticated user to change their settings, designers to change design parameters and run player-agent simulations, and developers to assign roles.
-    \item[\textbf{Encounter}] - allows the user to see what enemies they're fighting, know what the enemies have done on their previous turn, and allows the player to pick which attack ability to use on their turn.
-    \item[\textbf{Shop}] - allows the player to chose which upgrades to buy.
-    \item[\textbf{Game Over}] - shows a summary of the run including run time, number of deaths, number of coins, what upgrades they obtained, and what encounter they lost at (if they ran out of lives) or that they beat the game (on beating the final stage) 
-\end{description}
-
-\noindent\textit{As a player I want to be able to know what is going on in the game so I can make informed decisions in the game.}
-\\
-\noindent\textbf{Value:} 8
-\subsubsection{One Manual End-To-End Test (Must)}
-The game should have a manual end-to-end test documented showing the game works for an actual user. 
-
-\noindent\textit{As a designer I want to know the game has been tested to provide reassurance the game works correctly.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Accessible User Interface (Must)}
-The game must have an accessible user interface. It must have elements of sufficient size to be readable, and should allow the window to be scaled. It should have sufficient contrast to be clearly readable, and should allow keyboard only navigation.
-
-\noindent\textit{As a designer I want as many people as possible to be able to play my game, so I can maximise how much feedback I receive.}
-\\
-\noindent\textbf{Value:} 1
-\subsubsection{Different Difficulty Levels (Must)}
-The game must feature three different difficulty modes: Easy, Medium, and Hard. It should have different values for the design parameters for each difficulty to allow different difficulties to adjust how hard the game is. Difficulty should be selected at the start of a run, and cannot be changed once a run has started. 
-\\
-\\
-\noindent\textit{As a player I want a variety of difficulty options so I can play the game at a difficulty that's fun for me.}
-\\
-\noindent\textbf{Value:} 8
-\subsubsection{Progression Feedback (Must)}
-The game should provide feedback to players in the main menu of how far they've progressed in each difficulty, this should be the furthest stage they've reached or that they've completed the game on that difficulty.
-\\
-\\
-\noindent\textit{As a player I want a way to see my progress in the game so I can see how far iv'e gotten and compare with others.}
-\\
-\noindent\textbf{Value:} 1
-\subsubsection{Lives System (Must)}
-The java application should implement a lives system where the player starts with a limited number of lives, and each time they die in an encounter they can retry that encounter and lose a life. Once the player reaches 0 lives they die and a run over screen is displayed.
-\\
-\\
-\noindent\textit{As a player I want multiple chances to complete a level so I can learn from previous attempts and improve.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Health System (must)}
-The java application should implement a health system, where all entities including the player have health. Attack abilities should deal damage of a specified type, reducing the target's health based on the amount of damage and the damage type.
-\\
-\\
-\noindent\textit{As a designer I want a way to make enemies and the player take more than one hit to kill, so encounters can last longer and be more tactical.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Five Damage Types (Must)}
-The game should have five different damage types. All attack abilities deal damage of one of the following types:
-\begin{description}
-    \item[\textbf{physical}] - damage caused by a physical strike such as a punch or sword slash.
-    \item[\textbf{Fire}] - damage caused by exposure to fire such as a fireball.
-    \item[\textbf{Water}] - damage caused by exposure to high pressure water such as a water jet.
-    \item[\textbf{Thunder}] - damage caused by loud sounds and electricity such as a thunder storm.
-    \item[\textbf{Absolute}] - damage that cannot be resisted by any means.  
-\end{description}
-
-\noindent\textit{As a developer I want a variety of damage types to allow me to add strategy as to enemy weaknesses and strengths in relation to damage type.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Two Normal Encounters (Must)}
-The game must feature two normal encounters in the pool stages 1 and 2 draw from. An encounter consists of one or more enemies, and is delivered to the player at the start of each stage. The player is required to kill all enemies in an encounter to complete it.
-
-\noindent\textit{As a player I want each run to feel different, so having the encounters I get in each run be different improves variety and replayability.}
-\\
-\noindent\textbf{Value:} 3
-\subsubsection{One Normal Enemy (Must)}
-The game should feature one normal enemy that appears in both encounters. TODO
-
-\subsubsection{Three Stages (Should)}
-\subsubsection{Validation Of Telemetry Events (Should)}
-\subsubsection{Four Or More Normal Encounters (Should)}
-\subsubsection{Two Or More Normal Enemies (Should)}
-\subsubsection{One Boss Encounter (Should)}
-\subsubsection{Magic System (Should)}
-
-\subsubsection{Responsive User Interface (Could)}
-\subsubsection{Decision Log (Could)}
-\subsubsection{Twelve Telemetry Events (Could)}
-\subsubsection{Fifteen Or More Automted Tests (Could)}
-\subsubsection{Two Or More Boss Encounters (Could)}
-\subsubsection{Six Or More Normal Encounters (Could)}
-
-\subsubsection{Ten Stages (Wont)}
-\subsubsection{Multiple Target Abilities (Wont)}
-\subsubsection{Multiple Players (Wont)}
-\subsubsection{Encounter Creator (Wont)}
-\subsubsection{Dynamic Encounter Generation (Wont)}
-\subsubsection{Dynamic Enemy Generation (Wont)}
-\subsubsection{Scoring System (Wont)}
-\subsubsection{Additional Ability Resources (Wont)}
-\subsubsection{Upgrade Creator (Wont)}
-\subsubsection{More Than Ten Levels (Wont)}
-\subsubsection{Mid Run Difficulty Adjustment}
-\subsubsection{Dynamically Adjusting Difficulty (Wont)}
-\subsubsection{Mid Run Game Saves}
-
-\subsection{Python Application Requirements}
-\subsubsection{User Authentication (Must)}
-The python application should authenticate users before allowing them access to the application. 
-\\
-\\
-\noindent\textit{As a designer I want to ensure the privacy of player's data be ensuring anyone accessing it is authenticated.}
-\\
-\noindent\textbf{Value:} 5
-\subsubsection{Role Based Access Control (Must)}
-The python application must implement role based access control. It should have the same roles as the java application, specified as follows:
-\begin{description}
-    \item[\textbf{Player}] - players should not be able to access the python application at all. 
-    \item[\textbf{Designer}] - designers should be able to fully access the application, viewing the different dashboard views and getting suggestions for design parameter tweaks.
-    \item[\textbf{Developer}] - developers should be able to perform the same actions as designers. 
-\end{description}
-
-\noindent\textit{As a player I want to know only authenticated designers and developers can see my telemetry data, to ensure my privacy.}
-\\
-\noindent\textbf{Value:} 2
-\subsubsection{Six Telemetry Events (Must)}
-The java application must support the same six telemetry events the python application supports. It should be able to read them in from the shared event storage and process them. The events are as follows:
-\begin{description}
-    \item[\textbf{SessionStartEvent}] - sent when a session is established, either by a user with telemetry enabled logging in, or by a user enabling telemetry.
-    \item[\textbf{NormalEncounterStartEvent}] - sent when a normal encounter is started. The encounter could have started before and this would be sent after retrying the encounter.
-    \item[\textbf{NormalEncounterCompleteEvent}] - sent when the player defeats all enemies in a normal encounter, completing it. They then move onto the shop.
-    \item[\textbf{NormalEncounterFaileEvent}] - sent when a player dies in an encounter, and contains information about how many lives they have left.
-    \item[\textbf{EndSessionEvent}] - sent when a session ends, either by a user with telemetry enabled logging out, or by a user disabling telemetry.
-    \item[\textbf{SettingsChangeEvent}] - sent when a user changes one of the game's settings, and contains what setting was changed and to what value.  
-\end{description}
-
-\noindent\textit{As a designer I want to see information about a range of telemetry events, to give me as much information as possible to base my design decisions on.}
-\\
-\noindent\textbf{Value:} 8
-\subsubsection{Three Dashboard Views (Must)}
-The python application must be able to show three different dashboard views of the telemetry data. They should be as follows:
-\begin{description}
-    \item[\textbf{Funnel View}] - shows how far into the game players get, showing player drop of as levels progress.
-    \item[\textbf{Health}] - shows how much health players complete each stage at, to show how difficult certain stages are.
-    \item[\textbf{Difficulty Spikes}] - highlights stages with long completion times or failure rates to identify targets for balancing considerations.   
-\end{description}
-
-\noindent\textit{As a designer I want to see multiple different views of the telemetry information to provide different perspectives to inform my design decisions.}
-\\
-\noindent\textbf{Value:} 8
-\subsubsection{Accessible User Interface (Must)}
-The python application must have an accessible user interface. It should have sufficiently large UI elements that scale with window size, and sufficient contrast as to be clearly visible. It should allows keyboard navigation of the user interface.
-\\
-\\
-\noindent\textit{As a designer I don't want an inaccessible user interface to prevent good designers from gaining meaningful information from the telemetry and using this to adjust the game.}
-\\
-\noindent\textbf{Value:} 3
-
-\subsubsection{Validation Of Telemetry Events (Should)}
-\subsubsection{300 Sample Telemetry Events (Should)}
-
-\subsubsection{Responsive User Interface (Could)}
-\subsubsection{Repair Invalid Telemetry Events (Could)}
-
-\subsubsection{1500 Sample Telemetry Events (Wont)}
-\subsubsection{Six Dashboard Views (Wont)}
-\subsubsection{Rule Bassed Suggestions (Wont)}
-
-
-
+\section{Project Backlog}
+The project was split into three main sections representing the three main areas of work: the documentation, the java application, and the python application. Each of those areas is then further divided into epics and user stories. The epics and stories in this section include both those relevant to sprint 1 and what is planned for sprint 2. Due to the nature of scrum, the epics for sprint 2 may have adapted by the end of that sprint, and so may differ from the epics and stories in this prototype report. 
+\subsection{Documentation}
+\subsubsection{Prototype Report}
+\paragraph{Executive Summary}
+As a product owner I need an executive summary to give me an insight into what is to come in the report and provide the most important details to me.
+\subsection{Python Application}
+\subsection{Java Application}
+\section{Sprint 1 Prioritised Requirements}
+TODO tom
 \section{System Architecture}
 TODO tom
 \section{Telemetry Schema}
@@ -305,6 +54,6 @@ TODO will
 TODO luca P
 \section{Software Bill of Materials}
 TODO emre
-\section{Sprint 2 Plan}
+\section{Sprint 2 Prioritised Requirements}
 TODO tom
 \end{document}
