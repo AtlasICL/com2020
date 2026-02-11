@@ -31,18 +31,24 @@ public class TelemetryListenerIntegrationTests {
      */
     @BeforeEach
     void setUp() throws AuthenticationException {
-        SettingsSingleton.getSettings().createNewUser("TestUser", "TestPassword", Role.PLAYER);
-        SettingsSingleton.getSettings().authenticateUser("TestUser", "TestPassword");
+        SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
+        SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
         TEMP_DESTINATION_FILE = tempDir.resolve("events.json").toFile();
-        TelemetryListenerSingleton.setDestinationFile(TEMP_DESTINATION_FILE);
-        this.testEvent = new NormalEncounterStartEvent(null,
-                SettingsSingleton.getSettings().getUserID(),
-                SettingsSingleton.getSettings().getSessionID(),
+        TelemetryListenerSingleton.getInstance().setDestinationFile(TEMP_DESTINATION_FILE);
+        // Start a session for the test user, which will allow our test event to be invoked in each test.
+        StartSessionEvent startSession = new StartSessionEvent(new Object(),
+                SettingsSingleton.getInstance().getUserID(),
+                SettingsSingleton.getInstance().getSessionID(),
                 TimeManagerInterface.convertDateTime(LocalDateTime.now()),
-                "NormalEncounterStart",
-                EncounterType.ENCOUNTERTYPE_1,
-                1,
-                Difficulty.MEDIUM);
+                DifficultyEnum.MEDIUM);
+        TelemetryListenerSingleton.getInstance().onStartSession(startSession);
+        this.testEvent = new NormalEncounterStartEvent(new Object(),
+                SettingsSingleton.getInstance().getUserID(),
+                SettingsSingleton.getInstance().getSessionID(),
+                TimeManagerInterface.convertDateTime(LocalDateTime.now()),
+                EncounterEnum.ENCOUNTERTYPE_1,
+                DifficultyEnum.MEDIUM,
+                1);
     }
 
     /**
@@ -50,10 +56,10 @@ public class TelemetryListenerIntegrationTests {
      */
     @Test
     @DisplayName("TelemetryListener - Telemetry Event written to JSON if opted into telemetry")
-    void onNormalEncounterStart_telemetryWrittenIfOptedIn() throws AuthenticationException {
+    void onNormalEncounterStart_telemetryWrittenIfOptedIn() throws Exception {
         // Enable telemetry for the authenticated user and invoke the relevant listener method.
-        SettingsSingleton.getSettings().setTelemetryEnabled(true);
-        TelemetryListenerSingleton.getTelemetryListener().onNormalEncounterStart(this.testEvent);
+        SettingsSingleton.getInstance().setTelemetryEnabled(true);
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(this.testEvent);
         // Since telemetry is enabled, the file should now be created according to the file path.
         // The file should be non-empty, it should contain the details of this telemetry event.
         assertTrue(TEMP_DESTINATION_FILE.exists());
@@ -66,10 +72,10 @@ public class TelemetryListenerIntegrationTests {
      */
     @Test
     @DisplayName("TelemetryListener - Telemetry Event not written to JSON if opted out of telemetry")
-    void onNormalEncounterStart_telemetryNotWrittenIfOptedOut() throws AuthenticationException {
+    void onNormalEncounterStart_telemetryNotWrittenIfOptedOut() throws Exception {
         // Disable telemetry for the authenticated user and invoke the relevant listener method.
-        SettingsSingleton.getSettings().setTelemetryEnabled(false);
-        TelemetryListenerSingleton.getTelemetryListener().onNormalEncounterStart(this.testEvent);
+        SettingsSingleton.getInstance().setTelemetryEnabled(false);
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(this.testEvent);
         // Since telemetry is disabled, the file should not be created at all.
         assertFalse(TEMP_DESTINATION_FILE.exists());
     }
@@ -79,6 +85,6 @@ public class TelemetryListenerIntegrationTests {
      */
     @AfterEach
     void cleanUp() {
-        TelemetryListenerSingleton.resetDestinationFile();
+        TelemetryListenerSingleton.getInstance().resetDestinationFile();
     }
 }

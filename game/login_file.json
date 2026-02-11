@@ -1,0 +1,14 @@
+{
+  "testuser" : {
+    "password" : "testpw",
+    "role" : "player"
+  },
+  "testuser2" : {
+    "password" : "tespw2",
+    "role" : "player"
+  },
+  "TestUser" : {
+    "password" : "TestPassword",
+    "role" : "Player"
+  }
+}

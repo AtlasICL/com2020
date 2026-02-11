@@ -39,7 +39,7 @@ public class SettingsSingleton {
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
         // TEMPORARY
-        private static File LOGINS_FILE = new File("logins_file.json");
+        private static File LOGINS_FILE = new File("login_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -382,10 +382,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
-            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
-                throw new AuthenticationException();
-            }
+        public void setTelemetryEnabled(boolean telemetryEnabled) {
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
         }
@@ -484,7 +481,7 @@ public class SettingsSingleton {
 
         @Override
         public void resetLoginsDestinationFile() {
-            LOGINS_FILE = new File("logins_file.json");
+            LOGINS_FILE = new File("login_file.json");
         }
 
         @Override
