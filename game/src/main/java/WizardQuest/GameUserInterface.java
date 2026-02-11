@@ -7,6 +7,8 @@ public class GameUserInterface {
     private final GameManagerInterface gameManager;
     private final Scanner scanner;
 
+    private boolean telemetryEnabled = true;
+
     private static final String RESET = "\u001B[0m";
     private static final String BOLD = "\u001B[1m";
 
@@ -61,13 +63,42 @@ public class GameUserInterface {
                     startGame();
                     break;
                 case "2":
-                    System.out.println(YELLOW + "Settings are not available yet." + RESET);
+                    settingsMenu();
                     break;
                 case "3":
                     quit();
                     return;
                 default:
                     System.out.println(RED + "Invalid option." + RESET);
+            }
+        }
+    }
+
+    private void settingsMenu() {
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println();
+            System.out.println(BOLD + "Settings" + RESET);
+            System.out.println("1. Toggle Telemetry ("+ (telemetryEnabled ? GREEN + "ON" : RED + "OFF")
+             + RESET + ")");
+            System.out.println("9. Go Back");
+            String input = scanner.nextLine();
+            switch (input) {
+                case "9":
+                    isRunning = false;
+                    break;
+                case "1":
+                    if (telemetryEnabled == true) {
+                        telemetryEnabled = false;
+                        System.out.println(RED + "Telemetry disabled." + RESET);
+                    }
+                    else {
+                        telemetryEnabled = true;
+                        System.out.println(GREEN + "Telemetry enabled." + RESET);
+                    }
+                    break;
+                default:
+                    System.out.println(RED + "Invalid option." + RESET);    
             }
         }
     }
