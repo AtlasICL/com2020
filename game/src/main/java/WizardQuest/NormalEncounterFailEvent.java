@@ -14,12 +14,12 @@ public class NormalEncounterFailEvent extends EncounterFailEvent{
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
-     * @param difficulty    the difficulty used for the players session.
+     * @param difficulty    the difficulty used for the player's session.
      * @param stageNumber   the stage player has failed.
      * @param livesLeft     player lives remaining after completion.
      */
     public NormalEncounterFailEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int livesLeft){
+            String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
         super(source, userID, sessionID, timeStamp, "NormalEncounterFail", 
             encounterName, difficulty, stageNumber, livesLeft);
     }

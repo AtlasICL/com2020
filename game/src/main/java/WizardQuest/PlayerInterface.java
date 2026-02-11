@@ -83,5 +83,5 @@ public interface PlayerInterface extends EntityInterface {
      *
      * @return a list of purchased upgrades.
      */
-    public List<UpgradeType> getUpgrades();
+    public List<UpgradeEnum> getUpgrades();
 }

@@ -23,7 +23,7 @@ public interface GameRunInterface {
       * 
       * @return an array of references to the upgrades.
       */
-     public UpgradeType[] viewShop();
+     public UpgradeEnum[] viewShop();
 
      /**
       * Attempts to buy the selected upgrade, throwing an error if the player doesn't
@@ -35,7 +35,7 @@ public interface GameRunInterface {
       * @throws LackingResourceException if the player doesn't have enough coins to
       *                                  buy the upgrade.
       */
-     public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException;
+     public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException;
 
      /**
       * Returns a reference to the player.
@@ -84,5 +84,5 @@ public interface GameRunInterface {
       * 
       * @return the difficulty setting for this run.
       */
-     public Difficulty getDifficulty();
+     public DifficultyEnum getDifficulty();
 }

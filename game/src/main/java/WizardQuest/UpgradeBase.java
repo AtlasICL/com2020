@@ -2,25 +2,21 @@ package WizardQuest;
 
 import java.util.List;
 
-/**
- * Holds the player instance and forwards method calls to them
- * 
- * @param player player to decorate
- * 
- * @throws IllegalArgumentException if player doesn't exist
- * */
 public abstract class UpgradeBase implements PlayerInterface {
     protected final PlayerInterface player;
+
     /**
      * Constructs an upgrade from a player, decorating them.
+     *
      * @param player the player to decorate.
      * @throws IllegalArgumentException if the player is null.
      */
     protected UpgradeBase(PlayerInterface player) throws IllegalArgumentException {
         if (player != null) {
             this.player = player;
-        } else 
-        throw new IllegalArgumentException();
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -34,7 +30,7 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException {
+    public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException {
         player.loseHealth(amount, type);
     }
 
@@ -94,22 +90,22 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades() {
+    public List<UpgradeEnum> getUpgrades() {
         return player.getUpgrades();
     }
 
     @Override
-    public int calcDamage(int amount, DamageType type){
+    public int calcDamage(int amount, DamageEnum type){
         return player.calcDamage(amount, type);
     }
 
     @Override
-    public EntityType getType(){
+    public EntityEnum getType(){
         return player.getType();
     }
 
     @Override
-    public List<AbilityType> getAbilities(){
+    public List<AbilityEnum> getAbilities(){
         return player.getAbilities();
     }
 }

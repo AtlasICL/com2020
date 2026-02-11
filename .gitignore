@@ -7,3 +7,10 @@ tel/venv
 game/target
 
 .vscode
+
+Report.aux
+Report.bbl
+Report.log
+Report.out
+Report.synctex.gz
+Report.pdf

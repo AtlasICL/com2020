@@ -8,19 +8,19 @@ public class WaterJetUnlockUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.WATER_JET_UNLOCK)){
-            u.add(UpgradeType.WATER_JET_UNLOCK);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.WATER_JET_UNLOCK)){
+            u.add(UpgradeEnum.WATER_JET_UNLOCK);
         }
         return u;
     }
 
     @Override
-    public List<AbilityType> getAbilities(){
-        List<AbilityType> a = super.player.getAbilities();
-        if (!a.contains(AbilityType.WATER_JET)){
-            a.add(AbilityType.WATER_JET);
+    public List<AbilityEnum> getAbilities(){
+        List<AbilityEnum> a = super.player.getAbilities();
+        if (!a.contains(AbilityEnum.WATER_JET)){
+            a.add(AbilityEnum.WATER_JET);
         }
         return a;
     }

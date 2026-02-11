@@ -9,8 +9,8 @@ public class FireDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) {
-        if (type == DamageType.FIRE){
+    public void loseHealth(int amount, DamageEnum type) {
+        if (type == DamageEnum.FIRE){
             super.player.loseHealth(amount/2, type);   
         } 
         else {
@@ -19,10 +19,10 @@ public class FireDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.FIRE_DAMAGE_RESISTANCE)){
-            u.add(UpgradeType.FIRE_DAMAGE_RESISTANCE);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.FIRE_DAMAGE_RESISTANCE)){
+            u.add(UpgradeEnum.FIRE_DAMAGE_RESISTANCE);
         }
         return u;
     }

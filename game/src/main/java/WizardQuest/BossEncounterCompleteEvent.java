@@ -14,12 +14,12 @@ public class BossEncounterCompleteEvent extends EncounterCompleteEvent{
      * @param timeStamp         the time the event was constructed in the format
      *                          yyyy/mm/dd/hh/mm/ss.
      * @param encounterName     the name of the encounter a player is fighting.
-     * @param difficulty        the difficulty used for the players session.
+     * @param difficulty        the difficulty used for the player's session.
      * @param stageNumber       the stage player has completed.
      * @param playerHPRemaining player HP remaining after completion.
      */
     public BossEncounterCompleteEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int playerHPRemaining){
+            String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining){
         super(source, userID, sessionID, timeStamp, "BossEncounterComplete", 
             encounterName, difficulty, stageNumber, playerHPRemaining);
     }

@@ -6,9 +6,9 @@ Each subheading represents a component of the game system. Unless explicitly sta
 ### Methods
 public boolean isGameRunning()
 
-public Difficulty getCurrentDifficulty()
+public DifficultyEnum getCurrentDifficulty()
 
-public void startNewGame(Difficulty difficulty)
+public void startNewGame(DifficultyEnum difficulty)
 
 public GameRunInterface getCurrentRun()
 
@@ -24,9 +24,9 @@ public void completeCurrentEncounter()
 
 public void advanceToNextLevel()
 
-public UpgradeType[] viewShop()
+public UpgradeEnum[] viewShop()
 
-public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException
+public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException
 
 public void endGame()
 
@@ -46,7 +46,7 @@ private GameManagerSingleton()
 ### Fields
 private static GameManagerInterface gameManager
 ### Methods
-public GameManagerInterface getGameManager()
+public GameManagerInterface getInstance()
 
 ## interface TimeManagerInterface
 *Interface for the time manager*
@@ -66,14 +66,14 @@ private TimeManagerSingleton
 ### Fields
 private static TimeManagerInterface timeManager
 ### Methods
-public TimeManagerInterface getTimeManager()
+public TimeManagerInterface getInstance()
 
 ## interface EntityAIInterface
 *Interface for entity AI*
 ### Methods
-public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies) 
+public void useAbility(AbilityEnum[] abilities, EntityInterface self, EntityInterface[] enemies) 
 
-public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins) 
+public UpgradeEnum pickUpgrade(UpgradeEnum[] upgrades, int coins) 
 
 ## private RandomEntityAI implements EntityAIInterface nested in EntityAISingleton
 *EntityAI that picks a random ability or upgrade when the relevant method is used. *
@@ -87,16 +87,16 @@ private EntityAISingleton()
 ### Fields
 private static EntityAIInterface entityAI
 ### Methods
-public EntityAIInterface getEntityAI()
+public EntityAIInterface getInstance()
 
 ## GameRunInterface
 *Interface for a run of the game*
 ### Methods
 public EncounterInterface pickEncounter() *returns a random encounter based on currentStage*
 
-public UpgradeType[] viewShop() *returns N random upgrades in the shop*
+public UpgradeEnum[] viewShop() *returns N random upgrades in the shop*
 
-public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException *buys and removes it from the shop and gives it to the player*
+public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException *buys and removes it from the shop and gives it to the player*
 
 public PlayerInterface getPlayer() 
 
@@ -110,12 +110,12 @@ public int getDeathCount()
 
 public void incrementDeathCount() *Only increments death count. A player running out of lives, and the decrement of their lives should be handled by GameManger*
 
-public Difficulty getDifficulty()
+public DifficultyEnum getDifficulty()
 
 ## GameRun implements GameRunInterface
 *Stores information relating to a single run of the game*
 ### Constructors
-public GameRun(Difficulty difficulty) *creates a fresh game run*
+public GameRun(DifficultyEnum difficulty) *creates a fresh game run*
 ### Fields
 private EncounterInterface[] phase1NormalEncounters *drawn from for stages 1 and 2*
 
@@ -131,13 +131,13 @@ private EncounterInterface phase3Boss *drawn from for stage 9*
 
 private EncounterInterface finalBoss *drawn from for stage 10*
 
-private UpgradeType[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
+private UpgradeEnum[] shopUpgrades *drawn from to populate the shop, removed from when an upgrade is bought*
 
 private PlayerInterface player
 
 private int currentStage
 
-private Difficulty currentDifficulty
+private DifficultyEnum currentDifficulty
 ## TelemetryListenerInterface
 *Interface for the telemetry listener*
 ### Methods
@@ -179,7 +179,7 @@ private TelemetryListenerSingleton()
 ### Fields
 private static TelemetryListenerInterface telemetryListener
 ### Methods
-public TelemetryListenerInterface getTelemetryListener()
+public TelemetryListenerInterface getInstance()
 
 ## abstract TelemetryEvent extends EventObject
 *Contains fields all telemetry events contain*
@@ -204,29 +204,29 @@ public String getTelemetryName() *gets the name of the telemetry event according
 ## abstract EncounterEvent extends TelemetryEvent
 *Contains information relating to encounters*
 ### COnstructors
-public EncounterEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public EncounterEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty)
 ### Fields
 private final int stageNumber
 
-private final EncounterType encounterName
+private final EncounterEnum encounterName
 
-private final Difficulty difficulty
+private final DifficultyEnum difficulty
 ### Methods
 public int getStageNumber()
 
-public EncounterType getEncounterName()
+public EncounterEnum getEncounterName()
 
-public Difficulty getDifficulty()
+public DifficultyEnum getDifficulty()
 
 ## abstract EncounterStartEvent extends EncounterEvent
 *Stores information for telemetry events where an encounter is started*
 ### Constructors
-public EncounterStartEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public EncounterStartEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty)
 
 ## abstract EncounterCompleteEvent extends EncounterEvent
 *Stores information for telemetry events where an encounter is completed*
 ### Constructors
-public EncounterCompleteEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
+public EncounterCompleteEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int playerHPRemaining)
 ### Fields
 private int playerHPRemaining
 ### Methods
@@ -235,7 +235,7 @@ public int getPlayerHPRemaining()
 ## abstract EncounterFailEvent extends EncounterEvent
 *Stores information for telemetry events for when an encounter is failed*
 ### Constructors
-public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public EncounterFailEvent(Object source, int userId, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int livesLeft)
 ### Fields
 private int livesLeft
 ### Methods
@@ -249,37 +249,37 @@ public StartSessionEvent(Object source, int userID, int sessionID, String timest
 ## NormalEncounterStartEvent extends EncounterStartEvent
 *Contains fields for normal encounter start*
 ### Constructors
-public NormalEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public NormalEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty)
 
 ## NormalEncounterCompleteEvent extends EncounterCompleteEvent
 *Contains fields for normal encounter complete*
 ### Constructors
-public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
+public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int playerHPRemaining)
 
 ## NormalEncounterFailEvent extends EncounterFailEvent
 *Contains fields for normal encounter fail*
 ### Constructors
-public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public NormalEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int livesLeft)
 
 ## BossEncounterStartEvent extends EncounterStartEvent
 *Contains fields for boss encounter start*
 ### Constructors
-public BossEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty)
+public BossEncounterStartEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty)
 
 ## BossEncounterCompleteEvent extends EncounterCompleteEvent
 *Contains fields for boss encounter complete*
 ### Constructors
-public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int playerHPRemaining)
+public BossEncounterCompleteEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int playerHPRemaining)
 
 ## BossEncounterFailEvent extends EncounterFailEvent
 *Contains fields for boss encounter fail*
 ### Constructors
-public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, int livesLeft)
+public BossEncounterFailEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, int livesLeft)
 
 ## GainCoinEvent extends EncounterEvent
 *Contains fields for gain coin*
 ### Constructors
-public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber,  Difficulty difficulty, int coinsGained)
+public GainCoinEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber,  DifficultyEnum difficulty, int coinsGained)
 ### Fields
 private final int coinsGained
 
@@ -289,16 +289,16 @@ public int getCoinsGained()
 ## BuyUpgradeEvent extends EncounterEvent
 *Contains fields for buy upgrade*
 ### Constructors
-public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber,  Difficulty difficulty, UpgradeType upgradeBought, int coinsSpent)
+public BuyUpgradeEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber,  DifficultyEnum difficulty, UpgradeEnum upgradeBought, int coinsSpent)
 ### Fields
 private final int coinsSpent
 
-private final UpgradeType upgradeBought
+private final UpgradeEnum upgradeBought
 
 ### Methods
 public int getCoinsSpent()
 
-public UpgradeType getUpgradeBought()
+public UpgradeEnum getUpgradeBought()
 
 ## EndSessionEvent extends TelemetryEvent
 *Contains fields for end session, sent when telemetry is disabled.*
@@ -320,11 +320,11 @@ public String getSettingValue()
 ## KillEnemyEvent extends EncounterEvent
 *Contains fields for kill enemy*
 ### Constructors
-public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterType encounterName, int stageNumber, Difficulty difficulty, EntityType enemyType)
+public KillEnemyEvent(Object source, int userID, int sessionID, String timestamp, String telemetryName, EncounterEnum encounterName, int stageNumber, DifficultyEnum difficulty, EntityEnum enemyType)
 ### Fields
-private final EntityType enemyType
+private final EntityEnum enemyType
 ### Methods
-public EntityType getEnemyType()
+public EntityEnum getEnemyType()
 
 ## SettingsInterface
 *Interface for settings*
@@ -333,9 +333,9 @@ public void createNewUser(String username, String password) throws Authenticatio
 
 public void authenticateUser(String username, String password) throws AuthenticationException  
 
-public Role getUserRole() throws AuthenticationException
+public RoleEnum getUserRole() throws AuthenticationException
 
-public void setUserRole(String username, Role role) throws AuthenticationException *Throws the exception if lacking permission ( not a developer) or username doesn't exist*
+public void setUserRole(String username, RoleEnum role) throws AuthenticationException *Throws the exception if lacking permission ( not a developer) or username doesn't exist*
 
 public String getUsername() throws AuthenticationException
 
@@ -345,43 +345,43 @@ public int getUserID() throws AuthenticationException *performs a hash function 
 
 public bool isTelemetryEnabled() throws AuthenticationException
 
-public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException
+public int getMaxStageReached(DifficultyEnum difficulty) throws AuthenticationException
 
-public float getEnemyMaxHealthMultiplier(Difficulty difficulty) 
+public float getEnemyMaxHealthMultiplier(DifficultyEnum difficulty) 
 
-public int getPlayerMaxHealth(Difficulty difficulty)
+public int getPlayerMaxHealth(DifficultyEnum difficulty)
 
-public float getUpgradePriceMultiplier(Difficulty difficulty)
+public float getUpgradePriceMultiplier(DifficultyEnum difficulty)
 
-public float getEnemyDamageMultiplier(Difficulty difficulty)
+public float getEnemyDamageMultiplier(DifficultyEnum difficulty)
 
-public int getStartingLives(Difficulty difficulty)
+public int getStartingLives(DifficultyEnum difficulty)
 
-public int getMaxMagic(Difficulty difficulty)
+public int getMaxMagic(DifficultyEnum difficulty)
 
-public int getMagicRegenRate(Difficulty difficulty)
+public int getMagicRegenRate(DifficultyEnum difficulty)
 
-public int getShopItemCount(Difficulty difficulty)
+public int getShopItemCount(DifficultyEnum difficulty)
 
 public void setTelemetryEnabled(bool telemetryEnabled)
 
-public void setMaxStageReached(Difficulty difficulty, int maxStageReached)
+public void setMaxStageReached(DifficultyEnum difficulty, int maxStageReached)
 
-public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier)
+public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier)
 
-public void setPlayerMaxHealth(Difficulty difficulty, int newPlayerMaxHealth)
+public void setPlayerMaxHealth(DifficultyEnum difficulty, int newPlayerMaxHealth)
 
-public void setUpgradePriceMultiplier(Difficulty difficulty, float newUpgradePriceMultiplier)
+public void setUpgradePriceMultiplier(DifficultyEnum difficulty, float newUpgradePriceMultiplier)
 
-public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier)
+public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier)
 
-public void setStartingLives(Difficulty difficulty, int newStartingLives)
+public void setStartingLives(DifficultyEnum difficulty, int newStartingLives)
 
-public void setMaxMagic(Difficulty difficulty, int newMaxMagic)
+public void setMaxMagic(DifficultyEnum difficulty, int newMaxMagic)
 
-public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate)
+public void setMagicRegenRate(DifficultyEnum difficulty, int newMagicRegenRate)
 
-public void setShopItemCount(Difficulty difficulty, int newShopItemCount)
+public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount)
 
 ## private Settings implements SettingsInterface nested in SettingsSingleton
 *Stores user settings and statistics*
@@ -394,63 +394,24 @@ private String username
 
 private int sessionID *generated when the user logs in or when telemetry is enabled*
 
-private Role userRole
+private RoleEnum userRole
 
-private int hardMaxStageReached
+private EnumMap<\DifficultyEnum, Integer> maxStageReached
 
-private int normaMaxStageReached
+private EnumMap<\DifficultyEnum, Integer> playerMaxHealth
 
-private int easyMaxStageReached
+private EnumMap<\DifficultyEnum, Float> enemyDamageMultiplier
 
-*integer values multiplied by these parameters are rounded*
+private EnumMap<\DifficultyEnum, Float> enemyMaxHealthMultiplier
 
-private float hardEnemyMaxHealthMultiplier 
+private EnumMap<\DifficultyEnum, Integer> startingLives
 
-private float normalEnemyMaxHealthMultiplier
+private EnumMap<\DifficultyEnum, Integer> maxMagic
 
-private float easyEnemyMaxHealthMultiplier
+private EnumMap<\DifficultyEnum, Integer> magicRegenRate
 
-private int hardPlayerMaxHealth
+private EnumMap<\DifficultyEnum, Integer> shopItemCount
 
-private int normalPlayerMaxHealth
-
-private int easyPlayerMaxHealth
-
-private float hardUpgradePriceMultiplier
-
-private float normalUpgradePriceMultiplier
-
-private float easyUpgradePriceMultiplier
-
-private float hardEnemyDamageMultiplier
-
-private float normalEnemyDamageMultiplier
-
-private float easyEnemyDamageMultiplier
-
-private int hardStartingLives
-
-private int normalStartingLives
-
-private int easyStartingLives
-
-private int hardMaxMagic
-
-private int normalMaxMagic
-
-private int easyMaxMagic
-
-private int hardMagicRegenRate
-
-private int normalMagicRegenRate
-
-private int easyMagicRegenRate
-
-private int hardShopItemCount
-
-private int normalShopItemCount
-
-private int easyShopItemCount
 ## SettingsSingleton
 *Provides singleton access to the user's settings*
 ### Constructors
@@ -458,7 +419,7 @@ private SettingsSingleton()
 ### Fields
 private static SettingsInterface settings
 ### Methods
-pubic SettingsInterface getSettings()
+pubic SettingsInterface getInstance()
 
 ## AuthenticationException extends Exception
 *Exception for failed authentication*
@@ -469,10 +430,10 @@ public AuthenticationException(String message)
 
 public AuthenticationException(String message, Throwable cause)
 
-## enum Role
+## enum RoleEnum
 *Enumerates all user roles*
 ### Constructors
-private Role(String JSONName)
+private RoleEnum(String JSONName)
 ### Fields
 PLAYER, DESIGNER, DEVELOPER
 
@@ -489,30 +450,30 @@ public bool isComplete()
 
 public void markComplete()
 
-public EncounterType getType()
+public EncounterEnum getType()
 
 public void resetEnemyHealth()
 
 ## Encounter implements EncounterInterface
 *Stores all the enemies in an encounter, and information about said encounter*
 ### Constructors
-public Encounter(EncounterType type)
+public Encounter(EncounterEnum type)
 ### Fields
 private EntityInterface[] enemies 
 
 private bool completed
 
-private EncounterType encounterType
+private EncounterEnum encounterType
 
-## enum DamageType
+## enum DamageEnum
 *Enumerates all the type of damage*
 ### Fields
 PHYSICAL, FIRE, WATER, THUNDER, ABSOLUTE
 
-## enum AbilityType
+## enum AbilityEnum
 *Enumerates the game's abilities*
 ### Constructors
-private AbilityType(String description, int baseDamage, int magicCost, DamageType damageType)
+private AbilityEnum(String description, int baseDamage, int magicCost, DamageEnum damageType)
 ### Fields
 PUNCH, ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL
 
@@ -522,24 +483,24 @@ private final int baseDamage
 
 private final int magicCost
 
-private final DamageType damageType
+private final DamageEnum damageType
 
 ### Methods
 
-public String getDescription
+public String getDescription()
 
-public int getBaseDamage
+public int getBaseDamage()
 
-public int getMagicCost
+public int getMagicCost()
 
-public DamageType getDamageType
+public DamageEnum getDamageType()
 
 public void execute(EntityInterface source, EntityInterface target)
 
-## enum UpgradeType
+## enum UpgradeEnum
 *Enumerates the game's upgrades*
 ### Constructor
-private UpgradeType(int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName)
+private UpgradeEnum(int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName)
 ### Fields
 ABSOLUTE_PULSE, SLASH, WATER_JET, THUNDER_STORM, FIRE_BALL, PHYSICAL_DAMAGE_RESISTANCE, FIRE_DAMAGE_RESISTANCE, WATER_DAMAGE_RESISTANCE, THUNDER_DAMAGE_RESISTANCE, IMPROVED_PHYSICAL_DAMAGE, IMPROVED_FIRE_DAMAGE, IMPROVED_WATER_DAMAGE, IMPROVED_THUNDER_DAMAGE
 
@@ -555,10 +516,10 @@ public PlayerInterface applyUpgrade(PlayerInterface player) throws IllegalStateE
 
 public String getTelemetryName()
 
-## enum Difficulty
+## enum DifficultyEnum
 *Enumerates the different levels of difficulty*
 ### Constructors 
-private Difficulty(String telemetryName)
+private DifficultyEnum(String telemetryName)
 ### Fields
 EASY, MEDIUM, HARD
 
@@ -566,63 +527,63 @@ private final String telemetryName
 ### Methods
 public String getTelemetryName() *provides the name for the difficulty according to the telemetry schema*
 
-## enum SettingsType
+## enum SettingsEnum
 *Enumerates the names of the different game settings that are per user*
 ### Constructors
-private SettingsType(String telemetryName)
+private SettingsEnum(String telemetryName)
 ### Fields
 TELEMETRY_ENABLED
 
 private final String telemetryName
 ### Methods
 public String getTelemetryName()
-## enum EncounterType
+## enum EncounterEnum
 *Enumerates the games encounters*
 ### Constructors
-private EncounterType(EntityType[] enemies, String telemetryName)
+private EncounterEnum(EntityEnum[] enemies, String telemetryName)
 ### Fields
 ZOMBIE_HORDE, SKELETON_RANGERS, etc. *placeholder, encounters TBD*
 
-private final EntityType[] enemies
+private final EntityEnum[] enemies
 
 private final String telemetryName
 ### Methods
-public EntityType[] getEnemies()
+public EntityEnum[] getEnemies()
 
-public EncounterInterface createEncounter() *done using reflection via EntityType*
+public EncounterInterface createEncounter() *done using reflection via EntityEnum*
 
 public String getTelemetryName()
 
-## enum EntityType
+## enum EntityEnum
 *Enumerates the games entities*
 ### Constructor
-private EntityType(Class<? extends EntityInterface> enemyClass, String telemetryName)
+private EntityEnum(Class<? extends EntityInterface> entityClass, String telemetryName)
 ### Fields
 GOBLIN, FISH_MAN, PYROMANCER, EVIL_WIZARD, ARMOURED_GOBLIN, GHOST, BLACK_KNIGHT, DRAGON
 
-private final Class<? extends EntityInterface> enemyClass
+private final Class<? extends EntityInterface> entityClass
 
 private final String telemetryName
 ### Methods
-public EntityInterface createEnemy() *Done using reflection*
+public EntityInterface createEntity() throws IllegalStateException *Done using reflection*
 
 public String getTelemetryName()
 ## interface EntityInterface
 *Contains all methods all entities have*
 ### Methods
-public void loseHealth(int amount, DamageType type) throws IllegalArgumentException *amount cannot be negative*
+public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException *amount cannot be negative*
 
 public int getHealth()
 
 public int getMaxHealth()
 
-public int calcDamage(int base, DamageType type) *applies modifiers to damage type and returns the result*
+public int calcDamage(int base, DamageEnum type) *applies modifiers to damage type and returns the result*
 
-public List\<AbilityType> getAbilities()
+public List\<AbilityEnum> getAbilities()
 
 public void resetHealth()
 
-public EntityType getType()
+public EntityEnum getType()
 ## interface PlayerInterface extends EntityInterface
 *Contains all methods all the player has*
 ### Methods
@@ -646,11 +607,11 @@ public int getLives()
 
 public void loseLives(int amount) throws IllegalArgumentException *amount cannot be negative*
 
-List\<UpgradeType> getUpgrades()
+List\<UpgradeEnum> getUpgrades()
 ## Player implements PlayerInterface
 *Contains the concrete implementation of the player*
 ### Constructors
-public Player(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public Player(DifficultyEnum difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 ### Fields
 private int maxMagic
 
@@ -664,9 +625,9 @@ private int coins
 
 private int lives
 
-private Difficulty difficulty
+private DifficultyEnum difficulty
 
-## abstract Enemy implements EntityInterface
+## abstract EnemyBase implements EntityInterface
 *Contains an implementation of health points that all enemies use*
 ### Constructors
 public Enemy(int maxHealth) *specified by the ConcreteEnemy*
@@ -675,10 +636,10 @@ private int health
 
 private int maxHealth
 
-## ConcreteEnemy extends Enemy
+## ConcreteEnemy extends EnemyBase
 *Each enemy would have its own class, for example SkeletonEnemy, ZombieEnemy*
 ### Constructors
-public ConcreteEnemy(Difficulty difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
+public ConcreteEnemy(DifficultyEnum difficulty) *reads values from settings, and adjusting it's statistics using them (e.g. health)*
 
 ## LackingResourceException extends Exception
 *Exception for when an ability is attempted without sufficient resources*
@@ -700,3 +661,4 @@ public ConcreteUpgrade(PlayerInterface player)
 public UpgradeBase(PlayerInterface player) throws IllegalArgumentException *if the given player is null*
 ### Fields 
 protected PlayerInterface player
+

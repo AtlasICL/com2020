@@ -4,7 +4,7 @@ package WizardQuest;
  * Provides global access to the game manager.
  */
 public class GameManagerSingleton {
-    private static GameManagerInterface gameManager = new GameManager();
+    private static final GameManagerInterface gameManager = new GameManager();
 
     private GameManagerSingleton() {
     }
@@ -14,7 +14,7 @@ public class GameManagerSingleton {
      * 
      * @return a reference to the game manager singleton.
      */
-    public static GameManagerInterface getGameManager() {
+    public static GameManagerInterface getInstance() {
         return gameManager;
     }
 
@@ -36,12 +36,12 @@ public class GameManagerSingleton {
         }
 
         @Override
-        public Difficulty getCurrentDifficulty(){
+        public DifficultyEnum getCurrentDifficulty(){
             return this.currentGame.getDifficulty();
         }
 
         @Override
-        public void startNewGame(Difficulty difficulty){
+        public void startNewGame(DifficultyEnum difficulty){
             this.currentGame = new GameRun(difficulty);
         }
 
@@ -86,12 +86,12 @@ public class GameManagerSingleton {
         }
 
         @Override
-        public UpgradeType[] viewShop(){
+        public UpgradeEnum[] viewShop(){
             return this.currentGame.viewShop();
         }
 
         @Override
-        public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException{
+        public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException{
             this.currentGame.purchaseUpgrade(upgrade);
         }
 

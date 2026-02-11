@@ -9,8 +9,8 @@ public class PhysicalDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) {
-        if (type == DamageType.PHYSICAL) {
+    public void loseHealth(int amount, DamageEnum type) {
+        if (type == DamageEnum.PHYSICAL) {
             super.player.loseHealth(amount / 2, type);
         } else {
             super.player.loseHealth(amount, type);
@@ -18,10 +18,10 @@ public class PhysicalDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades() {
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.PHYSICAL_DAMAGE_RESISTANCE)) {
-            u.add(UpgradeType.PHYSICAL_DAMAGE_RESISTANCE);
+    public List<UpgradeEnum> getUpgrades() {
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE)) {
+            u.add(UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE);
         }
         return u;
     }

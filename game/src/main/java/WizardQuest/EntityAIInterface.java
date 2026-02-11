@@ -11,7 +11,7 @@ public interface EntityAIInterface {
      * @param self      the object calling this method.
      * @param enemies   the array of entities that are hostile to the calling entity in this encounter.
      */
-    public void useAbility(AbilityType[] abilities, EntityInterface self, EntityInterface[] enemies);
+    public void useAbility(AbilityEnum[] abilities, EntityInterface self, EntityInterface[] enemies);
 
     /**
      * Called when an Entity AI attempts to purchase an upgrade from the shop between encounters.
@@ -21,7 +21,7 @@ public interface EntityAIInterface {
      *                 Each upgrade requires a specific total of coins, an entity may only purchase what they can afford.
      * @return the single selected upgrade.
      */
-    public UpgradeType pickUpgrade(UpgradeType[] upgrades, int coins);
+    public UpgradeEnum pickUpgrade(UpgradeEnum[] upgrades, int coins);
 }
 
 
