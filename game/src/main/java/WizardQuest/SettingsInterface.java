@@ -1,10 +1,12 @@
 package WizardQuest;
 
+import java.io.File;
+
 /**
  * Interface for settings. Provides access to user settings and properties, as
  * well as the ability to authenticate and create users.
  */
-public interface SettingsInterface extends FileIOInterface {
+public interface SettingsInterface {
     /**
      * Attempts to create a new user with the given parameters. On success will add
      * this user to the user JSON database.
@@ -238,4 +240,30 @@ public interface SettingsInterface extends FileIOInterface {
      * @param newShopItemCount the value it's being set to.
      */
     public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException;
+
+    /**
+     * Allows JUnit tests to write to a temporary JSON file rather than login_file.json,
+     * mitigating any risk of test data corrupting the real JSON file.
+     *
+     * @param file the temporary JSON file to be written to.
+     */
+    public void setLoginsDestinationFile(File file);
+
+    /**
+     * Resets the filepath to the real JSON file, login_file.json, after running a JUnit test.
+     */
+    public void resetLoginsDestinationFile();
+
+    /**
+     * Allows JUnit tests to write to a temporary JSON file rather than settings_file.json,
+     * mitigating any risk of test data corrupting the real JSON file.
+     *
+     * @param file the temporary JSON file to be written to.
+     */
+    public void setSettingsDestinationFile(File file);
+
+    /**
+     * Resets the filepath to the real JSON file, settings_file.json, after running a JUnit test.
+     */
+    public void resetSettingsDestinationFile();
 }

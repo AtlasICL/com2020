@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements PlayerInterface {
-    private int maxMagic;
-    private int maxHealth;
+    private final int maxMagic;
+    private final int maxHealth;
     private int health;
     private int magic;
     private int coins;

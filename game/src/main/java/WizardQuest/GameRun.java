@@ -5,33 +5,33 @@ import java.util.Random;
 
 public class GameRun implements GameRunInterface {
     //Drawn from for stages 1 and 2.
-    private EncounterInterface[] phase1NormalEncounters; 
+    private final EncounterInterface[] phase1NormalEncounters;
 
     //Drawn from for stages 4 and 5.
-    private EncounterInterface[] phase2NormalEncounters; 
+    private final EncounterInterface[] phase2NormalEncounters;
 
     //Drawn from for stages 7 and 8.
-    private EncounterInterface[] phase3NormalEncounters; 
+    private final EncounterInterface[] phase3NormalEncounters;
 
     //Drawn from for stage 3.
-    private EncounterInterface phase1Boss; 
+    private final EncounterInterface phase1Boss;
 
     //Drawn from for stage 6.
-    private EncounterInterface phase2Boss; 
+    private final EncounterInterface phase2Boss;
 
     //Drawn from for stage 9.
-    private EncounterInterface phase3Boss; 
+    private final EncounterInterface phase3Boss;
 
     //Drawn from for stage 10.
-    private EncounterInterface finalBoss;
+    private final EncounterInterface finalBoss;
 
     // Pool upgrades for the shop are chosen from. When bought they're removed from this pool.
-    private UpgradeEnum[] shopUpgrades;
+    private final UpgradeEnum[] shopUpgrades;
     
     private PlayerInterface player;
     private int currentStage;
-    private DifficultyEnum currentDifficulty;
-    private LocalDateTime startTime;
+    private final DifficultyEnum difficulty;
+    private final LocalDateTime startTime;
 
     /**
      * Creates a run for the game in the specified difficulty. Also takes note of
@@ -51,7 +51,7 @@ public class GameRun implements GameRunInterface {
 
         this.player = new Player(difficulty);
         this.currentStage = 1;
-        this.currentDifficulty = difficulty;
+        this.difficulty = difficulty;
         this.startTime = LocalDateTime.now();
     }
 
@@ -95,7 +95,7 @@ public class GameRun implements GameRunInterface {
             this.shopUpgrades[i] = this.shopUpgrades[j];
             this.shopUpgrades[j] = temp;
         }
-        int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.currentDifficulty);
+        int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.difficulty);
         UpgradeEnum[] shop = new UpgradeEnum[totalUpgradesInShop];
         int i = 0;
         // Loop through the shuffled array of upgrades, adding each element to the shop until the shop item count has
@@ -150,7 +150,7 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public int getDeathCount() {
-        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.currentDifficulty);
+        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.difficulty);
         int currentLives = this.player.getLives();
         return startingLives - currentLives;
     }
@@ -162,7 +162,7 @@ public class GameRun implements GameRunInterface {
     
     @Override
     public DifficultyEnum getDifficulty(){
-        return this.currentDifficulty;
+        return this.difficulty;
     }
 
     /**

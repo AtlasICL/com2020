@@ -14,7 +14,7 @@ public class NormalEncounterStartEvent extends EncounterEvent{
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
      * @param encounterName the name of the encounter a player is fighting.
-     * @param difficulty    the difficulty used for the players session.
+     * @param difficulty    the difficulty used for the player's session.
      * @param stageNumber   the current stage player is attempting.
      */
     public NormalEncounterStartEvent(Object source, int userID, int sessionID, 

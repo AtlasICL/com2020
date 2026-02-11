@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import java.io.File;
+
 /**
  * Interface for the telemetry listener. Provides methods to deal with telemetry
  * events, writing them to the JSON store of telemetry events. When a method is
@@ -9,7 +11,7 @@ package WizardQuest;
  * NOTE: Some of the ConcreteEvent classes have not yet been created, this is because
  * they are not required for Sprint 1 (e.g., BossEncounterStartEvent)
  */
-public interface TelemetryListenerInterface extends FileIOInterface {
+public interface TelemetryListenerInterface {
     /**
      * Called when a user logs in or enables telemetry. 
      * 
@@ -96,4 +98,17 @@ public interface TelemetryListenerInterface extends FileIOInterface {
      * @param e the KillEnemyEvent to be recorded to the JSON database.
      */
     public void onKillEnemy(KillEnemyEvent e);
+
+    /**
+     * Allows JUnit tests to write to a temporary JSON file rather than events.json,
+     * mitigating any risk of test data corrupting the real JSON file.
+     *
+     * @param file the temporary JSON file to be written to.
+     */
+    public void setDestinationFile(File file);
+
+    /**
+     * Resets the filepath to the real JSON file, events.json, after running a JUnit test.
+     */
+    public void resetDestinationFile();
 }

@@ -15,7 +15,7 @@ public class StartSessionEvent extends TelemetryEvent {
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
-     * @param difficulty    the difficulty used for the players session.
+     * @param difficulty    the difficulty used for the player's session.
      */
     public StartSessionEvent(Object source, int userID, int sessionID, String timeStamp, DifficultyEnum difficulty){
         super(source, userID, sessionID, timeStamp, "StartSession");

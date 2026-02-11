@@ -1,6 +1,6 @@
 package WizardQuest;
 
-public enum UpgradeEnum { // "Upgrade" is refered to as "passive ability externally"
+public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability externally"
     // organised as price, class, telemetry name
     // add abilities
     PHYSICAL_DAMAGE_RESISTANCE(
@@ -19,7 +19,7 @@ public enum UpgradeEnum { // "Upgrade" is refered to as "passive ability externa
             5,
             ThunderDamageResistanceUpgrade.class,
             "ThunderDamageResistance"),
-    // MPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
+    // IMPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
     // "ImprovedPhysicalDamage"),
     // IMPROVED_FIRE_DAMAGE(15, ImprovedFireDamageUpgrade.class,
     // "ImprovedFireDamage"),

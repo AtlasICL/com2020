@@ -76,10 +76,9 @@ public interface GameManagerInterface {
      * Checks if the player has enough currency to purchase specified upgrade.
      * if not, throws an exception.
      * @param upgrade the upgrade being bought from the shop.
-     * @throws NotEnoughResourceException if the player doesn't have enough coins to
+     * @throws LackingResourceException if the player doesn't have enough coins to
      *                                    buy the upgrade.
      */
-
     public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException;
 
 

@@ -35,11 +35,11 @@ public class SettingsSingleton {
         private EnumMap<DifficultyEnum, Integer> magicRegenRate;
         private EnumMap<DifficultyEnum, Integer> shopItemCount;
 
-        private static final File SETTINGS_FILE = new File("settings_file.json");
+        private static File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
         // TEMPORARY
-        private static final File LOGINS_FILE = new File("logins_file.json");
+        private static File LOGINS_FILE = new File("logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -383,7 +383,7 @@ public class SettingsSingleton {
 
         @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.telemetryEnabled = telemetryEnabled;
@@ -392,7 +392,7 @@ public class SettingsSingleton {
 
         @Override
         public void setMaxStageReached(DifficultyEnum difficulty, int maxStageReached) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.maxStageReached.put(difficulty, maxStageReached);
@@ -401,7 +401,7 @@ public class SettingsSingleton {
 
         @Override
         public void setPlayerMaxHealth(DifficultyEnum difficulty, int newplayerMaxHealth) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
@@ -410,7 +410,7 @@ public class SettingsSingleton {
 
         @Override
         public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
@@ -419,7 +419,7 @@ public class SettingsSingleton {
 
         @Override
         public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
@@ -428,7 +428,7 @@ public class SettingsSingleton {
 
         @Override
         public void setStartingLives(DifficultyEnum difficulty, int newStartingLives) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.startingLives.put(difficulty, newStartingLives);
@@ -437,7 +437,7 @@ public class SettingsSingleton {
 
         @Override
         public void setMaxMagic(DifficultyEnum difficulty, int newMaxMagic) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.maxMagic.put(difficulty, newMaxMagic);
@@ -446,7 +446,7 @@ public class SettingsSingleton {
 
         @Override
         public void setMagicRegenRate(DifficultyEnum difficulty, int newMagicRegenRate) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.magicRegenRate.put(difficulty, newMagicRegenRate);
@@ -455,7 +455,7 @@ public class SettingsSingleton {
 
         @Override
         public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.shopItemCount.put(difficulty, newShopItemCount);
@@ -475,6 +475,26 @@ public class SettingsSingleton {
         @Override
         public boolean isTelemetryEnabled() throws AuthenticationException {
             return this.telemetryEnabled;
+        }
+
+        @Override
+        public void setLoginsDestinationFile(File file) {
+            LOGINS_FILE = file;
+        }
+
+        @Override
+        public void resetLoginsDestinationFile() {
+            LOGINS_FILE = new File("logins_file.json");
+        }
+
+        @Override
+        public void setSettingsDestinationFile(File file) {
+            SETTINGS_FILE = file;
+        }
+
+        @Override
+        public void resetSettingsDestinationFile() {
+            SETTINGS_FILE = new File("settings_file.json");
         }
     }
 }

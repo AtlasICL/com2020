@@ -4,7 +4,7 @@ package WizardQuest;
  * Provides global access to the game manager.
  */
 public class GameManagerSingleton {
-    private static GameManagerInterface gameManager = new GameManager();
+    private static final GameManagerInterface gameManager = new GameManager();
 
     private GameManagerSingleton() {
     }

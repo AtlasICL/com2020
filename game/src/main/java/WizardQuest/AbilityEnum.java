@@ -52,7 +52,7 @@ public enum AbilityEnum {
     /**
      * Gets the description of the ability.
      * 
-     * @return a human readable description of the ability.
+     * @return a human-readable description of the ability.
      */
     public String getDescription() {
         return description;
