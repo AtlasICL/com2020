@@ -1,8 +1,11 @@
 package WizardQuest;
 
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Enumerates all entity types in the game.
+ * Each of the types in this class has a reference to their concrete class used for instantiation, done via reflection
  */
 
 public enum EntityType {
@@ -21,6 +24,7 @@ public enum EntityType {
 
     /**
      * Constructor for the enum EntityType
+     *
      * @param enemyClass the class object for instantiation using reflection
      * @param telemetryName the naming for the telemetry events
      */
@@ -31,19 +35,22 @@ public enum EntityType {
 
     /**
      * Creates a new instance of this entity using Java reflection
+     *
+     * @param difficulty the current difficulty of the game
      * @return a new instance EntityInterface of this type
+     * @throws RuntimeException this happens if something goes wrong with reflection
      */
-    public EntityInterface createEnemy() {
-//        try {
-//            return enemyClass.getDeclaredConstructor().newInstance();
-//        } catch (InstantiationException | NoSuchMethodException e) {
-//            throw new RuntimeException(e);
-//        } to be fixed
-        return null;
+    public EntityInterface createEnemy(Difficulty difficulty) {
+        try {
+            return enemyClass.getDeclaredConstructor(Difficulty.class).newInstance(difficulty);
+        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * This method gets the telemetry name for this entity type
+     *
      * @return tje class object for this entity
      */
     public String getTelemetryName() {

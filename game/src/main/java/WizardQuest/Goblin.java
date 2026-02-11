@@ -1,5 +1,6 @@
 package WizardQuest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -8,17 +9,21 @@ import java.util.List;
  * Phase 1 enemy
  */
 public class Goblin extends Enemy{
-
-
-    public Goblin(){
-        super((int) Math.round(50 * 1.0f));
+    /**
+     *
+     * @param difficulty defines the current game difficulty for this concrete enemy, used to scale health
+     */
+    public Goblin(Difficulty difficulty){
+        super((int) Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
     }
     @Override
     public List<AbilityType> getAbilities(){
-        return List.of(AbilityType.SLASH, AbilityType.PUNCH);
+        return new LinkedList<>(List.of(AbilityType.SLASH, AbilityType.PUNCH));
     }
     @Override
     public EntityType getType(){
         return EntityType.GOBLIN;
     }
+
+
 }

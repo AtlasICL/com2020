@@ -11,6 +11,10 @@ import java.util.List;
 public abstract class Enemy implements EntityInterface {
     private int health;
     private int maxHealth;
+    private float physicalDamageModifier = 1.0f;
+    private float fireDamageModifier = 1.0f;
+    private float waterDamageModifier = 1.0f;
+    private float thunderDamageModifier = 1.0f;
 
     @Override
     public abstract List<AbilityType> getAbilities();
@@ -34,10 +38,24 @@ public abstract class Enemy implements EntityInterface {
         int realDamage = calcDamage(amount, type);
         this.health = Math.max(0, this.health - realDamage); // s.t health never goes below 0
     }
+
+    /**
+     * Calculates the total damage dealt after applying enemy's modifier for the damage type given. Absolute damage ignores modifiers
+     *
+     * @param base the base damage dealt by the entity's attack.
+     * @param type the damage type of the entity's attack.
+     * @return the total damage inflicted by this attack.
+     */
     @Override
     public int calcDamage(int base, DamageType type){
-          //to be implemented
-        return 0; // PLACEHOLDER
+        float modifier =  switch(type){
+            case WATER -> waterDamageModifier;
+            case PHYSICAL -> physicalDamageModifier;
+            case FIRE -> fireDamageModifier;
+            case THUNDER -> thunderDamageModifier;
+            case ABSOLUTE -> 1.0f;
+        };
+        return Math.round(base * modifier);
     }
 
 
@@ -49,5 +67,23 @@ public abstract class Enemy implements EntityInterface {
     public void resetHealth(){
         this.health = this.maxHealth;
     }
+
+
+    public void setPhysicalDamageModifier(float physicalDamageModifier) {
+        this.physicalDamageModifier = physicalDamageModifier;
+    }
+
+    public void setFireDamageModifier(float fireDamageModifier) {
+        this.fireDamageModifier = fireDamageModifier;
+    }
+
+    public void setWaterDamageModifier(float waterDamageModifier) {
+        this.waterDamageModifier = waterDamageModifier;
+    }
+
+    public void setThunderDamageModifier(float thunderDamageModifier) {
+        this.thunderDamageModifier = thunderDamageModifier;
+    }
+
 
 }
