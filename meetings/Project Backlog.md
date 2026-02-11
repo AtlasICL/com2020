@@ -24,13 +24,10 @@ Backlog contains things we need to do. Requirement is then split into user stori
 #### Automated Tests
 #### End to End Tests
 ### Presentation
-#### What is the problem TODO
 ### Deployment and Operations Guide
 #### Deployment Guide
 #### Operations Guide
 #### Maintenance and Troubleshooting Guide
-#### Maintenance Guide
-#### Troubleshooting Guide
 #### Extension Guide
 ### Data Management Guide
 #### Data Stored
