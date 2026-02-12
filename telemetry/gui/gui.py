@@ -24,6 +24,7 @@ class TelemetryAppGUI(tk.Tk):
         style = ttk.Style(self)
         style.theme_use("clam")
         self.file_name = "telemetry_events.json"
+        self.logic_engine = EventLogicEngine()
 
         style.configure(
             ".",
@@ -64,6 +65,10 @@ class TelemetryAppGUI(tk.Tk):
         self.make_welcome_screen()
 
         sns.set_theme(style="dark", context="notebook")
+        
+        self.tab_spike.rowconfigure(0, weight=1)
+        self.tab_spike.columnconfigure(0, weight=1)
+        
         self.funnel_plot = PlotTab(
             parent=self.tab_funnel,
             title="Funnel view",
@@ -76,6 +81,11 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Number of failures",
         )
+        self.spike_suggestion = ttk.Label(
+            self.tab_spike,
+            text="Suggestion: " + self.generate_spike_suggestion()
+        )
+        self.spike_suggestion.grid(row=1, column=0, pady=10, sticky="ew")
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
             title="HP remaining by stage)",
@@ -89,7 +99,6 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Coins gained",
         )
 
-        self.logic_engine = EventLogicEngine()
 
         self.refresh_funnel_graph()
         self.refresh_difficulty_spike_failure_plot()
@@ -182,6 +191,7 @@ class TelemetryAppGUI(tk.Tk):
             spike_data.values(), 
             label="Difficulty spikes (by failure rate)"
         )
+        self.spike_suggestion.config(text="Suggestion: " + self.generate_spike_suggestion())
     
 
     def get_average_dict_of_stage_dicts(
@@ -244,6 +254,21 @@ class TelemetryAppGUI(tk.Tk):
             series.append((x, y, str(difficulty.value)))
 
         self.fairness_plot.plot_multi_line(series)
+
+    def generate_spike_suggestion(self):
+        """
+        Generates a difficulty change suggestion 
+        for difficulty spikes.
+        """
+        stages = ""
+        spikes = self.logic_engine.fail_difficulty_spikes()
+        mean = sum(spikes.values())/10
+        for stage in spikes:
+            if spikes[stage] > mean:
+                stages += str(stage) + ", "
+        if stages != "":
+            return "High failure rate in " + stages + " consider increasing lives by 2."
+        return "No suggestions available"
 
 # TODO: We need to figure out when and how to refresh the plots. This
 # will also presumably become significantly harder when reading the
