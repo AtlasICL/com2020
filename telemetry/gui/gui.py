@@ -1,11 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import seaborn as sns
 
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
-
-TMP_FILENAME: str = "logs.json"
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
@@ -17,7 +15,6 @@ class GUI_SETTINGS:
     FONT_SIZE = 12
     BACKGROUND_COLOR = "#edd68f"
 
-
 class TelemetryAppGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
@@ -26,7 +23,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
-        self.file_name = "logs.json"
+        self.file_name = "telemetry_events.json"
 
         style.configure(
             ".",
@@ -99,7 +96,6 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_health_plots()
         self.refresh_coins_gained_plots()
 
-
     def make_welcome_screen(self):
         welcome = ttk.Label(
             self.tab_home,
@@ -125,6 +121,13 @@ class TelemetryAppGUI(tk.Tk):
         )
         switch_simulation_button.pack(pady=(10,20))
 
+        reset_telemetry_button = ttk.Button(
+            self.tab_home,
+            text="Reset Telemetry Data",
+            command=self.reset_telemetry
+        )
+        reset_telemetry_button.pack(pady=(10,20))
+
     def google_auth(self):
         print("Sign in requested")
         return
@@ -132,12 +135,20 @@ class TelemetryAppGUI(tk.Tk):
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
             self.switch_btn_text.set("Change to telemetry data")
-            self.file_name = "simulation.json"
+            self.file_name = "simulation_events.json"
             self.refresh_all()
         else:
             self.switch_btn_text.set("Change to simulation data")
-            self.file_name = "logs.json"
+            self.file_name = "telemetry_events.json"
             self.refresh_all()
+    
+    def reset_telemetry(self):
+        confirmed = messagebox.askyesno(
+        title="Switch Data Source",
+        message="Are you sure you want to reset telemetry data? All existing telemetry data will be lost")
+        if confirmed:
+            with open('telemetry_events.json', 'w') as f:
+                f.write('')
 
     def refresh_all(self):
         self.refresh_funnel_graph()
