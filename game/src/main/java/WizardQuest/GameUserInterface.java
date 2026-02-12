@@ -1,10 +1,14 @@
 package WizardQuest;
 
+import java.time.LocalDateTime;
+import java.time.Duration;
 import java.util.Scanner;
+
 
 public class GameUserInterface {
 
     private final GameManagerInterface gameManager;
+    private final SettingsInterface settings = SettingsSingleton.getSettings();
     private final Scanner scanner;
 
     private boolean telemetryEnabled = true;
@@ -47,6 +51,12 @@ public class GameUserInterface {
         System.out.println();
     }
 
+    /**
+     * LOGIN SCREEN/LOGIC TO BE IMPLEMENTED BY EMRE + LUCA C
+     * Needs role testing for settings access
+     * First user will be developer by default, can assign other roles through settings menu
+     */
+
     private void showMenu() {
         while (true) {
             System.out.println();
@@ -79,29 +89,208 @@ public class GameUserInterface {
         while (isRunning) {
             System.out.println();
             System.out.println(BOLD + "Settings" + RESET);
-            System.out.println("1. Toggle Telemetry ("+ (telemetryEnabled ? GREEN + "ON" : RED + "OFF")
-             + RESET + ")");
-            System.out.println("9. Go Back");
-            String input = scanner.nextLine();
-            switch (input) {
-                case "9":
-                    isRunning = false;
-                    break;
-                case "1":
-                    if (telemetryEnabled == true) {
-                        telemetryEnabled = false;
-                        System.out.println(RED + "Telemetry disabled." + RESET);
-                    }
-                    else {
-                        telemetryEnabled = true;
-                        System.out.println(GREEN + "Telemetry enabled." + RESET);
-                    }
-                    break;
-                default:
-                    System.out.println(RED + "Invalid option." + RESET);    
+
+            Role role = Role.DEVELOPER; //placeholder values in case of auth failure, overrides if auth successful
+            boolean telemetryEnabled = false;
+
+            try {
+                role = settings.getUserRole();
+                telemetryEnabled = settings.isTelemetryEnabled();
             }
+            catch (AuthenticationException e) {
+                System.out.println(RED + "You must be logged in to view settings." + RESET);
+                System.out.println("0. Go Back");
+                System.out.print(BLUE + ">>> " + RESET);
+                scanner.nextLine();
+                return;
+            }
+
+            System.out.println("User role: " + CYAN + role + RESET);
+            System.out.println("Telemetry: " + (telemetryEnabled ? GREEN + "ON" + RESET : RED + "OFF" + RESET));
+            System.out.println();
+
+            System.out.println("1. Toggle telemetry");
+            System.out.println("2. Telemetry disclosure");
+
+            if (role == Role.DESIGNER || role == Role.DEVELOPER) {
+                System.out.println("3. Change starting lives (design parameter)");
+            }
+
+            if (role == Role.DEVELOPER) {
+                System.out.println("4. Assign user role");
+            }
+
+            System.out.println("0. Go Back");
+
+            System.out.print(BLUE + ">>> " + RESET);
+            String input = scanner.nextLine();
+
+            if (input.equals("0")) {
+                return;
+            }
+
+            if (input.equals("1")) {
+                toggleTelemetry();
+                continue;
+            }
+
+            if (input.equals("2")) {
+                showTelemetryDisclosure();
+                continue;
+            }
+
+            if (input.equals("3")) {
+                if (role == Role.DESIGNER || role == Role.DEVELOPER) {
+                    changeStartingLives();
+                }
+                else {
+                    System.out.println(RED + "You do not have permission to change design parameters." + RESET);
+                }
+                continue;
+            }
+
+            if (input.equals("4")) {
+                if (role == Role.DEVELOPER) {
+                    assignUserRole();
+                }
+                else {
+                    System.out.println(RED + "You do not have permission to assign roles." + RESET);
+                }
+                continue;
+            }
+
+            System.out.println(RED + "Invalid option." + RESET);
         }
     }
+
+    private void toggleTelemetry() {
+
+        try {
+            boolean current = settings.isTelemetryEnabled();
+
+            if (current == true) {
+                settings.setTelemetryEnabled(false);
+                System.out.println(RED + "Telemetry disabled." + RESET);
+            }
+            else {
+                settings.setTelemetryEnabled(true);
+                System.out.println(GREEN + "Telemetry enabled." + RESET);
+            }
+        }
+        catch (AuthenticationException e) {
+            System.out.println(RED + "You must be logged in to change telemetry settings." + RESET);
+        }
+    }
+
+    private void changeStartingLives() {
+
+        Difficulty difficulty = selectDifficulty();
+
+        if (difficulty == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.println(BOLD + "Set Starting Lives" + RESET);
+        System.out.println("Difficulty: " + CYAN + difficulty + RESET);
+        System.out.print(BLUE + "Enter starting lives (e.g. 1-10): " + RESET);
+
+        String input = scanner.nextLine();
+
+        int lives;
+        try {
+            lives = Integer.parseInt(input);
+        }
+        catch (NumberFormatException e) {
+            System.out.println(RED + "Please enter a number." + RESET);
+            return;
+        }
+
+        if (lives < 1) {
+            System.out.println(RED + "Starting lives must be at least 1." + RESET);
+            return;
+        }
+
+        try {
+            settings.setStartingLives(difficulty, lives);
+            System.out.println(GREEN + "Starting lives updated." + RESET);
+        }
+        catch (AuthenticationException e) {
+            System.out.println(RED + "You must be logged in to change design parameters." + RESET);
+        }
+    }
+
+    private void assignUserRole() {
+
+        System.out.println();
+        System.out.println(BOLD + "Assign User Role" + RESET);
+
+        System.out.print(BLUE + "Username: " + RESET);
+        String username = scanner.nextLine();
+
+        System.out.println("1. PLAYER");
+        System.out.println("2. DESIGNER");
+        System.out.println("3. DEVELOPER");
+        System.out.print(BLUE + ">>> " + RESET);
+
+        String input = scanner.nextLine();
+
+        Role newRole;
+
+        if (input.equals("1")) {
+            newRole = Role.PLAYER;
+        }
+        else if (input.equals("2")) {
+            newRole = Role.DESIGNER;
+        }
+        else if (input.equals("3")) {
+            newRole = Role.DEVELOPER;
+        }
+        else {
+            System.out.println(RED + "Invalid role." + RESET);
+            return;
+        }
+
+        try {
+            settings.setUserRole(username, newRole);
+            System.out.println(GREEN + "Role updated for " + username + "." + RESET);
+        }
+        catch (AuthenticationException e) {
+            System.out.println(RED + "You must be logged in as a developer to assign roles." + RESET);
+        }
+    }
+
+    private void showTelemetryDisclosure() {
+
+        System.out.println();
+        System.out.println(BOLD + "Telemetry Disclosure" + RESET);
+        System.out.println();
+
+        System.out.println("If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.");
+        System.out.println("This includes:");
+
+        System.out.println("timestamp, session id, user id");
+        System.out.println("encounter start, completion, or fail (stage, difficulty, encounter name)");
+        System.out.println("player state on completion or fail (HP remaining, lives left if relevant)");
+        System.out.println("coins gained and upgrades purchased");
+        System.out.println("settings changes (new values)");
+        System.out.println("enemies defeated");
+
+        System.out.println();
+        System.out.println("Why we collect it:");
+        System.out.println("to spot difficulty spikes and unfair encounters");
+        System.out.println("to support balancing changes with evidence");
+
+        System.out.println();
+        System.out.println("You can toggle telemetry off at any time in Settings and between encounters.");
+        System.out.println();
+        System.out.println("0. Back");
+
+        System.out.print(BLUE + ">>> " + RESET);
+        scanner.nextLine();
+    }
+
+
 
     private void startGame() {
         Difficulty difficulty = selectDifficulty();
@@ -417,23 +606,53 @@ public class GameUserInterface {
                     + " (Cost: " + YELLOW + upgrades[i].getPrice() + RESET + ")");
         }
 
+        boolean telemetryNow = false;
+
+        try {
+            telemetryNow = settings.isTelemetryEnabled();
+        }
+        catch (AuthenticationException ignored) {
+        }
+
+        System.out.println();
+        System.out.println("9. Toggle telemetry (Currently: "
+                + (telemetryNow ? GREEN + "ON" : RED + "OFF") + RESET + ")");
         System.out.println("0. Leave shop");
 
         while (true) {
+
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
+            if (input.equals("0")) {
+                return;
+            }
+
+            if (input.equals("9")) {
+
+                try {
+                    boolean current = settings.isTelemetryEnabled();
+                    settings.setTelemetryEnabled(!current);
+
+                    System.out.println();
+                    System.out.println(YELLOW + "Telemetry updated. Returning to main menu..." + RESET);
+                    gameManager.endGame();
+                    return;
+                }
+                catch (AuthenticationException e) {
+                    System.out.println(RED + "You must be logged in to change telemetry." + RESET);
+                    continue;
+                }
+            }
+
             int choice;
+
             try {
                 choice = Integer.parseInt(input);
             }
             catch (NumberFormatException e) {
                 System.out.println(RED + "Enter a number." + RESET);
                 continue;
-            }
-
-            if (choice == 0) {
-                return;
             }
 
             if (choice < 1 || choice > upgrades.length) {
@@ -459,6 +678,11 @@ public class GameUserInterface {
         System.out.println(BOLD + "Run Complete" + RESET);
 
         GameRunInterface run = gameManager.getCurrentRun();
+        LocalDateTime start = run.getRunStartTime();
+        LocalDateTime end = LocalDateTime.now();
+        Duration duration = Duration.between(start, end);
+        long minutes = duration.toMinutes();
+        long seconds = duration.minusMinutes(minutes).getSeconds();
 
         if (run == null) {
             System.out.println(RED + "No run data available." + RESET);
@@ -474,6 +698,7 @@ public class GameUserInterface {
             player = null;
         }
 
+        System.out.println("Run Time: " + CYAN + minutes + "m " + seconds + "s" + RESET);
         System.out.println("Stages Reached: " + CYAN + run.getStage() + RESET);
         System.out.println("Deaths: " + CYAN + run.getDeathCount() + RESET);
 
