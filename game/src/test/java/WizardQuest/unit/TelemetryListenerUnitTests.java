@@ -1,11 +1,16 @@
 package WizardQuest.unit;
 
 import WizardQuest.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.io.TempDir;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 public class TelemetryListenerUnitTests {
@@ -14,9 +19,11 @@ public class TelemetryListenerUnitTests {
     * KNOWN ERRORS:
     * - ValidationException swallowed in TelemetryListenerSingleton, so JUnit does not detect it
     * - Issue with RoleEnum not being recognised
-    * - Users and settings should be written to mock files upon creation
     * - CleanUp method - may need to invoke EndSessionEvent?
      */
+
+    @TempDir
+    private Path tempDir;
 
     /**
      * Creates and authenticates a mock user account with the role of Player, which will be used to independently
@@ -27,6 +34,12 @@ public class TelemetryListenerUnitTests {
      */
     @BeforeEach
     void setUp() throws Exception {
+        // Initialise temporary JSON files for a test user's login and settings to be stored in.
+        File TEMP_LOGINS_FILE = tempDir.resolve("logins_file.json").toFile();
+        SettingsSingleton.getInstance().setLoginsDestinationFile(TEMP_LOGINS_FILE);
+        File TEMP_SETTINGS_FILE = tempDir.resolve("settings_file.json").toFile();
+        SettingsSingleton.getInstance().setSettingsDestinationFile(TEMP_SETTINGS_FILE);
+        // Create and authenticate a test user.
         SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
         SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
         // Start a session for the test user, which will allow our test event to be invoked in each test.
@@ -37,6 +50,7 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM);
         TelemetryListenerSingleton.getInstance().onStartSession(startSession);
     }
+
     /**
      * All telemetry events contain the userID field, which uniquely identifies the user who triggered the event.
      * The userID in the event field should match the userID in the settings of the authenticated user.
@@ -195,4 +209,11 @@ public class TelemetryListenerUnitTests {
             TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent3);
         });
     }
+
+    @AfterEach
+    void cleanUp() {
+        SettingsSingleton.getInstance().resetLoginsDestinationFile();
+        SettingsSingleton.getInstance().resetSettingsDestinationFile();
+    }
+
 }

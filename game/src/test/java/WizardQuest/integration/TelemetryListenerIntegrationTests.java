@@ -31,8 +31,15 @@ public class TelemetryListenerIntegrationTests {
      */
     @BeforeEach
     void setUp() throws AuthenticationException {
+        // Initialise temporary JSON files for a test user's login and settings to be stored in.
+        File TEMP_LOGINS_FILE = tempDir.resolve("logins_file.json").toFile();
+        SettingsSingleton.getInstance().setLoginsDestinationFile(TEMP_LOGINS_FILE);
+        File TEMP_SETTINGS_FILE = tempDir.resolve("settings_file.json").toFile();
+        SettingsSingleton.getInstance().setSettingsDestinationFile(TEMP_SETTINGS_FILE);
+        // Create and authenticate a test user.
         SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
         SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
+        // Initialise a temporary JSON file to test the reading and writing of event objects.
         TEMP_DESTINATION_FILE = tempDir.resolve("events.json").toFile();
         TelemetryListenerSingleton.getInstance().setDestinationFile(TEMP_DESTINATION_FILE);
         // Start a session for the test user, which will allow our test event to be invoked in each test.
@@ -85,6 +92,8 @@ public class TelemetryListenerIntegrationTests {
      */
     @AfterEach
     void cleanUp() {
+        SettingsSingleton.getInstance().resetLoginsDestinationFile();
+        SettingsSingleton.getInstance().resetSettingsDestinationFile();
         TelemetryListenerSingleton.getInstance().resetDestinationFile();
     }
 }
