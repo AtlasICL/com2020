@@ -5,6 +5,7 @@ This file contains the logic for parsing game output json files.
 import json
 from typing import TypeAlias
 from datetime import datetime
+from pathlib import Path
 
 from core.events import *
 
@@ -34,7 +35,7 @@ def convert_time(time_string: str) -> datetime:
     return datetime.strptime(time_string, "%Y/%m/%d/%H/%M/%S")
 
 
-def get_file(filename: str) -> list[dict]:
+def get_file(filename: Path) -> list[dict]:
     """
     This function parses a json file and returns a list of json objects.
     
@@ -52,7 +53,7 @@ def get_file(filename: str) -> list[dict]:
         raise RuntimeError(f"Could not parse - invalid json.")
 
 
-def parse_file(filename: str) -> list[ValidEvent]:
+def parse_file(filename: Path) -> list[ValidEvent]:
     """
     Creates a list of ValidEvent objects from a json file.
     

@@ -1,9 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import seaborn as sns
+from pathlib import Path
 
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
+
+ROOT_DIRECTORY = Path.cwd().parent
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
@@ -23,7 +26,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
-        self.file_name = "telemetry_events.json"
+        self.file_name = ROOT_DIRECTORY/ "telemetry_events.json"
         self.logic_engine = EventLogicEngine()
 
         style.configure(
@@ -144,11 +147,11 @@ class TelemetryAppGUI(tk.Tk):
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
             self.switch_btn_text.set("Change to telemetry data")
-            self.file_name = "simulation_events.json"
+            self.file_name = ROOT_DIRECTORY / "simulation_events.json"
             self.refresh_all()
         else:
             self.switch_btn_text.set("Change to simulation data")
-            self.file_name = "telemetry_events.json"
+            self.file_name = ROOT_DIRECTORY / "telemetry_events.json"
             self.refresh_all()
     
     def reset_telemetry(self):
@@ -156,7 +159,7 @@ class TelemetryAppGUI(tk.Tk):
         title="Switch Data Source",
         message="Are you sure you want to reset telemetry data? All existing telemetry data will be lost")
         if confirmed:
-            with open('telemetry_events.json', 'w') as f:
+            with open(ROOT_DIRECTORY / 'telemetry_events.json', 'w') as f:
                 f.write('')
 
     def refresh_all(self):
