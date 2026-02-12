@@ -28,7 +28,7 @@ public class FishMan extends EnemyBase {
     @Override
     public int calcDamage(int base, DamageType type){
         if (type == DamageType.THUNDER){
-            return Math.round(base * 1.5f);
+            return Math.round(base * 2.0f);
         }
         else if (type == DamageType.WATER){
             return Math.round(base * 0.5f);
