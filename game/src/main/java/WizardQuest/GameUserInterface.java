@@ -150,7 +150,7 @@ public class GameUserInterface {
             }
 
             if (input.equals("4")) {
-                if (role == Role.DEVELOPER) {
+                if (role == Role.PLAYER) {
                     assignUserRole();
                 }
                 else {
