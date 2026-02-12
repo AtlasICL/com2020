@@ -335,65 +335,151 @@
   \item There must be epics created on the board for each epic defined in the project backlog in this report.
   \item There must be a backlog section for tasks that have yet to have been started.
   \item There must be an in progress section for tasks being worked on. Each task in this section must be assigned to at least one group member.
-  \item THere must be a done section for tasks that are complete. Each task in this section must be assigned to at least one group member.
+  \item There must be a done section for tasks that are complete. Each task in this section must be assigned to at least one group member.
 \end{itemize}
 \subsection{Python Application}
 \subsubsection{User Interface}
 \paragraph{Login}
-
-\paragraph{Dashboards}
-
-\paragraph{Suggestions}
-
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item Users of the python application should first see a login screen.
+  \item This screen must prompt the users to sign in before they can access any other screen.
+  \item Users should also be able to reset their login or create an account from this screen.
+\end{itemize}
+\paragraph{Dashboards and Suggestions}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item Authenticated users with the developer or designer role should be able to view the dashboard screen.
+  \item Each view should show relevant design parameter suggestions based on the views contents.
+  \item It should contain the funnel view, showing the number of players which reach each stage.
+  \item It should contain a difficulty spike view showing the failure rate of each stage.
+  \item It should contain a comparison of the different difficulties on key metrics such as health and coins gained.
+\end{itemize}
 \paragraph{Decision Log}
-
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \subsubsection{Authentication and Acess Control}
 \paragraph{Login}
-
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Users must be required to log in before accessing the python application.
+  \item Users with an account must be able to log into that account by entering the correct details.
+  \item Users without an account must be able to create one.
+\end{itemize}
 \paragraph{Password Reset}
-
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Users must be able to reset their login credentials.
+  \item This reset system must require them to have some other security factor such as email.
+\end{itemize}
 \paragraph{Player Permissions}
-
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Users with the player role must be authenticated as players when logging in.
+  \item A player must not be able to view any of the dashboards. 
+\end{itemize}
 \paragraph{Designer Permissions}
-
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Users with the designer role must be authenticated as designers when logging in.
+  \item A designer must be able to view the dashboards and the associated design suggestions.
+\end{itemize}
 \paragraph{Developer Permissions}
-
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Users with the developer role must be authenticated as developers when logging in.
+  \item A developer must be able to view the dashboards and the associated design suggestions.
+\end{itemize}
 \subsubsection{Dashboard Views}
 \paragraph{Simulation View}
-
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Authenticated designers and developers must be able to view the results of the most recently ran simulation in the dashboard views.
+\end{itemize}
 \paragraph{Funnel View}
-
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The system must calculate a funnel view showing player drop off as the game progresses from the telemetry data.
+  \item This must then be passed to the user interface to display.
+\end{itemize}
 \paragraph{Difficulty Spikes}
-
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The system must calculate a difficulty spikes view showing failure rate for different stages from the telemetry data.  
+  \item This must then be passed to the user interface to display.
+\end{itemize}
 \paragraph{Progress Curves}
-
+\textbf{Value:} 3 \quad \textbf{Priority:} Could\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item The system must calculate how many coins players accumulated on each stage, and the time to complete each stage from the telemetry data.
+  \item This must then be passed to the user interface to display.
+\end{itemize}
 \paragraph{Fairness Indicators}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Comparison Mode}
-
+\textbf{Value:} 3 \quad \textbf{Priority:} Could\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item The system must calculate how many coins players accumulated on each stage along with how much health they finish each stage with, for each difficulty.
+  \item This must then be passed to the user interface to display.
+\end{itemize}
 \subsubsection{Design Suggestions}
 \paragraph{Rule Based Design Suggestions}
-
+\textbf{Value:} 1 \quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item The system should read the telemetry data and evaluate it against a suggestion criteria.
+  \item If this criteria is met, the system should suggest a concrete change to the design parameter to improve the balance of the game. 
+\end{itemize}
 \subsubsection{Telemetry Events}
 \paragraph{Read Telemetry Events}
-
+\textbf{Value:} 5 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item The system must be able to read telemetry events from the telemetry store for actual players.
+  \item The system must be able to read telemetry events from the telemetry store for simulated runs.
+\end{itemize}
 \paragraph{Validate Telemetry Events}
-
+\textbf{Value:} 5 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item The system must be able to detect missing fields in read in telemetry events and ignore them.
+  \item The system must be able to detect telemetry events with invalid field values and ignore them.
+\end{itemize}
 \subsubsection{Seeded Dataset}
 \paragraph{Telemetry Events}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Stage Variety}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Difficulty Variety}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{User Variety}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Session Variet}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Anomalous Telemetry Events}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \paragraph{Balancing Decisions}
-
+\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
 \subsection{Java Application}
 \subsubsection{User Interface}
 \paragraph{Login}
