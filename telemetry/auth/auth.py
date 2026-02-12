@@ -12,13 +12,15 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
 
 
-# ISSUER = os.environ.get("OIDC_ISSUER")
-# CLIENT_ID = os.environ.get("OIDC_CLIENT_ID")
-# CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
-
 ISSUER = "https://accounts.google.com"
 CLIENT_ID = "190615229216-9jjqaoghi5tko50keou5eha9m8n6u3b7.apps.googleusercontent.com"
 CLIENT_SECRET = "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"
+# Hardcoding Client Secret here is OK.
+# From Google's API documentation: "The client ID and client secret
+# obtained from the API Console are embedded in the source code of
+# your application. In this context, the client secret is 
+# obviously not treated as a secret." 
+# The above quote is from "https://googleapis.dev/ruby/google-api-client/v0.36.3/file.oauth-installed.html"
 
 SCOPES = ["openid", "profile" ,"email"]
 
