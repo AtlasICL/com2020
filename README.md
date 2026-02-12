@@ -38,17 +38,14 @@ com2020/
 │   └── pom.xml
 ├── telemetry/
 │   ├── core/
-│   │   ├── __init__.py
 │   │   ├── events.py
 │   │   ├── logic.py
 │   │   ├── parsing.py
 │   │   └── export.py
 │   ├── gui/
-│   │   ├── __init__.py
 │   │   ├── gui.py
 │   │   └── plotting.py
 │   ├── auth/
-│   │   ├── __init__.py
 │   │   └── auth.py
 │   ├── schema.md (json schema)
 │   ├── requirements.txt (for pip)
