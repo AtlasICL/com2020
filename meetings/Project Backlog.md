@@ -15,7 +15,7 @@ Backlog contains things we need to do. Requirement is then split into user stori
 ### Ethical and Legal considerations
 #### Privacy of Telemetry
 #### Consent and Disclosure
-#### Accessability
+#### Accessibility
 #### IP and Licensing  
 ### License 
 ### Software and Data Inventory
