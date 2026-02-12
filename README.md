@@ -58,12 +58,9 @@ com2020/
 ```
 
 ## Requirements
-The game module requires **Java** and **Maven**.  
+The game module requires **Java 17+** and **Maven**.  
 The telemetry module require **Python3**, and additional Python libraries, which may be
 installed using `python -m pip install -r requirements.txt`.
-
-## CI/CD and testing
-This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
