@@ -53,6 +53,8 @@ com2020/
 ├── report/
 │   └── ...
 ├── README.md
+├── simulation_events.json
+├── telemetry_events.json
 ├── deployment_guide.md
 └── .gitignore
 ```

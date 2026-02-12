@@ -1,11 +1,12 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import seaborn as sns
+from pathlib import Path
 
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
 
-TMP_FILENAME: str = "logs.json"
+ROOT_DIRECTORY = Path.cwd().parent
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
@@ -17,7 +18,6 @@ class GUI_SETTINGS:
     FONT_SIZE = 12
     BACKGROUND_COLOR = "#edd68f"
 
-
 class TelemetryAppGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
@@ -26,6 +26,8 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
+        self.file_name = ROOT_DIRECTORY/ "telemetry_events.json"
+        self.logic_engine = EventLogicEngine()
 
         style.configure(
             ".",
@@ -66,6 +68,10 @@ class TelemetryAppGUI(tk.Tk):
         self.make_welcome_screen()
 
         sns.set_theme(style="dark", context="notebook")
+        
+        self.tab_spike.rowconfigure(0, weight=1)
+        self.tab_spike.columnconfigure(0, weight=1)
+        
         self.funnel_plot = PlotTab(
             parent=self.tab_funnel,
             title="Funnel view",
@@ -78,6 +84,11 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Number of failures",
         )
+        self.spike_suggestion = ttk.Label(
+            self.tab_spike,
+            text="Suggestion: " + self.generate_spike_suggestion()
+        )
+        self.spike_suggestion.grid(row=1, column=0, pady=10, sticky="ew")
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
             title="HP remaining by stage)",
@@ -91,13 +102,11 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Coins gained",
         )
 
-        self.logic_engine = EventLogicEngine()
 
         self.refresh_funnel_graph()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
         self.refresh_coins_gained_plots()
-
 
     def make_welcome_screen(self):
         welcome = ttk.Label(
@@ -114,19 +123,57 @@ class TelemetryAppGUI(tk.Tk):
         )
         sign_in_button.pack(pady=(10, 20))
 
+        self.switch_btn_text = tk.StringVar()
+        self.switch_btn_text.set("Change to simulation data")
+
+        switch_simulation_button = ttk.Button(
+            self.tab_home,
+            textvariable=self.switch_btn_text,
+            command=self.toggle_file
+        )
+        switch_simulation_button.pack(pady=(10,20))
+
+        reset_telemetry_button = ttk.Button(
+            self.tab_home,
+            text="Reset Telemetry Data",
+            command=self.reset_telemetry
+        )
+        reset_telemetry_button.pack(pady=(10,20))
 
     def google_auth(self):
         print("Sign in requested")
         return
+    
+    def toggle_file(self):
+        if self.switch_btn_text.get() == "Change to simulation data":
+            self.switch_btn_text.set("Change to telemetry data")
+            self.file_name = ROOT_DIRECTORY / "simulation_events.json"
+            self.refresh_all()
+        else:
+            self.switch_btn_text.set("Change to simulation data")
+            self.file_name = ROOT_DIRECTORY / "telemetry_events.json"
+            self.refresh_all()
+    
+    def reset_telemetry(self):
+        confirmed = messagebox.askyesno(
+        title="Switch Data Source",
+        message="Are you sure you want to reset telemetry data? All existing telemetry data will be lost")
+        if confirmed:
+            with open(ROOT_DIRECTORY / 'telemetry_events.json', 'w') as f:
+                f.write('')
 
-
+    def refresh_all(self):
+        self.refresh_funnel_graph()
+        self.refresh_coins_gained_plots()
+        self.refresh_difficulty_spike_failure_plot()
+        self.refresh_health_plots()
 
     def refresh_funnel_graph(self):
         """
         Refreshes the plot of players remaining per stage (referred to
         as funnel view).
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         funnel_data: dict[int, int] = self.logic_engine.funnel_view()
         self.funnel_plot.plot_line(
             funnel_data.keys(), 
@@ -140,13 +187,14 @@ class TelemetryAppGUI(tk.Tk):
         Refreshes the plots for difficulty spike in terms of number 
         of failures per stage.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
         self.spike_plot.plot_line(
             spike_data.keys(), 
             spike_data.values(), 
             label="Difficulty spikes (by failure rate)"
         )
+        self.spike_suggestion.config(text="Suggestion: " + self.generate_spike_suggestion())
     
 
     def get_average_dict_of_stage_dicts(
@@ -180,7 +228,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the plots of HP remaining per stage per difficulty.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = self.logic_engine.compare_health_per_stage_per_difficulty()
 
         series = []
@@ -198,7 +246,7 @@ class TelemetryAppGUI(tk.Tk):
         Refreshed the plots for average coins gained per stage per
         difficulty.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = self.logic_engine.compare_coins_per_stage_per_difficulty()
 
         series = []
@@ -209,6 +257,21 @@ class TelemetryAppGUI(tk.Tk):
             series.append((x, y, str(difficulty.value)))
 
         self.fairness_plot.plot_multi_line(series)
+
+    def generate_spike_suggestion(self):
+        """
+        Generates a difficulty change suggestion 
+        for difficulty spikes.
+        """
+        stages = ""
+        spikes = self.logic_engine.fail_difficulty_spikes()
+        mean = sum(spikes.values())/10
+        for stage in spikes:
+            if spikes[stage] > mean:
+                stages += str(stage) + ", "
+        if stages != "":
+            return "High failure rate in " + stages + " consider increasing lives by 2."
+        return "No suggestions available"
 
 # TODO: We need to figure out when and how to refresh the plots. This
 # will also presumably become significantly harder when reading the

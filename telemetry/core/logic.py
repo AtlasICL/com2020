@@ -1,5 +1,6 @@
 from core.events import *
 from core.parsing import parse_file, ValidEvent
+from pathlib import Path
 
 class EventLogicEngine:
     def __init__(self):
@@ -56,12 +57,12 @@ class EventLogicEngine:
         ]
 
 
-    def categorise_events(self, filename: str) -> None:
+    def categorise_events(self, filename: Path) -> None:
         """
         Creates objects from the json file provided. 
 
         :param filename: json file with custom schema.
-        :type filename: str
+        :type filename: Path
         """
         # TODO: We would need to implement __eq__ methods for our 
         # event classes if we want the set() functionality of 
@@ -337,17 +338,3 @@ class EventLogicEngine:
         """
         return {diff: self.get_coins_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
-
-
-def main():
-    LogicEngine = EventLogicEngine()
-    LogicEngine.categorise_events("example_data3.json")
-    print(LogicEngine.fail_difficulty_spikes())
-    print(LogicEngine.funnel_view())
-    # for attr in LogicEngine._attributes:
-    #     for event in attr:
-    #         print(repr(event))
-
-
-if __name__ == "__main__":
-    main()
