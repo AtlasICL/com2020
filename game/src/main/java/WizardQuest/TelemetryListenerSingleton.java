@@ -36,7 +36,7 @@ public class TelemetryListenerSingleton {
         private LocalDateTime mostRecentTimeStamp;
         private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
         private static final ObjectMapper mapper = new ObjectMapper();
-        private static File DESTINATION_FILE  = new File("events.json"); //change to actual filepath
+        private static File DESTINATION_FILE  = new File("../../telemetry_events.json"); //change to actual filepath
         
         @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
         abstract static class ignoreSourceMixin {}
@@ -359,7 +359,7 @@ public class TelemetryListenerSingleton {
 
         @Override
         public void resetDestinationFile() {
-            DESTINATION_FILE = new File("events.json");
+            DESTINATION_FILE = new File("../../telemetry_events.json");
         }
     }
 }
