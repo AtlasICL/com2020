@@ -242,7 +242,7 @@ public interface SettingsInterface {
     public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException;
 
     /**
-     * Allows JUnit tests to write to a temporary JSON file rather than login_file.json,
+     * Allows JUnit tests to write to a temporary JSON file rather than logins_file.json,
      * mitigating any risk of test data corrupting the real JSON file.
      *
      * @param file the temporary JSON file to be written to.
@@ -250,7 +250,7 @@ public interface SettingsInterface {
     public void setLoginsDestinationFile(File file);
 
     /**
-     * Resets the filepath to the real JSON file, login_file.json, after running a JUnit test.
+     * Resets the filepath to the real JSON file, logins_file.json, after running a JUnit test.
      */
     public void resetLoginsDestinationFile();
 

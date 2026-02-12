@@ -24,44 +24,44 @@ com2020/
 │   │   ├── main/
 │   │   │   └── java/
 │   │   │       └── WizardQuest/
-│   │   │           └── game.java
+│   │   │           ├── gamefiles.java
+│   │   │           └── ...
 │   │   └── test/
 │   │       ├── java/
 │   │       │   └── WizardQuest/
 │   │       │       ├── unit/
 │   │       │       │   └── GameUnitTest.java
-│   │       │       ├── integration/
-│   │       │       │   └── GameIntegrationTest.java
-│   │       │       └── e2e/
-│   │       │           └── FullGameRunE2ETest.java
+│   │       │       └── integration/
+│   │       │           └── GameIntegrationTest.java
 │   │       └── resources/
-│   │           └── testResources.csv
+│   │           └── testResources.csv (placeholder)
 │   └── pom.xml
 ├── telemetry/
-│   ├── telemetry_app/
-│   │   ├── __init__.py
+│   ├── core/
 │   │   ├── events.py
 │   │   ├── logic.py
-│   │   └── gui.py
-│   ├── schema.md
-│   ├── requirements.txt
-│   └── telemetry_app.py
-├── meetings/
-│   ├── meeting_minutes.md
-│   └── project_specification.pdf
+│   │   ├── parsing.py
+│   │   └── export.py
+│   ├── gui/
+│   │   ├── gui.py
+│   │   └── plotting.py
+│   ├── auth/
+│   │   └── auth.py
+│   ├── schema.md (json schema)
+│   ├── requirements.txt (for pip)
+│   ├── telemetry_app.py
+│   └── README.md (python-specific instructions for dev)
 ├── README.md
 ├── simulation_events.json
 ├── telemetry_events.json
+├── deployment_guide.md
 └── .gitignore
 ```
 
 ## Requirements
-The game module requires **Java** and **Maven**.  
+The game module requires **Java 17+** and **Maven**.  
 The telemetry module require **Python3**, and additional Python libraries, which may be
 installed using `python -m pip install -r requirements.txt`.
-
-## CI/CD and testing
-This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)

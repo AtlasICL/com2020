@@ -9,6 +9,8 @@ import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
@@ -30,19 +32,49 @@ public class TelemetryListenerIntegrationTests {
      * or the credentials are invalid when trying to authenticate the user.
      */
     @BeforeEach
-    void setUp() throws AuthenticationException {
-        SettingsSingleton.getSettings().createNewUser("TestUser", "TestPassword", Role.PLAYER);
-        SettingsSingleton.getSettings().authenticateUser("TestUser", "TestPassword");
+    void setUp() throws AuthenticationException, IOException {
+        // Initialise temporary JSON files for a test user's login to be stored in.
+        File TEMP_LOGINS_FILE = tempDir.resolve("logins_file.json").toFile();
+        TEMP_LOGINS_FILE.createNewFile();
+        try (FileWriter fw = new FileWriter(TEMP_LOGINS_FILE)) {
+            fw.write("{}");
+        }
+        SettingsSingleton.getInstance().setLoginsDestinationFile(TEMP_LOGINS_FILE);
+
+        // Initialise and create temporary JSON files for a test user's settings to be stored in.
+        File TEMP_SETTINGS_FILE = tempDir.resolve("settings_file.json").toFile();
+        TEMP_SETTINGS_FILE.createNewFile();
+        try (FileWriter fw = new FileWriter(TEMP_SETTINGS_FILE)) {
+            fw.write("{}");
+        }
+        SettingsSingleton.getInstance().setSettingsDestinationFile(TEMP_SETTINGS_FILE);
+
+        // Initialise a temporary JSON file to test the reading and writing of event objects.
         TEMP_DESTINATION_FILE = tempDir.resolve("events.json").toFile();
-        TelemetryListenerSingleton.setDestinationFile(TEMP_DESTINATION_FILE);
-        this.testEvent = new NormalEncounterStartEvent(null,
-                SettingsSingleton.getSettings().getUserID(),
-                SettingsSingleton.getSettings().getSessionID(),
+        TEMP_DESTINATION_FILE.createNewFile();
+        try (FileWriter fw = new FileWriter(TEMP_DESTINATION_FILE)) {
+            fw.write("{}");
+        }
+        TelemetryListenerSingleton.getInstance().setDestinationFile(TEMP_DESTINATION_FILE);
+
+        // Create and authenticate a test user.
+        SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
+        SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
+
+        // Start a session for the test user, which will allow our test event to be invoked in each test.
+        StartSessionEvent startSession = new StartSessionEvent(new Object(),
+                SettingsSingleton.getInstance().getUserID(),
+                SettingsSingleton.getInstance().getSessionID(),
                 TimeManagerInterface.convertDateTime(LocalDateTime.now()),
-                "NormalEncounterStart",
-                EncounterType.ENCOUNTERTYPE_1,
-                1,
-                Difficulty.MEDIUM);
+                DifficultyEnum.MEDIUM);
+        TelemetryListenerSingleton.getInstance().onStartSession(startSession);
+        this.testEvent = new NormalEncounterStartEvent(new Object(),
+                SettingsSingleton.getInstance().getUserID(),
+                SettingsSingleton.getInstance().getSessionID(),
+                TimeManagerInterface.convertDateTime(LocalDateTime.now()),
+                EncounterEnum.ENCOUNTERTYPE_1,
+                DifficultyEnum.MEDIUM,
+                1);
     }
 
     /**
@@ -50,14 +82,15 @@ public class TelemetryListenerIntegrationTests {
      */
     @Test
     @DisplayName("TelemetryListener - Telemetry Event written to JSON if opted into telemetry")
-    void onNormalEncounterStart_telemetryWrittenIfOptedIn() throws AuthenticationException {
-        // Enable telemetry for the authenticated user and invoke the relevant listener method.
-        SettingsSingleton.getSettings().setTelemetryEnabled(true);
-        TelemetryListenerSingleton.getTelemetryListener().onNormalEncounterStart(this.testEvent);
-        // Since telemetry is enabled, the file should now be created according to the file path.
-        // The file should be non-empty, it should contain the details of this telemetry event.
-        assertTrue(TEMP_DESTINATION_FILE.exists());
-        assertTrue(TEMP_DESTINATION_FILE.length() > 0);
+    void onNormalEncounterStart_telemetryWrittenIfOptedIn() throws Exception {
+        // Enable telemetry for the authenticated user.
+        SettingsSingleton.getInstance().setTelemetryEnabled(true);
+        // Since telemetry is enabled, the event should be written to events.json.
+        // Therefore, the length of the file should increase from the listener method being invoked.
+        long lengthBeforeWrite = TEMP_DESTINATION_FILE.length();
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(this.testEvent);
+        long lengthAfterWrite = TEMP_DESTINATION_FILE.length();
+        assertTrue(lengthBeforeWrite < lengthAfterWrite);
     }
 
     /**
@@ -66,12 +99,15 @@ public class TelemetryListenerIntegrationTests {
      */
     @Test
     @DisplayName("TelemetryListener - Telemetry Event not written to JSON if opted out of telemetry")
-    void onNormalEncounterStart_telemetryNotWrittenIfOptedOut() throws AuthenticationException {
-        // Disable telemetry for the authenticated user and invoke the relevant listener method.
-        SettingsSingleton.getSettings().setTelemetryEnabled(false);
-        TelemetryListenerSingleton.getTelemetryListener().onNormalEncounterStart(this.testEvent);
-        // Since telemetry is disabled, the file should not be created at all.
-        assertFalse(TEMP_DESTINATION_FILE.exists());
+    void onNormalEncounterStart_telemetryNotWrittenIfOptedOut() throws Exception {
+        // Disable telemetry for the authenticated user.
+        SettingsSingleton.getInstance().setTelemetryEnabled(false);
+        // Since telemetry is disabled, the event should not be written to events.json.
+        // Therefore, the length of the file should not change from the listener method being invoked.
+        long lengthBefore =  TEMP_DESTINATION_FILE.length();
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(this.testEvent);
+        long lengthAfter = TEMP_DESTINATION_FILE.length();
+        assertEquals(lengthBefore, lengthAfter);
     }
 
     /**
@@ -79,6 +115,8 @@ public class TelemetryListenerIntegrationTests {
      */
     @AfterEach
     void cleanUp() {
-        TelemetryListenerSingleton.resetDestinationFile();
+        SettingsSingleton.getInstance().resetLoginsDestinationFile();
+        SettingsSingleton.getInstance().resetSettingsDestinationFile();
+        TelemetryListenerSingleton.getInstance().resetDestinationFile();
     }
 }
