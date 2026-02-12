@@ -48,11 +48,4 @@ public enum EncounterEnum {
         return telemetryName;
     }
 
-    /**
-     * Gets the number of enemies during an encounter
-     * @return the enemy count
-     */
-    public int getEnemyCount(){
-        return enemies.length;
-    }
 }

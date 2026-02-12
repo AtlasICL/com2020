@@ -10,10 +10,6 @@ import java.util.List;
 public abstract class EnemyBase implements EntityInterface {
     private int health;
     private int maxHealth;
-    private float physicalDamageModifier = 1.0f;
-    private float fireDamageModifier = 1.0f;
-    private float waterDamageModifier = 1.0f;
-    private float thunderDamageModifier = 1.0f;
 
     @Override
     public abstract List<AbilityType> getAbilities();
@@ -57,23 +53,4 @@ public abstract class EnemyBase implements EntityInterface {
     public void resetHealth(){
         this.health = this.maxHealth;
     }
-
-
-    public void setPhysicalDamageModifier(float physicalDamageModifier) {
-        this.physicalDamageModifier = physicalDamageModifier;
-    }
-
-    public void setFireDamageModifier(float fireDamageModifier) {
-        this.fireDamageModifier = fireDamageModifier;
-    }
-
-    public void setWaterDamageModifier(float waterDamageModifier) {
-        this.waterDamageModifier = waterDamageModifier;
-    }
-
-    public void setThunderDamageModifier(float thunderDamageModifier) {
-        this.thunderDamageModifier = thunderDamageModifier;
-    }
-
-
 }
