@@ -58,5 +58,5 @@ public interface EntityInterface {
      *
      * @return the entity type.
      */
-    public EntityType getType();
+    public EntityEnum getType();
 }

@@ -3,11 +3,11 @@ package WizardQuest;
 /**
  * Enumerates all encounter types in the game.
  */
-public enum EncounterType {
-    GOBLIN_ENCOUNTER(new EntityType[]{EntityType.GOBLIN}, "GoblinEncounter"),
-    FISHMAN_ENCOUNTER(new EntityType[]{EntityType.FISH_MAN}, "FishManEncounter");
+public enum EncounterEnum {
+    GOBLIN_ENCOUNTER(new EntityEnum[]{EntityEnum.GOBLIN}, "GoblinEncounter"),
+    FISHMAN_ENCOUNTER(new EntityEnum[]{EntityEnum.FISH_MAN}, "FishManEncounter");
 
-    private final EntityType[] enemies;
+    private final EntityEnum[] enemies;
     private final String telemetryName;
 
     /**
@@ -16,7 +16,7 @@ public enum EncounterType {
      * @param enemies array of EntityType objects that appear occur an encounter
      * @param telemetryName the name used for telemetry events
      */
-    private EncounterType(EntityType[] enemies, String telemetryName) {
+    private EncounterEnum(EntityEnum[] enemies, String telemetryName) {
         this.enemies = enemies;
         this.telemetryName = telemetryName;
     }
@@ -26,7 +26,7 @@ public enum EncounterType {
      *
      * @return an array of EntityType objects
      */
-    public EntityType[] getEnemies() {
+    public EntityEnum[] getEnemies() {
         return enemies;
     }
 

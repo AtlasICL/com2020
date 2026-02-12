@@ -19,8 +19,8 @@ public class GainCoinEvent extends EncounterEvent{
      * @param stageNumber   the stage player is collecting coins on.
      * @param coinsGained   number of coins gained by the player.
      */
-    public GainCoinEvent(Object source, int userID, int sessionID, 
-        String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int coinsGained){
+    public GainCoinEvent(Object source, int userID, int sessionID,
+                         String timeStamp, EncounterEnum encounterName, Difficulty difficulty, int stageNumber, int coinsGained){
         super(source, userID, sessionID, timeStamp, "GainCoin", encounterName, difficulty, stageNumber);
         this.coinsGained = coinsGained;
     }

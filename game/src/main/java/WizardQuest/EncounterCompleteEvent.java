@@ -7,7 +7,7 @@ public abstract class EncounterCompleteEvent extends EncounterEvent {
      * common data.
      * @param playerHPRemaining     A player's health points at the end of an encounter.
      */
-    public EncounterCompleteEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
+    public EncounterCompleteEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterEnum encounterName,
                                Difficulty difficulty, int stageNumber, int playerHPRemaining) {
         super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.playerHPRemaining = playerHPRemaining;

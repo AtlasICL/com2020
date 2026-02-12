@@ -59,8 +59,8 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public EntityType getType() {
-        return EntityType.PLAYER;
+    public EntityEnum getType() {
+        return EntityEnum.PLAYER;
     }
 
     @Override

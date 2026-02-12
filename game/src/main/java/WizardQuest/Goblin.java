@@ -8,7 +8,7 @@ import java.util.List;
  * They have low health and use only physical attacks
  * Phase 1 enemy
  */
-public class Goblin extends Enemy{
+public class Goblin extends EnemyBase {
     /**
      *
      * @param difficulty defines the current game difficulty for this concrete enemy, used to scale health
@@ -21,9 +21,12 @@ public class Goblin extends Enemy{
         return new LinkedList<>(List.of(AbilityType.SLASH, AbilityType.PUNCH));
     }
     @Override
-    public EntityType getType(){
-        return EntityType.GOBLIN;
+    public EntityEnum getType(){
+        return EntityEnum.GOBLIN;
     }
-
+    @Override
+    public int calcDamage(int base, DamageType type){
+        return base; // Goblin has no resistance
+    }
 
 }

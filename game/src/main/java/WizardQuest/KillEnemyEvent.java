@@ -19,9 +19,9 @@ public class KillEnemyEvent extends EncounterEvent{
      * @param stageNumber   the stage player has completed.
      * @param enemyType     type of enemy encounter.
      */
-    public KillEnemyEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, 
-            EnemyType enemyType){
+    public KillEnemyEvent(Object source, int userID, int sessionID,
+                          String timeStamp, EncounterEnum encounterName, Difficulty difficulty, int stageNumber,
+                          EnemyType enemyType){
                 super(source, userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);
                 this.enemyType = enemyType;
     }

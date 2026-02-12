@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
  * Each of the types in this class has a reference to their concrete class used for instantiation, done via reflection
  */
 
-public enum EntityType {
+public enum EntityEnum {
     PLAYER(Player.class, "Player"),
     GOBLIN(Goblin.class, "Goblin"), // enemy 1
     FISH_MAN(FishMan.class, "FishMan"), // enemy 2
@@ -28,7 +28,7 @@ public enum EntityType {
      * @param enemyClass the class object for instantiation using reflection
      * @param telemetryName the naming for the telemetry events
      */
-    private EntityType(Class<? extends EntityInterface> enemyClass, String telemetryName) {
+    private EntityEnum(Class<? extends EntityInterface> enemyClass, String telemetryName) {
         this.enemyClass = enemyClass;
         this.telemetryName = telemetryName;
     }

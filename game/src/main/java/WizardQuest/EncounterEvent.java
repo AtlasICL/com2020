@@ -2,7 +2,7 @@ package WizardQuest;
 
 public abstract class EncounterEvent extends TelemetryEvent {
     private final int stageNumber;
-    private final EncounterType encounterName;
+    private final EncounterEnum encounterName;
     private final Difficulty difficulty;
 
     /**
@@ -21,7 +21,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param stageNumber   the current stage player is attempting.
      * @param difficulty    the difficulty used for the player's session.
      */
-    public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterType encounterName,
+    public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterEnum encounterName,
             Difficulty difficulty, int stageNumber) {
         super(source, userID, sessionID, timeStamp, telemetryName);
         this.encounterName = encounterName;
@@ -33,7 +33,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * Gets the name for the encounter this event was generated on.
      * @return the encounter's name.
      */
-    public EncounterType getEncounterName(){
+    public EncounterEnum getEncounterName(){
         return this.encounterName;
     }
 

@@ -17,8 +17,8 @@ public class BossEncounterStartEvent extends EncounterEvent{
      * @param difficulty    the difficulty used for the players session.
      * @param stageNumber   the current stage player is attempting.
      */
-    public BossEncounterStartEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber){
+    public BossEncounterStartEvent(Object source, int userID, int sessionID,
+                                   String timeStamp, EncounterEnum encounterName, Difficulty difficulty, int stageNumber){
         super(source, userID, sessionID, timeStamp, "BossEncounterStart", 
             encounterName, difficulty, stageNumber);
     }

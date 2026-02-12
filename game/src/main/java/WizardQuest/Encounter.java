@@ -3,9 +3,9 @@ package WizardQuest;
 public class Encounter implements EncounterInterface {
     private EntityInterface[] enemies;
     private boolean completed;
-    private final EncounterType type;
+    private final EncounterEnum type;
 
-    public Encounter(EncounterType type) {
+    public Encounter(EncounterEnum type) {
         this.type = type;
     }
 
@@ -25,7 +25,7 @@ public class Encounter implements EncounterInterface {
     }
 
     @Override
-    public EncounterType getType() {
+    public EncounterEnum getType() {
         return type;
     }
 

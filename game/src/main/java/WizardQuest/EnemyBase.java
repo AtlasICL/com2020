@@ -1,6 +1,5 @@
 package WizardQuest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  * This class provides ways to calculate health and damage caused
  * Should be extended by Concrete enemy classes with their own definitions of stats, abilities and entity type
  */
-public abstract class Enemy implements EntityInterface {
+public abstract class EnemyBase implements EntityInterface {
     private int health;
     private int maxHealth;
     private float physicalDamageModifier = 1.0f;
@@ -23,7 +22,7 @@ public abstract class Enemy implements EntityInterface {
      * Constructor with specified max health.
      * @param maxHealth the maximum health for this enemy
      */
-    public Enemy(int maxHealth){
+    public EnemyBase(int maxHealth){
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }
@@ -47,16 +46,7 @@ public abstract class Enemy implements EntityInterface {
      * @return the total damage inflicted by this attack.
      */
     @Override
-    public int calcDamage(int base, DamageType type){
-        float modifier =  switch(type){
-            case WATER -> waterDamageModifier;
-            case PHYSICAL -> physicalDamageModifier;
-            case FIRE -> fireDamageModifier;
-            case THUNDER -> thunderDamageModifier;
-            case ABSOLUTE -> 1.0f;
-        };
-        return Math.round(base * modifier);
-    }
+    public abstract int calcDamage(int base, DamageType type);
 
 
     @Override
