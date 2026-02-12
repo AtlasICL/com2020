@@ -1,0 +1,819 @@
+\documentclass{article}
+
+\usepackage[english]{babel} % To obtain English text with the blindtext package
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+
+%settings paragraph to allow heading 4
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph}
+  {1em}
+  {}
+
+\titlespacing*{\paragraph}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\title{Telemetry Game Report}
+\author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
+\begin{document}
+\maketitle
+\section{Executive Summary}
+TODO Luca C
+
+\section{Problem Framing}
+The monitoring and maintenance of a game is essential for ensuring that players have an enjoyable experience, and that their engagement remains intact.
+However, game designers are often left to rely on their own intuition and small playtests to achieve this.
+Relying on subjective assessment makes it difficult for them to identify problem areas of a game where a player's engagement depreciates - such as difficulty spikes or features that provoke inequity between play styles.
+
+This project integrates an indie game with a telemetry application, generating intuitive telemetry events for several actions which are processed and presented in several ways.
+The objective is to aid the game designer's understanding of a player's experience, and how they could maintain the game to maximise the overall player experience.
+\section{Project Backlog}
+The project was split into three main sections representing the three main areas of work: the documentation, the java application, and the python application. Each of those areas is then further divided into epics and user stories. The epics and stories in this section include both those relevant to sprint 1 and what is planned for sprint 2. Due to the nature of scrum, the epics for sprint 2 may have adapted by the end of that sprint, and so may differ from the epics and stories in this prototype report. 
+\subsection{Documentation}
+\subsubsection{Prototype Report}
+\paragraph{Executive Summary}
+As a product owner I need an executive summary to give me an insight into what is to come in the report and provide the most important details to me.
+\paragraph{Problem Framing}
+As a product owner I need an in depth exploration of the problem so that I am informed of what problem the system should solve and ensure the development team fully understand the problem.
+\paragraph{Project Backlog}
+As a scrum master I need a project backlog so I can determine what work is to be done in each sprint.
+\paragraph{Sprint One Prioritised Requirements}
+As a product owner I need to know what requirements are being prioritised in sprint one to know that they align with my priorities.
+\paragraph{Architecture Schema}
+As a developer I need to know what the project schema is so I can produce code that integrates with it correctly.
+\paragraph{Data Flow Schema}
+As a developer I need to know what the flow of data is so I can work with the data in a manner that integrates well with the rest of the system.
+\paragraph{Telemetry Schema}
+As a developer I need to know the telemetry schema so I can interact with telemetry events correctly in a way which integrates well with the rest of the system.
+\paragraph{Initial Evaluation}
+As a product owner I need an initial evaluation of the prototype so I can see the developers are aware of their product and know what areas to work on in the future to improve it. 
+\paragraph{Sprint Two Prioritised Requirements}
+As a product owner I need to see what requirements are being prioritised and planned for in sprint two so I can know they align with my priorities. 
+\paragraph{Management}
+As a product owner I need to see how the team has worked together and what roles each person took on during development so I can evaluate each members performance and ensure the team is working well.
+\subsubsection{Meeting Minutes}
+\paragraph{Meeting Attendance}
+As a scrum master I need to know who is attending meetings so I can follow up people not there to ensure they are kept up to date.
+\paragraph{Work Completed}
+As a scrum master I need to know what work has been completed in each weekly scrum so I can determine what work needs to be prioritised for the next scrum, and plan for the next sprint. 
+\paragraph{Topics Discussed}
+As a scrum master I need to know what topics were discussed in the weekly scrum so I can keep developers who could not make it to the meeting updated.
+\paragraph{Work to be Done}
+As a scrum master I need to know what work has been assigned to each member so that I can check they're completing work on time, and follow up with them if issues arise. 
+\subsubsection{Risk Register}
+\paragraph{List of Risks}
+As a stakeholder I need to know what risks there are in the software so I can make informed decisions about the adoption and use of the software. 
+\paragraph{Risk Mitigations}
+As a stakeholder I need each risk to have a mitigation plan and owner so that risks are actively managed and their impact reduced.
+\subsubsection{Ethical and Legal Considerations}
+\paragraph{Privacy and Data Protection Analysis}
+As a product owner I need the software to handle data in full legal compliance and respect the privacy of users to foster user trust, maintain regulatory compliance and minimise privacy risk. 
+\paragraph{Consent and Disclosure Analysis}
+As a system user I need the software to obtain my consent for the collection of data, and disclose to me what data is collected and why so that I can make informed decisions about my data. 
+\paragraph{Accessabilty Analysis}
+As a system user with accessability requirements I need to the software to be accessible to me by complying with modern accessability standards so that I can use it to best advantage.
+\paragraph{Intelectual Property and Licensing Implications}
+As a product owner I need to know what the licensing and intellectual property constraints of the software are so that I can use it in full legal compliance and honor the rights of the intellectual property owners. 
+\subsubsection{Project License}
+\paragraph{Determine the Project License}
+As a product owner I need to know what license the product falls under so I that its usage complies with the license. 
+\subsubsection{Software and Data Inventory}
+\paragraph{Software Inventory}
+As a maintainer I need to know what software is a direct dependency of the system as well as this software's license, provenance, cost model and the version in use, so that I can build, test, extend and maintain the system.
+\paragraph{Data Inventory}
+As a maintainer I need to know what data the software directly depends on as well as this data's license, provenance, cost model and the version used, so I can build, test, extend and maintain the system.
+\subsubsection{Deployment Guide}
+\paragraph{Java Application Deployment Instructions}
+As a client I need instructions on how to deploy and run the Java application so I can perform actions using it.
+\paragraph{Python Application Deployment Instructions}
+As a client I need instructions on how to deploy and run the Python application so I can perform actions using it.
+\paragraph{Automated Test Running Instructions}
+As a maintainer I need instructions on how to run the automated test suite so that I can test any changes or extensions to the software to ensure their correctness.
+\subsubsection{Test Evidence}
+\paragraph{Automated Test Evidence}
+As a product owner I need evidence of the system passing automated tests so that I know the software runs correctly in the tested areas. 
+\paragraph{End to End Test Evidence}
+As a product owner I need evidence of the system passing end to end tests so that I know the software runs correctly in the tested areas.
+\subsubsection{Presentation}
+\paragraph{The Problem}
+As a product owner I need to see that the group are aware of the problem the system will solve so that we both reach a point of understanding and agreement in relation to the problem.
+\paragraph{Approach}
+As a product owner I need to see what approach the group took to solving the problem and how they designed their solution so that I can make an informed decision about it's adoption, utility, and effectiveness.
+\paragraph{Implementation}
+As a product owner I need to see what path was taken to implement the product and how it was implemented so that I can understand the implementation and see why they made different decisions in relation to the implementation.
+\paragraph{Evaluation}
+As a product owner I need to see an evaluation of the prototype so that I am informed of its advantages and limitations and thus can know its utility and where best to use it. 
+\paragraph{Demonstration}
+As a product owner I need to see a demonstration of the prototype so that I can see that it works, how to use it, and what it offers as well as to evidence what has been done in the project.
+\paragraph{Limitations and Next Steps}
+As a product owner I need to see where the project is going to next so that I can see it will be improved in areas of limitation and that the group is on schedule to deliver the complete system.
+\subsubsection{Operation Guide}
+\paragraph{Operation Instructions}
+As a client I need an operation guide explaining how to operate the system so I can use it effectively.
+\paragraph{Maintenance Instructions}
+As a maintainer I need clear maintenance instructions so I can ensure the game, settings, viewer and telemetry are functioning properly. 
+\paragraph{Troubleshooting Instructions}
+As a general user I need clear troubleshooting instructions based on clear and understandable error messages so that I can quickly troubleshoot errors and continue playing the game.
+\paragraph{Extension Guide}
+As a maintainer I need to know what areas of the system should be the targets of extension and how to extend of the current system so that when the system needs extension those are done in the easiest, least risky way.
+\subsubsection{Data Management Guide}
+\paragraph{Data Stored}
+As a data protection compliance officer I need to know what data is stored by the system so I can ensure this data is minimised and in full compliance with the law. 
+\paragraph{Data Format}
+As a maintainer I need to know what format the data is stored so I can work with the stored data and extend what data is stored. 
+\subsubsection{Scrum Board}
+\paragraph{Backlog, In Progress and Done Sections}
+As a scrum master I need to know what tasks are to be done, in progress, and completed so I can plan for the next daily scrum.
+\subsection{Python Application}
+\subsubsection{User Interface}
+\paragraph{Login}
+As a designer I need a login menu so that I can log into the python application and use it.
+\paragraph{Dashboards}
+As a designer I need a dashboard menu so that I can view the various dashboard views of the captured telemetry data.
+\paragraph{Suggestions}
+As a designer I need a suggestions menu so that I can view the rule based suggestions produced by the application.
+\paragraph{Decision Log}
+As a designer I need to a menu to view the decision log so I can see what design decisions have been made.
+\subsubsection{Authentication and Acess Control}
+\paragraph{Login}
+As a general user I need to be able to log in with the same credentials as for the java application so that I can be granted access to the telemetry application in line with my role.
+\paragraph{Password Reset}
+As a general user I need to be able to reset my login credentials so that I can recover my login if I lose them.
+\paragraph{Player Permissions}
+As a player I need to not be able to access the telemetry application so that I do not view collected telemetry in a way that invades the privacy of others.
+\paragraph{Designer Permissions}
+As a designer I need to be able to access the telemetry application so that I can view the telemetry dashboards, design log and rule based suggestions.
+\paragraph{Developer Permissions}
+As a developer I need to be able to do anything a designer can do so that I can help develop the game based on information in the telemetry application.
+\subsubsection{Dashboard Views}
+\paragraph{Simulation View}
+As a designer I need to see the simulation predictions to the effects of my design decisions as dashboard views so that I can make informed design decision.
+\paragraph{Funnel View}
+As a designer I need to be able to view a stage by stage completion funnel so that I can see at what stages player runs drop off and what the failure rate is of each stage.
+\paragraph{Difficulty Spikes}
+As a designer I need to be able to view which stages have unusually high failure rates or take a long time to complete so that I can focus my attention on balancing them.
+\paragraph{Progress Curves}
+As a designer I need to view the time to complete each stage and how many coins are accumulated on each stage so that I can better balance these factors.
+\paragraph{Fairness Indicators}
+As a designer I need to view a comparison between different play styles on the same stages so that I can determine if the game unfairly rewards one play style over another.
+\paragraph{Comparison Mode}
+As a designer I need to view a comparison on key metrics between the different difficulty modes so that I can ensure the jump in difficulty between modes is appropriate. 
+\subsubsection{Design Suggestions}
+\paragraph{Rule Based Design Suggestions}
+As a designer I need the telemetry application to provide rule based design suggestions to help me improve the game's balance.
+\subsubsection{Telemetry Events}
+\paragraph{Read Telemetry Events}
+As a designer I need the python application to be able to read the same telemetry event set that the java application produces so that I can view them in the application.
+\paragraph{Validate Telemetry Events}
+As a designer I need the python application to be able to validate telemetry events so it can handle anomalous telemetry events gracefully.
+\subsubsection{Seeded Dataset}
+\paragraph{Telemetry Events}
+As a developer I need a large number of seeded telemetry events so that I can use them to test the system handles telemetry in the expected manner.
+\paragraph{Stage Variety}
+As a developer I need the events in the dataset to come from all stages in the game so that I can test the systems can handle events from all stages.
+\paragraph{Difficulty Variety}
+As a developer I need the events in the dataset to come from all difficulty configurations so that I can test the systems can handle events from all difficulties.
+\paragraph{User Variety}
+As a developer I need the events in the dataset to come from a variety of user IDs so that I can test the system can handle events form a variety of user IDs.
+\paragraph{Session Variet}
+As a developer I need the events in the dataset to come from a variety of different sessions so that I can test the system can handle events from a variety of sessions. 
+\paragraph{Anomalous Telemetry Events}
+As a developer I need some of the seeded telemetry events to contain anomalous data so that I can test the system is able to gracefully handle this data. 
+\paragraph{Balancing Decisions}
+As a developer I need a set of sample balancing decisions within a sample decision log, that are a combination of good and bad decisions so that I can test the system is able to process the decision log. 
+\subsection{Java Application}
+\subsubsection{User Interface}
+\paragraph{Login}
+As a general user I need a login screen so I can log into the java game to use it.
+\paragraph{Main Menu}
+As a general user I need a main menu so that I can have a central access point to starting runs, viewing my progress and accessing my settings.
+\paragraph{Settings}
+As an authenticated user I need a settings menu to allow me to change settings, design parameters, and assign roles based on what role I have. 
+\paragraph{Start Run}
+As a general user I need a menu to allow me to select which difficulty for a game run I want to start.
+\paragraph{Encounter}
+As a general user I need an encounter menu so that I can select which attack abilities to use against enemies, view enemy health and view my health, lives, magic and coins. 
+\paragraph{Shop}
+As a general user I need a shop menu so that I can view which upgrades are available for me to purchase, how much they cost, and how many coins I have to buy them with.
+\paragraph{End Run}
+As a general user I need an end run menu so that I can view which stage I reached, how many times I died, how many coins I finished with, and how long the run was. 
+\subsubsection{Autheentication and Acesss Control}
+\paragraph{subsubsection}{Login}
+As a general user I need to be able to login with a username and password so that the telemetry events produced by me are associated with my user ID. 
+\paragraph{}{Login Reset}
+As a general user I need to be able to reset my login so if I forget my login credentials I can recover my account by resetting them.
+\paragraph{Player Permissions}
+As a player I need to be able to login, change whether telemetry is enabled, view my run progress, view a telemetry disclosure, play any number of game runs so that I can play the game and consent to the collection of my telemetry data.
+\paragraph{Designer Permissions}
+As a designer I need to be able to do anything a player can do, as well as view and edit design parameters in the settings screen so that I can edit the game's design and balance. 
+\paragraph{Develoer Permissions}
+As a developer I need to be able to do anything a designer can do, as well as assign roles to different users so users can gain roles other than the player role. 
+\subsubsection{Settings}
+\paragraph{Telemetry}
+As a general user I need a setting that allows me to enable and disable telemetry that is enabled by default so I can withdraw my consent for the collection of telemetry events relating to my play.
+\paragraph{Design Parameters}
+As a designer I need to view and set the values of the design parameters of the system so that I can balance the game.
+\paragraph{Simulation Mode}
+As a designer I need to view a simulation of the game so that I can see what the effect of changing the design parameters are on the game's balance.
+\paragraph{Role Asignment}
+As a developer I need to be able assign roles to different users so that designers are given the designer role and developers are given the developer role, giving them the correct authorisation. 
+\subsubsection{Gameplay Loop}
+\paragraph{Start Run}
+As a general user I need to be able to start a run so that I can play the game.
+\paragraph{Chose Difficulty}
+As a general user I need to be able to chose the difficulty for my run so that it is an appropriate difficulty for my skill level.
+\paragraph{Be in an Encounter}
+As a general user I need to be able to enter an encounter after starting a run, and go though one encounter per stage so that I am challenged by the game.
+\paragraph{Use Physcal Attack Abilities}
+As a general user in an encounter I need to be able to select any physical attack ability I have and use them against any enemy in the encounter so that I can make interesting decisions in the game that affect how successful I am.
+\paragraph{Use Magical Attack Abilities}
+As a general user in an encounter I need to be able to select any magic attack ability I have, view it's magic cost and if I have enough magic use it against any enemy in the encounter so that I can make interesting decisions in the game that affect how successful I am.
+\paragraph{Take Turns}
+As a general user in an encounter I need to be able to take my turn before all enemies take their turn, then have each enemy in the encounter take their turn so that the encounter is fair.
+\paragraph{Kill Enemies}
+As a general user in an encounter I need attack abilities to reduce enemy health and when their health is reduced to 0 or less they die and can no longer take turns so that I can prioritise dangerous enemies and succeed in encounters.
+\paragraph{Complete an Encounter}
+As a general user in an encounter I need to complete the encounter I'm in by killing all the enemies so that I can progress to the next stage.
+\paragraph{View Shop}
+As a general user after completing an encounter that was not the final encounter, I need to view a number of  upgrades from the list of all upgrades that I have not yet purchased, that are available for purchase in the shop and their cost so that I can buy upgrades and empower my character. 
+\paragraph{Purchase Upgrades in the Shop}
+As a general user in the shop I need to be able to purchase upgrades that I have enough coins to buy and obtain the passive or attack abilities associated with the upgrades so that I can customise my character.
+\paragraph{Complete a Run}
+As a general user after I complete the final encounter, run out of lives, or quite a run, I need the run to be completed so that I can view the run statistics and go back to the main menu.
+\subsubsection{Game Mechanics}
+\paragraph{Coins}
+As a general user I need to collect coins at the end of each encounter so that I can spend them in the shop.
+\paragraph{Health}
+As a general user I need my character and enemies to have health that is reduced when they take damage so that my character and enemies can die.
+\paragraph{Lives}
+As a general user I need my character to have lives so that if they die the run doesn't end until they run out of lives.
+\paragraph{Damage Types}
+As a general user I need several damage types so that different abilities of that damage type can affect different entities differently and the amount of damage of each type they deal can be upgraded. 
+\paragraph{Magic}
+As a general user in an encounter I need to be able to gain magic at a predefined rate at the start of each of my turns so that I can use magic abilities.
+\paragraph{Passive Abilities}
+As a general user I need to be able to obtain passive abilities from the shop that provide passive effects such as increasing my character's damage of a specific damage type or reducing the damage they take of a specific type so that I can upgrade my character.
+\paragraph{Attack Abilities}
+As a general user I need to be able to obtain attack abilities from the shop that can be used in the encounter, targeting enemy entities and dealing damage so that I can upgrade their attacks and kill stronger enemies.
+\paragraph{Difficulties}
+As a general user I need runs to be able to chose if my run is easy, moderate or hard difficulty, where each difficulty has a different value for each design parameter so that I can play a run that is of an appropriate difficulty for my skill level. 
+\subsubsection{Telemetry Events}
+\paragraph{Event Writing}
+As a designer I require the Java application to write telemetry events to the telemetry event store if the user has telemetry enabled, so I can view them in the python application.
+\paragraph{Event Validation}
+As a designer I require the Java application to validate the events it writes to the event store so that the number of anomalous events written is minimised.
+\paragraph{Start Session}
+As a developer I need to view information relating to the start of a session (run) so that I can know what difficulty the session is. 
+\paragraph{Normal Encounter Start}
+As a designer I need to view information relating to the start of a normal encounter so that I can know what encounter is taking place, on which stage and on what difficulty.
+\paragraph{Normal Encounter Fail}
+As a designer I need to view information relating to the failure of a normal encounter so that I can know what encounter was failed, what difficulty it was on, what stage the encounter was on, and how many lives the player has left on the run.
+\paragraph{Normal Encounter Complete}
+As a designer I need to view information relating to the completion of a normal encounter so that I can know what encounter was completed, what difficulty the encounter was, what stage it was on, and how much health the player finished with.
+\paragraph{Boss Encounter Start}
+As a designer I need to view information relating to the start of a boss encounter so I can know what encounter is taking place, on which stage and on what difficulty.
+\paragraph{Boss Encounter Fail}
+As a designer I need to view information relating to the failure of a boss encounter so that I can know what encounter was failed, what difficulty it was on, what stage the encounter was on, and how many lives the player has left on the run.
+\paragraph{Boss Encounter Complete}
+As a designer I need to view information relating to the completion of a boss encounter so that I can know what encounter was completed, what difficulty the encounter was, what stage it was on, and how much health the player finished with.
+\paragraph{Gain Coin}
+As a designer I need to view information relating to the player gaining coins so that I know how many coins were gained, on what difficulty they were gained on, what encounter provided them and what stage they were gained on.
+\paragraph{Buy Upgrade}
+As a designer I need to view information relating to the player purchasing an upgrade from the shop so that I know what stage the shop is associated with, what upgrade was bought and how many coins it cost.
+\paragraph{End Session}
+As a designer I need to view information relating to the end of a session (run) so that I know how long the session was. 
+\paragraph{Settings Chnage}
+As a designer I need to view information relating to changing a setting value so that I know what setting was changed and to what value.
+\paragraph{Kill Enemy}
+As a designer I need to view information relating to the death of an enemy so that I know what encounter the enemy was a part of, what difficulty the run was in, what stage the encounter was for, and what enemy was killed by the player. 
+\section{Sprint One Prioritised Requirements}
+\subsection{Documentation}
+\subsubsection{Prototype Report}
+\paragraph{Executive Summary}
+\textbf{Value:} 2 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+    \item The summary appears at the start of the report.
+    \item The summary clearly states what is delivered in the prototype.
+    \item The summary clearly states why prototype features exist in the prototype. 
+    \item The summary clearly states the most important risks of the prototype.
+    \item The summary clearly states the mitigations for those risks.
+\end{itemize}
+\paragraph{Problem Framing}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+    \item The problem framing clearly explains the problem.
+    \item The problem framing clearly states why the problem is important.
+    \item The problem framing clearly states what the goal of the project is.
+    \item The problem framing must state who is affected by the problem. 
+\end{itemize}
+
+\paragraph{Project Backlog}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+    \item The project backlog must clearly state which epics are required to complete the project.
+    \item The project backlog must clearly state which user stories are associated with each epic.
+\end{itemize}
+\paragraph{Sprint One Prioritised Requirements}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+  \item Each epic in the project backlog must be stated in the requirements.
+  \item Each story within each epic must be stated in the requirements.
+  \item Each story should have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
+  \item Each story must have an acceptance criteria associated with it, which when all criteria are met the story is considered complete for sprint 1. Criteria may change between sprints as sprint requirements change. 
+  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Wont. 
+  \item Each story must be able to link to a prototype feature and test. 
+\end{itemize}
+\paragraph{Architecture Schema}
+\textbf{Value:} 3\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+  \item Each class within the Java application must have it's purpose and use case explained.
+  \item There must be a UML diagram of the Java application showing how classes interact.
+  \item Each component of the Python application must have it's purpose and use case explained. 
+  \item All design choices must be justified and explained.
+  \item The limitations of all design choices must be stated, and why they're acceptable must be explained.
+\end{itemize}
+\paragraph{Data Flow Schema}
+\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+  \item Each component that accesses data should be explained, describing what data it accesses, what it does with it, and why it needs to access this data.
+  \item Each data store should be explained, stating what data it stores and in what format. 
+\end{itemize}
+\paragraph{Telemetry Schema}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+  \item Each telemetry event must be described by the schema.
+  \item Each telemetry event must have all it's fields described by the schema.
+  \item Each field must have its domain described by the schema. For enumerated fields all valid values must be described.
+\end{itemize}
+\paragraph{Initial Evaluation}
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize} 
+  \item Several metrics and measures of success should be evaluated. Where applicable they should be compared with the baselines of other solutions to the problem.
+  \item The method coverage of the test suite should be evaluated to determine how thoroughly the system is examined, and thus how confident we can be that defects will be discovered early. 
+  \item The time between the user inputting what attack ability they use, and the command line outputting the result of their attack and the enemies' turn to measure the responsiveness of the game. 
+  \item The memory usage of the prototype must be less than 1GB, and ideally as small as possible, to ensure it can run on devices with small amounts of memory. 
+  \item The ability for the prototype to handle invalid input gracefully as to make it accessible and secure.
+  \item The ability for the prototype to handle exceptions and edge cases gracefully to ensure the user experience is smooth and error free.
+  \item The ability for the prototype to handle anomalous telemetry events gracefully to ensure the designer experience is smooth and error free.
+  \item The usability of the prototype to allow designers to locate issues with the game and make informed changes within a short timeframe to ensure it is a useful tool for designers.
+  \item The effectiveness of the rule based suggestion to ensure they provide help to designers.
+  \item The limitations of the evaluation, including biases in the methodology, and whether the tests and evaluation methods generalise such that they're comparable to real world scenarios. 
+\end{itemize}
+\paragraph{Sprint Two Prioritised Requirements}
+\textbf{Value:} 3\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Each epic in the project backlog must be stated in the requirements.
+  \item Each story within each epic must be stated in the requirements.
+  \item Each story should have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
+  \item Each story must have an acceptance criteria associated with it, which when all criteria are met the story is considered complete for sprint 2. Criteria may change between sprints as sprint requirements change. 
+  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Wont. 
+  \item Each story must be able to link to a final product feature and test. 
+\end{itemize}
+\paragraph{Management}
+\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The management section should outline what roles each member had.
+  \item It should outline what tasks members owned, and what tasks they contributed to.
+  \item It should outline in what areas the group worked well together.
+  \item It should outline what challenges the group faced working together.
+  \item It should outline how those challenges were solved. 
+\end{itemize}
+\subsubsection{Meeting Minutes}
+\paragraph{Meeting Attendance}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item For each meeting, the group members who did attend the meeting are noted.
+  \item For each meeting, the group members who did not attend the meeting are noted. 
+\end{itemize}
+\paragraph{Work Completed}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item For each meeting, if a group member was present the work they completed during the previous weekly scrum should be outlined.
+\end{itemize}
+\paragraph{Topics Discussed}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item For each meeting, what topics were presented by group members and discussed by the group must be recorded.
+\end{itemize}
+\paragraph{Work to Be Completed}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item For each meeting, the work assigned to each group member (whether they were there or not) must be recorded.
+\end{itemize}
+\subsubsection{Risk Register}
+\paragraph{List of Risks}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item A list of all risks associated with role based access control should be included.
+  \item A list of all risks associated with authentication should be included.
+  \item A list of all risks associated with the storage of telemetry data should be included.
+  \item A list of all risks associated with design parameters should be included.
+  \item A list of all risks associated with logging should be included.
+  \item A list of all risks associated with the storage of user information should be included.
+\end{itemize}
+\paragraph{Risk Mitigations}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item For each risk, the mitigation strategy in use should be described and explained.
+\end{itemize}
+\subsubsection{Ethical and Legal Considerations}
+\paragraph{Privacy and Data Protection Analysis}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must discuss what data is stored about users.
+  \item Must discuss how the data storage complies with law.
+  \item Must discuss how collected data is pseudonymised.
+  \item Must discuss how access to this data is limited to only those it's relevant to.
+\end{itemize}
+\paragraph{Consent and Disclosure Analysis}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must discuss what the data is used for.
+  \item Must discuss how consent is handled.
+  \item Must discuss how this consent and disclosure policy complies with law.
+  \item Must discuss how this policy affects the user experience. 
+\end{itemize}
+\paragraph{Accessabilty Analysis}
+\textbf{Value:} 1\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must discuss the importance of accessability.
+  \item Must discuss what systems are in place to support the accessability of the software.
+  \item Must discuss what areas the system can improve upon for sprint 2.
+\end{itemize}
+\paragraph{Intelectual Property and Licensing Implications}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must discuss the intellectual property rights of the developers.
+  \item Must discuss the intellectual property rights of the product owner.
+  \item Must discuss the licensing considerations for the software and data the system depends on.
+  \item Must discuss the intellectual property rights of sources the systems draws inspiration from or is similar to.
+\end{itemize}
+
+\subsubsection{Project License}
+\paragraph{Determine the Project License}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item A license for the project must be determined.
+  \item The license must comply with the licensing requirements of all dependencies. 
+\end{itemize}
+\subsubsection{Software and Data Inventory}
+\paragraph{Software Inventory}
+\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item An inventory of all software components the system directly depends on must be produced.
+  \item This must contain the license of each dependency.
+  \item This must contain the cost model of each dependency.
+  \item This must contain the provenance of each dependency.
+  \item This must contain the version of each dependency the system uses.
+\end{itemize}
+\paragraph{Data Inventory}
+\textbf{Value:} 1\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item An inventory of all data the system directly depends on or uses must be produced.
+  \item This must contain the license of each dependency.
+  \item This must contain the cost model of each dependency.
+  \item This must contain the provenance of each dependency.
+  \item This must contain the version of each dependency the system uses.
+\end{itemize}
+\subsubsection{Deployment Guide}
+\paragraph{Java Application Deployment Instructions}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The guide must contain clear instructions for how to setup and run the Java application.
+  \item There may be instructions for different systems, but there should be a way to run the application on any desktop system that runs Windows, MacOS or Linux.
+\end{itemize}
+\paragraph{Python Application Deployment Instructions}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The guide must contain clear instructions for how to setup and run the Python application.
+  \item There may be instructions for different systems, but there should be a way to run the application on any desktop system that runs Windows, MacOS or Linux.
+\end{itemize}
+\paragraph{Automated Test Running Instructions}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item There should be clear instructions on how to run the test suite on the source code.
+  \item The version of the testing framework should be provided.
+  \item The running instructions should allow the running of the test on any desktop system that runs either Windows, MacOS or Linux.
+\end{itemize}
+\subsubsection{Test Evidence}
+\paragraph{Automated Test Evidence}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item There must be 5 automated tests.
+  \item For each automated test it should be outlined what component is being tested.
+  \item For each automated test it should be outlined what the expected output is.
+  \item For each automated test the actual output of the system should be provided, and thus evidence that the system passes the test.
+  \item The system must pass all automated tests.
+\end{itemize}
+\paragraph{End to End Test Evidence}
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item There must be one end to end test.
+  \item Evidence that the test is successful should be given.
+  \item The happy path and failure cases for the the test must be described.
+  \item The expected results of the test should be described.
+\end{itemize}
+\subsubsection{Presentation}
+\paragraph{The Problem}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should outline what the problem is.
+  \item Should outline why the problem is relevant.
+  \item Should outlie the scope of the problem.
+  \item Should outline the scope of the solution.
+  \item Should outline what assumptions were made about the problem.
+  \item Should outline who the intended users of the solution are. 
+\end{itemize}
+\paragraph{Approach}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should outline the architecture of the solution.
+  \item Should speak about similar solutions.
+  \item Should outline measures used to evaluate the system.
+\end{itemize}
+\paragraph{Implementation}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should outline the key components of the solution.
+  \item Should outline the key features of the implementation.
+  \item Should outline why key design decisions were made.
+\end{itemize}
+\paragraph{Evaluation}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should outline what issues were faced during implementation.
+  \item Should outline how well the system performs against measures outlined in approach, and compare it to existing solutions.
+  \item Should provide clear evidence of how well the prototype works. 
+\end{itemize}
+\paragraph{Demonstration}
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should take around 3 minutes to complete.
+  \item Should demonstrate the core functionality of the system.
+  \item Should be rehearsed before the live demo, to ensure it works correctly.
+  \item Should have a backup demonstration/video if the demo goes wrong. 
+\end{itemize}
+\paragraph{Limitations and Next Steps}
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Should outline the areas in which the prototype is weakest.
+  \item Should briefly outline what is to be done in the next sprint.
+\end{itemize}
+\subsubsection{Operation Guide}
+\paragraph{Operation Instructions}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\paragraph{Maintenance Instructions}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\paragraph{Troubleshooting Instructions}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\paragraph{Extension Guide}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\subsubsection{Data Management Guide}
+\paragraph{Data Stored}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\paragraph{Data Format}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
+\textbf{Acceptance Criteria} N/A
+\subsubsection{Scrum Board}
+\paragraph{Backlog, In Progress and Done Sections}
+\textbf{Value:} 3\quad \textbf{Priority:} Should\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item There must be a card for each story in the project backlog defined in this report.
+  \item There must be a card for each group of acceptance criteria (task) that varies between sprints.
+  \item There must be epics created on the board for each epic defined in the project backlog in this report.
+  \item There must be a backlog section for tasks that have yet to have been started.
+  \item There must be an in progress section for tasks being worked on. Each task in this section must be assigned to at least one group member.
+  \item THere must be a done section for tasks that are complete. Each task in this section must be assigned to at least one group member.
+\end{itemize}
+\subsection{Python Application}
+\subsubsection{User Interface}
+\paragraph{Login}
+
+\paragraph{Dashboards}
+
+\paragraph{Suggestions}
+
+\paragraph{Decision Log}
+
+\subsubsection{Authentication and Acess Control}
+\paragraph{Login}
+
+\paragraph{Password Reset}
+
+\paragraph{Player Permissions}
+
+\paragraph{Designer Permissions}
+
+\paragraph{Developer Permissions}
+
+\subsubsection{Dashboard Views}
+\paragraph{Simulation View}
+
+\paragraph{Funnel View}
+
+\paragraph{Difficulty Spikes}
+
+\paragraph{Progress Curves}
+
+\paragraph{Fairness Indicators}
+
+\paragraph{Comparison Mode}
+
+\subsubsection{Design Suggestions}
+\paragraph{Rule Based Design Suggestions}
+
+\subsubsection{Telemetry Events}
+\paragraph{Read Telemetry Events}
+
+\paragraph{Validate Telemetry Events}
+
+\subsubsection{Seeded Dataset}
+\paragraph{Telemetry Events}
+
+\paragraph{Stage Variety}
+
+\paragraph{Difficulty Variety}
+
+\paragraph{User Variety}
+
+\paragraph{Session Variet}
+
+\paragraph{Anomalous Telemetry Events}
+
+\paragraph{Balancing Decisions}
+
+\subsection{Java Application}
+\subsubsection{User Interface}
+\paragraph{Login}
+
+\paragraph{Main Menu}
+
+\paragraph{Settings}
+
+\paragraph{Start Run}
+
+\paragraph{Encounter}
+
+\paragraph{Shop}
+
+\paragraph{End Run}
+
+\subsubsection{Autheentication and Acesss Control}
+\paragraph{Login}
+
+\paragraph{Login Reset}
+
+\paragraph{Player Permissions}
+
+\paragraph{Designer Permissions}
+
+\paragraph{Develoer Permissions}
+
+\subsubsection{Settings}
+\paragraph{Telemetry}
+
+\paragraph{Design Parameters}
+
+\paragraph{Simulation Mode}
+
+\paragraph{Role Asignment}
+
+\subsubsection{Gameplay Loop}
+\paragraph{Start Run}
+
+\paragraph{Chose Difficulty}
+
+\paragraph{Be in an Encounter}
+
+\paragraph{Use Physcal Attack Abilities}
+
+\paragraph{Use Magical Attack Abilities}
+
+\paragraph{Take Turns}
+
+\paragraph{Kill Enemies}
+
+\paragraph{Complete an Encounter}
+
+\paragraph{View Shop}
+
+\paragraph{Purchase Upgrades in the Shop}
+
+\paragraph{Complete a Run}
+
+\subsubsection{Game Mechanics}
+\paragraph{Coins}
+
+\paragraph{Health}
+
+\paragraph{Lives}
+
+\paragraph{Damage Types}
+
+\paragraph{Magic}
+
+\paragraph{Passive Abilities}
+
+\paragraph{Attack Abilities}
+
+\paragraph{Difficulties}
+
+\subsubsection{Telemetry Events}
+\paragraph{Event Writing}
+
+\paragraph{Event Validation}
+
+\paragraph{Start Session}
+
+\paragraph{Normal Encounter Start}
+
+\paragraph{Normal Encounter Fail}
+
+\paragraph{Normal Encounter Complete}
+
+\paragraph{Boss Encounter Start}
+
+\paragraph{Boss Encounter Fail}
+
+\paragraph{Boss Encounter Complete}
+
+\paragraph{Gain Coin}
+
+\paragraph{Buy Upgrade}
+
+\paragraph{End Session}
+
+\paragraph{Settings Chnage}
+
+\paragraph{Kill Enemy}
+
+\section{Architecture Schema}
+TODO tom
+\section{Data Flow Schema}
+TODO tom
+\section{Telemetry Schema}
+TODO tom 
+\section{Game Design}
+TODO will 
+\section{Initial Evaluation}
+TODO will
+\section{Ethical and Legal Analysis}
+TODO will
+\section{Testing Architecture}
+TODO luca P
+\section{Software Bill of Materials}
+TODO emre
+\section{Sprint Two Prioritised Requirements}
+TODO tom
+\section{Management}
+TODO Kazybek
+\end{document}

@@ -174,7 +174,6 @@ public class TelemetryListenerSingleton {
             } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
                 System.err.println(ex.getMessage());
             }
-            
         }
 
         /**
