@@ -19,6 +19,7 @@
 ## Folder structure
 ```
 com2020/
+com2020/
 ├── game/
 │   ├── src/
 │   │   ├── main/
@@ -30,28 +31,30 @@ com2020/
 │   │       ├── java/
 │   │       │   └── WizardQuest/
 │   │       │       ├── unit/
-│   │       │       │   └── GameUnitTest.java
+│   │       │       │   └── ...
 │   │       │       └── integration/
-│   │       │           └── GameIntegrationTest.java
+│   │       │           └── ...
 │   │       └── resources/
-│   │           └── testResources.csv (placeholder)
+│   │           └── ...
 │   └── pom.xml
 ├── telemetry/
 │   ├── core/
-│   │   ├── events.py
-│   │   ├── logic.py
-│   │   ├── parsing.py
-│   │   └── export.py
+│   │   └── ...
 │   ├── gui/
-│   │   ├── gui.py
-│   │   └── plotting.py
+│   │   └── ...
 │   ├── auth/
-│   │   └── auth.py
+│   │   └── ...
 │   ├── schema.md (json schema)
 │   ├── requirements.txt (for pip)
-│   ├── telemetry_app.py
+│   ├── telemetry_app.py (telemetry entry point)
 │   └── README.md (python-specific instructions for dev)
+├── meetings/
+│   └── ...
+├── report/
+│   └── ...
 ├── README.md
+├── simulation_events.json
+├── telemetry_events.json
 ├── deployment_guide.md
 └── .gitignore
 ```
