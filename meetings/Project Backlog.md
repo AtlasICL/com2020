@@ -3,6 +3,16 @@ Backlog contains things we need to do. Requirement is then split into user stori
 ## Report
 ### Prototype Report
 #### Executive Summary
+#### Problem Framing
+The monitoring and maintenance of a game is essential for ensuring that players have an enjoyable experience, and
+that their engagement remains intact. However, game designers are often left to rely on their own intuition and small
+playtests to achieve this. Relying on subjective assessment makes it difficult for them to identify problem areas of
+a game where a player's engagement depreciates - such as difficulty spikes or features that provoke inequity between
+play styles.
+
+This project integrates an indie game with a telemetry application, generating intuitive telemetry events for several
+actions which are processed and presented in several ways. The objective is to aid the game designer's understanding of
+a player's experience, and how they could maintain the game to maximise the overall player experience.
 #### Project Backlog
 #### Prioritised Requirements
 #### Architecture Schema
@@ -15,7 +25,7 @@ Backlog contains things we need to do. Requirement is then split into user stori
 ### Ethical and Legal considerations
 #### Privacy of Telemetry
 #### Consent and Disclosure
-#### Accessability
+#### Accessibility
 #### IP and Licensing  
 ### License 
 ### Software and Data Inventory
