@@ -50,6 +50,8 @@ com2020/
 │   ├── meeting_minutes.md
 │   └── project_specification.pdf
 ├── README.md
+├── simulation_events.json
+├── telemetry_events.json
 └── .gitignore
 ```
 
