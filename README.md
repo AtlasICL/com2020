@@ -19,37 +19,41 @@
 ## Folder structure
 ```
 com2020/
+com2020/
 ├── game/
 │   ├── src/
 │   │   ├── main/
 │   │   │   └── java/
 │   │   │       └── WizardQuest/
-│   │   │           └── game.java
+│   │   │           ├── gamefiles.java
+│   │   │           └── ...
 │   │   └── test/
 │   │       ├── java/
 │   │       │   └── WizardQuest/
 │   │       │       ├── unit/
-│   │       │       │   └── GameUnitTest.java
-│   │       │       ├── integration/
-│   │       │       │   └── GameIntegrationTest.java
-│   │       │       └── e2e/
-│   │       │           └── FullGameRunE2ETest.java
+│   │       │       │   └── ...
+│   │       │       └── integration/
+│   │       │           └── ...
 │   │       └── resources/
-│   │           └── testResources.csv
+│   │           └── ...
 │   └── pom.xml
 ├── telemetry/
-│   ├── telemetry_app/
-│   │   ├── __init__.py
-│   │   ├── events.py
-│   │   ├── logic.py
-│   │   └── gui.py
-│   ├── schema.md
-│   ├── requirements.txt
-│   └── telemetry_app.py
+│   ├── core/
+│   │   └── ...
+│   ├── gui/
+│   │   └── ...
+│   ├── auth/
+│   │   └── ...
+│   ├── schema.md (json schema)
+│   ├── requirements.txt (for pip)
+│   ├── telemetry_app.py (telemetry entry point)
+│   └── README.md (python-specific instructions for dev)
 ├── meetings/
-│   ├── meeting_minutes.md
-│   └── project_specification.pdf
+│   └── ...
+├── report/
+│   └── ...
 ├── README.md
+├── deployment_guide.md
 └── .gitignore
 ```
 
