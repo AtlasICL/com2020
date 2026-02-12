@@ -22,4 +22,19 @@ public enum RoleEnum {
     public String getJSONName() {
         return this.JSONName;
     }
+
+    /**
+     * Converts the user's role from string format in the JSON file to a RoleEnum object.
+     *
+     * @param jsonName the user role specified in the JSON file.
+     * @return the user role as a RoleEnum object.
+     */
+    public static RoleEnum convertJSONToEnum(String jsonName) {
+        for (RoleEnum role : RoleEnum.values()) {
+            if (role.getJSONName().equals(jsonName)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Could not map JSON name " + jsonName + " to role.");
+    }
 }
