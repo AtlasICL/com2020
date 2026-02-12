@@ -9,7 +9,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
+import java.io.*;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
@@ -22,6 +22,10 @@ public class TelemetryListenerUnitTests {
     * - CleanUp method - may need to invoke EndSessionEvent?
      */
 
+    private File TEMP_DESTINATION_FILE;
+    private PrintStream defaultError;
+    private ByteArrayOutputStream exError;
+
     @TempDir
     private Path tempDir;
 
@@ -33,15 +37,31 @@ public class TelemetryListenerUnitTests {
      * or the credentials are invalid when trying to authenticate the user.
      */
     @BeforeEach
-    void setUp() throws Exception {
-        // Initialise temporary JSON files for a test user's login and settings to be stored in.
+    void setUp() throws AuthenticationException, IOException {
+        // Initialise and create temporary JSON files for a test user's login to be stored in.
         File TEMP_LOGINS_FILE = tempDir.resolve("logins_file.json").toFile();
+        TEMP_LOGINS_FILE.createNewFile();
+        try (FileWriter fw = new FileWriter(TEMP_LOGINS_FILE)) {
+            fw.write("{}");
+        }
         SettingsSingleton.getInstance().setLoginsDestinationFile(TEMP_LOGINS_FILE);
+
+        // Initialise and create temporary JSON files for a test user's settings to be stored in.
         File TEMP_SETTINGS_FILE = tempDir.resolve("settings_file.json").toFile();
+        TEMP_SETTINGS_FILE.createNewFile();
+        try (FileWriter fw = new FileWriter(TEMP_SETTINGS_FILE)) {
+            fw.write("{}");
+        }
         SettingsSingleton.getInstance().setSettingsDestinationFile(TEMP_SETTINGS_FILE);
+
         // Create and authenticate a test user.
         SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
         SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
+
+        // Initialise a temporary JSON file to test the reading and writing of event objects.
+        TEMP_DESTINATION_FILE = tempDir.resolve("events.json").toFile();
+        TelemetryListenerSingleton.getInstance().setDestinationFile(TEMP_DESTINATION_FILE);
+
         // Start a session for the test user, which will allow our test event to be invoked in each test.
         StartSessionEvent startSession = new StartSessionEvent(new Object(),
                 SettingsSingleton.getInstance().getUserID(),
@@ -49,6 +69,11 @@ public class TelemetryListenerUnitTests {
                 TimeManagerInterface.convertDateTime(LocalDateTime.now()),
                 DifficultyEnum.MEDIUM);
         TelemetryListenerSingleton.getInstance().onStartSession(startSession);
+
+        // Set up a buffer to capture the content of error messages when exceptions are handled.
+        defaultError = System.err;
+        exError = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(exError));
     }
 
     /**
@@ -57,7 +82,9 @@ public class TelemetryListenerUnitTests {
      */
     @Test
     @DisplayName("TelemetryListener - userID field input validated")
-    void onNormalEncounterStart_userIDValidated() throws Exception {
+    void onNormalEncounterStart_userIDValidated()
+            throws AuthenticationException, UserValidationException,
+            SessionValidationException, TimestampValidationException {
         // Initialise an invalid NormalEncounterStartEvent object for the authenticated user.
         // The userID field will be incremented by 1, creating a mismatch between the value in the
         // authenticated user's settings and the value in the event field.
@@ -69,9 +96,11 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // As a result of this mismatch, UserValidationException should be thrown when an event occurs.
-        assertThrows(UserValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
-        });
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
+        assertTrue(this.exError.toString().contains("UserID of event " + invalidTestEvent.getTelemetryName() +
+                " " + invalidTestEvent.getUserID() + " not equal to current sessionID of "));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
 
         // Initialise a valid NormalEncounterStartEvent object for the authenticated user.
         NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(new Object(),
@@ -82,10 +111,11 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // Now the value of userID in the authenticated user's settings matches the value in the event field.
-        // Therefore, UserValidationException should not be thrown when an event occurs.
-        assertDoesNotThrow(() -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);
-        });
+        // Therefore, events.json should be written to when the method is called.
+        long lengthBeforeWrite = TEMP_DESTINATION_FILE.length();
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);
+        long lengthAfterWrite = TEMP_DESTINATION_FILE.length();
+        assertTrue(lengthAfterWrite > lengthBeforeWrite);
     }
 
     /**
@@ -97,7 +127,9 @@ public class TelemetryListenerUnitTests {
      */
     @Test
     @DisplayName("TelemetryListener - sessionID field input validated")
-    void onNormalEncounterStart_sessionIDValidated() throws Exception {
+    void onNormalEncounterStart_sessionIDValidated()
+            throws AuthenticationException, UserValidationException,
+            SessionValidationException, TimestampValidationException {
         // Initialise an invalid NormalEncounterStartEvent object for the authenticated user.
         // The sessionID field will be incremented by 1, creating a mismatch between the value in the
         // authenticated user's settings and the value in the event field.
@@ -109,9 +141,11 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // As a result of this mismatch, UserValidationException should be thrown when an event occurs.
-        assertThrows(SessionValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
-        });
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
+        assertTrue(this.exError.toString().contains("SessionID of event " + invalidTestEvent.getTelemetryName() +
+                " " + invalidTestEvent.getSessionID() + " not equal to current sessionID of "));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
 
         // Initialise a StartSessionEvent object for the authenticated user.
         // This should be rejected, as a session is currently running for the user.
@@ -121,9 +155,11 @@ public class TelemetryListenerUnitTests {
                 TimeManagerInterface.convertDateTime(LocalDateTime.now()),
                 DifficultyEnum.MEDIUM);
         // This should result in SessionValidationException being thrown as a session is already running.
-        assertThrows(SessionValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onStartSession(testStartEvent);
-        });
+        TelemetryListenerSingleton.getInstance().onStartSession(testStartEvent);
+        assertTrue(this.exError.toString().contains("StartSession for Session " + testStartEvent.getSessionID() +
+                " occurs before EndSession of "));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
 
         // Initialise TWO EndSessionEvent objects for the authenticated user.
         // The first one should work as normal, since a session is currently running and can be ended.
@@ -136,13 +172,18 @@ public class TelemetryListenerUnitTests {
                 SettingsSingleton.getInstance().getUserID(),
                 SettingsSingleton.getInstance().getSessionID(),
                 TimeManagerInterface.convertDateTime(LocalDateTime.now()));
-        // This ordering of events should result in SessionValidationException being thrown only for the second event.
-        assertDoesNotThrow(() -> {
-            TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent1);
-        });
-        assertThrows(SessionValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent2);
-        });
+        // This first event should be accepted and written to events.json.
+        long lengthBeforeWrite = TEMP_DESTINATION_FILE.length();
+        TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent1);
+        long lengthAfterWrite = TEMP_DESTINATION_FILE.length();
+        assertTrue(lengthAfterWrite > lengthBeforeWrite);
+        // This second event should result in SessionValidationException being thrown.
+        TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent2);
+        assertTrue(this.exError.toString().contains("EndSession for Session " + testEndEvent2.getSessionID() +
+                " occurs before it's StartSession"));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
+
     }
 
     /**
@@ -153,7 +194,9 @@ public class TelemetryListenerUnitTests {
      */
     @Test
     @DisplayName("TelemetryListener - timeStamp field input validated")
-    void onNormalEncounterStart_timeStampValidated() throws Exception {
+    void onNormalEncounterStart_timeStampValidated()
+            throws AuthenticationException, UserValidationException,
+            SessionValidationException, TimestampValidationException {
         // Initialise an invalid NormalEncounterStartEvent object for the authenticated user.
         // The timestamp field will be of a format that is not parseable to a LocalDateTime object.
         NormalEncounterStartEvent invalidTestEvent1 = new NormalEncounterStartEvent(new Object(),
@@ -164,9 +207,11 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // Since the value cannot be parsed, TimestampValidationException should be thrown when an event occurs.
-        assertThrows(TimestampValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent1);
-        });
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent1);
+        assertTrue(this.exError.toString().contains("Time stamp of event " + invalidTestEvent1.getTelemetryName() +
+                " " + invalidTestEvent1.getTimestamp() + " is of invalid format"));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
 
         // Initialise an invalid NormalEncounterStartEvent object for the authenticated user.
         // The timestamp field will be of a time that is in the future.
@@ -178,9 +223,11 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // Since the time is in the future, TimestampValidationException should be thrown when an event occurs.
-        assertThrows(TimestampValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent2);
-        });
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent2);
+        assertTrue(this.exError.toString().contains("Time stamp of event " + invalidTestEvent2.getTelemetryName() +
+                " " + invalidTestEvent2.getTimestamp() + " is in the future"));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
 
         // Initialise TWO NormalEncounterStartEvent objects for the authenticated user.
         // The first one will contain a valid timestamp, and so should be accepted.
@@ -200,14 +247,17 @@ public class TelemetryListenerUnitTests {
                 DifficultyEnum.MEDIUM,
                 1);
         // The timestamp for the first event is valid, so calling onNormalEncounterStart should cause no issues.
-        assertDoesNotThrow(() -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);
-        });
+        long lengthBeforeWrite = TEMP_DESTINATION_FILE.length();
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);
+        long lengthAfterWrite = TEMP_DESTINATION_FILE.length();
+        assertTrue(lengthAfterWrite > lengthBeforeWrite);
         // The timestamp for the second event is earlier than the timestamp of the most recent event.
         // Therefore, TimestampValidationException should be thrown when the second event occurs.
-        assertThrows(TimestampValidationException.class, () -> {
-            TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent3);
-        });
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent3);
+        assertTrue(this.exError.toString().contains("Time stamp of event " + invalidTestEvent3.getTelemetryName() +
+                " " + invalidTestEvent3.getTimestamp() + " is not current"));
+        // Restore the system error buffer to its original value.
+        System.setErr(this.defaultError);
     }
 
     @AfterEach
@@ -215,5 +265,4 @@ public class TelemetryListenerUnitTests {
         SettingsSingleton.getInstance().resetLoginsDestinationFile();
         SettingsSingleton.getInstance().resetSettingsDestinationFile();
     }
-
 }
