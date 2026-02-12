@@ -9,19 +9,19 @@ public class ThunderStormUnlockUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades(){
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.THUNDER_STORM_UNLOCK)){
-            u.add(UpgradeType.THUNDER_STORM_UNLOCK);
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.THUNDER_STORM_UNLOCK)){
+            u.add(UpgradeEnum.THUNDER_STORM_UNLOCK);
         }
         return u;
     }
 
     @Override
-    public List<AbilityType> getAbilities(){
-        List<AbilityType> a = super.player.getAbilities();
-        if (!a.contains(AbilityType.THUNDER_STORM)){
-            a.add(AbilityType.THUNDER_STORM);
+    public List<AbilityEnum> getAbilities(){
+        List<AbilityEnum> a = super.player.getAbilities();
+        if (!a.contains(AbilityEnum.THUNDER_STORM)){
+            a.add(AbilityEnum.THUNDER_STORM);
         }
         return a;
     }

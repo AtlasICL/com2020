@@ -3,12 +3,12 @@ package WizardQuest;
 /**
  * Enumerates all settings types in the game.
  */
-public enum SettingsType {
+public enum SettingsEnum {
     TELEMETRY_ENABLED("TelemetryEnabled");
 
     private final String telemetryName;
 
-    private SettingsType(String telemetryName) {
+    private SettingsEnum(String telemetryName) {
         this.telemetryName = telemetryName;
     }
 

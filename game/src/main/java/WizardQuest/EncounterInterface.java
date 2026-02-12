@@ -29,7 +29,7 @@ public interface EncounterInterface {
      * 
      * @return the encounter's type.
      */
-    public EncounterType getType();
+    public EncounterEnum getType();
 
     /**
      * Resets the health of all enemies in the encounter. Should be called when the

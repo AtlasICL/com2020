@@ -1,6 +1,6 @@
 package WizardQuest;
 
-public enum UpgradeType { // "Upgrade" is refered to as "passive ability externally"
+public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability externally"
     // organised as price, class, telemetry name
     // add abilities
     PHYSICAL_DAMAGE_RESISTANCE(
@@ -19,7 +19,7 @@ public enum UpgradeType { // "Upgrade" is refered to as "passive ability externa
             5,
             ThunderDamageResistanceUpgrade.class,
             "ThunderDamageResistance"),
-    // MPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
+    // IMPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
     // "ImprovedPhysicalDamage"),
     // IMPROVED_FIRE_DAMAGE(15, ImprovedFireDamageUpgrade.class,
     // "ImprovedFireDamage"),
@@ -27,10 +27,6 @@ public enum UpgradeType { // "Upgrade" is refered to as "passive ability externa
     // "ImprovedWaterDamage"),
     // IMPROVED_THUNDER_DAMAGE(10, ImprovedThunderDamageUpgrade.class,
     // "ImprovedThunderDamage"),
-    PUNCH_UNLOCK(
-            0, //not applicable
-            PunchUnlockUpgrade.class,
-            "PunchUnlock"),
     SLASH_UNLOCK(
             15,
             SlashUnlockUpgrade.class,
@@ -56,7 +52,7 @@ public enum UpgradeType { // "Upgrade" is refered to as "passive ability externa
     private final Class<? extends UpgradeBase> upgradeClass;
     private final String telemetryName;
 
-    private UpgradeType(
+    private UpgradeEnum(
             int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName) {
         this.price = price;
         this.upgradeClass = upgradeClass;

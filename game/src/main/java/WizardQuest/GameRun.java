@@ -5,33 +5,33 @@ import java.util.Random;
 
 public class GameRun implements GameRunInterface {
     //Drawn from for stages 1 and 2.
-    private EncounterInterface[] phase1NormalEncounters; 
+    private final EncounterInterface[] phase1NormalEncounters;
 
     //Drawn from for stages 4 and 5.
-    private EncounterInterface[] phase2NormalEncounters; 
+    private final EncounterInterface[] phase2NormalEncounters;
 
     //Drawn from for stages 7 and 8.
-    private EncounterInterface[] phase3NormalEncounters; 
+    private final EncounterInterface[] phase3NormalEncounters;
 
     //Drawn from for stage 3.
-    private EncounterInterface phase1Boss; 
+    private final EncounterInterface phase1Boss;
 
     //Drawn from for stage 6.
-    private EncounterInterface phase2Boss; 
+    private final EncounterInterface phase2Boss;
 
     //Drawn from for stage 9.
-    private EncounterInterface phase3Boss; 
+    private final EncounterInterface phase3Boss;
 
     //Drawn from for stage 10.
-    private EncounterInterface finalBoss;
+    private final EncounterInterface finalBoss;
 
     // Pool upgrades for the shop are chosen from. When bought they're removed from this pool.
-    private UpgradeType[] shopUpgrades;
+    private final UpgradeEnum[] shopUpgrades;
     
     private PlayerInterface player;
     private int currentStage;
-    private Difficulty currentDifficulty;
-    private LocalDateTime startTime;
+    private final DifficultyEnum difficulty;
+    private final LocalDateTime startTime;
 
     /**
      * Creates a run for the game in the specified difficulty. Also takes note of
@@ -39,7 +39,7 @@ public class GameRun implements GameRunInterface {
      *
      * @param difficulty the difficulty setting for the run.
      */
-    public GameRun(Difficulty difficulty) {
+    public GameRun(DifficultyEnum difficulty) {
         phase1NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
         phase2NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
         phase3NormalEncounters = new EncounterInterface[] {}; // Contents of this array are TBC
@@ -47,11 +47,11 @@ public class GameRun implements GameRunInterface {
         phase2Boss = new Encounter(null); // Placeholder, contents are TBC
         phase3Boss = new Encounter(null); // Placeholder, contents are TBC
         finalBoss = new Encounter(null); // Placeholder, contents are TBC
-        shopUpgrades = new UpgradeType[] {}; // Contents of this array are TBC
+        shopUpgrades = new UpgradeEnum[] {}; // Contents of this array are TBC
 
         this.player = new Player(difficulty);
         this.currentStage = 1;
-        this.currentDifficulty = difficulty;
+        this.difficulty = difficulty;
         this.startTime = LocalDateTime.now();
     }
 
@@ -86,17 +86,17 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public UpgradeType[] viewShop() {
+    public UpgradeEnum[] viewShop() {
         // Fisher-Yates shuffling algorithm used to randomise order of upgrade pool
         Random r = new Random();
         for (int i = this.shopUpgrades.length - 1; i > 0; i--) {
             int j = r.nextInt(i + 1);
-            UpgradeType temp = this.shopUpgrades[i];
+            UpgradeEnum temp = this.shopUpgrades[i];
             this.shopUpgrades[i] = this.shopUpgrades[j];
             this.shopUpgrades[j] = temp;
         }
-        int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.currentDifficulty);
-        UpgradeType[] shop = new UpgradeType[totalUpgradesInShop];
+        int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.difficulty);
+        UpgradeEnum[] shop = new UpgradeEnum[totalUpgradesInShop];
         int i = 0;
         // Loop through the shuffled array of upgrades, adding each element to the shop until the shop item count has
         // been reached. Skip over any null values - these are upgrades that have already been purchased during the run.
@@ -113,7 +113,7 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public void purchaseUpgrade(UpgradeType upgrade) throws LackingResourceException {
+    public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
         // If upgrade is unaffordable, throw the relevant exception
         if (upgrade.getPrice() > this.player.getCoins()) {
             int difference = upgrade.getPrice() - this.player.getCoins();
@@ -150,7 +150,7 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public int getDeathCount() {
-        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.currentDifficulty);
+        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.difficulty);
         int currentLives = this.player.getLives();
         return startingLives - currentLives;
     }
@@ -161,8 +161,8 @@ public class GameRun implements GameRunInterface {
     }
     
     @Override
-    public Difficulty getDifficulty(){
-        return this.currentDifficulty;
+    public DifficultyEnum getDifficulty(){
+        return this.difficulty;
     }
 
     /**
@@ -171,7 +171,7 @@ public class GameRun implements GameRunInterface {
      *
      * @param upgrade the upgrade to remove from the pool.
      */
-    private void removeUpgradeFromPool(UpgradeType upgrade) {
+    private void removeUpgradeFromPool(UpgradeEnum upgrade) {
         for (int i = 0; i < this.shopUpgrades.length; i++) {
             if (this.shopUpgrades[i] == upgrade) {
                 this.shopUpgrades[i] = null;

@@ -23,23 +23,23 @@ public class SettingsSingleton {
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
         private int userID;
-        private Role userRole;
+        private RoleEnum userRole;
         private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
-        private EnumMap<Difficulty, Integer> maxStageReached;
-        private EnumMap<Difficulty, Integer> playerMaxHealth;
-        private EnumMap<Difficulty, Float> enemyDamageMultiplier;
-        private EnumMap<Difficulty, Float> enemyMaxHealthMultiplier;
-        private EnumMap<Difficulty, Integer> startingLives;
-        private EnumMap<Difficulty, Integer> maxMagic;
-        private EnumMap<Difficulty, Integer> magicRegenRate;
-        private EnumMap<Difficulty, Integer> shopItemCount;
+        private EnumMap<DifficultyEnum, Integer> maxStageReached;
+        private EnumMap<DifficultyEnum, Integer> playerMaxHealth;
+        private EnumMap<DifficultyEnum, Float> enemyDamageMultiplier;
+        private EnumMap<DifficultyEnum, Float> enemyMaxHealthMultiplier;
+        private EnumMap<DifficultyEnum, Integer> startingLives;
+        private EnumMap<DifficultyEnum, Integer> maxMagic;
+        private EnumMap<DifficultyEnum, Integer> magicRegenRate;
+        private EnumMap<DifficultyEnum, Integer> shopItemCount;
 
-        private static final File SETTINGS_FILE = new File("settings_file.json");
+        private static File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
         // TEMPORARY
-        private static final File LOGINS_FILE = new File("logins_file.json");
+        private static File LOGINS_FILE = new File("logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -52,46 +52,46 @@ public class SettingsSingleton {
          * Loads in default configs for settings.
          */
         private void loadDefaults() {
-            maxStageReached = new EnumMap<>(Difficulty.class);
-            playerMaxHealth = new EnumMap<>(Difficulty.class);
-            enemyDamageMultiplier = new EnumMap<>(Difficulty.class);
-            enemyMaxHealthMultiplier = new EnumMap<>(Difficulty.class);
-            startingLives = new EnumMap<>(Difficulty.class);
-            maxMagic = new EnumMap<>(Difficulty.class);
-            magicRegenRate = new EnumMap<>(Difficulty.class);
-            shopItemCount = new EnumMap<>(Difficulty.class);
+            maxStageReached = new EnumMap<>(DifficultyEnum.class);
+            playerMaxHealth = new EnumMap<>(DifficultyEnum.class);
+            enemyDamageMultiplier = new EnumMap<>(DifficultyEnum.class);
+            enemyMaxHealthMultiplier = new EnumMap<>(DifficultyEnum.class);
+            startingLives = new EnumMap<>(DifficultyEnum.class);
+            maxMagic = new EnumMap<>(DifficultyEnum.class);
+            magicRegenRate = new EnumMap<>(DifficultyEnum.class);
+            shopItemCount = new EnumMap<>(DifficultyEnum.class);
 
-            maxStageReached.put(Difficulty.EASY, 0);
-            maxStageReached.put(Difficulty.MEDIUM, 0);
-            maxStageReached.put(Difficulty.HARD, 0);
+            maxStageReached.put(DifficultyEnum.EASY, 0);
+            maxStageReached.put(DifficultyEnum.MEDIUM, 0);
+            maxStageReached.put(DifficultyEnum.HARD, 0);
 
-            playerMaxHealth.put(Difficulty.EASY, 200);
-            playerMaxHealth.put(Difficulty.MEDIUM, 100);
-            playerMaxHealth.put(Difficulty.HARD, 50);
+            playerMaxHealth.put(DifficultyEnum.EASY, 200);
+            playerMaxHealth.put(DifficultyEnum.MEDIUM, 100);
+            playerMaxHealth.put(DifficultyEnum.HARD, 50);
 
-            enemyDamageMultiplier.put(Difficulty.EASY, 0.5f);
-            enemyDamageMultiplier.put(Difficulty.MEDIUM, 1.0f);
-            enemyDamageMultiplier.put(Difficulty.HARD, 2.0f);
+            enemyDamageMultiplier.put(DifficultyEnum.EASY, 0.5f);
+            enemyDamageMultiplier.put(DifficultyEnum.MEDIUM, 1.0f);
+            enemyDamageMultiplier.put(DifficultyEnum.HARD, 2.0f);
 
-            enemyMaxHealthMultiplier.put(Difficulty.EASY, 1.0f);
-            enemyMaxHealthMultiplier.put(Difficulty.MEDIUM, 1.5f);
-            enemyMaxHealthMultiplier.put(Difficulty.HARD, 2.0f);
+            enemyMaxHealthMultiplier.put(DifficultyEnum.EASY, 1.0f);
+            enemyMaxHealthMultiplier.put(DifficultyEnum.MEDIUM, 1.5f);
+            enemyMaxHealthMultiplier.put(DifficultyEnum.HARD, 2.0f);
 
-            startingLives.put(Difficulty.EASY, 5);
-            startingLives.put(Difficulty.MEDIUM, 3);
-            startingLives.put(Difficulty.HARD, 1);
+            startingLives.put(DifficultyEnum.EASY, 5);
+            startingLives.put(DifficultyEnum.MEDIUM, 3);
+            startingLives.put(DifficultyEnum.HARD, 1);
 
-            maxMagic.put(Difficulty.EASY, 200);
-            maxMagic.put(Difficulty.MEDIUM, 100);
-            maxMagic.put(Difficulty.HARD, 50);
+            maxMagic.put(DifficultyEnum.EASY, 200);
+            maxMagic.put(DifficultyEnum.MEDIUM, 100);
+            maxMagic.put(DifficultyEnum.HARD, 50);
 
-            magicRegenRate.put(Difficulty.EASY, 5);
-            magicRegenRate.put(Difficulty.MEDIUM, 3);
-            magicRegenRate.put(Difficulty.HARD, 1);
+            magicRegenRate.put(DifficultyEnum.EASY, 5);
+            magicRegenRate.put(DifficultyEnum.MEDIUM, 3);
+            magicRegenRate.put(DifficultyEnum.HARD, 1);
 
-            shopItemCount.put(Difficulty.EASY, 3);
-            shopItemCount.put(Difficulty.MEDIUM, 2);
-            shopItemCount.put(Difficulty.HARD, 1);
+            shopItemCount.put(DifficultyEnum.EASY, 3);
+            shopItemCount.put(DifficultyEnum.MEDIUM, 2);
+            shopItemCount.put(DifficultyEnum.HARD, 1);
         }
 
         /**
@@ -134,7 +134,7 @@ public class SettingsSingleton {
                 if (userSettings == null) {
                     ObjectNode newProfile = jsonMapper.createObjectNode();
                     newProfile.put("telemetryEnabled", true);
-                    newProfile.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                    newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                     newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
                     usersNode.set(String.valueOf(userID), newProfile);
@@ -145,7 +145,7 @@ public class SettingsSingleton {
 
                 // Load user's (user-specific / non-global) data.
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
-                userRole = Role.valueOf(userSettings.get("role").asText());
+                userRole = RoleEnum.valueOf(userSettings.get("role").asText());
                 loadIntNode(userSettings, "furthestLevel", maxStageReached);
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
@@ -156,9 +156,9 @@ public class SettingsSingleton {
          * Helper function for creating a json object to represent an **int** 
          * settings field.
          */
-        private ObjectNode createIntNode(EnumMap<Difficulty, Integer> settingsMap) {
+        private ObjectNode createIntNode(EnumMap<DifficultyEnum, Integer> settingsMap) {
             ObjectNode newNode = jsonMapper.createObjectNode();
-            for (Difficulty difficulty : Difficulty.values()) {
+            for (DifficultyEnum difficulty : DifficultyEnum.values()) {
                 newNode.put(difficulty.toString(), settingsMap.get(difficulty));
             }
             return newNode;
@@ -168,9 +168,9 @@ public class SettingsSingleton {
          * Helper function for creating a json object to represent a **float** 
          * settings field.
          */
-        private ObjectNode createFloatNode(EnumMap<Difficulty, Float> settingsMap) {
+        private ObjectNode createFloatNode(EnumMap<DifficultyEnum, Float> settingsMap) {
             ObjectNode newNode = jsonMapper.createObjectNode();
-            for (Difficulty difficulty : Difficulty.values()) {
+            for (DifficultyEnum difficulty : DifficultyEnum.values()) {
                 newNode.put(difficulty.toString(), settingsMap.get(difficulty));
             }
             return newNode;
@@ -195,9 +195,9 @@ public class SettingsSingleton {
          * Helper function for reading in / loading the json settings for an **int**
          * settings field.
          */
-        private void loadIntNode(JsonNode userSettings, String field, EnumMap<Difficulty, Integer> settingsMap) {
+        private void loadIntNode(JsonNode userSettings, String field, EnumMap<DifficultyEnum, Integer> settingsMap) {
             JsonNode newNode = userSettings.get(field);
-            for (Difficulty difficulty : Difficulty.values()) {
+            for (DifficultyEnum difficulty : DifficultyEnum.values()) {
                 JsonNode value = newNode.get(difficulty.toString());
                 settingsMap.put(difficulty, value.asInt());
             }
@@ -207,9 +207,9 @@ public class SettingsSingleton {
          * Helper function for reading in / loading the json settings for an **float**
          * settings field.
          */
-        private void loadFloatNode(JsonNode userSettings, String field, EnumMap<Difficulty, Float> settingsMap) {
+        private void loadFloatNode(JsonNode userSettings, String field, EnumMap<DifficultyEnum, Float> settingsMap) {
             JsonNode newNode = userSettings.get(field);
-            for (Difficulty difficulty : Difficulty.values()) {
+            for (DifficultyEnum difficulty : DifficultyEnum.values()) {
                 JsonNode value = newNode.get(difficulty.toString());
                 settingsMap.put(difficulty, (float)value.asDouble());
             }
@@ -228,7 +228,7 @@ public class SettingsSingleton {
 
                 ObjectNode profileNode = jsonMapper.createObjectNode();
                 profileNode.put("telemetryEnabled", telemetryEnabled);
-                profileNode.put("role", (userRole != null ? userRole : Role.PLAYER).toString());
+                profileNode.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                 profileNode.set("furthestLevel", createIntNode(maxStageReached));
 
                 usersNode.set(String.valueOf(userID), profileNode);
@@ -253,7 +253,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void createNewUser(String username, String password, Role role) throws AuthenticationException {
+        public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException {
             try {
                 ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
 
@@ -284,12 +284,7 @@ public class SettingsSingleton {
                 }
 
                 userID = username.hashCode();
-
-                // TODO: I think there is a bug here, mapping from the json
-                // to the Role enum. 
-                // Potentially make a helper function to convert from string to 
-                // Role? Idk
-                userRole = Role.valueOf(userNode.get("role").asText());
+                userRole = RoleEnum.convertJSONToEnum(userNode.get("role").asText());
 
                 loadSettingsFromJson(userID);
             } catch (IOException e) {
@@ -301,23 +296,23 @@ public class SettingsSingleton {
          * Verifies the currently authenticated user is a developer (role).
          */
         private boolean currentUserIsDeveloper() {
-            return userRole == Role.DEVELOPER;
+            return userRole == RoleEnum.DEVELOPER;
         }
 
         /**
          * Verifies the currently authenticated user is a designer (role).
          */
         private boolean currentUserIsDesigner() {
-            return userRole == Role.DESIGNER;
+            return userRole == RoleEnum.DESIGNER;
         }
 
         @Override
-        public Role getUserRole() throws AuthenticationException {
+        public RoleEnum getUserRole() throws AuthenticationException {
             return userRole;
         }
 
         @Override
-        public void setUserRole(int userID, Role role) throws AuthenticationException {
+        public void setUserRole(int userID, RoleEnum role) throws AuthenticationException {
             if (!currentUserIsDeveloper()) {
                 throw new AuthenticationException();
             }
@@ -342,57 +337,54 @@ public class SettingsSingleton {
         }
 
         @Override
-        public int getMaxStageReached(Difficulty difficulty) throws AuthenticationException {
+        public int getMaxStageReached(DifficultyEnum difficulty) throws AuthenticationException {
             return maxStageReached.get(difficulty);
         }
 
         @Override
-        public int getPlayerMaxHealth(Difficulty difficulty) {
+        public int getPlayerMaxHealth(DifficultyEnum difficulty) {
             return playerMaxHealth.get(difficulty);
         }
 
         @Override
-        public float getEnemyDamageMultiplier(Difficulty difficulty) {
+        public float getEnemyDamageMultiplier(DifficultyEnum difficulty) {
             return enemyDamageMultiplier.get(difficulty);
         }
 
         @Override
-        public float getEnemyMaxHealthMultiplier(Difficulty difficulty) {
+        public float getEnemyMaxHealthMultiplier(DifficultyEnum difficulty) {
             return enemyMaxHealthMultiplier.get(difficulty);
         }
 
         @Override
-        public int getStartingLives(Difficulty difficulty) {
+        public int getStartingLives(DifficultyEnum difficulty) {
             return startingLives.get(difficulty);
         }
 
         @Override
-        public int getMaxMagic(Difficulty difficulty) {
+        public int getMaxMagic(DifficultyEnum difficulty) {
             return maxMagic.get(difficulty);
         }
 
         @Override
-        public int getMagicRegenRate(Difficulty difficulty) {
+        public int getMagicRegenRate(DifficultyEnum difficulty) {
             return magicRegenRate.get(difficulty);
         }
 
         @Override
-        public int getShopItemCount(Difficulty difficulty) {
+        public int getShopItemCount(DifficultyEnum difficulty) {
             return shopItemCount.get(difficulty);
         }
 
         @Override
-        public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
-                throw new AuthenticationException();
-            }
+        public void setTelemetryEnabled(boolean telemetryEnabled) {
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
         }
 
         @Override
-        public void setMaxStageReached(Difficulty difficulty, int maxStageReached) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setMaxStageReached(DifficultyEnum difficulty, int maxStageReached) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.maxStageReached.put(difficulty, maxStageReached);
@@ -400,8 +392,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setPlayerMaxHealth(Difficulty difficulty, int newplayerMaxHealth) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setPlayerMaxHealth(DifficultyEnum difficulty, int newplayerMaxHealth) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.playerMaxHealth.put(difficulty, newplayerMaxHealth);
@@ -409,8 +401,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setEnemyDamageMultiplier(Difficulty difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.enemyDamageMultiplier.put(difficulty, newEnemyDamageMultiplier);
@@ -418,8 +410,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setEnemyMaxHealthMultiplier(Difficulty difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.enemyMaxHealthMultiplier.put(difficulty, newEnemyMaxHealthMultiplier);
@@ -427,8 +419,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setStartingLives(Difficulty difficulty, int newStartingLives) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setStartingLives(DifficultyEnum difficulty, int newStartingLives) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.startingLives.put(difficulty, newStartingLives);
@@ -436,8 +428,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setMaxMagic(Difficulty difficulty, int newMaxMagic) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setMaxMagic(DifficultyEnum difficulty, int newMaxMagic) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.maxMagic.put(difficulty, newMaxMagic);
@@ -445,8 +437,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setMagicRegenRate(Difficulty difficulty, int newMagicRegenRate) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setMagicRegenRate(DifficultyEnum difficulty, int newMagicRegenRate) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.magicRegenRate.put(difficulty, newMagicRegenRate);
@@ -454,8 +446,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setShopItemCount(Difficulty difficulty, int newShopItemCount) throws AuthenticationException {
-            if (!currentUserIsDesigner() || !currentUserIsDeveloper()) {
+        public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
             this.shopItemCount.put(difficulty, newShopItemCount);
@@ -475,6 +467,26 @@ public class SettingsSingleton {
         @Override
         public boolean isTelemetryEnabled() throws AuthenticationException {
             return this.telemetryEnabled;
+        }
+
+        @Override
+        public void setLoginsDestinationFile(File file) {
+            LOGINS_FILE = file;
+        }
+
+        @Override
+        public void resetLoginsDestinationFile() {
+            LOGINS_FILE = new File("logins_file.json");
+        }
+
+        @Override
+        public void setSettingsDestinationFile(File file) {
+            SETTINGS_FILE = file;
+        }
+
+        @Override
+        public void resetSettingsDestinationFile() {
+            SETTINGS_FILE = new File("settings_file.json");
         }
     }
 }

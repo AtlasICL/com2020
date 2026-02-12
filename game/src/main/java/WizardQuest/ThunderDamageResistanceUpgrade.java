@@ -9,8 +9,8 @@ public class ThunderDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) {
-        if (type == DamageType.THUNDER) {
+    public void loseHealth(int amount, DamageEnum type) {
+        if (type == DamageEnum.THUNDER) {
             super.player.loseHealth(amount / 2, type);
         } else {
             super.player.loseHealth(amount, type);
@@ -18,10 +18,10 @@ public class ThunderDamageResistanceUpgrade extends UpgradeBase {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades() {
-        List<UpgradeType> u = super.player.getUpgrades();
-        if (!u.contains(UpgradeType.THUNDER_DAMAGE_RESISTANCE)) {
-            u.add(UpgradeType.THUNDER_DAMAGE_RESISTANCE);
+    public List<UpgradeEnum> getUpgrades() {
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.THUNDER_DAMAGE_RESISTANCE)) {
+            u.add(UpgradeEnum.THUNDER_DAMAGE_RESISTANCE);
         }
         return u;
     }

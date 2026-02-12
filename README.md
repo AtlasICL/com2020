@@ -23,30 +23,29 @@ com2020/
 │   ├── src/
 │   │   ├── main/
 │   │   │   └── java/
-│   │   │       └── gameName/
+│   │   │       └── WizardQuest/
 │   │   │           └── game.java
 │   │   └── test/
 │   │       ├── java/
-│   │       │   └── gameName/
-│   │       │       └── test.java
+│   │       │   └── WizardQuest/
+│   │       │       ├── unit/
+│   │       │       │   └── GameUnitTest.java
+│   │       │       ├── integration/
+│   │       │       │   └── GameIntegrationTest.java
+│   │       │       └── e2e/
+│   │       │           └── FullGameRunE2ETest.java
 │   │       └── resources/
 │   │           └── testResources.csv
 │   └── pom.xml
 ├── telemetry/
-│   ├── core/
-│   │   ├── __init__
-│   │   ├── events.py
-│   │   ├── parsing.py
-│   │   ├── logic.py
-│   │   └── export.py
-│   ├── gui/
+│   ├── telemetry_app/
 │   │   ├── __init__.py
-│   │   ├── gui.py
-│   │   └── plotting.py
-│   ├── telemetry_app.py
-│   ├── example_data.json
+│   │   ├── events.py
+│   │   ├── logic.py
+│   │   └── gui.py
 │   ├── schema.md
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── telemetry_app.py
 ├── meetings/
 │   ├── meeting_minutes.md
 │   └── project_specification.pdf
@@ -66,6 +65,6 @@ This project uses GitHub Actions for CI/CD and running automated tests.
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://peps.python.org/pep-0008/)
 
-## Meeting minutes 
+## Meeting minutes
 Find meeting minutes and project specification [here](/meetings/)
 

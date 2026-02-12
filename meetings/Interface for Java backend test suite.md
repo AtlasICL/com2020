@@ -1,10 +1,10 @@
 # Java Backend Test Suite Interface
 
 ## Explanation
-Each subheading represents a single class within the program. Within each class, there can be unit tests - these test the behaviour of a class in isolation. There can also be integrated tests - these test the behaviour of a class when interacting with the logic of other classes in the program. The interface also contains several end-to-end tests - these test the behaviour of the program as a whole in appropriate scenarios.
+Each subheading represents a single class within the program. Within each class, there can be unit tests - these test the behaviour of a class in isolation. There can also be integration tests - these test the behaviour of a class when interacting with the logic of other classes in the program. The interface also contains several end-to-end tests - these test the behaviour of the program as a whole in appropriate scenarios.
 
 ## Approach
-JUnit will be used as the framework for this test suite. Java Reflection will be used to create and assess mock objects at runtime, and to facilitate the testing of private methods and attributes.
+JUnit (v5.10.1) will be used as the framework for this test suite. Java Reflection will be used to create and assess mock objects at runtime, and to facilitate the testing of private methods and attributes.
 
 ## Unit and Integrated Tests
 
@@ -24,16 +24,14 @@ JUnit will be used as the framework for this test suite. Java Reflection will be
 
 - testConstructorIsPrivate()
 
-### interface EntityAIInterface
+### RandomEntityAI
 #### Unit Tests
-- testAbilityUsedIsValid()
+- testUpgradeOnlyPickedIfAffordable()
 
-- testUpgradePickedIsValidAndAffordable()
+- testPurchasedUpgradeAppliedToSelf()
 
-#### Integrated Tests
-- testDefensiveAbilityImpactsAllies() *- Interacts with logic of AbilityInterface, EntityInterface*
-
-- testOffensiveAbilityImpactsEnemies() *- Interacts with logic of AbilityInterface, EntityInterface*
+#### Integration Tests
+- testAbilityImpactsEnemies() *- Interacts with logic of AbilityInterface, EntityInterface*
 
 ### EntityAISingleton
 #### Unit Tests
@@ -43,56 +41,67 @@ JUnit will be used as the framework for this test suite. Java Reflection will be
 
 - testConstructorIsPrivate()
 
-### GameRunInterface
+### GameRun
 #### Unit Tests
-- testCurrentStageToNextStage()
+- testCurrentStageIncrementsToNextStage()
 
 - testRunStartTimeIsValid()
 
 - testDeathCountIsValid()
 
-- testDeathCountIncrements()
+- testDeathCountIncrementation()
 
 - testEncounterPickedFromCorrectPhase()
 
-- testCorrectNumberOfRandomUpgradesInShop()
+- testCorrectNumberOfUpgradesInShop()
+
+- testUpgradesInShopAreRandomised()
+
+- testUpgradeRemovedFromShopWhenPurchased()
 
 - testExceptionThrownIfLackingResourcesForUpgrade()
 
-#### Integrated Tests
-- testUpgradeRemovedFromShopAndAppliedToPlayer() *- Interacts with logic of UpgradeType*
+#### Integration Tests
+- testUpgradeAppliedToPlayer() *- Interacts with logic of UpgradeType*
 
 - testLifeLostIfDeathCountIncrements() *- Interacts with logic of PlayerInterface*
 
-### TelemetryListenerInterface
+### TelemetryListener
 #### Unit Tests
-- testSessionStartWrite()
+- testUserIDValidation()
 
-- testNormalEncounterStartWrite()
+- testSessionIDValidation()
 
-- testNormalEncounterCompleteWrite()
+- testTimeStampValidation()
 
-- testNormalEncounterFailWrite()
+- testTelemetryNameValidation()
 
-- testNormalEncounterRetryWrite()
+- testEncounterNameValidation()
 
-- testBossEncounterStartWrite() 
+- testStageNumberValidation()
 
-- testBossEncounterCompleteWrite()
+- testPlayerHPRemainingValidation()
 
-- testBossEncounterFailWrite()
+- testLivesLeftValidation()
 
-- testBossEncounterRetryEvent()
+- testCoinsGainedValidation()
 
-- testGainCoinWrite()
+- testUpgradeBoughtValidation()
 
-- testBuyUpgradeWrite()
+- testCoinsSpentValidation()
 
-- testEndSessionWrite()
+- testSettingsValidation()
 
-- testSettingsChangeWrite()
+- testSettingValueValidation()
 
-- testKillEnemyWrite()
+- testEnemyTypeValidation()
+
+- testDifficultyValidation()
+
+#### Integration Tests
+- testTelemetryWrittenIfUserOptedInToTelemetry() *- Interacts with I/O in JSON file*
+
+- testTelemetryNotWrittenIfUserOptedOutOfTelemetry() *- Interacts with I/O in JSON file*
 
 ### TelemetryListenerSingleton
 #### Unit Tests
@@ -102,83 +111,27 @@ JUnit will be used as the framework for this test suite. Java Reflection will be
 
 - testConstructorIsPrivate()
 
-### abstract TelemetryEvent extends EventObject
+### Settings
 #### Unit Tests
-- testUserIDValidation()
+- testExceptionThrownIfUsernameInvalidWhenCreatingUser()
   
-- testSessionIDValidation()
+- testExceptionThrownIfPasswordInvalidWhenCreatingUser()
 
-- testTimestampValidation()
-
-### abstract EncounterEvent extends TelemetryEvent
-#### Unit Tests
-- testEncounterNameValidation()
+- testExceptionThrownIfUsernameOrPasswordInvalidWhenAuthenticating()
   
-- testStageNumberValidation()
-
-### EncounterCompleteEvent extends EncounterEvent
-#### Unit Tests
-- testPlayerHPRemainingValidation()
-
-### EncounterRetryEvent extends EncounterEvent
-#### Unit Tests
-- testLivesLeftValidation()
-
-### GainCoinEvent extends EncounterEvent
-#### Unit Tests
-- testCoinsGainedValidation()
-
-### BuyUpgradeEvent extends EncounterEvent
-#### Unit Tests
-- testUpgradeBoughtValidation()
-
-- testCoinsSpentValidation()
-
-### SettingsChangeEvent extends TelemetryEvent
-#### Unit Tests
-- testSettingsValidation()
-
-- testSettingValueValidation()
-
-### KillEnemyEvent extends EncounterEvent
-#### Unit Tests
-- testEnemyTypeValidation()
-
-- testDifficultyValidation()
-
-### SettingsInterface
-#### Unit Tests
-- testUsernameCannotBeNull()
+- testUserIDHashFunctionIsConsistent()
   
--	testPasswordCannotBeNull()
+- testUniqueSessionIDCreated()
   
--	testUserIDIsValid()
-  
--	testUniqueSessionIDCreated()
-  
--	testUserRoleExists()
+- testExceptionThrownIfGetOrSetMethodInvokerIsNotDeveloper()
 
--	testFirstCreatedAccountIsDeveloper()
+- testDeveloperCanInvokeGetOrSetMethods()
 
--	testAllOtherCreatedAccountsArePlayers()
-  
--	testEnabledAndDisabledTelemetry()
-  
--	testEnemyMaxHealthMultiplier()
-  
--	testPlayerMaxHealthMultiplier()
-  
--	testUpgradePriceMultipler()
-  
--	testEnemyDamageMultiplier()
+- testExceptionThrownIfUsernameInvalidWhenSettingRole()
 
--	testStartingLives()
-  
--	testMaxMagicMultiplier()
-  
--	testMagicRegenRate()
-  
--	testShopItemCount()
+- testFirstCreatedAccountIsDeveloper()
+
+- testAllOtherCreatedAccountsArePlayers()
 
 ### SettingsSingleton
 #### Unit Tests
@@ -188,62 +141,54 @@ JUnit will be used as the framework for this test suite. Java Reflection will be
 
 - testConstructorIsPrivate()
 
-### EncounterInterface
+### Encounter
 #### Unit Tests
 - testEnemiesExist()
 
-- testStageIncompleteToComplete()
+- testCompletionStatusChangesWhenMarkedComplete()
 
-- testEncounterTypeIsValid()
-
-- testEnemyHPReset()
+- testEnemyHPIsReset()
 
 ### enum AbilityType
-#### Unit Tests
-- testGetAssociatedAbility()
+#### Integration Tests
+- testExecutedAbilityImpactsTarget() *- Interacts with logic of EntityInterface
 
 ### enum UpgradeType
-#### Integrated Tests
+#### Integration Tests
 - testUpgradeAppliedToPlayer() *- Interacts with logic of PlayerInterface*
 
 ### enum EncounterType
 #### Unit Tests
-- testValidEncounterCreated()
+- testValidEncounterIsCreated()
 
 ### enum EntityType
 #### Unit Tests
-- testValidEnemyCreated()
+- testValidEnemyIsCreated()
 
-### interface EntityInterface
+### Entity (Player/Enemy)
 #### Unit Tests
 - testHealthLossEqualToDamageCalculation()
 
-- testHealthGain()
+- testExceptionThrownIfHealthLossAmountIsNegative()
 
 - testHealthResetRestoresMaxHealth()
 
-### interface PlayerInterface extends EntityInterface
+### Player
 #### Unit Tests
-- testCoinsLoss()
+- testLoseCoins()
 
-- testCoinsGain()
+- testGainCoins()
 
-- testMagicLoss()
+- testLoseMagic()
 
-- testMagicGain()
+- testGainMagic()
 
-- testLivesLoss()
+- testLoseLives()
 
-- testLivesGain()
+- testGainLives()
 
-### interface AbilityInterface
-#### Unit Tests
-- testNumberOfTargetsMatchesExecutionTargets()
+- testExceptionThrownIfGainOrLossAmountIsNegative()
 
-#### Integrated Tests
-- testSourceExecuteDefensiveAbility() *- Interacts with logic of PlayerInterface, Enemy*
-
-- testSourceExecuteOffensiveAbility() *- Interacts with logic of PlayerInterface, Enemy*
 
 ## End-To-End Tests
 
