@@ -40,7 +40,7 @@ def get_file(filename: Path) -> list[dict]:
     This function parses a json file and returns a list of json objects.
     
     :param filename: filename for json to be parsed.
-    :type filename: str
+    :type filename: Path
     :return: List of json objects.
     :rtype: list[dict[str, Any]]
     """
@@ -58,7 +58,7 @@ def parse_file(filename: Path) -> list[ValidEvent]:
     Creates a list of ValidEvent objects from a json file.
     
     :param filename: filename for json to be parsed.
-    :type filename: str
+    :type filename: Path
     :return: List of valid event objects.
     :rtype: list[ValidEvent]
     """
