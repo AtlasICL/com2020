@@ -20,7 +20,10 @@ CLIENT_SECRET = "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"
 # obtained from the API Console are embedded in the source code of
 # your application. In this context, the client secret is 
 # obviously not treated as a secret." 
-# The above quote is from "https://googleapis.dev/ruby/google-api-client/v0.36.3/file.oauth-installed.html"
+# The above quote is from "https://googleapis.dev/ruby/google-api-client/v0.36.3/file.oauth-installed.html".
+# This is confirmed by "a client secret, which you embed in the source
+#  code of your application. (In this context, the client secret is 
+# obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
 SCOPES = ["openid", "profile" ,"email"]
 
