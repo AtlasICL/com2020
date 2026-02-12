@@ -26,6 +26,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
+        self.file_name = "logs.json"
 
         style.configure(
             ".",
@@ -114,19 +115,42 @@ class TelemetryAppGUI(tk.Tk):
         )
         sign_in_button.pack(pady=(10, 20))
 
+        self.switch_btn_text = tk.StringVar()
+        self.switch_btn_text.set("Change to simulation data")
+
+        switch_simulation_button = ttk.Button(
+            self.tab_home,
+            textvariable=self.switch_btn_text,
+            command=self.toggle_file
+        )
+        switch_simulation_button.pack(pady=(10,20))
 
     def google_auth(self):
         print("Sign in requested")
         return
+    
+    def toggle_file(self):
+        if self.switch_btn_text.get() == "Change to simulation data":
+            self.switch_btn_text.set("Change to telemetry data")
+            self.file_name = "simulation.json"
+            self.refresh_all()
+        else:
+            self.switch_btn_text.set("Change to simulation data")
+            self.file_name = "logs.json"
+            self.refresh_all()
 
-
+    def refresh_all(self):
+        self.refresh_funnel_graph()
+        self.refresh_coins_gained_plots()
+        self.refresh_difficulty_spike_failure_plot()
+        self.refresh_health_plots()
 
     def refresh_funnel_graph(self):
         """
         Refreshes the plot of players remaining per stage (referred to
         as funnel view).
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         funnel_data: dict[int, int] = self.logic_engine.funnel_view()
         self.funnel_plot.plot_line(
             funnel_data.keys(), 
@@ -140,7 +164,7 @@ class TelemetryAppGUI(tk.Tk):
         Refreshes the plots for difficulty spike in terms of number 
         of failures per stage.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
         self.spike_plot.plot_line(
             spike_data.keys(), 
@@ -180,7 +204,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the plots of HP remaining per stage per difficulty.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = self.logic_engine.compare_health_per_stage_per_difficulty()
 
         series = []
@@ -198,7 +222,7 @@ class TelemetryAppGUI(tk.Tk):
         Refreshed the plots for average coins gained per stage per
         difficulty.
         """
-        self.logic_engine.categorise_events(TMP_FILENAME)
+        self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = self.logic_engine.compare_coins_per_stage_per_difficulty()
 
         series = []
