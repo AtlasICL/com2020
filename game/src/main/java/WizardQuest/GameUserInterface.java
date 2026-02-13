@@ -341,14 +341,6 @@ public class GameUserInterface {
                 return;
             }
 
-            //overwrite snapshots again before advancing
-            try {
-                lastRun = gameManager.getCurrentRun();
-            } catch (Exception ignored) {}
-            try {
-                lastPlayer = gameManager.getCurrentPlayer();
-            } catch (Exception ignored) {}
-
             gameManager.advanceToNextLevel();
 
             if (!gameManager.isGameRunning()) {
@@ -360,6 +352,7 @@ public class GameUserInterface {
         //if ever drops out without triggering the early returns
         endScreen(lastRun, lastPlayer);
     }
+
 
     private boolean playEncounter() {
 
