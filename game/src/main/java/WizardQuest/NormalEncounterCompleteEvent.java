@@ -23,7 +23,4 @@ public class NormalEncounterCompleteEvent extends EncounterCompleteEvent{
         super(source, userID, sessionID, timeStamp, "NormalEncounterComplete", 
             encounterName, difficulty, stageNumber, playerHPRemaining);
     }
-
-    private class EncounterEnum {
-    }
 }
