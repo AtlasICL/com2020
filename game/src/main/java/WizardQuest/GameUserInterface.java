@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class GameUserInterface {
 
     private final GameManagerInterface gameManager;
-    private final SettingsInterface settings = SettingsSingleton.getSettings();
+    private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final Scanner scanner;
 
     private boolean telemetryEnabled = true;
@@ -24,7 +24,7 @@ public class GameUserInterface {
     private static final String MAGENTA = "\u001B[35m";
 
     private GameUserInterface() {
-        this.gameManager = GameManagerSingleton.getGameManager();
+        this.gameManager = GameManagerSingleton.getInstance();
         this.scanner = new Scanner(System.in);
     }
 
@@ -90,7 +90,7 @@ public class GameUserInterface {
             System.out.println();
             System.out.println(BOLD + "Settings" + RESET);
 
-            Role role = Role.DEVELOPER; //placeholder values in case of auth failure, overrides if auth successful
+            RoleEnum role = RoleEnum.DEVELOPER; //placeholder values in case of auth failure, overrides if auth successful
             boolean telemetryEnabled = false;
 
             try {
@@ -112,11 +112,11 @@ public class GameUserInterface {
             System.out.println("1. Toggle telemetry");
             System.out.println("2. Telemetry disclosure");
 
-            if (role == Role.DESIGNER || role == Role.DEVELOPER) {
+            if (role == RoleEnum.DESIGNER || role == RoleEnum.DEVELOPER) {
                 System.out.println("3. Change starting lives (design parameter)");
             }
 
-            if (role == Role.DEVELOPER) {
+            if (role == RoleEnum.DEVELOPER) {
                 System.out.println("4. Assign user role");
             }
 
@@ -140,7 +140,7 @@ public class GameUserInterface {
             }
 
             if (input.equals("3")) {
-                if (role == Role.DESIGNER || role == Role.DEVELOPER) {
+                if (role == RoleEnum.DESIGNER || role == RoleEnum.DEVELOPER) {
                     changeStartingLives();
                 }
                 else {
@@ -150,7 +150,7 @@ public class GameUserInterface {
             }
 
             if (input.equals("4")) {
-                if (role == Role.PLAYER) {
+                if (role == RoleEnum.PLAYER) {
                     assignUserRole();
                 }
                 else {
@@ -184,7 +184,7 @@ public class GameUserInterface {
 
     private void changeStartingLives() {
 
-        Difficulty difficulty = selectDifficulty();
+        DifficultyEnum difficulty = selectDifficulty(); // ?
 
         if (difficulty == null) {
             return;
@@ -235,24 +235,24 @@ public class GameUserInterface {
 
         String input = scanner.nextLine();
 
-        Role newRole;
+        RoleEnum newRole;
 
         if (input.equals("1")) {
-            newRole = Role.PLAYER;
+            newRole = RoleEnum.PLAYER;
         }
         else if (input.equals("2")) {
-            newRole = Role.DESIGNER;
+            newRole = RoleEnum.DESIGNER;
         }
         else if (input.equals("3")) {
-            newRole = Role.DEVELOPER;
+            newRole = RoleEnum.DEVELOPER;
         }
         else {
-            System.out.println(RED + "Invalid role." + RESET);
+            System.out.println(RED + "Invalid RoleEnum." + RESET);
             return;
         }
 
         try {
-            settings.setUserRole(username, newRole);
+            settings.setUserRole(username, newRole); // TODO: NEEDS TO BE USERID NOT USERNAME
             System.out.println(GREEN + "Role updated for " + username + "." + RESET);
         }
         catch (AuthenticationException e) {
@@ -293,7 +293,7 @@ public class GameUserInterface {
 
 
     private void startGame() {
-        Difficulty difficulty = selectDifficulty();
+        DifficultyEnum difficulty = selectDifficulty();
 
         if (difficulty == null) {
             return;
@@ -303,24 +303,24 @@ public class GameUserInterface {
         gameLoop();
     }
 
-    private String difficultyLabel(Difficulty difficulty) {
-        if (difficulty == Difficulty.EASY) {
+    private String difficultyLabel(DifficultyEnum difficulty) {
+        if (difficulty == DifficultyEnum.EASY) {
             return GREEN + "Easy" + RESET;
         }
-        if (difficulty == Difficulty.MEDIUM) {
+        if (difficulty == DifficultyEnum.MEDIUM) {
             return YELLOW + "Medium" + RESET;
         }
         return RED + "Hard" + RESET;
     }
 
-    private Difficulty selectDifficulty() {
+    private DifficultyEnum selectDifficulty() {
         while (true) {
             System.out.println();
             System.out.println(BOLD + "Select Difficulty" + RESET);
 
-            System.out.println("1. " + difficultyLabel(Difficulty.EASY));
-            System.out.println("2. " + difficultyLabel(Difficulty.MEDIUM));
-            System.out.println("3. " + difficultyLabel(Difficulty.HARD));
+            System.out.println("1. " + difficultyLabel(DifficultyEnum.EASY));
+            System.out.println("2. " + difficultyLabel(DifficultyEnum.MEDIUM));
+            System.out.println("3. " + difficultyLabel(DifficultyEnum.HARD));
             System.out.println("0. Go Back");
 
             System.out.print(BLUE + ">>> " + RESET);
@@ -330,11 +330,11 @@ public class GameUserInterface {
                 case "0":
                     return null;
                 case "1":
-                    return Difficulty.EASY;
+                    return DifficultyEnum.EASY;
                 case "2":
-                    return Difficulty.MEDIUM;
+                    return DifficultyEnum.MEDIUM;
                 case "3":
-                    return Difficulty.HARD;
+                    return DifficultyEnum.HARD;
                 default:
                     System.out.println(RED + "Invalid option." + RESET);
             }
@@ -424,7 +424,7 @@ public class GameUserInterface {
             System.out.println("Lives: " + YELLOW + player.getLives() + RESET);
             System.out.println("Coins: " + YELLOW + player.getCoins() + RESET);
 
-            AbilityType[] abilities = getPlayerAbilities(player);
+            AbilityEnum[] abilities = getPlayerAbilities(player);
 
             if (abilities == null || abilities.length == 0) {
                 System.out.println(RED + "No abilities available." + RESET);
@@ -464,7 +464,7 @@ public class GameUserInterface {
                 continue;
             }
 
-            AbilityType chosenAbility = abilities[abilityChoice - 1];
+            AbilityEnum chosenAbility = abilities[abilityChoice - 1];
 
             EntityInterface target = selectEnemyTarget(enemies);
 
@@ -473,7 +473,7 @@ public class GameUserInterface {
                 continue;
             }
 
-            chosenAbility.execute(player, target);
+            chosenAbility.execute(player, target); // TODO: Needs to handle lacking resource exception
 
             if (allEnemiesDead(enemies)) {
                 //win case, complete encounter, will advance to shop/next level
@@ -489,7 +489,7 @@ public class GameUserInterface {
                 if (enemy == null) continue;
                 if (enemy.getHealth() <= 0) continue;
 
-                AbilityType[] enemyAbilities = getEnemyAbilities(enemy);
+                AbilityEnum[] enemyAbilities = getEnemyAbilities(enemy);
 
                 if (enemyAbilities == null || enemyAbilities.length == 0) {
                     continue;
@@ -500,13 +500,13 @@ public class GameUserInterface {
         }
     }
 
-    private AbilityType[] getPlayerAbilities(PlayerInterface player) {
+    private AbilityEnum[] getPlayerAbilities(PlayerInterface player) {
 
         if (player == null || player.getAbilities().isEmpty()) {
-            return new AbilityType[0];
+            return new AbilityEnum[0];
         }
 
-        AbilityType[] abilities = new AbilityType[player.getAbilities().size()];
+        AbilityEnum[] abilities = new AbilityEnum[player.getAbilities().size()];
 
         for (int i = 0; i < player.getAbilities().size(); i++) {
             abilities[i] = player.getAbilities().get(i);
@@ -515,13 +515,13 @@ public class GameUserInterface {
         return abilities;
     }
 
-        private AbilityType[] getEnemyAbilities(EntityInterface enemy) {
+        private AbilityEnum[] getEnemyAbilities(EntityInterface enemy) {
 
         if (enemy == null || enemy.getAbilities().isEmpty()) {
-            return new AbilityType[0];
+            return new AbilityEnum[0];
         }
 
-        AbilityType[] abilities = new AbilityType[enemy.getAbilities().size()];
+        AbilityEnum[] abilities = new AbilityEnum[enemy.getAbilities().size()];
 
         for (int i = 0; i < enemy.getAbilities().size(); i++) {
             abilities[i] = enemy.getAbilities().get(i);
@@ -586,7 +586,7 @@ public class GameUserInterface {
         System.out.println();
         System.out.println(BOLD + "Shop" + RESET);
 
-        UpgradeType[] upgrades;
+        UpgradeEnum[] upgrades;
 
         try {
             upgrades = gameManager.viewShop();
@@ -684,7 +684,7 @@ public class GameUserInterface {
         long minutes = duration.toMinutes();
         long seconds = duration.minusMinutes(minutes).getSeconds();
 
-        if (run == null) {
+        if (run == null) { // TODO: THIS IS UNREACHABLE
             System.out.println(RED + "No run data available." + RESET);
             System.out.println();
             return;
