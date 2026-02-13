@@ -3,8 +3,8 @@ from core.parsing import parse_file, ValidEvent
 
 class EventLogicEngine:
     def __init__(self):
-        self.session_start_events: set[
-            SessionStart
+        self.start_session_events: set[
+            StartSession
         ] = set()
         self.end_session_events: set[
             EndSession
@@ -41,7 +41,7 @@ class EventLogicEngine:
         ] = set()
 
         self._attributes = [ 
-            self.session_start_events, 
+            self.start_session_events, 
             self.end_session_events,
             self.normal_encounter_start_events,
             self.normal_encounter_complete_events,
@@ -72,8 +72,8 @@ class EventLogicEngine:
         
         events: list[ValidEvent] = parse_file(filename)
         for event in events:
-            if isinstance(event, SessionStart):
-                self.session_start_events.add(event)
+            if isinstance(event, StartSession):
+                self.start_session_events.add(event)
             elif isinstance(event, EndSession):
                 self.end_session_events.add(event)
             elif isinstance(event, NormalEncounterStart):
@@ -116,12 +116,12 @@ class EventLogicEngine:
 
     def get_number_of_session_starts(self) -> int:
         """
-        Get the number of session start events.        
+        Get the number of start session events.        
 
         :return: Returns the number of unique session start events.
         :rtype: int
         """
-        return len(self.session_start_events)
+        return len(self.start_session_events)
     
     
     def get_unique_userIDs(self) -> set[int]:
@@ -132,7 +132,7 @@ class EventLogicEngine:
         :rtype: set[int]
         """
         uniqueIDs = set()
-        for event in self.session_start_events:
+        for event in self.start_session_events:
             uniqueIDs.add(event.userID)
         return uniqueIDs
     
@@ -222,7 +222,7 @@ class EventLogicEngine:
         :return: Difficulty value of the session.
         :rtype: Difficulty
         """
-        for start_event in self.session_start_events:
+        for start_event in self.start_session_events:
             if start_event.sessionID == sessionID:
                 return start_event.difficulty
         raise RuntimeError("No session start event for provided " \
@@ -239,7 +239,7 @@ class EventLogicEngine:
         :rtype: list[int]
         """
         difficulty_sessionIDs: list[int] = []
-        for start_event in self.session_start_events:
+        for start_event in self.start_session_events:
             if start_event.difficulty == difficulty:
                 difficulty_sessionIDs.append(start_event.sessionID)
         return difficulty_sessionIDs

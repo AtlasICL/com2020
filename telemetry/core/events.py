@@ -2,7 +2,7 @@ from enum import Enum
 from datetime import datetime
 
 class EventType(str, Enum):
-    SESSION_START = "SessionStart"
+    START_SESSION = "StartSession"
     END_SESSION = "EndSession"
 
     NORMAL_ENCOUNTER_START = "NormalEncounterStart"
@@ -65,10 +65,10 @@ class Difficulty(str, Enum):
     NORMAL = "Normal"
     HARD = "Hard"
 
-class SessionStart:
+class StartSession:
     """
-    SessionStart object represents an instance of a 
-    SessionStart event.
+    StartSession object represents an instance of a 
+    StartSession event.
     """
     def __init__(
             self,

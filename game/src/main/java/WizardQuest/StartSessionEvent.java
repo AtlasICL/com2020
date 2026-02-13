@@ -1,8 +1,10 @@
 package WizardQuest;
 
-public class NormalEncounterFailEvent extends EncounterFailEvent{
+
+public class StartSessionEvent extends TelemetryEvent {
+    private final Difficulty difficulty;
     /**
-     * Constructor for NormalEncounterFailEvent.
+     * Constructor for StartSessionEvent.
      * 
      * @param source        the object that constructed the telemetry event.
      * @param userID        the ID of the user who is playing the game when the
@@ -13,14 +15,18 @@ public class NormalEncounterFailEvent extends EncounterFailEvent{
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
-     * @param encounterName the name of the encounter a player is fighting.
      * @param difficulty    the difficulty used for the players session.
-     * @param stageNumber   the stage player has failed.
-     * @param livesLeft     player lives remaining after completion.
      */
-    public NormalEncounterFailEvent(Object source, int userID, int sessionID, 
-            String timeStamp, EncounterType encounterName, Difficulty difficulty, int stageNumber, int livesLeft){
-        super(source, userID, sessionID, timeStamp, "NormalEncounterFail", 
-            encounterName, difficulty, stageNumber, livesLeft);
+    public StartSessionEvent(Object source, int userID, int sessionID, String timeStamp, Difficulty difficulty){
+        super(source, userID, sessionID, timeStamp, "StartSession");
+        this.difficulty = difficulty;
+    }
+    /**
+     * Gets the stored difficulty.
+     * 
+     * @return session difficulty.
+     */
+    public Difficulty getDifficulty(){
+        return this.difficulty;
     }
 }

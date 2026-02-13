@@ -15,7 +15,7 @@ public interface TelemetryListenerInterface {
      * 
      * @param e the SessionStartEvent to be recorded to the JSON database.
      */
-    public void onSessionStart(SessionStartEvent e);
+    public void onStartSession(StartSessionEvent e);
 
     /**
      * Called when a normal encounter starts.
