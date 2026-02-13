@@ -12,7 +12,7 @@ public abstract class EnemyBase implements EntityInterface {
     private int maxHealth;
 
     @Override
-    public abstract List<AbilityType> getAbilities();
+    public abstract List<AbilityEnum> getAbilities();
 
     /**
      * Constructor with specified max health.
@@ -29,7 +29,7 @@ public abstract class EnemyBase implements EntityInterface {
     }
   
     @Override
-    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException{
+    public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException{
         if (amount < 0){
             throw new IllegalArgumentException("Damage amount cannot be negative");
         }
@@ -37,7 +37,7 @@ public abstract class EnemyBase implements EntityInterface {
     }
   
     @Override
-    public int calcDamage(int base, DamageType type){
+    public int calcDamage(int base, DamageEnum type){
         return base;
     }
 
