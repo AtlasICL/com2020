@@ -216,7 +216,7 @@ def google_login() -> tuple[Any, str]:
     userinfo = userinfo_resp.json()
 
     logger.info(f"Sign-in successful: "
-                f"user {userinfo.get("name")} authenticated.")
+                f"user {userinfo.get('name')} authenticated.")
     return userinfo.get("sub"), userinfo.get("name")
 
 
