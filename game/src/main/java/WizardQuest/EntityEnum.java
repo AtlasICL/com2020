@@ -38,20 +38,20 @@ public enum EntityEnum {
      *
      * @param difficulty the current difficulty of the game
      * @return a new instance EntityInterface of this type
-     * @throws RuntimeException this happens if something goes wrong with reflection
+     * @throws IllegalStateException this happens if something goes wrong with reflection
      */
     public EntityInterface createEnemy(Difficulty difficulty) {
         try {
             return enemyClass.getDeclaredConstructor(Difficulty.class).newInstance(difficulty);
         } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
     /**
      * This method gets the telemetry name for this entity type
      *
-     * @return tje class object for this entity
+     * @return the class object for this entity
      */
     public String getTelemetryName() {
         return telemetryName;

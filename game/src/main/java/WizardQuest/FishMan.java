@@ -26,16 +26,19 @@ public class FishMan extends EnemyBase {
     }
 
     @Override
-    public int calcDamage(int base, DamageType type){
+    public void loseHealth(int amount, DamageType type){
         if (type == DamageType.THUNDER){
-            return Math.round(base * 2.0f);
+            amount = (int) Math.round(amount * 2.0);
         }
         else if (type == DamageType.WATER){
-            return Math.round(base * 0.5f);
+            amount = (int) Math.round(amount / 2.0);
         }
-        else{
-            return base;
-        }
+        super.loseHealth(amount, type);
+    }
+
+    @Override
+    public int calcDamage(int base, DamageType type) {
+        return base;
     }
 }
 
