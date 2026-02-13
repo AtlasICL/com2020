@@ -1,13 +1,146 @@
-# How to run tests
+# Deployment Guide
 
-**Prerequisites for tests:**
+## Prerequisites
+_Please find our prerequisite configuration guides at the bottom of the page, if required._
 - Java 17+
 - Maven
 
-1. From root, navigate into the `game` directory.
-2. Run the tests using Maven.
+## Instructions for Running Game App
+To do.
 
+## Instructions for Running Telemetry App
+To do.
+
+## Instructions for Running Tests
+1. In the terminal, navigate into the `game` directory from root.
 ```
 cd game
+```
+2. Use the following Maven commands, which will execute all five automated tests in our suite.
+```
+mvn clean install
 mvn test
+```
+
+## Configuration Guides
+### Java 17+
+#### Windows
+1. Open Command Prompt with administrative privileges.
+2. Run the following command:
+```
+winget install EclipseAdoptium.Temurin.21.JDK
+```
+3. Close and reopen Command Prompt with administrative privileges.
+4. Run the following commands, which should print version numbers:
+```
+java -version
+javac -version
+```
+5. Run the following command. If no value is returned, proceed to step 6. Otherwise, installation complete.
+```
+echo %JAVA_HOME%
+```
+6. Open Run (Win + R), and run the following command:
+```
+sysdm.cpl
+```
+7. Navigate to Advanced -> Environment Variables.
+8. Under System Variables, click New.
+9. Variable name: `JAVA_HOME`. Variable value: `C:\Program Files\Eclipse Adoptium\jdk-21.x.x`  (_- You'll need to replace this value with your actual filepath._)
+10. Click OK.
+11. Under System Variables, select Path.
+12. Click Edit -> New, and add the following: `%JAVA_HOME%\bin`
+13. Click OK on all windows and return to Step 3.
+
+#### macOS
+1. Navigate to https://adoptium.net/temurin/releases
+2. Select either `JDK 25 - LTS`, `JDK 21 - LTS`, or `JDK 17 - LTS`.
+3. Scroll down to macOS (third one down), and ensure that JDK and x64 are selected.
+4. Download and run the installer marked .PKG.
+5. Follow the instructions provided by the installer.
+6. Open a terminal and run the following command:
+```
+java -version
+```
+7. Run the following command. If no value is returned, proceed to step 8. Otherwise, installation complete.
+```
+echo $JAVA_HOME
+```
+8. Run the following command and return to Step 6:
+```
+echo 'export JAVA_HOME=$(/usr/libexec/java_home)' >> ~/.zshrc
+source ~/.zshrc
+```
+
+#### Linux
+1. Open a terminal.
+2. Run the following commands:
+```
+sudo apt update
+sudo apt install openjdk-21-jdk
+```
+3. Run the following commands, which should print version numbers:
+```
+java -version
+javac -version
+```
+4. Run the following command. If no value is returned, proceed to step 5. Otherwise, installation complete.
+```
+echo $JAVA_HOME
+```
+5. Run the following command, which will retrieve the filepath.
+```
+sudo update-alternatives --config java
+```
+6. Run the following command and return to Step 3: (_NOTE: You'll need to replace /usr/lib/jvm/java-21-openjdk-amd64 with your filepath retrieved in Step 5._)
+```
+echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Maven
+#### Windows
+1. Navigate to https://maven.apache.org/download.cgi
+2. Download the binary zip archive.
+3. Open the folder and extract its contents to `C:\Program Files\Apache\Maven`.
+4. Open Run (Win + R), and run the following command:
+```
+sysdm.cpl
+```
+5. Navigate to Advanced -> Environment Variables.
+6. Under System Variables, click New.
+7. Variable name: `MAVEN_HOME`. Variable value: `C:\Program Files\Apache\Maven`
+8. Click OK.
+9. Under System Variables, select Path.
+10. Click Edit -> New, and add the following: `%MAVEN_HOME%\bin`
+11. Run the following command, which should print version numbers:
+```
+mvn -version
+```
+
+#### macOS
+1. Navigate to https://maven.apache.org/download.cgi
+2. Download the binary tar.gz file.
+3. Open a Terminal and run the following commands:
+```
+sudo tar xzf apache-maven-3.9.x-bin.tar.gz -C /usr/local/
+echo 'export MAVEN_HOME=/usr/local/apache-maven/apache-maven-3.9.x' >> ~/.zshrc
+echo 'export PATH=$MAVEN_HOME/bin:$PATH' >> ~/.zshrc
+source ~/.zshrc
+```
+4. Run the following command, which should print version numbers:
+```
+mvn -version
+```
+
+#### Linux
+1. Open a terminal.
+2. Run the following commands:
+```
+sudo apt update
+sudo apt install maven
+```
+3. Run the following command, which should print version numbers:
+```
+mvn -version
 ```
