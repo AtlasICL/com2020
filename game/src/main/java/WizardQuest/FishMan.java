@@ -35,10 +35,5 @@ public class FishMan extends EnemyBase {
         }
         super.loseHealth(amount, type);
     }
-
-    @Override
-    public int calcDamage(int base, DamageType type) {
-        return base;
-    }
 }
 

@@ -11,7 +11,7 @@ public enum EncounterEnum {
     private final String telemetryName;
 
     /**
-     * Constructor for EncounterType
+     * Constructor for EncounterEnum
      *
      * @param enemies array of EntityType objects that appear occur an encounter
      * @param telemetryName the name used for telemetry events

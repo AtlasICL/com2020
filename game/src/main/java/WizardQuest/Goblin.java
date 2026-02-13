@@ -24,9 +24,5 @@ public class Goblin extends EnemyBase {
     public EntityEnum getType(){
         return EntityEnum.GOBLIN;
     }
-    @Override
-    public int calcDamage(int base, DamageType type){
-        return base; // Goblin has no resistance
-    }
 
 }

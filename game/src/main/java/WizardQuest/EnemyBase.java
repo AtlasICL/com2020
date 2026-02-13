@@ -42,8 +42,9 @@ public abstract class EnemyBase implements EntityInterface {
      * @return the total damage inflicted by this attack.
      */
     @Override
-    public abstract int calcDamage(int base, DamageType type);
-
+    public int calcDamage(int base, DamageType type){
+        return base;
+    }
 
     @Override
     public int getMaxHealth() {
