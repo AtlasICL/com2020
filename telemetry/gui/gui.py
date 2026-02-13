@@ -100,11 +100,10 @@ class TelemetryAppGUI(tk.Tk):
             self.on_authenticated()
         else:
             # self.make_welcome_screen()
-            messagebox.showerror("Authorisation Error", 
-                                 "Only Designers and Developers may access telemetry data")
-            
-
-
+            messagebox.showerror(
+                "Authorisation Error", 
+                "Only Designers and Developers may access telemetry data"
+            )
 
 
     def on_authenticated(self):
