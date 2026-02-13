@@ -1,6 +1,6 @@
 
 \subsection{Documentation}
-\subsubsection{Prototype Report}
+\subsubsection{Report}
 \paragraph{Executive Summary}
 \textbf{Value:} 2 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
@@ -36,7 +36,7 @@
   \item Each story within each epic must be stated in the requirements.
   \item Each story should have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
   \item Each story must have an acceptance criteria associated with it, which when all criteria are met the story is considered complete for sprint 1. Criteria may change between sprints as sprint requirements change. 
-  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Won't. 
+  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Wont. 
   \item Each story must be able to link to a prototype feature and test. 
 \end{itemize}
 \paragraph{Architecture Schema}
@@ -64,11 +64,12 @@
   \item Each telemetry event must have all it's fields described by the schema.
   \item Each field must have its domain described by the schema. For enumerated fields all valid values must be described.
 \end{itemize}
-\paragraph{Initial Evaluation}
+\paragraph{Evaluation}
 \textbf{Value:} 5\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
   \item Several metrics and measures of success should be evaluated. Where applicable they should be compared with the baselines of other solutions to the problem.
+  \item Each metric and measure should serve an explicit purpose, which must be explained.
   \item The method coverage of the test suite should be evaluated to determine how thoroughly the system is examined, and thus how confident we can be that defects will be discovered early. 
   \item The time between the user inputting what attack ability they use, and the command line outputting the result of their attack and the enemies' turn to measure the responsiveness of the game. 
   \item The memory usage of the prototype must be less than 1GB, and ideally as small as possible, to ensure it can run on devices with small amounts of memory. 
@@ -87,7 +88,7 @@
   \item Each story within each epic must be stated in the requirements.
   \item Each story should have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
   \item Each story must have an acceptance criteria associated with it, which when all criteria are met the story is considered complete for sprint 2. Criteria may change between sprints as sprint requirements change. 
-  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Won't. 
+  \item Each story must have a priority associated with it for that sprint. The priority should either be Must, Should, Could or Wont. 
   \item Each story must be able to link to a final product feature and test. 
 \end{itemize}
 \paragraph{Management}
@@ -210,7 +211,7 @@
   \item This must contain the provenance of each dependency.
   \item This must contain the version of each dependency the system uses.
 \end{itemize}
-\subsubsection{Deployment Guide}
+\subsubsection{Deployment and Operations Guide}
 \paragraph{Java Application Deployment Instructions}
 \textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
@@ -250,7 +251,7 @@
 \begin{itemize}
   \item There must be one end to end test.
   \item Evidence that the test is successful should be given.
-  \item The happy path and failure cases for the the test must be described.
+  \item The happy path and failure cases for the test must be described.
   \item The expected results of the test should be described.
 \end{itemize}
 \subsubsection{Presentation}
@@ -305,25 +306,22 @@
   \item Should outline the areas in which the prototype is weakest.
   \item Should briefly outline what is to be done in the next sprint.
 \end{itemize}
-\subsubsection{Operation Guide}
-\paragraph{Operation Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
-\textbf{Acceptance Criteria} N/A
+\subsubsection{Maintainance and Troubleshooting Guide}
 \paragraph{Maintenance Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
 \paragraph{Troubleshooting Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
-\paragraph{Extension Guide}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
+\paragraph{Extension Instructions}
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
 \subsubsection{Data Management Guide}
 \paragraph{Data Stored}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
 \paragraph{Data Format}
-\textbf{Value:} 0\quad \textbf{Priority:} Won't\\
+\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
 \subsubsection{Scrum Board}
 \paragraph{Backlog, In Progress and Done Sections}
@@ -375,7 +373,7 @@
   \item Users without an account must be able to create one.
 \end{itemize}
 \paragraph{Password Reset}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 1\quad \textbf{Priority:} Could\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users must be able to reset their login credentials.
@@ -393,14 +391,15 @@
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users with the designer role must be authenticated as designers when logging in.
-  \item A designer must be able to view the dashboards and the associated design suggestions.
+  \item A designer must be able to view the dashboards.
+  \item A designer must be able to view the design suggestions.
 \end{itemize}
 \paragraph{Developer Permissions}
 \textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users with the developer role must be authenticated as developers when logging in.
-  \item A developer must be able to view the dashboards and the associated design suggestions.
+  \item A developer must be able to perform any action in the Python application a designer could. 
 \end{itemize}
 \subsubsection{Dashboard Views}
 \paragraph{Simulation View}
@@ -476,7 +475,7 @@
 \paragraph{User Variety}
 \textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
-\paragraph{Session Variet}
+\paragraph{Session Variety}
 \textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
 \textbf{Acceptance Criteria} N/A
 \paragraph{Anomalous Telemetry Events}
@@ -567,7 +566,7 @@
   \item Users without an account must be able to create one.
 \end{itemize}
 \paragraph{Password Reset}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 1\quad \textbf{Priority:} Could\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users must be able to reset their login credentials.
