@@ -8,6 +8,15 @@ game/target
 
 .vscode
 
+
+Report.aux
+Report.bbl
+Report.log
+Report.out
+Report.synctex.gz
+Report.pdf
+
+.env**
 report/*.aux
 report/*bcf
 report/*log
