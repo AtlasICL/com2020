@@ -1,18 +1,29 @@
 package WizardQuest;
 
-public class FireDamageResistanceUpgrade extends ConcreteUpgrade {
+import java.util.List;
+
+public class FireDamageResistanceUpgrade extends UpgradeBase {
 
     public FireDamageResistanceUpgrade(PlayerInterface player) {
         super(player);
     }
 
     @Override
-    public int loseHealth(int amount, DamageType type) {
-        if (type == DamageType.FIRE){
-            player.loseHealth(amount/2, type);   
+    public void loseHealth(int amount, DamageEnum type) {
+        if (type == DamageEnum.FIRE){
+            super.player.loseHealth(amount/2, type);   
         } 
         else {
-            player.loseHealth(amount, type); 
+            super.player.loseHealth(amount, type); 
         }
+    }
+
+    @Override
+    public List<UpgradeEnum> getUpgrades(){
+        List<UpgradeEnum> u = super.player.getUpgrades();
+        if (!u.contains(UpgradeEnum.FIRE_DAMAGE_RESISTANCE)){
+            u.add(UpgradeEnum.FIRE_DAMAGE_RESISTANCE);
+        }
+        return u;
     }
 }

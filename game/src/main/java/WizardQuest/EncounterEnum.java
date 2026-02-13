@@ -36,8 +36,7 @@ public enum EncounterEnum {
      * @return a new EncounterInterface with specified enemies
      */
     public EncounterInterface createEncounter() {
-        return new Encounter(this) {
-        };
+        return new Encounter(this);
     }
 
     /**

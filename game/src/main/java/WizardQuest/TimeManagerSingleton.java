@@ -1,6 +1,7 @@
 package WizardQuest;
 
 import java.time.LocalDateTime;
+
 /**
  * Provides a singleton global access point to the time manager
  */
@@ -13,7 +14,7 @@ public class TimeManagerSingleton {
      * Returns a reference to the time manager.
      * @return the time manager. 
      */
-    public static TimeManagerInterface getTimeManager() {
+    public static TimeManagerInterface getInstance() {
         return timeManager;
     }
 

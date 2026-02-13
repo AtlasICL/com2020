@@ -4,29 +4,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements PlayerInterface {
-    private int maxMagic;
-    private int maxHealth;
+    private final int maxMagic;
+    private final int maxHealth;
     private int health;
     private int magic;
     private int coins;
     private int lives;
-    private List<AbilityType> abilities;
-    private Difficulty difficulty;
+    private DifficultyEnum difficulty;
 
-    public Player(Difficulty difficulty) {
-        SettingsInterface settings = SettingsSingleton.getSettings();
+    public Player(DifficultyEnum difficulty) {
+        SettingsInterface settings = SettingsSingleton.getInstance();
         this.maxMagic = settings.getMaxMagic(difficulty);
         this.maxHealth = settings.getPlayerMaxHealth(difficulty);
         this.health = maxHealth;
         this.magic = 0;
         this.coins = 0;
         this.lives = settings.getStartingLives(difficulty);
-        this.abilities = new LinkedList<AbilityType>();
-        this.abilities.add(AbilityType.PUNCH);
     }
 
     @Override
-    public void loseHealth(int amount, DamageType type) throws IllegalArgumentException {
+    public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of health: %d", amount));
         }
@@ -44,13 +41,15 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public int calcDamage(int base, DamageType type) {
+    public int calcDamage(int base, DamageEnum type) {
         return base;
     }
 
     @Override
-    public List<AbilityType> getAbilities() {
-        return abilities;
+    public List<AbilityEnum> getAbilities() {
+        List<AbilityEnum> l =  new LinkedList<AbilityEnum>();
+        l.add(AbilityEnum.PUNCH);
+        return l;
     }
 
     @Override
@@ -96,7 +95,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public int getMagicRegenRate() {
-        return SettingsSingleton.getSettings().getMagicRegenRate(this.difficulty);
+        return SettingsSingleton.getInstance().getMagicRegenRate(this.difficulty);
     }
 
     @Override
@@ -129,8 +128,8 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public List<UpgradeType> getUpgrades() {
-        return new LinkedList<UpgradeType>();
+    public List<UpgradeEnum> getUpgrades() {
+        return new LinkedList<UpgradeEnum>();
     }
 }
 

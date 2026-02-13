@@ -19,53 +19,55 @@
 ## Folder structure
 ```
 com2020/
+com2020/
 ├── game/
 │   ├── src/
 │   │   ├── main/
 │   │   │   └── java/
-│   │   │       └── gameName/
-│   │   │           └── game.java
+│   │   │       └── WizardQuest/
+│   │   │           ├── gamefiles.java
+│   │   │           └── ...
 │   │   └── test/
 │   │       ├── java/
-│   │       │   └── gameName/
-│   │       │       └── test.java
+│   │       │   └── WizardQuest/
+│   │       │       ├── unit/
+│   │       │       │   └── ...
+│   │       │       └── integration/
+│   │       │           └── ...
 │   │       └── resources/
-│   │           └── testResources.csv
+│   │           └── ...
 │   └── pom.xml
 ├── telemetry/
 │   ├── core/
-│   │   ├── __init__
-│   │   ├── events.py
-│   │   ├── parsing.py
-│   │   ├── logic.py
-│   │   └── export.py
+│   │   └── ...
 │   ├── gui/
-│   │   ├── __init__.py
-│   │   ├── gui.py
-│   │   └── plotting.py
-│   ├── telemetry_app.py
-│   ├── example_data.json
-│   ├── schema.md
-│   └── requirements.txt
+│   │   └── ...
+│   ├── auth/
+│   │   └── ...
+│   ├── schema.md (json schema)
+│   ├── requirements.txt (for pip)
+│   ├── telemetry_app.py (telemetry entry point)
+│   └── README.md (python-specific instructions for dev)
 ├── meetings/
-│   ├── meeting_minutes.md
-│   └── project_specification.pdf
+│   └── ...
+├── report/
+│   └── ...
 ├── README.md
+├── simulation_events.json
+├── telemetry_events.json
+├── deployment_guide.md
 └── .gitignore
 ```
 
 ## Requirements
-The game module requires **Java** and **Maven**.  
+The game module requires **Java 17+** and **Maven**.  
 The telemetry module require **Python3**, and additional Python libraries, which may be
 installed using `python -m pip install -r requirements.txt`.
-
-## CI/CD and testing
-This project uses GitHub Actions for CI/CD and running automated tests.
 
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://peps.python.org/pep-0008/)
 
-## Meeting minutes 
+## Meeting minutes
 Find meeting minutes and project specification [here](/meetings/)
 

@@ -27,7 +27,7 @@ Within the shop screens in between encounters, players can exchange their coins 
 | Absolute Pulse | 10 | 20 | Absolute | |
 | Slash | 15 | 0 | Physical | more powerful than punch |
 | Water Jet | 20 | 20 | Water | |
-| Thunder Storm | 25 | 30 | Thunder | Hits all opponents |
+| Thunder Storm | 25 | 30 | Thunder | |
 | Fire Ball | 30 | 40 | Fire | High damage |
 
 ## Passive Abilities

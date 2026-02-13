@@ -22,10 +22,12 @@ public abstract class EnemyBase implements EntityInterface {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }
+  
     @Override
     public int getHealth() {
         return health;
     }
+  
     @Override
     public void loseHealth(int amount, DamageType type) throws IllegalArgumentException{
         if (amount < 0){
@@ -33,14 +35,7 @@ public abstract class EnemyBase implements EntityInterface {
         }
         this.health = Math.max(0, this.health - amount); // s.t health never goes below 0
     }
-
-    /**
-     * Calculates the total damage dealt after applying enemy's modifier for the damage type given. Absolute damage ignores modifiers
-     *
-     * @param base the base damage dealt by the entity's attack.
-     * @param type the damage type of the entity's attack.
-     * @return the total damage inflicted by this attack.
-     */
+  
     @Override
     public int calcDamage(int base, DamageType type){
         return base;
