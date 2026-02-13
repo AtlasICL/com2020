@@ -16,3 +16,6 @@ Report.synctex.gz
 Report.pdf
 
 .env**
+**.env
+
+telemetry/auth/logs.txt
