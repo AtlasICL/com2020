@@ -1,3 +1,47 @@
 \subsection{Overview}
+The project is split into two applications, one written in Python and the other written in Java. The reason for this is we determined that much of the functionality of displaying graphs of data, and handling data in general was much better suited to python than to any other programming language we were confident with. Furthermore we determined that java would be much better suited to create the video game in than python given the more rigorous syntax and typing, and better object oriented support. From there we divided the responsibility of the system between the two applications as described below. 
+
+\textbf{Python}
+\begin{itemize}
+    \item \textbf{Dashboard views}, as the handling of data and generation of graphs is very well supported in Python.
+    \item \textbf{Design suggestions}, as the Python application already has to read the telemetry data, and thus components processing it are more simple to implement in the Python application.
+    \item \textbf{Simulation views}, as the simulation generates telemetry identical to that of users, and as the Python application can already handle user made telemetry and display it, the functionality for displaying simulation generated telemetry is almost entirety already in the Python application, requiring minimal additional work to implement. 
+    \item \textbf{Decision Log View}, although not to be implemented in sprint one, it is planned that the Python application will be the access point to the design log, as this allows the cross-examination of logged decisions and the telemetry data that is used to justify those decisions.
+\end{itemize}
+
+\textbf{Java}
+\begin{itemize}
+    \item \textbf{Role Assignment}, as Java is a more rigorous language than python, and the application requires more complex role based access control due to the implementation of design parameters, it was determined that the Java application should manage role assignment. Specifically, as it was required for the system to operate, but not specified which role should have this permission in the specification, we chose to give only developers the ability to assign roles as this best fit with their role of maintaining the application.
+    \item \textbf{Design Parameters}, as the Java application is the only application influenced by the value of the design parameters, we determined those should be set in the Java application, as well as read and written to a configuration file by the Java application. In the next sprint we plan to add a section to the design parameter setting menu that requires designers and developers to justify their changes, which will be stored in the decision log.
+    \item \textbf{Telemetry Setting}, as the java application collects telemetry, it was decided the user setting to disable this would be located in the settings menu of the java application.
+    \item \textbf{Video Game}, due to java's extensive support of object oriented programming, and due to the fact that video games are generally very well suited to this paradigm it was decided the video game that produces the telemetry events would be coded on the Java application. 
+\end{itemize}
 \subsection{Python Application}
+TODO harry or emre 
 \subsection{Java Application}
+\subsubsection{Overview}
+The Java application was first split into front end and back end. From there the responsibilities of the backend were further divided into several singletons the front end would access. Each singleton was given responsibility for a particular area, and that area was further divided between different objects it composited. The front end then uses these singletons to perform the calculations required to run the game, and displays this information to the user. 
+\subsubsection{Design Principles}
+%not sure about this section if it's relevant or should be removed. 
+\paragraph{Testability}
+The Java application was designed with testing as a priority, specifically to allow the extensive use of mock objects. The first way this is achieved is through the use of a modified singleton pattern, where the concrete singleton is nested within a different class that provides access. This allows the concrete singleton to implement an interface, and thus allows the rest of the system to work around that interface rather than the singleton itself. This allows the switching out of the concrete singleton instance for a mock object for testing. Furthermore many of the objects within the java application are built around interfaces rather than implementations, to allow those objects to be swapped out for mock objects for testing.
+
+Another way in which the application is designed with testing in mind is by allowing the directories of all file writes to be modified, to allow a temporary directory to be setup for testing where mock events and configuration files are written and read to, and the resetting the destination of the systems that write files after the test is complete.
+\paragraph{Extensability}
+Its already been mentioned about the principle of programming to an interface for the purposes of testing, but this has also been done to allow extensibility as the interface can be extended and implemented by a different class to allow the functionality of the program to be extended, while maintaining compatibility with the current system following the open-close principle. 
+
+Another area in which the system supports extensibility is through it's upgrade system, using the decorator pattern it allows a player to be extended with any number of upgrades, as well as the creation of further upgrades. This upgrade system works in tandem with the ability system to allow upgrades to change how effective abilities are based on their damage type. Although the upgrade system currently does not do this, it does also support the ability to modify variables of the player such as health, lives, max health, magic etc. which could be implemented at a future date.
+\paragraph{Reusability}
+The system is also designed with reusability in mind, ensuring every component is reusable, and duplication is minimal. One example of this is in the ability system, which is the same for all entities both player and enemy. This allows us to get significant millage out of just a small number of abilities. 
+
+Another way the system makes good use of the resources it has is through it's encounter system. As an encounter can comprise of multiple enemies, allowing us to make use of enemies that the player would otherwise be very strong against in later encounters. Furthermore encounters at most stages are randomised, providing variety to each run, along with the randomisation of what abilities are purchasable in the shop. 
+
+\subsubsection{Abilities}
+\subsubsection{Upgrades}
+\subsubsection{Enemies}
+\subsubsection{Player}
+\subsubsection{Telemetry}
+\subsubsection{Time}
+\subsubsection{Settings}
+\subsubsection{Game Mangement}
+\subsubsection{User Interface}
