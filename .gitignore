@@ -8,6 +8,7 @@ game/target
 
 .vscode
 
+
 Report.aux
 Report.bbl
 Report.log
@@ -16,3 +17,13 @@ Report.synctex.gz
 Report.pdf
 
 .env**
+report/*.aux
+report/*bcf
+report/*log
+report/*.out
+report/*.pdf
+report/*.xml
+report/*.gz
+report/*toc
+
+**.env
