@@ -8,14 +8,13 @@ game/target
 
 .vscode
 
-Report.aux
-Report.bbl
-Report.log
-Report.out
-Report.synctex.gz
-Report.pdf
+report/*.aux
+report/*bcf
+report/*log
+report/*.out
+report/*.pdf
+report/*.xml
+report/*.gz
+report/*toc
 
-.env**
 **.env
-
-telemetry/auth/logs.txt

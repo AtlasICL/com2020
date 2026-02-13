@@ -76,8 +76,8 @@ source ~/.zshrc
 1. Open a terminal.
 2. Run the following commands:
 ```
-sudo apt update
-sudo apt install openjdk-21-jdk
+sudo apt update && sudo apt full-upgrade -y
+sudo apt install -y openjdk-21-jdk
 ```
 3. Run the following commands, which should print version numbers:
 ```
@@ -137,8 +137,8 @@ mvn -version
 1. Open a terminal.
 2. Run the following commands:
 ```
-sudo apt update
-sudo apt install maven
+sudo apt update && sudo apt full-upgrade -y
+sudo apt install -y maven
 ```
 3. Run the following command, which should print version numbers:
 ```
