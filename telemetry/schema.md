@@ -7,7 +7,7 @@
   - [List of valid enemy names](#list-of-valid-enemy-names)
   - [List of valid settings](#list-of-valid-settings)
   - [Example logging event jsons](#example-logging-event-jsons)
-    - [1) StartSession](#1-sessionstart)
+    - [1) StartSession](#1-startsession)
     - [2) NormalEncounterStart](#2-normalencounterstart)
     - [3) NormalEncounterComplete](#3-normalencountercomplete)
     - [4) NormalEncounterFail](#4-normalencounterfail)
@@ -188,8 +188,6 @@ To be defined at a later date.
 ### 11) SettingsChange
 ```
 {
-    userID: int,
-    sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     setting: string [must be in list of valid settings],
     setting_value: string,
