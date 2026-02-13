@@ -91,7 +91,7 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def handle_sign_in(self):
-        _, self.current_user_name = google_login()
+        _, self.current_user_name, _ = google_login() # TODO: DEAL WITH ROLE RETURN
         self.authenticated = True
         self.sign_in_button.pack_forget()
         self.welcome_label.config(text=self.get_personalised_welcome_message())
