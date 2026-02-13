@@ -1,8 +1,12 @@
 package WizardQuest;
 
-public class SettingsChangeEvent extends TelemetryEvent {
-    private final String setting;
+import java.util.EventObject;
+
+public class SettingsChangeEvent extends EventObject {
+    private final SettingsEnum setting;
     private final String settingValue;
+    private final String timeStamp;
+    private final String telemetryName;
     /**
      * Constructor for the settings change telemetry event. Produces a telemetry event storing
      * common data.
@@ -10,13 +14,48 @@ public class SettingsChangeEvent extends TelemetryEvent {
      * @param setting           The setting being changed in this event.
      * @param settingValue      The value that the setting is set to in this event.
      */
-    public SettingsChangeEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, String setting, String settingValue) {
-        super(source, userID, sessionID, timeStamp, telemetryName);
+    public SettingsChangeEvent(Object source, String timeStamp, SettingsEnum setting, String settingValue) {
+        super(source);
+        this.timeStamp = timeStamp;
         this.setting = setting;
         this.settingValue = settingValue;
+        this.telemetryName = "SettingsChange";
     }
 
-    public String getSetting() {return setting;}
+    /**
+     * Gets the stored timestamp.
+     * 
+     * @return the timestamp.
+     */
+    public String getTimestamp() {
+        return this.timeStamp;
+    }
 
-    public String getSettingValue() {return settingValue;}
+    /**
+     * Gets the name of the telemetry event according to the telemetry
+     * specification.
+     * 
+     * @return the event's name.
+     */
+    public String getTelemetryName() {
+        return this.telemetryName;
+    }
+
+    /**
+     * Gets the name of the setting being changed
+     * 
+     * @return the setting's name
+     */
+    public SettingsEnum getSetting() {
+        return this.setting;
+    }
+    
+    /**
+     * Gets the new value of the setting being changed
+     * 
+     * @return
+     */
+    public String getSettingValue() {
+        return this.settingValue;
+    }
 }
