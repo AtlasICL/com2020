@@ -252,7 +252,7 @@ public class GameUserInterface {
         }
 
         try {
-            settings.setUserRole(username, newRole); // TODO: NEEDS TO BE USERID NOT USERNAME
+            settings.setUserRole(username, newRole); // TODO: NEEDS TO BE USERID NOT USERNAME // will be done once auth system is implemented, placeholder for now.
             System.out.println(GREEN + "Role updated for " + username + "." + RESET);
         }
         catch (AuthenticationException e) {
@@ -473,7 +473,20 @@ public class GameUserInterface {
                 continue;
             }
 
-            chosenAbility.execute(player, target); // TODO: Needs to handle lacking resource exception
+            int cost = chosenAbility.getMagicCost();
+
+            if (player.getMagic() < cost) {
+                System.out.println(RED + "Not enough magic." + RESET);
+                continue;
+            }
+
+            try {
+                chosenAbility.execute(player, target);
+            }
+            catch (LackingResourceException e) {
+                System.out.println(RED + "Not enough magic." + RESET);
+                continue;
+            }
 
             if (allEnemiesDead(enemies)) {
                 //win case, complete encounter, will advance to shop/next level
@@ -586,6 +599,13 @@ public class GameUserInterface {
         System.out.println();
         System.out.println(BOLD + "Shop" + RESET);
 
+        // Show player coins
+        PlayerInterface player = gameManager.getCurrentPlayer();
+        if (player != null) {
+            System.out.println("Your Coins: " + YELLOW + player.getCoins() + RESET);
+            System.out.println();
+        }
+
         UpgradeEnum[] upgrades;
 
         try {
@@ -606,17 +626,7 @@ public class GameUserInterface {
                     + " (Cost: " + YELLOW + upgrades[i].getPrice() + RESET + ")");
         }
 
-        boolean telemetryNow = false;
-
-        try {
-            telemetryNow = settings.isTelemetryEnabled();
-        }
-        catch (AuthenticationException ignored) {
-        }
-
         System.out.println();
-        System.out.println("9. Toggle telemetry (Currently: "
-                + (telemetryNow ? GREEN + "ON" : RED + "OFF") + RESET + ")");
         System.out.println("0. Leave shop");
 
         while (true) {
@@ -626,23 +636,6 @@ public class GameUserInterface {
 
             if (input.equals("0")) {
                 return;
-            }
-
-            if (input.equals("9")) {
-
-                try {
-                    boolean current = settings.isTelemetryEnabled();
-                    settings.setTelemetryEnabled(!current);
-
-                    System.out.println();
-                    System.out.println(YELLOW + "Telemetry updated. Returning to main menu..." + RESET);
-                    gameManager.endGame();
-                    return;
-                }
-                catch (AuthenticationException e) {
-                    System.out.println(RED + "You must be logged in to change telemetry." + RESET);
-                    continue;
-                }
             }
 
             int choice;
@@ -663,6 +656,11 @@ public class GameUserInterface {
             try {
                 gameManager.purchaseUpgrade(upgrades[choice - 1]);
                 System.out.println(GREEN + "Upgrade purchased." + RESET);
+
+                if (player != null) {
+                    System.out.println("Remaining Coins: " + YELLOW + player.getCoins() + RESET);
+                }
+
             }
             catch (LackingResourceException e) {
                 System.out.println(RED + "Not enough coins." + RESET);
@@ -673,22 +671,32 @@ public class GameUserInterface {
         }
     }
 
+
+
     private void endScreen() {
         System.out.println();
         System.out.println(BOLD + "Run Complete" + RESET);
 
         GameRunInterface run = gameManager.getCurrentRun();
+
+        if (run == null) {
+            System.out.println(RED + "No run data available." + RESET);
+            System.out.println();
+            System.out.print(BLUE + "Press Enter to return to the main menu..." + RESET);
+            scanner.nextLine();
+            gameManager.endGame();
+            return;
+        }
+
         LocalDateTime start = run.getRunStartTime();
+        if (start == null) {
+            start = LocalDateTime.now();
+        }
+
         LocalDateTime end = LocalDateTime.now();
         Duration duration = Duration.between(start, end);
         long minutes = duration.toMinutes();
         long seconds = duration.minusMinutes(minutes).getSeconds();
-
-        if (run == null) { // TODO: THIS IS UNREACHABLE
-            System.out.println(RED + "No run data available." + RESET);
-            System.out.println();
-            return;
-        }
 
         PlayerInterface player;
         try {
@@ -707,11 +715,26 @@ public class GameUserInterface {
         }
 
         System.out.println();
+        System.out.println("0. Back to main menu");
+
+        while (true) {
+            System.out.print(BLUE + ">>> " + RESET);
+            String input = scanner.nextLine();
+
+            if ("0".equals(input)) {
+                break;
+            }
+
+            System.out.println(RED + "Invalid option." + RESET);
+        }
+
+        System.out.println();
         System.out.println("Returning to main menu...");
         System.out.println();
 
         gameManager.endGame();
     }
+
 
     private void quit() {
         System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
