@@ -4,14 +4,11 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 import java.util.Scanner;
 
-
 public class GameUserInterface {
 
     private final GameManagerInterface gameManager;
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final Scanner scanner;
-
-    private boolean telemetryEnabled = true;
 
     private static final String RESET = "\u001B[0m";
     private static final String BOLD = "\u001B[1m";
@@ -51,7 +48,7 @@ public class GameUserInterface {
         System.out.println();
     }
 
-    /**
+    /*
      * LOGIN SCREEN/LOGIC TO BE IMPLEMENTED BY EMRE + LUCA C
      * Needs role testing for settings access
      * First user will be developer by default, can assign other roles through settings menu
@@ -85,12 +82,11 @@ public class GameUserInterface {
     }
 
     private void settingsMenu() {
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
             System.out.println();
             System.out.println(BOLD + "Settings" + RESET);
 
-            RoleEnum role = RoleEnum.DEVELOPER; //placeholder values in case of auth failure, overrides if auth successful
+            RoleEnum role = RoleEnum.DEVELOPER;
             boolean telemetryEnabled = false;
 
             try {
@@ -125,9 +121,7 @@ public class GameUserInterface {
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
-            if (input.equals("0")) {
-                return;
-            }
+            if (input.equals("0")) return;
 
             if (input.equals("1")) {
                 toggleTelemetry();
@@ -150,7 +144,7 @@ public class GameUserInterface {
             }
 
             if (input.equals("4")) {
-                if (role == RoleEnum.PLAYER) {
+                if (role == RoleEnum.DEVELOPER) {
                     assignUserRole();
                 }
                 else {
@@ -164,11 +158,10 @@ public class GameUserInterface {
     }
 
     private void toggleTelemetry() {
-
         try {
             boolean current = settings.isTelemetryEnabled();
 
-            if (current == true) {
+            if (current) {
                 settings.setTelemetryEnabled(false);
                 System.out.println(RED + "Telemetry disabled." + RESET);
             }
@@ -184,11 +177,8 @@ public class GameUserInterface {
 
     private void changeStartingLives() {
 
-        DifficultyEnum difficulty = selectDifficulty(); // ?
-
-        if (difficulty == null) {
-            return;
-        }
+        DifficultyEnum difficulty = selectDifficulty();
+        if (difficulty == null) return;
 
         System.out.println();
         System.out.println(BOLD + "Set Starting Lives" + RESET);
@@ -237,22 +227,17 @@ public class GameUserInterface {
 
         RoleEnum newRole;
 
-        if (input.equals("1")) {
-            newRole = RoleEnum.PLAYER;
-        }
-        else if (input.equals("2")) {
-            newRole = RoleEnum.DESIGNER;
-        }
-        else if (input.equals("3")) {
-            newRole = RoleEnum.DEVELOPER;
-        }
+        if (input.equals("1")) newRole = RoleEnum.PLAYER;
+        else if (input.equals("2")) newRole = RoleEnum.DESIGNER;
+        else if (input.equals("3")) newRole = RoleEnum.DEVELOPER;
         else {
-            System.out.println(RED + "Invalid RoleEnum." + RESET);
+            System.out.println(RED + "Invalid role." + RESET);
             return;
         }
 
         try {
-            settings.setUserRole(username, newRole); // TODO: NEEDS TO BE USERID NOT USERNAME // will be done once auth system is implemented, placeholder for now.
+            // placeholder until auth exists, backend wants userID later
+            settings.setUserRole(username, newRole);
             System.out.println(GREEN + "Role updated for " + username + "." + RESET);
         }
         catch (AuthenticationException e) {
@@ -268,7 +253,6 @@ public class GameUserInterface {
 
         System.out.println("If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.");
         System.out.println("This includes:");
-
         System.out.println("timestamp, session id, user id");
         System.out.println("encounter start, completion, or fail (stage, difficulty, encounter name)");
         System.out.println("player state on completion or fail (HP remaining, lives left if relevant)");
@@ -282,34 +266,23 @@ public class GameUserInterface {
         System.out.println("to support balancing changes with evidence");
 
         System.out.println();
-        System.out.println("You can toggle telemetry off at any time in Settings and between encounters.");
-        System.out.println();
         System.out.println("0. Back");
 
         System.out.print(BLUE + ">>> " + RESET);
         scanner.nextLine();
     }
 
-
-
     private void startGame() {
         DifficultyEnum difficulty = selectDifficulty();
-
-        if (difficulty == null) {
-            return;
-        }
+        if (difficulty == null) return;
 
         gameManager.startNewGame(difficulty);
         gameLoop();
     }
 
     private String difficultyLabel(DifficultyEnum difficulty) {
-        if (difficulty == DifficultyEnum.EASY) {
-            return GREEN + "Easy" + RESET;
-        }
-        if (difficulty == DifficultyEnum.MEDIUM) {
-            return YELLOW + "Medium" + RESET;
-        }
+        if (difficulty == DifficultyEnum.EASY) return GREEN + "Easy" + RESET;
+        if (difficulty == DifficultyEnum.MEDIUM) return YELLOW + "Medium" + RESET;
         return RED + "Hard" + RESET;
     }
 
@@ -327,26 +300,33 @@ public class GameUserInterface {
             String input = scanner.nextLine();
 
             switch (input) {
-                case "0":
-                    return null;
-                case "1":
-                    return DifficultyEnum.EASY;
-                case "2":
-                    return DifficultyEnum.MEDIUM;
-                case "3":
-                    return DifficultyEnum.HARD;
-                default:
-                    System.out.println(RED + "Invalid option." + RESET);
+                case "0": return null;
+                case "1": return DifficultyEnum.EASY;
+                case "2": return DifficultyEnum.MEDIUM;
+                case "3": return DifficultyEnum.HARD;
+                default: System.out.println(RED + "Invalid option." + RESET);
             }
         }
     }
 
     private void gameLoop() {
+        GameRunInterface lastRun = null;
+        PlayerInterface lastPlayer = null;
+
         while (gameManager.isGameRunning()) {
+
+            //keep latest references while the run is still alive
+            try {
+                lastRun = gameManager.getCurrentRun();
+            } catch (Exception ignored) {}
+            try {
+                lastPlayer = gameManager.getCurrentPlayer();
+            } catch (Exception ignored) {}
 
             boolean encounterWon = playEncounter();
 
             if (!gameManager.isGameRunning()) {
+                endScreen(lastRun, lastPlayer);
                 return;
             }
 
@@ -357,13 +337,28 @@ public class GameUserInterface {
             openShop();
 
             if (!gameManager.isGameRunning()) {
+                endScreen(lastRun, lastPlayer);
                 return;
             }
 
+            //overwrite snapshots again before advancing
+            try {
+                lastRun = gameManager.getCurrentRun();
+            } catch (Exception ignored) {}
+            try {
+                lastPlayer = gameManager.getCurrentPlayer();
+            } catch (Exception ignored) {}
+
             gameManager.advanceToNextLevel();
+
+            if (!gameManager.isGameRunning()) {
+                endScreen(lastRun, lastPlayer);
+                return;
+            }
         }
 
-        endScreen();
+        //if ever drops out without triggering the early returns
+        endScreen(lastRun, lastPlayer);
     }
 
     private boolean playEncounter() {
@@ -382,7 +377,10 @@ public class GameUserInterface {
         }
 
         System.out.println();
-        System.out.println(BOLD + "Stage " + gameManager.getCurrentRun().getStage() + RESET);
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run != null) {
+            System.out.println(BOLD + "Stage " + run.getStage() + RESET);
+        }
         System.out.println("Encounter: " + CYAN + encounter.getType() + RESET);
 
         while (true) {
@@ -396,20 +394,11 @@ public class GameUserInterface {
 
             EntityInterface[] enemies = encounter.getEnemies();
 
-            if (allEnemiesDead(enemies)) {
-                //win case, encounter completed
-                gameManager.completeCurrentEncounter();
-                System.out.println(GREEN + "Encounter complete." + RESET);
-                return true;
-            }
-
-            //lose case (health <= 0)
             if (player.getHealth() <= 0) {
                 System.out.println(RED + BOLD + "You died." + RESET);
 
                 gameManager.resetFailedEncounter();
 
-                //lose game case (no lives left)
                 if (player.getLives() == 0) {
                     System.out.println(RED + "Out of lives." + RESET);
                     gameManager.endGame();
@@ -428,7 +417,7 @@ public class GameUserInterface {
 
             if (abilities == null || abilities.length == 0) {
                 System.out.println(RED + "No abilities available." + RESET);
-                gameManager.endGame(); //end game if no abilities to use, player can't do anything
+                gameManager.endGame();
                 return false;
             }
 
@@ -467,14 +456,12 @@ public class GameUserInterface {
             AbilityEnum chosenAbility = abilities[abilityChoice - 1];
 
             EntityInterface target = selectEnemyTarget(enemies);
-
             if (target == null) {
                 System.out.println(RED + "No valid target." + RESET);
                 continue;
             }
 
             int cost = chosenAbility.getMagicCost();
-
             if (player.getMagic() < cost) {
                 System.out.println(RED + "Not enough magic." + RESET);
                 continue;
@@ -489,13 +476,11 @@ public class GameUserInterface {
             }
 
             if (allEnemiesDead(enemies)) {
-                //win case, complete encounter, will advance to shop/next level
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
                 return true;
             }
 
-            //enemy turn
             EntityAIInterface ai = EntityAISingleton.getInstance();
 
             for (EntityInterface enemy : enemies) {
@@ -503,50 +488,43 @@ public class GameUserInterface {
                 if (enemy.getHealth() <= 0) continue;
 
                 AbilityEnum[] enemyAbilities = getEnemyAbilities(enemy);
-
-                if (enemyAbilities == null || enemyAbilities.length == 0) {
-                    continue;
-                }
+                if (enemyAbilities == null || enemyAbilities.length == 0) continue;
 
                 ai.useAbility(enemyAbilities, enemy, new EntityInterface[] { player });
             }
+
+            //next loop iteration re-checks death/win
         }
     }
 
     private AbilityEnum[] getPlayerAbilities(PlayerInterface player) {
-
         if (player == null || player.getAbilities().isEmpty()) {
             return new AbilityEnum[0];
         }
 
         AbilityEnum[] abilities = new AbilityEnum[player.getAbilities().size()];
-
         for (int i = 0; i < player.getAbilities().size(); i++) {
             abilities[i] = player.getAbilities().get(i);
         }
-
         return abilities;
     }
 
-        private AbilityEnum[] getEnemyAbilities(EntityInterface enemy) {
-
+    private AbilityEnum[] getEnemyAbilities(EntityInterface enemy) {
         if (enemy == null || enemy.getAbilities().isEmpty()) {
             return new AbilityEnum[0];
         }
 
         AbilityEnum[] abilities = new AbilityEnum[enemy.getAbilities().size()];
-
         for (int i = 0; i < enemy.getAbilities().size(); i++) {
             abilities[i] = enemy.getAbilities().get(i);
         }
-
         return abilities;
     }
 
     private EntityInterface selectEnemyTarget(EntityInterface[] enemies) {
 
         System.out.println();
-        System.out.println(BOLD + "Choose a target:" + RESET); //for multi-enemy encounters (single-case too)
+        System.out.println(BOLD + "Choose a target:" + RESET);
         int shown = 0;
 
         for (int i = 0; i < enemies.length; i++) {
@@ -558,9 +536,7 @@ public class GameUserInterface {
             System.out.println((i + 1) + ". " + enemy.getType() + " (HP: " + enemy.getHealth() + ")");
         }
 
-        if (shown == 0) {
-            return null;
-        }
+        if (shown == 0) return null;
 
         System.out.print(BLUE + ">>> " + RESET);
         String input = scanner.nextLine();
@@ -573,12 +549,9 @@ public class GameUserInterface {
             return null;
         }
 
-        if (choice < 1 || choice > enemies.length) {
-            return null;
-        }
+        if (choice < 1 || choice > enemies.length) return null;
 
         EntityInterface chosen = enemies[choice - 1];
-
         if (chosen == null) return null;
         if (chosen.getHealth() <= 0) return null;
 
@@ -588,9 +561,7 @@ public class GameUserInterface {
     private boolean allEnemiesDead(EntityInterface[] enemies) {
         for (EntityInterface enemy : enemies) {
             if (enemy == null) continue;
-            if (enemy.getHealth() > 0) {
-                return false;
-            }
+            if (enemy.getHealth() > 0) return false;
         }
         return true;
     }
@@ -599,7 +570,6 @@ public class GameUserInterface {
         System.out.println();
         System.out.println(BOLD + "Shop" + RESET);
 
-        // Show player coins
         PlayerInterface player = gameManager.getCurrentPlayer();
         if (player != null) {
             System.out.println("Your Coins: " + YELLOW + player.getCoins() + RESET);
@@ -630,16 +600,12 @@ public class GameUserInterface {
         System.out.println("0. Leave shop");
 
         while (true) {
-
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
-            if (input.equals("0")) {
-                return;
-            }
+            if (input.equals("0")) return;
 
             int choice;
-
             try {
                 choice = Integer.parseInt(input);
             }
@@ -657,10 +623,10 @@ public class GameUserInterface {
                 gameManager.purchaseUpgrade(upgrades[choice - 1]);
                 System.out.println(GREEN + "Upgrade purchased." + RESET);
 
-                if (player != null) {
-                    System.out.println("Remaining Coins: " + YELLOW + player.getCoins() + RESET);
+                PlayerInterface p = gameManager.getCurrentPlayer();
+                if (p != null) {
+                    System.out.println("Remaining Coins: " + YELLOW + p.getCoins() + RESET);
                 }
-
             }
             catch (LackingResourceException e) {
                 System.out.println(RED + "Not enough coins." + RESET);
@@ -671,40 +637,29 @@ public class GameUserInterface {
         }
     }
 
-
-
-    private void endScreen() {
+    private void endScreen(GameRunInterface run, PlayerInterface player) {
         System.out.println();
         System.out.println(BOLD + "Run Complete" + RESET);
-
-        GameRunInterface run = gameManager.getCurrentRun();
 
         if (run == null) {
             System.out.println(RED + "No run data available." + RESET);
             System.out.println();
-            System.out.print(BLUE + "Press Enter to return to the main menu..." + RESET);
-            scanner.nextLine();
+            System.out.print(BLUE + "Press 0 to return to the main menu..." + RESET);
+            while (!"0".equals(scanner.nextLine())) {
+                System.out.println(RED + "Invalid option." + RESET);
+                System.out.print(BLUE + ">>> " + RESET);
+            }
             gameManager.endGame();
             return;
         }
 
         LocalDateTime start = run.getRunStartTime();
-        if (start == null) {
-            start = LocalDateTime.now();
-        }
+        if (start == null) start = LocalDateTime.now();
 
         LocalDateTime end = LocalDateTime.now();
         Duration duration = Duration.between(start, end);
         long minutes = duration.toMinutes();
         long seconds = duration.minusMinutes(minutes).getSeconds();
-
-        PlayerInterface player;
-        try {
-            player = gameManager.getCurrentPlayer();
-        }
-        catch (Exception e) {
-            player = null;
-        }
 
         System.out.println("Run Time: " + CYAN + minutes + "m " + seconds + "s" + RESET);
         System.out.println("Stages Reached: " + CYAN + run.getStage() + RESET);
@@ -720,11 +675,7 @@ public class GameUserInterface {
         while (true) {
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
-
-            if ("0".equals(input)) {
-                break;
-            }
-
+            if ("0".equals(input)) break;
             System.out.println(RED + "Invalid option." + RESET);
         }
 
@@ -735,10 +686,10 @@ public class GameUserInterface {
         gameManager.endGame();
     }
 
-
     private void quit() {
         System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
         scanner.close();
     }
 }
+
 
