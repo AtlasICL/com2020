@@ -102,11 +102,11 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Coins gained",
         )
 
-
         self.refresh_funnel_graph()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
         self.refresh_coins_gained_plots()
+
 
     def make_welcome_screen(self):
         welcome = ttk.Label(
@@ -140,9 +140,6 @@ class TelemetryAppGUI(tk.Tk):
         )
         reset_telemetry_button.pack(pady=(10,20))
 
-    def google_auth(self):
-        print("Sign in requested")
-        return
     
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
@@ -153,6 +150,7 @@ class TelemetryAppGUI(tk.Tk):
             self.switch_btn_text.set("Change to simulation data")
             self.file_name = ROOT_DIRECTORY / "telemetry_events.json"
             self.refresh_all()
+
     
     def reset_telemetry(self):
         confirmed = messagebox.askyesno(
@@ -162,11 +160,13 @@ class TelemetryAppGUI(tk.Tk):
             with open(ROOT_DIRECTORY / 'telemetry_events.json', 'w') as f:
                 f.write('')
 
+
     def refresh_all(self):
         self.refresh_funnel_graph()
         self.refresh_coins_gained_plots()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
+
 
     def refresh_funnel_graph(self):
         """
@@ -258,6 +258,7 @@ class TelemetryAppGUI(tk.Tk):
 
         self.fairness_plot.plot_multi_line(series)
 
+
     def generate_spike_suggestion(self):
         """
         Generates a difficulty change suggestion 
@@ -273,6 +274,3 @@ class TelemetryAppGUI(tk.Tk):
             return "High failure rate in " + stages + " consider increasing lives by 2."
         return "No suggestions available"
 
-# TODO: We need to figure out when and how to refresh the plots. This
-# will also presumably become significantly harder when reading the
-# file will not be guaranteed.
