@@ -16,3 +16,5 @@ report/*.pdf
 report/*.xml
 report/*.gz
 report/*toc
+
+**.env
