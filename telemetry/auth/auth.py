@@ -101,7 +101,21 @@ class CallbackHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(
             b"<html><body><h3>Login complete. You can now close this tab.</h3></body></html>"+
-            b"<style>body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #2c2f33 } h3 { color: #9b59ff; font-size: 36px; font-weight: bold; align-items: center; justify-content: center; }</style>"
+            b"""<style>body {
+                font-family: Arial, sans-serif; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                background: #2c2f33 
+            } 
+            h3 {
+                color: #9b59ff; 
+                font-size: 36px; 
+                font-weight: bold; 
+                align-items: center; 
+                justify-content: center;
+            }</style>"""
         )
 
 
