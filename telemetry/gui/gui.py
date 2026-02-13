@@ -5,6 +5,7 @@ from pathlib import Path
 
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
+from auth.auth import google_login
 
 ROOT_DIRECTORY = Path.cwd().parent
 
@@ -28,6 +29,8 @@ class TelemetryAppGUI(tk.Tk):
         style.theme_use("clam")
         self.file_name = ROOT_DIRECTORY/ "telemetry_events.json"
         self.logic_engine = EventLogicEngine()
+        self.authenticated = False
+        self.current_user_name = None
 
         style.configure(
             ".",
@@ -58,20 +61,70 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_spike = ttk.Frame(self.notebook)
         self.tab_curves = ttk.Frame(self.notebook)
         self.tab_fairness = ttk.Frame(self.notebook)
+        self.tab_suggestions = ttk.Frame(self.notebook)
 
         self.notebook.add(self.tab_home, text="Home")
-        self.notebook.add(self.tab_funnel, text="Funnel view")
-        self.notebook.add(self.tab_spike, text="Difficulty spike")
-        self.notebook.add(self.tab_curves, text="Health")
-        self.notebook.add(self.tab_fairness, text="Coins")
 
         self.make_welcome_screen()
 
         sns.set_theme(style="dark", context="notebook")
-        
+
+
+    def make_welcome_screen(self):
+        self.welcome_label = ttk.Label(
+            self.tab_home,
+            text=self.get_personalised_welcome_message(),
+            justify="center"
+        )
+        self.welcome_label.pack(pady=(30, 15))
+
+        self.sign_in_button = ttk.Button(
+            self.tab_home,
+            text="Sign in with Google",
+            command=self.handle_sign_in
+        )
+        self.sign_in_button.pack(pady=(10, 20))
+
+
+    def get_personalised_welcome_message(self) -> str:
+        return "Welcome to the Telemetry App" if self.current_user_name is None else "Welcome to the Telemetry App, " + self.current_user_name
+
+
+    def handle_sign_in(self):
+        _, self.current_user_name = google_login()
+        self.authenticated = True
+        self.sign_in_button.pack_forget()
+        self.welcome_label.config(text=self.get_personalised_welcome_message())
+        self.on_authenticated()
+
+
+    def on_authenticated(self):
+        self.switch_btn_text = tk.StringVar()
+        self.switch_btn_text.set("Change to simulation data")
+
+        switch_simulation_button = ttk.Button(
+            self.tab_home,
+            textvariable=self.switch_btn_text,
+            command=self.toggle_file
+        )
+        switch_simulation_button.pack(pady=(10,20))
+
+        reset_telemetry_button = ttk.Button(
+            self.tab_home,
+            text="Reset Telemetry Data",
+            command=self.reset_telemetry
+        )
+        reset_telemetry_button.pack(pady=(10,20))
+
+        self.notebook.add(self.tab_funnel, text="Funnel view")
+        self.notebook.add(self.tab_spike, text="Difficulty spike")
+        self.notebook.add(self.tab_curves, text="Health")
+        self.notebook.add(self.tab_fairness, text="Coins")
+        self.notebook.add(self.tab_suggestions, text="Suggestions")
+
         self.tab_spike.rowconfigure(0, weight=1)
         self.tab_spike.columnconfigure(0, weight=1)
-        
+
         self.funnel_plot = PlotTab(
             parent=self.tab_funnel,
             title="Funnel view",
@@ -85,10 +138,10 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Number of failures",
         )
         self.spike_suggestion = ttk.Label(
-            self.tab_spike,
+            self.tab_suggestions,
             text="Suggestion: " + self.generate_spike_suggestion()
         )
-        self.spike_suggestion.grid(row=1, column=0, pady=10, sticky="ew")
+        self.spike_suggestion.pack(pady=(30, 15)) 
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
             title="HP remaining by stage)",
@@ -108,39 +161,6 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_coins_gained_plots()
 
 
-    def make_welcome_screen(self):
-        welcome = ttk.Label(
-            self.tab_home,
-            text="Welcome to the Telemetry App",
-            justify="center"
-        )
-        welcome.pack(pady=(30, 15))
-
-        sign_in_button = ttk.Button(
-            self.tab_home,
-            text="Sign in with Google",
-            command=self.google_auth
-        )
-        sign_in_button.pack(pady=(10, 20))
-
-        self.switch_btn_text = tk.StringVar()
-        self.switch_btn_text.set("Change to simulation data")
-
-        switch_simulation_button = ttk.Button(
-            self.tab_home,
-            textvariable=self.switch_btn_text,
-            command=self.toggle_file
-        )
-        switch_simulation_button.pack(pady=(10,20))
-
-        reset_telemetry_button = ttk.Button(
-            self.tab_home,
-            text="Reset Telemetry Data",
-            command=self.reset_telemetry
-        )
-        reset_telemetry_button.pack(pady=(10,20))
-
-    
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
             self.switch_btn_text.set("Change to telemetry data")
@@ -151,11 +171,12 @@ class TelemetryAppGUI(tk.Tk):
             self.file_name = ROOT_DIRECTORY / "telemetry_events.json"
             self.refresh_all()
 
-    
+
     def reset_telemetry(self):
         confirmed = messagebox.askyesno(
-        title="Switch Data Source",
-        message="Are you sure you want to reset telemetry data? All existing telemetry data will be lost")
+        title = "Switch Data Source",
+        message = "Are you sure you want to reset telemetry data? " 
+            + "All existing telemetry data will be lost")
         if confirmed:
             with open(ROOT_DIRECTORY / 'telemetry_events.json', 'w') as f:
                 f.write('')
@@ -195,7 +216,7 @@ class TelemetryAppGUI(tk.Tk):
             label="Difficulty spikes (by failure rate)"
         )
         self.spike_suggestion.config(text="Suggestion: " + self.generate_spike_suggestion())
-    
+
 
     def get_average_dict_of_stage_dicts(
             self, 
