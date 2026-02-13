@@ -155,7 +155,7 @@ def google_login() -> tuple[Any, str, Role]:
     Returns the name and unique identifier of the user.
 
     :return: User unique identifier, user name.
-    :rtype: tuple[Any, str]
+    :rtype: tuple[Any, str, Role]
     :raises HTTPError: If an HTTP error occurs. 
     """
     validate_env_vars()

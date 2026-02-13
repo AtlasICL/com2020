@@ -5,7 +5,7 @@ from pathlib import Path
 
 from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
-from auth.auth import google_login
+from auth.auth import google_login, Role
 
 ROOT_DIRECTORY = Path.cwd().parent
 
@@ -91,11 +91,20 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def handle_sign_in(self):
-        _, self.current_user_name, _ = google_login() # TODO: DEAL WITH ROLE RETURN
+        _, self.current_user_name, role = google_login() # TODO: DEAL WITH ROLE RETURN
         self.authenticated = True
-        self.sign_in_button.pack_forget()
-        self.welcome_label.config(text=self.get_personalised_welcome_message())
-        self.on_authenticated()
+        AUTHORISED_ROLES = [Role.DESIGNER, Role.DEVELOPER]
+        if role in AUTHORISED_ROLES:
+            self.sign_in_button.pack_forget()
+            self.welcome_label.config(text=self.get_personalised_welcome_message())
+            self.on_authenticated()
+        else:
+            # self.make_welcome_screen()
+            messagebox.showerror("Authorisation Error", 
+                                 "Only Designers and Developers may access telemetry data")
+            
+
+
 
 
     def on_authenticated(self):
