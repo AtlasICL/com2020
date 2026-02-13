@@ -13,9 +13,9 @@ from urllib.parse import urlencode, urlparse, parse_qs
 
 
 ISSUER = "https://accounts.google.com"
-CLIENT_ID = "190615229216-9jjqaoghi5tko50keou5eha9m8n6u3b7.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
-# Hardcoding Client Secret here is OK.
+CLIENT_ID = os.environ.get("OIDC_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
+
 # From Google's API documentation: "The client ID and client secret
 # obtained from the API Console are embedded in the source code of
 # your application. In this context, the client secret is 
@@ -25,7 +25,7 @@ CLIENT_SECRET = "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"
 #  code of your application. (In this context, the client secret is 
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
-SCOPES = ["openid", "profile" ,"email"]
+SCOPES = ["openid", "profile", "email"]
 
 
 def validate_env_vars() -> None:
