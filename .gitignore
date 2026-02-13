@@ -18,3 +18,5 @@ report/*.gz
 report/*toc
 
 **.env
+.env**
+**.env**

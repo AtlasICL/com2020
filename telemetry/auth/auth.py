@@ -7,6 +7,9 @@ import base64
 import hashlib
 import secrets
 
+import json
+from enum import Enum
+
 import logging
 from datetime import datetime
 
@@ -22,7 +25,7 @@ logging_handler = logging.FileHandler("auth/logs.txt", encoding="utf-8")
 logging_handler.setLevel(logging.INFO)
 
 logging_handler.setFormatter(logging.Formatter(
-    fmt="%(asctime)s\n    |%(message)s",
+    fmt="%(asctime)s\n    %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 ))
 
@@ -43,6 +46,8 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
 SCOPES = ["profile", "email"]
+
+LOGGING_ENABLED: bool = True
 
 
 def validate_env_vars() -> None:
@@ -135,9 +140,15 @@ class CallbackHandler(BaseHTTPRequestHandler):
                 justify-content: center;
             }</style>"""
         )
+        
+
+class Role(str, Enum):
+    PLAYER = "player"
+    DESIGNER = "designer"
+    DEVELOPER = "developer"
 
 
-def google_login() -> tuple[Any, str]:
+def google_login() -> tuple[Any, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
@@ -172,17 +183,22 @@ def google_login() -> tuple[Any, str]:
     auth_url = f"{auth_endpoint}?{urlencode(params)}"
 
     open_browser(auth_url)
-    logger.info("SIE: Sign-in prompted %s", datetime.now().strftime("%DD%HH%MM"))
+    if LOGGING_ENABLED:
+        logger.info("[SIE ] Sign-in prompted.")
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
-        logger.warning("SIE: Sign-in failed: no authorization code received.")
+        if LOGGING_ENABLED:
+            logger.warning(
+                "[SIE ] Sign-in failed: no authorization code received."
+            )
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
-        logger.warning("SIE: Sign-in failed: state mismatch.")
+        if LOGGING_ENABLED:
+            logger.warning("[SIE ] Sign-in failed: state mismatch.")
         raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
@@ -198,8 +214,9 @@ def google_login() -> tuple[Any, str]:
         timeout=15,
     )
     if not token_resp.ok:
-        logger.error("SIE: Sign-in failed: token exchange error"
-                     + "(status = {token_resp.status_code})")
+        if LOGGING_ENABLED:
+            logger.error("[SIE ] Sign-in failed: token exchange error" +
+                         "(status = {token_resp.status_code})")
         print("---- AUTH ERROR OCCURRED ----")
         print("|  Token status:", token_resp.status_code)
         print("|  Token body:", token_resp.text)
@@ -215,9 +232,64 @@ def google_login() -> tuple[Any, str]:
     userinfo_resp.raise_for_status()
     userinfo = userinfo_resp.json()
 
-    logger.info(f"Sign-in successful: "
-                f"user {userinfo.get('name')} authenticated.")
-    return userinfo.get("sub"), userinfo.get("name")
+    if LOGGING_ENABLED:
+        logger.info(f"[SIE ] Sign-in successful: " +
+                    f"user {userinfo.get('name')} authenticated.")
+    
+    sub = userinfo.get("sub")
+    return sub, userinfo.get("name"), get_role(
+        "logins_file.json", 
+        userID=sub
+    )
+
+
+def get_role(filename: str, userID: int) -> Role:
+    """
+    This function returns the role of the given user. It does so by
+    checking the user roles json file at the provided filepath.
+    If a profile does not exist for the given user, this function will
+    create one with the default role of "player".
+
+    :param filename: File path for the user roles json file.
+    :type filename: str
+    :param userID: The user ID of the user.
+    :type userID: int
+    :return: Returns the role of the user.
+    :rtype: Role
+    """
+    try:
+        with open(filename, 'r') as f:
+            player_roles = json.load(f)
+            this_user = player_roles.get(str(userID))
+            if this_user is None:
+                player_roles[str(userID)] = Role.PLAYER.value
+                with open(filename, 'w') as outfile:
+                    json.dump(player_roles, outfile, indent=4)
+                if LOGGING_ENABLED:
+                    logger.info(f"[AE  ] New user authenticated " + 
+                                f"with role {Role.PLAYER.value}.")
+                return Role.PLAYER
+            else:
+                try:
+                    if LOGGING_ENABLED:
+                        logger.info(f"[AE  ] Existing user authenticated " + 
+                                    f"with role {this_user}.")
+                    return Role(this_user) 
+                except ValueError:
+                    raise ValueError(f"Logins file at {filename}" +
+                                     f"contained an unknown role")
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"Could not find user roles file at {filename}"
+        )
+    except json.JSONDecodeError:
+        raise RuntimeError(
+            f"Could not parse user roles file at {filename}" + 
+            f"- invalid json."
+        )
+
+
+
 
 
 # TESTING
