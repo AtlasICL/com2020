@@ -7,9 +7,26 @@ import base64
 import hashlib
 import secrets
 
+import logging
+from datetime import datetime
+
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+logging_handler = logging.FileHandler("auth/logs.txt", encoding="utf-8")
+logging_handler.setLevel(logging.INFO)
+
+logging_handler.setFormatter(logging.Formatter(
+    fmt="%(asctime)s\n    |%(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+))
+
+logger.addHandler(logging_handler)
 
 
 ISSUER = "https://accounts.google.com"
@@ -25,7 +42,7 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 #  code of your application. (In this context, the client secret is 
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
-SCOPES = ["openid", "profile", "email"]
+SCOPES = ["profile", "email"]
 
 
 def validate_env_vars() -> None:
@@ -100,7 +117,8 @@ class CallbackHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.end_headers()
         self.wfile.write(
-            b"<html><body><h3>Login complete. You can now close this tab.</h3></body></html>"+
+            b"<html><body><h3>Login complete. " +
+            b"You can now close this tab.</h3></body></html>" +
             b"""<style>body {
                 font-family: Arial, sans-serif; 
                 display: flex; 
@@ -140,7 +158,6 @@ def google_login() -> tuple[Any, str]:
     redirect_uri = f"http://127.0.0.1:{server.server_port}/callback"
 
     state = secrets.token_urlsafe(24)
-    nonce = secrets.token_urlsafe(24)
     code_verifier, code_challenge = make_pkce_pair()
 
     params = {
@@ -149,22 +166,24 @@ def google_login() -> tuple[Any, str]:
         "redirect_uri": redirect_uri,
         "scope": " ".join(SCOPES),
         "state": state,
-        "nonce": nonce,
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
     }
     auth_url = f"{auth_endpoint}?{urlencode(params)}"
 
     open_browser(auth_url)
+    logger.info("SIE: Sign-in prompted %s", datetime.now().strftime("%DD%HH%MM"))
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
+        logger.warning("SIE: Sign-in failed: no authorization code received.")
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
-        raise RuntimeError("State mismatch (possible CSRF).")
+        logger.warning("SIE: Sign-in failed: state mismatch.")
+        raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
         token_endpoint,
@@ -179,6 +198,8 @@ def google_login() -> tuple[Any, str]:
         timeout=15,
     )
     if not token_resp.ok:
+        logger.error("SIE: Sign-in failed: token exchange error"
+                     + "(status = {token_resp.status_code})")
         print("---- AUTH ERROR OCCURRED ----")
         print("|  Token status:", token_resp.status_code)
         print("|  Token body:", token_resp.text)
@@ -194,6 +215,8 @@ def google_login() -> tuple[Any, str]:
     userinfo_resp.raise_for_status()
     userinfo = userinfo_resp.json()
 
+    logger.info(f"Sign-in successful: "
+                f"user {userinfo.get("name")} authenticated.")
     return userinfo.get("sub"), userinfo.get("name")
 
 
