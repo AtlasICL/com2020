@@ -18,7 +18,10 @@ public class FishMan extends EnemyBase {
     }
     @Override
     public List<AbilityType> getAbilities(){
-        return new LinkedList<>(List.of(AbilityType.WATER_JET, AbilityType.PUNCH));
+        LinkedList<AbilityType> abilities = new LinkedList<>();
+        abilities.add(AbilityType.PUNCH);
+        abilities.add(AbilityType.WATER_JET);
+        return abilities;
     }
     @Override
     public EntityEnum getType(){

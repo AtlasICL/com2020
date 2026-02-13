@@ -18,7 +18,10 @@ public class Goblin extends EnemyBase {
     }
     @Override
     public List<AbilityType> getAbilities(){
-        return new LinkedList<>(List.of(AbilityType.SLASH, AbilityType.PUNCH));
+        List<AbilityType> abilities = new LinkedList<>();
+        abilities.add(AbilityType.SLASH);
+        abilities.add(AbilityType.PUNCH);
+        return abilities;
     }
     @Override
     public EntityEnum getType(){
