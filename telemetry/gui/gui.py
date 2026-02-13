@@ -265,7 +265,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         stages = ""
         spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values())/10
+        mean = sum(spikes.values())/len(spikes)
         for stage in spikes:
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
