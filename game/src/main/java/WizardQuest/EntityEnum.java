@@ -40,9 +40,9 @@ public enum EntityEnum {
      * @return a new instance EntityInterface of this type
      * @throws IllegalStateException this happens if something goes wrong with reflection
      */
-    public EntityInterface createEnemy(Difficulty difficulty) {
+    public EntityInterface createEnemy(DifficultyEnum difficulty) {
         try {
-            return enemyClass.getDeclaredConstructor(Difficulty.class).newInstance(difficulty);
+            return enemyClass.getDeclaredConstructor(DifficultyEnum.class).newInstance(difficulty);
         } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
