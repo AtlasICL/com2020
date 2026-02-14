@@ -80,8 +80,8 @@ public class GameUserInterface {
                         String displayName = (user.name() == null || user.name().isBlank()) ? "User" : user.name();
                         System.out.println(
                             GREEN + "Signed in as " + CYAN + displayName + RESET +
-                            GREEN + " | Role: " + CYAN + user.role() + RESET +
-                            GREEN + " | UserID: " + CYAN + user.userID() + RESET);
+                            GREEN + " || Role: " + CYAN + user.role() + RESET +
+                            GREEN + " || UserID: " + CYAN + user.userID() + RESET);
 
                         return;
                     }
@@ -162,7 +162,7 @@ public class GameUserInterface {
             }
 
             if (role == RoleEnum.DEVELOPER) {
-                System.out.println("4. Assign user role");
+                System.out.println("4. Assign user roles [NOT FOR SPRINT 1]");
             }
 
             System.out.println("0. Go Back");
@@ -262,9 +262,9 @@ public class GameUserInterface {
     private void assignUserRole() {
 
         System.out.println();
-        System.out.println(BOLD + "Assign User Role" + RESET);
+        System.out.println(BOLD + "Assign User Role [WIP]" + RESET);
 
-        System.out.print(BLUE + "Username: " + RESET);
+        System.out.print(BLUE + "ID: " + RESET);
         String username = scanner.nextLine();
 
         System.out.println("1. PLAYER");
@@ -438,6 +438,8 @@ public class GameUserInterface {
                 return false;
             }
 
+            player.gainMagic(15); //15 magic gain after each turn (fine for sprint 1 as we're only staying in phase 1)
+
             EntityInterface[] enemies = encounter.getEnemies();
 
             if (player.getHealth() <= 0) {
@@ -509,9 +511,11 @@ public class GameUserInterface {
 
             int cost = chosenAbility.getMagicCost();
             if (player.getMagic() < cost) {
-                System.out.println(RED + "Not enough magic." + RESET);
+                System.out.println(RED + "Not enough magic, select another ability." + RESET);
                 continue;
             }
+
+            int targetHpBefore = target.getHealth();
 
             try {
                 chosenAbility.execute(player, target);
@@ -521,9 +525,22 @@ public class GameUserInterface {
                 continue;
             }
 
+            int targetHpAfter = target.getHealth();
+            int damageDealt = targetHpBefore - targetHpAfter;
+            if (damageDealt < 0) damageDealt = 0;
+
+            System.out.println();
+            System.out.println(GREEN + "You used " + chosenAbility.name() + " on " + target.getType()
+                    + " for " + damageDealt + " damage." + RESET);
+            System.out.println(target.getType() + " HP: " + CYAN + targetHpAfter + RESET);
+
             if (allEnemiesDead(enemies)) {
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
+                if (player != null) {
+                    player.gainCoins(10);
+                    System.out.println(YELLOW + "+10 coins" + RESET);
+                }
                 return true;
             }
 
@@ -536,7 +553,18 @@ public class GameUserInterface {
                 AbilityEnum[] enemyAbilities = getEnemyAbilities(enemy);
                 if (enemyAbilities == null || enemyAbilities.length == 0) continue;
 
+                int playerHpBefore = player.getHealth();
+
                 ai.useAbility(enemyAbilities, enemy, new EntityInterface[] { player });
+
+                int playerHpAfter = player.getHealth();
+                int damageTaken = playerHpBefore - playerHpAfter;
+                System.out.println(damageTaken); //test to see if damage actually exists
+                if (damageTaken < 0) damageTaken = 0;
+
+                System.out.println();
+                System.out.println(RED + enemy.getType() + " attacked you for " + damageTaken + " damage." + RESET);
+                System.out.println("Your HP: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }
 
             //next loop iteration re-checks death/win
@@ -637,9 +665,20 @@ public class GameUserInterface {
             return;
         }
 
+        int shown = 0;
+
         for (int i = 0; i < upgrades.length; i++) {
-            System.out.println((i + 1) + ". " + CYAN + upgrades[i].getTelemetryName() + RESET
-                    + " (Cost: " + YELLOW + upgrades[i].getPrice() + RESET + ")");
+            UpgradeEnum up = upgrades[i];
+            if (up == null) continue;
+
+            shown++;
+            System.out.println(shown + ". " + CYAN + up.getTelemetryName() + RESET
+                    + " (Cost: " + YELLOW + up.getPrice() + RESET + ")");
+        }
+
+        if (shown == 0) {
+            System.out.println(RED + "No upgrades available." + RESET);
+            return;
         }
 
         System.out.println();
@@ -660,13 +699,19 @@ public class GameUserInterface {
                 continue;
             }
 
-            if (choice < 1 || choice > upgrades.length) {
+            //TEST: filters out nulls
+            java.util.ArrayList<UpgradeEnum> visible = new java.util.ArrayList<>();
+            for (UpgradeEnum up : upgrades) {
+                if (up != null) visible.add(up);
+            }
+
+            if (choice < 1 || choice > visible.size()) {
                 System.out.println(RED + "Invalid choice." + RESET);
                 continue;
             }
 
             try {
-                gameManager.purchaseUpgrade(upgrades[choice - 1]);
+                gameManager.purchaseUpgrade(visible.get(choice - 1));
                 System.out.println(GREEN + "Upgrade purchased." + RESET);
 
                 PlayerInterface p = gameManager.getCurrentPlayer();
@@ -675,7 +720,7 @@ public class GameUserInterface {
                 }
             }
             catch (LackingResourceException e) {
-                System.out.println(RED + "Not enough coins." + RESET);
+                System.out.println(RED + "Not enough coins, select another upgrade." + RESET);
             }
             catch (Exception e) {
                 System.out.println(RED + "Could not purchase upgrade." + RESET);
