@@ -21,6 +21,7 @@ TODO harry or emre
 \subsection{Java Application}
 \subsubsection{Overview}
 The Java application was first split into front end and back end. From there the responsibilities of the backend were further divided into several singletons the front end would access. Each singleton was given responsibility for a particular area, and that area was further divided between different objects it composited. The front end then uses these singletons to perform the calculations required to run the game, and displays this information to the user. 
+\begin{comment}
 \subsubsection{Design Principles}
 %not sure about this section if it's relevant or should be removed. 
 \paragraph{Testability}
@@ -35,9 +36,33 @@ Another area in which the system supports extensibility is through it's upgrade 
 The system is also designed with reusability in mind, ensuring every component is reusable, and duplication is minimal. One example of this is in the ability system, which is the same for all entities both player and enemy. This allows us to get significant millage out of just a small number of abilities. 
 
 Another way the system makes good use of the resources it has is through it's encounter system. As an encounter can comprise of multiple enemies, allowing us to make use of enemies that the player would otherwise be very strong against in later encounters. Furthermore encounters at most stages are randomised, providing variety to each run, along with the randomisation of what abilities are purchasable in the shop. 
+\end{comment}
 
 \subsubsection{Abilities}
+\paragraph{Overview}
+Abilities internally refer to what are called attack abilities in the documentation, this is because passive abilities are fully handled by the upgrade system and thus it is clear that an ability internally refers to an attack ability. Abilities all have common characteristics and work in a similar way based on these characteristics and thus are represented as an enum.
+\paragraph{AbilityEnum}
+Ability enum enumerates all of the game's abilities for both enemies and the player. Each ability is represented by several key characteristics, which are stored in each enum instance: the base damage amount, the damage type, the magic cost, the name for the ability in the telemetry system, and a description of the ability. 
+
+The execute method is in charge of actually using the ability in the backend, requiring the source (who used the ability) and target (who is being attacked). It reduces the source's magic by the abilities cost if they're a player (or throws an exception if they do not have enough magic to use it) and otherwise ignoring the magic system for enemies. It then interfaces with the upgrade system to determine the final damage amount which the target's health is then reduced by.
 \subsubsection{Upgrades}
+\paragraph{Overview}
+The upgrade system uses the decorator pattern to add additional functionality to the player dynamically. Upgrades are stored in the game run and some are then picked out of the shop and displayed to the user. Upgrades internally refer to what are called passive and attack abilities in the documentation. 
+\paragraph{UpgradeEnum}
+All upgrades have several common characteristics (price, decorator class, and telemetry name), these are stored within the upgrade enum, which is used by all systems to represent upgrades. The other classes in the upgrade system serve only as decorators and are never directly interacted without outside of upgrade enum. 
+
+The upgrade enum also provides the functionality for applying upgrades to the player, which is done through reflection of the stored upgrade class. Each upgrade takes a PlayerInterface as a parameter to it's constructor, and holds a reference to the player, which it forwards most function calls to. It then returns the newly constructed upgrade as a PlayerInterface.
+\paragraph{UpgradeBase}
+Upgrade base is the parent of all upgrades. It stores the reference to the player, and forwards all PlayerInterface calls to the player. It is an abstract class.
+\paragraph{ResistanceUpgrades}
+Resistance upgrades are a specific type of passive upgrade that provides resistance to a damage type, halving the damage the player takes of that type. 
+
+Like all upgrades they override the getUpgrades() method to append a reference to their UpgradeEnum instance to the result of calling it for the internal player. This is used to keep track of which upgrades the player has. 
+
+
+Additionally, the override the loseHealth() method, checking if the damage type is that which they provide resistance to, and halving it if it is. It then forwards this loseHealth() call to the internal player.
+\paragraph{AbilityUnlockUpgrades}
+\subsubsection{Encounters}
 \subsubsection{Enemies}
 \subsubsection{Player}
 \subsubsection{Telemetry}
@@ -45,3 +70,4 @@ Another way the system makes good use of the resources it has is through it's en
 \subsubsection{Settings}
 \subsubsection{Game Mangement}
 \subsubsection{User Interface}
+\subsubsection{Authentication}
