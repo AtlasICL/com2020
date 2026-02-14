@@ -62,10 +62,77 @@ Like all upgrades they override the getUpgrades() method to append a reference t
 
 Additionally, the override the loseHealth() method, checking if the damage type is that which they provide resistance to, and halving it if it is. It then forwards this loseHealth() call to the internal player.
 \paragraph{AbilityUnlockUpgrades}
+Ability unlock upgrades are concrete implementations of UpgradeBase that are used to unlock abilities (called attack abilities in documentation).
+
+Similarly to ResistanceUpgrades, the override the getUpgrades method to add a reference to their enum instance to it. 
+
+Furthermore they override the getAbilities() method, first obtaining the abilities of the internal player and then appending a reference to the AbilityEnum instance for their relevant ability.
 \subsubsection{Encounters}
+\paragraph{Overview}
+Similarly to upgrades, there is a finite number of pre-made encounters, consisting of one or more enemies. 
+\paragraph{EncounterEnum}
+This represents all the pre-made encounters in the game, holding a list of all enemy enums in the encounter and the name of the encounter for telemetry purposes. It is used when referring to the type of encounter rather than a specific concrete encounter, and thus mostly appears within telemetry. 
+
+It contains the ability to produce a concrete encounter from the enum value. This method is currently unused but serves as a utility for future work and extension of the system. 
+\paragraph{EncounterInterface}
+This defines the interface for a concrete encounter, and is used by all classes that deal with actual encounters with concrete enemies. 
+
+It has methods allowing access to the enemies within it, as well as the ability to reset their health (in the case the player dies and restarts the encounter), and mark it as complete (to prevent it reappearing later in the run). It also contains the ability to get the EncounterEnum value for the encounter, which is used when producing telemetry relating to it.
+\paragraph{Encounter}
+This is the concrete implementation of EncounterInterface. It holds a reference to each enemy instance within the encounter and other information required to service the interface.
+
+The concrete encounter is only ever referenced when creating an encounter, which is done when a new GameRun is instantiated. 
 \subsubsection{Enemies}
+\paragraph{Overview}
+Both the player and enemies within this game are considered entities. All abilities work on entities, and wherever they can be used instead of enemies or players they are (e.g. in encounters). 
+\paragraph{EntityAIInterface}
+This defines the interface for the AI used for both enemies as well as running the simulation of the game. It defines methods for determining and using an ability, as well as determining what to buy in the shop. 
+\paragraph{EntityAISingleton}
+This defines a singleton with a single instance of a concrete implementation of EntityAIInterface. In the prototype this implementation uses randomness to determine which abilities to use and what upgrades to buy in the shop. 
+
+The singleton class provides static global access to the instance of random EntityAI, which is used by the UI to determine which ability each enemy uses on the player, and what the simulated player does. 
+\paragraph{EntityEnum}
+EntityEnum acts like EncounterEnum for entities, grouping common characteristics based on entirety type rather than instance. It thus stores a reference to the class used to instantiate the enemy, and a telemetry safe name for them. It is used mainly by the telemetry system and EncounterEnum. 
+
+It allows the creation of enemies from the enum, which is done through reflection. This is currently unused by the system, but could become useful in future extensions of the system.
+\paragraph{EntityInterface}
+TODO
+\paragraph{EnemyBase}
+EnemyBase is an abstract class that implements the core functionality all enemy instances have in common. Each concrete enemy then extends this class.
+
+It takes in both health and max health values, calculated by the enemy passing them in based of it's base health value and the design parameters (the design parameter for health is not implemented so returns a default value). 
+
+It then provides methods for working with health (lose, reset, get) as well as a default implementation for calculating how much damage an ability it uses should deal.
+\paragraph{ConcreteEnemies}
+Concrete enemies extend EnemyBase, providing enemy specific methods and fields. 
+
+In their constructor they calculate how much health they should have, sending that to the constructor of their superclass (EnemyBase). 
+
+They then override getAbilities() to add to it the abilities the enemy has, and implement getType() to return the type o enemy as EnemyEnum. 
+
+Some also override loseHealth() if they have damage vulnerabilities (double damage from source) or damage resistances (half damage from source). 
 \subsubsection{Player}
+\paragraph{Overview}
+The player system handles information relating to the player of the game, this is the user's character within the game, and is not related to the player role. Each run is given a new player which then gains upgrades from the shop as the game run progresses.
+\paragraph{PlayerInterface}
+This defines the interface for the player, and extends EntityInterface with functionality exclusive to players.
+
+It provides methods for dealing with coins (which are obtained at the end of encounters, and spend in the shop), lives (which are lost each time the player dies), and magic (which increases each round in an encounter, is spent to use magically abilities), and upgrades.
+\paragraph{Player}
+This is the concrete implementation of the player interface. It contains values for all data related to the player, including health, coins, and magic.
 \subsubsection{Telemetry}
+\paragraph{Overview}
+The telemetry system is in charge of validating and writing telemetry to the correct telemetry store (dependant on if it's a simulation or an actual user). It uses java's delegation model.
+\paragraph{TelemetryListenerInterface}
+This specifies the interface for the telemetry listener instance. It contains methods to handle all telemetry events, and is what's used by sources to send telemetry events to the instance (Obtained via TelemetryListenerSingleton)
+\paragraph{TelemetryListenerSingleton}
+TODO
+\paragraph{TelemetryEvent}
+\paragraph{EncounterEvent}
+\paragraph{EncounterCompleteEvent}
+\paragraph{EncounterFailEvent}
+\paragraph{ConcreteTelemetryEvent}
+
 \subsubsection{Time}
 \subsubsection{Settings}
 \subsubsection{Game Mangement}
