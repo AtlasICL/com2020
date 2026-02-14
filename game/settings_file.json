@@ -1,3 +1,68 @@
 {
-    
+  "users" : {
+    "0" : {
+      "telemetryEnabled" : false,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "-1631417452" : {
+      "telemetryEnabled" : true,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "1950438128" : {
+      "telemetryEnabled" : true,
+      "role" : "DEVELOPER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    }
+  },
+  "designParameters" : {
+    "playerMaxHealth" : {
+      "EASY" : 200,
+      "MEDIUM" : 100,
+      "HARD" : 50
+    },
+    "shopItemCount" : {
+      "EASY" : 3,
+      "MEDIUM" : 2,
+      "HARD" : 1
+    },
+    "enemyDamageMultiplier" : {
+      "EASY" : 0.5,
+      "MEDIUM" : 1.0,
+      "HARD" : 2.0
+    },
+    "enemyHealthMultiplier" : {
+      "EASY" : 1.0,
+      "MEDIUM" : 1.5,
+      "HARD" : 2.0
+    },
+    "startingLives" : {
+      "EASY" : 10,
+      "MEDIUM" : 3,
+      "HARD" : 1
+    },
+    "maxMagic" : {
+      "EASY" : 200,
+      "MEDIUM" : 100,
+      "HARD" : 50
+    },
+    "magicGenerationRate" : {
+      "EASY" : 5,
+      "MEDIUM" : 3,
+      "HARD" : 1
+    }
+  }
 }
