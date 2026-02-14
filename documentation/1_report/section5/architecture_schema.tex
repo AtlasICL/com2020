@@ -23,7 +23,9 @@ The Python application acts as a visualiser for telemetry data gained from the J
 \paragraph{Overview}
 Both the Python and Java applications utilise Google OAuth to authenticate users, assigning them with the default role of Player if they do not already exist in the logins file. Authentication then returns user and role information to the application that calls it.
 \paragraph{auth}
+Opens Google authentication in browser for users to authenticate. The function google\_login opens the browser, gets returned info from OAuth and uses its sub value as a UID for the user known as User\_ID. This function then calls get\_role using logins\_file and the User\_ID, to get from the logins\_file the users role, at this point if the user has not played/registered before, their ID will be written with the default role of Player. The google\_login function then returns the User\_ID (sub) and the user's role.
 \paragraph{auth\_wrapper}
+
 \subsubsection{core}
 \paragraph{Overview}
 \paragraph{events}
