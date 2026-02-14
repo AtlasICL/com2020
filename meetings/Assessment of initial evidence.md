@@ -8,7 +8,7 @@ This prototype successfully delivers a vertical slice of the project as a whole.
 
 Our idea for this project was to provide a very simple turn-based combat game, in which some of a player’s behaviour in gameplay is recorded. This gameplay behaviour can then be visualised, and from this, various parameters of the game can be tweaked as to best provide the player with a balanced difficulty. While the scope of the telemetry side of the project remained fairly consistent throughout the project’s progress, The game’s design initially suffered from a great deal of scope creep, This is likely because, to begin with, the needs for the game were not adequately designed. Following this realisation, the game was re-designed from the ground-up, in a way that meant the game was both feasible to create, yet also preserved the spirit of the original vision. Synergy with the telemetry side of the project was also taken into account. 
 
-## Project Architecture
+## Technical Considerations
 
 While the group considered both doing the project entirely in Java (for ease of coding the game), or entirely in python (for ease of coding the telemetry aspects), we settled on an architecture that has the game programed in Java, and the telemetry side programmed in Python, the two components communicating with one another using a JSON.
 
