@@ -32,7 +32,7 @@ public class EntityAISingleton {
             if (self == null) return;
             if (enemies == null || enemies.length == 0) return;
 
-            //pick player
+            //makes player target
             EntityInterface target = null;
 
             for (EntityInterface e : enemies) {

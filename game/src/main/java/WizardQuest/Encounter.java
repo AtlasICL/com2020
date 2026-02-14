@@ -7,7 +7,7 @@ public class Encounter implements EncounterInterface {
 
     public Encounter(EncounterEnum type) {
 
-        //TEST: never allow null encounters
+        //never allow null encounters
         if (type == null) {
             throw new IllegalArgumentException("Encounter type cannot be null.");
         }

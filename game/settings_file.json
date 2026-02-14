@@ -26,6 +26,15 @@
         "MEDIUM" : 0,
         "HARD" : 0
       }
+    },
+    "-1141973652" : {
+      "telemetryEnabled" : true,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
     }
   },
   "designParameters" : {
