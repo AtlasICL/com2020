@@ -22,12 +22,13 @@ As a game, the player’s options are always kept simple, by design, the player 
 
 The player can select from three difficulty options, such that, regardless of if the player is inexperienced with games as a whole, or is very skilled at video games, it’s still likely the game will offer an engaging challenge for them. These difficulty options are able to be finely tuned, through analysis on the telemetry side, to best meet the requirements of each difficulty level.
 
-The telemetry interface provides many means of visualising data (pie charts, graphs etc. ), these visual means will be readable, and have high contrast so that they can be interpreted easily, even by those who have visual impairments of some kind. The telemetry interface also accounts for blind users, as text descriptions of the data will accompany any data visualisations - allowing the use of a screen reader (i.e a pie chart being accompanied by a table containing section names and percentages occupied).
+The telemetry interface provides many means of visualising data (pie charts, graphs etc. ), these visual means will be readable, and have high contrast so that they can be interpreted easily, even by those who have visual impairments of some kind.
    
 This project aims to best follow the WCAG 2.1 principles.
 
 ## Intellectual Property (IP) and Licensing Implications
     
 Another thing we risk is infringing on the copyright of similar solutions, products or creative works. While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons & Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic and intuitive gameplay, and small scale. No copyrighted characters are used in this game, instead, the characters are examples of generic fantasy archetypes, such as Wizzards or Goblins. 
+
 
 
