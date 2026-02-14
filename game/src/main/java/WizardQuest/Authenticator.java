@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.lang.ProcessBuilder;
 import java.util.stream.Collectors;
 
-import javax.management.relation.RoleNotFoundException;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,6 +71,20 @@ public class Authenticator implements AuthenticatorInterface {
             userID,
             role
         );
+    }
+
+    // FOR TESTING
+    // To test, use mvn -f C:\eaca\com2020\game\pom.xml compile exec:java "-Dexec.mainClass=WizardQuest.Authenticator"
+    public static void main(String[] args) {
+        Authenticator auth = new Authenticator();
+        try {
+            AuthenticationResult result = auth.login();
+            System.out.println("Name: " + result.name());
+            System.out.println("UserID: " + result.userID());
+            System.out.println("Role: " + result.role());
+        } catch (AuthenticationException e) {
+            System.err.println("Login failed: " + e.getMessage());
+        }
     }
 
 }
