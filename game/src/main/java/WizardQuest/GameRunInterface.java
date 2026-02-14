@@ -77,9 +77,8 @@ public interface GameRunInterface {
      public int getDeathCount();
 
      /**
-      * Increments the run's death count. It is the job of the caller to decrement
-      * the player's lives and register when their health reaches 0 to call this
-      * method.
+      * Marks that the player has died, incrementing the death count, reducing the
+      * player's lives by 1, and resetting their health.
       */
      public void incrementDeathCount();
 

@@ -34,6 +34,7 @@ public class GameRun implements GameRunInterface {
     private final DifficultyEnum difficulty;
     private final LocalDateTime startTime;
     private final Random random;
+    private int deathCount;
 
     /**
      * Creates a run for the game in the specified difficulty. Also takes note of
@@ -77,6 +78,7 @@ public class GameRun implements GameRunInterface {
         this.difficulty = difficulty;
         this.startTime = LocalDateTime.now();
         this.random = new Random();
+        this.deathCount = 0;
     }
 
     @Override
@@ -166,14 +168,14 @@ public class GameRun implements GameRunInterface {
 
     @Override
     public int getDeathCount() {
-        int startingLives = SettingsSingleton.getInstance().getStartingLives(this.difficulty);
-        int currentLives = this.player.getLives();
-        return startingLives - currentLives;
+        return this.deathCount;
     }
 
     @Override
     public void incrementDeathCount() {
         this.player.loseLives(1);
+        this.deathCount++;
+        this.player.resetHealth();
     }
 
     @Override

@@ -1,5 +1,7 @@
 # Explanation
 Each subheading represents a component of the game system. Unless explicitly stated the components type is a class and it's access specifier is public and it is in the top level of the package (unnested). The heading also states what it extends and implements. In the cases of extension and implementation all methods in the parent components are also in the child, but are not explicitly stated. If unspecified it extends object. Anything in italics is a comment or description of a component. 
+# Purpose
+This specification was created early on and served as a framework while the group worked on each component. Due to the rapid development of the system this interface has become outdated, but this does not matter as it has served its purpose and is not meant to be a serious piece of documentation. See the Report and Javadoc for formal documentation of the application.
 # Interfaces
 ## GameManagerInterface 
 *Interface for the game manager*
