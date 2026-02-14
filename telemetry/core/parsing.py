@@ -179,8 +179,6 @@ def parse_event(event: dict) -> ValidEvent:
                 )
             case EventType.SETTINGS_CHANGE:
                 return SettingsChange(
-                    event[EventParameter.USER_ID],
-                    event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.SETTING],
                     event[EventParameter.SETTING_VALUE]

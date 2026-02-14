@@ -7,9 +7,29 @@ import base64
 import hashlib
 import secrets
 
+import json
+from enum import Enum
+
+import logging
+from datetime import datetime
+
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+logging_handler = logging.FileHandler("auth/logs.txt", encoding="utf-8")
+logging_handler.setLevel(logging.INFO)
+
+logging_handler.setFormatter(logging.Formatter(
+    fmt="%(asctime)s\n    %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+))
+
+logger.addHandler(logging_handler)
 
 
 ISSUER = "https://accounts.google.com"
@@ -25,7 +45,9 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 #  code of your application. (In this context, the client secret is 
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
-SCOPES = ["openid", "profile", "email"]
+SCOPES = ["profile", "email"]
+
+LOGGING_ENABLED: bool = True
 
 
 def validate_env_vars() -> None:
@@ -100,7 +122,8 @@ class CallbackHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.end_headers()
         self.wfile.write(
-            b"<html><body><h3>Login complete. You can now close this tab.</h3></body></html>"+
+            b"<html><body><h3>Login complete. " +
+            b"You can now close this tab.</h3></body></html>" +
             b"""<style>body {
                 font-family: Arial, sans-serif; 
                 display: flex; 
@@ -117,16 +140,22 @@ class CallbackHandler(BaseHTTPRequestHandler):
                 justify-content: center;
             }</style>"""
         )
+        
+
+class Role(str, Enum):
+    PLAYER = "player"
+    DESIGNER = "designer"
+    DEVELOPER = "developer"
 
 
-def google_login() -> tuple[Any, str]:
+def google_login() -> tuple[Any, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
     Returns the name and unique identifier of the user.
 
     :return: User unique identifier, user name.
-    :rtype: tuple[Any, str]
+    :rtype: tuple[Any, str, Role]
     :raises HTTPError: If an HTTP error occurs. 
     """
     validate_env_vars()
@@ -140,7 +169,6 @@ def google_login() -> tuple[Any, str]:
     redirect_uri = f"http://127.0.0.1:{server.server_port}/callback"
 
     state = secrets.token_urlsafe(24)
-    nonce = secrets.token_urlsafe(24)
     code_verifier, code_challenge = make_pkce_pair()
 
     params = {
@@ -149,22 +177,29 @@ def google_login() -> tuple[Any, str]:
         "redirect_uri": redirect_uri,
         "scope": " ".join(SCOPES),
         "state": state,
-        "nonce": nonce,
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
     }
     auth_url = f"{auth_endpoint}?{urlencode(params)}"
 
     open_browser(auth_url)
+    if LOGGING_ENABLED:
+        logger.info("[SIE ] Sign-in prompted.")
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
+        if LOGGING_ENABLED:
+            logger.warning(
+                "[SIE ] Sign-in failed: no authorization code received."
+            )
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
-        raise RuntimeError("State mismatch (possible CSRF).")
+        if LOGGING_ENABLED:
+            logger.warning("[SIE ] Sign-in failed: state mismatch.")
+        raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
         token_endpoint,
@@ -179,6 +214,9 @@ def google_login() -> tuple[Any, str]:
         timeout=15,
     )
     if not token_resp.ok:
+        if LOGGING_ENABLED:
+            logger.error("[SIE ] Sign-in failed: token exchange error" +
+                         "(status = {token_resp.status_code})")
         print("---- AUTH ERROR OCCURRED ----")
         print("|  Token status:", token_resp.status_code)
         print("|  Token body:", token_resp.text)
@@ -194,7 +232,64 @@ def google_login() -> tuple[Any, str]:
     userinfo_resp.raise_for_status()
     userinfo = userinfo_resp.json()
 
-    return userinfo.get("sub"), userinfo.get("name")
+    if LOGGING_ENABLED:
+        logger.info(f"[SIE ] Sign-in successful: " +
+                    f"user {userinfo.get('name')} authenticated.")
+    
+    sub = userinfo.get("sub")
+    return sub, userinfo.get("name"), get_role(
+        "logins_file.json", 
+        userID=sub
+    )
+
+
+def get_role(filename: str, userID: int) -> Role:
+    """
+    This function returns the role of the given user. It does so by
+    checking the user roles json file at the provided filepath.
+    If a profile does not exist for the given user, this function will
+    create one with the default role of "player".
+
+    :param filename: File path for the user roles json file.
+    :type filename: str
+    :param userID: The user ID of the user.
+    :type userID: int
+    :return: Returns the role of the user.
+    :rtype: Role
+    """
+    try:
+        with open(filename, 'r') as f:
+            player_roles = json.load(f)
+            this_user = player_roles.get(str(userID))
+            if this_user is None:
+                player_roles[str(userID)] = Role.PLAYER.value
+                with open(filename, 'w') as outfile:
+                    json.dump(player_roles, outfile, indent=4)
+                if LOGGING_ENABLED:
+                    logger.info(f"[AE  ] New user authenticated " + 
+                                f"with role {Role.PLAYER.value}.")
+                return Role.PLAYER
+            else:
+                try:
+                    if LOGGING_ENABLED:
+                        logger.info(f"[AE  ] Existing user authenticated " + 
+                                    f"with role {this_user}.")
+                    return Role(this_user) 
+                except ValueError:
+                    raise ValueError(f"Logins file at {filename}" +
+                                     f"contained an unknown role")
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"Could not find user roles file at {filename}"
+        )
+    except json.JSONDecodeError:
+        raise RuntimeError(
+            f"Could not parse user roles file at {filename}" + 
+            f"- invalid json."
+        )
+
+
+
 
 
 # TESTING
