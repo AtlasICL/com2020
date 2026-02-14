@@ -58,6 +58,9 @@ public class GameManagerSingleton {
         @Override
         public EncounterInterface pickEncounter(){
             EncounterInterface encounter = this.currentGame.pickEncounter();
+            if (encounter != null) {
+                encounter.resetEnemyHealth(); //ensure targets exist if encounter instance is reused
+            }
             this.currentEncounter = encounter;
             return encounter;
         }

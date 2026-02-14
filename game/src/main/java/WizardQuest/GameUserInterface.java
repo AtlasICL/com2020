@@ -699,7 +699,7 @@ public class GameUserInterface {
                 continue;
             }
 
-            //TEST: filters out nulls
+            // rebuild visible list (so your numbering matches what was printed)
             java.util.ArrayList<UpgradeEnum> visible = new java.util.ArrayList<>();
             for (UpgradeEnum up : upgrades) {
                 if (up != null) visible.add(up);
@@ -720,11 +720,31 @@ public class GameUserInterface {
                 }
             }
             catch (LackingResourceException e) {
-                System.out.println(RED + "Not enough coins, select another upgrade." + RESET);
+                System.out.println(RED + "Not enough coins." + RESET);
             }
             catch (Exception e) {
                 System.out.println(RED + "Could not purchase upgrade." + RESET);
             }
+
+            // re-display shop menu after buy / fail
+            System.out.println();
+            if (player != null) {
+                System.out.println("Your Coins: " + YELLOW + player.getCoins() + RESET);
+                System.out.println();
+            }
+
+            int shownAgain = 0;
+            for (int i = 0; i < upgrades.length; i++) {
+                UpgradeEnum up = upgrades[i];
+                if (up == null) continue;
+
+                shownAgain++;
+                System.out.println(shownAgain + ". " + CYAN + up.getTelemetryName() + RESET
+                        + " (Cost: " + YELLOW + up.getPrice() + RESET + ")");
+            }
+
+            System.out.println();
+            System.out.println("0. Leave shop");
         }
     }
 
