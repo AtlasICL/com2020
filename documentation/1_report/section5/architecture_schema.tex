@@ -20,9 +20,16 @@ The project is split into two applications, one written in Python and the other 
 \subsubsection{Overview}
 The Python application acts as a visualiser for telemetry data gained from the Java game. The application is composed of a frontend and a backend, with the frontend responsible for displaying view dashboards, suggestions, and displaying authentication. Whilst the backend is responsible for authentication logic for both the python telemetry application and Java game and parsing json gained from the Java game, sending graphical representations to the frontend.
 \subsubsection{Authentication}
+\paragraph{Overview}
 \paragraph{auth}
 \paragraph{auth\_wrapper}
-\subsubsection{}
+\subsubsection{core}
+\paragraph{Overview}
+\paragraph{events}
+\paragraph{export}
+\paragraph{logic}
+\paragraph{parsing}
+
 \subsection{Java Application}
 \subsubsection{Overview}
 The Java application was first split into front end and back end. From there the responsibilities of the backend were further divided into several singletons the front end would access. Each singleton was given responsibility for a particular area, and that area was further divided between different objects it composited. The front end then uses these singletons to perform the calculations required to run the game, and displays this information to the user. 
