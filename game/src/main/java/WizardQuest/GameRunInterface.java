@@ -14,8 +14,12 @@ public interface GameRunInterface {
       * finished, and reset it if the player retries it after dying.
       * 
       * @return a reference to the chosen encounter.
+      * 
+      * @throws IllegalStateException if it is asked to pick an encounter for a stage
+      *                               where all encounters have already been
+      *                               completed.
       */
-     public EncounterInterface pickEncounter();
+     public EncounterInterface pickEncounter() throws IllegalStateException;
 
      /**
       * Picks a number of upgrades from the shop determined by the ShopItemCount
