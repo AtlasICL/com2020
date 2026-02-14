@@ -49,10 +49,10 @@ public class Authenticator implements AuthenticatorInterface {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode json = mapper.readTree(output);
 
-                name = json.get("name") != null ? json.get("name").asText() : "";
                 userID = json.get("sub") != null ? json.get("sub").asText() : "";
+                name = json.get("name") != null ? json.get("name").asText() : "";
                 String roleVal = json.get("role").asText();
-                if (role == null) {throw new AuthenticationException("Error parsing authenticatd user's role"); }
+                if (roleVal == null) {throw new AuthenticationException("Error parsing authenticatd user's role"); }
                 role = RoleEnum.valueOf(roleVal.toUpperCase());
 
             } catch (JsonProcessingException e) {
