@@ -2,11 +2,11 @@
 
 ## Privacy and Data Protection
 
-In any program that tracks user data, the user’s privacy is at risk - in this context, it is important to use user data responsibly and securely, otherwise, the project may breach various legal acts (e.g. The Data Protection Act). To mitigate risks, the game will not store any user data that’s not relevant to gameplay, or the balancing of gameplay. Any data that is stored will be stored anonymously [Emre can fill in this bit, discuss how players info is stored and google sign-in]. [description of how minor info gathering is mitigated]
+In any program that tracks user data, the user’s privacy is at risk - in this context, it is important to use user data responsibly and securely, otherwise, the project may breach various legal acts (e.g. The Data Protection Act). To mitigate risks, the game will not store any user data that’s not relevant to gameplay, or the balancing of gameplay. Any data that is stored will be stored anonymously. User authentecation will be handled by Google, so the program's responsibility to handle authentication secureley is delegated to Google.
 
 ## Consent and Disclosure
 
-Similar to how it was mentioned above, there are legal risks to not complying with data usage and Disclosure. When the player begins the game, they are informed that their gameplay will be tracked and exclusively used to inform game-balancing, and that this can be disabled if the player wishes to. [Change previous fact if wrong!!] This message gives a brief overview of what the game records, how it will be used, and how it will be sudoanonymously stored. A user under the age of 18 years old should not be able to opt into data disclosure[specifics undecided]. As referenced earlier, opted-in users can choose to opt out whenever. Ultimately, it is important to achieve all of this without disrupting the user experience, hence, all forms of asking for content and disclosing information is done as concisely as possible, and in a fully unobtrusive manner.
+Similar to how it was mentioned above, there are legal risks to not complying with data usage and Disclosure. When the player begins the game, they are informed that their gameplay will be tracked and exclusively used to inform game-balancing, and that this can be disabled if the player wishes to. This message gives a brief overview of what the game records, how it will be used, and how it will be sudoanonymously stored. A user under the age of 18 years old should not be able to opt into data disclosure - this is specified in the aformentioned message. As referenced earlier, opted-in users can choose to opt out whenever. Ultimately, it is important to achieve all of this without disrupting the user experience, hence, all forms of asking for content and disclosing information is done as concisely as possible, and in a fully unobtrusive manner.
 
 ## Accessibility
 
@@ -29,4 +29,5 @@ This project aims to best follow the WCAG 2.1 principles.
 ## Intellectual Property (IP) and Licensing Implications
     
 Another thing we risk is infringing on the copyright of similar solutions, products or creative works. While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons & Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic and intuitive gameplay, and small scale. No copyrighted characters are used in this game, instead, the characters are examples of generic fantasy archetypes, such as Wizzards or Goblins. 
+
 
