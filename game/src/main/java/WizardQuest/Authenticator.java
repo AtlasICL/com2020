@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.lang.ProcessBuilder;
 import java.util.stream.Collectors;
 
+import javax.management.relation.RoleNotFoundException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,8 +53,9 @@ public class Authenticator implements AuthenticatorInterface {
 
                 userID = json.get("sub") != null ? json.get("sub").asText() : "";
                 name = json.get("name") != null ? json.get("name").asText() : "";
-                String roleVal = json.get("role").asText();
-                if (roleVal == null) {throw new AuthenticationException("Error parsing authenticatd user's role"); }
+                JsonNode roleNode = json.get("role");
+                if (roleNode == null) { throw new AuthenticationException("Error parsing authenticated user's role"); }
+                String roleVal = roleNode.asText();
                 role = RoleEnum.valueOf(roleVal.toUpperCase());
 
             } catch (JsonProcessingException e) {
