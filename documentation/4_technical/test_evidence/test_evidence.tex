@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+
+%settings paragraph to allow heading 4
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph}
+  {1em}
+  {}
+
+\titlespacing*{\paragraph}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\title{Telemetry Game Report\\[0.3em]
+\large COM2020 - Project 7}
+\author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
+\date{17/02/2026}
+\begin{document}
+Our prototype consists of five automated tests using the JUnit framework (version X.X.X).
+These automated tests all test the behaviour of the TelemetryListener class, which processes telemetry events as they happen - fundamental to the core objective of our program.
+Details on how to run these can be found in our Deployment Guide (deployment\_guide.pdf).
+
+We have implemented three unit tests - these test that the userID, sessionID and timestamp fields of events are validated and handled correctly.
+By supplying varying fields of Event objects with erroneous data, we have asserted that exceptions are handled by verifying the contents of the error message output to console.
+When supplying all of these fields with typical data, we have asserted that no exception handling occurs, since no exceptions were thrown in these cases.
+
+We have also implemented two integration tests - these test that telemetry events are written to file if the user has enabled telemetry, and vice versa.
+By invoking the listener's method on a valid Event object, we have asserted that the file's length increased immediately after the event occurred if telemetry was enabled,
+and that the file's length did not change if telemetry was disabled.
+Any data read from or written to file in our test was done using temporary files, to avoid cluttering in the production files.
+
+// TO DO - Discuss manual tests once done
+
+\end{document}
