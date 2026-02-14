@@ -8,7 +8,6 @@ import java.lang.ProcessBuilder;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +40,7 @@ public class Authenticator implements AuthenticatorInterface {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
                 output = reader.lines().collect(Collectors.joining());
             } catch (IOException e) {
-                throw new AuthenticationException("Auth error." + e);
+                throw new AuthenticationException("Auth error." + e.getMessage());
             }
 
             proc.waitFor();
@@ -49,18 +48,21 @@ public class Authenticator implements AuthenticatorInterface {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode json = mapper.readTree(output);
-                name = json.get("name").asText();
-                userID = json.get("sub").asText();
+
+                name = json.get("name") != null ? json.get("name").asText() : "";
+                userID = json.get("sub") != null ? json.get("sub").asText() : "";
                 String roleVal = json.get("role").asText();
+                if (role == null) {throw new AuthenticationException("Error parsing authenticatd user's role"); }
                 role = RoleEnum.valueOf(roleVal.toUpperCase());
+
             } catch (JsonProcessingException e) {
-                throw new AuthenticationException("Auth error while parsing python login module output" + e); 
+                throw new AuthenticationException("Auth error while parsing python login module output" + e.getMessage()); 
             }
 
         } catch (InterruptedException e) {
-            throw new AuthenticationException("Auth error while waiting for Python auth module response" + e);
+            throw new AuthenticationException("Auth error while waiting for Python auth module response" + e.getMessage());
         } catch (IOException e) {
-            throw new AuthenticationException("Auth error occurred from Python process" + e);
+            throw new AuthenticationException("Auth error occurred from Python process" + e.getMessage());
         }
 
         return new AuthenticationResult(
