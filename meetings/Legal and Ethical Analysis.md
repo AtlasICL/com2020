@@ -1,47 +1,33 @@
-NOTE: This is a very rough draft. This is just a collection of everything which came to mind. Feel free to edit as you see fit.
 # Ethical/Legal Considerations
 
-## Privacy of Telemetry
+## Privacy and Data Protection
 
--   The program will not store any user data that is not relevant to gameplay, or the balancing of gameplay
-    
--   Any data relevant to the player will be anonymised. For example, player sessions will be identified by a generated numerical identifier,
-    
+In any program that tracks user data, the user’s privacy is at risk - in this context, it is important to use user data responsibly and securely, otherwise, the project may breach various legal acts (e.g. The Data Protection Act). To mitigate risks, the game will not store any user data that’s not relevant to gameplay, or the balancing of gameplay. Any data that is stored will be stored anonymously. User authentecation will be handled by Google, so the program's responsibility to handle authentication secureley is delegated to Google.
 
 ## Consent and Disclosure
 
--   When the player begins the game, they are informed that their gameplay will be tracked and exclusively used to inform game-balancing, and that this can be disabled if the player wishes to. This message gives a brief overview of what the game records, and how it will be used. It will also state how it will be stored (anonymously etc. )
-    
+Similar to how it was mentioned above, there are legal risks to not complying with data usage and Disclosure. When the player begins the game, they are informed that their gameplay will be tracked and exclusively used to inform game-balancing, and that this can be disabled if the player wishes to. This message gives a brief overview of what the game records, how it will be used, and how it will be sudoanonymously stored. A user under the age of 18 years old should not be able to opt into data disclosure - this is specified in the aformentioned message. As referenced earlier, opted-in users can choose to opt out whenever. Ultimately, it is important to achieve all of this without disrupting the user experience, hence, all forms of asking for content and disclosing information is done as concisely as possible, and in a fully unobtrusive manner.
 
 ## Accessibility
 
--   Core Screens can be navigated by keyboard
-    
--   All text in game appears in front of a plain black background - this contrast allows readability.
-    
--   Both the game and the telemetry elements have mobile-friendly layouts
-    
--   A key element of the game’s accessibility is derived from the simplicity within the game. Players have simple options that are described with one word (“Attack”, “Buy”, etc. ).
-    
--   Likewise, the User Interface elements (such as the one-word resources the player has to manage) are distinguished from one another by colour, such that a player with a limited understanding of written English can still engage with the game and its mechanics. For example, the player’s “Health” will start by being displayed as a green 100, but as the character takes damage it will appear as red - indicating danger
-    
--   Blind players using screen-readers can still enjoy the game, as the UI partially functions as a narrator, i.e, “The Plant Monster attacks the player for 23 Health!”
-    
--   Furthermore, the player can select from three difficulty modes (easy/balanced/hard), therefore the game is accessible to all skill levels.
-    
--   Ultimately, the purpose of the telemetry side of the project is to help balance the game, meaning it’s unlikely the player will go up against a level of difficulty they find too challenging to still have fun.
-    
--   The telemetry interface provides many means of visualising data (pie charts, graphs etc. ), these visual means will be readable, and have high contrast so that they can be interpreted easily.
-    
--   The telemetry interface accounts for blind users, using screen readers, as text descriptions of the data will accompany any data visualisations. (i.e a pie chart being accompanied by a table containing section names and percentages occupied)
-    
--   The telemetry interface can be navigated with just a keyboard, accounting for those unable to use a mouse.
-    
+While less a concern of legality, there is still a potential risk that some players may not be able to get the most out of the project. Accommodating for as many users as possible allows the game to be enjoyed by as many people as possible, and allows anyone, regardless of physical ability to utilise the telemetry interface. 
 
-  
+For both the game and telemetry interface, core screens can be navigated by keyboard, accommodating for individuals who are only able to use a keyboard or alternative accessibility keyboard equivalents. 
+
+Furthermore, in both the game and telemetry interface, all text in game appears in front of a plain black background - this contrast allows readability, accommodating for those with levels of visual impairment. 
+
+The game can be understood with just text alone, and the telemetry interface features text descriptions of the data that will accompany any data visualisations. (i.e a pie chart being accompanied by a table containing section names and percentages occupied), these two features mean blind users can still experience this project with the use of a screen reader. 
+
+As a game, the player’s options are always kept simple, by design, the player has very simple options and direction, these can be summed up in either a short sentence (i.e “select an attack”) or a single word (“Buy”), allowing users who are less familiar with the english language, or are unfamiliar with games as a whole to still participate in the game - for example, a very young child would still be able to enjoy the game. Similarly, the player’s objectives are always incredibly simple, so all users intuitively understand what to do.
+
+The player can select from three difficulty options, such that, regardless of if the player is inexperienced with games as a whole, or is very skilled at video games, it’s still likely the game will offer an engaging challenge for them. These difficulty options are able to be finely tuned, through analysis on the telemetry side, to best meet the requirements of each difficulty level.
+
+The telemetry interface provides many means of visualising data (pie charts, graphs etc. ), these visual means will be readable, and have high contrast so that they can be interpreted easily, even by those who have visual impairments of some kind. The telemetry interface also accounts for blind users, as text descriptions of the data will accompany any data visualisations - allowing the use of a screen reader (i.e a pie chart being accompanied by a table containing section names and percentages occupied).
+   
+This project aims to best follow the WCAG 2.1 principles.
 
 ## Intellectual Property (IP) and Licensing Implications
-
--   All assets used within the game and telemetry interface are either royalty free or created by the development team.
     
--   While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons & Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic gameplay.
+Another thing we risk is infringing on the copyright of similar solutions, products or creative works. While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons & Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic and intuitive gameplay, and small scale. No copyrighted characters are used in this game, instead, the characters are examples of generic fantasy archetypes, such as Wizzards or Goblins. 
+
+
