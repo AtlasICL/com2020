@@ -187,11 +187,7 @@ public class GameUserInterface {
             }
 
             if (input.equals("4")) {
-                if (role == RoleEnum.DEVELOPER) {
-                    assignUserRole();
-                } else {
-                    System.out.println(RED + "You do not have permission to assign roles." + RESET);
-                }
+                System.out.println("We are not doing this in Sprint 1.");
                 continue;
             }
 
@@ -246,43 +242,6 @@ public class GameUserInterface {
             System.out.println(GREEN + "Starting lives updated." + RESET);
         } catch (AuthenticationException e) {
             System.out.println(RED + "You must be logged in to change design parameters." + RESET);
-        }
-    }
-
-    private void assignUserRole() {
-
-        System.out.println();
-        System.out.println(BOLD + "Assign User Role [WIP]" + RESET);
-
-        System.out.print(BLUE + "ID: " + RESET);
-        String username = scanner.nextLine();
-
-        System.out.println("1. PLAYER");
-        System.out.println("2. DESIGNER");
-        System.out.println("3. DEVELOPER");
-        System.out.print(BLUE + ">>> " + RESET);
-
-        String input = scanner.nextLine();
-
-        RoleEnum newRole;
-
-        if (input.equals("1"))
-            newRole = RoleEnum.PLAYER;
-        else if (input.equals("2"))
-            newRole = RoleEnum.DESIGNER;
-        else if (input.equals("3"))
-            newRole = RoleEnum.DEVELOPER;
-        else {
-            System.out.println(RED + "Invalid role." + RESET);
-            return;
-        }
-
-        try {
-            int userID = username.hashCode();
-            settings.setUserRole(userID, newRole);
-            System.out.println(GREEN + "Role updated for " + username + "." + RESET);
-        } catch (AuthenticationException e) {
-            System.out.println(RED + "You must be logged in as a developer to assign roles." + RESET);
         }
     }
 

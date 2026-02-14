@@ -1,6 +1,7 @@
 package WizardQuest;
 
 import java.io.File;
+import java.math.BigInteger;
 
 /**
  * Interface for settings. Provides access to user settings and properties, as
@@ -19,7 +20,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if there is a user with the same username or
      *                                 the username is invalid.
      */
-    public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException;
+    public void createNewUser(BigInteger userID, String password, RoleEnum role) throws AuthenticationException;
 
     /**
      * Attempts to authenticate the specified user, logging in as them on success.
@@ -31,7 +32,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if the user does not exist or their login
      *                                 credentials are invalid or incorrect.
      */
-    public void authenticateUser(String username, String password) throws AuthenticationException;
+    public void authenticateUser(BigInteger userID, String password) throws AuthenticationException;
 
     /**
      * Authenticates an externally authenticated user (e.g. from Google Sign-In).
@@ -62,7 +63,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(int userID, RoleEnum role) throws AuthenticationException;
+    public void setUserRole(BigInteger userID, RoleEnum role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or

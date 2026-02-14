@@ -95,63 +95,6 @@ public class SettingsSingleton {
             shopItemCount.put(DifficultyEnum.HARD, 1);
         }
 
-        /**
-         * Load the settings of a given player from the settings file (.json).
-         * Design parameters (global, affecting all users) loaded from
-         * "designParameters" key. 
-         * User-specific data is loaded from "users", with the key being 
-         * their userID. Reminder that an example settings.json file is provided.
-         * If a profile for a user does not yet exist, it will be created with
-         * default values.
-         */
-        private void loadSettingsFromJson(int userID) {
-            if (!SETTINGS_FILE.exists()) {
-                loadDefaults();
-                return;
-            }
-
-            try {
-                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
-
-                JsonNode designParams = root.get("designParameters");
-                if (designParams == null) {
-                    root.set("designParameters", createDesignParametersNode());
-                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
-                } else {
-                    loadIntNode(designParams, "playerMaxHealth", playerMaxHealth);
-                    loadIntNode(designParams, "shopItemCount", shopItemCount);
-                    loadFloatNode(designParams, "enemyDamageMultiplier", enemyDamageMultiplier);
-                    loadFloatNode(designParams, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
-                    loadIntNode(designParams, "startingLives", startingLives);
-                    loadIntNode(designParams, "maxMagic", maxMagic);
-                    loadIntNode(designParams, "magicGenerationRate", magicRegenRate);
-                }
-
-                // Load per-user data.
-                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
-                JsonNode userSettings = usersNode.get(String.valueOf(userID));
-
-                // If the user did not have a section in the file, create it.
-                if (userSettings == null) {
-                    ObjectNode newProfile = jsonMapper.createObjectNode();
-                    newProfile.put("telemetryEnabled", true);
-                    // newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
-                    newProfile.set("furthestLevel", createIntNode(maxStageReached));
-
-                    usersNode.set(String.valueOf(userID), newProfile);
-                    root.set("users", usersNode);
-                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
-                    return;
-                }
-
-                // Load user's (user-specific / non-global) data.
-                telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
-                // userRole = RoleEnum.valueOf(userSettings.get("role").asText());
-                loadIntNode(userSettings, "furthestLevel", maxStageReached);
-            } catch (IOException e) {
-                System.out.println("ERROR! Error reading settings from settings file." + e.toString());
-            }
-        }
 
         private void loadSettingsFromJson(BigInteger userID) {
             if (!SETTINGS_FILE.exists()) {
@@ -184,7 +127,6 @@ public class SettingsSingleton {
                 if (userSettings == null) {
                     ObjectNode newProfile = jsonMapper.createObjectNode();
                     newProfile.put("telemetryEnabled", true);
-                    // newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                     newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
                     usersNode.set(String.valueOf(userID), newProfile);
@@ -195,7 +137,6 @@ public class SettingsSingleton {
 
                 // Load user's (user-specific / non-global) data.
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
-                // userRole = RoleEnum.valueOf(userSettings.get("role").asText());
                 loadIntNode(userSettings, "furthestLevel", maxStageReached);
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
@@ -268,7 +209,6 @@ public class SettingsSingleton {
         /**
          * Saves USER-SPECIFIC info:
          * - telemetryEnabled
-         * - role
          * - furthestLevel (per difficulty)
          */
         public void saveProfile() {
@@ -278,7 +218,6 @@ public class SettingsSingleton {
 
                 ObjectNode profileNode = jsonMapper.createObjectNode();
                 profileNode.put("telemetryEnabled", telemetryEnabled);
-                profileNode.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                 profileNode.set("furthestLevel", createIntNode(maxStageReached));
 
                 usersNode.set(String.valueOf(userID), profileNode);
@@ -303,7 +242,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException {
+        public void createNewUser(BigInteger userID, String password, RoleEnum role) throws AuthenticationException {
             try {
                 ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
 
@@ -311,7 +250,7 @@ public class SettingsSingleton {
                 userNode.put("password", password);
                 userNode.put("role", role.getJSONName());
 
-                allLogins.set(username, userNode);
+                allLogins.set(userID.toString(), userNode);
                 jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
             } catch (IOException e) {
                 System.out.println("Failed to save new user to logins file." + e.toString());
@@ -319,31 +258,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void authenticateUser(String username, String password) throws AuthenticationException {}
+        public void authenticateUser(BigInteger userID, String password) throws AuthenticationException {}
 
-        // @Override
-        // public void authenticateUser(String username, String password) throws AuthenticationException {
-        //     try {
-        //         JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
-        //         JsonNode userNode = allLogins.get(username);
-
-        //         if (userNode == null) {
-        //             throw new AuthenticationException("User does not exist.");
-        //         }
-
-        //         String storedPassword = userNode.get("password").asText();
-        //         if (!storedPassword.equals(password)) {
-        //             throw new AuthenticationException("Incorrect password");
-        //         }
-
-        //         userID = username.hashCode();
-        //         userRole = RoleEnum.convertJSONToEnum(userNode.get("role").asText());
-
-        //         loadSettingsFromJson(userID);
-        //     } catch (IOException e) {
-        //         System.out.println("Error reading login file" + e);
-        //     }
-        // }
 
         //TEST: authenticates an externally authenticated user (Google SSO), allows access to role + ID
         public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException {
@@ -362,8 +278,6 @@ public class SettingsSingleton {
 
             loadSettingsFromJson(this.userID);
         }
-
-
 
         /**
          * Verifies the currently authenticated user is a developer (role).
@@ -385,7 +299,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setUserRole(int userID, RoleEnum role) throws AuthenticationException {
+        public void setUserRole(BigInteger userID, RoleEnum role) throws AuthenticationException {
             if (!currentUserIsDeveloper()) {
                 throw new AuthenticationException();
             }
