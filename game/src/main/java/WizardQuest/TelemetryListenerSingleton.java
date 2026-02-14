@@ -108,6 +108,29 @@ public class TelemetryListenerSingleton {
         }
 
         /**
+         * Checks if timestamp related to an event is valid.
+         * 
+         * @param e
+         * @throws TimestampValidationException
+         */
+        private void isCorrectTimeStamp(SettingsChangeEvent e) throws TimestampValidationException{
+            try{
+                LocalDateTime eventTime = LocalDateTime.parse(e.getTimestamp(), formatter);
+                if(eventTime.isAfter(LocalDateTime.now())){
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                            " " + e.getTimestamp() + " is in the future");
+                }
+                else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
+                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                            " " + e.getTimestamp() + " is not current");
+                }
+            } catch (java.time.format.DateTimeParseException ex) {
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
+                                                        " " + e.getTimestamp() + " is of invalid format");
+            }
+        }
+
+        /**
          * Called by all event listeners to save to json file
          * 
          * @param e the event to be recorded to the JSON database.
@@ -325,11 +348,8 @@ public class TelemetryListenerSingleton {
         @Override
         public void onSettingsChange(SettingsChangeEvent e){
             try {
-                isCorrectSession(e);
                 isCorrectTimeStamp(e);
-                isCorrectUser(e);
-                saveEvent(e);
-            } catch (SessionValidationException | TimestampValidationException | UserValidationException ex) {
+            } catch (TimestampValidationException ex) {
                 System.err.println(ex.getMessage());
             }
         }
