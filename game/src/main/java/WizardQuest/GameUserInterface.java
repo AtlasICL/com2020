@@ -82,9 +82,10 @@ public class GameUserInterface {
                                         GREEN + " || UserID: " + CYAN + user.userID() + RESET);
 
                         return;
-                    } catch (Exception e) {
-                        System.out.println(RED + "Login failed: " + e.getMessage() + RESET);
+                    } catch (AuthenticationException e) {
+                        System.out.print(e);
                     }
+
                     break;
 
                 case "0":

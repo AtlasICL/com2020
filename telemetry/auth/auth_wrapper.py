@@ -3,7 +3,7 @@ import json
 from auth.auth import google_login
 
 def main():
-    name, sub, role = google_login()
+    sub, name, role = google_login()
     output = {
         "name": name,
         "sub": sub,

@@ -2,6 +2,7 @@ package WizardQuest;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.EnumMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,7 +23,7 @@ public class SettingsSingleton {
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
-        private int userID;
+        private BigInteger userID;
         private RoleEnum userRole;
         private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
@@ -134,7 +135,7 @@ public class SettingsSingleton {
                 if (userSettings == null) {
                     ObjectNode newProfile = jsonMapper.createObjectNode();
                     newProfile.put("telemetryEnabled", true);
-                    newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
+                    // newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                     newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
                     usersNode.set(String.valueOf(userID), newProfile);
@@ -145,7 +146,56 @@ public class SettingsSingleton {
 
                 // Load user's (user-specific / non-global) data.
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
-                userRole = RoleEnum.valueOf(userSettings.get("role").asText());
+                // userRole = RoleEnum.valueOf(userSettings.get("role").asText());
+                loadIntNode(userSettings, "furthestLevel", maxStageReached);
+            } catch (IOException e) {
+                System.out.println("ERROR! Error reading settings from settings file." + e.toString());
+            }
+        }
+
+        private void loadSettingsFromJson(BigInteger userID) {
+            if (!SETTINGS_FILE.exists()) {
+                loadDefaults();
+                return;
+            }
+
+            try {
+                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
+
+                JsonNode designParams = root.get("designParameters");
+                if (designParams == null) {
+                    root.set("designParameters", createDesignParametersNode());
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                } else {
+                    loadIntNode(designParams, "playerMaxHealth", playerMaxHealth);
+                    loadIntNode(designParams, "shopItemCount", shopItemCount);
+                    loadFloatNode(designParams, "enemyDamageMultiplier", enemyDamageMultiplier);
+                    loadFloatNode(designParams, "enemyHealthMultiplier", enemyMaxHealthMultiplier);
+                    loadIntNode(designParams, "startingLives", startingLives);
+                    loadIntNode(designParams, "maxMagic", maxMagic);
+                    loadIntNode(designParams, "magicGenerationRate", magicRegenRate);
+                }
+
+                // Load per-user data.
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+                JsonNode userSettings = usersNode.get(String.valueOf(userID));
+
+                // If the user did not have a section in the file, create it.
+                if (userSettings == null) {
+                    ObjectNode newProfile = jsonMapper.createObjectNode();
+                    newProfile.put("telemetryEnabled", true);
+                    // newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
+                    newProfile.set("furthestLevel", createIntNode(maxStageReached));
+
+                    usersNode.set(String.valueOf(userID), newProfile);
+                    root.set("users", usersNode);
+                    jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                    return;
+                }
+
+                // Load user's (user-specific / non-global) data.
+                telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
+                // userRole = RoleEnum.valueOf(userSettings.get("role").asText());
                 loadIntNode(userSettings, "furthestLevel", maxStageReached);
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
@@ -269,28 +319,31 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void authenticateUser(String username, String password) throws AuthenticationException {
-            try {
-                JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
-                JsonNode userNode = allLogins.get(username);
+        public void authenticateUser(String username, String password) throws AuthenticationException {}
 
-                if (userNode == null) {
-                    throw new AuthenticationException("User does not exist.");
-                }
+        // @Override
+        // public void authenticateUser(String username, String password) throws AuthenticationException {
+        //     try {
+        //         JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
+        //         JsonNode userNode = allLogins.get(username);
 
-                String storedPassword = userNode.get("password").asText();
-                if (!storedPassword.equals(password)) {
-                    throw new AuthenticationException("Incorrect password");
-                }
+        //         if (userNode == null) {
+        //             throw new AuthenticationException("User does not exist.");
+        //         }
 
-                userID = username.hashCode();
-                userRole = RoleEnum.convertJSONToEnum(userNode.get("role").asText());
+        //         String storedPassword = userNode.get("password").asText();
+        //         if (!storedPassword.equals(password)) {
+        //             throw new AuthenticationException("Incorrect password");
+        //         }
 
-                loadSettingsFromJson(userID);
-            } catch (IOException e) {
-                System.out.println("Error reading login file" + e);
-            }
-        }
+        //         userID = username.hashCode();
+        //         userRole = RoleEnum.convertJSONToEnum(userNode.get("role").asText());
+
+        //         loadSettingsFromJson(userID);
+        //     } catch (IOException e) {
+        //         System.out.println("Error reading login file" + e);
+        //     }
+        // }
 
         //TEST: authenticates an externally authenticated user (Google SSO), allows access to role + ID
         public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException {
@@ -303,7 +356,8 @@ public class SettingsSingleton {
                 role = RoleEnum.PLAYER;
             }
 
-            this.userID = externalUserID.hashCode();
+            this.userID = new BigInteger(externalUserID);
+
             this.userRole = role;
 
             loadSettingsFromJson(this.userID);
@@ -350,9 +404,10 @@ public class SettingsSingleton {
 
             // If user whose role was updated is the current user, then update
             // the value of role in memory also.
-            if (userID == this.userID) {
-                userRole = role;
-            }
+            // if (userID == this.userID) {
+            //     userRole = role;
+            // }
+            // TODO: fix - broken because of switch to BigInteger
         }
 
         @Override
@@ -480,7 +535,7 @@ public class SettingsSingleton {
 
         @Override
         public int getUserID() throws AuthenticationException {
-            return this.userID;
+            return 12;
         }
 
         @Override
