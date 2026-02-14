@@ -34,6 +34,17 @@ public interface SettingsInterface {
     public void authenticateUser(String username, String password) throws AuthenticationException;
 
     /**
+     * Authenticates an externally authenticated user (e.g. from Google Sign-In).
+     * 
+     * @param externalUserID the external user ID.
+     * @param role the role of the external user.
+     * @throws AuthenticationException if the external user ID is invalid or missing.
+     */
+    public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException;
+
+    
+
+    /**
      * Returns the role of the currently authenticated user or throws an exception
      * if no user is authenticated.
      * 

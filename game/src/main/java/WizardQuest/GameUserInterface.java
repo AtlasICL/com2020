@@ -1,7 +1,7 @@
 package WizardQuest;
 
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class GameUserInterface {
@@ -9,6 +9,8 @@ public class GameUserInterface {
     private final GameManagerInterface gameManager;
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final Scanner scanner;
+
+    private AuthenticationResult currentUser = null;
 
     private static final String RESET = "\u001B[0m";
     private static final String BOLD = "\u001B[1m";
@@ -32,6 +34,7 @@ public class GameUserInterface {
 
     public void start() {
         showTitle();
+        loginScreen();
         showMenu();
     }
 
@@ -53,6 +56,52 @@ public class GameUserInterface {
      * Needs role testing for settings access
      * First user will be developer by default, can assign other roles through settings menu
      */
+
+
+    private void loginScreen() {
+        while (true) {
+            System.out.println();
+            System.out.println(BOLD + "Login" + RESET);
+            System.out.println("1. " + YELLOW + "Sign in with Google" + RESET);
+            System.out.println("0. Quit");
+
+            System.out.print(BLUE + ">>> " + RESET);
+            String input = scanner.nextLine();
+
+            switch (input) {
+                case "1":
+                    try {
+                        Authenticator authenticator = new Authenticator();
+                        AuthenticationResult user = authenticator.login();
+                        currentUser = user;
+                        settings.authenticateExternalUser(user.userID(), user.role());
+
+
+                        String displayName = (user.name() == null || user.name().isBlank()) ? "User" : user.name();
+                        System.out.println(
+                            GREEN + "Signed in as " + CYAN + displayName + RESET +
+                            GREEN + " | Role: " + CYAN + user.role() + RESET +
+                            GREEN + " | UserID: " + CYAN + user.userID() + RESET);
+
+                        return;
+                    }
+                    catch (Exception e) {
+                        System.out.println(RED + "Login failed: " + e.getMessage() + RESET);
+                    }
+                    break;
+
+                case "0":
+                    quit();
+                    return;
+
+                default:
+                    System.out.println(RED + "Invalid option." + RESET);
+            }
+        }
+    }
+
+
+
 
     private void showMenu() {
         while (true) {
@@ -236,8 +285,8 @@ public class GameUserInterface {
         }
 
         try {
-            // placeholder until auth exists, backend wants userID later
-            settings.setUserRole(username, newRole);
+            int userID = username.hashCode();
+            settings.setUserRole(userID, newRole);
             System.out.println(GREEN + "Role updated for " + username + "." + RESET);
         }
         catch (AuthenticationException e) {
@@ -291,9 +340,13 @@ public class GameUserInterface {
             System.out.println();
             System.out.println(BOLD + "Select Difficulty" + RESET);
 
-            System.out.println("1. " + difficultyLabel(DifficultyEnum.EASY));
-            System.out.println("2. " + difficultyLabel(DifficultyEnum.MEDIUM));
-            System.out.println("3. " + difficultyLabel(DifficultyEnum.HARD));
+            int easyLives = settings.getStartingLives(DifficultyEnum.EASY);
+            int mediumLives = settings.getStartingLives(DifficultyEnum.MEDIUM);
+            int hardLives = settings.getStartingLives(DifficultyEnum.HARD);
+
+            System.out.println("1. " + difficultyLabel(DifficultyEnum.EASY) + " " + BLUE + "[Starting Lives: " + easyLives + "]" + RESET);
+            System.out.println("2. " + difficultyLabel(DifficultyEnum.MEDIUM) + " " + BLUE + "[Starting Lives: " + mediumLives + "]" + RESET);
+            System.out.println("3. " + difficultyLabel(DifficultyEnum.HARD) + " " + BLUE + "[Starting Lives: " + hardLives + "]" + RESET);
             System.out.println("0. Go Back");
 
             System.out.print(BLUE + ">>> " + RESET);

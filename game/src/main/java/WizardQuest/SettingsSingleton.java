@@ -292,6 +292,25 @@ public class SettingsSingleton {
             }
         }
 
+        //TEST: authenticates an externally authenticated user (Google SSO), allows access to role + ID
+        public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException {
+
+            if (externalUserID == null || externalUserID.isBlank()) {
+                throw new AuthenticationException("External user ID is missing.");
+            }
+
+            if (role == null) {
+                role = RoleEnum.PLAYER;
+            }
+
+            this.userID = externalUserID.hashCode();
+            this.userRole = role;
+
+            loadSettingsFromJson(this.userID);
+        }
+
+
+
         /**
          * Verifies the currently authenticated user is a developer (role).
          */
