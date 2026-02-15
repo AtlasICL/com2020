@@ -21,7 +21,7 @@ public abstract class EncounterEvent extends TelemetryEvent {
      * @param stageNumber   the current stage player is attempting.
      * @param difficulty    the difficulty used for the player's session.
      */
-    public EncounterEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName, EncounterEnum encounterName,
+    public EncounterEvent(Object source, String userID, int sessionID, String timeStamp, String telemetryName, EncounterEnum encounterName,
             DifficultyEnum difficulty, int stageNumber) {
         super(source, userID, sessionID, timeStamp, telemetryName);
         this.encounterName = encounterName;

@@ -18,7 +18,7 @@ public class NormalEncounterCompleteEvent extends EncounterCompleteEvent{
      * @param stageNumber       the stage player has completed.
      * @param playerHPRemaining player HP remaining after completion.
      */
-    public NormalEncounterCompleteEvent(Object source, int userID, int sessionID, 
+    public NormalEncounterCompleteEvent(Object source, String userID, int sessionID,
             String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining){
         super(source, userID, sessionID, timeStamp, "NormalEncounterComplete", 
             encounterName, difficulty, stageNumber, playerHPRemaining);

@@ -2,6 +2,7 @@ package WizardQuest;
 
 public class GainCoinEvent extends EncounterEvent{
     private final int coinsGained;
+    
     /**
      * Constructor for GainCoinEvent.
      * 
@@ -19,11 +20,12 @@ public class GainCoinEvent extends EncounterEvent{
      * @param stageNumber   the stage player is collecting coins on.
      * @param coinsGained   number of coins gained by the player.
      */
-    public GainCoinEvent(Object source, int userID, int sessionID, 
+    public GainCoinEvent(Object source, String userID, int sessionID,
         String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int coinsGained){
         super(source, userID, sessionID, timeStamp, "GainCoin", encounterName, difficulty, stageNumber);
         this.coinsGained = coinsGained;
     }
+
     /**
      * Gets the stored number of coins gained.
      * 

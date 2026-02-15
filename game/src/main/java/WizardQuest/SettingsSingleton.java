@@ -22,7 +22,7 @@ public class SettingsSingleton {
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
-        private int userID;
+        private String userID;
         private RoleEnum userRole;
         private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
@@ -38,8 +38,7 @@ public class SettingsSingleton {
         private static File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
-        // TEMPORARY
-        private static File LOGINS_FILE = new File("logins_file.json");
+        private static File LOGINS_FILE = new File("../telemetry/logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -103,7 +102,7 @@ public class SettingsSingleton {
          * If a profile for a user does not yet exist, it will be created with
          * default values.
          */
-        private void loadSettingsFromJson(int userID) {
+        private void loadSettingsFromJson(String userID) {
             if (!SETTINGS_FILE.exists()) {
                 loadDefaults();
                 return;
@@ -128,16 +127,15 @@ public class SettingsSingleton {
 
                 // Load per-user data.
                 ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
-                JsonNode userSettings = usersNode.get(String.valueOf(userID));
+                JsonNode userSettings = usersNode.get(userID);
 
                 // If the user did not have a section in the file, create it.
                 if (userSettings == null) {
                     ObjectNode newProfile = jsonMapper.createObjectNode();
                     newProfile.put("telemetryEnabled", true);
-                    newProfile.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                     newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
-                    usersNode.set(String.valueOf(userID), newProfile);
+                    usersNode.set(userID, newProfile);
                     root.set("users", usersNode);
                     jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
                     return;
@@ -145,7 +143,6 @@ public class SettingsSingleton {
 
                 // Load user's (user-specific / non-global) data.
                 telemetryEnabled = userSettings.get("telemetryEnabled").asBoolean();
-                userRole = RoleEnum.valueOf(userSettings.get("role").asText());
                 loadIntNode(userSettings, "furthestLevel", maxStageReached);
             } catch (IOException e) {
                 System.out.println("ERROR! Error reading settings from settings file." + e.toString());
@@ -228,10 +225,9 @@ public class SettingsSingleton {
 
                 ObjectNode profileNode = jsonMapper.createObjectNode();
                 profileNode.put("telemetryEnabled", telemetryEnabled);
-                profileNode.put("role", (userRole != null ? userRole : RoleEnum.PLAYER).toString());
                 profileNode.set("furthestLevel", createIntNode(maxStageReached));
 
-                usersNode.set(String.valueOf(userID), profileNode);
+                usersNode.set(userID, profileNode);
                 root.set("users", usersNode);
                 jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
             } catch (IOException e) {
@@ -253,43 +249,15 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException {
-            try {
-                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
-
-                ObjectNode userNode = jsonMapper.createObjectNode();
-                userNode.put("password", password);
-                userNode.put("role", role.getJSONName());
-
-                allLogins.set(username, userNode);
-                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
-            } catch (IOException e) {
-                System.out.println("Failed to save new user to logins file." + e.toString());
+        public void loginWithResult(AuthenticationResult result) throws AuthenticationException {
+            if (result == null) {
+                throw new AuthenticationException("Authentication result is null.");
             }
-        }
 
-        @Override
-        public void authenticateUser(String username, String password) throws AuthenticationException {
-            try {
-                JsonNode allLogins = jsonMapper.readTree(LOGINS_FILE);
-                JsonNode userNode = allLogins.get(username);
+            userID = result.userID();
+            userRole = result.role();
 
-                if (userNode == null) {
-                    throw new AuthenticationException("User does not exist.");
-                }
-
-                String storedPassword = userNode.get("password").asText();
-                if (!storedPassword.equals(password)) {
-                    throw new AuthenticationException("Incorrect password");
-                }
-
-                userID = username.hashCode();
-                userRole = RoleEnum.convertJSONToEnum(userNode.get("role").asText());
-
-                loadSettingsFromJson(userID);
-            } catch (IOException e) {
-                System.out.println("Error reading login file" + e);
-            }
+            loadSettingsFromJson(userID);
         }
 
         /**
@@ -312,26 +280,22 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setUserRole(int userID, RoleEnum role) throws AuthenticationException {
+        public void setUserRole(String userID, RoleEnum role) throws AuthenticationException {
             if (!currentUserIsDeveloper()) {
                 throw new AuthenticationException();
             }
 
             try {
-                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
-                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
-
-                JsonNode targetUser = usersNode.get(String.valueOf(userID));
-
-                ((ObjectNode) targetUser).put("role", role.toString());
-                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
+                allLogins.put(userID, role.name().toLowerCase());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
             } catch (IOException e) {
-                System.out.println("ERROR! Error updating user role in settings file. " + e.toString());
+                System.out.println("ERROR! Error updating user role in logins file. " + e.toString());
             }
 
             // If user whose role was updated is the current user, then update
             // the value of role in memory also.
-            if (userID == this.userID) {
+            if (userID.equals(this.userID)) {
                 userRole = role;
             }
         }
@@ -460,7 +424,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public int getUserID() throws AuthenticationException {
+        public String getUserID() throws AuthenticationException {
             return this.userID;
         }
 
@@ -476,7 +440,7 @@ public class SettingsSingleton {
 
         @Override
         public void resetLoginsDestinationFile() {
-            LOGINS_FILE = new File("logins_file.json");
+            LOGINS_FILE = new File("../telemetry/logins_file.json");
         }
 
         @Override

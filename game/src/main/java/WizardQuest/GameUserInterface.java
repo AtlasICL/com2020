@@ -32,6 +32,10 @@ public class GameUserInterface {
 
     public void start() {
         showTitle();
+        if (!login()) {
+            System.out.println(RED + "Cannot continue without authentication." + RESET);
+            return;
+        }
         showMenu();
     }
 
@@ -48,11 +52,19 @@ public class GameUserInterface {
         System.out.println();
     }
 
-    /*
-     * LOGIN SCREEN/LOGIC TO BE IMPLEMENTED BY EMRE + LUCA C
-     * Needs role testing for settings access
-     * First user will be developer by default, can assign other roles through settings menu
-     */
+    private boolean login() {
+        System.out.println(YELLOW + "Signing in via Google..." + RESET);
+        try {
+            Authenticator auth = new Authenticator();
+            AuthenticationResult result = auth.login();
+            settings.loginWithResult(result);
+            System.out.println(GREEN + "Welcome, " + result.name() + "! (Role: " + result.role() + ")" + RESET);
+            return true;
+        } catch (AuthenticationException e) {
+            System.out.println(RED + "Login failed: " + e.getMessage() + RESET);
+            return false;
+        }
+    }
 
     private void showMenu() {
         while (true) {
@@ -86,8 +98,8 @@ public class GameUserInterface {
             System.out.println();
             System.out.println(BOLD + "Settings" + RESET);
 
-            RoleEnum role = RoleEnum.DEVELOPER;
-            boolean telemetryEnabled = false;
+            RoleEnum role;
+            boolean telemetryEnabled;
 
             try {
                 role = settings.getUserRole();

@@ -18,7 +18,7 @@ public class NormalEncounterFailEvent extends EncounterFailEvent{
      * @param stageNumber   the stage player has failed.
      * @param livesLeft     player lives remaining after completion.
      */
-    public NormalEncounterFailEvent(Object source, int userID, int sessionID, 
+    public NormalEncounterFailEvent(Object source, String userID, int sessionID,
             String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
         super(source, userID, sessionID, timeStamp, "NormalEncounterFail", 
             encounterName, difficulty, stageNumber, livesLeft);

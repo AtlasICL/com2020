@@ -23,7 +23,7 @@ public class Authenticator implements AuthenticatorInterface {
         // Instantiate the process builder, and set it up to be able
         // to run the login python script.
         ProcessBuilder procBuilder = new ProcessBuilder(
-            "python",
+            "python3",
             "-m",
             "auth.auth_wrapper"
         );
@@ -36,28 +36,53 @@ public class Authenticator implements AuthenticatorInterface {
             Process proc = procBuilder.start();
 
             String output;
+            String errorOutput;
             
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+                 BufferedReader errReader = new BufferedReader(new InputStreamReader(proc.getErrorStream()))) {
                 output = reader.lines().collect(Collectors.joining());
+                errorOutput = errReader.lines().collect(Collectors.joining("\n"));
             } catch (IOException e) {
                 throw new AuthenticationException("Auth error." + e.getMessage());
             }
 
-            proc.waitFor();
+            int exitCode = proc.waitFor();
+
+            if (exitCode != 0) {
+                throw new AuthenticationException(
+                    "Python auth module exited with code " + exitCode + ": " + errorOutput
+                );
+            }
+
+            if (output.isEmpty()) {
+                throw new AuthenticationException(
+                    "Python auth module returned no output. Errors: " + errorOutput
+                );
+            }
 
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode json = mapper.readTree(output);
 
+                if (json == null || json.isNull() || json.isMissingNode()) {
+                    throw new AuthenticationException(
+                        "Python auth module returned invalid JSON: " + output);
+                }
+
                 userID = json.get("sub") != null ? json.get("sub").asText() : "";
                 name = json.get("name") != null ? json.get("name").asText() : "";
                 JsonNode roleNode = json.get("role");
-                if (roleNode == null) { throw new AuthenticationException("Error parsing authenticated user's role"); }
+                if (roleNode == null) {
+                    throw new AuthenticationException(
+                        "Error parsing authenticated user's role. Output: " + output);
+                }
                 String roleVal = roleNode.asText();
                 role = RoleEnum.valueOf(roleVal.toUpperCase());
 
             } catch (JsonProcessingException e) {
-                throw new AuthenticationException("Auth error while parsing python login module output" + e.getMessage()); 
+                throw new AuthenticationException(
+                    "Auth error while parsing python login module output: " + output
+                );
             }
 
         } catch (InterruptedException e) {

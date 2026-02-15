@@ -3,7 +3,7 @@ package WizardQuest;
 import java.util.EventObject;
 
 public abstract class TelemetryEvent extends EventObject {
-    private final int userID;
+    private final String userID;
     private final int sessionID;
     private final String timeStamp;
     private final String telemetryName;
@@ -24,7 +24,7 @@ public abstract class TelemetryEvent extends EventObject {
      * @param telemetryName the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */
-    public TelemetryEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName) {
+    public TelemetryEvent(Object source, String userID, int sessionID, String timeStamp, String telemetryName) {
         super(source);
         this.userID = userID;
         this.sessionID = sessionID;
@@ -37,7 +37,7 @@ public abstract class TelemetryEvent extends EventObject {
      * 
      * @return the user's ID.
      */
-    public int getUserID() {
+    public String getUserID() {
         return this.userID;
     }
 
