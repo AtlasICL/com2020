@@ -80,7 +80,8 @@ public class GameUserInterface {
             System.out.println(BOLD + "Main Menu" + RESET);
             System.out.println("1. " + YELLOW + "Start New Game" + RESET);
             System.out.println("2. " + YELLOW + "Settings" + RESET);
-            System.out.println("3. Quit");
+            System.out.println("3, " + YELLOW + "View Telemetry Disclosure" + RESET);
+            System.out.println("0. Quit");
 
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
@@ -92,9 +93,12 @@ public class GameUserInterface {
                 case "2":
                     settingsMenu();
                     break;
-                case "3":
+                case "0":
                     quit();
                     return;
+                case "3":
+                    showTelemetryDisclosure();
+                    break;
                 default:
                     System.out.println(RED + "Invalid option." + RESET);
             }
