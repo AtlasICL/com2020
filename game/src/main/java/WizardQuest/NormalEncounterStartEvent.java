@@ -17,7 +17,7 @@ public class NormalEncounterStartEvent extends EncounterEvent{
      * @param difficulty    the difficulty used for the player's session.
      * @param stageNumber   the current stage player is attempting.
      */
-    public NormalEncounterStartEvent(Object source, int userID, int sessionID, 
+    public NormalEncounterStartEvent(Object source, String userID, int sessionID,
             String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber){
         super(source, userID, sessionID, timeStamp, "NormalEncounterStart", 
             encounterName, difficulty, stageNumber);

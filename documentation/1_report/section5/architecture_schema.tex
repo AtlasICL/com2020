@@ -1,0 +1,249 @@
+\subsection{Overview}
+The project is split into two applications, one written in Python and the other written in Java. The reason for this is we determined that much of the functionality of displaying graphs of data, and handling data in general was much better suited to python than to any other programming language we were confident with. Furthermore we determined that java would be much better suited to create the video game in than python given the more rigorous syntax and typing, and better object oriented support. From there we divided the responsibility of the system between the two applications as described below. 
+
+\textbf{Python}
+\begin{itemize}
+    \item \textbf{Dashboard views}, as the handling of data and generation of graphs is very well supported in Python.
+    \item \textbf{Design suggestions}, as the Python application already has to read the telemetry data, and thus components processing it are more simple to implement in the Python application.
+    \item \textbf{Simulation views}, as the simulation generates telemetry identical to that of users, and as the Python application can already handle user made telemetry and display it, the functionality for displaying simulation generated telemetry is almost entirety already in the Python application, requiring minimal additional work to implement. 
+    \item \textbf{Decision Log View}, although not to be implemented in sprint one, it is planned that the Python application will be the access point to the design log, as this allows the cross-examination of logged decisions and the telemetry data that is used to justify those decisions.
+\end{itemize}
+
+\textbf{Java}
+\begin{itemize}
+    \item \textbf{Role Assignment}, as Java is a more rigorous language than python, and the application requires more complex role based access control due to the implementation of design parameters, it was determined that the Java application should manage role assignment. Specifically, as it was required for the system to operate, but not specified which role should have this permission in the specification, we chose to give only developers the ability to assign roles as this best fit with their role of maintaining the application.
+    \item \textbf{Design Parameters}, as the Java application is the only application influenced by the value of the design parameters, we determined those should be set in the Java application, as well as read and written to a configuration file by the Java application. In the next sprint we plan to add a section to the design parameter setting menu that requires designers and developers to justify their changes, which will be stored in the decision log.
+    \item \textbf{Telemetry Setting}, as the java application collects telemetry, it was decided the user setting to disable this would be located in the settings menu of the java application.
+    \item \textbf{Video Game}, due to java's extensive support of object oriented programming, and due to the fact that video games are generally very well suited to this paradigm it was decided the video game that produces the telemetry events would be coded on the Java application. 
+\end{itemize}
+\subsection{Python Application}
+\subsubsection{Overview}
+The Python application acts as a visualiser for telemetry data gained from the Java game. The application is composed of a frontend and a backend, with the frontend responsible for displaying view dashboards, suggestions, and displaying authentication. Whilst the backend is responsible for authentication logic for both the python telemetry application and Java game and parsing json gained from the Java game, sending graphical representations to the frontend.
+\subsubsection{Authentication}
+\paragraph{Overview}
+Both the Python and Java applications utilise Google OAuth to authenticate users, assigning them with the default role of Player if they do not already exist in the logins file. Authentication then returns user and role information to the application that calls it.
+\paragraph{auth}
+Opens Google authentication in browser for users to authenticate. The function google\_login opens the browser, gets returned info from OAuth and uses its sub value as a UID for the user known as User\_ID. This function then calls get\_role using logins\_file and the User\_ID, to get from the logins\_file the users role, at this point if the user has not played/registered before, their ID will be written with the default role of Player. The google\_login function then returns the User\_ID (sub) and the user's role.
+\paragraph{auth\_wrapper}
+Calls google\_login from auth and writes it to stdout for java purposes.
+\subsubsection{core}
+\paragraph{Overview}
+Core holds the main logic for parsing and generating the data used for views in the frontend. Core also holds python class definitions of all telemetry events, which are used for creating views.
+\paragraph{events}
+
+\paragraph{export}
+\paragraph{logic}
+\paragraph{parsing}
+\subsubsection{gui}
+\paragraph{Overview}
+\paragraph{gui}
+\paragraph{plotting}
+\paragraph{telemetry\_app}
+\subsection{Java Application}
+\subsubsection{Overview}
+The Java application was first split into front end and back end. From there the responsibilities of the backend were further divided into several singletons the front end would access. Each singleton was given responsibility for a particular area, and that area was further divided between different objects it composited. The front end then uses these singletons to perform the calculations required to run the game, and displays this information to the user. 
+\begin{comment}
+\subsubsection{Design Principles}
+%not sure about this section if it's relevant or should be removed. 
+\paragraph{Testability}
+The Java application was designed with testing as a priority, specifically to allow the extensive use of mock objects. The first way this is achieved is through the use of a modified singleton pattern, where the concrete singleton is nested within a different class that provides access. This allows the concrete singleton to implement an interface, and thus allows the rest of the system to work around that interface rather than the singleton itself. This allows the switching out of the concrete singleton instance for a mock object for testing. Furthermore many of the objects within the java application are built around interfaces rather than implementations, to allow those objects to be swapped out for mock objects for testing.
+
+Another way in which the application is designed with testing in mind is by allowing the directories of all file writes to be modified, to allow a temporary directory to be setup for testing where mock events and configuration files are written and read to, and the resetting the destination of the systems that write files after the test is complete.
+\paragraph{Extensability}
+Its already been mentioned about the principle of programming to an interface for the purposes of testing, but this has also been done to allow extensibility as the interface can be extended and implemented by a different class to allow the functionality of the program to be extended, while maintaining compatibility with the current system following the open-close principle. 
+
+Another area in which the system supports extensibility is through it's upgrade system, using the decorator pattern it allows a player to be extended with any number of upgrades, as well as the creation of further upgrades. This upgrade system works in tandem with the ability system to allow upgrades to change how effective abilities are based on their damage type. Although the upgrade system currently does not do this, it does also support the ability to modify variables of the player such as health, lives, max health, magic etc. which could be implemented at a future date.
+\paragraph{Reusability}
+The system is also designed with reusability in mind, ensuring every component is reusable, and duplication is minimal. One example of this is in the ability system, which is the same for all entities both player and enemy. This allows us to get significant millage out of just a small number of abilities. 
+
+Another way the system makes good use of the resources it has is through it's encounter system. As an encounter can comprise of multiple enemies, allowing us to make use of enemies that the player would otherwise be very strong against in later encounters. Furthermore encounters at most stages are randomised, providing variety to each run, along with the randomisation of what abilities are purchasable in the shop. 
+\end{comment}
+
+\subsubsection{Abilities}
+\paragraph{Overview}
+Abilities internally refer to what are called attack abilities in the documentation, this is because passive abilities are fully handled by the upgrade system and thus it is clear that an ability internally refers to an attack ability. Abilities all have common characteristics and work in a similar way based on these characteristics and thus are represented as an enum.
+\paragraph{AbilityEnum}
+Ability enum enumerates all of the game's abilities for both enemies and the player. Each ability is represented by several key characteristics, which are stored in each enum instance: the base damage amount, the damage type, the magic cost, the name for the ability in the telemetry system, and a description of the ability. 
+
+The execute method is in charge of actually using the ability in the backend, requiring the source (who used the ability) and target (who is being attacked). It reduces the source's magic by the abilities cost if they're a player (or throws an exception if they do not have enough magic to use it) and otherwise ignoring the magic system for enemies. It then interfaces with the upgrade system to determine the final damage amount which the target's health is then reduced by.
+\subsubsection{Upgrades}
+\paragraph{Overview}
+The upgrade system uses the decorator pattern to add additional functionality to the player dynamically. Upgrades are stored in the game run and some are then picked out of the shop and displayed to the user. Upgrades internally refer to what are called passive and attack abilities in the documentation. 
+\paragraph{UpgradeEnum}
+All upgrades have several common characteristics (price, decorator class, and telemetry name), these are stored within the upgrade enum, which is used by all systems to represent upgrades. The other classes in the upgrade system serve only as decorators and are never directly interacted without outside of upgrade enum. 
+
+The upgrade enum also provides the functionality for applying upgrades to the player, which is done through reflection of the stored upgrade class. Each upgrade takes a PlayerInterface as a parameter to it's constructor, and holds a reference to the player, which it forwards most function calls to. It then returns the newly constructed upgrade as a PlayerInterface.
+\paragraph{UpgradeBase}
+Upgrade base is the parent of all upgrades. It stores the reference to the player, and forwards all PlayerInterface calls to the player. It is an abstract class.
+\paragraph{ResistanceUpgrades}
+Resistance upgrades are a specific type of passive upgrade that provides resistance to a damage type, halving the damage the player takes of that type. 
+
+Like all upgrades they override the getUpgrades() method to append a reference to their UpgradeEnum instance to the result of calling it for the internal player. This is used to keep track of which upgrades the player has. 
+
+
+Additionally, the override the loseHealth() method, checking if the damage type is that which they provide resistance to, and halving it if it is. It then forwards this loseHealth() call to the internal player.
+\paragraph{AbilityUnlockUpgrades}
+Ability unlock upgrades are concrete implementations of UpgradeBase that are used to unlock abilities (called attack abilities in documentation).
+
+Similarly to ResistanceUpgrades, the override the getUpgrades method to add a reference to their enum instance to it. 
+
+Furthermore they override the getAbilities() method, first obtaining the abilities of the internal player and then appending a reference to the AbilityEnum instance for their relevant ability.
+\subsubsection{Encounters}
+\paragraph{Overview}
+Similarly to upgrades, there is a finite number of pre-made encounters, consisting of one or more enemies. 
+\paragraph{EncounterEnum}
+This represents all the pre-made encounters in the game, holding a list of all enemy enums in the encounter and the name of the encounter for telemetry purposes. It is used when referring to the type of encounter rather than a specific concrete encounter, and thus mostly appears within telemetry. 
+
+It contains the ability to produce a concrete encounter from the enum value. This method is currently unused but serves as a utility for future work and extension of the system. 
+\paragraph{EncounterInterface}
+This defines the interface for a concrete encounter, and is used by all classes that deal with actual encounters with concrete enemies. 
+
+It has methods allowing access to the enemies within it, as well as the ability to reset their health (in the case the player dies and restarts the encounter), and mark it as complete (to prevent it reappearing later in the run). It also contains the ability to get the EncounterEnum value for the encounter, which is used when producing telemetry relating to it.
+\paragraph{Encounter}
+This is the concrete implementation of EncounterInterface. It holds a reference to each enemy instance within the encounter and other information required to service the interface.
+
+The concrete encounter is only ever referenced when creating an encounter, which is done when a new GameRun is instantiated. 
+\subsubsection{Enemies}
+\paragraph{Overview}
+Both the player and enemies within this game are considered entities. All abilities work on entities, and wherever they can be used instead of enemies or players they are (e.g. in encounters). 
+\paragraph{EntityAIInterface}
+This defines the interface for the AI used for both enemies as well as running the simulation of the game. It defines methods for determining and using an ability, as well as determining what to buy in the shop. 
+\paragraph{EntityAISingleton}
+This defines a class with a single instance of a concrete implementation of EntityAIInterface. In the prototype this implementation uses randomness to determine which abilities to use and what upgrades to buy in the shop. 
+
+The singleton class provides static global access to the instance of random EntityAI, which is used by the UI to determine which ability each enemy uses on the player, and what the simulated player does. It does so following a modified singleton pattern.
+\paragraph{EntityEnum}
+EntityEnum acts like EncounterEnum for entities, grouping common characteristics based on entirety type rather than instance. It thus stores a reference to the class used to instantiate the enemy, and a telemetry safe name for them. It is used mainly by the telemetry system and EncounterEnum. 
+
+It allows the creation of enemies from the enum, which is done through reflection. This is currently unused by the system, but could become useful in future extensions of the system.
+\paragraph{EntityInterface}
+EntityInterface specifies all methods all entities should implement. It provides methods for health management (loseHealth and resetHealth), obtaining the entity's type as an EntityEnum value, and getting the abilities the entity has. All entities implement this interface, and PlayerInterface extends it.
+\paragraph{EnemyBase}
+EnemyBase is an abstract class that implements the core functionality all enemy instances have in common. Each concrete enemy then extends this class.
+
+It takes in both health and max health values, calculated by the enemy passing them in based of it's base health value and the design parameters (the design parameter for health is not implemented so returns a default value). 
+
+It then provides methods for working with health (lose, reset, get) as well as a default implementation for calculating how much damage an ability it uses should deal.
+\paragraph{ConcreteEnemies}
+Concrete enemies extend EnemyBase, providing enemy specific methods and fields. 
+
+In their constructor they calculate how much health they should have, sending that to the constructor of their superclass (EnemyBase). 
+
+They then override getAbilities() to add to it the abilities the enemy has, and implement getType() to return the type o enemy as EnemyEnum. 
+
+Some also override loseHealth() if they have damage vulnerabilities (double damage from source) or damage resistances (half damage from source). 
+\subsubsection{Player}
+\paragraph{Overview}
+The player system handles information relating to the player of the game, this is the user's character within the game, and is not related to the player role. Each run is given a new player which then gains upgrades from the shop as the game run progresses.
+\paragraph{PlayerInterface}
+This defines the interface for the player, and extends EntityInterface with functionality exclusive to players.
+
+It provides methods for dealing with coins (which are obtained at the end of encounters, and spend in the shop), lives (which are lost each time the player dies), and magic (which increases each round in an encounter, is spent to use magically abilities), and upgrades.
+\paragraph{Player}
+This is the concrete implementation of the player interface. It contains values for all data related to the player, including health, coins, and magic.
+\subsubsection{Telemetry}
+\paragraph{Overview}
+The telemetry system is in charge of validating and writing telemetry to the correct telemetry store (dependant on if it's a simulation or an actual user). It uses java's delegation model.
+\paragraph{TelemetryListenerInterface}
+This specifies the interface for the telemetry listener instance. It contains methods to handle all telemetry events, and is what's used by sources to send telemetry events to the instance (Obtained via TelemetryListenerSingleton)
+\paragraph{TelemetryListenerSingleton}
+This class holds a static reference to the only concrete telemetry listener, providing access to it via a static method. This global access point is then used by all sources of telemetry to send the events to the telemetry listener via the TelemetryListenerInterface. It follows a modified singleton pattern.
+
+The listener implements the interface, and responds to telemetry events. It first checks if telemetry is enabled in the user's settings, and if this is not the case discards the event. Otherwise it then validates the event on several criteria before writing it to the json store that's been set (either the user or simulation store). 
+\paragraph{TelemetryEvent}
+Telemetry event is the base class all telemetry events extend. It extends EventObject to comply with java's delegation model, and also contains the SessionID, UserID, a timestamp of when it was made (obtained by the TimeManagerSingleton) and the name of the telemetry event for use in the JSON store. It is an abstract class.
+
+SessionID is unique for each run of the game. UserID is a pseudonym for the user to keep the data pseudonymised, timestamp is given as a LocalDateTime and converted to a string in the format the telemetry schema specifies. The name is provided by the subclass, through it's constructor as it is dependant on subclass.
+\paragraph{EncounterEvent}
+EncounterEvent extends TelemetryEvent to store data related to all encounters. It stores everything within TelemetryEvent in addition to the stage number it was generated on, the EncounterEnum of the encounter, and the difficulty of the run (easy, moderate, or hard). It is an abstract class. 
+\paragraph{EncounterCompleteEvent}
+EncounterCompleteEvent extends EncounterEvent to contain the information both NormalEncounterComplete and BossEncounterComplete (for next sprint) events store. It stores everything in EncounterEvent along with how much health the player had when they completed the encounter (to gauge difficulty of the encounter).
+\paragraph{EncounterFailEvent}
+EncounterFailEvent extends EncounterEvent to contain the information for both NormalEncounterFail and BossEncounterFail. It stores everything in EncounterEvent as well as how many lives the player has left, to gauge how much a player fails on a specific encounter, and to show lives drop off over time. It is an abstract class.
+\paragraph{ConcreteTelemetryEvent}
+Each concrete telemetry event extends one of the above abstract classes, and then adds additional fields for any other data. All fields within telemetry events are final as they act as a data store, and thus the information cannot change. 
+
+StartSession extends TelemetryEvent, and additionally contains the difficulty of the session/run.
+
+NormalEncounterStart extends EncounterEvent, and stores no additional information.
+
+NormalEncounterComplete extends EncounterCompleteEvent and stores no additional information.
+
+NormalEncounterFail extends EncounterFailEvent and stores no additional information.
+
+BossEncounterStart extends EncounterEvent, and is not implemented as no boss levels exist in the prototype.
+
+BossEncounterComplete extends EncounterCompleteEvent and is also not implemented for the same reasons.
+
+BossEncounterFail extends EncounterFailEvent and is also not implemented for the same reasons.
+
+GainCoin extends EncounterEvent and additionally will store how many coins were gained. It is not implemented in the prototype.
+
+BuyUpgrade extends EncounterEvent and additionally will store what upgrade was bought (passed through UpgradeEnum), and how many coins it cost to buy. It is not implemented in the prototype.
+
+EndSession extends TelemetryEvent and marks the end of a session/run. It stores no additional data.
+
+SettingsChange extends TelemetryEvent and is sent when a setting is changed. It stores which setting was changed as SettingEnum and a String for it's value. Currently the only user setting is whether they send telemetry, however if the prototype is extended to include additional settings, by storing the value as a String it allows many valid values that something like a int or boolean wouldn't.
+
+KillEnemy extends EncounterEvent and stores what enemy was killed as EnemyEnum. It is not implemented in the prototype.
+\subsubsection{Time}
+\paragraph{Overview}
+Time is managed by a singleton, that all other objects speak to to obtain the time. This is done to allow the swapping of the singleton (using reflection) to allow the testing of time sensitive code with a mock object. 
+\paragraph{TimeManagerInterface}
+This defines the interface for the time manger, and provides 2 functions. One provides the current time as a LocalDateTime. The other is a static method used to convert a LocalDateTime into a String following the format used by the telemetry schema. It is what is used by all classes that require time information.
+\paragraph{TimeManagerSingleton}
+This class provides a static method for accessing the singleton instance, and acts as a global point of access to the singleton following a modified singleton pattern. The value of the internal time manager can be swapped for a mock object to allow testing.
+\subsubsection{Settings}
+\paragraph{Overview}
+Settings provides a large interface for interacting with much of the game's configuration, including design parameters and in the next sprint user roles. It is stored as a singleton to allow all classes access to it for the obtaining of setting values that they will then use.
+\paragraph{SettingEnum}
+This enumerates all user settings, and is used exclusively in telemetry for storing which setting is changed. It currently only has a single value for telemetry enabled, but if more settings were added they could be added to this enum.
+\paragraph{SettingsInterface}
+This defines the interface for the singleton instance stored within SettingsSingleton. It provides authenticated methods for getting and setting design parameters, getting and setting user settings, session and user ID handling, as well as seeing a user's progress. It also contains methods for setting user roles however that is not implemented in the prototype, and must be done by manually changing the configuration file.
+\paragraph{SettingsSingleton}
+This class provides a global point of access to a single settings instance following a modified singleton pattern. All classes use this class to obtain settings information.
+
+The stored instance implements the SettingsInterface, reading and writing to the settings store for both user settings and the design parameters, as well as forcing authentication for authenticated methods. It also stores the userID and sessionID.
+\subsubsection{Game Mangement}
+\paragraph{Overview}
+The game management system is in charge of starting and ending runs, and providing an interface between the user interface and the game's backend. 
+\paragraph{GameManagerInterface}
+This specifies the interface for the game manager. The manager is the entry point to the game's backend providing a host of methods to obtain information about the game's state and modify it. 
+\paragraph{GameMangerSingleton}
+This provides a global point of access to the game manager, for use by the UI. It does so following a modified singleton pattern.
+
+A concrete implementation of the game manager is then instantiated within the singleton, which implements the GameManagerInterface. The concrete implementation also stores all data related to the running of the game, including the game run that is currently active (if one is) and the encounter the player is currently in (if they are in one).
+\paragraph{GameRunInterface}
+This describes the interface for a game run. A game run represents a single run of the game from start to finish. If the player loses all their lives the run is deleted. 
+
+The pickEncounter() method provides an encounter appropriate for the current stage of the run. viewShop() provides several upgrades that have yet to have been bought for the player to purchase in the shop. Upgrades can then be purchased using the purchaseUpgrade() method. It provides the ability to advance in stage, and get the current stage number. 
+
+It also provides several methods for obtaining run statistics to display to the player at the end of the run, including the length of the run and the number of times the player died in the run.
+
+It also provides a way to know what difficulty the run is.
+\paragraph{GameRun}
+GameRun is a concrete implementation of GameRunInterface. It stores all possible encounters in separate pools (arrays), for each pool stages pull encounters from. In the prototype this consists of pulling encounters from one shared pool, for both stages. It stores which stage the run is on, and what difficulty was chosen for the run.
+
+It also stores what upgrades the user has yet to purchase so they can be displayed in the shop. 
+
+Lastly, it stores a reference to the player of the run, which it allows interaction with through several of it's methods.
+\subsubsection{User Interface}
+\paragraph{Overview}
+The user interface is implemented in a large GameUserInterface class. This class acts as the entry point to the game, and uses a plethora of methods to display the various UI menus for the game.
+\paragraph{GameUserInterface}
+This class implements the user interface as a command line tool. It stores a reference to settings, the game manager, and information about the currently authenticated user. It contains a method for each major menu, and contains several methods for gathering user input of a specific kind (e.g. difficulty). 
+
+It starts by displaying a title for the game (WizardQuest), then prompts the user to log in. Once authenticated it shows the main menu. From there users can start a run, go into settings, or quit. If they quit the program closes. 
+
+If they go into settings, dependant on the authenticated user, they are able to toggle telemetry, view the telemetry disclosure (of what information is collected). Designers and developers can also modify the design parameters (after choosing which difficulty to set them for) and run a simulation of the game. Additionally developers can assign new roles to users.
+
+If they start a run, they are first asked to select a difficulty for the run, then go into the first encounter, following the gameplay loop described in the sprint 1 plan. Once a run ends the UI displays an end screen summarising their run.
+\subsubsection{Authentication}
+\paragraph{Overview}
+Authentication is provided by a concrete authenticator class that is instantiated when authentication is needed. The authenticator uses Google OAuth to authenticate users, ensuring the authentication processes is secure and also fulfills all the authentication needs the application could require by transferring that risk to Google.
+\paragraph{AuthenticatorInterface}
+This defines the interface for the concrete authenticator. It defines a single method for authentication, which prompts the user to sign in with Google OAuth and return the user information as a AuthenticationResult. It throws an AuthenticationException if this fails.
+\paragraph{Authenticator}
+Authenticator is the concrete class that implements the AuthenticatorInterface. It works by first reaching out to the python application to request it to authenticate the user (This is done to minimise the risk of incorrectly implementing authentication as it's only implemented in one place, so all bugs are only in that one place and not duplicated in the Java application as well). The python authenticator then outputs into stdout the authentication information as a JSON format which the Java application parses to obtain the authenticated user's information. It then compiles this information into an AuthenticationResult and returns it.
+\paragraph{AuthenticationResult}
+This is a record, containing the key information about an authenticated user. It contains their username, userID (pseudonymised), and what role they have. This data can then be read by both the CLI and Settings for use in access control.

@@ -34,7 +34,10 @@ public class GameUserInterface {
 
     public void start() {
         showTitle();
-        loginScreen();
+        if (!login()) {
+            System.out.println(RED + "Cannot continue without authentication." + RESET);
+            return;
+        }
         showMenu();
     }
 
@@ -50,51 +53,17 @@ public class GameUserInterface {
         System.out.println();
     }
 
-    /*
-     * LOGIN SCREEN/LOGIC TO BE IMPLEMENTED BY EMRE + LUCA C
-     * Needs role testing for settings access
-     * First user will be developer by default, can assign other roles through
-     * settings menu
-     */
-
-    private void loginScreen() {
-        while (true) {
-            System.out.println();
-            System.out.println(BOLD + "Login" + RESET);
-            System.out.println("1. " + YELLOW + "Sign in with Google" + RESET);
-            System.out.println("0. Quit");
-
-            System.out.print(BLUE + ">>> " + RESET);
-            String input = scanner.nextLine();
-
-            switch (input) {
-                case "1":
-                    try {
-                        Authenticator authenticator = new Authenticator();
-                        AuthenticationResult user = authenticator.login();
-                        currentUser = user;
-                        settings.authenticateExternalUser(user.userID(), user.role());
-
-                        String displayName = (user.name() == null || user.name().isBlank()) ? "User" : user.name();
-                        System.out.println(
-                                GREEN + "Signed in as " + CYAN + displayName + RESET +
-                                        GREEN + " || Role: " + CYAN + user.role() + RESET +
-                                        GREEN + " || UserID: " + CYAN + user.userID() + RESET);
-
-                        return;
-                    } catch (AuthenticationException e) {
-                        System.out.print(e);
-                    }
-
-                    break;
-
-                case "0":
-                    quit();
-                    return;
-
-                default:
-                    System.out.println(RED + "Invalid option." + RESET);
-            }
+    private boolean login() {
+        System.out.println(YELLOW + "Signing in via Google..." + RESET);
+        try {
+            Authenticator auth = new Authenticator();
+            AuthenticationResult result = auth.login();
+            settings.loginWithResult(result);
+            System.out.println(GREEN + "Welcome, " + result.name() + "! (Role: " + result.role() + ")" + RESET);
+            return true;
+        } catch (AuthenticationException e) {
+            System.out.println(RED + "Login failed: " + e.getMessage() + RESET);
+            return false;
         }
     }
 
@@ -130,8 +99,8 @@ public class GameUserInterface {
             System.out.println();
             System.out.println(BOLD + "Settings" + RESET);
 
-            RoleEnum role = RoleEnum.DEVELOPER;
-            boolean telemetryEnabled = false;
+            RoleEnum role;
+            boolean telemetryEnabled;
 
             try {
                 role = settings.getUserRole();

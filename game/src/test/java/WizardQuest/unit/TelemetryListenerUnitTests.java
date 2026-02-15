@@ -54,9 +54,9 @@ public class TelemetryListenerUnitTests {
         }
         TelemetryListenerSingleton.getInstance().setDestinationFile(TEMP_DESTINATION_FILE);
 
-        // Create and authenticate a test user.
-        SettingsSingleton.getInstance().createNewUser("TestUser", "TestPassword", RoleEnum.PLAYER);
-        SettingsSingleton.getInstance().authenticateUser("TestUser", "TestPassword");
+        // Log in as a test user.
+        SettingsSingleton.getInstance().loginWithResult(
+                new AuthenticationResult("TestUser", "TestUserID", RoleEnum.PLAYER));
 
         // Start a session for the test user, which will allow our test event to be invoked in each test.
         StartSessionEvent startSession = new StartSessionEvent(new Object(),

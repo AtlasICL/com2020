@@ -2,6 +2,7 @@ package WizardQuest;
 
 public class KillEnemyEvent extends EncounterEvent{
     private final EntityEnum enemyType;
+    
     /**
      * Constructor for KillEnemyEvent.
      * 
@@ -19,7 +20,7 @@ public class KillEnemyEvent extends EncounterEvent{
      * @param stageNumber   the stage player has completed.
      * @param enemyType     type of enemy encounter.
      */
-    public KillEnemyEvent(Object source, int userID, int sessionID, 
+    public KillEnemyEvent(Object source, String userID, int sessionID,
             String timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, 
             EntityEnum enemyType){
                 super(source, userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);

@@ -16,21 +16,9 @@
     [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
 2026-02-13 20:46:22
     [AE  ] New user authenticated with role player.
-2026-02-14 22:56:03
+2026-02-14 23:56:36
     [SIE ] Sign-in prompted.
-2026-02-14 22:56:10
+2026-02-14 23:56:41
     [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
-2026-02-14 22:56:10
+2026-02-14 23:56:41
     [AE  ] New user authenticated with role player.
-2026-02-14 22:56:39
-    [SIE ] Sign-in prompted.
-2026-02-14 22:56:45
-    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
-2026-02-14 22:56:45
-    [AE  ] Existing user authenticated with role player.
-2026-02-14 23:02:14
-    [SIE ] Sign-in prompted.
-2026-02-14 23:02:21
-    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
-2026-02-14 23:02:21
-    [AE  ] Existing user authenticated with role player.

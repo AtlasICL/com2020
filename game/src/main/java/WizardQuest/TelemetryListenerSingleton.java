@@ -32,7 +32,7 @@ public class TelemetryListenerSingleton {
      */
     private static class TelemetryListener implements TelemetryListenerInterface {
         private int currentSessionID = -1;
-        private int currentUserID = -1;
+        private String currentUserID = null;
         private LocalDateTime mostRecentTimeStamp;
         private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
         private static final ObjectMapper mapper = new ObjectMapper();
@@ -77,7 +77,7 @@ public class TelemetryListenerSingleton {
          * @throws UserValidationException exception used to specify invalid users
          */
         private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
-            if(currentUserID != e.getUserID()){
+            if(currentUserID == null || !currentUserID.equals(e.getUserID())){
                 throw new UserValidationException("UserID of event " + e.getTelemetryName() + 
                                                     " " + e.getUserID() + " not equal to current sessionID of "
                                                      + currentUserID);
@@ -333,7 +333,7 @@ public class TelemetryListenerSingleton {
                 isCorrectTimeStamp(e);
                 saveEvent(e);
                 this.currentSessionID = -1;
-                this.currentUserID = -1;
+                this.currentUserID = null;
             } catch (TimestampValidationException | SessionValidationException ex) {
                 System.err.println(ex.getMessage());
             }

@@ -21,11 +21,12 @@ public abstract class EncounterFailEvent extends EncounterEvent{
      * @param stageNumber   the stage player has failed.
      * @param livesLeft     player lives remaining after completion.
      */
-    public EncounterFailEvent(Object source, int userID, int sessionID, 
+    public EncounterFailEvent(Object source, String userID, int sessionID,
             String timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
         super(source, userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.livesLeft = livesLeft;
     }
+    
     /**
      * Gets stored lives left.
      * 

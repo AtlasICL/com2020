@@ -9,41 +9,14 @@ import java.math.BigInteger;
  */
 public interface SettingsInterface {
     /**
-     * Attempts to create a new user with the given parameters. On success will add
-     * this user to the user JSON database.
-     * 
-     * @param username the user's username. Must consist exclusively of
-     *                 alphanumeric characters, underscores or hyphens.
-     * @param password the user's password. It is hashed and salted before being
-     *                 stored.
-     * @param role     the role for the user.
-     * @throws AuthenticationException if there is a user with the same username or
-     *                                 the username is invalid.
+     * Logs in the user using the result from the Authenticator (Python OAuth).
+     * Sets the current user's ID, name, and role from the authentication result,
+     * and loads their settings from the settings file.
+     *
+     * @param result the AuthenticationResult returned by Authenticator.login().
+     * @throws AuthenticationException if the result is invalid.
      */
-    public void createNewUser(BigInteger userID, String password, RoleEnum role) throws AuthenticationException;
-
-    /**
-     * Attempts to authenticate the specified user, logging in as them on success.
-     * 
-     * @param username the user's username. Must consist exclusively of
-     *                 alphanumeric characters, underscores or hyphens.
-     * @param password the user's password. It is hashed and salted with the user's
-     *                 salt before being looked up in the database.
-     * @throws AuthenticationException if the user does not exist or their login
-     *                                 credentials are invalid or incorrect.
-     */
-    public void authenticateUser(BigInteger userID, String password) throws AuthenticationException;
-
-    /**
-     * Authenticates an externally authenticated user (e.g. from Google Sign-In).
-     * 
-     * @param externalUserID the external user ID.
-     * @param role the role of the external user.
-     * @throws AuthenticationException if the external user ID is invalid or missing.
-     */
-    public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException;
-
-    
+    public void loginWithResult(AuthenticationResult result) throws AuthenticationException;
 
     /**
      * Returns the role of the currently authenticated user or throws an exception
@@ -63,7 +36,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(BigInteger userID, RoleEnum role) throws AuthenticationException;
+    public void setUserRole(String userID, RoleEnum role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or
@@ -84,7 +57,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated.
      * @return the user's ID.
      */
-    public int getUserID() throws AuthenticationException;
+    public String getUserID() throws AuthenticationException;
 
     /**
      * Returns whether the user has telemetry enabled.

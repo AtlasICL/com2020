@@ -14,7 +14,7 @@ public class EndSessionEvent extends TelemetryEvent{
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss.
      */
-    public EndSessionEvent(Object source, int userID, int sessionID, String timeStamp){
+    public EndSessionEvent(Object source, String userID, int sessionID, String timeStamp){
         super(source, userID, sessionID, timeStamp, "EndSession");
     }
 }

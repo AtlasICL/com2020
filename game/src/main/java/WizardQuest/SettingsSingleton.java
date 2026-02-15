@@ -23,7 +23,7 @@ public class SettingsSingleton {
 
     private static class Settings implements SettingsInterface {
         private boolean telemetryEnabled;
-        private BigInteger userID;
+        private String userID;
         private RoleEnum userRole;
         private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
 
@@ -39,8 +39,7 @@ public class SettingsSingleton {
         private static File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
 
-        // TEMPORARY
-        private static File LOGINS_FILE = new File("logins_file.json");
+        private static File LOGINS_FILE = new File("../telemetry/logins_file.json");
 
         /**
          * Reads in settings from user database and populates the game settings.
@@ -95,8 +94,16 @@ public class SettingsSingleton {
             shopItemCount.put(DifficultyEnum.HARD, 1);
         }
 
-
-        private void loadSettingsFromJson(BigInteger userID) {
+        /**
+         * Load the settings of a given player from the settings file (.json).
+         * Design parameters (global, affecting all users) loaded from
+         * "designParameters" key. 
+         * User-specific data is loaded from "users", with the key being 
+         * their userID. Reminder that an example settings.json file is provided.
+         * If a profile for a user does not yet exist, it will be created with
+         * default values.
+         */
+        private void loadSettingsFromJson(String userID) {
             if (!SETTINGS_FILE.exists()) {
                 loadDefaults();
                 return;
@@ -121,7 +128,7 @@ public class SettingsSingleton {
 
                 // Load per-user data.
                 ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
-                JsonNode userSettings = usersNode.get(String.valueOf(userID));
+                JsonNode userSettings = usersNode.get(userID);
 
                 // If the user did not have a section in the file, create it.
                 if (userSettings == null) {
@@ -129,7 +136,7 @@ public class SettingsSingleton {
                     newProfile.put("telemetryEnabled", true);
                     newProfile.set("furthestLevel", createIntNode(maxStageReached));
 
-                    usersNode.set(String.valueOf(userID), newProfile);
+                    usersNode.set(userID, newProfile);
                     root.set("users", usersNode);
                     jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
                     return;
@@ -220,7 +227,7 @@ public class SettingsSingleton {
                 profileNode.put("telemetryEnabled", telemetryEnabled);
                 profileNode.set("furthestLevel", createIntNode(maxStageReached));
 
-                usersNode.set(String.valueOf(userID), profileNode);
+                usersNode.set(userID, profileNode);
                 root.set("users", usersNode);
                 jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
             } catch (IOException e) {
@@ -242,41 +249,15 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void createNewUser(BigInteger userID, String password, RoleEnum role) throws AuthenticationException {
-            try {
-                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
-
-                ObjectNode userNode = jsonMapper.createObjectNode();
-                userNode.put("password", password);
-                userNode.put("role", role.getJSONName());
-
-                allLogins.set(userID.toString(), userNode);
-                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
-            } catch (IOException e) {
-                System.out.println("Failed to save new user to logins file." + e.toString());
-            }
-        }
-
-        @Override
-        public void authenticateUser(BigInteger userID, String password) throws AuthenticationException {}
-
-
-        //TEST: authenticates an externally authenticated user (Google SSO), allows access to role + ID
-        public void authenticateExternalUser(String externalUserID, RoleEnum role) throws AuthenticationException {
-
-            if (externalUserID == null || externalUserID.isBlank()) {
-                throw new AuthenticationException("External user ID is missing.");
+        public void loginWithResult(AuthenticationResult result) throws AuthenticationException {
+            if (result == null) {
+                throw new AuthenticationException("Authentication result is null.");
             }
 
-            if (role == null) {
-                role = RoleEnum.PLAYER;
-            }
+            userID = result.userID();
+            userRole = result.role();
 
-            this.userID = new BigInteger(externalUserID);
-
-            this.userRole = role;
-
-            loadSettingsFromJson(this.userID);
+            loadSettingsFromJson(userID);
         }
 
         /**
@@ -299,29 +280,24 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setUserRole(BigInteger userID, RoleEnum role) throws AuthenticationException {
+        public void setUserRole(String userID, RoleEnum role) throws AuthenticationException {
             if (!currentUserIsDeveloper()) {
                 throw new AuthenticationException();
             }
 
             try {
-                ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
-                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
-
-                JsonNode targetUser = usersNode.get(String.valueOf(userID));
-
-                ((ObjectNode) targetUser).put("role", role.toString());
-                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(SETTINGS_FILE, root);
+                ObjectNode allLogins = (ObjectNode) jsonMapper.readTree(LOGINS_FILE);
+                allLogins.put(userID, role.name().toLowerCase());
+                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(LOGINS_FILE, allLogins);
             } catch (IOException e) {
-                System.out.println("ERROR! Error updating user role in settings file. " + e.toString());
+                System.out.println("ERROR! Error updating user role in logins file. " + e.toString());
             }
 
             // If user whose role was updated is the current user, then update
             // the value of role in memory also.
-            // if (userID == this.userID) {
-            //     userRole = role;
-            // }
-            // TODO: fix - broken because of switch to BigInteger
+            if (userID.equals(this.userID)) {
+                userRole = role;
+            }
         }
 
         @Override
@@ -448,8 +424,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public int getUserID() throws AuthenticationException {
-            return 12;
+        public String getUserID() throws AuthenticationException {
+            return this.userID;
         }
 
         @Override
@@ -464,7 +440,7 @@ public class SettingsSingleton {
 
         @Override
         public void resetLoginsDestinationFile() {
-            LOGINS_FILE = new File("logins_file.json");
+            LOGINS_FILE = new File("../telemetry/logins_file.json");
         }
 
         @Override
