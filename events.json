@@ -617,4 +617,107 @@
   "sessionID" : -1753824590,
   "timestamp" : "2026/02/15/17/23/21"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : 1749957280,
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/39/44"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 1749957280,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/39/44"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : 1749957280,
+  "timestamp" : "2026/02/15/17/40/08"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -1518178256,
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/41/04"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/41/04"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "lives_left" : 3,
+  "timestamp" : "2026/02/15/17/41/18"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/41/18"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "lives_left" : 2,
+  "timestamp" : "2026/02/15/17/41/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/41/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -1518178256,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "lives_left" : 1,
+  "timestamp" : "2026/02/15/17/41/48"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -1518178256,
+  "timestamp" : "2026/02/15/17/41/48"
+}
 ]

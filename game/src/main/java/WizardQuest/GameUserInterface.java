@@ -212,7 +212,7 @@ public class GameUserInterface {
 
         GameRunInterface lastRun = null;
         PlayerInterface lastPlayer = null;
-
+EncounterInterface currentEncounter = gameManager.pickEncounter();
         while (gameManager.isGameRunning()) {
 
             // keep latest references while the run is still alive
@@ -225,7 +225,7 @@ public class GameUserInterface {
             } catch (Exception ignored) {
             }
 
-            boolean encounterWon = simulateEncounter();
+            boolean encounterWon = simulateEncounter(currentEncounter);
 
             if (!encounterWon) {
                 continue;
@@ -243,25 +243,15 @@ public class GameUserInterface {
             simulateShop();
 
             gameManager.advanceToNextLevel();
+            
+            currentEncounter = gameManager.pickEncounter();
         }
 
         // if ever drops out without triggering the early returns
         endScreen(lastRun, lastPlayer);
     }
 
-    private boolean simulateEncounter() {
-
-        EncounterInterface encounter;
-
-        try {
-            encounter = gameManager.pickEncounter();
-        } catch (Exception e) {
-            System.out.println();
-            System.out.println(RED + BOLD + "No encounters available right now." + RESET);
-            System.out.println("Ending run.");
-            gameManager.endGame();
-            return false;
-        }
+    private boolean simulateEncounter(EncounterInterface encounter) {
 
         GameRunInterface run = gameManager.getCurrentRun();
         if (run != null) {
@@ -523,7 +513,7 @@ public class GameUserInterface {
     private void gameLoop() {
         GameRunInterface lastRun = null;
         PlayerInterface lastPlayer = null;
-
+        EncounterInterface currentEncounter = gameManager.pickEncounter();
         while (gameManager.isGameRunning()) {
 
             // keep latest references while the run is still alive
@@ -536,7 +526,7 @@ public class GameUserInterface {
             } catch (Exception ignored) {
             }
 
-            boolean encounterWon = playEncounter();
+            boolean encounterWon = playEncounter(currentEncounter);
 
             if (!gameManager.isGameRunning()) {
                 endScreen(lastRun, lastPlayer);
@@ -547,6 +537,7 @@ public class GameUserInterface {
                 continue;
             }
 
+            
             // stop after stage 2 (no shop after finishing)
             GameRunInterface run = gameManager.getCurrentRun();
             if (run != null && run.getStage() >= 2) {
@@ -569,25 +560,15 @@ public class GameUserInterface {
                 endScreen(lastRun, lastPlayer);
                 return;
             }
+
+            currentEncounter = gameManager.pickEncounter();
         }
 
         // if ever drops out without triggering the early returns
         endScreen(lastRun, lastPlayer);
     }
 
-    private boolean playEncounter() {
-
-        EncounterInterface encounter;
-
-        try {
-            encounter = gameManager.pickEncounter();
-        } catch (Exception e) {
-            System.out.println();
-            System.out.println(RED + BOLD + "No encounters available right now." + RESET);
-            System.out.println("Ending run.");
-            gameManager.endGame();
-            return false;
-        }
+    private boolean playEncounter(EncounterInterface encounter) {
 
         System.out.println();
         GameRunInterface run = gameManager.getCurrentRun();
@@ -781,7 +762,6 @@ public class GameUserInterface {
 
                 int playerHpAfter = player.getHealth();
                 int damageTaken = playerHpBefore - playerHpAfter;
-                System.out.println(damageTaken);
                 if (damageTaken < 0)
                     damageTaken = 0;
 
