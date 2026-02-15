@@ -15,6 +15,13 @@ game/target
 .env**
 **.env**
 
+telemetry/auth/logs.txt
+telemetry/logins_file.json
+
+
+
+
+
 *.aux
 *.gz
 *.bcf

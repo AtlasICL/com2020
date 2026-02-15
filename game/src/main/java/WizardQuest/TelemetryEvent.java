@@ -1,12 +1,14 @@
 package WizardQuest;
 
-import java.util.EventObject;
+import java.time.Instant;
 
-public abstract class TelemetryEvent extends EventObject {
-    private final int userID;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public abstract class TelemetryEvent {
+    private final String userID;
     private final int sessionID;
-    private final String timeStamp;
-    private final String telemetryName;
+    private final Instant timeStamp;
+    private final String event;
 
     /**
      * Constructor for the base telemetry event. Produces a telemetry event storing
@@ -21,15 +23,14 @@ public abstract class TelemetryEvent extends EventObject {
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss
-     * @param telemetryName the name of the telemetry event according to the JSON
+     * @param event         the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */
-    public TelemetryEvent(Object source, int userID, int sessionID, String timeStamp, String telemetryName) {
-        super(source);
+    public TelemetryEvent(String userID, int sessionID, Instant timeStamp, String event) {
         this.userID = userID;
         this.sessionID = sessionID;
         this.timeStamp = timeStamp;
-        this.telemetryName = telemetryName;
+        this.event = event;
     }
 
     /**
@@ -37,7 +38,7 @@ public abstract class TelemetryEvent extends EventObject {
      * 
      * @return the user's ID.
      */
-    public int getUserID() {
+    public String getUserID() {
         return this.userID;
     }
 
@@ -55,7 +56,8 @@ public abstract class TelemetryEvent extends EventObject {
      * 
      * @return the timestamp.
      */
-    public String getTimestamp() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd/HH/mm/ss", timezone = "UTC")
+    public Instant getTimestamp() {
         return this.timeStamp;
     }
 
@@ -65,7 +67,7 @@ public abstract class TelemetryEvent extends EventObject {
      * 
      * @return the event's name.
      */
-    public String getTelemetryName() {
-        return this.telemetryName;
+    public String getEvent() {
+        return this.event;
     }
 }

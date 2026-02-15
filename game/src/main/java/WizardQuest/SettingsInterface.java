@@ -8,30 +8,14 @@ import java.io.File;
  */
 public interface SettingsInterface {
     /**
-     * Attempts to create a new user with the given parameters. On success will add
-     * this user to the user JSON database.
-     * 
-     * @param username the user's username. Must consist exclusively of
-     *                 alphanumeric characters, underscores or hyphens.
-     * @param password the user's password. It is hashed and salted before being
-     *                 stored.
-     * @param role     the role for the user.
-     * @throws AuthenticationException if there is a user with the same username or
-     *                                 the username is invalid.
+     * Logs in the user using the result from the Authenticator (Python OAuth).
+     * Sets the current user's ID, name, and role from the authentication result,
+     * and loads their settings from the settings file.
+     *
+     * @param result the AuthenticationResult returned by Authenticator.login().
+     * @throws AuthenticationException if the result is invalid.
      */
-    public void createNewUser(String username, String password, RoleEnum role) throws AuthenticationException;
-
-    /**
-     * Attempts to authenticate the specified user, logging in as them on success.
-     * 
-     * @param username the user's username. Must consist exclusively of
-     *                 alphanumeric characters, underscores or hyphens.
-     * @param password the user's password. It is hashed and salted with the user's
-     *                 salt before being looked up in the database.
-     * @throws AuthenticationException if the user does not exist or their login
-     *                                 credentials are invalid or incorrect.
-     */
-    public void authenticateUser(String username, String password) throws AuthenticationException;
+    public void loginWithResult(AuthenticationResult result) throws AuthenticationException;
 
     /**
      * Returns the role of the currently authenticated user or throws an exception
@@ -51,7 +35,7 @@ public interface SettingsInterface {
      * @throws AuthenticationException if no user is authenticated,
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
-    public void setUserRole(int userID, RoleEnum role) throws AuthenticationException;
+    public void setUserRole(String userID, RoleEnum role) throws AuthenticationException;
 
     /**
      * Returns the session id of the currently authenticated user and session, or
@@ -69,10 +53,9 @@ public interface SettingsInterface {
      * Hashes the username of the currently authenticated user and returns it (as
      * their ID).
      * 
-     * @throws AuthenticationException if no user is authenticated.
      * @return the user's ID.
      */
-    public int getUserID() throws AuthenticationException;
+    public String getUserID();
 
     /**
      * Returns whether the user has telemetry enabled.

@@ -7,7 +7,10 @@ from core.logic import EventLogicEngine
 from gui.plotting import PlotTab
 from auth.auth import google_login, Role
 
+
 ROOT_DIRECTORY = Path.cwd().parent
+POLLING_INTERVAL_MS = 3000
+
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
@@ -19,6 +22,7 @@ class GUI_SETTINGS:
     FONT_SIZE = 12
     BACKGROUND_COLOR = "#edd68f"
 
+
 class TelemetryAppGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
@@ -27,7 +31,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
-        self.file_name = ROOT_DIRECTORY/ "telemetry_events.json"
+        self.file_name = ROOT_DIRECTORY / "event_logs" / "events.json"
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None
@@ -163,20 +167,24 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Coins gained",
         )
 
-        self.refresh_funnel_graph()
-        self.refresh_difficulty_spike_failure_plot()
-        self.refresh_health_plots()
-        self.refresh_coins_gained_plots()
+        self.refresh_all()
+        self.do_auto_refresh()
+
+
+    def do_auto_refresh(self, interval_ms=POLLING_INTERVAL_MS):
+        """Use polling to refresh data for plots."""
+        self.refresh_all()
+        self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
 
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
             self.switch_btn_text.set("Change to telemetry data")
-            self.file_name = ROOT_DIRECTORY / "simulation_events.json"
+            self.file_name = ROOT_DIRECTORY / "event_logs" / "simulation_events.json"
             self.refresh_all()
         else:
             self.switch_btn_text.set("Change to simulation data")
-            self.file_name = ROOT_DIRECTORY / "telemetry_events.json"
+            self.file_name = ROOT_DIRECTORY / "event_logs" / "telemetry_events.json"
             self.refresh_all()
 
 
@@ -186,7 +194,7 @@ class TelemetryAppGUI(tk.Tk):
         message = "Are you sure you want to reset telemetry data? " 
             + "All existing telemetry data will be lost")
         if confirmed:
-            with open(ROOT_DIRECTORY / 'telemetry_events.json', 'w') as f:
+            with open(ROOT_DIRECTORY / "event_logs" / "telemetry_events.json", 'w') as f:
                 f.write('')
 
 

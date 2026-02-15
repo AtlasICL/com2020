@@ -31,72 +31,73 @@ public class GameManagerSingleton {
         }
 
         @Override
-        public boolean isGameRunning(){
+        public boolean isGameRunning() {
             return this.currentGame != null;
         }
 
         @Override
-        public DifficultyEnum getCurrentDifficulty(){
+        public DifficultyEnum getCurrentDifficulty() {
             return this.currentGame.getDifficulty();
         }
 
         @Override
-        public void startNewGame(DifficultyEnum difficulty){
+        public void startNewGame(DifficultyEnum difficulty) {
             this.currentGame = new GameRun(difficulty);
         }
 
         @Override
-        public GameRunInterface getCurrentRun(){
+        public GameRunInterface getCurrentRun() {
             return this.currentGame;
         }
 
         @Override
-        public PlayerInterface getCurrentPlayer(){
+        public PlayerInterface getCurrentPlayer() {
             return this.currentGame.getPlayer();
         }
 
         @Override
-        public EncounterInterface pickEncounter(){
+        public EncounterInterface pickEncounter() {
             EncounterInterface encounter = this.currentGame.pickEncounter();
+            if (encounter != null) {
+                encounter.resetEnemyHealth(); // ensure targets exist if encounter instance is reused
+            }
             this.currentEncounter = encounter;
             return encounter;
         }
 
         @Override
-        public EncounterInterface getCurrentEncounter(){
+        public EncounterInterface getCurrentEncounter() {
             return this.currentEncounter;
         }
 
         @Override
-        public void resetFailedEncounter(){
+        public void resetFailedEncounter() {
             this.currentEncounter.resetEnemyHealth();
-            PlayerInterface player = this.currentGame.getPlayer();
-            player.resetHealth();
-            player.loseLives(1);
+            this.currentGame.incrementDeathCount();
         }
 
         @Override
-        public void completeCurrentEncounter(){
+        public void completeCurrentEncounter() {
             this.currentEncounter.markComplete();
         }
 
         @Override
-        public void advanceToNextLevel(){
+        public void advanceToNextLevel() {
             this.currentGame.nextStage();
         }
 
         @Override
-        public UpgradeEnum[] viewShop(){
+        public UpgradeEnum[] viewShop() {
             return this.currentGame.viewShop();
         }
 
         @Override
-        public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException{
+        public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
             this.currentGame.purchaseUpgrade(upgrade);
         }
 
         @Override
-        public void endGame(){
+        public void endGame() {
             this.currentEncounter = null;
             this.currentGame = null;
         }

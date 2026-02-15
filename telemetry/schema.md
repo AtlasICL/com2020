@@ -42,16 +42,36 @@ Here are the possible event types:
 3) `Hard`
 
 ## List of valid encounter names
-To be defined at a later date.
+1) `GoblinEncounter`
+2) `FishmanEncounter`
 
 ## List of valid upgrade names
-To be defined at a later date.
+1) `PhysicalDamageResistance`
+2) `FireDamageResistance`
+3) `WaterDamageResistance`
+4) `ThunderDamageResistance`
+5) `ImprovedPhysicalDamage`
+6) `ImprovedFireDamage`
+7) `ImprovedWaterDamage`
+8) `ImprovedThunderDamage`
+9) `SlashUnlock`
+10) `AbsolutePulseUnlock`
+11) `WaterJetUnlock`
+12) `FireBallUnlock`
+13) `ThunderStormUnlock`
 
 ## List of valid enemy names
-To be defined at a later date.
+1) `Goblin`
+2) `Fishman`
 
 ## List of valid settings
-To be defined at a later date.
+1) `MaxStageReached`
+2) `PlayerMaxHealth`
+3) `EnemyDamageMultiplier`
+4) `StartingLives`
+5) `MaxMagic`
+6) `MagicRegenRate`
+7) `ShopItemCount`
 
 ## Example logging event jsons
 
