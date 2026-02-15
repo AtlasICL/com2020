@@ -5,4 +5,65 @@
   "event" : "EndSession",
   "timestamp" : "2026/02/15/14/05/45"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -2122333352,
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/16/02/05"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -2122333352,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/16/02/06"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -2122333352,
+  "timestamp" : "2026/02/15/16/02/09"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -1687612439,
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/16/03/54"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1687612439,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/16/03/54"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -1687612439,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 1,
+  "timestamp" : "2026/02/15/16/04/04"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -1687612439,
+  "timestamp" : "2026/02/15/16/04/04"
+}
 ]

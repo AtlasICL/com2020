@@ -49,7 +49,8 @@ public class GameManagerSingleton {
             this.currentGame = new GameRun(difficulty, random.nextInt());
             TelemetryListenerSingleton.getInstance()
                     .onStartSession(new StartSessionEvent(SettingsSingleton.getInstance().getUserID(),
-                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(), difficulty));
+                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(),
+                            difficulty));
         }
 
         @Override
@@ -105,15 +106,17 @@ public class GameManagerSingleton {
 
         @Override
         public void endGame() {
-            TelemetryListenerSingleton.getInstance()
-                    .onEndSession(new EndSessionEvent(SettingsSingleton.getInstance().getUserID(),
-                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime()));
+            if (this.currentGame != null) {
+                TelemetryListenerSingleton.getInstance()
+                        .onEndSession(new EndSessionEvent(SettingsSingleton.getInstance().getUserID(),
+                                currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime()));
+            }
             this.currentEncounter = null;
             this.currentGame = null;
         }
 
-        @Override 
-        public int getSessionID(){
+        @Override
+        public int getSessionID() {
             return this.currentGame.getSessionID();
         }
     }

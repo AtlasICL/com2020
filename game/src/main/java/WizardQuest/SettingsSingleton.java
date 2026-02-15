@@ -3,7 +3,6 @@ package WizardQuest;
 import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
-import java.util.Random;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +22,6 @@ public class SettingsSingleton {
     }
 
     private static class Settings implements SettingsInterface {
-        private final Random random;
         private boolean telemetryEnabled;
         private String userID;
         private RoleEnum userRole;
@@ -47,7 +45,6 @@ public class SettingsSingleton {
          */
         public Settings() {
             loadDefaults();
-            random = new Random();
             userID = null;
         }
 

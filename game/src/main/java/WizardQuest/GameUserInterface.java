@@ -1,9 +1,9 @@
 package WizardQuest;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+
 
 public class GameUserInterface {
 
@@ -352,7 +352,6 @@ public class GameUserInterface {
             if (run != null && run.getStage() >= 2) {
                 System.out.println();
                 System.out.println(GREEN + BOLD + "Stage 2 complete. Ending prototype run." + RESET);
-                gameManager.endGame();
                 endScreen(lastRun, lastPlayer);
                 return;
             }
@@ -420,7 +419,8 @@ public class GameUserInterface {
                         .println(RED + "\t" + e.getType().getDisplayName() + " (" + e.getHealth() + " health)" + RESET);
             }
 
-            player.gainMagic(player.getMagicRegenRate());
+            player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
+
 
             EntityInterface[] enemies = encounter.getEnemies();
 
