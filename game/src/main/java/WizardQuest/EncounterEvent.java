@@ -3,8 +3,8 @@ package WizardQuest;
 import java.time.Instant;
 
 public abstract class EncounterEvent extends TelemetryEvent {
-    private final int stageNumber;
-    private final EncounterEnum encounterName;
+    private final int stage_number;
+    private final EncounterEnum encounter_name;
     private final DifficultyEnum difficulty;
 
     /**
@@ -24,25 +24,25 @@ public abstract class EncounterEvent extends TelemetryEvent {
     public EncounterEvent(String userID, int sessionID, Instant timeStamp, String telemetryName, EncounterEnum encounterName,
             DifficultyEnum difficulty, int stageNumber) {
         super(userID, sessionID, timeStamp, telemetryName);
-        this.encounterName = encounterName;
+        this.encounter_name = encounterName;
         this.difficulty = difficulty;
-        this.stageNumber = stageNumber;
+        this.stage_number = stageNumber;
     }
 
     /**
      * Gets the name for the encounter this event was generated on.
      * @return the encounter's name.
      */
-    public EncounterEnum getEncounterName(){
-        return this.encounterName;
+    public EncounterEnum getEncounter_name(){
+        return this.encounter_name;
     }
 
     /**
      * Gets the stage number the player is on when this event was created.
      * @return the stage number stored in the event.
      */
-    public int getStageNumber() {
-        return this.stageNumber;
+    public int getStage_number() {
+        return this.stage_number;
     }
 
     /**

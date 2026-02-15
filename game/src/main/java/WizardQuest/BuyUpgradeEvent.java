@@ -3,8 +3,8 @@ package WizardQuest;
 import java.time.Instant;
 
 public class BuyUpgradeEvent extends EncounterEvent{
-    private final UpgradeEnum upgradeBought;
-    private final int coinsSpent;
+    private final UpgradeEnum upgrade_bought;
+    private final int coins_spent;
 
     /**
      * Constructor for BuyUpgradeEvent.
@@ -25,8 +25,8 @@ public class BuyUpgradeEvent extends EncounterEvent{
     public BuyUpgradeEvent(String userID, int sessionID,
         Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, UpgradeEnum upgradeBought, int coinsSpent){
         super(userID, sessionID, timeStamp, "BuyUpgrade", encounterName, difficulty, stageNumber);
-        this.upgradeBought = upgradeBought;
-        this.coinsSpent = coinsSpent;
+        this.upgrade_bought = upgradeBought;
+        this.coins_spent = coinsSpent;
     }
 
     /**
@@ -34,8 +34,8 @@ public class BuyUpgradeEvent extends EncounterEvent{
      *
      * @return upgrade a player has purchased.
      */
-    public UpgradeEnum getUpgradeBought() {
-        return upgradeBought;
+    public UpgradeEnum getUpgrade_bought() {
+        return upgrade_bought;
     }
 
     /**
@@ -43,7 +43,7 @@ public class BuyUpgradeEvent extends EncounterEvent{
      *
      * @return coins spent on an upgrade.
      */
-    public int getCoinsSpent(){
-        return this.coinsSpent;
+    public int getCoins_spent(){
+        return this.coins_spent;
     }
 }

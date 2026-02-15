@@ -3,7 +3,7 @@ package WizardQuest;
 import java.time.Instant;
 
 public abstract class EncounterCompleteEvent extends EncounterEvent{
-    private final int playerHPRemaining;
+    private final int player_HP_remaining;
 
     /**
      * Constructor for EncounterCompleteEvent.
@@ -24,7 +24,7 @@ public abstract class EncounterCompleteEvent extends EncounterEvent{
     public EncounterCompleteEvent(String userID, int sessionID,
             Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining) {
         super(userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
-        this.playerHPRemaining = playerHPRemaining;
+        this.player_HP_remaining = playerHPRemaining;
     }
 
     /**
@@ -32,7 +32,7 @@ public abstract class EncounterCompleteEvent extends EncounterEvent{
      *
      * @return player HP remaining after encounter complete.
      */
-    public int getPlayerHPRemaining(){
-        return this.playerHPRemaining;
+    public int getPlayer_HP_remaining(){
+        return this.player_HP_remaining;
     }
 }

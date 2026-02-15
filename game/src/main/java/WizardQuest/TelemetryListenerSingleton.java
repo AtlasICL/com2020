@@ -52,16 +52,16 @@ public class TelemetryListenerSingleton {
          * @throws SessionValidationException exception used to specify invalid sessions.
          */
         private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
-            if(e.getTelemetryName().equals("EndSession") && currentSessionID == -1){
+            if(e.getEvent().equals("EndSession") && currentSessionID == -1){
                 throw new SessionValidationException("EndSession for session " + e.getSessionID() + 
-                                                    " occurs before it's StartSession");
+                                                    " occurs before its StartSession");
             }
-            else if(currentSessionID != e.getSessionID() && !e.getTelemetryName().equals("StartSession")){
-                throw new SessionValidationException("SessionID of event " + e.getTelemetryName() + 
+            else if(currentSessionID != e.getSessionID() && !e.getEvent().equals("StartSession")){
+                throw new SessionValidationException("SessionID of event " + e.getEvent() + 
                                                     " " + e.getSessionID() + " not equal to current sessionID of "
                                                      + currentSessionID);
             }
-            else if(e.getTelemetryName().equals("StartSession") && currentSessionID != -1){
+            else if(e.getEvent().equals("StartSession") && currentSessionID != -1){
                 throw new SessionValidationException("StartSession for session " + e.getSessionID() + 
                                                     " occurs before EndSession of " + currentSessionID);
             }
@@ -74,7 +74,7 @@ public class TelemetryListenerSingleton {
          */
         private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
             if(currentUserID == null || !currentUserID.equals(e.getUserID())){
-                throw new UserValidationException("UserID of event " + e.getTelemetryName() + 
+                throw new UserValidationException("UserID of event " + e.getEvent() + 
                                                     " " + e.getUserID() + " not equal to current sessionID of "
                                                      + currentUserID);
             }
@@ -89,11 +89,11 @@ public class TelemetryListenerSingleton {
         private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
             Instant eventTime = e.getTimestamp();
             if(eventTime.isAfter(Instant.now())){
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                                                         " " + e.getTimestamp() + " is in the future");
             }
             else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                                                         " " + e.getTimestamp() + " is not current");
             }
         }
@@ -106,11 +106,11 @@ public class TelemetryListenerSingleton {
          */
         private void isCorrectTimeStamp(SettingsChangeEvent e) throws TimestampValidationException{
             if(e.getTimestamp().isAfter(Instant.now())){
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                                                         " " + e.getTimestamp() + " is in the future");
             }
             else if(mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)){
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                                                         " " + e.getTimestamp() + " is not current");
             }
         }

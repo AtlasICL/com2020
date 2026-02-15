@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SettingsChangeEvent {
     private final SettingsEnum setting;
-    private final String settingValue;
+    private final String setting_value;
     private final Instant timeStamp;
-    private final String telemetryName;
+    private final String event;
     /**
      * Constructor for the settings change telemetry event. Produces a telemetry event storing
      * common data.
@@ -22,8 +22,8 @@ public class SettingsChangeEvent {
     public SettingsChangeEvent(Instant timeStamp, SettingsEnum setting, String settingValue) {
         this.timeStamp = timeStamp;
         this.setting = setting;
-        this.settingValue = settingValue;
-        this.telemetryName = "SettingsChange";
+        this.setting_value = settingValue;
+        this.event = "SettingsChange";
     }
 
     /**
@@ -42,8 +42,8 @@ public class SettingsChangeEvent {
      * 
      * @return the event's name.
      */
-    public String getTelemetryName() {
-        return this.telemetryName;
+    public String getEvent() {
+        return this.event;
     }
 
     /**
@@ -60,7 +60,7 @@ public class SettingsChangeEvent {
      * 
      * @return
      */
-    public String getSettingValue() {
-        return this.settingValue;
+    public String getSetting_value() {
+        return this.setting_value;
     }
 }

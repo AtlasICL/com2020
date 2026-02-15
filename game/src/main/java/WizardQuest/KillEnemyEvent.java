@@ -3,7 +3,7 @@ package WizardQuest;
 import java.time.Instant;
 
 public class KillEnemyEvent extends EncounterEvent{
-    private final EntityEnum enemyType;
+    private final EntityEnum enemy_type;
 
     /**
      * Constructor for KillEnemyEvent.
@@ -24,7 +24,7 @@ public class KillEnemyEvent extends EncounterEvent{
             Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,
             EntityEnum enemyType){
                 super(userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);
-                this.enemyType = enemyType;
+                this.enemy_type = enemyType;
     }
     
     /**
@@ -32,7 +32,7 @@ public class KillEnemyEvent extends EncounterEvent{
      *
      * @return enemy type killed.
      */
-    public EntityEnum getEnemyType(){
-        return this.enemyType;
+    public EntityEnum getEnemy_type(){
+        return this.enemy_type;
     }
 }

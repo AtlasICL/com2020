@@ -8,7 +8,7 @@ public abstract class TelemetryEvent {
     private final String userID;
     private final int sessionID;
     private final Instant timeStamp;
-    private final String telemetryName;
+    private final String event;
 
     /**
      * Constructor for the base telemetry event. Produces a telemetry event storing
@@ -23,14 +23,14 @@ public abstract class TelemetryEvent {
      *                      sessions.
      * @param timeStamp     the time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss
-     * @param telemetryName the name of the telemetry event according to the JSON
+     * @param event         the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */
-    public TelemetryEvent(String userID, int sessionID, Instant timeStamp, String telemetryName) {
+    public TelemetryEvent(String userID, int sessionID, Instant timeStamp, String event) {
         this.userID = userID;
         this.sessionID = sessionID;
         this.timeStamp = timeStamp;
-        this.telemetryName = telemetryName;
+        this.event = event;
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class TelemetryEvent {
      * 
      * @return the event's name.
      */
-    public String getTelemetryName() {
-        return this.telemetryName;
+    public String getEvent() {
+        return this.event;
     }
 }

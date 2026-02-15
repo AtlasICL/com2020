@@ -3,7 +3,7 @@ package WizardQuest;
 import java.time.Instant;
 
 public class GainCoinEvent extends EncounterEvent{
-    private final int coinsGained;
+    private final int coins_gained;
 
     /**
      * Constructor for GainCoinEvent.
@@ -23,7 +23,7 @@ public class GainCoinEvent extends EncounterEvent{
     public GainCoinEvent(String userID, int sessionID,
         Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int coinsGained){
         super(userID, sessionID, timeStamp, "GainCoin", encounterName, difficulty, stageNumber);
-        this.coinsGained = coinsGained;
+        this.coins_gained = coinsGained;
     }
 
     /**
@@ -31,7 +31,7 @@ public class GainCoinEvent extends EncounterEvent{
      *
      * @return number of coins gained.
      */
-    public int getCoinsGained(){
-        return this.coinsGained;
+    public int getCoins_gained(){
+        return this.coins_gained;
     }
 }

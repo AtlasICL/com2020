@@ -3,7 +3,7 @@ package WizardQuest;
 import java.time.Instant;
 
 public abstract class EncounterFailEvent extends EncounterEvent{
-    private final int livesLeft;
+    private final int lives_left;
 
     /**
      * Constructor for EncounterFailEvent.
@@ -24,7 +24,7 @@ public abstract class EncounterFailEvent extends EncounterEvent{
     public EncounterFailEvent(String userID, int sessionID,
             Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
         super(userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
-        this.livesLeft = livesLeft;
+        this.lives_left = livesLeft;
     }
 
     /**
@@ -32,7 +32,7 @@ public abstract class EncounterFailEvent extends EncounterEvent{
      *
      * @return lives left after encounter failure.
      */
-    public int getLivesLeft(){
-        return this.livesLeft;
+    public int getLives_left(){
+        return this.lives_left;
     }
 }
