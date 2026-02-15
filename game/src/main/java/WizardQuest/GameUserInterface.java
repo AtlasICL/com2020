@@ -24,6 +24,8 @@ public class GameUserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String MAGENTA = "\u001B[35m";
 
+    private static final int COINS_GAINED = 20;
+
     private final boolean[] ownedUpgrades = new boolean[UpgradeEnum.values().length];
 
     private GameUserInterface() {
@@ -350,14 +352,14 @@ public class GameUserInterface {
                                 player.getHealth()));
                 gameManager.completeCurrentEncounter();
                 if (player != null) {
-                    player.gainCoins(35);
+                    player.gainCoins(COINS_GAINED);
                     telemetryListener.onGainCoin(
                             new GainCoinEvent(
                                     settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
-                                    10));
+                                    COINS_GAINED));
                 }
                 return true;
             }
@@ -380,7 +382,7 @@ public class GameUserInterface {
 
     }
 
-    //Buys between 0 and 1 upgrades from the shop.
+    // Buys between 0 and 1 upgrades from the shop.
     private void simulateShop() {
         UpgradeEnum[] upgrades = gameManager.viewShop();
         UpgradeEnum u = ai.pickUpgrade(upgrades, gameManager.getCurrentPlayer().getCoins());
@@ -743,15 +745,15 @@ public class GameUserInterface {
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
                 if (player != null) {
-                    player.gainCoins(35);
+                    player.gainCoins(COINS_GAINED);
                     telemetryListener.onGainCoin(
                             new GainCoinEvent(
                                     settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
-                                    10));
-                    System.out.println(YELLOW + "+10 coins" + RESET);
+                                    COINS_GAINED));
+                    System.out.println(YELLOW + "+" + COINS_GAINED + " coins" + RESET);
                 }
                 return true;
             }
@@ -773,9 +775,9 @@ public class GameUserInterface {
                 AbilityEnum a = ai.pickAbility(enemy);
                 try {
                     a.execute(enemy, player);
-                } catch (LackingResourceException e){
+                } catch (LackingResourceException e) {
                     e.printStackTrace();
-                }                
+                }
 
                 int playerHpAfter = player.getHealth();
                 int damageTaken = playerHpBefore - playerHpAfter;
@@ -784,7 +786,8 @@ public class GameUserInterface {
                     damageTaken = 0;
 
                 System.out.println();
-                System.out.println(RED + enemy.getType().getDisplayName() + " attacked you with " + a.getDisplayName() + " for " + damageTaken
+                System.out.println(RED + enemy.getType().getDisplayName() + " attacked you with " + a.getDisplayName()
+                        + " for " + damageTaken
                         + " damage." + RESET);
                 System.out.println("Your health: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }

@@ -592,4 +592,29 @@
   "sessionID" : -292483596,
   "timestamp" : "2026/02/15/17/21/45"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -1753824590,
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/23/01"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1753824590,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/23/01"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -1753824590,
+  "timestamp" : "2026/02/15/17/23/21"
+}
 ]
