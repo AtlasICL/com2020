@@ -6,47 +6,50 @@ public enum AbilityEnum {
             "A simple punch.",
             10,
             0,
-            DamageEnum.PHYSICAL),
+            DamageEnum.PHYSICAL, "Puch"),
     ABSOLUTE_PULSE(
             "A magical pulse that no-one can defend against.",
             15,
             20,
-            DamageEnum.ABSOLUTE),
+            DamageEnum.ABSOLUTE, "Absolute Pulse"),
     SLASH(
             "A slash with a blade.",
             20,
             0,
-            DamageEnum.PHYSICAL),
+            DamageEnum.PHYSICAL, "Slash"),
     WATER_JET(
             "A magical (and high-velocity) jet of water.",
             15,
             20,
-            DamageEnum.WATER),
+            DamageEnum.WATER, "Water Jet"),
     THUNDER_STORM(
             "A magical blast of electricity.",
             25,
             30,
-            DamageEnum.THUNDER),
+            DamageEnum.THUNDER, "Thunder Storm"),
     FIRE_BALL(
             "A magically summoned powerful ball of fire.",
             35,
             40,
-            DamageEnum.FIRE);
+            DamageEnum.FIRE, "Fire Ball");
 
     private final String description;
     private final int baseDamage;
     private final int baseMagicPoints;
     private final DamageEnum damageType;
+    private final String displayName;
 
     AbilityEnum(
             String description,
             int baseDamage,
             int baseMagicPoints,
-            DamageEnum damageType) {
+            DamageEnum damageType,
+            String displayName) {
         this.description = description;
         this.baseDamage = baseDamage;
         this.baseMagicPoints = baseMagicPoints;
         this.damageType = damageType;
+        this.displayName = displayName;
     }
 
     /**
@@ -84,6 +87,15 @@ public enum AbilityEnum {
      */
     public DamageEnum getDamageType() {
         return damageType;
+    }
+
+    /**
+     * Gets the human readable display name for the ability.
+     * 
+     * @return the ability's display name.
+     */
+    public String getDisplayName() {
+        return displayName;
     }
 
     /**

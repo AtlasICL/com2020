@@ -246,7 +246,7 @@ public class GameUserInterface {
         System.out.println("This includes:");
         System.out.println("timestamp, session id, user id");
         System.out.println("encounter start, completion, or fail (stage, difficulty, encounter name)");
-        System.out.println("player state on completion or fail (HP remaining, lives left if relevant)");
+        System.out.println("player state on completion or fail (health remaining, lives left if relevant)");
         System.out.println("coins gained and upgrades purchased");
         System.out.println("settings changes (new values)");
         System.out.println("enemies defeated");
@@ -416,7 +416,7 @@ public class GameUserInterface {
             System.out.println("Encounter: " + CYAN + encounter.getType().getDisplayName() + RESET);
             for (EntityInterface e : encounter.getEnemies()) {
                 System.out
-                        .println(RED + "\t" + e.getType().getDisplayName() + " (" + e.getHealth() + " health)" + RESET);
+                        .println(RED + "\t" + e.getType().getDisplayName() + " (Health: " + e.getHealth() + "/" + e.getMaxHealth() + ")" + RESET);
             }
 
             player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
@@ -445,7 +445,7 @@ public class GameUserInterface {
             }
 
             System.out.println();
-            System.out.println("HP: " + GREEN + player.getHealth() + RESET + " / " + player.getMaxHealth());
+            System.out.println("Health: " + GREEN + player.getHealth() + RESET + " / " + player.getMaxHealth());
             System.out.println("Magic: " + CYAN + player.getMagic() + RESET + " / " + player.getMaxMagic());
             System.out.println("Lives: " + YELLOW + player.getLives() + RESET);
             System.out.println("Coins: " + YELLOW + player.getCoins() + RESET);
@@ -462,8 +462,8 @@ public class GameUserInterface {
             System.out.println(BOLD + "Choose an ability:" + RESET);
 
             for (int i = 0; i < abilities.length; i++) {
-                System.out.println((i + 1) + ". " + abilities[i].getDescription()
-                        + " (Cost: " + abilities[i].getMagicCost() + ")");
+                System.out.println((i + 1) + ". " + abilities[i].getDisplayName() + " (" + abilities[i].getBaseDamage() + " damage) - " + abilities[i].getDescription()
+                        + " (Cost: " + abilities[i].getMagicCost() + " magic)");
             }
 
             System.out.println("0. Quit Run");
@@ -518,9 +518,8 @@ public class GameUserInterface {
                 damageDealt = 0;
 
             System.out.println();
-            System.out.println(GREEN + "You used " + chosenAbility.name() + " on " + target.getType()
+            System.out.println(GREEN + "You used " + chosenAbility.getDisplayName() + " on " + target.getType().getDisplayName()
                     + " for " + damageDealt + " damage." + RESET);
-            System.out.println(target.getType() + " HP: " + CYAN + targetHpAfter + RESET);
 
             if (target.getHealth() <= 0) {
                 telemetryListener.onKillEnemy(
@@ -579,8 +578,8 @@ public class GameUserInterface {
                     damageTaken = 0;
 
                 System.out.println();
-                System.out.println(RED + enemy.getType() + " attacked you for " + damageTaken + " damage." + RESET);
-                System.out.println("Your HP: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
+                System.out.println(RED + enemy.getType().getDisplayName() + " attacked you for " + damageTaken + " damage." + RESET);
+                System.out.println("Your health: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }
         }
     }
@@ -623,7 +622,7 @@ public class GameUserInterface {
                 continue;
 
             shown++;
-            System.out.println((i + 1) + ". " + enemy.getType() + " (HP: " + enemy.getHealth() + ")");
+            System.out.println((i + 1) + ". " + enemy.getType().getDisplayName() + " (Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth() +")");
         }
 
         if (shown == 0)
