@@ -720,4 +720,331 @@
   "sessionID" : -1518178256,
   "timestamp" : "2026/02/15/17/41/48"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -1678934339,
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/57/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/57/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "KillEnemy",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "enemy_type" : "GOBLIN",
+  "timestamp" : "2026/02/15/17/57/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "player_HP_remaining" : 140,
+  "timestamp" : "2026/02/15/17/57/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "GainCoin",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "coins_gained" : 25,
+  "timestamp" : "2026/02/15/17/57/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "upgrade_bought" : "ABSOLUTE_PULSE_UNLOCK",
+  "coins_spent" : 10,
+  "timestamp" : "2026/02/15/17/57/59"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -1678934339,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "upgrade_bought" : "SLASH_UNLOCK",
+  "coins_spent" : 15,
+  "timestamp" : "2026/02/15/17/58/04"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1678934339,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/58/11"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "KillEnemy",
+  "sessionID" : -1678934339,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "enemy_type" : "FISH_MAN",
+  "timestamp" : "2026/02/15/17/58/48"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : -1678934339,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "player_HP_remaining" : 175,
+  "timestamp" : "2026/02/15/17/58/48"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "GainCoin",
+  "sessionID" : -1678934339,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "coins_gained" : 25,
+  "timestamp" : "2026/02/15/17/58/48"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -1678934339,
+  "timestamp" : "2026/02/15/17/58/55"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : 946109109,
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/58/57"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/58/57"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "lives_left" : 3,
+  "timestamp" : "2026/02/15/17/59/02"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/59/02"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "lives_left" : 2,
+  "timestamp" : "2026/02/15/17/59/08"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/59/08"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "KillEnemy",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "enemy_type" : "GOBLIN",
+  "timestamp" : "2026/02/15/17/59/16"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "player_HP_remaining" : 10,
+  "timestamp" : "2026/02/15/17/59/16"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "GainCoin",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "coins_gained" : 25,
+  "timestamp" : "2026/02/15/17/59/16"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : 946109109,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "upgrade_bought" : "PHYSICAL_DAMAGE_RESISTANCE",
+  "coins_spent" : 20,
+  "timestamp" : "2026/02/15/17/59/16"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 946109109,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/59/28"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : 946109109,
+  "timestamp" : "2026/02/15/17/59/30"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : 1858308683,
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/59/38"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 1858308683,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/59/38"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "KillEnemy",
+  "sessionID" : 1858308683,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "enemy_type" : "GOBLIN",
+  "timestamp" : "2026/02/15/17/59/41"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : 1858308683,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "player_HP_remaining" : 130,
+  "timestamp" : "2026/02/15/17/59/41"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "GainCoin",
+  "sessionID" : 1858308683,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "coins_gained" : 25,
+  "timestamp" : "2026/02/15/17/59/41"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : 1858308683,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "upgrade_bought" : "THUNDER_STORM_UNLOCK",
+  "coins_spent" : 25,
+  "timestamp" : "2026/02/15/17/59/44"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : 1858308683,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "EASY",
+  "timestamp" : "2026/02/15/17/59/47"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : 1858308683,
+  "timestamp" : "2026/02/15/18/00/09"
+}
 ]

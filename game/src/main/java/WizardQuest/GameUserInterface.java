@@ -592,7 +592,7 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
         }
         player.resetHealth();
         player.resetMagic();
-
+        player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
         // Encounter Loop
         while (true) {
             System.out.println("Encounter: " + CYAN + encounter.getType().getDisplayName() + RESET);
@@ -602,7 +602,7 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
                                 + e.getMaxHealth() + ")" + RESET);
             }
 
-            player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
+            
 
             EntityInterface[] enemies = encounter.getEnemies();
 
@@ -771,6 +771,8 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
                         + " damage." + RESET);
                 System.out.println("Your health: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }
+
+            player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
         }
     }
 
