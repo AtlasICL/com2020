@@ -1,7 +1,6 @@
 package WizardQuest;
 
 import java.io.File;
-import java.math.BigInteger;
 
 /**
  * Interface for settings. Provides access to user settings and properties, as
@@ -54,10 +53,9 @@ public interface SettingsInterface {
      * Hashes the username of the currently authenticated user and returns it (as
      * their ID).
      * 
-     * @throws AuthenticationException if no user is authenticated.
      * @return the user's ID.
      */
-    public String getUserID() throws AuthenticationException;
+    public String getUserID();
 
     /**
      * Returns whether the user has telemetry enabled.

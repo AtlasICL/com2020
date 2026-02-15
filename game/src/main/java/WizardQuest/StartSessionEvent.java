@@ -1,5 +1,6 @@
 package WizardQuest;
 
+import java.time.Instant;
 
 public class StartSessionEvent extends TelemetryEvent {
     private final DifficultyEnum difficulty;
@@ -18,8 +19,8 @@ public class StartSessionEvent extends TelemetryEvent {
      *                      yyyy/mm/dd/hh/mm/ss.
      * @param difficulty    the difficulty used for the player's session.
      */
-    public StartSessionEvent(Object source, String userID, int sessionID, String timeStamp, DifficultyEnum difficulty){
-        super(source, userID, sessionID, timeStamp, "StartSession");
+    public StartSessionEvent(String userID, int sessionID, Instant timeStamp, DifficultyEnum difficulty) {
+        super(userID, sessionID, timeStamp, "StartSession");
         this.difficulty = difficulty;
     }
 

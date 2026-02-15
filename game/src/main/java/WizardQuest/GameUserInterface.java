@@ -1,6 +1,7 @@
 package WizardQuest;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -9,8 +10,6 @@ public class GameUserInterface {
     private final GameManagerInterface gameManager;
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final Scanner scanner;
-
-    private AuthenticationResult currentUser = null;
 
     private static final String RESET = "\u001B[0m";
     private static final String BOLD = "\u001B[1m";
@@ -39,6 +38,14 @@ public class GameUserInterface {
             return;
         }
         showMenu();
+        TelemetryListenerSingleton.getInstance().onStartSession(
+            new StartSessionEvent(
+                SettingsSingleton.getInstance().getUserID(),
+                12,
+                Instant.now(), 
+                GameManagerSingleton.getInstance().getCurrentDifficulty()
+            )   
+        );
     }
 
     private void showTitle() {
@@ -208,6 +215,13 @@ public class GameUserInterface {
 
         try {
             settings.setStartingLives(difficulty, lives);
+            TelemetryListenerSingleton.getInstance().onSettingsChange(
+                new SettingsChangeEvent(
+                    Instant.now(), 
+                    SettingsEnum.STARTING_LIVES, 
+                    String.valueOf(lives)
+                )
+            );
             System.out.println(GREEN + "Starting lives updated." + RESET);
         } catch (AuthenticationException e) {
             System.out.println(RED + "You must be logged in to change design parameters." + RESET);

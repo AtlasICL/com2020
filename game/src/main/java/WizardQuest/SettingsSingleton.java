@@ -424,7 +424,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public String getUserID() throws AuthenticationException {
+        public String getUserID() {
             return this.userID;
         }
 
