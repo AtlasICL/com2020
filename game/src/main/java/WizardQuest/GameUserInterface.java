@@ -206,7 +206,7 @@ public class GameUserInterface {
     }
 
     private void runSimulatedRun() {
-        telemetryListener.setDestinationFile(new File("../simulation_events.json"));
+        telemetryListener.setDestinationFile(new File("../event_logs/simulation_events.json"));
         DifficultyEnum d = selectDifficulty();
         gameManager.startNewGame(d);
 

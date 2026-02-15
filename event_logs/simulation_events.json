@@ -220,4 +220,439 @@
   "sessionID" : 795853084,
   "timestamp" : "2026/02/15/17/19/27"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -177180065,
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 20,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 19,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 18,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 17,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 16,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 15,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 14,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 13,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 12,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 11,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 10,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 9,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 8,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 7,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 6,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 5,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 4,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 3,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 2,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -177180065,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "HARD",
+  "lives_left" : 1,
+  "timestamp" : "2026/02/15/19/02/29"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -177180065,
+  "timestamp" : "2026/02/15/19/02/29"
+}
 ]
