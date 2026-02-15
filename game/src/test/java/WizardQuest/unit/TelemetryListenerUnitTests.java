@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 public class TelemetryListenerUnitTests {
 
@@ -70,7 +69,7 @@ public class TelemetryListenerUnitTests {
                 GameManagerSingleton.getInstance().startNewGame(DifficultyEnum.MEDIUM);
                 StartSessionEvent startSession = new StartSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now(),
                                 DifficultyEnum.MEDIUM);
                 TelemetryListenerSingleton.getInstance().onStartSession(startSession);
@@ -90,17 +89,15 @@ public class TelemetryListenerUnitTests {
          */
         @Test
         @DisplayName("TelemetryListener - userID field input validated")
-        void onNormalEncounterStart_userIDValidated()
-                        throws AuthenticationException, UserValidationException,
-                        SessionValidationException, TimestampValidationException {
+        void onNormalEncounterStart_userIDValidated() {
                 // Initialise an invalid NormalEncounterStartEvent object for the authenticated
                 // user.
                 // The userID field will be incremented by 1, creating a mismatch between the
                 // value in the
                 // authenticated user's settings and the value in the event field.
                 NormalEncounterStartEvent invalidTestEvent = new NormalEncounterStartEvent(
-                                SettingsSingleton.getInstance().getUserID() + 1,
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                null,
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -117,7 +114,7 @@ public class TelemetryListenerUnitTests {
                 // user.
                 NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -142,9 +139,7 @@ public class TelemetryListenerUnitTests {
          */
         @Test
         @DisplayName("TelemetryListener - sessionID field input validated")
-        void onNormalEncounterStart_sessionIDValidated()
-                        throws AuthenticationException, UserValidationException,
-                        SessionValidationException, TimestampValidationException {
+        void onNormalEncounterStart_sessionIDValidated() {
                 // Initialise an invalid NormalEncounterStartEvent object for the authenticated
                 // user.
                 // The sessionID field will be incremented by 1, creating a mismatch between the
@@ -152,7 +147,7 @@ public class TelemetryListenerUnitTests {
                 // authenticated user's settings and the value in the event field.
                 NormalEncounterStartEvent invalidTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID() + 1,
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID() + 1,
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -171,7 +166,7 @@ public class TelemetryListenerUnitTests {
                 // This should be rejected, as a session is currently running for the user.
                 StartSessionEvent testStartEvent = new StartSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now(),
                                 DifficultyEnum.MEDIUM);
                 // This should result in SessionValidationException being thrown as a session is
@@ -189,11 +184,11 @@ public class TelemetryListenerUnitTests {
                 // The second one should fail, as there is no session currently running now.
                 EndSessionEvent testEndEvent1 = new EndSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now());
                 EndSessionEvent testEndEvent2 = new EndSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.now());
                 // This first event should be accepted, no exception should be thrown.
                 TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent1);
@@ -201,7 +196,7 @@ public class TelemetryListenerUnitTests {
                 // This second event should result in SessionValidationException being thrown.
                 TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent2);
                 assertTrue(this.exError.toString().contains("EndSession for session " + testEndEvent2.getSessionID() +
-                                " occurs before it's StartSession"));
+                                " occurs before its StartSession"));
                 // Reset the exception output stream.
                 exError.reset();
 
@@ -210,42 +205,18 @@ public class TelemetryListenerUnitTests {
         /**
          * All telemetry events contain the timeStamp field, which identifies the time
          * at which the event occurred.
-         * timeStamp should be parsable to a LocalDateTime object.
          * It should not be a time in the future, nor should it be before the time stamp
-         * of the last event that
-         * occurred before this one.
+         * of the last event that occurred before this one.
          */
         @Test
         @DisplayName("TelemetryListener - timeStamp field input validated")
-        void onNormalEncounterStart_timeStampValidated()
-                        throws AuthenticationException, UserValidationException,
-                        SessionValidationException, TimestampValidationException {
-                // Initialise an invalid NormalEncounterStartEvent object for the authenticated
-                // user.
-                // The timestamp field will be of a format that is not parseable to a
-                // LocalDateTime object.
-                NormalEncounterStartEvent invalidTestEvent1 = new NormalEncounterStartEvent(
-                                SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
-                                Instant.now().plus(1, ChronoUnit.DAYS),
-                                EncounterEnum.GOBLIN_ENCOUNTER,
-                                DifficultyEnum.MEDIUM,
-                                1);
-                // Since the value cannot be parsed, TimestampValidationException should be
-                // thrown when an event occurs.
-                TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent1);
-                assertTrue(this.exError.toString()
-                                .contains("Time stamp of event " + invalidTestEvent1.getEvent() +
-                                                " " + invalidTestEvent1.getTimestamp() + " is of invalid format"));
-                // Reset the exception output stream.
-                exError.reset();
-
+        void onNormalEncounterStart_timeStampValidated() {
                 // Initialise an invalid NormalEncounterStartEvent object for the authenticated
                 // user.
                 // The timestamp field will be of a time that is in the future.
                 NormalEncounterStartEvent invalidTestEvent2 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 Instant.parse("3000-01-01T15:00:00Z"), // 1st January 3000 at 15:00:00
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -264,14 +235,14 @@ public class TelemetryListenerUnitTests {
                 // The second one will contain a timestamp earlier than that of the first one.
                 NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                                 TimeManagerSingleton.getInstance().getCurrentTime(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
                                 1);
                 NormalEncounterStartEvent invalidTestEvent3 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getSessionID(),
+                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
                         Instant.parse("2026-01-01T15:00:00Z"), // 1st January 2026 at 15:00:00
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -293,15 +264,22 @@ public class TelemetryListenerUnitTests {
         }
 
         /**
+         * Create and invoke an EndSessionEvent, to ensure that sessionIDs are kept clean between each test.
          * Resets the telemetry listener's filepath to the filepath used for production.
          * Also restores the system error buffer to its original value from before any
          * tests were run.
          */
         @AfterEach
         void cleanUp() {
-                System.setErr(this.defaultError);
-                SettingsSingleton.getInstance().resetLoginsDestinationFile();
-                SettingsSingleton.getInstance().resetSettingsDestinationFile();
-                TelemetryListenerSingleton.getInstance().resetDestinationFile();
+            EndSessionEvent endSessionEvent = new EndSessionEvent(
+                    SettingsSingleton.getInstance().getUserID(),
+                    GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                    Instant.now()
+            );
+            TelemetryListenerSingleton.getInstance().onEndSession(endSessionEvent);
+            System.setErr(this.defaultError);
+            SettingsSingleton.getInstance().resetLoginsDestinationFile();
+            SettingsSingleton.getInstance().resetSettingsDestinationFile();
+            TelemetryListenerSingleton.getInstance().resetDestinationFile();
         }
 }

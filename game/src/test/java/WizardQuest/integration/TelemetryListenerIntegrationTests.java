@@ -73,7 +73,8 @@ public class TelemetryListenerIntegrationTests {
         StartSessionEvent startSession = new StartSessionEvent(
                 SettingsSingleton.getInstance().getUserID(),
                 GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
-                Instant.now(), DifficultyEnum.MEDIUM);
+                Instant.now(),
+                DifficultyEnum.MEDIUM);
         TelemetryListenerSingleton.getInstance().onStartSession(startSession);
         this.testEvent = new NormalEncounterStartEvent(SettingsSingleton.getInstance().getUserID(),
                 GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
@@ -121,10 +122,17 @@ public class TelemetryListenerIntegrationTests {
     }
 
     /**
+     * Create and invoke an EndSessionEvent, to ensure that sessionIDs are kept clean between each test.
      * Resets the telemetry listener's filepath to the filepath used for production.
      */
     @AfterEach
     void cleanUp() {
+        EndSessionEvent endSessionEvent = new EndSessionEvent(
+                SettingsSingleton.getInstance().getUserID(),
+                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                Instant.now()
+        );
+        TelemetryListenerSingleton.getInstance().onEndSession(endSessionEvent);
         SettingsSingleton.getInstance().resetLoginsDestinationFile();
         SettingsSingleton.getInstance().resetSettingsDestinationFile();
         TelemetryListenerSingleton.getInstance().resetDestinationFile();
