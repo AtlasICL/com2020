@@ -16,7 +16,7 @@ game/target
 **.env**
 
 telemetry/auth/logs.txt
-telemetry/logins_file.txt
+telemetry/logins_file.json
 
 
 
