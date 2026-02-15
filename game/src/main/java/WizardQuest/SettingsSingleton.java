@@ -2,6 +2,7 @@ package WizardQuest;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.EnumMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -215,7 +216,6 @@ public class SettingsSingleton {
         /**
          * Saves USER-SPECIFIC info:
          * - telemetryEnabled
-         * - role
          * - furthestLevel (per difficulty)
          */
         public void saveProfile() {

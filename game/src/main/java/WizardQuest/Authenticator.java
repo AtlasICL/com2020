@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.ProcessBuilder;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,7 +22,7 @@ public class Authenticator implements AuthenticatorInterface {
         // Instantiate the process builder, and set it up to be able
         // to run the login python script.
         ProcessBuilder procBuilder = new ProcessBuilder(
-            "python3",
+            "python",
             "-m",
             "auth.auth_wrapper"
         );
@@ -98,18 +97,18 @@ public class Authenticator implements AuthenticatorInterface {
         );
     }
 
-    // FOR TESTING
-    // To test, use mvn -f C:\eaca\com2020\game\pom.xml compile exec:java "-Dexec.mainClass=WizardQuest.Authenticator"
-    public static void main(String[] args) {
-        Authenticator auth = new Authenticator();
-        try {
-            AuthenticationResult result = auth.login();
-            System.out.println("Name: " + result.name());
-            System.out.println("UserID: " + result.userID());
-            System.out.println("Role: " + result.role());
-        } catch (AuthenticationException e) {
-            System.err.println("Login failed: " + e.getMessage());
-        }
-    }
+    // // FOR TESTING
+    // // To test, use mvn -f C:\eaca\com2020\game\pom.xml compile exec:java "-Dexec.mainClass=WizardQuest.Authenticator"
+    // public static void main(String[] args) {
+    //     Authenticator auth = new Authenticator();
+    //     try {
+    //         AuthenticationResult result = auth.login();
+    //         System.out.println("Name: " + result.name());
+    //         System.out.println("UserID: " + result.userID());
+    //         System.out.println("Role: " + result.role());
+    //     } catch (AuthenticationException e) {
+    //         System.err.println("Login failed: " + e.getMessage());
+    //     }
+    // }
 
 }

@@ -1,6 +1,7 @@
 package WizardQuest;
 
 import java.io.File;
+import java.math.BigInteger;
 
 /**
  * Interface for settings. Provides access to user settings and properties, as

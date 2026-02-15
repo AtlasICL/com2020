@@ -27,7 +27,35 @@ public class EntityAISingleton {
         }
 
         @Override
-        public void useAbility(AbilityEnum[] abilities, EntityInterface self, EntityInterface[] enemies) {}
+        public void useAbility(AbilityEnum[] abilities, EntityInterface self, EntityInterface[] enemies) {
+            if (abilities == null || abilities.length == 0) return;
+            if (self == null) return;
+            if (enemies == null || enemies.length == 0) return;
+
+            //makes player target
+            EntityInterface target = null;
+
+            for (EntityInterface e : enemies) {
+                if (e != null && e.getHealth() > 0) {
+                    target = e;
+                    break;
+                }
+            }
+
+            if (target == null) return;
+
+            //pick ability at random
+            AbilityEnum chosen =
+                    abilities[(int)(Math.random() * abilities.length)];
+
+            //execute attack
+            try {
+                chosen.execute(self, target);
+            }
+            catch (LackingResourceException ignored) {
+                //placeholder
+            }
+        }
 
         @Override
         public UpgradeEnum pickUpgrade(UpgradeEnum[] upgrades, int coins) {return null;} // PLACEHOLDER

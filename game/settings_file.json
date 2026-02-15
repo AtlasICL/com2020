@@ -1,4 +1,50 @@
 {
+  "users" : {
+    "0" : {
+      "telemetryEnabled" : false,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "-1631417452" : {
+      "telemetryEnabled" : true,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "1950438128" : {
+      "telemetryEnabled" : true,
+      "role" : "DEVELOPER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "-1141973652" : {
+      "telemetryEnabled" : true,
+      "role" : "PLAYER",
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    },
+    "105241953273671074461" : {
+      "telemetryEnabled" : true,
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
+    }
+  },
   "designParameters" : {
     "playerMaxHealth" : {
       "EASY" : 200,
@@ -21,7 +67,7 @@
       "HARD" : 2.0
     },
     "startingLives" : {
-      "EASY" : 5,
+      "EASY" : 10,
       "MEDIUM" : 3,
       "HARD" : 1
     },
@@ -34,16 +80,6 @@
       "EASY" : 5,
       "MEDIUM" : 3,
       "HARD" : 1
-    }
-  },
-  "users" : {
-    "105241953273671074461" : {
-      "telemetryEnabled" : true,
-      "furthestLevel" : {
-        "EASY" : 0,
-        "MEDIUM" : 0,
-        "HARD" : 0
-      }
     }
   }
 }

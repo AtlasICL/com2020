@@ -14,8 +14,12 @@ public interface GameRunInterface {
       * finished, and reset it if the player retries it after dying.
       * 
       * @return a reference to the chosen encounter.
+      * 
+      * @throws IllegalStateException if it is asked to pick an encounter for a stage
+      *                               where all encounters have already been
+      *                               completed.
       */
-     public EncounterInterface pickEncounter();
+     public EncounterInterface pickEncounter() throws IllegalStateException;
 
      /**
       * Picks a number of upgrades from the shop determined by the ShopItemCount
@@ -73,9 +77,8 @@ public interface GameRunInterface {
      public int getDeathCount();
 
      /**
-      * Increments the run's death count. It is the job of the caller to decrement
-      * the player's lives and register when their health reaches 0 to call this
-      * method.
+      * Marks that the player has died, incrementing the death count, reducing the
+      * player's lives by 1, and resetting their health.
       */
      public void incrementDeathCount();
 
