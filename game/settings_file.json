@@ -45,7 +45,7 @@
       }
     },
     "102232247054755865131" : {
-      "telemetryEnabled" : true,
+      "telemetryEnabled" : false,
       "furthestLevel" : {
         "EASY" : 0,
         "MEDIUM" : 0,

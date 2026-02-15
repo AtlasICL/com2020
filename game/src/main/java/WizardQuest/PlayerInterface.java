@@ -41,7 +41,8 @@ public interface PlayerInterface extends EntityInterface {
     public int getMaxMagic();
 
     /**
-     * Gets the rate at which a player's magic points regenerates between each stage.
+     * Gets the rate at which a player's magic points regenerates between each
+     * stage.
      *
      * @return the player's magic regeneration rate per stage.
      */
@@ -62,6 +63,11 @@ public interface PlayerInterface extends EntityInterface {
      * @throws IllegalArgumentException if amount is not a non-negative number.
      */
     public void loseMagic(int amount) throws IllegalArgumentException;
+
+    /**
+     * Resets the player's magic to 0.
+     */
+    public void resetMagic();
 
     /**
      * Gets the remaining lives that a player has in a session.

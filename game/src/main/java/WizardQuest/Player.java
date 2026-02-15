@@ -131,5 +131,10 @@ public class Player implements PlayerInterface {
     public List<UpgradeEnum> getUpgrades() {
         return new LinkedList<UpgradeEnum>();
     }
+
+    @Override
+    public void resetMagic(){
+        this.magic = 0;
+    }
 }
 

@@ -9,18 +9,22 @@ import java.lang.reflect.InvocationTargetException;
  */
 
 public enum EntityEnum {
-    PLAYER(Player.class, "Player"),
-    GOBLIN(Goblin.class, "Goblin"), // enemy 1
-    FISH_MAN(FishMan.class, "FishMan"), // enemy 2
+    PLAYER(Player.class, "Player", "Player"),
+    GOBLIN(Goblin.class, "Goblin", "Goblin"), // enemy 1
+    FISH_MAN(FishMan.class, "FishMan", "Fish man");// enemy 2
+    /*
     PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
     EVIL_WIZARD(null, "EvilWizard"), // PLACEHOLDER ARGS
     ARMOURED_GOBLIN(null, "ArmouredGoblin"), // PLACEHOLDER ARGS
     GHOST(null, "Ghost"), // PLACEHOLDER ARGS
     BLACK_KNIGHT(null, "Black Knight"), // PLACEHOLDER ARGS
     DRAGON(null, "Dragon"),; // PLACEHOLDER ARGS
+     */
 
     private final Class<? extends EntityInterface> enemyClass;
     private final String telemetryName;
+    private final String displayName;
+
 
     /**
      * Constructor for the enum EntityType
@@ -28,9 +32,10 @@ public enum EntityEnum {
      * @param enemyClass the class object for instantiation using reflection
      * @param telemetryName the naming for the telemetry events
      */
-    private EntityEnum(Class<? extends EntityInterface> enemyClass, String telemetryName) {
+    private EntityEnum(Class<? extends EntityInterface> enemyClass, String telemetryName, String displayName) {
         this.enemyClass = enemyClass;
         this.telemetryName = telemetryName;
+        this.displayName = displayName;
     }
 
     /**
@@ -55,6 +60,15 @@ public enum EntityEnum {
      */
     public String getTelemetryName() {
         return telemetryName;
+    }
+
+        /**
+     * This method gets the telemetry name for this entity type
+     *
+     * @return the class object for this entity
+     */
+    public String getDisplayName() {
+        return displayName;
     }
 }
 

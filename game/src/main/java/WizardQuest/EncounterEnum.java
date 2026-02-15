@@ -4,11 +4,12 @@ package WizardQuest;
  * Enumerates all encounter types in the game.
  */
 public enum EncounterEnum {
-    GOBLIN_ENCOUNTER(new EntityEnum[]{EntityEnum.GOBLIN}, "GoblinEncounter"),
-    FISHMAN_ENCOUNTER(new EntityEnum[]{EntityEnum.FISH_MAN}, "FishManEncounter");
+    GOBLIN_ENCOUNTER(new EntityEnum[]{EntityEnum.GOBLIN}, "GoblinEncounter", "Goblin Encounter"),
+    FISHMAN_ENCOUNTER(new EntityEnum[]{EntityEnum.FISH_MAN}, "FishManEncounter", "Fish Man Encounter");
 
     private final EntityEnum[] enemies;
     private final String telemetryName;
+    private final String displayName;
 
     /**
      * Constructor for EncounterEnum
@@ -16,9 +17,10 @@ public enum EncounterEnum {
      * @param enemies array of EntityType objects that appear occur an encounter
      * @param telemetryName the name used for telemetry events
      */
-    private EncounterEnum(EntityEnum[] enemies, String telemetryName) {
+    private EncounterEnum(EntityEnum[] enemies, String telemetryName, String displayName) {
         this.enemies = enemies;
         this.telemetryName = telemetryName;
+        this.displayName = displayName;
     }
 
     /**
@@ -41,10 +43,18 @@ public enum EncounterEnum {
 
     /**
      * This method gets the telemetry name for this encounter
-     * @return tje class object for this entity
+     * @return the telemetry name for the entity
      */
     public String getTelemetryName() {
         return telemetryName;
+    }
+
+        /**
+     * This method gets the display name for this encounter
+     * @return the display name for the entity
+     */
+    public String getDisplayName() {
+        return displayName;
     }
 
 }

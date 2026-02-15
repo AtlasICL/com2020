@@ -1,6 +1,6 @@
 package WizardQuest;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * Provides a singleton global access point to the time manager
@@ -22,8 +22,8 @@ public class TimeManagerSingleton {
         public TimeManager() {}
 
         @Override
-        public LocalDateTime getCurrentTime() {
-            return LocalDateTime.now();
+        public Instant getCurrentTime() {
+            return Instant.now();
         }
     }
 }

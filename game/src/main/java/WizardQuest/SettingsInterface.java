@@ -10,12 +10,17 @@ public interface SettingsInterface {
     /**
      * Logs in the user using the result from the Authenticator (Python OAuth).
      * Sets the current user's ID, name, and role from the authentication result,
-     * and loads their settings from the settings file.
+     * and loads their settings from the settings file. Also establishes a session for use in telemetry.
      *
      * @param result the AuthenticationResult returned by Authenticator.login().
      * @throws AuthenticationException if the result is invalid.
      */
     public void loginWithResult(AuthenticationResult result) throws AuthenticationException;
+
+    /**
+     * Marks the end of a session, informing settings to send the endSessionEvent to telemetry listener.
+     */
+    public void endSession();
 
     /**
      * Returns the role of the currently authenticated user or throws an exception

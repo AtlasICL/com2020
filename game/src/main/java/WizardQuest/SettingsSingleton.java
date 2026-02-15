@@ -3,6 +3,7 @@ package WizardQuest;
 import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,17 +15,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class SettingsSingleton {
     private static SettingsInterface settings = new Settings();
 
-    private SettingsSingleton() {}
+    private SettingsSingleton() {
+    }
 
     public static SettingsInterface getInstance() {
         return settings;
     }
 
     private static class Settings implements SettingsInterface {
+        private final Random random;
         private boolean telemetryEnabled;
         private String userID;
         private RoleEnum userRole;
-        private int sessionID; // WE ARE NOT YET SETTING THIS - TODO LATER
+        private int sessionID;
 
         private EnumMap<DifficultyEnum, Integer> maxStageReached;
         private EnumMap<DifficultyEnum, Integer> playerMaxHealth;
@@ -45,6 +48,9 @@ public class SettingsSingleton {
          */
         public Settings() {
             loadDefaults();
+            random = new Random();
+            userID = null;
+            sessionID = 0;
         }
 
         /**
@@ -84,9 +90,9 @@ public class SettingsSingleton {
             maxMagic.put(DifficultyEnum.MEDIUM, 100);
             maxMagic.put(DifficultyEnum.HARD, 50);
 
-            magicRegenRate.put(DifficultyEnum.EASY, 5);
-            magicRegenRate.put(DifficultyEnum.MEDIUM, 3);
-            magicRegenRate.put(DifficultyEnum.HARD, 1);
+            magicRegenRate.put(DifficultyEnum.EASY, 15);
+            magicRegenRate.put(DifficultyEnum.MEDIUM, 15);
+            magicRegenRate.put(DifficultyEnum.HARD, 15);
 
             shopItemCount.put(DifficultyEnum.EASY, 3);
             shopItemCount.put(DifficultyEnum.MEDIUM, 2);
@@ -96,8 +102,8 @@ public class SettingsSingleton {
         /**
          * Load the settings of a given player from the settings file (.json).
          * Design parameters (global, affecting all users) loaded from
-         * "designParameters" key. 
-         * User-specific data is loaded from "users", with the key being 
+         * "designParameters" key.
+         * User-specific data is loaded from "users", with the key being
          * their userID. Reminder that an example settings.json file is provided.
          * If a profile for a user does not yet exist, it will be created with
          * default values.
@@ -126,7 +132,8 @@ public class SettingsSingleton {
                 }
 
                 // Load per-user data.
-                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users")
+                        : jsonMapper.createObjectNode();
                 JsonNode userSettings = usersNode.get(userID);
 
                 // If the user did not have a section in the file, create it.
@@ -150,7 +157,7 @@ public class SettingsSingleton {
         }
 
         /**
-         * Helper function for creating a json object to represent an **int** 
+         * Helper function for creating a json object to represent an **int**
          * settings field.
          */
         private ObjectNode createIntNode(EnumMap<DifficultyEnum, Integer> settingsMap) {
@@ -162,7 +169,7 @@ public class SettingsSingleton {
         }
 
         /**
-         * Helper function for creating a json object to represent a **float** 
+         * Helper function for creating a json object to represent a **float**
          * settings field.
          */
         private ObjectNode createFloatNode(EnumMap<DifficultyEnum, Float> settingsMap) {
@@ -208,7 +215,7 @@ public class SettingsSingleton {
             JsonNode newNode = userSettings.get(field);
             for (DifficultyEnum difficulty : DifficultyEnum.values()) {
                 JsonNode value = newNode.get(difficulty.toString());
-                settingsMap.put(difficulty, (float)value.asDouble());
+                settingsMap.put(difficulty, (float) value.asDouble());
             }
         }
 
@@ -220,7 +227,8 @@ public class SettingsSingleton {
         public void saveProfile() {
             try {
                 ObjectNode root = (ObjectNode) jsonMapper.readTree(SETTINGS_FILE);
-                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users") : jsonMapper.createObjectNode();
+                ObjectNode usersNode = root.has("users") ? (ObjectNode) root.get("users")
+                        : jsonMapper.createObjectNode();
 
                 ObjectNode profileNode = jsonMapper.createObjectNode();
                 profileNode.put("telemetryEnabled", telemetryEnabled);
@@ -255,8 +263,12 @@ public class SettingsSingleton {
 
             userID = result.userID();
             userRole = result.role();
-
+            this.sessionID = random.nextInt(); // Given how few sessions per second there are, collision chance is
+                                               // minimal.
+            TelemetryListenerSingleton.getInstance().onStartSession(
+                    new StartSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
             loadSettingsFromJson(userID);
+
         }
 
         /**
@@ -278,6 +290,7 @@ public class SettingsSingleton {
             return userRole;
         }
 
+        // Not implemented in sprint 1
         @Override
         public void setUserRole(String userID, RoleEnum role) throws AuthenticationException {
             if (!currentUserIsDeveloper()) {
@@ -341,8 +354,27 @@ public class SettingsSingleton {
 
         @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) {
+            // End/Start the session
+            if (telemetryEnabled) {
+                sessionID = random.nextInt(); // set new session ID.
+                TelemetryListenerSingleton.getInstance().onStartSession(
+                        new StartSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
+            } else {
+                TelemetryListenerSingleton.getInstance().onEndSession(
+                        new EndSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
+
+            }
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
+
+        }
+
+        @Override
+        public void endSession() {
+            TelemetryListenerSingleton.getInstance().onEndSession(
+                    new EndSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
+            userID = null;
+            sessionID = 0;
         }
 
         @Override
@@ -355,7 +387,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setPlayerMaxHealth(DifficultyEnum difficulty, int newplayerMaxHealth) throws AuthenticationException {
+        public void setPlayerMaxHealth(DifficultyEnum difficulty, int newplayerMaxHealth)
+                throws AuthenticationException {
             if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
@@ -364,7 +397,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier) throws AuthenticationException {
+        public void setEnemyDamageMultiplier(DifficultyEnum difficulty, float newEnemyDamageMultiplier)
+                throws AuthenticationException {
             if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
@@ -373,7 +407,8 @@ public class SettingsSingleton {
         }
 
         @Override
-        public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier) throws AuthenticationException {
+        public void setEnemyMaxHealthMultiplier(DifficultyEnum difficulty, float newEnemyMaxHealthMultiplier)
+                throws AuthenticationException {
             if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
                 throw new AuthenticationException();
             }
