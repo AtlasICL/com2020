@@ -222,7 +222,7 @@ public class GameUserInterface {
 
         try {
             settings.setStartingLives(difficulty, lives);
-            TelemetryListenerSingleton.getInstance().onSettingsChange(
+            telemetryListener.onSettingsChange(
                     new SettingsChangeEvent( settings.getUserID(),
                             timeManager.getCurrentTime(),
                             SettingsEnum.STARTING_LIVES,
@@ -379,9 +379,9 @@ public class GameUserInterface {
             System.out.println(BOLD + "Stage " + run.getStage() + RESET);
         }
 
-        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(
+        telemetryListener.onNormalEncounterStart(
                 new NormalEncounterStartEvent(
-                        settings.getUserID(), 12, Instant.now(),
+                        settings.getUserID(), gameManager.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(),
                         encounter.getType(),
                         gameManager.getCurrentDifficulty(),
                         run != null ? run.getStage() : 1));
@@ -409,9 +409,9 @@ public class GameUserInterface {
 
             if (player.getHealth() <= 0) {
                 System.out.println(RED + BOLD + "You died." + RESET);
-                TelemetryListenerSingleton.getInstance().onNormalEncounterFail(
+                telemetryListener.onNormalEncounterFail(
                         new NormalEncounterFailEvent(
-                                settings.getUserID(), gameManager.getCurrentRun().getSessionID(),
+                                settings.getUserID(), gameManager.getSessionID(),
                                 timeManager.getCurrentTime(),
                                 encounter.getType(),
                                 gameManager.getCurrentDifficulty(),
@@ -506,9 +506,9 @@ public class GameUserInterface {
             System.out.println(target.getType() + " HP: " + CYAN + targetHpAfter + RESET);
 
             if (target.getHealth() <= 0) {
-                TelemetryListenerSingleton.getInstance().onKillEnemy(
+                telemetryListener.onKillEnemy(
                         new KillEnemyEvent(
-                                settings.getUserID(), 12, Instant.now(),
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                 encounter.getType(),
                                 gameManager.getCurrentDifficulty(),
                                 run != null ? run.getStage() : 1,
@@ -516,9 +516,9 @@ public class GameUserInterface {
             }
 
             if (allEnemiesDead(enemies)) {
-                TelemetryListenerSingleton.getInstance().onNormalEncounterComplete(
+                telemetryListener.onNormalEncounterComplete(
                         new NormalEncounterCompleteEvent(
-                                settings.getUserID(), 12, Instant.now(),
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                 encounter.getType(),
                                 gameManager.getCurrentDifficulty(),
                                 run != null ? run.getStage() : 1,
@@ -527,9 +527,9 @@ public class GameUserInterface {
                 System.out.println(GREEN + "Encounter complete." + RESET);
                 if (player != null) {
                     player.gainCoins(10);
-                    TelemetryListenerSingleton.getInstance().onGainCoin(
+                    telemetryListener.onGainCoin(
                             new GainCoinEvent(
-                                    settings.getUserID(), 12, Instant.now(),
+                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
@@ -720,9 +720,9 @@ public class GameUserInterface {
             try {
                 UpgradeEnum bought = visible.get(choice - 1);
                 gameManager.purchaseUpgrade(bought);
-                TelemetryListenerSingleton.getInstance().onBuyUpgrade(
+                telemetryListener.onBuyUpgrade(
                         new BuyUpgradeEvent(
-                                settings.getUserID(), 12, Instant.now(),
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
                                 gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType()
                                         : null,
                                 gameManager.getCurrentDifficulty(),
