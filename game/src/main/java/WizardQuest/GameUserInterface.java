@@ -1,9 +1,9 @@
 package WizardQuest;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
 
 public class GameUserInterface {
 
@@ -11,6 +11,7 @@ public class GameUserInterface {
     private final SettingsInterface settings;
     private final TimeManagerInterface timeManager;
     private final TelemetryListenerInterface telemetryListener;
+    private final EntityAIInterface ai;
     private final Scanner scanner;
 
     private static final String RESET = "\u001B[0m";
@@ -30,6 +31,7 @@ public class GameUserInterface {
         this.settings = SettingsSingleton.getInstance();
         this.timeManager = TimeManagerSingleton.getInstance();
         this.telemetryListener = TelemetryListenerSingleton.getInstance();
+        this.ai = EntityAISingleton.getInstance();
         this.scanner = new Scanner(System.in);
     }
 
@@ -168,7 +170,12 @@ public class GameUserInterface {
             }
 
             if (input.equals("4")) {
-                // TODO
+                if (role == RoleEnum.DESIGNER || role == RoleEnum.DEVELOPER) {
+                    runSimulatedRun();
+                } else {
+                    System.out.println(RED + "You do not have permission to change design parameters." + RESET);
+                }
+                continue;
             }
             /*
              * if (input.equals("5")) {
@@ -194,6 +201,197 @@ public class GameUserInterface {
         } catch (AuthenticationException e) {
             System.out.println(RED + "You must be logged in to change telemetry settings." + RESET);
         }
+    }
+
+    private void runSimulatedRun() {
+        telemetryListener.setDestinationFile(new File("../simulation_events.json"));
+        DifficultyEnum d = selectDifficulty();
+        gameManager.startNewGame(d);
+
+        GameRunInterface lastRun = null;
+        PlayerInterface lastPlayer = null;
+
+        while (gameManager.isGameRunning()) {
+
+            // keep latest references while the run is still alive
+            try {
+                lastRun = gameManager.getCurrentRun();
+            } catch (Exception ignored) {
+            }
+            try {
+                lastPlayer = gameManager.getCurrentPlayer();
+            } catch (Exception ignored) {
+            }
+
+            boolean encounterWon = simulateEncounter();
+
+            if (!encounterWon) {
+                continue;
+            }
+
+            // stop after stage 2 (no shop after finishing)
+            GameRunInterface run = gameManager.getCurrentRun();
+            if (run != null && run.getStage() >= 2) {
+                System.out.println();
+                System.out.println(GREEN + BOLD + "Stage 2 complete. Ending prototype run." + RESET);
+                endScreen(lastRun, lastPlayer);
+                return;
+            }
+
+            simulateShop();
+
+            gameManager.advanceToNextLevel();
+        }
+
+        // if ever drops out without triggering the early returns
+        endScreen(lastRun, lastPlayer);
+    }
+
+    private boolean simulateEncounter() {
+
+        EncounterInterface encounter;
+
+        try {
+            encounter = gameManager.pickEncounter();
+        } catch (Exception e) {
+            System.out.println();
+            System.out.println(RED + BOLD + "No encounters available right now." + RESET);
+            System.out.println("Ending run.");
+            gameManager.endGame();
+            return false;
+        }
+
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run != null) {
+            System.out.println(BOLD + "Stage " + run.getStage() + RESET);
+        }
+
+        telemetryListener.onNormalEncounterStart(
+                new NormalEncounterStartEvent(
+                        settings.getUserID(), gameManager.getSessionID(),
+                        TimeManagerSingleton.getInstance().getCurrentTime(),
+                        encounter.getType(),
+                        gameManager.getCurrentDifficulty(),
+                        run != null ? run.getStage() : 1));
+
+        // Reset player at the start of the encounter
+        PlayerInterface player = gameManager.getCurrentPlayer();
+        if (player == null) {
+            gameManager.endGame();
+            return false;
+        }
+        player.resetHealth();
+        player.resetMagic();
+
+        // Encounter Loop
+        System.out.println("Encounter: " + CYAN + encounter.getType().getDisplayName() + RESET);
+        while (true) {
+
+            player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
+
+            EntityInterface[] enemies = encounter.getEnemies();
+
+            if (player.getHealth() <= 0) {
+                telemetryListener.onNormalEncounterFail(
+                        new NormalEncounterFailEvent(
+                                settings.getUserID(), gameManager.getSessionID(),
+                                timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                player.getLives()));
+                gameManager.resetFailedEncounter();
+
+                if (player.getLives() == 0) {
+                    gameManager.endGame();
+                }
+
+                return false;
+            }
+
+            EntityInterface target = ai.pickTarget(enemies);
+            AbilityEnum ability = ai.pickAbility(player);
+
+            if (ability == null) {
+                System.out.println(RED + "No abilities available." + RESET);
+                gameManager.endGame();
+                return false;
+            }
+
+            if (target == null) {
+                System.out.println(RED + "No targets available." + RESET);
+                gameManager.endGame();
+                return false;
+            }
+
+            try {
+                ability.execute(player, target);
+            } catch (LackingResourceException e) {
+                e.printStackTrace();
+            }
+
+            if (target.getHealth() <= 0) {
+                telemetryListener.onKillEnemy(
+                        new KillEnemyEvent(
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                target.getType()));
+            }
+
+            if (allEnemiesDead(enemies)) {
+                telemetryListener.onNormalEncounterComplete(
+                        new NormalEncounterCompleteEvent(
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                player.getHealth()));
+                gameManager.completeCurrentEncounter();
+                if (player != null) {
+                    player.gainCoins(10);
+                    telemetryListener.onGainCoin(
+                            new GainCoinEvent(
+                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                    encounter.getType(),
+                                    gameManager.getCurrentDifficulty(),
+                                    run != null ? run.getStage() : 1,
+                                    10));
+                }
+                return true;
+            }
+
+            // each enemy takes their turn
+            for (EntityInterface enemy : enemies) {
+                if (enemy == null)
+                    continue;
+                if (enemy.getHealth() <= 0)
+                    continue;
+
+                AbilityEnum a = ai.pickAbility(enemy);
+                try {
+                    a.execute(enemy, player);
+                } catch (LackingResourceException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    //Buys between 0 and 1 upgrades from the shop.
+    private void simulateShop() {
+        UpgradeEnum[] upgrades = gameManager.viewShop();
+        UpgradeEnum u = ai.pickUpgrade(upgrades, gameManager.getCurrentPlayer().getCoins());
+        if (u != null) {
+            try {
+                gameManager.purchaseUpgrade(u);
+            } catch (LackingResourceException e) {
+                e.printStackTrace();
+            }
+        }
+        return;
     }
 
     private void changeStartingLives() {
@@ -225,7 +423,7 @@ public class GameUserInterface {
         try {
             settings.setStartingLives(difficulty, lives);
             telemetryListener.onSettingsChange(
-                    new SettingsChangeEvent( settings.getUserID(),
+                    new SettingsChangeEvent(settings.getUserID(),
                             timeManager.getCurrentTime(),
                             SettingsEnum.STARTING_LIVES,
                             String.valueOf(lives)));
@@ -268,7 +466,7 @@ public class GameUserInterface {
         if (difficulty == null)
             return;
 
-        //reset owned upgrades at the start of each new run
+        // reset owned upgrades at the start of each new run
         for (int i = 0; i < ownedUpgrades.length; i++) {
             ownedUpgrades[i] = false;
         }
@@ -347,7 +545,7 @@ public class GameUserInterface {
                 continue;
             }
 
-            //stop after stage 2 (no shop after finishing)
+            // stop after stage 2 (no shop after finishing)
             GameRunInterface run = gameManager.getCurrentRun();
             if (run != null && run.getStage() >= 2) {
                 System.out.println();
@@ -397,7 +595,8 @@ public class GameUserInterface {
 
         telemetryListener.onNormalEncounterStart(
                 new NormalEncounterStartEvent(
-                        settings.getUserID(), gameManager.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(),
+                        settings.getUserID(), gameManager.getSessionID(),
+                        TimeManagerSingleton.getInstance().getCurrentTime(),
                         encounter.getType(),
                         gameManager.getCurrentDifficulty(),
                         run != null ? run.getStage() : 1));
@@ -416,11 +615,11 @@ public class GameUserInterface {
             System.out.println("Encounter: " + CYAN + encounter.getType().getDisplayName() + RESET);
             for (EntityInterface e : encounter.getEnemies()) {
                 System.out
-                        .println(RED + "\t" + e.getType().getDisplayName() + " (Health: " + e.getHealth() + "/" + e.getMaxHealth() + ")" + RESET);
+                        .println(RED + "\t" + e.getType().getDisplayName() + " (Health: " + e.getHealth() + "/"
+                                + e.getMaxHealth() + ")" + RESET);
             }
 
             player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
-
 
             EntityInterface[] enemies = encounter.getEnemies();
 
@@ -462,7 +661,8 @@ public class GameUserInterface {
             System.out.println(BOLD + "Choose an ability:" + RESET);
 
             for (int i = 0; i < abilities.length; i++) {
-                System.out.println((i + 1) + ". " + abilities[i].getDisplayName() + " (" + abilities[i].getBaseDamage() + " damage) - " + abilities[i].getDescription()
+                System.out.println((i + 1) + ". " + abilities[i].getDisplayName() + " (" + abilities[i].getBaseDamage()
+                        + " damage) - " + abilities[i].getDescription()
                         + " (Cost: " + abilities[i].getMagicCost() + " magic)");
             }
 
@@ -518,8 +718,9 @@ public class GameUserInterface {
                 damageDealt = 0;
 
             System.out.println();
-            System.out.println(GREEN + "You used " + chosenAbility.getDisplayName() + " on " + target.getType().getDisplayName()
-                    + " for " + damageDealt + " damage." + RESET);
+            System.out.println(
+                    GREEN + "You used " + chosenAbility.getDisplayName() + " on " + target.getType().getDisplayName()
+                            + " for " + damageDealt + " damage." + RESET);
 
             if (target.getHealth() <= 0) {
                 telemetryListener.onKillEnemy(
@@ -569,7 +770,12 @@ public class GameUserInterface {
 
                 int playerHpBefore = player.getHealth();
 
-                ai.useAbility(enemyAbilities, enemy, new EntityInterface[] { player });
+                AbilityEnum a = ai.pickAbility(enemy);
+                try {
+                    a.execute(enemy, player);
+                } catch (LackingResourceException e){
+                    e.printStackTrace();
+                }                
 
                 int playerHpAfter = player.getHealth();
                 int damageTaken = playerHpBefore - playerHpAfter;
@@ -578,7 +784,8 @@ public class GameUserInterface {
                     damageTaken = 0;
 
                 System.out.println();
-                System.out.println(RED + enemy.getType().getDisplayName() + " attacked you for " + damageTaken + " damage." + RESET);
+                System.out.println(RED + enemy.getType().getDisplayName() + " attacked you with " + a.getDisplayName() + " for " + damageTaken
+                        + " damage." + RESET);
                 System.out.println("Your health: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }
         }
@@ -622,7 +829,8 @@ public class GameUserInterface {
                 continue;
 
             shown++;
-            System.out.println((i + 1) + ". " + enemy.getType().getDisplayName() + " (Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth() +")");
+            System.out.println((i + 1) + ". " + enemy.getType().getDisplayName() + " (Health: " + enemy.getHealth()
+                    + "/" + enemy.getMaxHealth() + ")");
         }
 
         if (shown == 0)
