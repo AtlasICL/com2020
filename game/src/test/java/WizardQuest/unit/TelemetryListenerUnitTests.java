@@ -69,7 +69,7 @@ public class TelemetryListenerUnitTests {
                 GameManagerSingleton.getInstance().startNewGame(DifficultyEnum.MEDIUM);
                 StartSessionEvent startSession = new StartSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now(),
                                 DifficultyEnum.MEDIUM);
                 TelemetryListenerSingleton.getInstance().onStartSession(startSession);
@@ -97,7 +97,7 @@ public class TelemetryListenerUnitTests {
                 // authenticated user's settings and the value in the event field.
                 NormalEncounterStartEvent invalidTestEvent = new NormalEncounterStartEvent(
                                 null,
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -114,7 +114,7 @@ public class TelemetryListenerUnitTests {
                 // user.
                 NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -147,7 +147,7 @@ public class TelemetryListenerUnitTests {
                 // authenticated user's settings and the value in the event field.
                 NormalEncounterStartEvent invalidTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID() + 1,
+                                GameManagerSingleton.getInstance().getSessionID() + 1,
                                 Instant.now(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -166,7 +166,7 @@ public class TelemetryListenerUnitTests {
                 // This should be rejected, as a session is currently running for the user.
                 StartSessionEvent testStartEvent = new StartSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now(),
                                 DifficultyEnum.MEDIUM);
                 // This should result in SessionValidationException being thrown as a session is
@@ -184,11 +184,11 @@ public class TelemetryListenerUnitTests {
                 // The second one should fail, as there is no session currently running now.
                 EndSessionEvent testEndEvent1 = new EndSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now());
                 EndSessionEvent testEndEvent2 = new EndSessionEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.now());
                 // This first event should be accepted, no exception should be thrown.
                 TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent1);
@@ -216,7 +216,7 @@ public class TelemetryListenerUnitTests {
                 // The timestamp field will be of a time that is in the future.
                 NormalEncounterStartEvent invalidTestEvent2 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 Instant.parse("3000-01-01T15:00:00Z"), // 1st January 3000 at 15:00:00
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -235,14 +235,14 @@ public class TelemetryListenerUnitTests {
                 // The second one will contain a timestamp earlier than that of the first one.
                 NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                                 TimeManagerSingleton.getInstance().getCurrentTime(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
                                 1);
                 NormalEncounterStartEvent invalidTestEvent3 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                                GameManagerSingleton.getInstance().getSessionID(),
                         Instant.parse("2026-01-01T15:00:00Z"), // 1st January 2026 at 15:00:00
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
@@ -273,7 +273,7 @@ public class TelemetryListenerUnitTests {
         void cleanUp() {
             EndSessionEvent endSessionEvent = new EndSessionEvent(
                     SettingsSingleton.getInstance().getUserID(),
-                    GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                    GameManagerSingleton.getInstance().getSessionID(),
                     Instant.now()
             );
             TelemetryListenerSingleton.getInstance().onEndSession(endSessionEvent);

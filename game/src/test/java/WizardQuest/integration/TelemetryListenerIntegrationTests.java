@@ -72,12 +72,12 @@ public class TelemetryListenerIntegrationTests {
         GameManagerSingleton.getInstance().startNewGame(DifficultyEnum.MEDIUM);
         StartSessionEvent startSession = new StartSessionEvent(
                 SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                GameManagerSingleton.getInstance().getSessionID(),
                 Instant.now(),
                 DifficultyEnum.MEDIUM);
         TelemetryListenerSingleton.getInstance().onStartSession(startSession);
         this.testEvent = new NormalEncounterStartEvent(SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                GameManagerSingleton.getInstance().getSessionID(),
                 Instant.now(),
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
@@ -129,7 +129,7 @@ public class TelemetryListenerIntegrationTests {
     void cleanUp() {
         EndSessionEvent endSessionEvent = new EndSessionEvent(
                 SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getCurrentRun().getSessionID(),
+                GameManagerSingleton.getInstance().getSessionID(),
                 Instant.now()
         );
         TelemetryListenerSingleton.getInstance().onEndSession(endSessionEvent);
