@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import java.util.Random;
+
 /**
  * Provides global access to the game manager.
  */
@@ -24,10 +26,12 @@ public class GameManagerSingleton {
     private static class GameManager implements GameManagerInterface {
         private GameRunInterface currentGame;
         private EncounterInterface currentEncounter;
+        private final Random random;
 
         public GameManager() {
             this.currentEncounter = null;
             this.currentGame = null;
+            this.random = new Random();
         }
 
         @Override
@@ -42,7 +46,10 @@ public class GameManagerSingleton {
 
         @Override
         public void startNewGame(DifficultyEnum difficulty) {
-            this.currentGame = new GameRun(difficulty);
+            this.currentGame = new GameRun(difficulty, random.nextInt());
+            TelemetryListenerSingleton.getInstance()
+                    .onStartSession(new StartSessionEvent(SettingsSingleton.getInstance().getUserID(),
+                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(), difficulty));
         }
 
         @Override
@@ -98,8 +105,16 @@ public class GameManagerSingleton {
 
         @Override
         public void endGame() {
+            TelemetryListenerSingleton.getInstance()
+                    .onEndSession(new EndSessionEvent(SettingsSingleton.getInstance().getUserID(),
+                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime()));
             this.currentEncounter = null;
             this.currentGame = null;
+        }
+
+        @Override 
+        public int getSessionID(){
+            return this.currentGame.getSessionID();
         }
     }
 }

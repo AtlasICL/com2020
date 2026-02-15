@@ -51,7 +51,7 @@ public class TelemetryListenerSingleton {
          * @param e event being checked.
          * @throws SessionValidationException exception used to specify invalid sessions.
          */
-        private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
+        private void isCorrectSession(SessionEvent e) throws SessionValidationException{
             if(e.getEvent().equals("EndSession") && currentSessionID == -1){
                 throw new SessionValidationException("EndSession for session " + e.getSessionID() + 
                                                     " occurs before its StartSession");

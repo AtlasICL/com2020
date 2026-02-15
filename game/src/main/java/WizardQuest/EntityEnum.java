@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public enum EntityEnum {
     PLAYER(Player.class, "Player", "Player"),
     GOBLIN(Goblin.class, "Goblin", "Goblin"), // enemy 1
-    FISH_MAN(FishMan.class, "FishMan", "Fish man");// enemy 2
+    FISH_MAN(FishMan.class, "FishMan", "Fish Man");// enemy 2
     /*
     PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
     EVIL_WIZARD(null, "EvilWizard"), // PLACEHOLDER ARGS

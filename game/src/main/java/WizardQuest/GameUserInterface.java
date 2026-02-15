@@ -5,13 +5,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-
 public class GameUserInterface {
 
     private final GameManagerInterface gameManager;
-    private final SettingsInterface settings; 
-    private final TimeManagerInterface timeManager; 
-    private final TelemetryListenerInterface telemetryListener; 
+    private final SettingsInterface settings;
+    private final TimeManagerInterface timeManager;
+    private final TelemetryListenerInterface telemetryListener;
     private final Scanner scanner;
 
     private static final String RESET = "\u001B[0m";
@@ -42,7 +41,7 @@ public class GameUserInterface {
         if (!login()) {
             System.out.println(RED + "Cannot continue without authentication." + RESET);
             return;
-        }        
+        }
         showMenu();
     }
 
@@ -63,7 +62,7 @@ public class GameUserInterface {
         try {
             Authenticator auth = new Authenticator();
             AuthenticationResult result = auth.login();
-            settings.loginWithResult(result); //Settings handles session establishment.
+            settings.loginWithResult(result); // Settings handles session establishment.
             System.out.println(GREEN + "Welcome, " + result.name() + "! (Role: " + result.role() + ")" + RESET);
             return true;
         } catch (AuthenticationException e) {
@@ -224,7 +223,7 @@ public class GameUserInterface {
         try {
             settings.setStartingLives(difficulty, lives);
             TelemetryListenerSingleton.getInstance().onSettingsChange(
-                    new SettingsChangeEvent(
+                    new SettingsChangeEvent( settings.getUserID(),
                             timeManager.getCurrentTime(),
                             SettingsEnum.STARTING_LIVES,
                             String.valueOf(lives)));
@@ -401,7 +400,7 @@ public class GameUserInterface {
             System.out.println("Encounter: " + CYAN + encounter.getType().getDisplayName() + RESET);
             for (EntityInterface e : encounter.getEnemies()) {
                 System.out
-                        .println(RED + "\t" + e.getType().getDisplayName() + "(" + e.getHealth() + " health)" + RESET);
+                        .println(RED + "\t" + e.getType().getDisplayName() + " (" + e.getHealth() + " health)" + RESET);
             }
 
             player.gainMagic(player.getMagicRegenRate());
@@ -410,18 +409,14 @@ public class GameUserInterface {
 
             if (player.getHealth() <= 0) {
                 System.out.println(RED + BOLD + "You died." + RESET);
-                try {
-                    TelemetryListenerSingleton.getInstance().onNormalEncounterFail(
-                            new NormalEncounterFailEvent(
-                                    settings.getUserID(), settings.getSessionID(),
-                                    TimeManagerSingleton.getInstance().getCurrentTime(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
-                                    player.getLives()));
-                } catch (AuthenticationException e) {
-                    e.printStackTrace();
-                }
+                TelemetryListenerSingleton.getInstance().onNormalEncounterFail(
+                        new NormalEncounterFailEvent(
+                                settings.getUserID(), gameManager.getCurrentRun().getSessionID(),
+                                timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                player.getLives()));
                 gameManager.resetFailedEncounter();
 
                 if (player.getLives() == 0) {
@@ -821,7 +816,6 @@ public class GameUserInterface {
     }
 
     private void quit() {
-        settings.endSession();
         System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
         scanner.close();
     }

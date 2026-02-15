@@ -20,6 +20,7 @@ public class Player implements PlayerInterface {
         this.magic = 0;
         this.coins = 0;
         this.lives = settings.getStartingLives(difficulty);
+        this.difficulty = difficulty;
     }
 
     @Override

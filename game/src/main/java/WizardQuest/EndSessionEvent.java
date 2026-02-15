@@ -2,7 +2,7 @@ package WizardQuest;
 
 import java.time.Instant;
 
-public class EndSessionEvent extends TelemetryEvent{
+public class EndSessionEvent extends SessionEvent{
     /**
      * Constructor for EndSessionEvent.
      *

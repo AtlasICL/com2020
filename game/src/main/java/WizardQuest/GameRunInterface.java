@@ -88,4 +88,10 @@ public interface GameRunInterface {
       * @return the difficulty setting for this run.
       */
      public DifficultyEnum getDifficulty();
+     
+     /**
+      * Gets the session ID for the current run.
+      * @return the session ID of the current run.
+      */
+     public int getSessionID();
 }

@@ -27,7 +27,6 @@ public class SettingsSingleton {
         private boolean telemetryEnabled;
         private String userID;
         private RoleEnum userRole;
-        private int sessionID;
 
         private EnumMap<DifficultyEnum, Integer> maxStageReached;
         private EnumMap<DifficultyEnum, Integer> playerMaxHealth;
@@ -50,7 +49,6 @@ public class SettingsSingleton {
             loadDefaults();
             random = new Random();
             userID = null;
-            sessionID = 0;
         }
 
         /**
@@ -263,10 +261,6 @@ public class SettingsSingleton {
 
             userID = result.userID();
             userRole = result.role();
-            this.sessionID = random.nextInt(); // Given how few sessions per second there are, collision chance is
-                                               // minimal.
-            TelemetryListenerSingleton.getInstance().onStartSession(
-                    new StartSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
             loadSettingsFromJson(userID);
 
         }
@@ -354,27 +348,9 @@ public class SettingsSingleton {
 
         @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) {
-            // End/Start the session
-            if (telemetryEnabled) {
-                sessionID = random.nextInt(); // set new session ID.
-                TelemetryListenerSingleton.getInstance().onStartSession(
-                        new StartSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
-            } else {
-                TelemetryListenerSingleton.getInstance().onEndSession(
-                        new EndSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
-
-            }
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
 
-        }
-
-        @Override
-        public void endSession() {
-            TelemetryListenerSingleton.getInstance().onEndSession(
-                    new EndSessionEvent(userID, sessionID, TimeManagerSingleton.getInstance().getCurrentTime()));
-            userID = null;
-            sessionID = 0;
         }
 
         @Override
@@ -452,10 +428,6 @@ public class SettingsSingleton {
             saveDesignParameters();
         }
 
-        @Override
-        public int getSessionID() throws AuthenticationException {
-            return this.sessionID;
-        }
 
         @Override
         public String getUserID() {
