@@ -2,7 +2,8 @@ package WizardQuest;
 
 import java.time.Instant;
 
-public class StartSessionEvent extends TelemetryEvent {
+public class StartSessionEvent extends SessionEvent {
+
     private final DifficultyEnum difficulty;
     
     /**
@@ -25,9 +26,8 @@ public class StartSessionEvent extends TelemetryEvent {
     }
 
     /**
-     * Gets the stored difficulty.
-     * 
-     * @return session difficulty.
+     * Gets the difficulty of the session.
+     * @return the difficulty of the session. 
      */
     public DifficultyEnum getDifficulty(){
         return this.difficulty;

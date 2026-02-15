@@ -34,7 +34,7 @@ public class TelemetryListenerSingleton {
         private String currentUserID = "12";
         private Instant mostRecentTimeStamp;
         private static final ObjectMapper mapper = new ObjectMapper();
-        private static File DESTINATION_FILE  = new File("../events.json"); //change to actual filepath
+        private static File DESTINATION_FILE  = new File("../event_logs/events.json"); //change to actual filepath
         
         static{
             mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
@@ -51,7 +51,7 @@ public class TelemetryListenerSingleton {
          * @param e event being checked.
          * @throws SessionValidationException exception used to specify invalid sessions.
          */
-        private void isCorrectSession(TelemetryEvent e) throws SessionValidationException{
+        private void isCorrectSession(SessionEvent e) throws SessionValidationException{
             if(e.getEvent().equals("EndSession") && currentSessionID == -1){
                 throw new SessionValidationException("EndSession for session " + e.getSessionID() + 
                                                     " occurs before its StartSession");

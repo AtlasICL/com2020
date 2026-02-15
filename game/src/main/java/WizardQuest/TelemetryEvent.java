@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public abstract class TelemetryEvent {
     private final String userID;
-    private final int sessionID;
     private final Instant timeStamp;
     private final String event;
 
@@ -26,9 +25,8 @@ public abstract class TelemetryEvent {
      * @param event         the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */
-    public TelemetryEvent(String userID, int sessionID, Instant timeStamp, String event) {
+    public TelemetryEvent(String userID, Instant timeStamp, String event) {
         this.userID = userID;
-        this.sessionID = sessionID;
         this.timeStamp = timeStamp;
         this.event = event;
     }
@@ -42,14 +40,7 @@ public abstract class TelemetryEvent {
         return this.userID;
     }
 
-    /**
-     * Gets the stored session ID.
-     * 
-     * @return the session ID.
-     */
-    public int getSessionID() {
-        return this.sessionID;
-    }
+
 
     /**
      * Gets the stored timestamp.

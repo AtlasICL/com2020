@@ -35,6 +35,7 @@ public class GameRun implements GameRunInterface {
     private final LocalDateTime startTime;
     private final Random random;
     private int deathCount;
+    private final int sessionID;
 
     /**
      * Creates a run for the game in the specified difficulty. Also takes note of
@@ -43,24 +44,21 @@ public class GameRun implements GameRunInterface {
      * @param difficulty the difficulty setting for the run.
      */
 
-    // TEST: i filled every encounter slot with a default encounter to see
-    public GameRun(DifficultyEnum difficulty) {
+    public GameRun(DifficultyEnum difficulty, int sessionID) {
         phase1NormalEncounters = new EncounterInterface[] {
                 new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
                 new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty)
-        }; 
-        phase2NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty) }; 
-        phase3NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty) }; 
-        phase1Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
-                                                                    // after testing
-        phase2Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
-                                                                    // after testing
-        phase3Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
-                                                                    // after testing
-        finalBoss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
-                                                                   // after testing
+        };
+        phase2NormalEncounters = null;
+        phase3NormalEncounters = null;
+        phase1Boss = null; // Placeholder, contents are TBC -put back to null
+                           // after testing
+        phase2Boss = null; // Placeholder, contents are TBC -put back to null
+                           // after testing
+        phase3Boss = null; // Placeholder, contents are TBC -put back to null
+                           // after testing
+        finalBoss = null; // Placeholder, contents are TBC -put back to null
+                          // after testing
         shopUpgrades = new UpgradeEnum[] {
                 UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
                 UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
@@ -79,6 +77,12 @@ public class GameRun implements GameRunInterface {
         this.startTime = LocalDateTime.now();
         this.random = new Random();
         this.deathCount = 0;
+        this.sessionID = sessionID;
+    }
+
+    @Override
+    public int getSessionID(){
+        return this.sessionID;
     }
 
     @Override
