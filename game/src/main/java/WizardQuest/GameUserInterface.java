@@ -350,7 +350,7 @@ public class GameUserInterface {
                                 player.getHealth()));
                 gameManager.completeCurrentEncounter();
                 if (player != null) {
-                    player.gainCoins(10);
+                    player.gainCoins(35);
                     telemetryListener.onGainCoin(
                             new GainCoinEvent(
                                     settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
@@ -743,7 +743,7 @@ public class GameUserInterface {
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
                 if (player != null) {
-                    player.gainCoins(10);
+                    player.gainCoins(35);
                     telemetryListener.onGainCoin(
                             new GainCoinEvent(
                                     settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),

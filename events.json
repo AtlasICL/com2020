@@ -476,4 +476,120 @@
   "sessionID" : 1513720866,
   "timestamp" : "2026/02/15/16/24/45"
 }
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "StartSession",
+  "sessionID" : -292483596,
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/21/10"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/21/10"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "KillEnemy",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "enemy_type" : "FISH_MAN",
+  "timestamp" : "2026/02/15/17/21/22"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "player_HP_remaining" : 15,
+  "timestamp" : "2026/02/15/17/21/22"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "GainCoin",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "coins_gained" : 10,
+  "timestamp" : "2026/02/15/17/21/22"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "upgrade_bought" : "FIRE_DAMAGE_RESISTANCE",
+  "coins_spent" : 10,
+  "timestamp" : "2026/02/15/17/21/34"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "upgrade_bought" : "FIRE_DAMAGE_RESISTANCE",
+  "coins_spent" : 10,
+  "timestamp" : "2026/02/15/17/21/39"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "upgrade_bought" : "FIRE_DAMAGE_RESISTANCE",
+  "coins_spent" : 10,
+  "timestamp" : "2026/02/15/17/21/40"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : -292483596,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "upgrade_bought" : "THUNDER_DAMAGE_RESISTANCE",
+  "coins_spent" : 5,
+  "timestamp" : "2026/02/15/17/21/41"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -292483596,
+  "stage_number" : 2,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "MEDIUM",
+  "timestamp" : "2026/02/15/17/21/43"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "EndSession",
+  "sessionID" : -292483596,
+  "timestamp" : "2026/02/15/17/21/45"
+}
 ]
