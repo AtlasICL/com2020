@@ -1,11 +1,13 @@
 package WizardQuest;
 
-import java.util.EventObject;
+import java.time.Instant;
 
-public class SettingsChangeEvent extends EventObject {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class SettingsChangeEvent {
     private final SettingsEnum setting;
     private final String settingValue;
-    private final String timeStamp;
+    private final Instant timeStamp;
     private final String telemetryName;
     /**
      * Constructor for the settings change telemetry event. Produces a telemetry event storing
@@ -17,8 +19,7 @@ public class SettingsChangeEvent extends EventObject {
      * @param setting       The setting being changed in this event.
      * @param settingValue  The value that the setting is set to in this event.
      */
-    public SettingsChangeEvent(Object source, String timeStamp, SettingsEnum setting, String settingValue) {
-        super(source);
+    public SettingsChangeEvent(Instant timeStamp, SettingsEnum setting, String settingValue) {
         this.timeStamp = timeStamp;
         this.setting = setting;
         this.settingValue = settingValue;
@@ -30,7 +31,8 @@ public class SettingsChangeEvent extends EventObject {
      * 
      * @return the timestamp.
      */
-    public String getTimestamp() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd/HH/mm/ss", timezone = "UTC")
+    public Instant getTimestamp() {
         return this.timeStamp;
     }
 

@@ -1,11 +1,13 @@
 package WizardQuest;
 
-import java.util.EventObject;
+import java.time.Instant;
 
-public abstract class TelemetryEvent extends EventObject {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public abstract class TelemetryEvent {
     private final String userID;
     private final int sessionID;
-    private final String timeStamp;
+    private final Instant timeStamp;
     private final String telemetryName;
 
     /**
@@ -24,8 +26,7 @@ public abstract class TelemetryEvent extends EventObject {
      * @param telemetryName the name of the telemetry event according to the JSON
      *                      telemetry specification.
      */
-    public TelemetryEvent(Object source, String userID, int sessionID, String timeStamp, String telemetryName) {
-        super(source);
+    public TelemetryEvent(String userID, int sessionID, Instant timeStamp, String telemetryName) {
         this.userID = userID;
         this.sessionID = sessionID;
         this.timeStamp = timeStamp;
@@ -55,7 +56,8 @@ public abstract class TelemetryEvent extends EventObject {
      * 
      * @return the timestamp.
      */
-    public String getTimestamp() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd/HH/mm/ss", timezone = "UTC")
+    public Instant getTimestamp() {
         return this.timeStamp;
     }
 

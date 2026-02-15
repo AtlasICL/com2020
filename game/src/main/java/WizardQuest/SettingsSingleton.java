@@ -2,7 +2,6 @@ package WizardQuest;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.EnumMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -424,7 +423,7 @@ public class SettingsSingleton {
         }
 
         @Override
-        public String getUserID() throws AuthenticationException {
+        public String getUserID() {
             return this.userID;
         }
 
