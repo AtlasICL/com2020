@@ -24,7 +24,7 @@ public class GameUserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String MAGENTA = "\u001B[35m";
 
-    private static final int COINS_GAINED = 20;
+    private static final int COINS_GAINED = 25;
 
     private final boolean[] ownedUpgrades = new boolean[UpgradeEnum.values().length];
 
