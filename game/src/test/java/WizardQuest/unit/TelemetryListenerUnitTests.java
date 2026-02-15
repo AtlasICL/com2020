@@ -1,9 +1,7 @@
 package WizardQuest.unit;
 
 import WizardQuest.*;
-import javafx.util.Duration;
 
-import org.ietf.jgss.GSSManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoZonedDateTime;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -29,8 +25,7 @@ public class TelemetryListenerUnitTests {
 
         /**
          * Creates and authenticates a mock user account with the role of Player, which
-         * will be used to independently
-         * execute each test.
+         * will be used to independently execute each test.
          *
          * @throws AuthenticationException if the username is already in use or is
          *                                 invalid when trying to create an account,
@@ -113,7 +108,7 @@ public class TelemetryListenerUnitTests {
                 // As a result of this mismatch, UserValidationException should be thrown when
                 // an event occurs.
                 TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
-                assertTrue(this.exError.toString().contains("UserID of event " + invalidTestEvent.getTelemetryName() +
+                assertTrue(this.exError.toString().contains("UserID of event " + invalidTestEvent.getEvent() +
                                 " " + invalidTestEvent.getUserID() + " not equal to current sessionID of "));
                 // Reset the exception output stream.
                 exError.reset();
@@ -248,18 +243,18 @@ public class TelemetryListenerUnitTests {
                 // Initialise an invalid NormalEncounterStartEvent object for the authenticated
                 // user.
                 // The timestamp field will be of a time that is in the future.
-                NormalEncounterStartEvent invalidTestEvent2 = new NormalEncounterStartEvent(new Object(),
+                NormalEncounterStartEvent invalidTestEvent2 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
                                 GameManagerSingleton.getInstance().getSessionID(),
-                                "3000/01/01/15/00/00", // 1st January 3000 at 15:00:00
-                                EncounterEnum.ENCOUNTERTYPE_1,
+                                Instant.parse("3000-01-01T15:00:00Z"), // 1st January 3000 at 15:00:00
+                                EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
                                 1);
                 // Since the time is in the future, TimestampValidationException should be
                 // thrown when an event occurs.
                 TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent2);
                 assertTrue(this.exError.toString()
-                                .contains("Time stamp of event " + invalidTestEvent2.getTelemetryName() +
+                                .contains("Time stamp of event " + invalidTestEvent2.getEvent() +
                                                 " " + invalidTestEvent2.getTimestamp() + " is in the future"));
                 // Reset the exception output stream.
                 exError.reset();
@@ -267,19 +262,18 @@ public class TelemetryListenerUnitTests {
                 // Initialise TWO NormalEncounterStartEvent objects for the authenticated user.
                 // The first one will contain a valid timestamp, and so should be accepted.
                 // The second one will contain a timestamp earlier than that of the first one.
-                NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(new Object(),
+                NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                SettingsSingleton.getInstance().getSessionID(),
-                                TimeManagerInterface.convertDateTime(LocalDateTime.now()), // 1st January 2026 at
-                                                                                           // 15:00:00
-                                EncounterEnum.ENCOUNTERTYPE_1,
+                                GameManagerSingleton.getInstance().getSessionID(),
+                                TimeManagerSingleton.getInstance().getCurrentTime(),
+                                EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
                                 1);
-                NormalEncounterStartEvent invalidTestEvent3 = new NormalEncounterStartEvent(new Object(),
+                NormalEncounterStartEvent invalidTestEvent3 = new NormalEncounterStartEvent(
                                 SettingsSingleton.getInstance().getUserID(),
-                                SettingsSingleton.getInstance().getSessionID(),
-                                "2025/01/01/15/00/00", // 1st January 2025 at 15:00:00 - one year earlier
-                                EncounterEnum.ENCOUNTERTYPE_1,
+                                GameManagerSingleton.getInstance().getSessionID(),
+                        Instant.parse("2026-01-01T15:00:00Z"), // 1st January 2026 at 15:00:00
+                                EncounterEnum.GOBLIN_ENCOUNTER,
                                 DifficultyEnum.MEDIUM,
                                 1);
                 // The timestamp for the first event is valid, so calling onNormalEncounterStart
@@ -292,7 +286,7 @@ public class TelemetryListenerUnitTests {
                 // event occurs.
                 TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent3);
                 assertTrue(this.exError.toString()
-                                .contains("Time stamp of event " + invalidTestEvent3.getTelemetryName() +
+                                .contains("Time stamp of event " + invalidTestEvent3.getEvent() +
                                                 " " + invalidTestEvent3.getTimestamp() + " is not current"));
                 // Reset the exception output stream.
                 exError.reset();
