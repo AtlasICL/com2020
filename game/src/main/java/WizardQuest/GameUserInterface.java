@@ -894,7 +894,7 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
                 boolean owned = ownedUpgrades[up.ordinal()];
                 String tag = owned ? ownedTag : "";
 
-                System.out.println(shown + ". " + CYAN + up.getTelemetryName() + RESET
+                System.out.println(shown + ". " + CYAN + up.getDisplayName() + RESET
                         + " (Cost: " + YELLOW + up.getPrice() + RESET + ")" + tag);
             }
 

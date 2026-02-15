@@ -6,19 +6,19 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
     PHYSICAL_DAMAGE_RESISTANCE(
             20,
             PhysicalDamageResistanceUpgrade.class,
-            "PhysicalDamageResistance"),
+            "PhysicalDamageResistance", "Physical Damage Resistance"),
     FIRE_DAMAGE_RESISTANCE(
             10,
             FireDamageResistanceUpgrade.class,
-            "FireDamageResistance"),
+            "FireDamageResistance", "Fire Damage Resistance"),
     WATER_DAMAGE_RESISTANCE(
             5,
             WaterDamageResistanceUpgrade.class,
-            "WaterDamageResistance"),
+            "WaterDamageResistance", "Water Damage Resistance"),
     THUNDER_DAMAGE_RESISTANCE(
             5,
             ThunderDamageResistanceUpgrade.class,
-            "ThunderDamageResistance"),
+            "ThunderDamageResistance", "Thunder Damage Resistance"),
     // IMPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
     // "ImprovedPhysicalDamage"),
     // IMPROVED_FIRE_DAMAGE(15, ImprovedFireDamageUpgrade.class,
@@ -30,33 +30,35 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
     SLASH_UNLOCK(
             15,
             SlashUnlockUpgrade.class,
-            "SlashUnlock"),
+            "SlashUnlock", "Slash"),
     ABSOLUTE_PULSE_UNLOCK(
             10,
             AbsolutePulseUnlockUpgrade.class,
-            "AbsolutePulseUnlock"),
+            "AbsolutePulseUnlock", "Absolute Pulse"),
     WATER_JET_UNLOCK(
             20,
             WaterJetUnlockUpgrade.class,
-            "WaterJetUnlock"),
+            "WaterJetUnlock", "Water Jet"),
     FIRE_BALL_UNLOCK(
             30,
             FireBallUnlockUpgrade.class,
-            "FireBallUnlock"),
+            "FireBallUnlock", "Fire Ball"),
     THUNDER_STORM_UNLOCK(
             25,
             ThunderStormUnlockUpgrade.class,
-            "ThunderStormUnlock");
+            "ThunderStormUnlock", "Thunder Storm");
 
     private final int price;
     private final Class<? extends UpgradeBase> upgradeClass;
     private final String telemetryName;
+    private final String displayName;
 
     private UpgradeEnum(
-            int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName) {
+            int price, Class<? extends UpgradeBase> upgradeClass, String telemetryName, String displayName) {
         this.price = price;
         this.upgradeClass = upgradeClass;
         this.telemetryName = telemetryName;
+        this.displayName = displayName;
     }
 
     public int getPrice() {
@@ -83,5 +85,13 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
      */
     public String getTelemetryName() {
         return telemetryName;
+    }
+
+    /**
+     * Get the human readable name for the upgrade.
+     * @return the display name.
+     */
+    public String getDisplayName(){
+        return this.displayName;
     }
 }
