@@ -365,12 +365,5 @@ public class TelemetryListenerSingleton {
         public void resetDestinationFile() {
             DESTINATION_FILE = new File("../../telemetry_events.json");
         }
-
-        @Override
-        public void resetSessionState() {
-            this.currentSessionID = -1;
-            this.currentUserID = null;
-            this.mostRecentTimeStamp = null;
-        }
     }
 }
