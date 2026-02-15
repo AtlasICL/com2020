@@ -361,7 +361,6 @@ public class TelemetryListenerSingleton {
             DESTINATION_FILE = file;
         }
 
-        // TODO: LUCA P please check this filepath
         @Override
         public void resetDestinationFile() {
             DESTINATION_FILE = new File("../event_logs/telemetry_events.json");
