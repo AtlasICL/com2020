@@ -1,6 +1,6 @@
 import json
 
-from auth import google_login
+from auth.auth import google_login
 
 def main():
     sub, name, role = google_login()
