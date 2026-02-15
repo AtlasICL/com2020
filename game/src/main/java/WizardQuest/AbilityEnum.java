@@ -6,7 +6,7 @@ public enum AbilityEnum {
             "A simple punch.",
             10,
             0,
-            DamageEnum.PHYSICAL, "Puch"),
+            DamageEnum.PHYSICAL, "Punch"),
     ABSOLUTE_PULSE(
             "A magical pulse that no-one can defend against.",
             15,
