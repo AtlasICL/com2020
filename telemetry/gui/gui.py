@@ -31,7 +31,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
-        self.file_name = ROOT_DIRECTORY / "events.json"
+        self.file_name = ROOT_DIRECTORY / "event_logs" / "events.json"
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None
@@ -180,11 +180,11 @@ class TelemetryAppGUI(tk.Tk):
     def toggle_file(self):
         if self.switch_btn_text.get() == "Change to simulation data":
             self.switch_btn_text.set("Change to telemetry data")
-            self.file_name = ROOT_DIRECTORY / "simulation_events.json"
+            self.file_name = ROOT_DIRECTORY / "event_logs" / "simulation_events.json"
             self.refresh_all()
         else:
             self.switch_btn_text.set("Change to simulation data")
-            self.file_name = ROOT_DIRECTORY / "events.json"
+            self.file_name = ROOT_DIRECTORY / "event_logs" / "telemetry_events.json"
             self.refresh_all()
 
 
@@ -194,7 +194,7 @@ class TelemetryAppGUI(tk.Tk):
         message = "Are you sure you want to reset telemetry data? " 
             + "All existing telemetry data will be lost")
         if confirmed:
-            with open(ROOT_DIRECTORY / 'events.json', 'w') as f:
+            with open(ROOT_DIRECTORY / "event_logs" / "telemetry_events.json", 'w') as f:
                 f.write('')
 
 
