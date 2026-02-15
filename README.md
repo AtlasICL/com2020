@@ -43,7 +43,7 @@ For the deployment guide, see [this file](deployment_guide.md).
 | ---------------------- | --------------------- |
 | **Project:**           | WizardQuest (com2020) |
 | **Version:**           | 0.0.9                 |
-| **License:**           | MIT                   |
+| **Licence:**           | MIT                   |
 | **SBOM last updated:** | 2026-02-15            |
 
 
