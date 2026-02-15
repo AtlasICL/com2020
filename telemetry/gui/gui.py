@@ -31,7 +31,7 @@ class TelemetryAppGUI(tk.Tk):
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
         style = ttk.Style(self)
         style.theme_use("clam")
-        self.file_name = ROOT_DIRECTORY / "event_logs" / "events.json"
+        self.file_name = ROOT_DIRECTORY / "event_logs" / "telemetry_events.json"
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None

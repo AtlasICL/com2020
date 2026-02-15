@@ -35,7 +35,7 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void resetHealth(){
+    public void resetHealth() {
         player.resetHealth();
     }
 
@@ -50,7 +50,7 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public void gainCoins(int amount) throws IllegalArgumentException  {
+    public void gainCoins(int amount) throws IllegalArgumentException {
         player.gainCoins(amount);
     }
 
@@ -80,6 +80,11 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
+    public void resetMagic() {
+        player.resetMagic();
+    }
+
+    @Override
     public int getLives() {
         return player.getLives();
     }
@@ -95,17 +100,17 @@ public abstract class UpgradeBase implements PlayerInterface {
     }
 
     @Override
-    public int calcDamage(int amount, DamageEnum type){
+    public int calcDamage(int amount, DamageEnum type) {
         return player.calcDamage(amount, type);
     }
 
     @Override
-    public EntityEnum getType(){
+    public EntityEnum getType() {
         return player.getType();
     }
 
     @Override
-    public List<AbilityEnum> getAbilities(){
+    public List<AbilityEnum> getAbilities() {
         return player.getAbilities();
     }
 }

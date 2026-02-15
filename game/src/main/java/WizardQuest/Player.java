@@ -20,6 +20,7 @@ public class Player implements PlayerInterface {
         this.magic = 0;
         this.coins = 0;
         this.lives = settings.getStartingLives(difficulty);
+        this.difficulty = difficulty;
     }
 
     @Override
@@ -130,6 +131,11 @@ public class Player implements PlayerInterface {
     @Override
     public List<UpgradeEnum> getUpgrades() {
         return new LinkedList<UpgradeEnum>();
+    }
+
+    @Override
+    public void resetMagic(){
+        this.magic = 0;
     }
 }
 

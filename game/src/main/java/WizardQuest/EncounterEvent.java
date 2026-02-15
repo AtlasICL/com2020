@@ -2,7 +2,7 @@ package WizardQuest;
 
 import java.time.Instant;
 
-public abstract class EncounterEvent extends TelemetryEvent {
+public abstract class EncounterEvent extends SessionEvent {
     private final int stage_number;
     private final EncounterEnum encounter_name;
     private final DifficultyEnum difficulty;

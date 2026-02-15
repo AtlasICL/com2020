@@ -18,7 +18,7 @@ public interface GameManagerInterface {
     public DifficultyEnum getCurrentDifficulty();
 
     /**
-     * Starts a new game, with difficulty.
+     * Starts a new game, with difficulty. Sends SessionStartEvent to telemetry listener.
      * @param difficulty the difficulty to start the game on.
      */
     public void startNewGame(DifficultyEnum difficulty);
@@ -83,8 +83,14 @@ public interface GameManagerInterface {
 
 
     /**
-     * Ends current game.
+     * Ends current game. Sends EndSession to telemetry listener.
      * Returns to main menu and resets game data --- no save.
      */    
     public void endGame();
+
+    /**
+     * Gets the ID for the current run's session.
+     * @return the session ID for the current run.
+     */
+    public int getSessionID();
 }

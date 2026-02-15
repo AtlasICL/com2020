@@ -10,7 +10,7 @@ public interface SettingsInterface {
     /**
      * Logs in the user using the result from the Authenticator (Python OAuth).
      * Sets the current user's ID, name, and role from the authentication result,
-     * and loads their settings from the settings file.
+     * and loads their settings from the settings file. 
      *
      * @param result the AuthenticationResult returned by Authenticator.login().
      * @throws AuthenticationException if the result is invalid.
@@ -36,18 +36,6 @@ public interface SettingsInterface {
      *                                 or the authenticated user calling the method is not of the Developer role.
      */
     public void setUserRole(String userID, RoleEnum role) throws AuthenticationException;
-
-    /**
-     * Returns the session id of the currently authenticated user and session, or
-     * throws an exception if the user is unauthenticated or no session is
-     * established. A session is only established for users who have telemetry
-     * enabled.
-     * 
-     * @throws AuthenticationException if no user is authenticated or session
-     *                                 established.
-     * @return the current session's ID
-     */
-    public int getSessionID() throws AuthenticationException;
 
     /**
      * Hashes the username of the currently authenticated user and returns it (as
@@ -144,9 +132,6 @@ public interface SettingsInterface {
      * an exception if no user is authenticated.
      * 
      * @param telemetryEnabled whether the user has telemetry enabled or not.
-     *                         Setting this to false will send an EndSession event
-     *                         and setting this to true will send a StartSession
-     *                         event with a new session ID.
      * @throws AuthenticationException if the user cannot be authenticated.
      */
     public void setTelemetryEnabled(boolean telemetryEnabled) throws AuthenticationException;

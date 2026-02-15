@@ -43,6 +43,14 @@
         "MEDIUM" : 0,
         "HARD" : 0
       }
+    },
+    "102232247054755865131" : {
+      "telemetryEnabled" : true,
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
     }
   },
   "designParameters" : {
@@ -77,9 +85,9 @@
       "HARD" : 50
     },
     "magicGenerationRate" : {
-      "EASY" : 5,
-      "MEDIUM" : 3,
-      "HARD" : 1
+      "EASY" : 15,
+      "MEDIUM" : 15,
+      "HARD" : 15
     }
   }
 }
