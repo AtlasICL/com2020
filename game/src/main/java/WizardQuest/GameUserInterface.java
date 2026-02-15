@@ -23,6 +23,8 @@ public class GameUserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String MAGENTA = "\u001B[35m";
 
+    private final boolean[] ownedUpgrades = new boolean[UpgradeEnum.values().length];
+
     private GameUserInterface() {
         this.gameManager = GameManagerSingleton.getInstance();
         this.settings = SettingsSingleton.getInstance();
@@ -266,6 +268,11 @@ public class GameUserInterface {
         if (difficulty == null)
             return;
 
+        //reset owned upgrades at the start of each new run
+        for (int i = 0; i < ownedUpgrades.length; i++) {
+            ownedUpgrades[i] = false;
+        }
+
         gameManager.startNewGame(difficulty);
         gameLoop();
     }
@@ -338,6 +345,16 @@ public class GameUserInterface {
 
             if (!encounterWon) {
                 continue;
+            }
+
+            //stop after stage 2 (no shop after finishing)
+            GameRunInterface run = gameManager.getCurrentRun();
+            if (run != null && run.getStage() >= 2) {
+                System.out.println();
+                System.out.println(GREEN + BOLD + "Stage 2 complete. Ending prototype run." + RESET);
+                gameManager.endGame();
+                endScreen(lastRun, lastPlayer);
+                return;
             }
 
             openShop();
@@ -557,7 +574,7 @@ public class GameUserInterface {
 
                 int playerHpAfter = player.getHealth();
                 int damageTaken = playerHpBefore - playerHpAfter;
-                System.out.println(damageTaken); // test to see if damage actually exists
+                System.out.println(damageTaken);
                 if (damageTaken < 0)
                     damageTaken = 0;
 
@@ -565,8 +582,6 @@ public class GameUserInterface {
                 System.out.println(RED + enemy.getType() + " attacked you for " + damageTaken + " damage." + RESET);
                 System.out.println("Your HP: " + GREEN + playerHpAfter + RESET + " / " + player.getMaxHealth());
             }
-
-            // next loop iteration re-checks death/win
         }
     }
 
@@ -670,27 +685,35 @@ public class GameUserInterface {
             return;
         }
 
-        int shown = 0;
+        String ownedTag = MAGENTA + " [ALREADY OWNED]" + RESET;
 
-        for (int i = 0; i < upgrades.length; i++) {
-            UpgradeEnum up = upgrades[i];
-            if (up == null)
-                continue;
-
-            shown++;
-            System.out.println(shown + ". " + CYAN + up.getTelemetryName() + RESET
-                    + " (Cost: " + YELLOW + up.getPrice() + RESET + ")");
-        }
-
-        if (shown == 0) {
-            System.out.println(RED + "No upgrades available." + RESET);
-            return;
-        }
-
-        System.out.println();
-        System.out.println("0. Leave shop");
+        int[] optionToIndex = new int[upgrades.length];
 
         while (true) {
+            int shown = 0;
+            for (int i = 0; i < upgrades.length; i++) {
+                UpgradeEnum up = upgrades[i];
+                if (up == null)
+                    continue;
+
+                shown++;
+                optionToIndex[shown - 1] = i;
+
+                boolean owned = ownedUpgrades[up.ordinal()];
+                String tag = owned ? ownedTag : "";
+
+                System.out.println(shown + ". " + CYAN + up.getTelemetryName() + RESET
+                        + " (Cost: " + YELLOW + up.getPrice() + RESET + ")" + tag);
+            }
+
+            if (shown == 0) {
+                System.out.println(RED + "No upgrades available." + RESET);
+                return;
+            }
+
+            System.out.println();
+            System.out.println("0. Leave shop");
+
             System.out.print(BLUE + ">>> " + RESET);
             String input = scanner.nextLine();
 
@@ -702,23 +725,32 @@ public class GameUserInterface {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 System.out.println(RED + "Enter a number." + RESET);
+                System.out.println();
                 continue;
             }
 
-            // rebuild visible list (so your numbering matches what was printed)
-            java.util.ArrayList<UpgradeEnum> visible = new java.util.ArrayList<>();
-            for (UpgradeEnum up : upgrades) {
-                if (up != null)
-                    visible.add(up);
+            if (choice < 1 || choice > shown) {
+                System.out.println(RED + "Invalid choice." + RESET);
+                System.out.println();
+                continue;
             }
 
-            if (choice < 1 || choice > visible.size()) {
+            int upgradeIndex = optionToIndex[choice - 1];
+            UpgradeEnum bought = upgrades[upgradeIndex];
+
+            if (bought == null) {
                 System.out.println(RED + "Invalid choice." + RESET);
+                System.out.println();
+                continue;
+            }
+
+            if (ownedUpgrades[bought.ordinal()]) {
+                System.out.println(RED + "You already own that upgrade." + RESET);
+                System.out.println();
                 continue;
             }
 
             try {
-                UpgradeEnum bought = visible.get(choice - 1);
                 gameManager.purchaseUpgrade(bought);
                 telemetryListener.onBuyUpgrade(
                         new BuyUpgradeEvent(
@@ -741,26 +773,11 @@ public class GameUserInterface {
                 System.out.println(RED + "Could not purchase upgrade." + RESET);
             }
 
-            // re-display shop menu after buy / fail
             System.out.println();
             if (player != null) {
                 System.out.println("Your Coins: " + YELLOW + player.getCoins() + RESET);
                 System.out.println();
             }
-
-            int shownAgain = 0;
-            for (int i = 0; i < upgrades.length; i++) {
-                UpgradeEnum up = upgrades[i];
-                if (up == null)
-                    continue;
-
-                shownAgain++;
-                System.out.println(shownAgain + ". " + CYAN + up.getTelemetryName() + RESET
-                        + " (Cost: " + YELLOW + up.getPrice() + RESET + ")");
-            }
-
-            System.out.println();
-            System.out.println("0. Leave shop");
         }
     }
 

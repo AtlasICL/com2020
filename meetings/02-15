@@ -1,0 +1,48 @@
+# COM2020 – Weekly Scrum Meeting 7
+
+**Date:** 15/02/2026  
+
+**Duration:** 50 minutes
+
+---
+
+## Attendance
+
+| Name                 | Present? |
+|----------------------|----------|
+| Luca Pacitti         | No       |
+| Luca Croci           | Yes      |
+| Emre Acarsoy         | Yes      |
+| Harry Taylor         | Yes      |
+| Tom Croft            | Yes      |
+| Kazybek Khairulla    | Yes      |
+| Will Finney          | Yes      |
+
+---
+
+## Topics Discussed
+
+### Tasks accomplished since last meeting
+- **TC**: Structured documentation to comply with specification, completed a first draft of sections 2, 3, 4, 9 of the report.
+- **LC**: Implemented the main game loop. Implemented user CLI.
+- **EA**: Implemented Java calling Python for auth. Fixed Java event logging. Implemented python dynamically updating data. Many bug fixes. 
+- **HT**: Implemented event validation java-side, checking for correctness in timestamps, sessions, and users. Finished python definitions of enums. Suggestions implemented. Presentation completed.
+- **KK**: Migrated GitHub issues to Jira. 
+- **WF**: Prepared for evaluation section, wrote license decision.
+
+### TODO
+- **TC**: 
+  - Various bug fixes in the game
+  - Dataflow schema
+- **WF**: 
+  - Evaluate the project
+- **EA**:
+  - Review recent functionality update PRs 
+  - Write SBOM section of report
+  - Coordinate with HT and write python sections of report
+- **HF**: 
+  - Coordinate with EA and write python section of report
+- **LC**:
+  - Work on the report
+- **KK**: 
+  - Management section of report 
