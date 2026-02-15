@@ -37,15 +37,15 @@ public class GameUserInterface {
             System.out.println(RED + "Cannot continue without authentication." + RESET);
             return;
         }
-        showMenu();
         TelemetryListenerSingleton.getInstance().onStartSession(
             new StartSessionEvent(
                 SettingsSingleton.getInstance().getUserID(),
                 12,
-                Instant.now(), 
-                GameManagerSingleton.getInstance().getCurrentDifficulty()
-            )   
+                Instant.now(),
+                null
+            )
         );
+        showMenu();
     }
 
     private void showTitle() {
@@ -375,6 +375,15 @@ public class GameUserInterface {
         }
         System.out.println("Encounter: " + CYAN + encounter.getType() + RESET);
 
+        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(
+            new NormalEncounterStartEvent(
+                settings.getUserID(), 12, Instant.now(),
+                encounter.getType(),
+                gameManager.getCurrentDifficulty(),
+                run != null ? run.getStage() : 1
+            )
+        );
+
         while (true) {
 
             PlayerInterface player = gameManager.getCurrentPlayer();
@@ -391,6 +400,16 @@ public class GameUserInterface {
 
             if (player.getHealth() <= 0) {
                 System.out.println(RED + BOLD + "You died." + RESET);
+
+                TelemetryListenerSingleton.getInstance().onNormalEncounterFail(
+                    new NormalEncounterFailEvent(
+                        settings.getUserID(), 12, Instant.now(),
+                        encounter.getType(),
+                        gameManager.getCurrentDifficulty(),
+                        run != null ? run.getStage() : 1,
+                        player.getLives()
+                    )
+                );
 
                 gameManager.resetFailedEncounter();
 
@@ -480,11 +499,41 @@ public class GameUserInterface {
                     + " for " + damageDealt + " damage." + RESET);
             System.out.println(target.getType() + " HP: " + CYAN + targetHpAfter + RESET);
 
+            if (target.getHealth() <= 0) {
+                TelemetryListenerSingleton.getInstance().onKillEnemy(
+                    new KillEnemyEvent(
+                        settings.getUserID(), 12, Instant.now(),
+                        encounter.getType(),
+                        gameManager.getCurrentDifficulty(),
+                        run != null ? run.getStage() : 1,
+                        target.getType()
+                    )
+                );
+            }
+
             if (allEnemiesDead(enemies)) {
+                TelemetryListenerSingleton.getInstance().onNormalEncounterComplete(
+                    new NormalEncounterCompleteEvent(
+                        settings.getUserID(), 12, Instant.now(),
+                        encounter.getType(),
+                        gameManager.getCurrentDifficulty(),
+                        run != null ? run.getStage() : 1,
+                        player.getHealth()
+                    )
+                );
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
                 if (player != null) {
                     player.gainCoins(10);
+                    TelemetryListenerSingleton.getInstance().onGainCoin(
+                        new GainCoinEvent(
+                            settings.getUserID(), 12, Instant.now(),
+                            encounter.getType(),
+                            gameManager.getCurrentDifficulty(),
+                            run != null ? run.getStage() : 1,
+                            10
+                        )
+                    );
                     System.out.println(YELLOW + "+10 coins" + RESET);
                 }
                 return true;
@@ -669,7 +718,18 @@ public class GameUserInterface {
             }
 
             try {
-                gameManager.purchaseUpgrade(visible.get(choice - 1));
+                UpgradeEnum bought = visible.get(choice - 1);
+                gameManager.purchaseUpgrade(bought);
+                TelemetryListenerSingleton.getInstance().onBuyUpgrade(
+                    new BuyUpgradeEvent(
+                        settings.getUserID(), 12, Instant.now(),
+                        gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType() : null,
+                        gameManager.getCurrentDifficulty(),
+                        gameManager.getCurrentRun() != null ? gameManager.getCurrentRun().getStage() : 1,
+                        bought,
+                        bought.getPrice()
+                    )
+                );
                 System.out.println(GREEN + "Upgrade purchased." + RESET);
 
                 PlayerInterface p = gameManager.getCurrentPlayer();
@@ -757,6 +817,11 @@ public class GameUserInterface {
     }
 
     private void quit() {
+        TelemetryListenerSingleton.getInstance().onEndSession(
+            new EndSessionEvent(
+                settings.getUserID(), 12, Instant.now()
+            )
+        );
         System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
         scanner.close();
     }

@@ -22,7 +22,7 @@ public class Authenticator implements AuthenticatorInterface {
         // Instantiate the process builder, and set it up to be able
         // to run the login python script.
         ProcessBuilder procBuilder = new ProcessBuilder(
-            "python",
+            "python3",
             "-m",
             "auth.auth_wrapper"
         );

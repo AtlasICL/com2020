@@ -2,6 +2,8 @@ package WizardQuest;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public abstract class TelemetryEvent {
     private final String userID;
     private final int sessionID;
@@ -54,6 +56,7 @@ public abstract class TelemetryEvent {
      * 
      * @return the timestamp.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd/HH/mm/ss", timezone = "UTC")
     public Instant getTimestamp() {
         return this.timeStamp;
     }

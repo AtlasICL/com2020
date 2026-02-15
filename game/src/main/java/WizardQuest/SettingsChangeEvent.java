@@ -2,6 +2,8 @@ package WizardQuest;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SettingsChangeEvent {
     private final SettingsEnum setting;
     private final String settingValue;
@@ -29,6 +31,7 @@ public class SettingsChangeEvent {
      * 
      * @return the timestamp.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd/HH/mm/ss", timezone = "UTC")
     public Instant getTimestamp() {
         return this.timeStamp;
     }

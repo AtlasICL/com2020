@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,15 +33,12 @@ public class TelemetryListenerSingleton {
         private int currentSessionID = -1;
         private String currentUserID = "12";
         private Instant mostRecentTimeStamp;
-        private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss");
         private static final ObjectMapper mapper = new ObjectMapper();
         private static File DESTINATION_FILE  = new File("../events.json"); //change to actual filepath
         
-        @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"source"})
-        abstract static class ignoreSourceMixin {}
-        
         static{
-            mapper.addMixIn(java.util.EventObject.class, ignoreSourceMixin.class);
+            mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+            mapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
         }
         public TelemetryListener() {
@@ -92,19 +87,14 @@ public class TelemetryListenerSingleton {
          * @throws TimestampValidationException
          */
         private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
-            try{
-                Instant eventTime = e.getTimestamp();
-                if(eventTime.isAfter(LocalDateTime.now())){
-                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                            " " + e.getTimestamp() + " is in the future");
-                }
-                else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
-                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                            " " + e.getTimestamp() + " is not current");
-                }
-            } catch (java.time.format.DateTimeParseException ex) {
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                        " " + e.getTimestamp() + " is of invalid format");
+            Instant eventTime = e.getTimestamp();
+            if(eventTime.isAfter(Instant.now())){
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                                                        " " + e.getTimestamp() + " is in the future");
+            }
+            else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                                                        " " + e.getTimestamp() + " is not current");
             }
         }
 
@@ -115,18 +105,13 @@ public class TelemetryListenerSingleton {
          * @throws TimestampValidationException
          */
         private void isCorrectTimeStamp(SettingsChangeEvent e) throws TimestampValidationException{
-            try{
-                if(e.getTimestamp().isAfter(LocalDateTime.now().toInstant(null))){
-                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                            " " + e.getTimestamp() + " is in the future");
-                }
-                else if(mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)){
-                    throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                            " " + e.getTimestamp() + " is not current");
-                }
-            } catch (java.time.format.DateTimeParseException ex) {
-                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() + 
-                                                        " " + e.getTimestamp() + " is of invalid format");
+            if(e.getTimestamp().isAfter(Instant.now())){
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                                                        " " + e.getTimestamp() + " is in the future");
+            }
+            else if(mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)){
+                throw new TimestampValidationException("Time stamp of event " + e.getTelemetryName() +
+                                                        " " + e.getTimestamp() + " is not current");
             }
         }
 
@@ -379,6 +364,13 @@ public class TelemetryListenerSingleton {
         @Override
         public void resetDestinationFile() {
             DESTINATION_FILE = new File("../../telemetry_events.json");
+        }
+
+        @Override
+        public void resetSessionState() {
+            this.currentSessionID = -1;
+            this.currentUserID = null;
+            this.mostRecentTimeStamp = null;
         }
     }
 }
