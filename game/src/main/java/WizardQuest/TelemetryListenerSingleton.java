@@ -34,7 +34,7 @@ public class TelemetryListenerSingleton {
         private String currentUserID = "12";
         private Instant mostRecentTimeStamp;
         private static final ObjectMapper mapper = new ObjectMapper();
-        private static File DESTINATION_FILE  = new File("../event_logs/events.json"); //change to actual filepath
+        private static File DESTINATION_FILE  = new File("../event_logs/telemetry_events.json"); //change to actual filepath
         
         static{
             mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
@@ -361,9 +361,10 @@ public class TelemetryListenerSingleton {
             DESTINATION_FILE = file;
         }
 
+        // TODO: LUCA P please check this filepath
         @Override
         public void resetDestinationFile() {
-            DESTINATION_FILE = new File("../../telemetry_events.json");
+            DESTINATION_FILE = new File("../event_logs/telemetry_events.json");
         }
     }
 }
