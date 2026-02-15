@@ -1,5 +1,5 @@
 # Team Project for COM2020
-- [Team members:](#team-members)
+- [Team members](#team-members)
 - [Style guide](#style-guide)
 - [Meeting minutes](#meeting-minutes)
 - [Build instructions](#build-instructions)
@@ -15,7 +15,7 @@
 
 
 
-## Team members:
+## Team members
 | Name              | Email                  |
 | ----------------- | ---------------------- |
 | Emre Acarsoy      | ea616@exeter.ac.uk     |
@@ -27,14 +27,14 @@
 | Will Finney       | wjf207@exeter.ac.uk    |
 
 
-# Style guide
+## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://peps.python.org/pep-0008/)
 
-# Meeting minutes
+## Meeting minutes
 Find meeting minutes and project specification [here](/meetings/)
 
-# Build instructions
+## Build instructions
 For the deployment guide, see [this file](deployment_guide.md).
 
 # Software Bill of Materials (SBOM) 
