@@ -46,20 +46,20 @@ public class GameRun implements GameRunInterface {
     // TEST: i filled every encounter slot with a default encounter to see
     public GameRun(DifficultyEnum difficulty) {
         phase1NormalEncounters = new EncounterInterface[] {
-                new Encounter(EncounterEnum.GOBLIN_ENCOUNTER),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER)
-        }; // Contents of this array are TBC
-        phase2NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER) }; // Contents of this array are TBC
-        phase3NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER) }; // Contents of this array are TBC
-        phase1Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER); // Placeholder, contents are TBC -put back to null
+                new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty)
+        }; 
+        phase2NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty) }; 
+        phase3NormalEncounters = new EncounterInterface[] { new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty) }; 
+        phase1Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
                                                                     // after testing
-        phase2Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER); // Placeholder, contents are TBC -put back to null
+        phase2Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
                                                                     // after testing
-        phase3Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER); // Placeholder, contents are TBC -put back to null
+        phase3Boss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
                                                                     // after testing
-        finalBoss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER); // Placeholder, contents are TBC -put back to null
+        finalBoss = new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty); // Placeholder, contents are TBC -put back to null
                                                                    // after testing
         shopUpgrades = new UpgradeEnum[] {
                 UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,

@@ -5,7 +5,7 @@ public class Encounter implements EncounterInterface {
     private boolean completed;
     private final EncounterEnum type;
 
-    public Encounter(EncounterEnum type) {
+    public Encounter(EncounterEnum type, DifficultyEnum difficulty) {
 
         //never allow null encounters
         if (type == null) {
@@ -13,9 +13,6 @@ public class Encounter implements EncounterInterface {
         }
 
         this.type = type;
-
-        //temporary (default for now)
-        DifficultyEnum difficulty = DifficultyEnum.EASY;
 
         //build enemies from enum
         EntityEnum[] enemyTypes = type.getEnemies();
