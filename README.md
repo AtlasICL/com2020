@@ -124,13 +124,11 @@ All dependency licences are compatible with this project's MIT licence.
 # Folder structure
 ```
 com2020/
-com2020/
 ├── game/
 │   ├── src/
 │   │   ├── main/
 │   │   │   └── java/
 │   │   │       └── WizardQuest/
-│   │   │           ├── gamefiles.java
 │   │   │           └── ...
 │   │   └── test/
 │   │       ├── java/
@@ -151,15 +149,12 @@ com2020/
 │   │   └── ...
 │   ├── schema.md (json schema)
 │   ├── requirements.txt (for pip)
-│   ├── telemetry_app.py (telemetry entry point)
+│   ├── telemetry_app.py
 │   └── README.md (python-specific instructions for dev)
-├── meetings/
-│   └── ...
-├── report/
-│   └── ...
+├── event_logs/
+│   ├── telemetry_events.json
+│   └── simulation_events.json
 ├── README.md
-├── simulation_events.json
-├── telemetry_events.json
 ├── deployment_guide.md
 └── .gitignore
 ```
