@@ -65,14 +65,14 @@ For the deployment guide, see [this file](deployment_guide.md).
 **Language:** Python 3.13  
 **Package Manager:** pip
 
-| Type    | Dependency | Version     |
-| ------- | ---------- | ----------- |
-| Runtime | matplotlib | most recent |
-| Runtime | numpy      | most recent |
-| Runtime | pandas     | most recent |
-| Runtime | seaborn    | most recent |
-| Runtime | requests   | most recent |
-| Testing | pytest     | most recent |
+| Type    | Dependency | Version |
+| ------- | ---------- | ------- |
+| Runtime | matplotlib | 3.10.8  |
+| Runtime | numpy      | 2.4.2   |
+| Runtime | pandas     | 3.0.0   |
+| Runtime | seaborn    | 0.13.2  |
+| Runtime | requests   | 2.32.5  |
+| Testing | pytest     | 3.3.0   |
 
 
 ## External dependencies
