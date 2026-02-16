@@ -3,6 +3,8 @@ package WizardQuest;
 
 import java.lang.reflect.InvocationTargetException;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Enumerates all entity types in the game.
  * Each of the types in this class has a reference to their concrete class used for instantiation, done via reflection
@@ -11,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 public enum EntityEnum {
     PLAYER(Player.class, "Player", "Player"),
     GOBLIN(Goblin.class, "Goblin", "Goblin"), // enemy 1
-    FISH_MAN(FishMan.class, "FishMan", "Fish Man");// enemy 2
+    FISH_MAN(FishMan.class, "Fishman", "Fish Man");// enemy 2
     /*
     PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
     EVIL_WIZARD(null, "EvilWizard"), // PLACEHOLDER ARGS
@@ -58,6 +60,7 @@ public enum EntityEnum {
      *
      * @return the class object for this entity
      */
+    @JsonValue
     public String getTelemetryName() {
         return telemetryName;
     }

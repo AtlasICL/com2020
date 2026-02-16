@@ -1,5 +1,7 @@
 package WizardQuest;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Enumerates all difficulty levels in the game.
  */
@@ -14,6 +16,7 @@ public enum DifficultyEnum {
         this.telemetryName = telemetryName;
     }
 
+    @JsonValue
     public String getTelemetryName() {
         return telemetryName;
     }

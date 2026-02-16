@@ -379,11 +379,22 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
         if (u != null) {
             try {
                 gameManager.purchaseUpgrade(u);
+                telemetryListener.onBuyUpgrade(
+                    new BuyUpgradeEvent(
+                        settings.getUserID(),
+                        gameManager.getSessionID(),
+                        TimeManagerSingleton.getInstance().getCurrentTime(),
+                        gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType() : null,
+                        gameManager.getCurrentDifficulty(),
+                        gameManager.getCurrentRun() != null ? gameManager.getCurrentRun().getStage() : 1,
+                        u,
+                        u.getPrice()
+                    )
+                );
             } catch (LackingResourceException e) {
                 e.printStackTrace();
             }
         }
-        return;
     }
 
     private void changeStartingLives() {

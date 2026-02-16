@@ -15,12 +15,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class TelemetryListenerSingleton {
     private static final TelemetryListenerInterface telemetryListener = new TelemetryListener();
+
     private TelemetryListenerSingleton() {
     }
 
     /**
-     * Returns a reference to the telemetry listener. 
-     * @return a reference to the telemetry listener. 
+     * Returns a reference to the telemetry listener.
+     * 
+     * @return a reference to the telemetry listener.
      */
     public static TelemetryListenerInterface getInstance() {
         return telemetryListener;
@@ -34,49 +36,55 @@ public class TelemetryListenerSingleton {
         private String currentUserID = "12";
         private Instant mostRecentTimeStamp;
         private static final ObjectMapper mapper = new ObjectMapper();
-        private static File DESTINATION_FILE  = new File("../event_logs/telemetry_events.json"); //change to actual filepath
-        
-        static{
+        private static File DESTINATION_FILE = new File("../event_logs/telemetry_events.json"); // change to actual
+                                                                                                // filepath
+
+        static {
             mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
             mapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
         }
+
         public TelemetryListener() {
         }
+
         /**
-         * Checks if session related to an event is valid. Checks for session ending when no session is established,
-         * checks for events sessionID not corresponding with the current session being ran 
+         * Checks if session related to an event is valid. Checks for session ending
+         * when no session is established,
+         * checks for events sessionID not corresponding with the current session being
+         * ran
          * and new session starts occurring before the current session has ended.
          * 
          * @param e event being checked.
-         * @throws SessionValidationException exception used to specify invalid sessions.
+         * @throws SessionValidationException exception used to specify invalid
+         *                                    sessions.
          */
-        private void isCorrectSession(SessionEvent e) throws SessionValidationException{
-            if(e.getEvent().equals("EndSession") && currentSessionID == -1){
-                throw new SessionValidationException("EndSession for session " + e.getSessionID() + 
-                                                    " occurs before its StartSession");
-            }
-            else if(currentSessionID != e.getSessionID() && !e.getEvent().equals("StartSession")){
-                throw new SessionValidationException("SessionID of event " + e.getEvent() + 
-                                                    " " + e.getSessionID() + " not equal to current sessionID of "
-                                                     + currentSessionID);
-            }
-            else if(e.getEvent().equals("StartSession") && currentSessionID != -1){
-                throw new SessionValidationException("StartSession for session " + e.getSessionID() + 
-                                                    " occurs before EndSession of " + currentSessionID);
+        private void isCorrectSession(SessionEvent e) throws SessionValidationException {
+            if (e.getEvent().equals("EndSession") && currentSessionID == -1) {
+                throw new SessionValidationException("EndSession for session " + e.getSessionID() +
+                        " occurs before its StartSession");
+            } else if (currentSessionID != e.getSessionID() && !e.getEvent().equals("StartSession")) {
+                throw new SessionValidationException("SessionID of event " + e.getEvent() +
+                        " " + e.getSessionID() + " not equal to current sessionID of "
+                        + currentSessionID);
+            } else if (e.getEvent().equals("StartSession") && currentSessionID != -1) {
+                throw new SessionValidationException("StartSession for session " + e.getSessionID() +
+                        " occurs before EndSession of " + currentSessionID);
             }
         }
+
         /**
-         * Checks if user related to an event is valid for the current session established.
+         * Checks if user related to an event is valid for the current session
+         * established.
          * 
          * @param e event being checked.
          * @throws UserValidationException exception used to specify invalid users
          */
-        private void isCorrectUser(TelemetryEvent e) throws UserValidationException{
-            if(currentUserID == null || !currentUserID.equals(e.getUserID())){
-                throw new UserValidationException("UserID of event " + e.getEvent() + 
-                                                    " " + e.getUserID() + " not equal to current sessionID of "
-                                                     + currentUserID);
+        private void isCorrectUser(TelemetryEvent e) throws UserValidationException {
+            if (currentUserID == null || !currentUserID.equals(e.getUserID())) {
+                throw new UserValidationException("UserID of event " + e.getEvent() +
+                        " " + e.getUserID() + " not equal to current sessionID of "
+                        + currentUserID);
             }
         }
 
@@ -86,15 +94,14 @@ public class TelemetryListenerSingleton {
          * @param e
          * @throws TimestampValidationException
          */
-        private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException{
+        private void isCorrectTimeStamp(TelemetryEvent e) throws TimestampValidationException {
             Instant eventTime = e.getTimestamp();
-            if(eventTime.isAfter(Instant.now())){
+            if (eventTime.isAfter(Instant.now())) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                                                        " " + e.getTimestamp() + " is in the future");
-            }
-            else if(mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)){
+                        " " + e.getTimestamp() + " is in the future");
+            } else if (mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                                                        " " + e.getTimestamp() + " is not current");
+                        " " + e.getTimestamp() + " is not current");
             }
         }
 
@@ -104,14 +111,13 @@ public class TelemetryListenerSingleton {
          * @param e
          * @throws TimestampValidationException
          */
-        private void isCorrectTimeStamp(SettingsChangeEvent e) throws TimestampValidationException{
-            if(e.getTimestamp().isAfter(Instant.now())){
+        private void isCorrectTimeStamp(SettingsChangeEvent e) throws TimestampValidationException {
+            if (e.getTimestamp().isAfter(Instant.now())) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                                                        " " + e.getTimestamp() + " is in the future");
-            }
-            else if(mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)){
+                        " " + e.getTimestamp() + " is in the future");
+            } else if (mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                                                        " " + e.getTimestamp() + " is not current");
+                        " " + e.getTimestamp() + " is not current");
             }
         }
 
@@ -120,31 +126,30 @@ public class TelemetryListenerSingleton {
          * 
          * @param e the event to be recorded to the JSON database.
          */
-        private void saveEvent(TelemetryEvent e){
+        private void saveEvent(TelemetryEvent e) {
             this.mostRecentTimeStamp = e.getTimestamp();
             try {
                 if (!SettingsSingleton.getInstance().isTelemetryEnabled()) {
-                    return; 
+                    return;
                 }
-            }
-            catch(AuthenticationException ex){
+            } catch (AuthenticationException ex) {
                 System.err.println("No user authenticated: " + ex.getMessage());
             }
-            
-            try{
+
+            try {
                 String jsonLine = mapper.writeValueAsString(e);
-                if(DESTINATION_FILE.length() == 0){
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESTINATION_FILE))){
+                if (DESTINATION_FILE.length() == 0) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESTINATION_FILE))) {
                         writer.write("[\n" + jsonLine + "\n]");
                     }
-                } else{
-                    try (RandomAccessFile raf = new RandomAccessFile(DESTINATION_FILE, "rw")){
-                        raf.seek(raf.length()-1);
+                } else {
+                    try (RandomAccessFile raf = new RandomAccessFile(DESTINATION_FILE, "rw")) {
+                        raf.seek(raf.length() - 1);
                         String jsonToAppend = ",\n" + jsonLine + "\n]";
                         raf.write(jsonToAppend.getBytes());
                     }
                 }
-            } catch (IOException ex){
+            } catch (IOException ex) {
                 System.err.println("Error writing to JSON: " + ex.getMessage());
             }
         }
@@ -155,7 +160,7 @@ public class TelemetryListenerSingleton {
          * @param e the StartSessionEvent to be recorded to the JSON database.
          */
         @Override
-        public void onStartSession(StartSessionEvent e){
+        public void onStartSession(StartSessionEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -173,7 +178,7 @@ public class TelemetryListenerSingleton {
          * @param e the NormalEncounterStartEvent to be recorded to the JSON database.
          */
         @Override
-        public void onNormalEncounterStart(NormalEncounterStartEvent e){
+        public void onNormalEncounterStart(NormalEncounterStartEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -191,7 +196,7 @@ public class TelemetryListenerSingleton {
          *          database.
          */
         @Override
-        public void onNormalEncounterComplete(NormalEncounterCompleteEvent e){
+        public void onNormalEncounterComplete(NormalEncounterCompleteEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -209,7 +214,7 @@ public class TelemetryListenerSingleton {
          * @param e the NormalEncounterFailEvent to be recorded to the JSON database.
          */
         @Override
-        public void onNormalEncounterFail(NormalEncounterFailEvent e){
+        public void onNormalEncounterFail(NormalEncounterFailEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -226,7 +231,7 @@ public class TelemetryListenerSingleton {
          * @param e the BossEncounterStartEvent to be recorded to the JSON database.
          */
         @Override
-        public void onBossEncounterStart(BossEncounterStartEvent e){
+        public void onBossEncounterStart(BossEncounterStartEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -243,7 +248,7 @@ public class TelemetryListenerSingleton {
          * @param e the BossEncounterCompleteEvent to be recorded to the JSON database.
          */
         @Override
-        public void onBossEncounterComplete(BossEncounterCompleteEvent e){
+        public void onBossEncounterComplete(BossEncounterCompleteEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -261,7 +266,7 @@ public class TelemetryListenerSingleton {
          * @param e the BossEncounterFailEvent to be recorded to the JSON database.
          */
         @Override
-        public void onBossEncounterFail(BossEncounterFailEvent e){
+        public void onBossEncounterFail(BossEncounterFailEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -278,7 +283,7 @@ public class TelemetryListenerSingleton {
          * @param e the GainCoinEvent to be recorded to the JSON database.
          */
         @Override
-        public void onGainCoin(GainCoinEvent e){
+        public void onGainCoin(GainCoinEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -295,7 +300,7 @@ public class TelemetryListenerSingleton {
          * @param e the BuyUpgradeEvent to be recorded to the JSON database.
          */
         @Override
-        public void onBuyUpgrade(BuyUpgradeEvent e){
+        public void onBuyUpgrade(BuyUpgradeEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -312,7 +317,7 @@ public class TelemetryListenerSingleton {
          * @param e the EndSessionEvent to be recorded to the JSON database.
          */
         @Override
-        public void onEndSession(EndSessionEvent e){
+        public void onEndSession(EndSessionEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
@@ -322,7 +327,7 @@ public class TelemetryListenerSingleton {
             } catch (TimestampValidationException | SessionValidationException ex) {
                 System.err.println(ex.getMessage());
             }
-            
+
         }
 
         /**
@@ -331,7 +336,7 @@ public class TelemetryListenerSingleton {
          * @param e the SettingsChangeEvent to be recorded to the JSON database.
          */
         @Override
-        public void onSettingsChange(SettingsChangeEvent e){
+        public void onSettingsChange(SettingsChangeEvent e) {
             try {
                 isCorrectTimeStamp(e);
             } catch (TimestampValidationException ex) {
@@ -345,7 +350,7 @@ public class TelemetryListenerSingleton {
          * @param e the KillEnemyEvent to be recorded to the JSON database.
          */
         @Override
-        public void onKillEnemy(KillEnemyEvent e){
+        public void onKillEnemy(KillEnemyEvent e) {
             try {
                 isCorrectSession(e);
                 isCorrectTimeStamp(e);
