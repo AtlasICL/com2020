@@ -2,125 +2,125 @@
 {
   "userID" : "102232247054755865131",
   "event" : "StartSession",
-  "sessionID" : -1866277698,
-  "difficulty" : "EASY",
-  "timestamp" : "2026/02/15/18/59/38"
+  "sessionID" : 141942179,
+  "difficulty" : "Medium",
+  "timestamp" : "2026/02/16/09/55/22"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "NormalEncounterStart",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 1,
   "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "timestamp" : "2026/02/15/18/59/38"
+  "difficulty" : "Medium",
+  "timestamp" : "2026/02/16/09/55/22"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "KillEnemy",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 1,
   "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "enemy_type" : "FISH_MAN",
-  "timestamp" : "2026/02/15/18/59/43"
+  "difficulty" : "Medium",
+  "enemy_type" : "Fishman",
+  "timestamp" : "2026/02/16/09/55/28"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "NormalEncounterComplete",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 1,
   "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "player_HP_remaining" : 160,
-  "timestamp" : "2026/02/15/18/59/43"
+  "difficulty" : "Medium",
+  "player_HP_remaining" : 20,
+  "timestamp" : "2026/02/16/09/55/28"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "GainCoin",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 1,
   "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
+  "difficulty" : "Medium",
   "coins_gained" : 25,
-  "timestamp" : "2026/02/15/18/59/43"
+  "timestamp" : "2026/02/16/09/55/28"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "BuyUpgrade",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 1,
   "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
+  "difficulty" : "Medium",
+  "upgrade_bought" : "SLASH_UNLOCK",
+  "coins_spent" : 15,
+  "timestamp" : "2026/02/16/09/55/28"
+}
+,
+{
+  "userID" : "102232247054755865131",
+  "event" : "BuyUpgrade",
+  "sessionID" : 141942179,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Medium",
   "upgrade_bought" : "WATER_DAMAGE_RESISTANCE",
   "coins_spent" : 5,
-  "timestamp" : "2026/02/15/18/59/51"
-}
-,
-{
-  "userID" : "102232247054755865131",
-  "event" : "BuyUpgrade",
-  "sessionID" : -1866277698,
-  "stage_number" : 1,
-  "encounter_name" : "FISHMAN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "upgrade_bought" : "PHYSICAL_DAMAGE_RESISTANCE",
-  "coins_spent" : 20,
-  "timestamp" : "2026/02/15/18/59/56"
+  "timestamp" : "2026/02/16/09/55/34"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "NormalEncounterStart",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 2,
   "encounter_name" : "GOBLIN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "timestamp" : "2026/02/15/18/59/57"
+  "difficulty" : "Medium",
+  "timestamp" : "2026/02/16/09/55/35"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "KillEnemy",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 2,
   "encounter_name" : "GOBLIN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "enemy_type" : "GOBLIN",
-  "timestamp" : "2026/02/15/19/00/52"
+  "difficulty" : "Medium",
+  "enemy_type" : "Goblin",
+  "timestamp" : "2026/02/16/09/55/42"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "NormalEncounterComplete",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 2,
   "encounter_name" : "GOBLIN_ENCOUNTER",
-  "difficulty" : "EASY",
-  "player_HP_remaining" : 165,
-  "timestamp" : "2026/02/15/19/00/52"
+  "difficulty" : "Medium",
+  "player_HP_remaining" : 60,
+  "timestamp" : "2026/02/16/09/55/42"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "GainCoin",
-  "sessionID" : -1866277698,
+  "sessionID" : 141942179,
   "stage_number" : 2,
   "encounter_name" : "GOBLIN_ENCOUNTER",
-  "difficulty" : "EASY",
+  "difficulty" : "Medium",
   "coins_gained" : 25,
-  "timestamp" : "2026/02/15/19/00/52"
+  "timestamp" : "2026/02/16/09/55/42"
 }
 ,
 {
   "userID" : "102232247054755865131",
   "event" : "EndSession",
-  "sessionID" : -1866277698,
-  "timestamp" : "2026/02/15/19/01/13"
+  "sessionID" : 141942179,
+  "timestamp" : "2026/02/16/09/55/45"
 }
 ]
