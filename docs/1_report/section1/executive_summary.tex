@@ -1,1 +1,15 @@
-TODO Luca C
+\documentclass{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\begin{document}
+
+\section*{Executive Summary}
+
+The project prototype delivers an interactive turn-based game via a CLI (Command-Line Interface), integrated with a telemetry dashboard to support game balancing. During gameplay, players progress through staged encounters against enemies and must manage lives, health, magic, and hit points. Between stages, players are able to purchase upgrades in a shop. The system records structured gameplay events across multiple difficulty configurations to support analytical evaluation.
+
+The program matters because it enables game designers to identify points of extreme difficulty, player drop-off, and progression curves, allowing balancing decisions to be based on structured gameplay data rather than intuition.
+
+Several risks were considered during development. A major risk was state-management errors causing inconsistencies in game flow, such as players becoming stuck in certain stages, as well as unreliable telemetry. This was mitigated through strict state checks before encounters and careful handling of empty or invalid targets. Another risk was inaccurate analytics caused by missing telemetry events. This was mitigated by implementing centralised telemetry listeners within the game loop to ensure that all key gameplay features were consistently captured and logged.
+
+\end{document}
