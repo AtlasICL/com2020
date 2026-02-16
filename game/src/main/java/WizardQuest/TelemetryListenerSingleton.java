@@ -141,7 +141,6 @@ public class TelemetryListenerSingleton {
                 String jsonLine = mapper.writeValueAsString(e);
                 String content = Files.readString(destination_file.toPath()).trim();
                 content = content.replaceAll("\\s+", "");
-                System.out.println(content);
                 if (destination_file.length() == 0 || "[]".equals(content)) {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination_file))) {
                         writer.write("[\n" + jsonLine + "\n]");
