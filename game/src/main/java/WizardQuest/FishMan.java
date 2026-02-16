@@ -14,7 +14,7 @@ public class FishMan extends EnemyBase {
      * @param difficulty defines the current game difficulty for this concrete enemy, used to scale health
      */
     public FishMan(DifficultyEnum difficulty){
-        super((int) Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
+        super(Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
     }
     @Override
     public List<AbilityEnum> getAbilities(){
@@ -31,10 +31,10 @@ public class FishMan extends EnemyBase {
     @Override
     public void loseHealth(int amount, DamageEnum type){
         if (type == DamageEnum.THUNDER){
-            amount = (int) Math.round(amount * 2.0);
+            amount = amount * 2;
         }
         else if (type == DamageEnum.WATER){
-            amount = (int) Math.round(amount / 2.0);
+            amount = Math.round(amount / 2.0f);
         }
         super.loseHealth(amount, type);
     }
