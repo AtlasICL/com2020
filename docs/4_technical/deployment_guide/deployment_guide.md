@@ -7,15 +7,26 @@ _Please find our prerequisite configuration guides at the bottom of the page, if
 - Maven
 
 ## Instructions for Running Game App
+
+**NOTE**: For Windows machines, please use a PowerShell terminal.
+
 1. In the terminal, navigate into the `game` directory from root.
 ```
 cd game
 ```
-2. Run the following commands, which will set environment variables to allow SSO via Google.
+2. Run ONE of the following scripts, dependent on your OS - which will set environment variables to allow SSO via Google.
+
+**Windows**
 ```
-$env:OIDC_ISSUER=""
+$env:OIDC_ISSUER="https://accounts.google.com"
 $env:OIDC_CLIENT_ID=""
 $env:OIDC_CLIENT_SECRET=""
+```
+**macOS or Linux**
+```
+export OIDC_ISSUER="https://accounts.google.com"
+export OIDC_CLIENT_ID=""
+export OIDC_CLIENT_SECRET=""
 ```
 3. Run the following Maven command, which will execute the game.
 ```
@@ -23,17 +34,29 @@ mvn clean compile exec:java "-Dexec.mainClass=WizardQuest.GameUserInterface"
 ```
 
 ## Instructions for Running Telemetry App
-1. Use the following command to navigate into the `telemetry` directory from root.
+
+**NOTE**: For Windows machines, please use a PowerShell terminal.
+
+1. In the terminal, se the following command to navigate into the `telemetry` directory from root.
 ```
 cd telemetry
 ```
-2. Run the following commands, which will set environment variables to allow SSO via Google.
+2. Run ONE of the following scripts, dependent on your OS - which will set environment variables to allow SSO via Google.
+
+**Windows**
 ```
-$env:OIDC_ISSUER=""
+$env:OIDC_ISSUER="https://accounts.google.com"
 $env:OIDC_CLIENT_ID=""
 $env:OIDC_CLIENT_SECRET=""
 ```
-3. In a new terminal, run ONE of the following scripts - dependent on your OS.
+**macOS or Linux**
+```
+export OIDC_ISSUER="https://accounts.google.com"
+export OIDC_CLIENT_ID=""
+export OIDC_CLIENT_SECRET=""
+```
+
+3. Run ONE of the following scripts, dependent on your OS.
 
 **Windows**
 ```
