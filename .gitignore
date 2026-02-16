@@ -1,33 +1,34 @@
-tel/venv
-
+# Python
 **/__pycache__/
-
 **/venv
 
+# Java
 game/target
 
+# IDEs
 .vscode
-
 .idea
 
+# env files
 .env**
 **.env
 .env**
 **.env**
 
-telemetry/auth/logs.txt
-telemetry/logins_file.json
+# Event logs
+telemetry_events.json
+logs.txt
 
 
-
-
-
+# LaTeX
 *.aux
 *.gz
 *.bcf
 *.out
 *.xml
 *.toc
+
+# Report
 cw1_prototype_report.log
 cw1_prototype_report.pdf
 meeting_minutes.log
