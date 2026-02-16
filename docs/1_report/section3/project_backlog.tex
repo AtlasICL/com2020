@@ -133,85 +133,131 @@ As a tester I need a seeded dataset consisting of a large variety of telemetry e
 \paragraph{Decision Dataset}
 As a developer I need a set of sample balancing decisions within a sample decision log, that are a combination of good and bad decisions so that I can test the system is able to process the decision log. 
 \subsection{Java Application}
+
 \subsubsection{Autheentication and Acesss Control}
-\paragraph{Login}
-As a general user I need to be able to login with a username and password so that the telemetry events produced by me are associated with my user ID. 
-\paragraph{Login Reset}
+
+\paragraph{Users can Log in}
+As a general user I need to be able to login with a username and password so that the telemetry events produced by me are associated with my user ID.
+
+\paragraph{Users can Reset their Login}
 As a general user I need to be able to reset my login so if I forget my login credentials I can recover my account by resetting them.
-\paragraph{Player Permissions}
-As a player I need to be able to login, change whether telemetry is enabled, view my run progress, view a telemetry disclosure, play any number of game runs so that I can play the game and consent to the collection of my telemetry data.
-\paragraph{Designer Permissions}
-As a designer I need to be able to do anything a player can do, as well as view and edit design parameters in the settings screen so that I can edit the game's design and balance. 
-\paragraph{Developer Permissions}
-As a developer I need to be able to do anything a designer can do, as well as assign roles to different users so users can gain roles other than the player role. 
+
+\paragraph{Authenticaed Users are Assigned a Role}
+As a general user I need to be assigned the role of player, designer, or developer dependant on my level of privilege within the game so that I can perform actions related to my role. 
+
 \subsubsection{Settings}
-\paragraph{Telemetry}
-As a general user I need a setting that allows me to enable and disable telemetry that is enabled by default so I can withdraw my consent for the collection of telemetry events relating to my play.
-\paragraph{Design Parameters}
-As a designer I need to view and set the values of the design parameters of the system so that I can balance the game.
-\paragraph{Simulation Mode}
-As a designer I need to view a simulation of the game so that I can see what the effect of changing the design parameters are on the game's balance.
-\paragraph{Role Asignment}
-As a developer I need to be able assign roles to different users so that designers are given the designer role and developers are given the developer role, giving them the correct authorisation. 
-\paragraph{Telemetry Disclosure}
+
+\paragraph{Users can View the Telemetry Disclosure}
 As a general user I need to be able to see what telemetry information is collected about my and it's purpose so that I am able to provide informed consent to the collection of my telemetry.
+
+\paragraph{Users can Toggle Telemetry}
+As a general user I need a setting that allows me to enable and disable telemetry, that is enabled by default, so that I can withdraw my consent for the collection of telemetry events relating to my play.
+
+\paragraph{Designers can View and Change Starting Lives}
+As a designer I need to be able to view and change the starting lives of the player for each difficulty so that I can balance the game. 
+
+\paragraph{Designers can View and Change Enemy Health Multiplier}
+As a designer I need to be able to view and change a multiplier for the amount of health enemies start each encounter with, for each difficulty so that I can balance the game. 
+
+\paragraph{Designers can View and Change Player Maximum Health}
+As a designer I need to be able to view and change the amount of health the player starts each encounter with have for each difficulty so that I can balance the game.
+
+\paragraph{Designers can View and Change Upgrade Price Multiplier}
+As a designer I need to be able to view and change the multiplier applied to the cost of upgrades in the shop for each difficulty so that I can balance the game.
+
+\paragraph{Designers can View and Change Enemy Damage Multiplier}
+As a designer I need to be able to view and change a multiplier for the amount of damage enemies deal each encounter, for each difficulty so that I can balance the game.
+
+\paragraph{Designers can View and Change Player Maximum Magic}
+As a designer I need to be able to view and change the maximum amount of magic the player can have stored in an encounter, for each difficulty so that I can balance the game.
+
+\paragraph{Designers can View and Change Magic Regeneration Rate}
+As a designer I need to be able to view and change the amount of magic the player regains at the start of each turn, for each difficulty so that I can balance the game.
+
+\paragraph{Designers can View and Change Number of Items in The Shop}
+As a designer I need to be able to view and change the number of items available in the shop, for each difficulty so that I can balance the game.
+
+\paragraph{Designers can Execute a Simulated Run}
+As a designer I need to view a simulation of the game so that I can see what the effects of design decisions on the game's balance.
+
+\paragraph{Developers can Assign Roles}
+As a developer I need to be able assign roles to different users so that designers are given the designer role and developers are given the developer role, giving them the correct authorisation.
+
 \subsubsection{Game Runs}
+
 \paragraph{User can Chose Difficulty}
 As a general user I need to be able to chose the difficulty of my run so that it is well balanced for my skill level.
+
 \paragraph{Player can Use Mundane Attack Abilities}
 As a player I need to be able to use any mundane attack abilities my character has (both purchased and starting) to deal damage of a specific type to enemies so that I can defeat them.
+
 \paragraph{Player can Chose Which Abilities to Purchase}
 As a player I need to see a variety of abilities which I can purchase for my character with coins in between encounters so that I a can make meaningful decisions about what abilities to get. 
+
 \paragraph{Player Can Use Purchased Magic Attack Abilities}
 As a player I need to be able to use any magic attack abilities my character has purchased from the shop, provided they have enough magic to use them, to deal damage of a specific type to enemies so that I can defeat them.
+
 \paragraph{Enemies Can Use Attack Abilities}
 As a player I need enemies to be able to use any attack abilities they have to deal damage of a specific type to my character, so that my character can die.
+
 \paragraph{Player Benefits from Purchased Damage Reistance Passive Abilities}
 As a player I need my character to take reduced damage of a specific type when they have purchased a passive ability from the shop that grants this, so that my character's durability is improved.
+
 \paragraph{Player Benefits from Purchased Damage Boost Passive Abilities}
 As a player I need my character to deal increased damage of a specific type when they have purchased a passive ability from the shop that grants this, so that my character's damage output is improved.
+
 \paragraph{Enemies Have Damage Resistances}
 As a player I need some enemies to be resistant to damage of a specific type so that I am encouraged to think about which ability I use against them.
+
 \paragraph{Enemies Have Damage Vulnerabilities}
 As a player I need some enemies to be vulnerable to damage of a specific type so that I am encouraged to think about which ability I use against them.
+
 \paragraph{Players can Encounter Multiple Enemies in Combat}
 As a player I need to encounter multiple enemies within a combat encounter so that I can chose which enemy to target strategically. 
+
 \paragraph{Player can Complete a Combat Round}
 As a player I need to be able to complete a combat round after all enemies and my character have taken their turns, with my character regaining magic at the start of each round, so that I can fight enemies over multiple rounds and continue using magic abilities.
+
 \paragraph{Player can Complete an Encounter}
 As a player I need to be able to complete an encounter by killing all the enemies, gaining coins upon completion, so that I can progress to the shop.
+
 \paragraph{Player can Retry an Encounter}
 As a player I need to be able to retry an encounter if my character dies while having lives so that I can improve and potentially beat the encounter.
+
 \paragraph{Player can Progress Through Stages}
 As a player I need to be able to progress though the stages of the game, completing a stage after leaving the shop so that I can track my progression through the game and my character and enemies can gain power. 
+
 \paragraph{Player can Fail Runs}
 As a player I need to be able to fail runs when my character dies without any lives, being sent back to stage 1 with no purchased abilities, so that there is consequence to my character dying. 
+
 \subsubsection{Telemetry Events}
-\paragraph{Event Writing}
-As a designer I require the Java application to write telemetry events to the telemetry event store if the user has telemetry enabled, so I can view them in the python application.
-\paragraph{Event Validation}
-As a designer I require the Java application to validate the events it writes to the event store so that the number of anomalous events written is minimised.
-\paragraph{Start Session}
-As a developer I need to view information relating to the start of a session (run) so that I can know what difficulty the session is. 
-\paragraph{Normal Encounter Start}
-As a designer I need to view information relating to the start of a normal encounter so that I can know what encounter is taking place, on which stage and on what difficulty.
-\paragraph{Normal Encounter Fail}
-As a designer I need to view information relating to the failure of a normal encounter so that I can know what encounter was failed, what difficulty it was on, what stage the encounter was on, and how many lives the player has left on the run.
-\paragraph{Normal Encounter Complete}
-As a designer I need to view information relating to the completion of a normal encounter so that I can know what encounter was completed, what difficulty the encounter was, what stage it was on, and how much health the player finished with.
-\paragraph{Boss Encounter Start}
-As a designer I need to view information relating to the start of a boss encounter so I can know what encounter is taking place, on which stage and on what difficulty.
-\paragraph{Boss Encounter Fail}
-As a designer I need to view information relating to the failure of a boss encounter so that I can know what encounter was failed, what difficulty it was on, what stage the encounter was on, and how many lives the player has left on the run.
-\paragraph{Boss Encounter Complete}
-As a designer I need to view information relating to the completion of a boss encounter so that I can know what encounter was completed, what difficulty the encounter was, what stage it was on, and how much health the player finished with.
-\paragraph{Gain Coin}
-As a designer I need to view information relating to the player gaining coins so that I know how many coins were gained, on what difficulty they were gained on, what encounter provided them and what stage they were gained on.
-\paragraph{Buy Upgrade}
-As a designer I need to view information relating to the player purchasing an upgrade from the shop so that I know what stage the shop is associated with, what upgrade was bought and how many coins it cost.
-\paragraph{End Session}
-As a designer I need to view information relating to the end of a session (run) so that I know how long the session was. 
-\paragraph{Settings Change}
-As a designer I need to view information relating to changing a setting value so that I know what setting was changed and to what value.
-\paragraph{Kill Enemy}
-As a designer I need to view information relating to the death of an enemy so that I know what encounter the enemy was a part of, what difficulty the run was in, what stage the encounter was for, and what enemy was killed by the player. 
+
+\paragraph{Application Handles Normal Encounter Fail}
+As a developer I need the application to validate and write normal encounter fail events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Normal Encounter Complete}
+As a developer I need the application to validate and write normal encounter complete events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Boss Encounter Start}
+As a developer I need the application to validate and write boss encounter start events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Boss Encounter Fail}
+As a developer I need the application to validate and write boss encounter fail events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Boss Encounter Complete}
+As a developer I need the application to validate and write boss encounter complete events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Gain Coin}
+As a developer I need the application to validate and write gain coin events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Buy Upgrade}
+As a developer I need the application to validate and write buy upgrade events to the event store so that I can view them externally.
+
+\paragraph{Application Handles End Session}
+As a developer I need the application to validate and write end session events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Settings Change}
+As a developer I need the application to validate and write settings change events to the event store so that I can view them externally.
+
+\paragraph{Application Handles Kill Enemy}
+As a developer I need the application to validate and write kill enemy events to the event store so that I can view them externally.
