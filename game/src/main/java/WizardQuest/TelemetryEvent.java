@@ -40,8 +40,6 @@ public abstract class TelemetryEvent {
         return this.userID;
     }
 
-
-
     /**
      * Gets the stored timestamp.
      * 

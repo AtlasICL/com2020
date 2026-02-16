@@ -51,8 +51,8 @@ class UpgradeName(str, Enum):
     THUNDER_STORM_UNLOCK = "THUNDER_STORM_UNLOCK"
 
 class EnemyType(str, Enum):
-    GOBLIN = "GOBLIN"
-    FISHMAN = "FISHMAN"
+    GOBLIN = "Goblin"
+    FISHMAN = "Fishman"
 
 class SettingName(str, Enum):
     TELEMETRY_ENABLED = "TELEMETRY_ENABLED"

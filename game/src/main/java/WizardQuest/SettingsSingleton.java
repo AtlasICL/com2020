@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * Provides singleton access to settings and user properties
  */
 public class SettingsSingleton {
-    private static SettingsInterface settings = new Settings();
+    private static final SettingsInterface settings = new Settings();
 
     private SettingsSingleton() {
     }
@@ -424,7 +424,6 @@ public class SettingsSingleton {
             this.shopItemCount.put(difficulty, newShopItemCount);
             saveDesignParameters();
         }
-
 
         @Override
         public String getUserID() {

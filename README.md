@@ -8,8 +8,6 @@
   - [Telemetry App (Python) dependencies](#telemetry-app-python-dependencies)
   - [External dependencies](#external-dependencies)
   - [System dependencies](#system-dependencies)
-- [Licensing](#licensing)
-  - [Project Licence](#project-licence)
   - [Dependency Licences](#dependency-licences)
 - [Folder structure](#folder-structure)
 
