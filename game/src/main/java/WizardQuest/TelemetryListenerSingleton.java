@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
 import java.time.Instant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,7 @@ public class TelemetryListenerSingleton {
         private String currentUserID = "12";
         private Instant mostRecentTimeStamp;
         private static final ObjectMapper mapper = new ObjectMapper();
-        private static File DESTINATION_FILE = new File("../event_logs/telemetry_events.json"); // change to actual
+        private static File destination_file = new File("../event_logs/telemetry_events.json"); // change to actual
                                                                                                 // filepath
 
         static {
@@ -138,12 +139,15 @@ public class TelemetryListenerSingleton {
 
             try {
                 String jsonLine = mapper.writeValueAsString(e);
-                if (DESTINATION_FILE.length() == 0) {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESTINATION_FILE))) {
+                String content = Files.readString(destination_file.toPath()).trim();
+                content = content.replaceAll("\\s+", "");
+                System.out.println(content);
+                if (destination_file.length() == 0 || "[]".equals(content)) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(destination_file))) {
                         writer.write("[\n" + jsonLine + "\n]");
                     }
                 } else {
-                    try (RandomAccessFile raf = new RandomAccessFile(DESTINATION_FILE, "rw")) {
+                    try (RandomAccessFile raf = new RandomAccessFile(destination_file, "rw")) {
                         raf.seek(raf.length() - 1);
                         String jsonToAppend = ",\n" + jsonLine + "\n]";
                         raf.write(jsonToAppend.getBytes());
@@ -339,6 +343,7 @@ public class TelemetryListenerSingleton {
         public void onSettingsChange(SettingsChangeEvent e) {
             try {
                 isCorrectTimeStamp(e);
+                saveEvent(e);
             } catch (TimestampValidationException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -363,12 +368,12 @@ public class TelemetryListenerSingleton {
 
         @Override
         public void setDestinationFile(File file) {
-            DESTINATION_FILE = file;
+            destination_file = file;
         }
 
         @Override
         public void resetDestinationFile() {
-            DESTINATION_FILE = new File("../event_logs/telemetry_events.json");
+            destination_file = new File("../event_logs/telemetry_events.json");
         }
     }
 }
