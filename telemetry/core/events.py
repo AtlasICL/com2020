@@ -66,7 +66,7 @@ class SettingName(str, Enum):
 
 class Difficulty(str, Enum):
     EASY = "Easy"
-    NORMAL = "Normal"
+    MEDIUM = "Medium"
     HARD = "Hard"
 
 class StartSession:
