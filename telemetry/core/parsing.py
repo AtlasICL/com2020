@@ -7,7 +7,23 @@ from typing import TypeAlias
 from datetime import datetime
 from pathlib import Path
 
-from core.events import *
+from core.events import (
+    KillEnemy,
+    EventParameter,
+    BossEncounterFail,
+    GainCoin,
+    EventType,
+    StartSession,
+    BuyUpgrade,
+    NormalEncounterStart,
+    EndSession,
+    NormalEncounterComplete,
+    SettingsChange,
+    BossEncounterComplete,
+    NormalEncounterFail,
+    BossEncounterStart,
+)
+
 
 ValidEvent: TypeAlias = (
     StartSession
