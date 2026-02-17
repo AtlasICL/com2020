@@ -1,3 +1,15 @@
+"""
+Docstring for telemetry.gui.gui
+
+This module is responsible for running the Telemetry App GUI.
+
+The GUI is implemented using tkinter.
+
+This module is responsible for the logic of refreshing plot data.
+
+The GUI logic lives in the TelemetryAppGUI class.
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 import seaborn as sns

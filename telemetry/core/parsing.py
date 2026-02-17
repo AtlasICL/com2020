@@ -9,6 +9,7 @@ from pathlib import Path
 
 from core.events import *
 
+
 ValidEvent: TypeAlias = (
     StartSession
     | NormalEncounterStart
