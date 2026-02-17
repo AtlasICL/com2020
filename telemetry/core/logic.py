@@ -9,6 +9,21 @@ This functionality is provided by the EventLogicEngine class.
 """
 
 from core.events import *
+from core.events import (
+    BossEncounterComplete,
+    BossEncounterFail,
+    BossEncounterStart,
+    BuyUpgrade,
+    Difficulty,
+    EndSession,
+    GainCoin,
+    KillEnemy,
+    NormalEncounterComplete,
+    NormalEncounterFail,
+    NormalEncounterStart,
+    SettingsChange,
+    StartSession,
+)
 from core.parsing import parse_file, ValidEvent
 from pathlib import Path
 
