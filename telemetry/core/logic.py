@@ -4,7 +4,7 @@ Docstring for telemetry.core.logic
 This module provides the logic for parsing event log JSON files, and 
 instantiating the relevant Event objects. Additionally, this module 
 provides functionality for aggregating and analysing the data parsed, 
-such as sorting by difficulty, getting averges, etc...
+such as sorting by difficulty, getting averages, etc...
 
 This functionality is provided by the EventLogicEngine class.
 """

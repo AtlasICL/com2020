@@ -1,4 +1,6 @@
 """
+Docstring for telemetry.core.parsing
+
 This file contains the logic for parsing game output json files.
 """
 
