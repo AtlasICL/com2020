@@ -19,10 +19,10 @@
 | Emre Acarsoy      | ea616@exeter.ac.uk     |
 | Luca Croci        | lc1107@exeter.ac.uk    |
 | Tom Croft         | tjc227@exeter.ac.uk    |
+| Will Finney       | wjf207@exeter.ac.uk    |
 | Kazybek Khairulla | kk598@exeter.ac.uk     |
 | Luca Pacitti      | ljmp201@exeter.ac.uk   |
 | Harry Taylor      | ht555@exeter.ac.uk     |
-| Will Finney       | wjf207@exeter.ac.uk    |
 
 
 ## Style guide
