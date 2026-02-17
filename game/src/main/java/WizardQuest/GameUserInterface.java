@@ -955,6 +955,7 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
 
             try {
                 gameManager.purchaseUpgrade(bought);
+                ownedUpgrades[bought.ordinal()] = true;
                 telemetryListener.onBuyUpgrade(
                         new BuyUpgradeEvent(
                                 settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
