@@ -1,7 +1,6 @@
 import os
 import requests
 import threading
-from typing import Any
 
 import base64
 import hashlib
@@ -148,14 +147,14 @@ class Role(str, Enum):
     DEVELOPER = "developer"
 
 
-def google_login() -> tuple[Any, str, Role]:
+def google_login() -> tuple[str, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
     Returns the name and unique identifier of the user.
 
     :return: User unique identifier, user name.
-    :rtype: tuple[Any, str, Role]
+    :rtype: tuple[str, str, Role]
     :raises HTTPError: If an HTTP error occurs. 
     """
     validate_env_vars()
@@ -243,7 +242,7 @@ def google_login() -> tuple[Any, str, Role]:
     )
 
 
-def get_role(filename: str, userID: int) -> Role:
+def get_role(filename: str, userID: str) -> Role:
     """
     This function returns the role of the given user. It does so by
     checking the user roles json file at the provided filepath.
