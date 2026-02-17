@@ -1,5 +1,10 @@
 """
-This file contains the logic for parsing game output json files.
+Docstring for telemetry.core.parsing
+
+This module contains the logic for parsing game output json files. This
+module is responsible for reading the event log JSON files, and
+instantiating the ValidEvent object which corresponds to the event 
+parsed.
 """
 
 import json
@@ -23,6 +28,7 @@ from core.events import (
     NormalEncounterFail,
     BossEncounterStart,
 )
+
 
 
 ValidEvent: TypeAlias = (

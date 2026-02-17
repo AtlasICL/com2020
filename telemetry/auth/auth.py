@@ -1,3 +1,15 @@
+"""
+Docstring for telemetry.auth.auth
+
+This module is responsible for Google OAuth OIDC authentication.
+This allows users of this module to get the name, unique stable 
+identifier, and role of the authenticating user.
+
+Please note that use of this module requires the relevant environment
+variables to be set, i.e. OIDC_ISSUER, OIDC_CLIENT_ID, and 
+OIDC_CLIENT_SECRET.
+"""
+
 import os
 import requests
 import threading
@@ -10,7 +22,6 @@ import json
 from enum import Enum
 
 import logging
-from datetime import datetime
 
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler

@@ -1,3 +1,14 @@
+"""
+Docstring for telemetry.core.logic
+
+This module provides the logic for aggregating and analysing the data
+parsed by the parsing module, namely sorting by difficulty, getting 
+averages by difficulty, etc...
+
+This functionality is provided by the EventLogicEngine class.
+"""
+
+from core.events import *
 from core.events import (
     BossEncounterComplete,
     BossEncounterFail,
@@ -15,6 +26,7 @@ from core.events import (
 )
 from core.parsing import parse_file, ValidEvent
 from pathlib import Path
+
 
 class EventLogicEngine:
     def __init__(self):
