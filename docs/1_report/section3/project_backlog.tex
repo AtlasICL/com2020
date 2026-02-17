@@ -1,4 +1,4 @@
-The project was split into three main sections representing the three main areas of work: the documentation, the java application, and the python application. Each of those areas is then further divided into epics and user stories. The epics and stories in this section include both those relevant to sprint 1 and what is planned for sprint 2. Due to the nature of scrum, the epics for sprint 2 may have adapted by the end of that sprint, and so may differ from the epics and stories in this prototype report. 
+The project was split into three main sections representing the three main areas of work: the documentation, the java application, and the python application. Each of those areas is then further divided into epics and user stories. The epics and stories in this section include both those relevant to sprint 1 and what is planned for sprint 2. Due to the nature of scrum, the epics for sprint 2 may have adapted by the end of that sprint, and so may differ from the epics and stories in this prototype report.
 
 \subsection{Documentation}
 
@@ -28,7 +28,7 @@ As a stakeholder I need to know the data flow schema so that I can understand ho
 \paragraph{Stakeholders can View Telemetry Schema}
 As a stakeholder I need to know the telemetry schema so that I can understand how the telemetry is structured and make informed decisions about future integration and use.
 
-\paragraph{Stakeholders can View Game Design}
+\paragraph{Stakeholders can View Game Design Documentation}
 As a stakeholder I need to know the game design of the application so I can understand game mechanics and evaluate design decisions. 
 
 \paragraph{Stakeholders can View Sprint Two Prioritised Requirements}
@@ -37,45 +37,13 @@ As a stakeholder I need to see what requirements are being prioritised and plann
 \paragraph{Stakeholders can View Management}
 As a stakeholder I need to see how the team has worked together and what roles each person took on during development so I can evaluate team performance.
 
-\subsubsection{Meeting Minutes}
+\subsubsection{Process Information}
 
-\paragraph{Stakeholders can View Meeting Attendance}
-As a stakeholder I need to be able to view who is attending meetings so that I can stay informed about team participation.
+\paragraph{Stakeholders can View Meeting Minutes}
+As a stakeholder I need to be able to view who was at each weekly scrum meeting, what everyone did that scrum, what was discussed and what work is to be done so that I can remain up to date with project progress.
 
-\paragraph{Stakeholders can View Work Completed}
-As a stakeholder I need to be able to view what work has been completed by each person so that I can assess project progress.
-
-\paragraph{Stakeholders can View Topics Discussed}
-As a stakeholder I need to be able to view what topics were discussed during the scrum meeting so that I am updated on project discussion. 
-
-\paragraph{Stakeholders can View Work to be Done}
-As a stakeholder I need to to be able to view what work is to be done over the next weekly scrum so that I can monitor progress and ensure it aligns with my priorities.
-
-\subsubsection{Risk Register}
-
-\paragraph{Stakeholders can View the ID and Description of Each Risk}
-As a stakeholder I need each risk to be given a unique identifier so that I can speak about it specifically in meetings and communications.
-
-\paragraph{Stakeholders can View a Description of Each Risk}
-As a stakeholder I need to be able to view a clear, short description of the risk so that I can understand what the risk is.
-
-\paragraph{Stakeholders can View the Consequence of Each Risk}
-As a stakeholder I need to be able to view the consequences of a risk so that I understand what will happen should it occur.
-
-\paragraph{Stakeholders can View the Impact of Each Risk}
-As a stakeholder I need to be able to view the predicted impact of a risk as a numeric value so that I can assess how significant the risk is should it happen.
-
-\paragraph{Stakeholders can View the Likelihood of Each Risk}
-As a stakeholder I need to be able to view the likelihood the risk occurs so that I can assess how often the risk will occur.
-
-\paragraph{Stakeholders can View the Value of Each Risk}
-As a stakeholder I need to be able to see a value for how significant the risk is so that I can prioritise its mitigation.
-
-\paragraph{Stakeholders can View the Treatment for Each Risk}
-As a stakeholder I need to be able to see how a risk is going to be treated so that I can evaluate if this treatment is sufficient.
-
-\paragraph{Stakeholders can View the Risk Owner for Each Risk}
-As a stakeholder I need to be able to see who owns the risk so that I know who is accountable for it and can ensure they are monitoring and addressing the risk. 
+\paragraph{Stakeholder can view Risk Register}
+As a stakeholder I need to be able to view a risk register of potential process risks so that I am aware of them and ensured they're being mitigated
 
 \subsubsection{Ethical and Legal Considerations}
 
@@ -212,6 +180,9 @@ As a designer I need to be able to compare key metrics from both user generated 
 \paragraph{Designers can View Rule Based Design Suggestions}
 As a designer I need the telemetry application to provide rule based design suggestions from both simulated and user generated telemetry so that it provides assistance in balancing the game. 
 
+\paragraph{Designers can View Decision Log}
+As a designer I need to be able to view a log of what design parameter changes have occurred along with an explanation as to why so that I can audit design decision. 
+
 \subsubsection{Telemetry Events}
 
 \paragraph{Application Handles Start Session}
@@ -297,7 +268,7 @@ As a designer I need to be able to view and change the maximum amount of magic t
 \paragraph{Designers can View and Change Magic Regeneration Rate}
 As a designer I need to be able to view and change the amount of magic the player regains at the start of each turn, for each difficulty so that I can balance the game.
 
-\paragraph{Designers can View and Change Number of Items in The Shop}
+\paragraph{Designers can View and Change Number of Items in the Shop}
 As a designer I need to be able to view and change the number of items available in the shop, for each difficulty so that I can balance the game.
 
 \paragraph{Designers can Execute a Simulated Run}
@@ -329,28 +300,25 @@ As a player I need my character to take reduced damage of a specific type when t
 \paragraph{Player Benefits from Purchased Damage Boost Passive Abilities}
 As a player I need my character to deal increased damage of a specific type when they have purchased a passive ability from the shop that grants this, so that my character's damage output is improved.
 
-\paragraph{Enemies Have Damage Resistances}
-As a player I need some enemies to be resistant to damage of a specific type so that I am encouraged to think about which ability I use against them.
-
-\paragraph{Enemies Have Damage Vulnerabilities}
-As a player I need some enemies to be vulnerable to damage of a specific type so that I am encouraged to think about which ability I use against them.
+\paragraph{Enemies Have Damage Resistances and Vulnerabilities}
+As a player I need some enemies to be resistant or vulnerable to damage of a specific type so that I am encouraged to think about which ability I use against them.
 
 \paragraph{Players can Encounter Multiple Enemies in Combat}
 As a player I need to encounter multiple enemies within a combat encounter so that I can chose which enemy to target strategically. 
 
-\paragraph{Player can Complete a Combat Round}
+\paragraph{Players can Complete a Combat Round}
 As a player I need to be able to complete a combat round after all enemies and my character have taken their turns, with my character regaining magic at the start of each round, so that I can fight enemies over multiple rounds and continue using magic abilities.
 
-\paragraph{Player can Complete an Encounter}
+\paragraph{Players can Complete an Encounter}
 As a player I need to be able to complete an encounter by killing all the enemies, gaining coins upon completion, so that I can progress to the shop.
 
-\paragraph{Player can Retry an Encounter}
+\paragraph{Players can Retry an Encounter}
 As a player I need to be able to retry an encounter if my character dies while having lives so that I can improve and potentially beat the encounter.
 
-\paragraph{Player can Progress Through Stages}
+\paragraph{Players can Progress Through Stages}
 As a player I need to be able to progress though the stages of the game, completing a stage after leaving the shop so that I can track my progression through the game and my character and enemies can gain power. 
 
-\paragraph{Player can Fail Runs}
+\paragraph{Players can Fail Runs}
 As a player I need to be able to fail runs when my character dies without any lives, being sent back to stage 1 with no purchased abilities, so that there is consequence to my character dying. 
 
 \subsubsection{Telemetry Events}
