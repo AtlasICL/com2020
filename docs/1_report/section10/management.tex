@@ -1,1 +1,16 @@
-TODO: KK
+\subsection{Roles}
+Tom Croft served as Project Lead and Scrum Master, overseeing the requirements, interface design, and reviewing pull requests. Emre Acarsoy was the Telemetry Lead and Java Developer, responsible for authentication, settings, and coordinating the Python application. Luca Croci was the UI and UX Lead, developing the command-line user interface for the Java game. Kazybek Khairulla was a Java Developer, implementing the encounters and enemies. Luca Pacitti was the Testing Lead and Java Developer, implementing the game run logic and all automated tests. Harry Taylor was a Telemetry Developer and Java Developer, developing the telemetry listener, event validation, and the Python suggestion system. Will Finney was a Java Developer and Gameplay Designer, implementing abilities and upgrades, and leading the legal and ethical analysis.
+
+\subsection{Task Ownership}
+During Sprint 1, implementation was divided by component. Tom designed the interface and implemented the Player, TimeManager, and difficulty system. Emre implemented settings persistence, Google SSO, and the SBOM. Luca Croci built the CLI including the menu, encounter, and shop screens. Kazybek implemented the Encounter and Enemy classes. Luca Pacitti implemented the GameRun class and the unit and integration tests. Harry implemented the TelemetryListener, JSON event writing, and event validation. Will implemented abilities, upgrades, and damage resistance.
+
+For documentation, Tom structured the report and wrote the requirements, architecture, and sprint plan sections. Luca Pacitti wrote the problem framing and test sections. Will wrote the legal and ethical analysis and risk register. Emre wrote the SBOM and license decision. The presentation was completed by Emre, Harry, and Kazybek.
+
+\subsection{What Worked Well}
+The team benefited from a clear division of work. After agreeing on individual focus areas in Meeting 4, each member could work on their component independently without blocking others. Weekly scrum meetings kept the team aligned, with each meeting reviewing completed work and assigning tasks for the following week. Emre and Harry worked closely together on the Python backend, which allowed them to iterate quickly. The use of MoSCoW prioritisation helped the team focus on the most important features first.
+
+\subsection{Challenges}
+The Java interface specification required minor changes as implementation progressed, which occasionally caused rework for members whose components depended on it. Additionally, several components were developed independently and integrated close to the deadline, which compressed the time available for end-to-end testing. The team also found that coordinating across two separate applications (Java and Python) added complexity, as changes to the telemetry schema or event format on one side needed to be reflected on the other.
+
+\subsection{How Challenges Were Resolved}
+Interface changes were managed through Tom reviewing all pull requests and communicating changes to affected members promptly. To address late integration, the team plans to introduce more frequent integration points in Sprint 2 and begin cross-application testing earlier. The coordination challenge between the Java and Python applications was eased by defining a clear telemetry JSON schema early on, which both sides could develop against independently.
