@@ -57,7 +57,7 @@ As a stakeholder I need to be able to view how the system handles privacy and us
 As a stakeholder I need the software to obtain user consent for the collection of data, and disclose to them what data is collected and why so that they can make informed decisions about their data. 
 
 \paragraph{Stakeholders can View the Accessibility Analysis}
-As a stakeholder I need to the software to be accessible to users with accessability requirements by complying with modern accessability standards so that they can use it to best advantage.
+As a stakeholder I need to know in what ways accessability has been considered and implemented within the software so that I can evaluate if it is sufficiently accessible.
 
 \paragraph{Stakeholders can View the Intellectual Property and Licensing Implications}
 As a stakeholder I need to know what the licensing and intellectual property constraints of the software are so that I can use it in full legal compliance and honor the rights of the intellectual property owners. 
@@ -78,13 +78,13 @@ As a maintainer I need to know what data the software directly depends on as wel
 \subsubsection{Deployment and Operations Guide}
 
 \paragraph{Client can View the Java Application Deployment Instructions}
-As a client I need instructions on how to deploy and run the Java application so I can perform actions using it.
+As a client I need instructions on how to deploy and operate the Java application so I can perform actions using it.
 
 \paragraph{Client can View the Python Application Deployment Instructions}
-As a client I need instructions on how to deploy and run the Python application so I can perform actions using it.
+As a client I need instructions on how to deploy and operate the Python application so I can perform actions using it.
 
 \paragraph{Maintainer can View the Automated Test Running Instructions}
-As a maintainer I need instructions on how to run the automated test suite so that I can test any changes or extensions to the software to ensure their correctness.
+As a maintainer I need instructions on how to operate the automated test suite so that I can test any changes or extensions to the software to ensure their correctness.
 
 \subsubsection{Test Evidence}
 
@@ -132,7 +132,7 @@ As a maintainer I need clear maintenance instructions so I can ensure the game, 
 As a general user I need clear troubleshooting instructions based on clear and understandable error messages so that I can quickly troubleshoot errors and continue playing the game.
 
 \paragraph{Maintainers can View Extension Instructions}
-As a maintainer I need to know what areas of the system should be the targets of extension and how to extend of the current system so that when the system needs extension those are done in the easiest, least risky way.
+As a maintainer I need to know what areas of the system should be the targets of extension and how to extend of the current system so that when the system needs extension those are done in the most appropriate way.
 
 \subsubsection{Data Management Guide}
 
@@ -140,7 +140,7 @@ As a maintainer I need to know what areas of the system should be the targets of
 As a stakeholder I need to know what data is stored by the system so I can ensure this data is minimised and in full compliance with the law. 
 
 \paragraph{Maintainers can View the Data Format}
-As a maintainer I need to know what format the data is stored so I can work with the stored data and extend what data is stored. 
+As a maintainer I need to know what format the data is stored in so I can work with the stored data and extend what data is stored. 
 
 \subsubsection{Scrum Board}
 
@@ -155,16 +155,17 @@ As a stakeholder I need to know what the completion status of each epic is so th
 \subsubsection{Authentication and Access Control}
 
 \paragraph{Users can Log In}
-As a general user I need to be able to log in with a username and password so that my account is securely authenticated and granted access to the application.  
+As a general user I need to be able to log in with a username and password so that my account
+is securely authenticated and I am granted access to the application.
 
 \paragraph{Users can Reset their Login}
 As a general user I need to be able to reset my login so that if I forget my login credentials I can recover my account by resetting them.
 
 \paragraph{Users can Perform Actions Permitted by Their Role}
-As an authenticated user I want to perform only the actions permitted by my assigned role so that I cannot access functionality beyond my authority.
+As an authenticated user I need to perform only the actions permitted by my assigned role so that I cannot access functionality beyond my authority.
 
 \paragraph{Users can view their Profile}
-As an authenticated user I want to view my user information such as my username and role so that I am able to verify this information is correct and what I am expecting.
+As an authenticated user I need to view my user information such as my username and role so that I am able to verify this information is correct and what I am expecting.
 
 \subsubsection{Telemetry Views}
 
@@ -172,7 +173,7 @@ As an authenticated user I want to view my user information such as my username 
 As a designer I need to be able to view a drop-off funnel showing completion rate for each stage based on simulated and user generated telemetry so that I can spot any stages with balancing issues.
 
 \paragraph{Designers can View Difficulty Spikes}
-As a designer I need to be able to view which levels have disproportionately high failure rates and completion times from both simulated and user generated telemetry so that I can improve their balance. 
+As a designer I need to be able to view which stages have disproportionately high failure rates and completion times from both simulated and user generated telemetry so that I can improve their balance. 
 
 \paragraph{Designers can View Progress Curves}
 As a designer I need to be able to view the time to complete and resource accumulation from both simulated and user generated telemetry events so that I can assess the balance of each stage.
@@ -237,7 +238,8 @@ As a developer I need a set of sample balancing decisions within a sample decisi
 \subsubsection{Autheentication and Access Control}
 
 \paragraph{Users can Log In}
-As a general user I need to be able to log in with a username and password so that the telemetry events produced by me are associated with my user ID.
+As a general user I need to be able to log in with a username and password so that my account
+is securely authenticated and I am granted access to the application.
 
 \paragraph{Users can Reset their Login}
 As a general user I need to be able to reset my login so if I forget my login credentials I can recover my account by resetting them.
@@ -248,7 +250,7 @@ As an authenticated user I want to perform only the actions permitted by my assi
 \subsubsection{Settings}
 
 \paragraph{Users can View the Telemetry Disclosure}
-As a general user I need to be able to see what telemetry information is collected about my and it's purpose so that I am able to provide informed consent to the collection of my telemetry.
+As a general user I need to be able to see what telemetry information is collected about me and it's purpose so that I am able to provide informed consent to the collection of my telemetry.
 
 \paragraph{Users can Toggle Telemetry}
 As a general user I need a setting that allows me to enable and disable telemetry, that is enabled by default, so that I can withdraw my consent for the collection of telemetry events relating to my play.
@@ -260,7 +262,7 @@ As a designer I need to be able to view and change the starting lives of the pla
 As a designer I need to be able to view and change a multiplier for the amount of health enemies start each encounter with, for each difficulty so that I can balance the game. 
 
 \paragraph{Designers can View and Change Player Maximum Health}
-As a designer I need to be able to view and change the amount of health the player starts each encounter with have for each difficulty so that I can balance the game.
+As a designer I need to be able to view and change the amount of health the player starts each encounter with, for each difficulty so that I can balance the game.
 
 \paragraph{Designers can View and Change Upgrade Price Multiplier}
 As a designer I need to be able to view and change the multiplier applied to the cost of upgrades in the shop for each difficulty so that I can balance the game.
@@ -278,7 +280,7 @@ As a designer I need to be able to view and change the amount of magic the playe
 As a designer I need to be able to view and change the number of items available in the shop, for each difficulty so that I can balance the game.
 
 \paragraph{Designers can Execute a Simulated Run}
-As a designer I need to view a simulation of the game so that I can see what the effects of design decisions on the game's balance.
+As a designer I need to be able to run a simulation of the game so that I can see what the effects of design decisions are on the game's balance.
 
 \paragraph{Developers can Assign Roles}
 As a developer I need to be able assign roles to different users so that designers are given the designer role and developers are given the developer role, giving them the correct authorisation.
@@ -289,7 +291,7 @@ As a developer I need to be able assign roles to different users so that designe
 As a general user I need to be able to chose the difficulty of my run so that it is well balanced for my skill level.
 
 \paragraph{Player can Use Mundane Attack Abilities}
-As a player I need to be able to use any mundane attack abilities my character has (both purchased and starting) to deal damage of a specific type to enemies so that I can defeat them.
+As a player I need to be able to use any mundane attack abilities my character has (both purchased and default) to deal damage of a specific type to enemies so that I can defeat them.
 
 \paragraph{Player can Chose Which Abilities to Purchase}
 As a player I need to see a variety of abilities which I can purchase for my character with coins in between encounters so that I a can make meaningful decisions about what abilities to get. 
@@ -319,13 +321,13 @@ As a player I need to be able to complete a combat round after all enemies and m
 As a player I need to be able to complete an encounter by killing all the enemies, gaining coins upon completion, so that I can progress to the shop.
 
 \paragraph{Players can Retry an Encounter}
-As a player I need to be able to retry an encounter if my character dies while having lives so that I can improve and potentially beat the encounter.
+As a player I need to be able to retry an encounter if my character dies while having lives so that I can improve and potentially complete the encounter.
 
 \paragraph{Players can Progress Through Stages}
 As a player I need to be able to progress though the stages of the game, completing a stage after leaving the shop so that I can track my progression through the game and my character and enemies can gain power. 
 
 \paragraph{Players can Fail Runs}
-As a player I need to be able to fail runs when my character dies without any lives, being sent back to stage 1 with no purchased abilities, so that there is consequence to my character dying. 
+As a player I need to be able to fail runs when my character dies without any lives, being sent back to stage one with no purchased abilities, so that there is consequence to my character dying. 
 
 \paragraph{Players can Complete Runs}
 As a player I need to be able to complete a run by reaching the last stage and be shown a summary of my run once it's complete so that I can use this information to evaluate my performance in the run. 
