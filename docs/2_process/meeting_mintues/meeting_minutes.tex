@@ -23,6 +23,7 @@
 \usepackage[section]{placeins}
 \usepackage{subcaption}
 \usepackage{longtable}
+\usepackage{comment}
 \usepackage{caption}
 \captionsetup{font=footnotesize}
 \setlength{\parskip}{\baselineskip}
@@ -49,25 +50,31 @@
   {1em}
   {}
 
-\titlespacing*{\paragraph}
-  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titleformat{\paragraph}[runin]
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph}
+  {1em}
+  {}
 
 
-\title{Meeting Minutes\\[0.3em]
+\title{Meeting minutes\\[0.3em]
 \large COM2020 - Project 7}
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \date{17/02/2026}
 \begin{document}
+\maketitle
+\tableofcontents
+\newpage
 
-\subsection*{Description}
+
+\section{Description}
 
 This document contains a written summary of each weekly scrum meeting conducted by our team.
-Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting,
-and any key decisions that would influence our team's progress before the next scrum meeting.
+Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting, and any key decisions that would influence our team's progress before the next scrum meeting.
 
-\subsection*{Meetings}
+\section{Meetings}
 
-\subsubsection*{Meeting #1}
+\subsection{Meeting #1}
 
 \textbf{Date:} 12/01/2026
 \textbf{Time:} 12:30
@@ -92,7 +99,7 @@ and any key decisions that would influence our team's progress before the next s
 \textbf{Date of next meeting:} 14/01/2026
 
 
-\subsubsection*{Meeting #2}
+\subsection{Meeting #2}
 
 \textbf{Date:} 14/01/2026
 \textbf{Time:} 13:30
@@ -115,7 +122,7 @@ final product.
 \textbf{Date of next meeting:} 21/01/2026
 
 
-\subsubsection*{Meeting #3}
+\subsection{Meeting #3}
 
 \textbf{Date:} 21/01/2026
 \textbf{Time:} 13:30
@@ -140,7 +147,7 @@ final product.
 \textbf{Date of next meeting:} 28/01/2026
 
 
-\subsubsection*{Meeting #4}
+\subsection{Meeting #4}
 
 \textbf{Date:} 28/01/2026
 \textbf{Time:} 13:30
@@ -169,7 +176,7 @@ NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, End
 \textbf{Date of next meeting:} 04/02/2026
 
 
-\subsubsection*{Meeting #5}
+\subsection{Meeting #5}
 
 \textbf{Date:} 04/02/2026
 \textbf{Time:} 13:30
@@ -192,7 +199,7 @@ NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, End
 \textbf{Date of next meeting:} 11/02/2026
 
 
-\subsubsection*{Meeting #6}
+\subsection{Meeting #6}
 
 \textbf{Date:} 11/02/2026
 \textbf{Time:} 13:30
@@ -213,8 +220,7 @@ NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, End
 
 \textbf{Date of next meeting:} 15/02/2026
 
-
-\subsubsection*{Meeting #7}
+\subsection{Meeting #7}
 
 \textbf{Date:} 15/02/2026
 \textbf{Time:} 14:00
