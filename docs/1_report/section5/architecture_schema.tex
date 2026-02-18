@@ -1,5 +1,7 @@
 \subsection{Overview}
-The project is split into two applications, one written in Python and the other written in Java. The reason for this is we determined that much of the functionality of displaying graphs of data, and handling data in general was much better suited to python than to any other programming language we were confident with. Furthermore we determined that java would be much better suited to create the video game in than python given the more rigorous syntax and typing, and better object oriented support. From there we divided the responsibility of the system between the two applications as described below. 
+The project is split into two applications, one written in Python and the other written in Java. The reason for this is we determined that much of the functionality of displaying graphs of data, and handling data in general was much better suited to python than to any other programming language we were confident with. Furthermore we determined that java would be much better suited to create the video game in than python given the more rigorous syntax and typing, and better object oriented support. From there we divided the responsibility of the system between the two applications as described below.  
+
+Communication between the game and the telemetry app is ensured by a set of shared JSON files, which the game writes to and the telemetry app reads from. The JSON conforms to a custom schema we designed. The choice of JSON for this communication protocol comes with the drawback that JSON is slower than a custom binary protocol. However, we deemed that the advantages outweighed the aforementioned drawback, since JSON is human-readable, and allows us to provide clear and explicit error messages and logging.
 
 \textbf{Python}
 \begin{itemize}
@@ -18,55 +20,40 @@ The project is split into two applications, one written in Python and the other 
 \end{itemize}
 \subsection{Python Application}
 \subsubsection{Overview}
-The Python application acts as a visualiser and analyser for telemetry data gained from the Java game. The application is composed of a frontend and a backend, with the frontend responsible for displaying view dashboards, suggestions, and displaying authentication. Whilst the backend is responsible for authentication logic for both the python telemetry application and Java game alongside parsing json gained from the Java game, sending data for graphical representations to the frontend.
+The Python application acts as a visualiser and analyser for telemetry data gained from the Java game. The application is composed of a frontend and a backend, with the frontend responsible for displaying view dashboards, suggestions, and displaying authentication. Whilst the backend is responsible for authentication logic for both the python telemetry application and Java game alongside parsing JSON gained from the Java game, sending data for graphical representations to the frontend.
 \subsubsection{Authentication}
 \paragraph{Overview}
 Both the Python and Java applications utilise Google OAuth to authenticate users, assigning them with the default role of Player if they do not already exist in the logins file. Authentication then returns user and role information to the application that calls it.
 \paragraph{auth}
-Opens Google authentication in browser for users to authenticate. The function google\_login opens the browser, gets returned info from OAuth and uses its sub value as a UID for the user known as User\_ID. This function then calls get\_role using logins\_file and the User\_ID, to get from the logins\_file the users role, at this point if the user has not played/registered before, their ID will be written with the default role of Player. The google\_login function then returns the User\_ID (sub), users's name on their google account  and the user's role.
+Opens Google authentication in browser for users to authenticate. The function google\_login opens the browser, gets returned info from OAuth and uses its sub value as a UID for the user known as UserID. This function then calls get\_role using logins\_file and the userID, to get from the logins\_file the users role, at this point if the user has not played/registered before, their ID will be written with the default role of Player. The google\_login function then returns the userID (sub), users's name on their google account  and the user's role.
 \paragraph{auth\_wrapper}
-Calls google\_login from auth and writes it to stdout for java purposes.
+This module provides a wrapper around our authentication module. It provides an entry point, and writes outputs to stdout in JSON format.
 \subsubsection{core}
 \paragraph{Overview}
 Core holds the main logic for parsing and generating the data used for views in the frontend. Core also holds python class definitions of all telemetry events, which are used for creating views.
 \paragraph{events}
-Events holds python class definitions for all event types. instances of these classes are created by interpreting the json file produced by the java game, storing them through logic and using grouped events of particular types for dashboard views in the telemetry app. 
+Events holds python class definitions for all event types. instances of these classes are created by interpreting the JSON file produced by the java game, storing them through logic and using grouped events of particular types for dashboard views in the telemetry app. 
 \paragraph{export}
 Used to export telemetry data to CSV, to be defined in sprint 2.
 \paragraph{logic}
 Used to categorise events by type using parsing, adding new events to a set of its type, allowing them to be collectively used for views. 
 
-Logic defines a class EventLogicEngine containing this logic, which gui can call methods from to get data to display. EventLogicEngine has a method for each view of data. Event object instances are added to a set member variable of that objects type, for access by gui.
+Logic defines a class EventLogicEngine containing this logic, which GUI can call methods from to get data to display. EventLogicEngine has a method for each view of data. Event object instances are added to a set member variable of that objects type, for access by GUI.
 \paragraph{parsing}
-Parses a json file, creating and returning a list of all event objects in the file converted to their python representations. Logic calls parse file, which parses each event from the json file, then creates an object instance of the event type based on the events TelemetryName, validating each json event having a TelemetryName in the process.
-\subsubsection{gui}
+Parses a JSON file, creating and returning a list of all event objects in the file converted to their python representations. Logic calls parse file, which parses each event from the JSON file, then creates an object instance of the event type based on the events TelemetryName, validating each JSON event having a TelemetryName in the process.
+\subsubsection{GUI}
 \paragraph{Overview}
 The python application defines a user interface created using tkinter, allowing users with a designer or developer role to view and get suggestions from data generated by the Java game
-\paragraph{gui}
-Gui authenticates users and only once authenticated, users are able to view telemetry information. The gui displays a welcome screen on startup, prompting users to sign in with google. If a user does not hold the needed role clearance, they will be given an error stating so, and will be allowed to log in again. When a user successfully signs in, they will have additional tabs added to see the various views and suggestions gained from those views, with graphs being generated using the PlotTab class in plotting. The user is also presented with options to swap to simulation based data to view and reset telemetry data which requires confirmation to do so; the logic of these buttons being in the gui.py.
+\paragraph{GUI}
+GUI authenticates users and only once authenticated, users are able to view telemetry information. The GUI displays a welcome screen on startup, prompting users to sign in with google. If a user does not hold the needed role clearance, they will be given an error stating so, and will be allowed to log in again. When a user successfully signs in, they will have additional tabs added to see the various views and suggestions gained from those views, with graphs being generated using the PlotTab class in plotting. The user is also presented with options to swap to simulation based data to view and reset telemetry data which requires confirmation to do so; the logic of these buttons being in the GUI.py.
 \paragraph{plotting}
-Plotting defines the class PlotTab, which each view creates an instance of. gui calls an instance of PlotTab to plot the required line(s) through plot\_line and plot\_lines methods for the visual representation, refreshing periodically by calling these methods to get real time data. 
+Plotting defines the class PlotTab, which each view creates an instance of. GUI calls an instance of PlotTab to plot the required line(s) through plot\_line and plot\_lines methods for the visual representation, refreshing periodically by calling these methods to get real time data. 
 \paragraph{telemetry\_app}
-Creates an instance of the gui and executes its main loop, starting the telemetry application.
+This file is the entry point for the Telemetry application. It instantiates the TelemetryAppGUI class and executes its main loop, starting the telemetry application.
+
 \subsection{Java Application}
 \subsubsection{Overview}
 The Java application was first split into front end and back end. From there the responsibilities of the backend were further divided into several singletons the front end would access. Each singleton was given responsibility for a particular area, and that area was further divided between different objects it composited. The front end then uses these singletons to perform the calculations required to run the game, and displays this information to the user. 
-\begin{comment}
-\subsubsection{Design Principles}
-%not sure about this section if it's relevant or should be removed. 
-\paragraph{Testability}
-The Java application was designed with testing as a priority, specifically to allow the extensive use of mock objects. The first way this is achieved is through the use of a modified singleton pattern, where the concrete singleton is nested within a different class that provides access. This allows the concrete singleton to implement an interface, and thus allows the rest of the system to work around that interface rather than the singleton itself. This allows the switching out of the concrete singleton instance for a mock object for testing. Furthermore many of the objects within the java application are built around interfaces rather than implementations, to allow those objects to be swapped out for mock objects for testing.
-
-Another way in which the application is designed with testing in mind is by allowing the directories of all file writes to be modified, to allow a temporary directory to be setup for testing where mock events and configuration files are written and read to, and the resetting the destination of the systems that write files after the test is complete.
-\paragraph{Extensability}
-Its already been mentioned about the principle of programming to an interface for the purposes of testing, but this has also been done to allow extensibility as the interface can be extended and implemented by a different class to allow the functionality of the program to be extended, while maintaining compatibility with the current system following the open-close principle. 
-
-Another area in which the system supports extensibility is through it's upgrade system, using the decorator pattern it allows a player to be extended with any number of upgrades, as well as the creation of further upgrades. This upgrade system works in tandem with the ability system to allow upgrades to change how effective abilities are based on their damage type. Although the upgrade system currently does not do this, it does also support the ability to modify variables of the player such as health, lives, max health, magic etc. which could be implemented at a future date.
-\paragraph{Reusability}
-The system is also designed with reusability in mind, ensuring every component is reusable, and duplication is minimal. One example of this is in the ability system, which is the same for all entities both player and enemy. This allows us to get significant millage out of just a small number of abilities. 
-
-Another way the system makes good use of the resources it has is through it's encounter system. As an encounter can comprise of multiple enemies, allowing us to make use of enemies that the player would otherwise be very strong against in later encounters. Furthermore encounters at most stages are randomised, providing variety to each run, along with the randomisation of what abilities are purchasable in the shop. 
-\end{comment}
 
 \subsubsection{Abilities}
 \paragraph{Overview}
@@ -158,7 +145,7 @@ This specifies the interface for the telemetry listener instance. It contains me
 \paragraph{TelemetryListenerSingleton}
 This class holds a static reference to the only concrete telemetry listener, providing access to it via a static method. This global access point is then used by all sources of telemetry to send the events to the telemetry listener via the TelemetryListenerInterface. It follows a modified singleton pattern.
 
-The listener implements the interface, and responds to telemetry events. It first checks if telemetry is enabled in the user's settings, and if this is not the case discards the event. Otherwise it then validates the event on several criteria before writing it to the json store that's been set (either the user or simulation store). 
+The listener implements the interface, and responds to telemetry events. It first checks if telemetry is enabled in the user's settings, and if this is not the case discards the event. Otherwise it then validates the event on several criteria before writing it to the JSON store that's been set (either the user or simulation store). 
 \paragraph{TelemetryEvent}
 Telemetry event is the base class all telemetry events extend. It extends EventObject to comply with java's delegation model, and also contains the SessionID, UserID, a timestamp of when it was made (obtained by the TimeManagerSingleton) and the name of the telemetry event for use in the JSON store. It is an abstract class.
 

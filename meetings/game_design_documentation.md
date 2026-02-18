@@ -22,29 +22,29 @@ Attacks that are not physical all cost magic points. Different attack abilities 
 
 Within the shop screens in between encounters, players can exchange their coins earned in battle for attack abilities. They are as follows:
 
-| Name | Shop Cost (coins) | Magic Points | Damage Type | Notes |
-|------|-------------------|--------------|-------------|-------|
-| Absolute Pulse | 10 | 20 | Absolute | |
-| Slash | 15 | 0 | Physical | more powerful than punch |
-| Water Jet | 20 | 20 | Water | |
-| Thunder Storm | 25 | 30 | Thunder | |
-| Fire Ball | 30 | 40 | Fire | High damage |
+| Name           | Shop Cost (coins) | Magic Points | Damage Type | Notes                    |
+| -------------- | ----------------- | ------------ | ----------- | ------------------------ |
+| Absolute Pulse | 10                | 20           | Absolute    |                          |
+| Slash          | 15                | 0            | Physical    | more powerful than punch |
+| Water Jet      | 20                | 20           | Water       |                          |
+| Thunder Storm  | 25                | 30           | Thunder     |                          |
+| Fire Ball      | 30                | 40           | Fire        | High damage              |
 
 ## Passive Abilities
 When the game begins, the player character will have no non-attack abilities. These can also be purchased in the shop in between encounters. The purpose of these abilities is to allow the player to become stronger in non-attacking ways.
 
 The names of these abilities are descriptive and simple.
 
-| Name | Shop Cost (coins) |
-|------|-------------------|
-| Physical Damage Resistance | 20 |
-| Fire Damage Resistance | 10 |
-| Water Damage Resistance | 5 |
-| Thunder Damage Resistance | 5 |
-| Improved Physical Damage | 20 |
-| Improved Fire Damage | 15 |
-| Improved Water Damage | 10 |
-| Improved Thunder Damage | 10 |
+| Name                       | Shop Cost (coins) |
+| -------------------------- | ----------------- |
+| Physical Damage Resistance | 20                |
+| Fire Damage Resistance     | 10                |
+| Water Damage Resistance    | 5                 |
+| Thunder Damage Resistance  | 5                 |
+| Improved Physical Damage   | 20                |
+| Improved Fire Damage       | 15                |
+| Improved Water Damage      | 10                |
+| Improved Thunder Damage    | 10                |
 
 ## Structure of Levels
 The game is split into three distinct phases:

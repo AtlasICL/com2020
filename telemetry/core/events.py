@@ -1,5 +1,13 @@
+"""
+Docstring for telemetry.core.events
+
+This module defines the Event objects which are created upon parsing
+JSON, and relevant Enums.
+"""
+
 from enum import Enum
 from datetime import datetime
+
 
 class EventType(str, Enum):
     START_SESSION = "StartSession"
@@ -18,6 +26,7 @@ class EventType(str, Enum):
     SETTINGS_CHANGE = "SettingsChange"
     KILL_ENEMY = "KillEnemy"
 
+
 class EventParameter():
     EVENT_TYPE = "event"
     USER_ID = "userID"
@@ -35,9 +44,11 @@ class EventParameter():
     SETTING_VALUE = "setting_value"
     ENEMY_TYPE = "enemy_type"
 
+
 class EncounterName(str, Enum):
     GOBLIN_ENCOUNTER = "GOBLIN_ENCOUNTER"
     FISHMAN_ENCOUNTER = "FISHMAN_ENCOUNTER"
+
 
 class UpgradeName(str, Enum):
     PHYSICAL_DAMAGE_RESISTANCE = "PHYSICAL_DAMAGE_RESISTANCE"
@@ -50,9 +61,11 @@ class UpgradeName(str, Enum):
     FIRE_BALL_UNLOCK = "FIRE_BALL_UNLOCK"
     THUNDER_STORM_UNLOCK = "THUNDER_STORM_UNLOCK"
 
+
 class EnemyType(str, Enum):
     GOBLIN = "Goblin"
     FISHMAN = "Fishman"
+
 
 class SettingName(str, Enum):
     TELEMETRY_ENABLED = "TELEMETRY_ENABLED"
@@ -64,10 +77,12 @@ class SettingName(str, Enum):
     MAGIC_REGEN_RATE = "MAGIC_REGEN_RATE"
     SHOP_ITEM_COUNT = "SHOP_ITEM_COUNT"
 
+
 class Difficulty(str, Enum):
     EASY = "Easy"
     MEDIUM = "Medium"
     HARD = "Hard"
+
 
 class StartSession:
     """
@@ -102,6 +117,7 @@ class StartSession:
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}"""
+    
 
 class NormalEncounterStart:
     """
@@ -146,6 +162,7 @@ class NormalEncounterStart:
             {self.encounter_name=}
             {self.difficulty=}
             {self.stage_number=}"""
+    
 
 class NormalEncounterComplete:
     """
@@ -197,6 +214,7 @@ class NormalEncounterComplete:
             {self.difficulty=}
             {self.stage_number=}
             {self.player_HP_remaining=}"""
+    
 
 class NormalEncounterFail:
     """
@@ -247,6 +265,7 @@ class NormalEncounterFail:
             {self.difficulty=}
             {self.stage_number=}
             {self.lives_left=}"""
+    
         
 class BossEncounterStart:
     """
@@ -291,6 +310,7 @@ class BossEncounterStart:
             {self.encounter_name=}
             {self.difficulty=}
             {self.stage_number=}"""
+    
 
 class BossEncounterComplete:
     """
@@ -341,6 +361,7 @@ class BossEncounterComplete:
             {self.encounter_name=}
             {self.difficulty=}
             {self.stage_number=}"""
+    
         
 class BossEncounterFail:
     """
@@ -382,6 +403,7 @@ class BossEncounterFail:
         self.stage_number = stage_number
         self.lives_left = lives_left
 
+
     def __repr__(self):
         return f"""BossEncounterFailObject
             {self.userID=}
@@ -391,6 +413,7 @@ class BossEncounterFail:
             {self.difficulty=}
             {self.stage_number=}
             {self.lives_left=}"""
+    
 
 class GainCoin:
     """
@@ -440,6 +463,7 @@ class GainCoin:
             {self.difficulty=}
             {self.stage_number=}
             {self.coins_gained=}"""
+    
 
 class BuyUpgrade:
     """
@@ -485,6 +509,7 @@ class BuyUpgrade:
             {self.stage_number=}
             {self.coins_spent=}
             {self.upgrade_bought=}"""
+    
 
 class EndSession:
     """
@@ -514,6 +539,7 @@ class EndSession:
             {self.userID=}
             {self.sessionID=}
             {self.timestamp=}"""
+    
 
 class SettingsChange:
     """
@@ -545,6 +571,7 @@ class SettingsChange:
             {self.timestamp=}
             {self.setting=}
             {self.value=}"""
+    
 
 class KillEnemy:
     """
@@ -595,4 +622,3 @@ class KillEnemy:
             {self.difficulty=}
             {self.stage_number=}
             {self.enemy_type=}"""
-
