@@ -15,6 +15,7 @@
 \usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
 \addbibresource{bibliography.bib}
 \usepackage[shortlabels]{enumitem}
+\setlist[itemize]{topsep=2pt, partopsep=0pt}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, allcolors=blue}
@@ -30,7 +31,7 @@
 \setlength{\parindent}{0pt}
 \usepackage{titlesec}
 \titlespacing*{\section} {0pt}{3ex}{2ex}
-\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{2ex}{0pt}
 \titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
 \usepackage{pdfpages}
 \setlist{nolistsep,leftmargin=*}
@@ -45,16 +46,16 @@
 
 %settings paragraph to allow heading 4
 \titleformat{\paragraph}
-  {\normalfont\normalsize\bfseries}
-  {\theparagraph}
-  {1em}
-  {}
+{\normalfont\normalsize\bfseries}
+{\theparagraph}
+{1em}
+{}
 
 \titleformat{\paragraph}[runin]
-  {\normalfont\normalsize\bfseries}
-  {\theparagraph}
-  {1em}
-  {}
+{\normalfont\normalsize\bfseries}
+{\theparagraph}
+{1em}
+{}
 
 
 \title{Meeting minutes\\[0.3em]
@@ -62,186 +63,223 @@
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \date{17/02/2026}
 \begin{document}
-\maketitle
-\tableofcontents
-\newpage
+    \maketitle
+    \tableofcontents
+    \newpage
 
 
-\section{Description}
+    \section{Description}
 
-This document contains a written summary of each weekly scrum meeting conducted by our team.
-Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting, and any key decisions that would influence our team's progress before the next scrum meeting.
+    This document contains a written summary of each weekly scrum meeting conducted by our team.
+    Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting, and any key decisions that would influence our team's progress before the next scrum meeting.
 
-\section{Meetings}
+    \section{Meetings}
 
-\subsection{Meeting #1}
+    \subsection{Meeting 1}
 
-\textbf{Date:} 12/01/2026
-\textbf{Time:} 12:30
-\textbf{Length:} 90 minutes
-\textbf{Location:} Innovation Centre Cafe
+    \textbf{Date:} 12/01/2026 \\
+    \textbf{Time:} 12:30 \\
+    \textbf{Length:} 90 minutes \\
+    \textbf{Location:} Innovation Centre Cafe
 
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney
-\textbf{Apologies:} Kazybek Khairulla
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney \\
+    \textbf{Apologies:} Kazybek Khairulla
 
-\textbf{Agenda Items}
-\item Language choice for both game and telemetry applications.
-\item Strategy for approaching development.
-\item Strategy for file structure and security.
-\item Strategy for collaboration.
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Language choice for both game and telemetry applications.
+        \item Strategy for approaching development.
+        \item Strategy for file structure and security.
+        \item Strategy for collaboration.
+    \end{itemize}
 
-\textbf{Key Decisions}
-\item Java to be used for game application, Python to be used for telemetry application.
-\item Test-driven development approach: Interfaces -> Tests -> Implementation.
-\item Role-based access control when authenticating players in both applications.
-\item No direct commits to main branch of repository allowed - pull requests must be created and reviewed before merging.
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Java to be used for game application, Python to be used for telemetry application.
+        \item Test-driven development approach: Interfaces -> Tests -> Implementation.
+        \item Role-based access control when authenticating players in both applications.
+        \item No direct commits to main branch of repository allowed - pull requests must be created and reviewed before merging.
+    \end{itemize}
 
-\textbf{Date of next meeting:} 14/01/2026
+    \textbf{Date of next meeting:} 14/01/2026
 
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 2}
 
-\subsection{Meeting #2}
+    \textbf{Date:} 14/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 90 minutes \\
+    \textbf{Location:} Innovation Centre Cafe
 
-\textbf{Date:} 14/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 90 minutes
-\textbf{Location:} Innovation Centre Cafe
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
 
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of gameplay design.
+        \item Discussion of three mechanics to influence success.
+        \item Strategy for composing requirements.
+    \end{itemize}
 
-\textbf{Agenda Items}
-\item Discussion of gameplay design.
-\item Discussion of three mechanics to influence success.
-\item Strategy for composing requirements.
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Game will be a simple, 2D, turn-based RPG called WizardQuest.
+        \item Three mechanics to influence success: Coins, Magic, Health.
+        \item MoSCoW prioritisation structure to be used for two sets of requirements: one for the prototype, the other for the final product.
+    \end{itemize}
 
-\textbf{Key Decisions}
-\item Game will be a simple, 2D, turn-based RPG called WizardQuest.
-\item Three mechanics to influence success: Coins, Magic, Health.
-\item MoSCoW prioritisation structure to be used for two sets of requirements: one for the prototype, the other for the
-final product.
+    \textbf{Date of next meeting:} 21/01/2026
 
-\textbf{Date of next meeting:} 21/01/2026
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 3}
 
+    \textbf{Date:} 21/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
 
-\subsection{Meeting #3}
+    \textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Croci
 
-\textbf{Date:} 21/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Discussion of ability types to be used in the game.
+        \item Grooming discussion for each individual requirement.
+    \end{itemize}
 
-\textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Croci
+    \textbf{Key Progress}
+    \begin{itemize}
+        \item Project requirements complete.
+        \item Started writing tests and implementation for telemetry application.
+    \end{itemize}
 
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Discussion of ability types to be used in the game.
-\item Grooming discussion for each individual requirement.
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Ability Types to be used: Physical, Fire, Water, Absolute.
+    \end{itemize}
 
-\textbf{Key Progress}
-\item Project requirements complete.
-\item Started writing tests and implementation for telemetry application.
+    \textbf{Date of next meeting:} 28/01/2026
 
-\textbf{Key Decisions}
-\item Ability Types to be used: Physical, Fire, Water, Absolute.
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 4}
 
-\textbf{Date of next meeting:} 28/01/2026
+    \textbf{Date:} 28/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
 
+    \textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Croci
 
-\subsection{Meeting #4}
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Strategy for commencing implementation of game application.
+        \item Discussion of one chosen design parameter for prototype.
+        \item Discussion of six chosen telemetry events for prototype.
+    \end{itemize}
 
-\textbf{Date:} 28/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
+    \textbf{Key Progress}
+    \begin{itemize}
+        \item Completed interface for game application.
+        \item Completed interface for test suite of game application.
+        \item Completed initial implementation for telemetry application.
+    \end{itemize}
 
-\textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Croci
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Entire team to work on development of game application - each member assigned a number of related classes.
+        \item Chosen design parameter for prototype: Lives.
+        \item Chosen telemetry events for prototype: SessionStartEvent, NormalEncounterStartEvent,
+        NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, EndSessionEvent.
+    \end{itemize}
 
-\textbf{Agenda Items}
-\item Strategy for commencing implementation of game application.
-\item Discussion of one chosen design parameter for prototype.
-\item Discussion of six chosen telemetry events for prototype.
+    \textbf{Date of next meeting:} 04/02/2026
 
-\textbf{Key Progress}
-\item Completed interface for game application.
-\item Completed interface for test suite of game application.
-\item Completed initial implementation for telemetry application.
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 5}
 
-\textbf{Key Decisions}
-\item Entire team to work on development of game application - each member assigned a number of related classes.
-\item Chosen design parameter for prototype: Lives
-\item - Chosen telemetry events for prototype: SessionStartEvent, NormalEncounterStartEvent,
-NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, EndSessionEvent
+    \textbf{Date:} 04/02/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
 
-\textbf{Date of next meeting:} 04/02/2026
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
 
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Strategy for writing report and other documentation.
+    \end{itemize}
 
-\subsection{Meeting #5}
+    \textbf{Key Progress}
+    \begin{itemize}
+        \item Significant progression with implementation of game application.
+    \end{itemize}
 
-\textbf{Date:} 04/02/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Entire team to work on writing of report and other documentation - each section/file assigned to a group member.
+        \item Google OAuth 2.0 OIDC to be used for the game and telemetry applications.
+    \end{itemize}
 
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+    \textbf{Date of next meeting:} 11/02/2026
 
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Strategy for writing report and other documentation.
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 6}
 
-\textbf{Key Progress}
-\item Significant progression with implementation of game application.
+    \textbf{Date:} 11/02/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
 
-\textbf{Key Decisions}
-\item Entire team to work on writing of report and other documentation - each section/file assigned to a group member.
-\item Google Open Authentication to be used for the game and telemetry applications.
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
 
-\textbf{Date of next meeting:} 11/02/2026
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+    \end{itemize}
 
+    \textbf{Key Progress}
+    \begin{itemize}
+        \item Completed automated test suite required for prototype.
+        \item Completed initial implementation for game application.
+    \end{itemize}
 
-\subsection{Meeting #6}
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Entire team to work on debugging entire project ahead of prototype presentation next week.
+    \end{itemize}
 
-\textbf{Date:} 11/02/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
+    \textbf{Date of next meeting:} 15/02/2026
 
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 7}
 
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
+    \textbf{Date:} 15/02/2026 \\
+    \textbf{Time:} 14:00 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Remote conference via Discord
 
-\textbf{Key Progress}
-\item Completed automated test suite required for prototype.
-\item Completed initial implementation for game application.
+    \textbf{Attendees:} Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Pacitti
 
-\textbf{Key Decisions}
-\item Entire team to work on debugging entire project ahead of prototype presentation next week.
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Final preparations necessary for tomorrow's presentation.
+    \end{itemize}
 
-\textbf{Date of next meeting:} 15/02/2026
+    \textbf{Key Progress}
+    \begin{itemize}
+        \item Major progress with debugging, small issues left to iron out.
+    \end{itemize}
 
-\subsection{Meeting #7}
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Entire team to continue work on preparing prototype for tomorrow's presentation.
+        \item Entire team to work on presentation slideshow - each slide assigned to a group member.
+    \end{itemize}
 
-\textbf{Date:} 15/02/2026
-\textbf{Time:} 14:00
-\textbf{Length:} 60 minutes
-\textbf{Location:} Remote conference via Discord
-
-\textbf{Attendees:} Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Pacitti
-
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Final preparations necessary for tomorrow's presentation.
-
-\textbf{Key Progress}
-\item Major progress with debugging, small issues left to iron out.
-
-\textbf{Key Decisions}
-\item Entire team to continue work on preparing prototype for tomorrow's presentation.
-\item Entire team to work on presentation slideshow - each slide assigned to a group member.
-
-\textbf{Date of next meeting:} 18/02/2026
-
+    \textbf{Date of next meeting:} 18/02/2026
 
 \end{document}
