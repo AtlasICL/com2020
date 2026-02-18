@@ -14,7 +14,9 @@ _Please find our prerequisite configuration guides at the bottom of the page, if
 ```
 cd game
 ```
-2. Run ONE of the following scripts, dependent on your OS - which will set environment variables to allow SSO via Google.
+2. Run ONE of the following scripts, dependent on your OS - which will set environment variables for Google OAuth 2.0 OIDC.
+
+**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email _ea616@exeter.ac.uk_.
 
 **Windows**
 ```
@@ -41,7 +43,9 @@ mvn clean compile exec:java "-Dexec.mainClass=WizardQuest.GameUserInterface"
 ```
 cd telemetry
 ```
-2. Run ONE of the following scripts, dependent on your OS - which will set environment variables to allow SSO via Google.
+2. Run ONE of the following scripts, dependent on your OS - which will set environment variables for Google OAuth 2.0 OIDC.
+
+**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email _ea616@exeter.ac.uk_.
 
 **Windows**
 ```
