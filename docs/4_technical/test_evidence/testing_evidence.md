@@ -12,7 +12,7 @@ what our system aims to achieve. The test suite utilises JUnit's `@TempDir` feat
 with temporary JSON files where necessary - this prevents any risk of corruption to the JSON files to be used for
 production. The concrete `TelemetryEvent` class primarily used for testing is `NormalEncounterStartEvent` - however, we
 have also utilised JUnit's `@BeforeEach` and `@AfterEach` features to invoke a `StartSessionEvent` and `EndSessionEvent`
-object before and after each event respectively, due to dynamic assignment of the SessionID field.
+object before and after each event respectively. This is due to dynamic assignment of the SessionID field.
 
 ### Recording
 
