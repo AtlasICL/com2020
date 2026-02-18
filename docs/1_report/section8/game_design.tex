@@ -1,1 +1,156 @@
-TODO: WF
+\subsection{Game Design Documentation}
+
+This subsection of the report serves as a non-technical overview of the full game's design. Please note that any numbers mentioned here aren't final, but provide a strong starting point, and illustrate the distance between values in some cases.
+
+\subsubsection{Level Structure}
+
+The game will exist in two parts: combat encounters and shops. There are 10 combat encounters in the game, and a shop will follow each one, excluding the final combat encounter.
+
+\subsubsection{Combat Encounter Design}
+
+When in a combat encounter, the game functions as turn-based. The player will always move first. The player gains 15 magic points at the beginning of each turn. The player will be able to see a simple description of their undefeated opponent(s). There will be text that servess two purposes: to narrate the scene ("You were hit for 20 damage point(s)", "Encounter Complete, etc.), and to serve as the player's interface, allowing the player to select from their available attack abilities (with information such as magic cost and damage type). Once an attack is selected, the player is prompted to select which opponent they wish to damage. Following this, the opponent's turn takes place, where, like the player, an opponent will select from one of their abilities to use on the player.
+
+\subsubsection{Damage Types}
+
+Both the player and the enemies that they can encounter are affected differently by different damage types. For example, if the player were to cast a water-based spell at a "Pyromancer" enemy, the attack would be more effective than if it were cast on a "Fish Man" enemy.
+
+Each attack ability in the game has a damage type. The damage types are as follows: Physical, Fire, Water, Thunder, Absolute.
+
+Attacks of the Absolute type are always effective on any opponent.
+
+\subsubsection{Attack Abilities}
+
+When the game begins, the player character only has one attacking ability – that being "Punch", a low-damage physical move.
+
+Attacks that are not physical all cost magic points. Different attack abilities use different amounts of magic points.
+
+Within the shop screens in between encounters, players can exchange their coins earned in battle for attack abilities. They are as follows:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+Name & Shop Cost (coins) & Magic Points & Damage Type & Notes \\
+\hline
+Absolute Pulse & 10 & 20 & Absolute & \\
+Slash & 15 & 0 & Physical & more powerful than punch \\
+Water Jet & 20 & 20 & Water & \\
+Thunder Storm & 25 & 30 & Thunder & \\
+Fire Ball & 30 & 40 & Fire & High damage \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Passive Abilities}
+
+When the game begins, the player character will have no non-attack abilities. These can also be purchased in the shop in between encounters. The purpose of these abilities is to allow the player to become stronger in non-attacking ways.
+
+The names of these abilities are descriptive and simple.
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+Name & Shop Cost (coins) \\
+\hline
+Physical Damage Resistance & 20 \\
+Fire Damage Resistance & 10 \\
+Water Damage Resistance & 5 \\
+Thunder Damage Resistance & 5 \\
+Improved Physical Damage & 20 \\
+Improved Fire Damage & 15 \\
+Improved Water Damage & 10 \\
+Improved Thunder Damage & 10 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Structure of Levels}
+
+The game is split into three distinct phases:
+
+\textbf{Phase 1}, where players will be given simple encounters to teach them the basic rules of the game. This phase ends with a boss at level 3. Players will only fight one enemy at a time in Phase 1. Each encounter rewards the player with 10 coins.
+
+\textbf{Phase 2}, where players must deal with a steady climb in challenge. This phase ends with a boss at level 7. Players can encounter two enemies at once in Phase 2. Each encounter rewards the player with 15 coins.
+
+\textbf{Phase 3}, where players will have their skills put to the test in highly difficult encounters. This phase ends with a boss at level 9 and a final boss at level 10. Players can encounter three enemies at a time, in level 8 in particular. Each encounter rewards the player with 20 coins.
+
+\subsubsection{Enemies Within Encounters}
+
+There are many enemies that the player will encounter within the game. The range of enemies that can be encountered increases as the phases increase.
+
+\subsubsection{Phase 1 Enemies}
+
+\textbf{Goblin}
+\begin{itemize}
+\item Health: Medium
+\item Actions: Slash
+\item Resistant to: None
+\item Vulnerable to: None
+\end{itemize}
+
+\textbf{Fish Man}
+\begin{itemize}
+\item Health: Medium
+\item Actions: Punch, Water Jet
+\item Resistant to: Water
+\item Vulnerable to: Thunder
+\end{itemize}
+
+\textbf{Pyromancer}
+\begin{itemize}
+\item Health: Low
+\item Actions: Fire Ball
+\item Resistant to: Fire
+\item Vulnerable to: Water
+\end{itemize}
+
+\textbf{Evil Wizard (Boss)}
+\begin{itemize}
+\item Health: Medium
+\item Actions: Thunder Storm, Fire Ball
+\item Resistant to: Immune to anything not Physical/Absolute
+\item Vulnerable to: Physical, Absolute
+\end{itemize}
+
+\subsubsection{Phase 2 Enemies}
+
+(All non-boss enemies that have appeared in Phase 1)
+
+\textbf{Armoured Goblin}
+\begin{itemize}
+\item Health: High
+\item Actions: Slash
+\item Resistant to: Mundane, Fire, Water
+\item Vulnerable to: Thunder
+\end{itemize}
+
+\textbf{Ghost (Boss)}
+\begin{itemize}
+\item Health: High
+\item Actions: Thunder Storm, Absolute Pulse, Fire Ball
+\item Resistant to: Physical (fully immune)
+\item Vulnerable to: Absolute
+\end{itemize}
+
+\subsubsection{Phase 3 Enemies}
+
+(All non-boss enemies that have appeared in Phase 2)
+
+\textbf{Black Knight (Boss)}
+\begin{itemize}
+\item Health: High
+\item Actions: Slash
+\item Resistant to: Physical
+\item Vulnerable to: Thunder
+\end{itemize}
+
+\textbf{Dragon (Final Boss)}
+\begin{itemize}
+\item Health: Very High
+\item Actions: Slash, Fire Ball, Thunder Storm
+\item Resistant to: Fire, Thunder
+\item Vulnerable to: Absolute
+\end{itemize}
+
+\subsubsection{Shop Design}
+
+The shop exists as a single screen. Four random abilities are presented to the user, alongside their price, and whether they are an "Attack" or "Passive". Providing the player can afford the abilities, they will be able to buy as many of the four as they please. Once the player decides they are done, they can select "Next Encounter" and continue the game.

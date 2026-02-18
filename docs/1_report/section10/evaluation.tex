@@ -1,0 +1,247 @@
+\subsection{Evaluation}
+
+To assure the most comprehensive evaluation, the code project produced
+has been compared to both quantitative and qualitative baselines. In
+this subsection the five areas of evaluation will be explored.
+
+\subsection{Gameplay Strategy Analysis}
+
+The first measure of success is a measure of the engagingness of the
+gameplay. As the legendary game designer Sid Miers once said, "A game is
+a series of interesting decisions" - we can derive from this, the
+baseline we use to test for this metric is that each decision the player
+gets to make must feel as impactful as possible.
+
+The first interesting decision that the player gets to make is when they
+first access the shop after encounter 1. The player can decide whether
+they wish to spend their limited coins on zero, one or multiple upgrades
+for their character. The player has to decide on this carefully, as
+there is no guarantee of what encounter they will have following the
+shop, so must make decisions that account for all possibilities.
+
+\includegraphics[width=2.82361in,height=2.93819in]{media/image1.png}
+
+If the player chooses to purchase an upgrade that provides them with an
+attack, there are more interesting decisions to be made, for instance,
+if a player has an encounter with a Fish Man, and has access to the
+Thunder Storm ability, the player must carefully decide (once sufficient
+magic has been accumulated) to conserve magic for a later turn, or to
+immediately use the Thunder Storm ability to deal a large amount of
+damage immediately.
+
+\includegraphics[width=5.09514in,height=4.77847in]{media/image2.png}
+
+The first level does not have particularly many interesting choices,
+this is intentional. The purpose of this first level is to simply teach
+players the basic rules of the game in a non obtrusive way
+(understanding how health, attacks and magic attrition works). Giving
+the player too many decisions so early on would only serve to make the
+game more confusing - hence why this trade-off was made.
+
+Furthermore, while the player may only get to make a small range of
+choices in the two levels provided, the full game with more abilities,
+10 levels and 8 shops will allow for an exponentially greater number of
+engaging gameplay moments, using the framework already demonstrated in
+the prototype
+
+To conclude, the prototype meets the baseline, as it does contain a
+number of interesting decisions - yet shows potential to surpass it in
+future builds.
+
+\subsection{Client Runability}
+
+The next measure of success we have decided on is the user's ability to
+run the game on all hardware, new or old. Our next baseline is that the
+game and the telemetry can both run on 1GB of RAM.
+
+For the Java game, it meets this baseline.
+
+\includegraphics[width=6.2625in,height=0.89097in]{media/image3.png}
+
+For the Python Telemetry app, the baseline is also met.
+
+\includegraphics[width=6.25486in,height=1.45694in]{media/image4.png}
+
+Not only are both baselines met, but running both simultaneously still
+meets the baseline.
+
+While the future version of this code is almost bound to cost more
+memory, it's unlikely that this baseline will not be satisfied in the
+future.
+
+To summarise, the program is incredibly successful here.
+
+\subsection{Detection validity}
+
+Another measure of success we feel is necessary for a quality end
+product is the programs ability to detect spikes in
+difficulty in areas of gameplay. The baseline that must be met here is
+that an area of the game that is logically expected to be difficult will
+be represented as a spike in the telemetry interface.
+
+The logical expectation we have made is that players will fail more in
+the first level than the second, as the difficulties are similar, but,
+in the second level the player will likely have access to some form of
+upgrade.
+
+After simulating the game 300 times on easy, medium and hard modes, the
+``difficulty spike'' view on the telemetry interface reads as follows:
+
+\includegraphics[width=6.25069in,height=4.91944in]{media/image5.png}
+
+The disparity between the number of failures on level one and level two
+are clear. While influenced by the fact that some players will lose all
+their lives on level 1 and not have the chance to lose any lives in
+level 2, it is still evident that the expected trend is reflected in the
+data as a difficulty ``spike''. Hence this meets the baseline.
+
+This representation is currently limited as, with only two levels in the
+game, the graph can only show the amount of failures in the first two
+levels, as a result this view has very limited use - especially when
+compared to how it may appear in the final product.
+
+In summary, the program is able to validly detect an area of difficulty
+and represent it as a difficulty spike, and despite the limited
+opportunities to do so, this feature's potential is showcased well in
+the prototype.
+
+\subsection{Design Usability}
+
+One of the most important aspects of any piece of software is that it is
+designed in a useful, intuitive and responsive way. The baseline that
+must be met to assure this is that, in both the game and telemetry
+aspects, every subsection of the game is accessible in 3 or less inputs, in
+accordance with the unofficial, yet nonetheless valuable
+``3-click-rule'' user experience heuristic.
+
+For the Java game this is measured from the main menu:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5001}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule()
+\endhead
+\textbf{Feature} & \textbf{Minimum inputs to access} \\
+Easy player game & 2 \\
+Medium player game & 2 \\
+Hard player game & 2 \\
+Easy simulated game & 3 \\
+Medium simulated game & 3 \\
+Hard simulated game & 3 \\
+Toggle telemetry sharing & 2 \\
+View telemetry disclosure & 1 \\
+Change starting lives as a design parameter & 2 \\
+Exit Game & 1 \\
+\bottomrule()
+\end{longtable}
+
+It must be noted however that the Java app currently uses a CLI. While
+the structure of the menus are evidently logically and intuitively
+designed, amount to which the prototype is navigable will only increase
+in the final product.
+
+For the Python interface this is measured from the ``Home'' page whilst
+viewing telemetry data:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5001}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule()
+\endhead
+\textbf{Feature} & \textbf{Minimum inputs to access} \\
+Clear telemetry data & 1 \\
+View the ``Funnel View'' graph with telemetry data & 1 \\
+View the ``Difficulty Spike'' graph with telemetry data & 1 \\
+View the ``Health'' graph with telemetry data & 1 \\
+View the ``Coins'' graph with telemetry data & 1 \\
+View the ``Suggestions'' subsection with telemetry data & 1 \\
+View the ``Funnel View'' graph with simulated data & 2 \\
+View the ``Difficulty Spike'' graph with simulated data & 2 \\
+View the ``Health'' graph with simulated data & 2 \\
+View the ``Coins'' graph with simulated data & 2 \\
+View the ``Suggestions'' subsection with simulated data & 2 \\
+\bottomrule()
+\end{longtable}
+
+Both the game and telemetry interfaces use the same Google
+authentication that involves a far more substantial number of user
+inputs, takes noticeably longer to load and involves the opening of an
+additional tab. While this is at odds with our philosophy of fast and
+simple accessibility, we accept this trade off in this specific case as
+the security provided by Google's authentication is significant enough
+for us to accept this small loss in the user's experience.
+
+Ultimately, where relevant, the game and telemetry interface are
+designed in ways that are fitting with good user experience principles,
+and always meet the baseline, except in the one scenario
+(authentication) where we have a reasonable cause to go below what would
+otherwise be the baseline.
+
+\subsection{Suggestion Effectiveness}
+
+The fifth and final metric which we have chosen to measure the
+effectiveness of our product is the ability of the telemetry code to
+provide useful balancing information in the ``suggestions'' subsection. The
+baseline is that, given a large amount of gameplay data, the telemetry
+interface will be able to provide useful feedback that, when applied,
+change the gameplay experience in the intended way.
+
+To generate the most fitting suggestion, 300 simulated games where run
+(100 across each difficulty setting) where ``Easy'' had 10 starting
+lives. ``Medium'' had 3 and ``Hard'' had 1.
+
+By assessing the funnel view, we can tell that \textasciitilde57\% of
+players are failing the first level, yet the drop-off after level 2 is
+lesser. As level one is supposed to introduce players to the game, such
+a high failure rate goes against the design philosophy of the game, and
+must be corrected.
+
+\includegraphics[width=4.58403in,height=3.62153in]{media/image6.png}
+
+In response, the interface suggested the following:
+
+\includegraphics[width=4.67639in,height=1.00556in]{media/image7.png}
+
+Once clearing the simulation data, and simulating 300 more attempts at
+the game, the following funnel view was produced.
+
+\includegraphics[width=4.59306in,height=3.62153in]{media/image8.png}
+
+From this, it can be deduced that \textasciitilde63\% of players were
+able to pass the first stage when taking on the advice of the
+suggestions. Increasing the players remaining by \textasciitilde6\%
+does, somewhat meet this baseline, it is evident that the advice
+provided could be more effective than it currently is.
+
+It is also valuable to note that the simulated player behaviour uses
+inherently far simpler logic than any human player. Here, a simulated
+player will not use the failure of an attempt at this game as a learning
+opportunity on how to take a different approach, unlike most human
+players. As a result, we may infer that the simulated data isn't as
+representative of the usefulness of the suggestion as it could be.
+
+The reason as for why this result occurred is that currently, the only
+design parameters a designer can change is the player's starting lives.
+As the current player drop off is more likely to be able to be prevented
+by changing parameters such as the reducing damage multiplier dealt by
+opponents, it can be understood that the current system has the
+framework of an effective system, however, its usefulness cannot fully
+be realised in the current prototype build of the system.
+
+To summarise, the suggestions provided by the prototype are somewhat
+useful, yet are ultimately not as valuable, as the tools currently
+provided in the prototype build do not allow the game to be balanced in
+a significant way.
+
+\subsection{Conclusion}
+
+This prototype can be considered successful. The product provides the
+framework strategic and engaging gameplay, it can be run on a reasonable
+amount of RAM, it detects spikes in difficulty effectively, it can be
+navigated easily and it can provide suggestions that help balance game
+difficulty. There are currently a number of issues (e.g. small breadth
+in gameplay decisions, limited range of suggestions) that will be
+effectively fixed in the full build. As a prototype, this system
+provides the framework for elements of the system that are not yet fully
+implemented, so the majority of the issues present in the prototype
+simply exist as this is nothing more than a vertical slice.

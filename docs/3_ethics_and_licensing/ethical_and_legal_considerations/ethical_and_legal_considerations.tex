@@ -29,8 +29,8 @@
 \setlength{\parindent}{0pt}
 \usepackage{titlesec}
 \titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
 \titlespacing*{\subsection} {0pt}{3ex}{2ex}
-\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
 \usepackage{pdfpages}
 \setlist{nolistsep,leftmargin=*}
 
@@ -53,10 +53,41 @@
   {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 
-\title{Telemetry Game Report\\[0.3em]
+\title{Ethical and Legal Considerations\\[0.3em]
 \large COM2020 - Project 7}
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \date{17/02/2026}
 \begin{document}
-TODO will 
+
+
+\section{Privacy and Data Protection}
+
+In any program that tracks user data, the user’s privacy is at risk - in this context, it is important to use user data responsibly and securely, otherwise, the project may breach various legal acts (e.g. The Data Protection Act). To mitigate risks, the game will not store any user data that’s not relevant to gameplay, or the balancing of gameplay. Any data that is stored will be stored anonymously. User authentecation will be handled by Google, so the program's responsibility to handle authentication secureley is delegated to Google.
+
+\section{Consent and Disclosure}
+
+Similar to how it was mentioned above, there are legal risks to not complying with data usage and Disclosure. When the player begins the game, they are informed that their gameplay will be tracked and exclusively used to inform game-balancing, and that this can be disabled if the player wishes to. This message gives a brief overview of what the game records, how it will be used, and how it will be sudoanonymously stored. A user under the age of 18 years old should not be able to opt into data disclosure - this is specified in the aformentioned message. As referenced earlier, opted-in users can choose to opt out whenever. Ultimately, it is important to achieve all of this without disrupting the user experience, hence, all forms of asking for content and disclosing information is done as concisely as possible, and in a fully unobtrusive manner.
+
+\section{Accessibility}
+
+While less a concern of legality, there is still a potential risk that some players may not be able to get the most out of the project. Accommodating for as many users as possible allows the game to be enjoyed by as many people as possible, and allows anyone, regardless of physical ability to utilise the telemetry interface. 
+
+For both the game and telemetry interface, core screens can be navigated by keyboard, accommodating for individuals who are only able to use a keyboard or alternative accessibility keyboard equivalents. 
+
+Furthermore, in both the game and telemetry interface, all text in game appears in front of a plain black background - this contrast allows readability, accommodating for those with levels of visual impairment. 
+
+The game can be understood with just text alone, and the telemetry interface features text descriptions of the data that will accompany any data visualisations. (i.e a pie chart being accompanied by a table containing section names and percentages occupied), these two features mean blind users can still experience this project with the use of a screen reader. 
+
+As a game, the player’s options are always kept simple, by design, the player has very simple options and direction, these can be summed up in either a short sentence (i.e “select an attack”) or a single word (“Buy”), allowing users who are less familiar with the english language, or are unfamiliar with games as a whole to still participate in the game - for example, a very young child would still be able to enjoy the game. Similarly, the player’s objectives are always incredibly simple, so all users intuitively understand what to do.
+
+The player can select from three difficulty options, such that, regardless of if the player is inexperienced with games as a whole, or is very skilled at video games, it’s still likely the game will offer an engaging challenge for them. These difficulty options are able to be finely tuned, through analysis on the telemetry side, to best meet the requirements of each difficulty level.
+
+The telemetry interface provides many means of visualising data (pie charts, graphs etc. ), these visual means will be readable, and have high contrast so that they can be interpreted easily, even by those who have visual impairments of some kind.
+   
+This project aims to best follow the WCAG 2.1 principles.
+
+\section{Intellectual Property (IP) and Licensing Implications}
+    
+Another thing we risk is infringing on the copyright of similar solutions, products or creative works. While the characters, aesthetics and mechanics of the game draw some inspiration from countless sources (Dungeons \& Dragons, Final Fantasy, etc.), the game created in this project is derivative from its inspiration, as of its focus on simplistic and intuitive gameplay, and small scale. No copyrighted characters are used in this game, instead, the characters are examples of generic fantasy archetypes, such as Wizzards or Goblins. 
+
 \end{document}
