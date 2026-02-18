@@ -10,7 +10,7 @@ public class SettingsChangeEvent extends TelemetryEvent {
      * Constructor for the settings change telemetry event. Produces a telemetry event storing
      * common data.
      *
-     * @param UserID    The userID for the currently authenticated user.
+     * @param userID        The userID for the currently authenticated user.
      * @param source        The object that constructed the telemetry event.
      * @param timeStamp     The time the event was constructed in the format
      *                      yyyy/mm/dd/hh/mm/ss,
