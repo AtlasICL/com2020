@@ -1,6 +1,6 @@
 # Manual End-to-End Test Suite
 
-## Test 1: Player is authenticated by Google SSO
+## Test 1: Player is authenticated by Google OAuth 2.0 OIDC
 
 ### Recording
 
@@ -14,7 +14,7 @@ When the game is run, this is the startup screen that appears in the command lin
 
 This opens a new tab in my default browser, as shown below:
 
-<img src="images/google_sso.png" alt="Google SSO" width="600">
+<img src="images/google_sso.png" alt="Google OAuth" width="600">
 <img src="images/google_review_policies.png" alt="Google Review Policies" width="600">
 
 After entering my credentials, I am then shown the following screen indicating login success:

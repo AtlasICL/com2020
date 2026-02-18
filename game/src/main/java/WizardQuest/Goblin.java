@@ -13,7 +13,7 @@ public class Goblin extends EnemyBase {
      * @param difficulty defines the current game difficulty for this concrete enemy, used to scale health
      */
     public Goblin(DifficultyEnum difficulty){
-        super((int) Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
+        super(Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
     }
 
     @Override
