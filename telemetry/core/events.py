@@ -548,11 +548,13 @@ class SettingsChange:
     """
     def __init__(
         self,
+        userID: str,
         timestamp: datetime,
         setting: SettingName,
         value: int
     ):
         """
+        :param userID: The ID of the user changing the setting.
         :param timestamp: Timestamp of the event. 
         Format: YYYY/MM/DD/HH/MM/SS.
         :type timestamp: datetime
@@ -562,12 +564,14 @@ class SettingsChange:
         setting was set to. 
         :type value: int
         """
+        self.userID = userID
         self.timestamp = timestamp
         self.setting = setting
         self.value = value
 
     def __repr__(self):
         return f"""SettingsChangeObject
+            {self.userID=}
             {self.timestamp=}
             {self.setting=}
             {self.value=}"""
