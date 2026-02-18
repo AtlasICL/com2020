@@ -53,10 +53,112 @@
   {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 
-\title{Telemetry Game Report\\[0.3em]
+\title{Risk Register\\[0.3em]
 \large COM2020 - Project 7}
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \date{17/02/2026}
 \begin{document}
-TODO 
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+\subsection{Risk Register Description}
+The continuous tracking of potential problems in a team project is essential for its success. By creating and categorising a list of potential risks with classification and mitigation strategies, the group can aim to classify and reduce the impact of these problems on the overall project.
+\subsection{Requirements for risks}
+To quantify the specific risk a problem may have to the product, the following criteria are used to describe a specific risk:
+\begin{itemize}
+    \item Each risk must be assigned a unique identifier.
+    \item Each risk must be given a clear description.
+    \item The consequences of each risk occurring must be clearly stated.
+    \item The ordinal impact, from 1 to 5, must be stated for each risk.
+    \item The ordinal likelihood, from 1 to 5, must be stated for each risk.
+    \item The ordinal value, from 1 to 25, equalling the product of the impact and likelihood of the risk, must be stated.
+    \item The treatment for each risk must be stated, including treatment method (accept, transfer, mitigate, avoid) and details of the treatment. 
+    \item An owner for each risk must be assigned and recorded.
+\end{itemize}
+\section{Risks}
+\subsection{Repository based risks}
+\subsubsection{Accidental Deletion of Repository from GitHub}
+\textbf{Impact:} 5\quad \textbf{Likelihood:} 1\quad \textbf{Total Value:} 5\\
+\textbf{Consequences}\\
+Loss of central Repository, developers can no longer see each others changes. Project is no longer viewable publicly.\\
+\textbf{Treatment}\\
+Mitigate by Creating a new repository on GitHub, restored using a developers local repository or working copy.\\
+Accept Potential loss of some commits and commit information.\\
+\textbf{Risk Owner}\\
+GitHub Repository Owner - Emre Acarsoy
+\subsubsection{Merge Conflicts}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
+\textbf{Consequences}\\
+Developers spend more time fixing code overlaps than writing new features; potential for "broken" builds.\\
+\textbf{Treatment}\\
+Mitigate by enforcing frequent rebases from main branch.\\
+\textbf{Risk Owner}\\
+Development leads dependent on section (Game Lead - Tom Croft, Telemetry Lead - Emre Acarsoy, Testing Lead - Luca Pacitti)
+\subsubsection{Secret Leak}
+\textbf{Impact:} 5\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 10\\
+\textbf{Consequences}\\
+Unauthorised access to API resources, gained via public repository\\
+\textbf{Treatment}\\
+Mitigate using a .gitignore, if a secret is leaked regenerate secret.\\
+\textbf{Risk Owner}\\
+Developer in charge of APIs - Emre Acarsoy
+\subsubsection{Pushes to Main Corrupting Project}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 6\\
+\textbf{Consequences}\\
+Pushing to main without checking code impact may result in a non-functional application in main, hindering development.\\
+\textbf{Treatment}\\
+Mitigate by enable branch protections, preventing changes in main without a pull request.\\
+\textbf{Risk Owner}\\
+Project lead/scrum master - Tom Croft
+\subsubsection{Inconsistent commits}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
+\textbf{Consequences}\\
+Commits to the repository are too large, or lacking information regarding their contents in the commit message\\
+\textbf{Treatment}\\
+Mitigate with often commits and descriptive messaging\\
+\textbf{Risk Owner}\\
+Project lead/scrum master - Tom Croft
+\subsection{Team Risks}
+\subsubsection{Team Member Illness / Absence}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 6\\
+\textbf{Consequences}\\
+Team member absence causes halt in their section of development\\
+\textbf{Treatment}\\
+Transfer development responsibilities to other developers. Mitigate by staying ahead of schedule.\\
+\textbf{Risk Owner}\\
+Scrum Master - Tom Croft
+\subsubsection{Skill Gap / Learning Curve}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
+\textbf{Consequences}\\
+Team member not having the required skill to develop their part of a solution.\\
+\textbf{Treatment}\\
+Transfer work to multiple developers, mitigate by researching or reading documentation\\
+\textbf{Risk Owner}\\
+Project lead - Tom Croft
+\subsubsection{Scope creep}
+\textbf{Impact:} 4\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 12\\
+\textbf{Consequences}\\
+Adding additional functionality beyond specification leads to a less finished core product.\\
+\textbf{Treatment}\\
+Mitigate by enforcing specific requirements via MoSCoW prioritisation.\\
+\textbf{Risk Owner}\\
+Design lead - Tom Croft
+\subsubsection{Lack of Communication}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 9\\
+\textbf{Consequences}\\
+Lack of communication between developers breeds systems which do not interface with each other correctly.\\
+\textbf{Treatment}\\
+Transfer brief knowledge of systems through interfaces of schemas.\\
+\textbf{Risk Owner}\\
+Development leads dependent on section (Game Lead - Tom Croft, Telemetry Lead - Emre Acarsoy, Testing Lead - Luca Pacitti)
+\subsubsection{Insufficient Testing}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 9\\
+\textbf{Consequences}\\
+Testing problems lead to integration problems later in development.\\
+\textbf{Treatment}\\
+Mitigate by improving testing algorithms.\\
+\textbf{Risk Owner}\\
+Testing Lead - Luca Pacitti
 \end{document}
