@@ -1,14 +1,18 @@
 \subsection{Overview}
-The system uses several data stores to keep track of both telemetry data, as well as user data such as settings and roles. Each subsection within this section represents one data store. In it will be described what data it stores, what uses that data, and what the data is used for.
+The system uses several data stores to keep track of both telemetry data, as well as user data such as settings and roles. Each subsection within this section represents one data store. In it will be described what data it stores, what components use that data, and what the data is used for.
 \subsection{Telemetry Events}
 
 \subsubsection{Data Stored}
 
 \paragraph{Overview}
-In this data store, it stores all user generated telemetry events. Each event stores user data as specified in the telemetry schema. All the data is stored as one large JSON list, with many JSON objects, where each object represents a single telemetry event. 
+This data store contains all user generated telemetry events. Each event stores user data as specified in the telemetry schema. All the data is stored as one large JSON list, with many JSON objects, where each object represents a single telemetry event. 
 
 \paragraph{Common Fields}
-The type of object is specified by the event field as a string. The sessionID is a 32 bit int, randomly generated for each run, and thus the chance of duplicate session ids is negligible for the scale of the application. Should this become an issue later on they can be migrated to a UUID, which can handle significantly more sessions before collisions become likely. The userID is the sub provided by google OAuth and thus pseudonymous with the user. Lastly each event is timestamped with when it was created in the format year/month/day/hour/minute/second. 
+The type of object is specified by the event field as a string. The sessionID is a 32 bit int, randomly generated for each run, and thus the chance of duplicate session ids is negligible for the scale of the application. Should this become an issue later on they can be migrated to a UUID, which can handle significantly more sessions before collisions become likely. The userID is the sub provided by google OAuth and thus pseudonymous with the user. Lastly each event is timestamped with when it was created in 
+the format year/month/day/hour/minute/second. 
+
+\paragraph{Other Fields}
+The difficulty field stores the difficulty of a run as a string. The encounter\_name field stores the name for the encounter, based on the predefined encounters. The stage\_number field stores which stage the event was generated on. The player\_HP\_remaining field contains how much health the player finished an encounter with. the lives\_left field contains how many lives the player has when they fail an encounter. The coins\_gained field contains how many coins the player gained from completing an encounter. The upgrade\_bought field contains the telemetry name of the upgrade bought from the shop, and coins\_spent contains how much it cost to buy. The setting field contains the name of the setting changed, and the setting\_value contains the new value of the setting as a string. The enemy\_type field contains the telemetry name of the enemy that was killed.
 
 \subsubsection{Data Used}
 
@@ -38,7 +42,7 @@ The Python application only ever reads from simulated events. It does so every 3
 \subsubsection{Data Stored}
 
 \paragraph{Overview}
-This data store, stores the login information of each user. It does so in a plaintext JSON file, as for the prototype the focus is on producing a functioning prototype, but this could be secured next sprint. 
+This data store contains the login information of each user. It does so in a plaintext JSON file, as for this sprint the focus is on producing a functioning prototype, but this could be secured next sprint. 
 
 \paragraph{Common Fields}
 Each entry in the file contains a key of the userID and a value of the user's role. User roles are updated by modifying the role value in the prototype, however after sprint 2 we aim to add a role assignment mechanism within the Java app. 
@@ -49,7 +53,7 @@ Each entry in the file contains a key of the userID and a value of the user's ro
 The Java application never directly reads this data. It instead makes a authentication request to the Python application, which reads the user data after authenticating them, and sends this to the Java app through its output stream. The Java app uses their userID for telemetry events, and uses their role for role-based access control as defined in the sprint plan.
 
 \paragraph{Python Application}
-The Python application writes to this file when a new user is created, by default assigning them the role of player due to the least privilege security principle. It reads from the file when authenticated a user that has been authenticated before, keeping note of their role and userID. It uses their role to ensure correct role-based access control as defined in the sprint plan, and displays their userID to them in the home tab.  
+The Python application writes to this file when a new user is created, by default assigning them the role of player due to the least privilege security principle. It reads from the file when authenticating a user that has been authenticated before, keeping note of their role and userID. It uses their role to ensure correct role-based access control as defined in the sprint plan, and displays their userID to them in the home tab.  
 
 \subsection{Settings File}
 
@@ -59,9 +63,10 @@ The Python application writes to this file when a new user is created, by defaul
 This data store keeps track of all design parameter values along with user settings. It does so using two top levels fields, one for user data, and the other for design parameter data. 
 
 \paragraph{User Data}
-The user data stores a JSON object of users, where each key is the user's userID and the value is their user settings. The user's settings consist of if they have telemetry enabled, an an unused role setting, and the furthest level they've reached on each difficulty. This is also currently unused, as it will be used to display player progress in sprint 2. 
+The user data stores a JSON object of users, where each key is the user's userID and the value is their user settings. The user's settings consist of if they have telemetry enabled, an unused role setting, and the furthest level they've reached on each difficulty. This is also currently unused, but will be used to display player progress in sprint 2.
+
 \paragraph{Desing Parameters}
-The design parameters are stored in another JSON object. This object has keys for each design parameter name and each value is another JSON object, having a key for each difficulty and the value of the design parameter for that difficulty. 
+The design parameters are stored in another JSON object. This object has keys for each design parameter name and each value is another JSON object, having a key for each difficulty and storing the value of the design parameter for that difficulty. 
 
 \subsubsection{Data Used}
 
