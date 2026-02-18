@@ -16,7 +16,7 @@ cd game
 ```
 2. Run ONE of the following scripts, dependent on your OS - which will set environment variables for Google OAuth 2.0 OIDC.
 
-**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email _ea616@exeter.ac.uk_.
+**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email [ea616@exeter.ac.uk](mailto:ea616@exeter.ac.uk).
 
 **Windows**
 ```
@@ -45,7 +45,7 @@ cd telemetry
 ```
 2. Run ONE of the following scripts, dependent on your OS - which will set environment variables for Google OAuth 2.0 OIDC.
 
-**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email _ea616@exeter.ac.uk_.
+**NOTE**: The CLIENT_ID and CLIENT_SECRET values cannot be publicly distributed. To obtain these for running the below script, please email [ea616@exeter.ac.uk](mailto:ea616@exeter.ac.uk).
 
 **Windows**
 ```
