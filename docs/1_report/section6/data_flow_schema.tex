@@ -41,7 +41,7 @@ The Python application only ever reads from simulated events. It does so every 3
 This data store, stores the login information of each user. It does so in a plaintext JSON file, as for the prototype the focus is on producing a functioning prototype, but this could be secured next sprint. 
 
 \paragraph{Common Fields}
-Each entry in the file contains a key of the userID and a value of the user's role. User roles are updated by modifying the role value in the prototype, however after sprint 2 we aim to add a role assignment mechanism within the java app. 
+Each entry in the file contains a key of the userID and a value of the user's role. User roles are updated by modifying the role value in the prototype, however after sprint 2 we aim to add a role assignment mechanism within the Java app. 
 
 \subsubsection{Data Used}
 
@@ -49,7 +49,7 @@ Each entry in the file contains a key of the userID and a value of the user's ro
 The Java application never directly reads this data. It instead makes a authentication request to the Python application, which reads the user data after authenticating them, and sends this to the Java app through its output stream. The Java app uses their userID for telemetry events, and uses their role for role-based access control as defined in the sprint plan.
 
 \paragraph{Python Application}
-The python application writes to this file when a new user is created, by default assigning them the role of player due to the least privilege security principle. It reads from the file when authenticated a user that has been authenticated before, keeping note of their role and userID. It uses their role to ensure correct role-based access control as defined in the sprint plan, and displays their userID to them in the home tab.  
+The Python application writes to this file when a new user is created, by default assigning them the role of player due to the least privilege security principle. It reads from the file when authenticated a user that has been authenticated before, keeping note of their role and userID. It uses their role to ensure correct role-based access control as defined in the sprint plan, and displays their userID to them in the home tab.  
 
 \subsection{Settings File}
 
@@ -66,9 +66,9 @@ The design parameters are stored in another JSON object. This object has keys fo
 \subsubsection{Data Used}
 
 \paragraph{Java Application}
-The user data information is read by the java application after authenticating a user to obtain their telemetry setting. If they have telemetry disabled the app will not store telemetry events in either event stores. It also reads from the file on user login to obtain the values for all design parameters across each difficulty, storing this data. This data is then used to determine the design parameter values during gameplay. 
+The user data information is read by the Java application after authenticating a user to obtain their telemetry setting. If they have telemetry disabled the app will not store telemetry events in either event stores. It also reads from the file on user login to obtain the values for all design parameters across each difficulty, storing this data. This data is then used to determine the design parameter values during gameplay. 
 
 The application writes to the file when a user enables or disables telemetry, storing their choice. It also writes to the file when a design parameter is changed, to store the update should the game be restarted. 
 
 \paragraph{Python Application}
-The python application does not use this data store. 
+The Python application does not use this data store. 
