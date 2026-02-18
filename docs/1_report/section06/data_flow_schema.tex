@@ -19,6 +19,7 @@ The difficulty field stores the difficulty of a run as a string. The encounter\_
 \paragraph{Java Application}
 The Java application never reads telemetry events. It appends to the file with new events provided the user has telemetry enabled, and then saves its changes as to not lock the file.
 
+\newpage
 \paragraph{Python Application}
 The Python application only ever reads from telemetry events. It does so every 3 seconds to live update its telemetry views. It validates incoming data, then uses it to determine how many players survive each stage (funnel view), how often players die on each stage (Difficulty Spikes), how much health players finish each stage with, for each difficulty (Health Comparison), and how many coins player finish each stage with (Coins Comparison). It also checks to see if the number of failures on a stage is above average and if so suggests tweaks to the design parameters to make the stage easier.
 
@@ -47,6 +48,7 @@ This data store contains the login information of each user. It does so in a pla
 \paragraph{Common Fields}
 Each entry in the file contains a key of the userID and a value of the user's role. User roles are updated by modifying the role value in the prototype, however after sprint 2 we aim to add a role assignment mechanism within the Java app. 
 
+\newpage
 \subsubsection{Data Used}
 
 \paragraph{Java Application}

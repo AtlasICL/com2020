@@ -1,23 +1,23 @@
 \subsection{Explanation}
-Each subsection is an aspect of the project (either the documentation, python or java application). Each subsubsection is then an epic within that area. Each paragraph represents one story for that epic, referencing a story in the project backlog. Each story is assigned a value associated with how much work is required to complete the story for this sprint, the risks associated with the story, the technical changes required to complete it, what it depends on, how complex it is to achieve, and what value it adds to the project, assuming all work to be done in the last sprint was done. Each story is also assigned a priority of either Must, Should, could and wont. Lastly an acceptance criteria is provided for each story, stating what tasks must be completed to achieve the story. 
+This section follows the exact same format as the sprint one prioritised requirements. Each story's value is calculated assuming the work done on that story is what was planned in the previous sprint (So anything in the Must, Should, or Could category is done). Due to the adaptability of scrum, it is expected that both the project backlog and sprint two plan will have changed by the end of sprint two, to ensure the plan is both realistic and adaptive. 
 
 \subsection{Documentation}
 
 \subsubsection{Report}
 
 \paragraph{Stakeholders can View Executive Summary}
-\textbf{Value:} 2 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
     \item The summary appears at the start of the report.
-    \item The summary clearly states what is delivered in the prototype.
-    \item The summary clearly states why prototype features exist in the prototype. 
-    \item The summary clearly states the most important risks of the prototype.
+    \item The summary clearly states what is delivered in the final system.
+    \item The summary clearly states why features exist in the final system. 
+    \item The summary clearly states the most important risks of the final system.
     \item The summary clearly states the mitigations for those risks.
 \end{itemize}
 
 \paragraph{Stakeholders can View Problem Framing}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
     \item The problem framing clearly explains the problem.
@@ -27,7 +27,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholders can View Definition of Done}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
     \item The definition of done must clearly explain when a documentation story is complete.
@@ -35,48 +35,49 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholders can View Project Backlog}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
     \item The project backlog must clearly state which epics are required to complete the project.
     \item The project backlog must clearly state which user stories are associated with each epic.
 \end{itemize}
 
+\newpage
 \paragraph{Stakeholders can View Sprint One Prioritised Requirements}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
-  \item Each epic in the project backlog must be stated in the requirements.
+  \item Each epic in the project backlog must be specified in the requirements.
   \item Each story within each epic must be stated in the requirements.
   \item Each story must have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
   \item Each story must have an acceptance criteria associated with it, which when all criteria are met, the story is considered complete for sprint one. Criteria may change between sprints as sprint requirements change. 
-  \item Each story must have a priority associated with it for that sprint. The priority must either be Must, Should, Could or Wont. 
+  \item Each story must have a priority associated with it for that sprint. The priority must either be Must, Should, Could, or Won't. 
   \item Each story must be able to link to a prototype feature. 
 \end{itemize}
 
-
 \paragraph{Stakeholders can View Architecture Schema}
 \paragraph{Architecture Schema}
-\textbf{Value:} 3\quad \textbf{Priority:} Should\\
+\textbf{Value:} 2\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
   \item Each class category of the Java application must have its purpose and use case explained.
   \item Each class category of the Python application must have its purpose and use case explained. 
-  \item Classes that share an identical structure with minor variation need only for their category to be explained.
+  \item Classes that share an identical structure with minor variation need only their category to be explained.
   \item All structural design choices must be justified and explained.
-  \item The limitations of all specified design choices must be stated, and why they're acceptable must be explained.
+  \item The limitations of all specified design choices must be stated, and why they are acceptable must be explained.
 \end{itemize}
 
 \paragraph{Stakeholders can View Data Flow Schema}
-\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\paragraph{Data Flow Schema}
+\textbf{Value:} 1\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
-  \item Each component that accesses data be explained, describing what data it accesses, what it does with it, and why it needs to access this data.
+  \item Each component that accesses data must be explained, describing what data it accesses, what it does with it, and why it needs to access this data.
   \item Each data store must be explained, stating what data it stores and in what format. 
 \end{itemize}
 
 \paragraph{Stakeholders can View Telemetry Schema}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
   \item Each telemetry event must be described by the schema.
@@ -85,17 +86,16 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholders can View Game Design Documentation}
-\textbf{Value:} 3\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Could\\
 \textbf{Acceptance Criteria}
 \begin{itemize} 
-  \item The documentation must outline the gameplay loop.
-  \item The documentation must explain all parts of the gameplay loop.
+  \item The documentation must outline the gameplay loop
   \item The documentation must define all attack abilities (both magic and mundane) along with their cost to purchase, magic cost, damage type, and base damage.
   \item The documentation must define all passive abilities, what they do, and their cost.
   \item The documentation must define all damage types and their use cases.
   \item The documentation must outline a structure for the game's progression.
   \item The documentation must define all enemies within the game.
-
+  \item The documentation must explain all parts of the gameplay loop.
 \end{itemize}
 
 \paragraph{Stakeholder can View Evaluation}
@@ -103,8 +103,10 @@ Each subsection is an aspect of the project (either the documentation, python or
 \textbf{Acceptance Criteria}
 \begin{itemize} 
   \item The evaluation must define 5 measures of success.
-  \item For each measure, evidence must be provided to show system effectiveness.
+  \item For each measure evidence must be provided to show system effectiveness.
   \item The limitations and biases of the evaluation must also be explored and explained.
+  \item The evaluation must contain a discussion on the fairness of the system as a whole.
+  \item The evaluation must contain a discussion on any unintended side effects of balancing decisions and game design.
 \end{itemize}
 
 \paragraph{Stakeholders can View Sprint Two Prioritised Requirements}
@@ -115,7 +117,7 @@ Each subsection is an aspect of the project (either the documentation, python or
   \item Each story within each epic must be stated in the requirements.
   \item Each story must have a value associated with it, based on how much work it is to complete the story, the significance of the risks associated with it, the technical changes required to complete it, how much depends on it, how complex it is to complete, and the value it's completion adds to the project.
   \item Each story must have an acceptance criteria associated with it, which when all criteria are met the story is considered complete for sprint two. Criteria may change between sprints as sprint requirements change. 
-  \item Each story must have a priority associated with it for that sprint. The priority must either be Must, Should, Could or Wont. 
+  \item Each story must have a priority associated with it for that sprint. The priority must either be Must, Should, Could or Won't. 
   \item Each story must be able to link to a final product feature and test. 
 \end{itemize} 
 
@@ -144,7 +146,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholder can view Risk Register}
-\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
     \item Each risk must be assigned a unique identifier.
@@ -160,7 +162,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Ethical and Legal Considerations}
 
 \paragraph{Stakeholders can View the Privacy and Data Protection Analysis}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must discuss what data is stored about users.
@@ -170,7 +172,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholders can View the Consent and Disclosure Analysis}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must discuss what the data is used for.
@@ -179,13 +181,14 @@ Each subsection is an aspect of the project (either the documentation, python or
   \item Must discuss how this policy affects the user experience. 
 \end{itemize}
 
+\newpage
 \paragraph{Stakeholders can View the Accessibility Analysis}
 \textbf{Value:} 1\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must discuss the importance of accessability.
   \item Must discuss what systems are in place to support the accessability of the software.
-  \item Must discuss what areas the system can improve upon for sprint 2.
+  \item Must discuss what areas the system can improve upon in the future.
 \end{itemize}
 
 \paragraph{Stakeholders can View the Intellectual Property and Licensing Implications}
@@ -201,7 +204,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Project License}
 
 \paragraph{Stakeholders can View the Project License}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item A license for the project must be determined.
@@ -212,7 +215,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Software and Data Inventory}
 
 \paragraph{Maintainers can View the Software Inventory}
-\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item An inventory of all software components the system directly depends on must be produced.
@@ -223,7 +226,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Maintainers can View the Data Inventory}
-\textbf{Value:} 1\quad \textbf{Priority:} Should\\
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item An inventory of all data the system directly depends on or uses must be produced.
@@ -236,18 +239,18 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Deployment and Operations Guide}
 
 \paragraph{Client can View the Java Application Deployment Instructions}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item The guide must contain clear instructions for how to set up and operate the Java application.
+  \item The guide must contain clear instructions for how to set up and run the Java application.
   \item There may be instructions for different systems, but there must be a way to run the application on any desktop system that runs Windows, MacOS or Linux.
 \end{itemize}
 
 \paragraph{Client can View the Python Application Deployment Instructions}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item The guide must contain clear instructions for how to set up and operate the Python application.
+  \item The guide must contain clear instructions for how to set up and run the Python application.
   \item There may be instructions for different systems, but there must be a way to run the application on any desktop system that runs Windows, MacOS or Linux.
 \end{itemize}
 
@@ -255,7 +258,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item There must be clear instructions on how to operate the test suite on the source code.
+  \item There must be clear instructions on how to run the test suite on the source code.
   \item The version of the testing framework must be provided.
   \item The running instructions must allow the running of the test on any desktop system that runs either Windows, MacOS or Linux.
 \end{itemize}
@@ -263,28 +266,30 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Test Evidence}
 
 \paragraph{Stakeholder can View the Automated Test Evidence}
-\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item There must be 5 automated tests.
-  \item Some of them must unit tests.
-  \item Others must be integration tests.
+  \item There must be 15 automated tests, consisting of both unit and integration tests.
+  \item For each automated test it must be outlined what component is being tested.
+  \item For each automated test it must be outlined what the expected output is.
+  \item For each automated test the actual output of the system must be provided, and thus evidence that the system passes the test.
+  \item The system must pass all automated tests.
 \end{itemize}
 
 \paragraph{Stakeholder can View the End to End Test Evidence}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 8\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item There must be one end to end test.
-  \item Evidence that the test is successful must be given.
-  \item The happy path and failure cases for the test must be described.
-  \item The expected results of the test must be described.
+  \item There must be 8 end to end tests.
+  \item Evidence that the tests are successful must be given.
+  \item The happy path and failure cases for each test must be described.
+  \item The expected results of the tests must be described.
 \end{itemize}
 
 \subsubsection{Presentation}
 
 \paragraph{Stakeholder can View an Explanation of the Problem}
-\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must outline what the problem is.
@@ -296,10 +301,11 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholder can View the Design Approach}
-\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must outline the architecture of the solution.
+  \item Must speak about similar solutions.
   \item Must outline measures used to evaluate the system.
 \end{itemize}
 
@@ -321,15 +327,18 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholder can View a Live Demonstration}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Must take around 4 minutes to complete.
-  \item Must demonstrate a run of the game.
+  \item Must demonstrate a run of the game up to and including stage 3.
   \item Must demonstrate the telemetry views.
   \item Must demonstrate the telemetry suggestions.
   \item Must demonstrate the simulation.
   \item Must demonstrate the adjustment of a design parameter.
+  \item Must demonstrate the viewing of the telemetry disclosure. 
+  \item Must show the handover pack.
+  \item Must show how a maintainer would add a new stage. 
   \item Must be rehearsed before the live demo, to ensure it works correctly.
   \item Must have a backup demonstration, must it go wrong.
 \end{itemize}
@@ -338,13 +347,17 @@ Each subsection is an aspect of the project (either the documentation, python or
 \textbf{Value:} 2\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
-  \item Must outline the areas in which the prototype is weakest.
-  \item Must briefly outline what is to be done in the next sprint.
+  \item Must outline the areas in which the system is weakest.
+  \item Must briefly outline what could be done in the future to address these weaknesses.
 \end{itemize}
 
 \paragraph{Stakeholder can View the Ethics and Telemetry Disclosure}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must outline the ethical considerations of the system.
+  \item Must outline what telemetry is collected and for what purpose.
+\end{itemize}
 
 \paragraph{Stakeholders can View Management Information}
 \textbf{Value:} 1\quad \textbf{Priority:} Must\\
@@ -355,35 +368,74 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Stakeholders can View an Brief of the Scrum Board}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item Must show a snapshot of the scrum board.
+  \item Must contain relevant information to the current sprint. 
+\end{itemize}
 
 \subsubsection{Maintenance and Troubleshooting Guide}
 
 \paragraph{Maintainers can View Maintenance Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item Must contain clear instructions on how to launch both the python and java application, once all prerequisites are configured.
+    \item Must contain clear instructions on how to use the Java application, including an explanation of each user menu.
+    \item Must contain clear instructions on how to use the Python application, including an explanation of each user menu.
+    \item Must contain instructions on how to manage user data and roles.
+    \item Must contain instructions on how to manage the telemetry data.
+    \item Must contain instructions on how to interpret any logging systems, including the decision log. 
+\end{itemize}
 
+\newpage
 \paragraph{Users can View Troubleshooting Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item Must contain a list of many common symptoms of problems.
+    \item Each symptoms must then be associated with a common problem.
+    \item Each problem must then have a clear series of troubleshooting steps to fix it.
+    \item Lastly each problem must have clear verification criteria to check it has been solved.
+\end{itemize}
 
 \paragraph{Maintainers can View Extension Instructions}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 7\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item Must contain clear instructions on how to add additional telemetry events.
+    \item Must contain clear instructions on how to add additional abilities (both passive and active).
+    \item Must contain clear instructions on how to add additional damage types.
+    \item Must contain clear instructions on how to add additional enemies (both normal and boss)
+    \item Must contain clear instructions on how to add additional encounters.
+    \item Must contain clear instructions on how to add additional stages.
+    \item Must contain an overview of the system architecture, explaining it without justifying the design.
+    \item Must contain an explanation of how both applications manage security, including authentication and access control.
+\end{itemize}
 
 \subsubsection{Data Management Guide}
 
 \paragraph{Stakeholders can View What Data is Stored}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item Must contain a clear explanation of each data store and it's purpose.
+    \item Must contain a description of what kind of data is stored in each data store.
+    \item Must explain which processes interact with each data store, and in which way they interact with it. 
+\end{itemize}
 
 \paragraph{Maintainers can View the Data Format}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item Must contain an overview of the format each data store uses to store data.
+    \item For each data store, must provide a clear schema for how data is stored.
+    \item Must specify clearly the domain of all fields in all data stores.
+\end{itemize}
 
+\newpage
 \subsubsection{Scrum Board}
-
 \paragraph{Stakeholders can View a Snapshot of the Scrum Board}
 \textbf{Value:} 3\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
@@ -409,7 +461,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Authentication and Access Control}
 
 \paragraph{Users can Log In}
-\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item Users must be required to log in before accessing the python application.
@@ -418,7 +470,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Users can Reset their Login}
-\textbf{Value:} 1\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users must be able to reset their login credentials.
@@ -426,7 +478,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Users can Perform Actions Permitted by Their Role}
-\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
     \item A user with the player role must not be able to access the application.
@@ -434,13 +486,18 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Users can view their Profile}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 1\quad \textbf{Priority:} Could\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+    \item An authenticated user must be able to view what their role is.
+    \item An authenticated user must be able to view what their username is.
+    \item An authenticated user must be able to log out from this menu.
+\end{itemize}
 
 \subsubsection{Telemetry Views}
 
 \paragraph{Designers can View Funnel}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item The system must calculate a funnel view showing user character drop off from the telemetry data as the game progresses.
@@ -449,54 +506,66 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Designers can View Difficulty Spikes}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item The system must calculate a difficulty spikes view showing failure rate for different stages from the telemetry data.  
   \item This must then be displayed to the user. 
   \item It must be able to be switched from viewing actual user data, to simulation generated telemetry data.
+  \item The system must highlight significant spikes to the designer.
 \end{itemize}
 
 \paragraph{Designers can View Progress Curves}
-\textbf{Value:} 3 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
-  \item The system must calculate how many coins user's character's accumulated on each stage from the telemetry data.
+  \item The system must calculate how many coins user's character's accumulated on each stage, and the time to complete each stage from the telemetry data.
   \item This must then be displayed to the user. 
   \item It must be able to be switched from viewing actual user data, to simulation generated telemetry data.
 \end{itemize}
 
 \paragraph{Designers can View Fairness Indicators}
-\paragraph{Fairness Indicators}
-\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 7 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The system must be able to determine if a player run was fast or slow.
+  \item The system must be able to determine if a player run was aggressive or defensive.
+  \item The system must allow the comparison of different speeds on key metrics including lives, coins and health as runs progress.
+  \item The system must allow the comparison of different aggressiveness values on key metrics including lives, coins and health as runs progress.
+  \item This must then be passed to the user interface to display.
+\end{itemize}
 
 \paragraph{Designers can View Comparison Mode}
-\textbf{Value:} 3 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 2 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
-  \item The system must calculate how many coins user's character's accumulated on each stage along with how much health they finish each stage with, for each difficulty.
+  \item The system must calculate how many coins user's character's accumulated on each stage along with how much health they finish each stage with, and how many lives they have, for each difficulty.
   \item This must then be displayed to the user. 
   \item It must be able to be switched from viewing actual user data, to simulation generated telemetry data.
 \end{itemize}
 
 \paragraph{Designers can View Rule Based Design Suggestions}
-\textbf{Value:} 2 \quad \textbf{Priority:} Should\\
+\textbf{Value:} 5 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
-  \item The system must read the telemetry data and evaluate it against a suggestion criteria.
-  \item If this criteria is met, the system must suggest a concrete change to the design parameter to improve the balance of the game. 
+  \item The system must read the telemetry data and evaluate it against 6 suggestion criteria.
+  \item For each criteria that's met, the system must suggestion a concrete change to a design parameter that will improve balance.
   \item This suggestions must be displayed to the user.
 \end{itemize}
 
 \paragraph{Designers can View Decision Log}
-\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 5 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item Designers must be able to view a log of changes to design parameters.
+  \item Each change must have an associated explanation as to why.
+  \item Those explanations must be able to link to telemetry data evidence.
+\end{itemize}
 
 \subsubsection{Telemetry Events}
 
 \paragraph{Application Handles Start Session}
-\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read start session events that follow the telemetry schema.
@@ -505,7 +574,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Normal Encounter Fail}
-\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read normal encounter fail events that follow the telemetry schema.
@@ -513,8 +582,9 @@ Each subsection is an aspect of the project (either the documentation, python or
     \item The application must provide clear errors to the user when failing to validate them.
 \end{itemize}
 
+\newpage
 \paragraph{Application Handles Normal Encounter Complete}
-\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read normal encounter complete events that follow the telemetry schema.
@@ -523,7 +593,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Boss Encounter Start}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read boss encounter start events that follow the telemetry schema.
@@ -532,16 +602,15 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Boss Encounter Fail}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read boss encounter fail events that follow the telemetry schema.
     \item The application must be able to validate those events.
     \item The application must provide clear errors to the user when failing to validate them.
 \end{itemize}
-
 \paragraph{Application Handles Boss Encounter Complete}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read boss encounter complete events that follow the telemetry schema.
@@ -550,7 +619,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Gain Coin}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read gain coin events that follow the telemetry schema.
@@ -559,7 +628,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Buy Upgrade}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read buy upgrade events that follow the telemetry schema.
@@ -568,7 +637,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles End Session}
-\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read end session events that follow the telemetry schema.
@@ -577,7 +646,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Settings Change}
-\textbf{Value:} 1 \quad \textbf{Priority:} Must\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read settings change events that follow the telemetry schema.
@@ -586,7 +655,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Kill Enemy}
-\textbf{Value:} 1 \quad \textbf{Priority:} Could\\
+\textbf{Value:} 0 \quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
     \item The application must be able to read kill enemy events that follow the telemetry schema.
@@ -597,19 +666,32 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Seeded Dataset}
 
 \paragraph{Developers can Access a Telemetry Dataset}
-\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 13 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item There must be an example dataset of 1,500 seeded telemetry events.
+  \item The dataset of seeded telemetry must be have been generated by sources across all stages.
+  \item The dataset of seeded telemetry must be have been generated by sources across all difficulties.
+  \item The dataset of seeded telemetry must be have been generated by sources across 40 or more users.
+  \item The dataset of seeded telemetry must be have been generated by sources across 80 or more sessions.
+  \item The dataset of seeded telemetry must be contain 150 anomalous values, that do not follow the specification.
+\end{itemize}
 
+\newpage
 \paragraph{Developers can Access a Decision Dataset}
-\textbf{Value:} 0 \quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 3 \quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria} 
+\begin{itemize}
+  \item There must be an example decision log containing 30 decisions.
+  \item 10 of these decisions must be flawed, and 20 must be good.
+\end{itemize}
 
 \subsection{Java Application}
 
 \subsubsection{Autheentication and Access Control}
 
 \paragraph{User can Log In}
-\textbf{Value:} 5\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item Users must be required to log in before accessing the Java application.
@@ -618,7 +700,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Users can Reset their Login}
-\textbf{Value:} 1\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Could\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item Users must be able to reset their login credentials.
@@ -631,6 +713,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \begin{itemize}
     \item A user with the player role must be able to toggle telemetry, view the telemetry disclosure, and play the game.
     \item A user with the designer or developer role must be able to view the values of design parameters and execute simulated runs.
+    \item A user with the developer role must be able to assign roles to other users.
 \end{itemize}
 
 \subsubsection{Settings}
@@ -645,8 +728,9 @@ Each subsection is an aspect of the project (either the documentation, python or
     \item The telemetry disclosure must explain why that data is collected.
 \end{itemize}
 
+\newpage
 \paragraph{Users can Toggle Telemetry}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
     \item A user in settings must be able to see if they have telemetry enabled or not.
@@ -657,44 +741,79 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Designers can View and Change Starting Lives}
-\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
     \item A designer in settings must be able to view the starting lives for each difficulty.
-    \item A designer in settings must be able to set the value of starting lives for each difficulty.
-    \item The value for starting lives must persist beyond the lifetime of the game.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
 \end{itemize}
 
 \paragraph{Designers can View and Change Enemy Health Multiplier}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the enemy health multiplier for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Player Maximum Health}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the player maximum health for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Upgrade Price Multiplier}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the upgrade price multiplier for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Enemy Damage Multiplier}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the enemy damage multiplier for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Player Maximum Magic}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the player maximum magic for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Magic Regeneration Rate}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the magic regeneration rate for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can View and Change Number of Items in the Shop}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 2\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+    \item A designer in settings must be able to view the number of items available in the shop for each difficulty.
+    \item A designer in settings must be able to set its value for each difficulty.
+    \item The value of the design parameter must persist beyond the lifetime of the game.
+\end{itemize}
 
 \paragraph{Designers can Execute a Simulated Run}
-\textbf{Value:} 2\quad \textbf{Priority:} Should\\
+\textbf{Value:} 0\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item A designer must be able to execute a simulated run.
@@ -704,18 +823,19 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Developers can Assign Roles}
-\textbf{Value:} 5\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item An authenticated developer can enter the username of another user and assign a role to them.
   \item The first user must be a developer.
-  \item There must always be one developer account.
+  \item There must always be 1 developer account.
 \end{itemize}
 
+\newpage
 \subsubsection{Game Runs}
 
 \paragraph{User can Chose Difficulty}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item At the start of a game run the player can select the difficulty for the run.
@@ -725,7 +845,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Player can Use Mundane Attack Abilities}
-\textbf{Value:} 8\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item The player must always be able to use the default attack ability on their turn while in an encounter. 
@@ -740,7 +860,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Player can Chose Which Abilities to Purchase}
-\textbf{Value:} 1\quad \textbf{Priority:} Should\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item Multiple abilities must appear in the shop between encounters.
@@ -749,7 +869,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Player Can Use Purchased Magic Attack Abilities}
-\textbf{Value:} 8\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item Players must have a finite magic reserve, limited by their maximum magic.
@@ -766,7 +886,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Enemies Can Use Attack Abilities}
-\textbf{Value:} 3\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item Enemies must be able to use both magic and mundane attack abilities on their turn against the player.
@@ -778,7 +898,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Player Benefits from Purchased Damage Reistance Passive Abilities}
-\textbf{Value:} 2\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item The player must be able to purchase passive abilities in the shop that provide resistance to a specific damage type, as specified in the game design documentation.
@@ -789,7 +909,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Player Benefits from Purchased Damage Boost Passive Abilities}
-\textbf{Value:} 2\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item The player must be able to purchase passive abilities in the shop that provide boosts to a specific damage type, as specified in the game design documentation.
@@ -799,8 +919,9 @@ Each subsection is an aspect of the project (either the documentation, python or
   \item They must only be purchased once per run. 
 \end{itemize}
 
+\newpage
 \paragraph{Enemies Have Damage Resistances and Vulnerabilities}
-\textbf{Value:} 2\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Should\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item Some enemies must resist a damage type as specified in the game design documentation.
@@ -810,7 +931,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Players can Encounter Multiple Enemies in Combat}
-\textbf{Value:} 2\quad \textbf{Priority:} Could\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item Combat encounters must be able to have multiple enemies within them.
@@ -819,7 +940,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Players can Complete a Combat Round}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item At the start of a combat round, the player must gain magic based on the game design specification.
@@ -829,7 +950,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Players can Complete an Encounter}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item A combat encounter must be completed if all enemies within the encounter have 0 or less health.
@@ -837,7 +958,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Players can Retry an Encounter}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item At the start of a game run the player must have an amount of lives based on the design parameter.
@@ -847,16 +968,19 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Players can Progress Through Stages}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 8\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item After completing an encounter the player must go to the shop.
   \item After leaving the shop the stage the player is on must be incremented.
   \item The player must then enter another encounter.
+  \item On stages 3, 6, 9 and 10 the player must encounter a boss enemy as described in the game design documentation.
+  \item There must be a separate collection of encounters for stages 1 and 2, as there is for 4 and 5, and 7 and 8.
+  \item The encounters on each stage must progressively get harder.
 \end{itemize}
 
 \paragraph{Players can Fail Runs}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
   \item If a player dies during an encounter, while having 0 or less lives they must fail the run.
@@ -870,7 +994,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \textbf{Value:} 1\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize} 
-  \item If a player completes the encounter on stage 2 they must complete the run.
+  \item If a player completes the encounter on stage 10 they must complete the run.
   \item This must show a run completed screen displaying what stage the player reached, how long the run was, how many coins they finished with and how many times they died.
   \item They must then be able to leave this screen and start a new run.
 \end{itemize}
@@ -878,7 +1002,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \subsubsection{Telemetry Events}
 
 \paragraph{Application Handles Start Session}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item The game must feature the start session event.
@@ -896,7 +1020,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Normal Encounter Fail}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item The game must feature the normal encounter fail event.
@@ -905,7 +1029,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Normal Encounter Complete}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria}
 \begin{itemize}
   \item The game must feature the normal encounter complete event.
@@ -914,19 +1038,34 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Boss Encounter Start}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The game must feature the boss encounter start event.
+  \item The event must have the fields specified in the telemetry schema.
+  \item The event must be created each time the player start a boss encounter.
+\end{itemize}
 
 \paragraph{Application Handles Boss Encounter Fail}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The game must feature the boss encounter fail event.
+  \item The event must have the fields specified in the telemetry schema.
+  \item The event must be created each time the player dies in a boss encounter.
+\end{itemize}
 
 \paragraph{Application Handles Boss Encounter Complete}
-\textbf{Value:} 0\quad \textbf{Priority:} Wont\\
-\textbf{Acceptance Criteria} N/A
+\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Acceptance Criteria}
+\begin{itemize}
+  \item The game must feature the boss encounter fail event.
+  \item The event must have the fields specified in the telemetry schema.
+  \item The event must be created each time the player completes a boss encounter by killing the boss
+\end{itemize}
 
 \paragraph{Application Handles Gain Coin}
-\textbf{Value:} 1\quad \textbf{Priority:} Could \\
+\textbf{Value:} 0\quad \textbf{Priority:} Must \\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item The game must feature the gain coin event.
@@ -935,7 +1074,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Buy Upgrade}
-\textbf{Value:} 1\quad \textbf{Priority:} Could \\
+\textbf{Value:} 1\quad \textbf{Priority:} Must \\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item The game must feature the buy upgrade event.
@@ -944,16 +1083,16 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles End Session}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item The game must feature the End session event.
   \item The event must have the fields specified in the telemetry schema.
-  \item The event must be created when a game run ends, either by the user completing the run by completing the second encounter, or by their character dying.
+  \item The event must be created when a game run ends, either by the user completing the run by completing the last encounter, or by their character dying.
 \end{itemize}
 
 \paragraph{Application Handles Settings Change}
-\textbf{Value:} 1\quad \textbf{Priority:} Must\\
+\textbf{Value:} 0\quad \textbf{Priority:} Must\\
 \textbf{Acceptance Criteria} 
 \begin{itemize}
   \item The game must feature the settings change event.
@@ -962,7 +1101,7 @@ Each subsection is an aspect of the project (either the documentation, python or
 \end{itemize}
 
 \paragraph{Application Handles Kill Enemy}
-\textbf{Value:} 1\quad \textbf{Priority:} Could \\
+\textbf{Value:} 1\quad \textbf{Priority:} Must \\
 \begin{itemize}
   \item The game must feature the kill enemy event.
   \item The event must have the fields specified in the telemetry schema.
