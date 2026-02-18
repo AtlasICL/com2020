@@ -212,7 +212,7 @@ public class GameUserInterface {
 
         GameRunInterface lastRun = null;
         PlayerInterface lastPlayer = null;
-EncounterInterface currentEncounter = gameManager.pickEncounter();
+        EncounterInterface currentEncounter = gameManager.pickEncounter();
         while (gameManager.isGameRunning()) {
 
             // keep latest references while the run is still alive
@@ -243,7 +243,7 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
             simulateShop();
 
             gameManager.advanceToNextLevel();
-            
+
             currentEncounter = gameManager.pickEncounter();
         }
 
@@ -380,17 +380,16 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
             try {
                 gameManager.purchaseUpgrade(u);
                 telemetryListener.onBuyUpgrade(
-                    new BuyUpgradeEvent(
-                        settings.getUserID(),
-                        gameManager.getSessionID(),
-                        TimeManagerSingleton.getInstance().getCurrentTime(),
-                        gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType() : null,
-                        gameManager.getCurrentDifficulty(),
-                        gameManager.getCurrentRun() != null ? gameManager.getCurrentRun().getStage() : 1,
-                        u,
-                        u.getPrice()
-                    )
-                );
+                        new BuyUpgradeEvent(
+                                settings.getUserID(),
+                                gameManager.getSessionID(),
+                                TimeManagerSingleton.getInstance().getCurrentTime(),
+                                gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType()
+                                        : null,
+                                gameManager.getCurrentDifficulty(),
+                                gameManager.getCurrentRun() != null ? gameManager.getCurrentRun().getStage() : 1,
+                                u,
+                                u.getPrice()));
             } catch (LackingResourceException e) {
                 e.printStackTrace();
             }
@@ -548,7 +547,6 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
                 continue;
             }
 
-            
             // stop after stage 2 (no shop after finishing)
             GameRunInterface run = gameManager.getCurrentRun();
             if (run != null && run.getStage() >= 2) {
@@ -612,8 +610,6 @@ EncounterInterface currentEncounter = gameManager.pickEncounter();
                         .println(RED + "\t" + e.getType().getDisplayName() + " (Health: " + e.getHealth() + "/"
                                 + e.getMaxHealth() + ")" + RESET);
             }
-
-            
 
             EntityInterface[] enemies = encounter.getEnemies();
 
