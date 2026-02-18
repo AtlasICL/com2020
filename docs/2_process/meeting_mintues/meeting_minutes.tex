@@ -15,6 +15,7 @@
 \usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
 \addbibresource{bibliography.bib}
 \usepackage[shortlabels]{enumitem}
+\setlist[itemize]{topsep=2pt, partopsep=0pt}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, allcolors=blue}
@@ -23,13 +24,14 @@
 \usepackage[section]{placeins}
 \usepackage{subcaption}
 \usepackage{longtable}
+\usepackage{comment}
 \usepackage{caption}
 \captionsetup{font=footnotesize}
 \setlength{\parskip}{\baselineskip}
 \setlength{\parindent}{0pt}
 \usepackage{titlesec}
 \titlespacing*{\section} {0pt}{3ex}{2ex}
-\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{2ex}{0pt}
 \titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
 \usepackage{pdfpages}
 \setlist{nolistsep,leftmargin=*}
@@ -44,198 +46,583 @@
 
 %settings paragraph to allow heading 4
 \titleformat{\paragraph}
-  {\normalfont\normalsize\bfseries}
-  {\theparagraph}
-  {1em}
-  {}
+{\normalfont\normalsize\bfseries}
+{\theparagraph}
+{1em}
+{}
 
-\titlespacing*{\paragraph}
-  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titleformat{\paragraph}[runin]
+{\normalfont\normalsize\bfseries}
+{\theparagraph}
+{1em}
+{}
 
 
-\title{Meeting Minutes\\[0.3em]
+\title{Meeting minutes\\[0.3em]
 \large COM2020 - Project 7}
 \author{Harry Taylor, Luca Pacitti, Emre Acarsoy, Tom Croft, Luca Croci, Will Finney, \\ Kazybek Khairulla}
 \date{17/02/2026}
 \begin{document}
-
-\subsection*{Description}
-
-This document contains a written summary of each weekly scrum meeting conducted by our team.
-Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting,
-and any key decisions that would influence our team's progress before the next scrum meeting.
-
-\subsection*{Meetings}
-
-\subsubsection*{Meeting #1}
-
-\textbf{Date:} 12/01/2026
-\textbf{Time:} 12:30
-\textbf{Length:} 90 minutes
-\textbf{Location:} Innovation Centre Cafe
-
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney
-\textbf{Apologies:} Kazybek Khairulla
-
-\textbf{Agenda Items}
-\item Language choice for both game and telemetry applications.
-\item Strategy for approaching development.
-\item Strategy for file structure and security.
-\item Strategy for collaboration.
-
-\textbf{Key Decisions}
-\item Java to be used for game application, Python to be used for telemetry application.
-\item Test-driven development approach: Interfaces -> Tests -> Implementation.
-\item Role-based access control when authenticating players in both applications.
-\item No direct commits to main branch of repository allowed - pull requests must be created and reviewed before merging.
-
-\textbf{Date of next meeting:} 14/01/2026
+    \maketitle
+    \tableofcontents
+    \newpage
 
 
-\subsubsection*{Meeting #2}
+    \section{Description}
 
-\textbf{Date:} 14/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 90 minutes
-\textbf{Location:} Innovation Centre Cafe
+    This document contains a written summary of each weekly scrum meeting conducted by our team.
+    Each summary discloses the meeting's agenda, any key progress made by each member since the last scrum meeting, and any key decisions that would influence our team's progress before the next scrum meeting.
 
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+    \section{Meetings}
 
-\textbf{Agenda Items}
-\item Discussion of gameplay design.
-\item Discussion of three mechanics to influence success.
-\item Strategy for composing requirements.
+    \subsection{Meeting 1}
 
-\textbf{Key Decisions}
-\item Game will be a simple, 2D, turn-based RPG called WizardQuest.
-\item Three mechanics to influence success: Coins, Magic, Health.
-\item MoSCoW prioritisation structure to be used for two sets of requirements: one for the prototype, the other for the
-final product.
+    \textbf{Date:} 12/01/2026 \\
+    \textbf{Time:} 12:30 \\
+    \textbf{Length:} 90 minutes \\
+    \textbf{Location:} Innovation Centre Cafe
 
-\textbf{Date of next meeting:} 21/01/2026
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney \\
+    \textbf{Apologies:} Kazybek Khairulla
 
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Language choice for both game and telemetry applications.
+        \item Strategy for approaching development.
+        \item Strategy for file structure and security.
+        \item Strategy for collaboration.
+    \end{itemize}
 
-\subsubsection*{Meeting #3}
+    \textbf{Key Decisions}
+    \begin{itemize}
+        \item Java to be used for game application, Python to be used for telemetry application.
+        \item Test-driven development approach: Interfaces $\rightarrow$ Tests $\rightarrow$ Implementation.
+        \item Role-based access control when authenticating players in both applications.
+        \item No direct commits to main branch of repository allowed - pull requests must be created and reviewed before merging.
+    \end{itemize}
 
-\textbf{Date:} 21/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
-
-\textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Croci
-
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Discussion of ability types to be used in the game.
-\item Grooming discussion for each individual requirement.
-
-\textbf{Key Progress}
-\item Project requirements complete.
-\item Started writing tests and implementation for telemetry application.
-
-\textbf{Key Decisions}
-\item Ability Types to be used: Physical, Fire, Water, Absolute.
-
-\textbf{Date of next meeting:} 28/01/2026
+    \textbf{Date of next meeting:} 14/01/2026
 
 
-\subsubsection*{Meeting #4}
 
-\textbf{Date:} 28/01/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 2}
 
-\textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Croci
+    \textbf{Date:} 14/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 90 minutes \\
+    \textbf{Location:} Innovation Centre Cafe
 
-\textbf{Agenda Items}
-\item Strategy for commencing implementation of game application.
-\item Discussion of one chosen design parameter for prototype.
-\item Discussion of six chosen telemetry events for prototype.
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
 
-\textbf{Key Progress}
-\item Completed interface for game application.
-\item Completed interface for test suite of game application.
-\item Completed initial implementation for telemetry application.
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of gameplay design.
+        \item Discussion of three mechanics to influence success.
+        \item Strategy for agile approach to the project.
+    \end{itemize}
 
-\textbf{Key Decisions}
-\item Entire team to work on development of game application - each member assigned a number of related classes.
-\item Chosen design parameter for prototype: Lives
-\item - Chosen telemetry events for prototype: SessionStartEvent, NormalEncounterStartEvent,
-NormalEncounterCompleteEvent, NormalEncounterFailEvent, SettingsChangeEvent, EndSessionEvent
+    \textbf{Gameplay Design}
+    \begin{itemize}
+        \item 2D turn-based RPG.
+        \item Simple to understand.
+        \item Three difficulty levels, with different default parameters for each.
+        \item 10 levels total:
+        \begin{itemize}
+            \item Boss levels at 3, 6, 9, and 10.
+            \item Difficulty increases over time.
+        \end{itemize}
+        \item Defeating enemies grants coins; defeating bosses grants more coins.
+        \item Every level is an encounter.
+        \item After each encounter, the player enters a shop menu where coins can be spent on upgrades.
+        \item The player has a number of lives, which varies depending on the selected difficulty.
+        \begin{itemize}
+            \item If the player dies and has lives remaining, they restart the current level.
+            \item If the player dies with no lives remaining, they restart the game entirely.
+        \end{itemize}
+        \item Each encounter starts with the player at maximum health.
+        \item Automated agent will be used to play the game as a simulation, to demonstrate effects of tweaking design parameters.
+    \end{itemize}
 
-\textbf{Date of next meeting:} 04/02/2026
+    \textbf{Mechanics to Influence Success}
+    \begin{itemize}
+        \item \textbf{Coins:} used to purchase upgrades after an encounter.
+        \item \textbf{Magic:} used to execute actions during an encounter.
+        \item \textbf{Health:} used to evaluate whether a player is alive during an encounter.
+    \end{itemize}
 
+    \textbf{Agile Approach to Project}
+    \begin{itemize}
+        \item Two sprints:
+        \begin{itemize}
+            \item \textbf{First sprint:} from now until the CW1 deadline.
+            \item \textbf{Second sprint:} from the CW1 deadline until the CW2 deadline.
+        \end{itemize}
 
-\subsubsection*{Meeting #5}
+        \item Requirements to be composed using the \textbf{MoSCoW} prioritisation structure:
+        \begin{itemize}
+            \item First sprint focuses on \textbf{Must-have} goals for the prototype.
+            \item Second sprint focuses on \textbf{Should-have} and \textbf{Could-have} goals.
+        \end{itemize}
+    \end{itemize}
 
-\textbf{Date:} 04/02/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
-
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Strategy for writing report and other documentation.
-
-\textbf{Key Progress}
-\item Significant progression with implementation of game application.
-
-\textbf{Key Decisions}
-\item Entire team to work on writing of report and other documentation - each section/file assigned to a group member.
-\item Google Open Authentication to be used for the game and telemetry applications.
-
-\textbf{Date of next meeting:} 11/02/2026
-
-
-\subsubsection*{Meeting #6}
-
-\textbf{Date:} 11/02/2026
-\textbf{Time:} 13:30
-\textbf{Length:} 60 minutes
-\textbf{Location:} Innovation Centre - Babbage Laboratory
-
-\textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-
-\textbf{Key Progress}
-\item Completed automated test suite required for prototype.
-\item Completed initial implementation for game application.
-
-\textbf{Key Decisions}
-\item Entire team to work on debugging entire project ahead of prototype presentation next week.
-
-\textbf{Date of next meeting:} 15/02/2026
+    \textbf{Date of next meeting:} 21/01/2026
 
 
-\subsubsection*{Meeting #7}
 
-\textbf{Date:} 15/02/2026
-\textbf{Time:} 14:00
-\textbf{Length:} 60 minutes
-\textbf{Location:} Remote conference via Discord
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 3}
 
-\textbf{Attendees:} Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
-\textbf{Apologies:} Luca Pacitti
+    \textbf{Date:} 21/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
 
-\textbf{Agenda Items}
-\item Discussion of individual progress in the last week.
-\item Final preparations necessary for tomorrow's presentation.
+    \textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Croci
 
-\textbf{Key Progress}
-\item Major progress with debugging, small issues left to iron out.
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Discussion of ability types to be used in the game.
+        \item Grooming discussion for each individual requirement.
+    \end{itemize}
 
-\textbf{Key Decisions}
-\item Entire team to continue work on preparing prototype for tomorrow's presentation.
-\item Entire team to work on presentation slideshow - each slide assigned to a group member.
+    \textbf{Individual Progress}
+    \begin{itemize}
+        \item \textbf{Tom:} Designed the program's requirements, developed a plan of all required objects, methods, and structure from these, created the interface for the Java backend, and started laying out the framework for the Java backend.
 
-\textbf{Date of next meeting:} 18/02/2026
+        \item \textbf{Luca P:} Assisted Tom with requirements gathering and developed a plan of all required unit tests for the Java backend based on the interface.
 
+        \item \textbf{Luca C:} Made progress on the design of the Java frontend and provided the team with gameplay walkthrough videos for feedback.
+
+        \item \textbf{Emre:} Worked closely with Harry on the design and implementation of the Python backend, particularly the parsing and translation of received JSON objects into Python objects.
+
+        \item \textbf{Harry:} Worked closely with Emre on the design and implementation of the Python backend, particularly the parsing and translation of received JSON objects into Python objects.
+
+        \item \textbf{Kazy:} Evaluated and proposed ideas for design proposals of the Java backend.
+
+        \item \textbf{Will:} Assisted Tom with requirements gathering and made progress on documentation, particularly addressing the ethical and legal issues considered by the team for this project.
+    \end{itemize}
+
+
+    \textbf{Ability Types}
+    \begin{itemize}
+        \item Physical
+        \item Fire
+        \item Water
+        \item Absolute (nothing can overpower this)
+    \end{itemize}
+
+    \textbf{Grooming}
+    \begin{itemize}
+        \item Review of all individual requirements, and agreement on the expected timescale for completing each.
+        \item Working on the assumption that one team member will complete one hour of coding per day.
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 28/01/2026
+
+
+
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 4}
+
+    \textbf{Date:} 28/01/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
+
+    \textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Croci
+
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Strategy for commencing implementation of game application.
+        \item Discussion of one chosen design parameter for prototype.
+        \item Discussion of six chosen telemetry events for prototype.
+    \end{itemize}
+
+    \textbf{Individual Focus Areas for Implementation}
+    \begin{itemize}
+        \item \textbf{Will:} Abilities (AbilityType) and Upgrades (UpgradeType)
+        \item \textbf{Kazy:} Enemies and Entity AI (Encounters and EncounterType)
+        \item \textbf{Harry:} Telemetry Writing
+        \item \textbf{Emre:} Settings reading/writing and Authentication
+        \item \textbf{Luca P:} Player and Game Run management
+        \item \textbf{Tom:} TimeManager, DamageType, and Difficulty
+        \item \textbf{Luca C:} Text-based UI
+    \end{itemize}
+
+    \textbf{Chosen Design Parameter for Prototype}
+    \begin{itemize}
+        \item Lives
+    \end{itemize}
+
+    \textbf{Chosen Telemetry Events for Prototype}
+    \begin{itemize}
+        \item SessionStartEvent
+        \item NormalEncounterStartEvent
+        \item NormalEncounterCompleteEvent
+        \item NormalEncounterFailEvent
+        \item SettingsChangeEvent
+        \item EndSessionEvent
+    \end{itemize}
+
+    \textbf{Other Discussion Points}
+    \begin{itemize}
+        \item Scrapped NormalEncounterRetryEvent and BossEncounterRetryEvent - these were redundant with StartEvent objects.
+        \item Removed defensive abilities from interface - these will not be implemented.
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 04/02/2026
+
+
+
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 5}
+
+    \textbf{Date:} 04/02/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
+
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Strategy for writing report and other documentation.
+    \end{itemize}
+
+    \textbf{Individual Progress}
+    \begin{itemize}
+        \item \textbf{Tom:} Made necessary tweaks to the interface, wrote non-functional requirements for the Java application, implemented the Player class, and oversaw and assisted with other team member operations.
+
+        \item \textbf{Luca P:} Created frameworks for all Java files, implemented Game Run, and implemented the required Java test frameworks for Sprint 1.
+
+        \item \textbf{Luca C:} Completed the Game Manager interface and will be working on the CLI over the next few days.
+
+        \item \textbf{Emre:} Learned how SSO with Google works and will be implementing authentication along with the rest of the Settings class in the next few days.
+
+        \item \textbf{Harry:} Implemented the telemetry singleton listener and JSON processing.
+
+        \item \textbf{Kazy:} Implemented Encounter and EncounterType.
+
+        \item \textbf{Will:} Implemented Abilities and Upgrades.
+    \end{itemize}
+
+    \textbf{Documentation Strategy}
+    \item All documentation to be significantly worked on before next meeting.
+    \begin{itemize}
+        \item \textbf{Will:}
+        \begin{itemize}
+            \item Ethics
+            \item Initial Evidence
+        \end{itemize}
+
+        \item \textbf{Luca P:}
+        \begin{itemize}
+            \item Tests
+            \item Deployment Guide (with Emre)
+        \end{itemize}
+
+        \item \textbf{Luca C:}
+        \begin{itemize}
+            \item Summary
+        \end{itemize}
+
+        \item \textbf{Tom:}
+        \begin{itemize}
+            \item Prioritised Requirements
+            \item Architecture
+            \item Telemetry Schema
+            \item Sprint Plan
+        \end{itemize}
+
+        \item \textbf{Emre:}
+        \begin{itemize}
+            \item SBOM
+            \item Deployment Guide (with Luca P)
+        \end{itemize}
+
+        \item \textbf{Whole Team:}
+        \begin{itemize}
+            \item Presentation
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Other Discussion Points}
+    \begin{itemize}
+        \item Google OAuth 2.0 OIDC to be used for the game and telemetry applications.
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 11/02/2026
+
+
+
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 6}
+
+    \textbf{Date:} 11/02/2026 \\
+    \textbf{Time:} 13:30 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Innovation Centre - Babbage Laboratory
+
+    \textbf{Attendees:} Luca Pacitti, Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla
+
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Final preparations necessary for next week's presentation.
+    \end{itemize}
+
+    \textbf{Individual Progress}
+    \begin{itemize}
+        \item \textbf{Tom:} Reviewed PRs, cleaned up the project, and reviewed requirements as the project progressed.
+
+        \item \textbf{Luca P:} Finished the unit and integration tests required for Sprint 1.
+
+        \item \textbf{Luca C:} Implemented the CLI, primarily the menu, encounters, and shop screen.
+
+        \item \textbf{Emre:} Finished saving and loading of Settings to/from JSON for global design parameters, including validation of permissions (roles), implemented user-based read/write of data and the framework for authentication.
+
+        \item \textbf{Harry:} Finished the TelemetryListener and its interfacing with JSON. Implemented validation and defined exceptions for userID, sessionID, and timestamp event fields.
+
+        \item \textbf{Kazy:} Finished the implementation of Encounters and Enemies.
+
+        \item \textbf{Will:} Completed the legal and ethical analysis section of the report.
+    \end{itemize}
+
+    \textbf{Final Preparations for Prototype Presentation}
+    \begin{itemize}
+        \item \textbf{Emre:}
+        \begin{itemize}
+            \item Implement Google SSO for the Java application
+            \item Integrate settings and authentication into the CLI (with Luca C)
+            \item Complete the PowerPoint presentation (with Harry and Kazy)
+            \item Complete the deployment guide (with Luca P)
+            \item Determine the project license
+            \item Complete the SBOM section of the report
+        \end{itemize}
+
+        \item \textbf{Luca C:}
+        \begin{itemize}
+            \item Integrate settings and authentication into the CLI (with Emre)
+        \end{itemize}
+
+        \item \textbf{Luca P:}
+        \begin{itemize}
+            \item Complete the test section of the report
+            \item Complete the deployment guide (with Emre)
+            \item Complete the problem framing section of the report
+        \end{itemize}
+
+        \item \textbf{Harry:}
+        \begin{itemize}
+            \item Complete the PowerPoint presentation (with Emre and Kazy)
+        \end{itemize}
+
+        \item \textbf{Kazy:}
+        \begin{itemize}
+            \item Complete the PowerPoint presentation (with Emre and Harry)
+            \item Complete the user stories
+        \end{itemize}
+
+        \item \textbf{Tom:}
+        \begin{itemize}
+            \item Complete the project backlog section of the report
+        \end{itemize}
+
+        \item \textbf{Will:}
+        \begin{itemize}
+            \item Complete the risk register section of the report
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 15/02/2026
+
+
+
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 7}
+
+    \textbf{Date:} 15/02/2026 \\
+    \textbf{Time:} 14:00 \\
+    \textbf{Length:} 60 minutes \\
+    \textbf{Location:} Remote conference via Discord
+
+    \textbf{Attendees:} Luca Croci, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Pacitti
+
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Discussion of individual progress in the last week.
+        \item Final preparations necessary for tomorrow's presentation.
+    \end{itemize}
+
+    \textbf{Individual Progress}
+    \begin{itemize}
+        \item \textbf{Tom:} Structured documentation to comply with specification; completed a first draft of sections 2, 3, 4, and 9 of the report.
+
+        \item \textbf{Luca C:} Implemented the main game loop and user CLI.
+
+        \item \textbf{Emre:} Implemented Java calling Python for authentication, fixed Java event logging, implemented Python dynamically updating data, and applied many bug fixes.
+
+        \item \textbf{Harry:} Implemented event validation Java-side, checking correctness of timestamps, sessions, and users; finished Python definitions of enums; suggestions implemented; presentation completed.
+
+        \item \textbf{Kazy:} Migrated GitHub issues to Jira.
+
+        \item \textbf{Will:} Prepared the evaluation section and wrote the license decision.
+    \end{itemize}
+
+    \textbf{Final Preparations for Prototype Presentation}
+    \begin{itemize}
+        \item \textbf{Tom:}
+        \begin{itemize}
+            \item Various bug fixes in the game
+            \item Dataflow schema
+        \end{itemize}
+
+        \item \textbf{Will:}
+        \begin{itemize}
+            \item Evaluate the project
+        \end{itemize}
+
+        \item \textbf{Emre:}
+        \begin{itemize}
+            \item Review recent functionality update PRs
+            \item Write SBOM section of report
+            \item Coordinate with HT and write Python sections of report
+        \end{itemize}
+
+        \item \textbf{Harry:}
+        \begin{itemize}
+            \item Coordinate with EA and write Python section of report
+        \end{itemize}
+
+        \item \textbf{Luca C:}
+        \begin{itemize}
+            \item Work on the report
+        \end{itemize}
+
+        \item \textbf{Kazy:}
+        \begin{itemize}
+            \item Management section of report
+        \end{itemize}
+
+        \item \textbf{Luca:}
+        \begin{itemize}
+            \item Finalise deployment guide
+            \item Finalise testing and meeting minutes sections of report
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 18/02/2026
+
+
+
+    \vspace{1.5\baselineskip}
+    \subsection{Meeting 8}
+
+    \textbf{Date:} 18/02/2026 \\
+    \textbf{Time:} 13:00 \\
+    \textbf{Length:} 30 minutes \\
+    \textbf{Location:} Remote conference via Discord
+
+    \textbf{Attendees:} Luca Pacitti, Emre Acarsoy, Harry Taylor, Tom Croft, Will Finney, Kazybek Khairulla \\
+    \textbf{Apologies:} Luca Croci
+
+    \textbf{Agenda Items}
+    \begin{itemize}
+        \item Finalising report for submission.
+    \end{itemize}
+
+    \textbf{Individual Progress}
+    \begin{itemize}
+        \item \textbf{Tom:}
+        \begin{itemize}
+            \item Completed various sections of the report
+            \item Reviewed PRs for other sections
+            \item Redrafted project backlog to include horizontal splitting, vertical splitting, and sprint plans
+            \item Updated architecture and dataflow schema
+        \end{itemize}
+
+        \item \textbf{Luca C:}
+        \begin{itemize}
+            \item Almost completed own section of the report
+            \item Janitorial work for Python side (documentation, code style)
+        \end{itemize}
+
+        \item \textbf{Emre:}
+        \begin{itemize}
+            \item Worked on Python architecture schema in the report
+            \item Completed Software Bill of Materials (SBOM) with cost models and licensing
+            \item Reviewed various PRs and helped with LaTeX formatting
+            \item Worked on janitorial work for Python side (documentation, code style)
+        \end{itemize}
+
+        \item \textbf{Luca P:}
+        \begin{itemize}
+            \item Refactored Java unit and integration tests to comply with latest changes
+            \item Executed manual end-to-end tests with screenshots and video evidence
+            \item Fixed bugs
+            \item Completed testing architecture, problem framing, and meeting minutes sections of the report
+            \item Completed the deployment guide
+        \end{itemize}
+
+        \item \textbf{Harry:}
+        \begin{itemize}
+            \item Wrote major portions of the architecture schema report
+            \item Completed risk register section of the report
+            \item Helped review PRs
+            \item Worked on janitorial work for Python side (documentation, code style)
+            \item Updated Python schema to correspond to latest changes
+        \end{itemize}
+
+        \item \textbf{Kazy:}
+        \begin{itemize}
+            \item Completed management section of the report
+            \item Completed Jira PDF
+        \end{itemize}
+
+        \item \textbf{Will:}
+        \begin{itemize}
+            \item Completed the evaluation section
+            \item Refactored game design, ethics and legal, and license sections
+            \item Designed evaluation tests
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Final Preparations for Submission}
+    \begin{itemize}
+        \item \textbf{Tom:}
+        \begin{itemize}
+            \item Finish sprint plans and submit PR
+            \item Review PRs
+        \end{itemize}
+
+        \item \textbf{Emre:}
+        \begin{itemize}
+            \item Prepare the zip file for submission
+        \end{itemize}
+
+        \item \textbf{Harry:}
+        \begin{itemize}
+            \item Minor changes based on TC's PR review
+            \item Minor schema changes
+        \end{itemize}
+
+        \item \textbf{Luca C:}
+        \begin{itemize}
+            \item Changes based on TC's PR
+        \end{itemize}
+
+        \item \textbf{Kazy:}
+        \begin{itemize}
+            \item Minor changes based on TC's PR review
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Date of next meeting:} 25/02/2026
 
 \end{document}

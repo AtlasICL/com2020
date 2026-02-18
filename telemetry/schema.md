@@ -78,7 +78,7 @@ Here are the possible event types:
 ### 1) StartSession
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "StartSession"
@@ -89,7 +89,7 @@ Here are the possible event types:
 ### 2) NormalEncounterStart
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -102,7 +102,7 @@ Here are the possible event types:
 ### 3) NormalEncounterComplete
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -116,7 +116,7 @@ Here are the possible event types:
 ### 4) NormalEncounterFail
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -130,7 +130,7 @@ Here are the possible event types:
 ### 5) BossEncounterStart
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -143,7 +143,7 @@ Here are the possible event types:
 ### 6) BossEncounterComplete
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -157,7 +157,7 @@ Here are the possible event types:
 ### 7) BossEncounterFail
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -171,7 +171,7 @@ Here are the possible event types:
 ### 8) GainCoin
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],
@@ -185,7 +185,7 @@ Here are the possible event types:
 ### 9) BuyUpgrade
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     stage_number: int,
@@ -198,7 +198,7 @@ Here are the possible event types:
 ### 10) EndSession
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     event: "EndSession"
@@ -208,6 +208,7 @@ Here are the possible event types:
 ### 11) SettingsChange
 ```
 {
+    userID: string, 
     timestamp: YYYY/MM/DD/HH/MM/SS,
     setting: string [must be in list of valid settings],
     setting_value: string,
@@ -218,7 +219,7 @@ Here are the possible event types:
 ### 12) KillEnemy
 ```
 {
-    userID: int,
+    userID: string,
     sessionID: int,
     timestamp: YYYY/MM/DD/HH/MM/SS,
     encounter_name: string [must be in list of valid encounter names],

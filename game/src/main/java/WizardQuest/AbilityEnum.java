@@ -114,6 +114,7 @@ public enum AbilityEnum {
                 throw new LackingResourceException("Not enough magic points");
             }
         } // no magic consumed if enemy uses attack
-        target.loseHealth(baseDamage, damageType);
+        int dmg  = source.calcDamage(baseDamage, damageType);
+        target.loseHealth(dmg, damageType);
     }
 }
