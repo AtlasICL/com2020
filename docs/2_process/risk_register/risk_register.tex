@@ -87,7 +87,7 @@ Loss of central Repository, developers can no longer see each others changes. Pr
 Mitigate by Creating a new repository on GitHub, restored using a developers local repository or working copy.\\
 Accept Potential loss of some commits and commit information.\\
 \textbf{Risk Owner}\\
-GitHub Repository owner
+GitHub Repository Owner - Emre Acarsoy
 \subsubsection{Merge Conflicts}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
 \textbf{Consequences}\\
@@ -95,7 +95,7 @@ Developers spend more time fixing code overlaps than writing new features; poten
 \textbf{Treatment}\\
 Mitigate by enforcing frequent rebases from main branch.\\
 \textbf{Risk Owner}\\
-Any developer for the file changes in question (e.g. Telemetry developer for telemetry based PRs)
+Development leads dependent on section (Game Lead - Tom Croft, Telemetry Lead - Emre Acarsoy, Testing Lead - Luca Pacitti)
 \subsubsection{Secret Leak}
 \textbf{Impact:} 5\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 10\\
 \textbf{Consequences}\\
@@ -103,7 +103,7 @@ Unauthorised access to API resources, gained via public repository\\
 \textbf{Treatment}\\
 Mitigate using a .gitignore, if a secret is leaked regenerate secret.\\
 \textbf{Risk Owner}\\
-Developer in charge of APIs
+Developer in charge of APIs - Emre Acarsoy
 \subsubsection{Pushes to Main Corrupting Project}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 6\\
 \textbf{Consequences}\\
@@ -111,7 +111,7 @@ Pushing to main without checking code impact may result in a non-functional appl
 \textbf{Treatment}\\
 Mitigate by enable branch protections, preventing changes in main without a pull request.\\
 \textbf{Risk Owner}\\
-Developer responsible for corruption
+Project lead/scrum master - Tom Croft
 \subsubsection{Inconsistent commits}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
 \textbf{Consequences}\\
@@ -119,7 +119,7 @@ Commits to the repository are too large, or lacking information regarding their 
 \textbf{Treatment}\\
 Mitigate with often commits and descriptive messaging\\
 \textbf{Risk Owner}\\
-Developer in question
+Project lead/scrum master - Tom Croft
 \subsection{Team Risks}
 \subsubsection{Team Member Illness / Absence}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 2\quad \textbf{Total Value:} 6\\
@@ -128,7 +128,7 @@ Team member absence causes halt in their section of development\\
 \textbf{Treatment}\\
 Transfer development responsibilities to other developers. Mitigate by staying ahead of schedule.\\
 \textbf{Risk Owner}\\
-Absent developer
+Scrum Master - Tom Croft
 \subsubsection{Skill Gap / Learning Curve}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 4\quad \textbf{Total Value:} 12\\
 \textbf{Consequences}\\
@@ -136,7 +136,7 @@ Team member not having the required skill to develop their part of a solution.\\
 \textbf{Treatment}\\
 Transfer work to multiple developers, mitigate by researching or reading documentation\\
 \textbf{Risk Owner}\\
-Developer in question
+Project lead - Tom Croft
 \subsubsection{Scope creep}
 \textbf{Impact:} 4\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 12\\
 \textbf{Consequences}\\
@@ -144,7 +144,7 @@ Adding additional functionality beyond specification leads to a less finished co
 \textbf{Treatment}\\
 Mitigate by enforcing specific requirements via MoSCoW prioritisation.\\
 \textbf{Risk Owner}\\
-Design lead
+Design lead - Tom Croft
 \subsubsection{Lack of Communication}
 \textbf{Impact:} 3\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 9\\
 \textbf{Consequences}\\
@@ -152,5 +152,13 @@ Lack of communication between developers breeds systems which do not interface w
 \textbf{Treatment}\\
 Transfer brief knowledge of systems through interfaces of schemas.\\
 \textbf{Risk Owner}\\
-Developers/Development teams (e.g. telemetry teams, game team)
+Development leads dependent on section (Game Lead - Tom Croft, Telemetry Lead - Emre Acarsoy, Testing Lead - Luca Pacitti)
+\subsubsection{Insufficient Testing}
+\textbf{Impact:} 3\quad \textbf{Likelihood:} 3\quad \textbf{Total Value:} 9\\
+\textbf{Consequences}\\
+Testing problems lead to integration problems later in development.\\
+\textbf{Treatment}\\
+Mitigate by improving testing algorithms.\\
+\textbf{Risk Owner}\\
+Testing Lead - Luca Pacitti
 \end{document}
