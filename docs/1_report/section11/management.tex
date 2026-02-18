@@ -1,1 +1,37 @@
-TODO: KK
+\subsection{Roles}
+Each team member was assigned a primary role based on their strengths and interests. The roles are listed below.
+\begin{itemize}
+    \item \textbf{Tom Croft:} Project Lead / Scrum Master, Lead Designer.
+    \item \textbf{Emre Acarsoy:} Telemetry Lead, Java Developer.
+    \item \textbf{Luca Croci:} UI \& UX Lead.
+    \item \textbf{Kazybek Khairulla:} Java Developer.
+    \item \textbf{Luca Pacitti:} Testing Lead, Java Developer.
+    \item \textbf{Harry Taylor:} Telemetry Developer, Java Developer.
+    \item \textbf{Will Finney:} Java Developer, Gameplay Designer.
+\end{itemize}
+
+\subsection{Task Ownership}
+During Sprint 1, implementation was divided by component. The tasks each member owned and contributed to are listed below.
+\begin{itemize}
+    \item \textbf{Tom Croft:} Designed the interface, implemented Player, TimeManager, and the difficulty system. Reviewed pull requests and oversaw integration. Wrote the requirements, architecture, and sprint plan sections of the report.
+    \item \textbf{Emre Acarsoy:} Implemented settings persistence, Google SSO authentication, and the SBOM. Bug fixes across both applications. Wrote the SBOM and license decision sections of the report.
+    \item \textbf{Luca Croci:} Built the CLI including the menu, encounter, and shop screens. Implemented the Game Manager and main game loop.
+    \item \textbf{Kazybek Khairulla:} Implemented the Encounter and Enemy classes. Contributed to the presentation and the management section of the report.
+    \item \textbf{Luca Pacitti:} Implemented the GameRun class and all unit and integration tests. Wrote the problem framing and test sections of the report.
+    \item \textbf{Harry Taylor:} Implemented the TelemetryListener, JSON event writing, and event validation. Implemented the Python suggestion system. Wrote the risk register section of the report and contributed to the presentation.
+    \item \textbf{Will Finney:} Implemented abilities, upgrades, and damage resistance. Wrote the legal and ethical analysis and evaluation sections of the report.
+\end{itemize}
+
+\subsection{What Worked Well}
+The team coordinated with clear division of work. After agreeing on individual focus areas in Meeting 4, each member worked on their component independently without blocking others. Weekly scrum meetings kept the team aligned, with each meeting reviewing completed work and assigning tasks for the following week. Emre and Harry worked closely together on the Python backend, which allowed them to iterate quickly. The use of MoSCoW prioritisation helped the team focus on the most important features first.
+
+\subsection{Challenges and How They Were Resolved}
+
+\paragraph{Interface Changes}
+The Java interface specification required minor changes as implementation progressed, which occasionally caused rework for members whose components depended on it. This was managed through Tom reviewing all pull requests and communicating changes to affected members promptly.
+
+\paragraph{Late Integration}
+Several components were developed independently and integrated close to the deadline, which compressed the time available for end-to-end testing. To address this, the team plans to introduce more frequent integration points in Sprint 2 and begin cross-application testing earlier.
+
+\paragraph{Two different applications coordination}
+Coordinating across two separate applications (Java and Python) added extra complexity, as changes to the telemetry schema or event format on one side needed to be reflected on the other. This was mitigated by defining a clear telemetry JSON schema early on, which both sides could develop against independently.
