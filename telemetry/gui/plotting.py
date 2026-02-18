@@ -1,3 +1,12 @@
+"""
+Docstring for telemetry.gui.plotting
+
+This module contains functionality for generating graph plots from
+parsed event data.
+
+This functionality is provided by the PlotTab class.
+"""
+
 from tkinter import ttk
 from matplotlib.figure import Figure
 from matplotlib.ticker import FixedLocator
