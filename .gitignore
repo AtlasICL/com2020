@@ -19,6 +19,8 @@ game/target
 telemetry_events.json
 logs.txt
 
+# WSL
+*Zone.Identifier
 
 # LaTeX
 *.aux

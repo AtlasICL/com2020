@@ -43,11 +43,13 @@
 \setlength{\cftsubsecnumwidth}{3.0em}
 \setcounter{tocdepth}{2}
 
-\titleformat{\paragraph}[runin]
+\titleformat{\paragraph}
   {\normalfont\normalsize\bfseries}
-  {\theparagraph}
-  {1em}
   {}
+  {0pt}
+  {}
+
+\usepackage{booktabs}
 
 
 \title{Telemetry Game Report\\[0.3em]
@@ -61,48 +63,48 @@
 
 % Section 1 - Executive Summary
 \section{Executive Summary}
-\input{section1/executive_summary}
+\input{section01/executive_summary}
 \newpage
 
 % Section 2 - Introduction
 \section{Introduction}
-\input{section2/problem_framing}
-\input{section2/definition_of_done}
+\input{section02/problem_framing}
+\input{section02/definition_of_done}
 \newpage
 
 % Section 3 - Project Backlog
 \section{Project Backlog}
-\input{section3/project_backlog}
+\input{section03/project_backlog}
 \newpage
 
 % Section 4 - Sprint 1
 \section{Sprint 1 Prioritised Requirements}
-\input{section4/sprint_one}
+\input{section04/sprint_one}
 \newpage
 
 % Section 5 - Architecture Schema
 \section{Architecture Schema}
-\input{section5/architecture_schema}
+\input{section05/architecture_schema}
 \newpage
 
 % Section 6 - Data Flow Schema
 \section{Data Flow Schema}
-\input{section6/data_flow_schema}
+\input{section06/data_flow_schema}
 \newpage
 
 % Section 7 Telemetry Schema
 \section{Telemetry Schema}
-\input{section7/telemetry_schema}
+\input{section07/telemetry_schema}
 \newpage
 
 % Section 8 - Game Design 
 \section{Game Design}
-\input{section8/game_design}
+\input{section08/game_design}
 \newpage
 
 % Section 9 - Evaluation 
 \section{Evaluation}
-\input{section9/evaluation}
+\input{section09/evaluation}
 \newpage
 
 % Section 10 - Sprint 2 Priorities
