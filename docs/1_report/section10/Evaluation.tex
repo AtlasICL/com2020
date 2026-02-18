@@ -1,12 +1,10 @@
-
-
-\section{Evaluation}
+\subsection{Evaluation}
 
 To assure the most comprehensive evaluation, the code project produced
 has been compared to both quantitative and qualitative baselines. In
-this section the five areas of evaluation will be explored.
+this subsection the five areas of evaluation will be explored.
 
-\section{Gameplay Strategy Analysis}\label{gameplay-strategy-analysis}}
+\subsection{Gameplay Strategy Analysis}
 
 The first measure of success is a measure of the engagingness of the
 gameplay. As the legendary game designer Sid Miers once said, "A game is
@@ -21,7 +19,7 @@ for their character. The player has to decide on this carefully, as
 there is no guarantee of what encounter they will have following the
 shop, so must make decisions that account for all possibilities.
 
-\includegraphics[width=2.82361in,height=2.93819in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image1.png}
+\includegraphics[width=2.82361in,height=2.93819in]{media/image1.png}
 
 If the player chooses to purchase an upgrade that provides them with an
 attack, there are more interesting decisions to be made, for instance,
@@ -31,7 +29,7 @@ magic has been accumulated) to conserve magic for a later turn, or to
 immediately use the Thunder Storm ability to deal a large amount of
 damage immediately.
 
-\includegraphics[width=5.09514in,height=4.77847in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image2.png}
+\includegraphics[width=5.09514in,height=4.77847in]{media/image2.png}
 
 The first level does not have particularly many interesting choices,
 this is intentional. The purpose of this first level is to simply teach
@@ -50,8 +48,7 @@ To conclude, the prototype meets the baseline, as it does contain a
 number of interesting decisions - yet shows potential to surpass it in
 future builds.
 
-\hypertarget{client-runability}{%
-\section{Client Runability}\label{client-runability}}
+\subsection{Client Runability}
 
 The next measure of success we have decided on is the user's ability to
 run the game on all hardware, new or old. Our next baseline is that the
@@ -59,11 +56,11 @@ game and the telemetry can both run on 1GB of RAM.
 
 For the Java game, it meets this baseline.
 
-\includegraphics[width=6.2625in,height=0.89097in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image3.png}
+\includegraphics[width=6.2625in,height=0.89097in]{media/image3.png}
 
 For the Python Telemetry app, the baseline is also met.
 
-\includegraphics[width=6.25486in,height=1.45694in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image4.png}
+\includegraphics[width=6.25486in,height=1.45694in]{media/image4.png}
 
 Not only are both baselines met, but running both simultaneously still
 meets the baseline.
@@ -74,11 +71,10 @@ future.
 
 To summarise, the program is incredibly successful here.
 
-\hypertarget{detection-validity}{%
-\section{Detection validity}\label{detection-validity}}
+\subsection{Detection validity}
 
 Another measure of success we feel is necessary for a quality end
-product is the program\textquotesingle s ability to detect spikes in
+product is the programs ability to detect spikes in
 difficulty in areas of gameplay. The baseline that must be met here is
 that an area of the game that is logically expected to be difficult will
 be represented as a spike in the telemetry interface.
@@ -91,7 +87,7 @@ upgrade.
 After simulating the game 300 times on easy, medium and hard modes, the
 ``difficulty spike'' view on the telemetry interface reads as follows:
 
-\includegraphics[width=6.25069in,height=4.91944in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image5.png}
+\includegraphics[width=6.25069in,height=4.91944in]{media/image5.png}
 
 The disparity between the number of failures on level one and level two
 are clear. While influenced by the fact that some players will lose all
@@ -109,13 +105,12 @@ and represent it as a difficulty spike, and despite the limited
 opportunities to do so, this feature's potential is showcased well in
 the prototype.
 
-\hypertarget{design-usability}{%
-\section{Design Usability}\label{design-usability}}
+\subsection{Design Usability}
 
 One of the most important aspects of any piece of software is that it is
 designed in a useful, intuitive and responsive way. The baseline that
 must be met to assure this is that, in both the game and telemetry
-aspects, every section of the game is accessible in 3 or less inputs, in
+aspects, every subsection of the game is accessible in 3 or less inputs, in
 accordance with the unofficial, yet nonetheless valuable
 ``3-click-rule'' user experience heuristic.
 
@@ -159,12 +154,12 @@ View the ``Funnel View'' graph with telemetry data & 1 \\
 View the ``Difficulty Spike'' graph with telemetry data & 1 \\
 View the ``Health'' graph with telemetry data & 1 \\
 View the ``Coins'' graph with telemetry data & 1 \\
-View the ``Suggestions'' section with telemetry data & 1 \\
+View the ``Suggestions'' subsection with telemetry data & 1 \\
 View the ``Funnel View'' graph with simulated data & 2 \\
 View the ``Difficulty Spike'' graph with simulated data & 2 \\
 View the ``Health'' graph with simulated data & 2 \\
 View the ``Coins'' graph with simulated data & 2 \\
-View the ``Suggestions'' section with simulated data & 2 \\
+View the ``Suggestions'' subsection with simulated data & 2 \\
 \bottomrule()
 \end{longtable}
 
@@ -182,12 +177,11 @@ and always meet the baseline, except in the one scenario
 (authentication) where we have a reasonable cause to go below what would
 otherwise be the baseline.
 
-\hypertarget{suggestion-effectiveness}{%
-\section{Suggestion Effectiveness}\label{suggestion-effectiveness}}
+\subsection{Suggestion Effectiveness}
 
 The fifth and final metric which we have chosen to measure the
 effectiveness of our product is the ability of the telemetry code to
-provide useful balancing information in the ``suggestions'' section. The
+provide useful balancing information in the ``suggestions'' subsection. The
 baseline is that, given a large amount of gameplay data, the telemetry
 interface will be able to provide useful feedback that, when applied,
 change the gameplay experience in the intended way.
@@ -202,16 +196,16 @@ lesser. As level one is supposed to introduce players to the game, such
 a high failure rate goes against the design philosophy of the game, and
 must be corrected.
 
-\includegraphics[width=4.58403in,height=3.62153in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image6.png}
+\includegraphics[width=4.58403in,height=3.62153in]{media/image6.png}
 
 In response, the interface suggested the following:
 
-\includegraphics[width=4.67639in,height=1.00556in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image7.png}
+\includegraphics[width=4.67639in,height=1.00556in]{media/image7.png}
 
 Once clearing the simulation data, and simulating 300 more attempts at
 the game, the following funnel view was produced.
 
-\includegraphics[width=4.59306in,height=3.62153in]{vertopal_bb2f175b63ab42899ba488fbb3eb322a/media/image8.png}
+\includegraphics[width=4.59306in,height=3.62153in]{media/image8.png}
 
 From this, it can be deduced that \textasciitilde63\% of players were
 able to pass the first stage when taking on the advice of the
@@ -239,8 +233,7 @@ useful, yet are ultimately not as valuable, as the tools currently
 provided in the prototype build do not allow the game to be balanced in
 a significant way.
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\subsection{Conclusion}
 
 This prototype can be considered successful. The product provides the
 framework strategic and engaging gameplay, it can be run on a reasonable
@@ -252,5 +245,3 @@ effectively fixed in the full build. As a prototype, this system
 provides the framework for elements of the system that are not yet fully
 implemented, so the majority of the issues present in the prototype
 simply exist as this is nothing more than a vertical slice.
-
-\end{document}

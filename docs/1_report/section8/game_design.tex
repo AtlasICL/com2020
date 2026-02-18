@@ -1,21 +1,16 @@
-\documentclass{article}
-\usepackage{graphicx}
-\usepackage{float}
-\begin{document}
+\subsection{Game Design Documentation}
 
-\section{Game Design Documentation}
+This subsection of the report serves as a non-technical overview of the full game's design. Please note that any numbers mentioned here aren't final, but provide a strong starting point, and illustrate the distance between values in some cases.
 
-This section of the report serves as a non-technical overview of the full game's design. Please note that any numbers mentioned here aren't final, but provide a strong starting point, and illustrate the distance between values in some cases.
-
-\subsection{Level Structure}
+\subsubsection{Level Structure}
 
 The game will exist in two parts: combat encounters and shops. There are 10 combat encounters in the game, and a shop will follow each one, excluding the final combat encounter.
 
-\subsection{Combat Encounter Design}
+\subsubsection{Combat Encounter Design}
 
 When in a combat encounter, the game functions as turn-based. The player will always move first. The player gains 15 magic points at the beginning of each turn. The player will be able to see a simple description of their undefeated opponent(s). There will be text that servess two purposes: to narrate the scene ("You were hit for 20 damage point(s)", "Encounter Complete, etc.), and to serve as the player's interface, allowing the player to select from their available attack abilities (with information such as magic cost and damage type). Once an attack is selected, the player is prompted to select which opponent they wish to damage. Following this, the opponent's turn takes place, where, like the player, an opponent will select from one of their abilities to use on the player.
 
-\subsection{Damage Types}
+\subsubsection{Damage Types}
 
 Both the player and the enemies that they can encounter are affected differently by different damage types. For example, if the player were to cast a water-based spell at a "Pyromancer" enemy, the attack would be more effective than if it were cast on a "Fish Man" enemy.
 
@@ -23,7 +18,7 @@ Each attack ability in the game has a damage type. The damage types are as follo
 
 Attacks of the Absolute type are always effective on any opponent.
 
-\subsection{Attack Abilities}
+\subsubsection{Attack Abilities}
 
 When the game begins, the player character only has one attacking ability – that being "Punch", a low-damage physical move.
 
@@ -45,7 +40,7 @@ Fire Ball & 30 & 40 & Fire & High damage \\
 \end{tabular}
 \end{center}
 
-\subsection{Passive Abilities}
+\subsubsection{Passive Abilities}
 
 When the game begins, the player character will have no non-attack abilities. These can also be purchased in the shop in between encounters. The purpose of these abilities is to allow the player to become stronger in non-attacking ways.
 
@@ -68,7 +63,7 @@ Improved Thunder Damage & 10 \\
 \end{tabular}
 \end{center}
 
-\subsection{Structure of Levels}
+\subsubsection{Structure of Levels}
 
 The game is split into three distinct phases:
 
@@ -78,11 +73,11 @@ The game is split into three distinct phases:
 
 \textbf{Phase 3}, where players will have their skills put to the test in highly difficult encounters. This phase ends with a boss at level 9 and a final boss at level 10. Players can encounter three enemies at a time, in level 8 in particular. Each encounter rewards the player with 20 coins.
 
-\subsection{Enemies Within Encounters}
+\subsubsection{Enemies Within Encounters}
 
 There are many enemies that the player will encounter within the game. The range of enemies that can be encountered increases as the phases increase.
 
-\subsection{Phase 1 Enemies}
+\subsubsection{Phase 1 Enemies}
 
 \textbf{Goblin}
 \begin{itemize}
@@ -116,7 +111,7 @@ There are many enemies that the player will encounter within the game. The range
 \item Vulnerable to: Physical, Absolute
 \end{itemize}
 
-\subsection{Phase 2 Enemies}
+\subsubsection{Phase 2 Enemies}
 
 (All non-boss enemies that have appeared in Phase 1)
 
@@ -136,7 +131,7 @@ There are many enemies that the player will encounter within the game. The range
 \item Vulnerable to: Absolute
 \end{itemize}
 
-\subsection{Phase 3 Enemies}
+\subsubsection{Phase 3 Enemies}
 
 (All non-boss enemies that have appeared in Phase 2)
 
@@ -156,8 +151,6 @@ There are many enemies that the player will encounter within the game. The range
 \item Vulnerable to: Absolute
 \end{itemize}
 
-\subsection{Shop Design}
+\subsubsection{Shop Design}
 
 The shop exists as a single screen. Four random abilities are presented to the user, alongside their price, and whether they are an "Attack" or "Passive". Providing the player can afford the abilities, they will be able to buy as many of the four as they please. Once the player decides they are done, they can select "Next Encounter" and continue the game.
-
-\end{document}
