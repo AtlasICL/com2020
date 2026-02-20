@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class GameUserInterface {
+public class GameUserCLI {
 
     private final GameManagerInterface gameManager;
     private final SettingsInterface settings;
@@ -28,7 +28,7 @@ public class GameUserInterface {
 
     private final boolean[] ownedUpgrades = new boolean[UpgradeEnum.values().length];
 
-    private GameUserInterface() {
+    private GameUserCLI() {
         this.gameManager = GameManagerSingleton.getInstance();
         this.settings = SettingsSingleton.getInstance();
         this.timeManager = TimeManagerSingleton.getInstance();
@@ -38,7 +38,7 @@ public class GameUserInterface {
     }
 
     public static void main(String[] args) {
-        GameUserInterface ui = new GameUserInterface();
+        GameUserCLI ui = new GameUserCLI();
         ui.start();
     }
 
@@ -732,17 +732,15 @@ public class GameUserInterface {
                                 player.getHealth()));
                 gameManager.completeCurrentEncounter();
                 System.out.println(GREEN + "Encounter complete." + RESET);
-                if (player != null) {
-                    player.gainCoins(COINS_GAINED);
-                    telemetryListener.onGainCoin(
-                            new GainCoinEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
-                                    COINS_GAINED));
-                    System.out.println(YELLOW + "+" + COINS_GAINED + " coins" + RESET);
-                }
+                player.gainCoins(COINS_GAINED);
+                telemetryListener.onGainCoin(
+                        new GainCoinEvent(
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                COINS_GAINED));
+                System.out.println(YELLOW + "+" + COINS_GAINED + " coins" + RESET);
                 return true;
             }
 
@@ -1033,7 +1031,8 @@ public class GameUserInterface {
     }
 
     private void quit() {
-        System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
-        scanner.close();
+        try (scanner) {
+            System.out.println(YELLOW + "Thanks for playing WizardQuest!" + RESET);
+        }
     }
 }
