@@ -15,9 +15,9 @@ from tkinter import ttk, messagebox
 import seaborn as sns
 from pathlib import Path
 
-from core.logic import EventLogicEngine
-from gui.plotting import PlotTab
-from auth.auth import google_login, Role
+from telemetry.core.logic import EventLogicEngine
+from telemetry.gui.plotting import PlotTab
+from telemetry.auth.auth import google_login, Role
 
 
 ROOT_DIRECTORY = Path.cwd().parent

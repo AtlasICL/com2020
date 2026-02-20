@@ -14,7 +14,8 @@ OIDC_CLIENT_ID, and OIDC_CLIENT_SECRET.
 
 import json
 
-from auth.auth import google_login
+from telemetry.auth.auth import google_login
+
 
 def main():
     sub, name, role = google_login()

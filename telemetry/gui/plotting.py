@@ -12,6 +12,7 @@ from matplotlib.figure import Figure
 from matplotlib.ticker import FixedLocator
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+
 class PlotTab:
     def __init__(
             self, 

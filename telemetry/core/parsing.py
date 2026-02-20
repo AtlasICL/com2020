@@ -12,7 +12,7 @@ from typing import TypeAlias
 from datetime import datetime
 from pathlib import Path
 
-from core.events import (
+from telemetry.core.events import (
     KillEnemy,
     EventParameter,
     BossEncounterFail,
@@ -28,7 +28,6 @@ from core.events import (
     NormalEncounterFail,
     BossEncounterStart,
 )
-
 
 
 ValidEvent: TypeAlias = (
