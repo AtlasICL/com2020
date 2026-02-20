@@ -1,7 +1,8 @@
 package wizardquest.telemetry;
 
 /**
- * Exception representing an issue relating to an incorrect userID for telemetry.
+ * Exception representing an issue relating to an incorrect userID for
+ * telemetry.
  * The userID does not match what is expected for the session.
  */
 public class SessionValidationException extends Exception {

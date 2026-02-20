@@ -15,7 +15,7 @@ public interface EntityInterface {
      * damage type being inflicted upon them.
      *
      * @param amount the total health that the entity will lose.
-     * @param type the inflicted damage type that has caused this health loss.
+     * @param type   the inflicted damage type that has caused this health loss.
      * @throws IllegalArgumentException if amount is not a non-negative number.
      */
     public void loseHealth(int amount, DamageEnum type) throws IllegalArgumentException;
@@ -36,7 +36,8 @@ public interface EntityInterface {
 
     /**
      * Calculate the damage inflicted by one entity onto another.
-     * Applies damage type modifiers to the base damage to calculate the final amount.
+     * Applies damage type modifiers to the base damage to calculate the final
+     * amount.
      *
      * @param base the base damage dealt by the entity's attack.
      * @param type the damage type of the entity's attack.

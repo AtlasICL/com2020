@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 import wizardquest.abilities.UpgradeEnum;
-import wizardquest.entity.EntityInterface;
 import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
@@ -88,33 +87,22 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public int getSessionID(){
+    public int getSessionID() {
         return this.sessionID;
     }
 
     @Override
     public EncounterInterface pickEncounter() throws IllegalStateException {
-        switch (this.currentStage) {
-            case 1:
-            case 2:
-                return pickEncounterFrom(this.phase1NormalEncounters);
-            case 3:
-                return this.phase1Boss;
-            case 4:
-            case 5:
-                return pickEncounterFrom(this.phase2NormalEncounters);
-            case 6:
-                return this.phase2Boss;
-            case 7:
-            case 8:
-                return pickEncounterFrom(this.phase3NormalEncounters);
-            case 9:
-                return this.phase3Boss;
-            case 10:
-                return this.finalBoss;
-            default:
-                return null;
-        }
+        return switch (this.currentStage) {
+            case 1, 2 -> pickEncounterFrom(this.phase1NormalEncounters);
+            case 3 -> this.phase1Boss;
+            case 4, 5 -> pickEncounterFrom(this.phase2NormalEncounters);
+            case 6 -> this.phase2Boss;
+            case 7, 8 -> pickEncounterFrom(this.phase3NormalEncounters);
+            case 9 -> this.phase3Boss;
+            case 10 -> this.finalBoss;
+            default -> null;
+        };
     }
 
     @Override
@@ -128,9 +116,9 @@ public class GameRun implements GameRunInterface {
         // until the shop item count has
         // been reached. Skip over any null values - these are upgrades that have
         // already been purchased during the run.
-        for (int j = 0; j < this.shopUpgrades.length; j++) {
-            if (this.shopUpgrades[j] != null) {
-                shop[i] = this.shopUpgrades[j];
+        for (UpgradeEnum shopUpgrade : this.shopUpgrades) {
+            if (shopUpgrade != null) {
+                shop[i] = shopUpgrade;
                 i++;
                 if (i == totalUpgradesInShop) {
                     break;
@@ -227,9 +215,9 @@ public class GameRun implements GameRunInterface {
      */
     private EncounterInterface pickEncounterFrom(EncounterInterface[] encounters) throws IllegalStateException {
         shuffleArray(encounters);
-        for (int i = 0; i < encounters.length; i++) {
-            if (!encounters[i].isComplete()) {
-                return encounters[i];
+        for (EncounterInterface encounter : encounters) {
+            if (!encounter.isComplete()) {
+                return encounter;
             }
         }
         throw new IllegalStateException("Out of Encounters for stage: " + this.currentStage);

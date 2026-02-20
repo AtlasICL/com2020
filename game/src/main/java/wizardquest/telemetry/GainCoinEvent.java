@@ -5,7 +5,7 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class GainCoinEvent extends EncounterEvent{
+public class GainCoinEvent extends EncounterEvent {
     private final int coins_gained;
 
     /**
@@ -24,7 +24,8 @@ public class GainCoinEvent extends EncounterEvent{
      * @param coinsGained   number of coins gained by the player.
      */
     public GainCoinEvent(String userID, int sessionID,
-        Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int coinsGained){
+            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,
+            int coinsGained) {
         super(userID, sessionID, timeStamp, "GainCoin", encounterName, difficulty, stageNumber);
         this.coins_gained = coinsGained;
     }
@@ -34,7 +35,7 @@ public class GainCoinEvent extends EncounterEvent{
      *
      * @return number of coins gained.
      */
-    public int getCoins_gained(){
+    public int getCoins_gained() {
         return this.coins_gained;
     }
 }

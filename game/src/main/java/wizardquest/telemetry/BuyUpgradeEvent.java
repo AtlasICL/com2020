@@ -6,7 +6,7 @@ import wizardquest.abilities.UpgradeEnum;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class BuyUpgradeEvent extends EncounterEvent{
+public class BuyUpgradeEvent extends EncounterEvent {
     private final UpgradeEnum upgrade_bought;
     private final int coins_spent;
 
@@ -27,7 +27,8 @@ public class BuyUpgradeEvent extends EncounterEvent{
      * @param coinsSpent    the number of coins spent by the player on an upgrade.
      */
     public BuyUpgradeEvent(String userID, int sessionID,
-        Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, UpgradeEnum upgradeBought, int coinsSpent){
+            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,
+            UpgradeEnum upgradeBought, int coinsSpent) {
         super(userID, sessionID, timeStamp, "BuyUpgrade", encounterName, difficulty, stageNumber);
         this.upgrade_bought = upgradeBought;
         this.coins_spent = coinsSpent;
@@ -47,7 +48,7 @@ public class BuyUpgradeEvent extends EncounterEvent{
      *
      * @return coins spent on an upgrade.
      */
-    public int getCoins_spent(){
+    public int getCoins_spent() {
         return this.coins_spent;
     }
 }

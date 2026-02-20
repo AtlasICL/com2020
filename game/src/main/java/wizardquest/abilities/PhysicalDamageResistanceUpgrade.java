@@ -13,7 +13,7 @@ public class PhysicalDamageResistanceUpgrade extends UpgradeBase {
     @Override
     public void loseHealth(int amount, DamageEnum type) {
         if (type == DamageEnum.PHYSICAL) {
-            super.player.loseHealth(Math.round(amount/2), type);
+            super.player.loseHealth(Math.round(amount / 2), type);
         } else {
             super.player.loseHealth(amount, type);
         }

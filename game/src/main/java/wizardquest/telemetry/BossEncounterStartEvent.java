@@ -5,7 +5,7 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class BossEncounterStartEvent extends EncounterEvent{
+public class BossEncounterStartEvent extends EncounterEvent {
     /**
      * Constructor for BossEncounterStartEvent.
      *
@@ -21,8 +21,8 @@ public class BossEncounterStartEvent extends EncounterEvent{
      * @param stageNumber   the current stage player is attempting.
      */
     public BossEncounterStartEvent(String userID, int sessionID,
-            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber){
+            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber) {
         super(userID, sessionID, timeStamp, "BossEncounterStart",
-            encounterName, difficulty, stageNumber);
+                encounterName, difficulty, stageNumber);
     }
 }
