@@ -47,6 +47,7 @@ public class TelemetryListenerIntegrationTests {
      *                                 or the credentials are invalid when trying to
      *                                 authenticate the user.
      */
+    @SuppressWarnings("unused")
     @BeforeEach
     void setUp() throws AuthenticationException, IOException {
         // Initialise temporary JSON files for a test user's login to be stored in.
@@ -137,6 +138,7 @@ public class TelemetryListenerIntegrationTests {
      * Create and invoke an EndSessionEvent, to ensure that sessionIDs are kept clean between each test.
      * Resets the telemetry listener's filepath to the filepath used for production.
      */
+    @SuppressWarnings("unused")
     @AfterEach
     void cleanUp() {
         EndSessionEvent endSessionEvent = new EndSessionEvent(

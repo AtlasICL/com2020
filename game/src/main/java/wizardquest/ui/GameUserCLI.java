@@ -773,8 +773,6 @@ public class GameUserCLI {
                 return true;
             }
 
-            EntityAIInterface ai = EntityAISingleton.getInstance();
-
             for (EntityInterface enemy : enemies) {
                 if (enemy == null)
                     continue;

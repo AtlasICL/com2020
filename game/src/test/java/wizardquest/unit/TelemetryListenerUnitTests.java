@@ -46,6 +46,7 @@ public class TelemetryListenerUnitTests {
      *                                 or the credentials are invalid when trying to
      *                                 authenticate the user.
      */
+    @SuppressWarnings("unused")
     @BeforeEach
     void setUp() throws AuthenticationException, IOException {
         // Initialise and create temporary JSON files for a test user's login to be
@@ -285,6 +286,7 @@ public class TelemetryListenerUnitTests {
      * Also restores the system error buffer to its original value from before any
      * tests were run.
      */
+    @SuppressWarnings("unused")
     @AfterEach
     void cleanUp() {
         EndSessionEvent endSessionEvent = new EndSessionEvent(

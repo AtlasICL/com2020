@@ -49,7 +49,7 @@ public class EntityAISingleton {
 
         @Override
         public AbilityEnum pickAbility(EntityInterface self) {
-            AbilityEnum[] abilities = self.getAbilities().toArray(new AbilityEnum[0]);
+            final AbilityEnum[] abilities = self.getAbilities().toArray(AbilityEnum[]::new);
             if (abilities == null || abilities.length == 0)
                 return null;
             shuffleArray(abilities);
