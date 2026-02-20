@@ -1,0 +1,101 @@
+package wizardquest.gamemanager;
+
+import java.time.LocalDateTime;
+
+import wizardquest.abilities.UpgradeEnum;
+import wizardquest.entity.PlayerInterface;
+import wizardquest.settings.DifficultyEnum;
+
+/**
+ * Provides the interface for a game run. A game run stores information about a
+ * single run of the game, including the encounters in that run and the player.
+ */
+public interface GameRunInterface {
+     /**
+      * Picks a random encounter for the current stage from the encounter pool for
+      * that stage and returns a reference to it. It is the responsibility of the
+      * caller to keep track of the encounter, mark it as complete when it is
+      * finished, and reset it if the player retries it after dying.
+      * 
+      * @return a reference to the chosen encounter.
+      * 
+      * @throws IllegalStateException if it is asked to pick an encounter for a stage
+      *                               where all encounters have already been
+      *                               completed.
+      */
+     public EncounterInterface pickEncounter() throws IllegalStateException;
+
+     /**
+      * Picks a number of upgrades from the shop determined by the ShopItemCount
+      * design parameter and returns an array of references to them.
+      * 
+      * @return an array of references to the upgrades.
+      */
+     public UpgradeEnum[] viewShop();
+
+     /**
+      * Attempts to buy the selected upgrade, throwing an error if the player doesn't
+      * have enough coins, and otherwise reducing their number of coins by the
+      * upgrade's price. It then removes the upgrade from the poo
+      * of upgrades the shop selects from and decorates the player with it.
+      * 
+      * @param upgrade the upgrade being bought from the shop.
+      * @throws LackingResourceException if the player doesn't have enough coins to
+      *                                  buy the upgrade.
+      */
+     public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException;
+
+     /**
+      * Returns a reference to the player.
+      * 
+      * @return a reference to the player.
+      */
+     public PlayerInterface getPlayer();
+
+     /**
+      * Increments the stage count, so the pickEncounter method can draw from the
+      * encounter pool for the correct stage.
+      */
+     public void nextStage();
+
+     /**
+      * Gets the current stage's number.
+      * 
+      * @return the current stage number (between 1 and 10 inclusive).
+      */
+     public int getStage();
+
+     /**
+      * GIves the time when this game run instance was created (and thus the run
+      * started).
+      * 
+      * @return the LocalDateTime of when the run started.
+      */
+     public LocalDateTime getRunStartTime();
+
+     /**
+      * Returns the number of deaths the player has had in this run.
+      * 
+      * @return the number of time the player's died this run.
+      */
+     public int getDeathCount();
+
+     /**
+      * Marks that the player has died, incrementing the death count, reducing the
+      * player's lives by 1, and resetting their health.
+      */
+     public void incrementDeathCount();
+
+     /**
+      * Gets the difficulty of the run.
+      * 
+      * @return the difficulty setting for this run.
+      */
+     public DifficultyEnum getDifficulty();
+     
+     /**
+      * Gets the session ID for the current run.
+      * @return the session ID of the current run.
+      */
+     public int getSessionID();
+}
