@@ -8,8 +8,9 @@ averages by difficulty, etc...
 This functionality is provided by the EventLogicEngine class.
 """
 
-from core.events import *
-from core.events import (
+from pathlib import Path
+
+from telemetry.core.events import (
     BossEncounterComplete,
     BossEncounterFail,
     BossEncounterStart,
@@ -24,8 +25,7 @@ from core.events import (
     SettingsChange,
     StartSession,
 )
-from core.parsing import parse_file, ValidEvent
-from pathlib import Path
+from telemetry.core.parsing import parse_file, ValidEvent
 
 
 class EventLogicEngine:
