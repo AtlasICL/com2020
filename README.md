@@ -123,36 +123,35 @@ All dependency licences are compatible with this project's MIT licence.
 ```
 com2020/
 ├── game/
-│   ├── src/
-│   │   ├── main/
-│   │   │   └── java/
-│   │   │       └── WizardQuest/
-│   │   │           └── ...
-│   │   └── test/
-│   │       ├── java/
-│   │       │   └── WizardQuest/
-│   │       │       ├── unit/
-│   │       │       │   └── ...
-│   │       │       └── integration/
-│   │       │           └── ...
-│   │       └── resources/
-│   │           └── ...
-│   └── pom.xml
+│   ├── pom.xml
+│   └── src/
+│       ├── main/
+│       │   └── java/
+│       │       └── WizardQuest/
+│       │           ├── auth/
+│       │           ├── settings/
+│       │           ├── telemetry/
+│       │           ├── gamemanager/
+│       │           ├── abilities/
+│       │           ├── entity/
+│       │           └── ui/
+│       └── test/
+│           ├── java/
+│           │   └── WizardQuest/
+│           │       ├── unit/
+│           │       └── integration/
+│           └── resources/
 ├── telemetry/
 │   ├── core/
-│   │   └── ...
 │   ├── gui/
-│   │   └── ...
 │   ├── auth/
-│   │   └── ...
 │   ├── schema.md (json schema)
-│   ├── requirements.txt (for pip)
-│   ├── telemetry_app.py
-│   └── README.md (python-specific instructions for dev)
+│   ├── requirements.txt
+│   └── telemetry_app.py
 ├── event_logs/
 │   ├── telemetry_events.json
 │   └── simulation_events.json
 ├── README.md
-├── deployment_guide.md
+├── LICENSE
 └── .gitignore
 ```
