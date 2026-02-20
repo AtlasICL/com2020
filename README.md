@@ -1,16 +1,10 @@
 # Team Project for COM2020
-- [Team members](#team-members)
-- [Style guide](#style-guide)
-- [Meeting minutes](#meeting-minutes)
-- [Build instructions](#build-instructions)
-- [Software Bill of Materials (SBOM)](#software-bill-of-materials-sbom)
-  - [Game (Java) dependencies](#game-java-dependencies)
-  - [Telemetry App (Python) dependencies](#telemetry-app-python-dependencies)
-  - [External dependencies](#external-dependencies)
-  - [System dependencies](#system-dependencies)
-  - [Dependency Licences](#dependency-licences)
-- [Folder structure](#folder-structure)
 
+- [Build instructions](#build-instructions)
+- [Style guide](#style-guide)
+- [Software Bill of Materials (SBOM)](#software-bill-of-materials-sbom)
+- [Licensing](#licensing)
+- [Folder structure](#folder-structure)
 
 
 ## Team members
@@ -25,15 +19,51 @@
 | Harry Taylor      | ht555@exeter.ac.uk     |
 
 
+# Build instructions
+
+## Requirements / prerequisites
+- Java 17+
+- Maven
+- Python 3.13+
+
+## Set environment variables
+
+| OS      | Commands                                                                                                       |
+| ------- | -------------------------------------------------------------------------------------------------------------- |
+| Windows | $env:OIDC_ISSUER="https://accounts.google.com"<br> $env:OIDC_CLIENT_ID=""<br> $env:OIDC_CLIENT_SECRET=""       |
+| Linux   | export OIDC_ISSUER="https://accounts.google.com"<br> export OIDC_CLIENT_ID=""<br> export OIDC_CLIENT_SECRET="" |
+
+
+## Run the game
+```
+cd game
+mvn clean compile exec:java "-Dexec.mainClass=WizardQuest.GameUserInterface"
+```
+
+## Run the telemetry app 
+**Windows:**
+```
+cd telemetry
+python -m venv venv
+./venv/Scripts/Activate.ps1
+pip install -r requirements.txt
+python telemetry_app.py
+```
+
+**Linux:**
+```
+cd telemetry
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 telemetry_app.py
+```
+
+
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
-- Java: [Google Java style guide](https://peps.python.org/pep-0008/)
+- Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
-## Meeting minutes
-Find meeting minutes and project specification [here](/meetings/)
-
-## Build instructions
-For the deployment guide, see [this file](deployment_guide.md).
 
 # Software Bill of Materials (SBOM) 
 
@@ -45,7 +75,7 @@ For the deployment guide, see [this file](deployment_guide.md).
 | **SBOM last updated:** | 2026-02-15            |
 
 
-## Game (Java) dependencies
+### Game (Java) dependencies
 
 **Language:** Java 17  
 **Build System:** Apache Maven  
@@ -60,7 +90,7 @@ For the deployment guide, see [this file](deployment_guide.md).
 | Build   | exec-maven-plugin       | org.codehaus.mojo              | 3.3.0   |
 
 
-## Telemetry App (Python) dependencies
+### Telemetry App (Python) dependencies
 
 **Language:** Python 3.13  
 **Package Manager:** pip
@@ -75,7 +105,7 @@ For the deployment guide, see [this file](deployment_guide.md).
 | Testing | pytest     | 3.3.0   |
 
 
-## External dependencies
+### External dependencies
 
 | Service          | Provider |
 | ---------------- | -------- |
@@ -84,7 +114,7 @@ For the deployment guide, see [this file](deployment_guide.md).
 Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables.
 
 
-## System dependencies
+### System dependencies
 
 | Requirement    | Details                   |
 | -------------- | ------------------------- |
@@ -95,11 +125,11 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 
 # Licensing
 
-## Project Licence
+### Project Licence
 
 This project is released under an MIT License. 
 
-## Dependency Licences
+### Dependency Licences
 
 | Dependency              | Licence         | Link                                                                                  |
 | ----------------------- | --------------- | ------------------------------------------------------------------------------------- |
@@ -111,7 +141,7 @@ This project is released under an MIT License.
 | exec-maven-plugin       | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | matplotlib              | PSF (BSD-style) | [License here](https://pypi.org/project/matplotlib/)                                  |
 | numpy                   | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
-| pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
+| pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/pandas/)                                      |
 | seaborn                 | BSD             | [License here](https://pypi.org/project/seaborn/)                                     |
 | requests                | Apache 2.0      | [License here](https://pypi.org/project/requests/)                                    |
 | pytest                  | MIT             | [License here](https://pypi.org/project/pytest/)                                      |
