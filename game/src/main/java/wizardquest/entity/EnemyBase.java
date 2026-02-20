@@ -13,7 +13,7 @@ import wizardquest.abilities.DamageEnum;
  */
 public abstract class EnemyBase implements EntityInterface {
     private int health;
-    private int maxHealth;
+    private final int maxHealth;
 
     @Override
     public abstract List<AbilityEnum> getAbilities();

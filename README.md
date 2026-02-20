@@ -37,7 +37,7 @@
 ## Run the game
 ```
 cd game
-mvn clean compile exec:java "-Dexec.mainClass=WizardQuest.GameUserInterface"
+mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameUserCLI"
 ```
 
 ## Run the telemetry app 
@@ -60,7 +60,7 @@ python3 telemetry_app.py
 ```
 
 
-## Style guide
+# Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
@@ -70,7 +70,7 @@ python3 telemetry_app.py
 |                        |                       |
 | ---------------------- | --------------------- |
 | **Project:**           | WizardQuest (com2020) |
-| **Version:**           | 0.0.9                 |
+| **Version:**           | 0.1.0                 |
 | **Licence:**           | MIT                   |
 | **SBOM last updated:** | 2026-02-15            |
 
