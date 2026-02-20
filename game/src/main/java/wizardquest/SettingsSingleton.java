@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+
 /**
  * Provides singleton access to settings and user properties
  */

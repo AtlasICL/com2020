@@ -1,4 +1,4 @@
-package wizardquest;
+package wizardquest.auth;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import wizardquest.RoleEnum;
 
 public class Authenticator implements AuthenticatorInterface {
 

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.io.TempDir;
 
 import wizardquest.*;
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
 
 import static org.junit.jupiter.api.Assertions.*;
 

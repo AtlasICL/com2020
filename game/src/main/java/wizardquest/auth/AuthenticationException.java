@@ -1,4 +1,4 @@
-package wizardquest;
+package wizardquest.auth;
 
 /**
  * Exception representing an issue relating to user authentication. Either an

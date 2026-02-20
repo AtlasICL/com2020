@@ -1,4 +1,4 @@
-package wizardquest;
+package wizardquest.auth;
 
 public interface AuthenticatorInterface {
 

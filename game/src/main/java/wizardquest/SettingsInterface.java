@@ -2,6 +2,9 @@ package wizardquest;
 
 import java.io.File;
 
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+
 /**
  * Interface for settings. Provides access to user settings and properties, as
  * well as the ability to authenticate and create users.

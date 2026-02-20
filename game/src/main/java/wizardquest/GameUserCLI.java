@@ -5,6 +5,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+import wizardquest.auth.Authenticator;
+
 public class GameUserCLI {
 
     private final GameManagerInterface gameManager;

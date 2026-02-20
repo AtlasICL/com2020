@@ -10,6 +10,8 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import wizardquest.auth.AuthenticationException;
+
 /**
  * Provides a single global access point to the telemetry listener for notifying
  * it.
