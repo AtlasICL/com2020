@@ -121,20 +121,14 @@ public class GameUserCLI {
             String input = scanner.nextLine();
 
             switch (input) {
-                case "1":
-                    startGame();
-                    break;
-                case "2":
-                    settingsMenu();
-                    break;
-                case "0":
+                case "1" -> startGame();
+                case "2" -> settingsMenu();
+                case "0" -> {
                     quit();
                     return;
-                case "3":
-                    showTelemetryDisclosure();
-                    break;
-                default:
-                    System.out.println(RED + "Invalid option." + RESET);
+                }
+                case "3" -> showTelemetryDisclosure();
+                default -> System.out.println(RED + "Invalid option." + RESET);
             }
         }
     }
@@ -282,6 +276,7 @@ public class GameUserCLI {
         endScreen(lastRun, lastPlayer);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     private boolean simulateEncounter(EncounterInterface encounter) {
 
         GameRunInterface run = gameManager.getCurrentRun();
@@ -372,16 +367,14 @@ public class GameUserCLI {
                                 run != null ? run.getStage() : 1,
                                 player.getHealth()));
                 gameManager.completeCurrentEncounter();
-                if (player != null) {
-                    player.gainCoins(COINS_GAINED);
-                    telemetryListener.onGainCoin(
-                            new GainCoinEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
-                                    COINS_GAINED));
-                }
+                player.gainCoins(COINS_GAINED);
+                telemetryListener.onGainCoin(
+                        new GainCoinEvent(
+                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                encounter.getType(),
+                                gameManager.getCurrentDifficulty(),
+                                run != null ? run.getStage() : 1,
+                                COINS_GAINED));
                 return true;
             }
 
@@ -404,6 +397,7 @@ public class GameUserCLI {
     }
 
     // Buys between 0 and 1 upgrades from the shop.
+    @SuppressWarnings("CallToPrintStackTrace")
     private void simulateShop() {
         UpgradeEnum[] upgrades = gameManager.viewShop();
         UpgradeEnum u = ai.pickUpgrade(upgrades, gameManager.getCurrentPlayer().getCoins());
@@ -537,16 +531,19 @@ public class GameUserCLI {
             String input = scanner.nextLine();
 
             switch (input) {
-                case "0":
+                case "0" -> {
                     return null;
-                case "1":
+                }
+                case "1" -> {
                     return DifficultyEnum.EASY;
-                case "2":
+                }
+                case "2" -> {
                     return DifficultyEnum.MEDIUM;
-                case "3":
+                }
+                case "3" -> {
                     return DifficultyEnum.HARD;
-                default:
-                    System.out.println(RED + "Invalid option." + RESET);
+                }
+                default -> System.out.println(RED + "Invalid option." + RESET);
             }
         }
     }
@@ -608,6 +605,7 @@ public class GameUserCLI {
         endScreen(lastRun, lastPlayer);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     private boolean playEncounter(EncounterInterface encounter) {
 
         System.out.println();

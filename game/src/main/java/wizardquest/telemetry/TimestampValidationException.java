@@ -1,7 +1,8 @@
 package wizardquest.telemetry;
 
 /**
- * Exception representing an issue relating to an incorrect time stamp for telemetry.
+ * Exception representing an issue relating to an incorrect time stamp for
+ * telemetry.
  * The time stamp is in the future, or is of invalid format.
  */
 public class TimestampValidationException extends Exception {

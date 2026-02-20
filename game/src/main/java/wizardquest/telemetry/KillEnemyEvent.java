@@ -6,7 +6,7 @@ import wizardquest.entity.EntityEnum;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class KillEnemyEvent extends EncounterEvent{
+public class KillEnemyEvent extends EncounterEvent {
     private final EntityEnum enemy_type;
 
     /**
@@ -26,17 +26,17 @@ public class KillEnemyEvent extends EncounterEvent{
      */
     public KillEnemyEvent(String userID, int sessionID,
             Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,
-            EntityEnum enemyType){
-                super(userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);
-                this.enemy_type = enemyType;
+            EntityEnum enemyType) {
+        super(userID, sessionID, timeStamp, "KillEnemy", encounterName, difficulty, stageNumber);
+        this.enemy_type = enemyType;
     }
-    
+
     /**
      * Gets stored enemy type killed.
      *
      * @return enemy type killed.
      */
-    public EntityEnum getEnemy_type(){
+    public EntityEnum getEnemy_type() {
         return this.enemy_type;
     }
 }

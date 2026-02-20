@@ -28,7 +28,7 @@ public class EntityAISingleton {
      * relevant method is used.
      */
     private static class RandomEntityAI implements EntityAIInterface {
-        private Random random;
+        private final Random random;
 
         public RandomEntityAI() {
             this.random = new Random();
@@ -53,12 +53,11 @@ public class EntityAISingleton {
             if (abilities == null || abilities.length == 0)
                 return null;
             shuffleArray(abilities);
-            
+
             // If player check that they have enough magic to use the ability.
-            if (self instanceof PlayerInterface){
-                PlayerInterface player = (PlayerInterface) self;
-                for (AbilityEnum a: abilities){
-                    if(a.getMagicCost() <= player.getMagic()){
+            if (self instanceof PlayerInterface player) {
+                for (AbilityEnum a : abilities) {
+                    if (a.getMagicCost() <= player.getMagic()) {
                         return a;
                     }
                 }

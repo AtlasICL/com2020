@@ -5,14 +5,15 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class BossEncounterCompleteEvent extends EncounterCompleteEvent{
+public class BossEncounterCompleteEvent extends EncounterCompleteEvent {
     /**
      * Constructor for BossEncounterCompleteEvent.
      *
      * @param userID            the ID of the user who is playing the game when the
      *                          event is
      *                          constructed.
-     * @param sessionID         the ID of the session the user is currently playing. See
+     * @param sessionID         the ID of the session the user is currently playing.
+     *                          See
      *                          TelemetryListenerInterface for information about
      *                          sessions.
      * @param timeStamp         the time the event was constructed.
@@ -22,8 +23,9 @@ public class BossEncounterCompleteEvent extends EncounterCompleteEvent{
      * @param playerHPRemaining player HP remaining after completion.
      */
     public BossEncounterCompleteEvent(String userID, int sessionID,
-            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining){
+            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,
+            int playerHPRemaining) {
         super(userID, sessionID, timeStamp, "BossEncounterComplete",
-            encounterName, difficulty, stageNumber, playerHPRemaining);
+                encounterName, difficulty, stageNumber, playerHPRemaining);
     }
 }

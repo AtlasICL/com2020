@@ -14,14 +14,15 @@ import wizardquest.settings.SettingsSingleton;
  */
 public class Goblin extends EnemyBase {
     /**
-     * @param difficulty defines the current game difficulty for this concrete enemy, used to scale health
+     * @param difficulty defines the current game difficulty for this concrete
+     *                   enemy, used to scale health
      */
-    public Goblin(DifficultyEnum difficulty){
+    public Goblin(DifficultyEnum difficulty) {
         super(Math.round(50 * SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)));
     }
 
     @Override
-    public List<AbilityEnum> getAbilities(){
+    public List<AbilityEnum> getAbilities() {
         List<AbilityEnum> abilities = new ArrayList<>();
         abilities.add(AbilityEnum.SLASH);
         abilities.add(AbilityEnum.PUNCH);
@@ -29,7 +30,7 @@ public class Goblin extends EnemyBase {
     }
 
     @Override
-    public EntityEnum getType(){
+    public EntityEnum getType() {
         return EntityEnum.GOBLIN;
     }
 

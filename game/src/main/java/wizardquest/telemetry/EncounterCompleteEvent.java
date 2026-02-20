@@ -5,7 +5,7 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public abstract class EncounterCompleteEvent extends EncounterEvent{
+public abstract class EncounterCompleteEvent extends EncounterEvent {
     private final int player_HP_remaining;
 
     /**
@@ -14,7 +14,8 @@ public abstract class EncounterCompleteEvent extends EncounterEvent{
      * @param userID            the ID of the user who is playing the game when the
      *                          event is
      *                          constructed.
-     * @param sessionID         the ID of the session the user is currently playing. See
+     * @param sessionID         the ID of the session the user is currently playing.
+     *                          See
      *                          TelemetryListenerInterface for information about
      *                          sessions.
      * @param timeStamp         the time the event was constructed.
@@ -25,7 +26,8 @@ public abstract class EncounterCompleteEvent extends EncounterEvent{
      * @param playerHPRemaining player HP remaining after completion.
      */
     public EncounterCompleteEvent(String userID, int sessionID,
-            Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int playerHPRemaining) {
+            Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty,
+            int stageNumber, int playerHPRemaining) {
         super(userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.player_HP_remaining = playerHPRemaining;
     }
@@ -35,7 +37,7 @@ public abstract class EncounterCompleteEvent extends EncounterEvent{
      *
      * @return player HP remaining after encounter complete.
      */
-    public int getPlayer_HP_remaining(){
+    public int getPlayer_HP_remaining() {
         return this.player_HP_remaining;
     }
 }

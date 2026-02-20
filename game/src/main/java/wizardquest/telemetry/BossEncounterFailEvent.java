@@ -5,7 +5,7 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public class BossEncounterFailEvent extends EncounterFailEvent{
+public class BossEncounterFailEvent extends EncounterFailEvent {
     /**
      * Constructor for BossEncounterFailEvent.
      *
@@ -22,8 +22,8 @@ public class BossEncounterFailEvent extends EncounterFailEvent{
      * @param livesLeft     player lives remaining after completion.
      */
     public BossEncounterFailEvent(String userID, int sessionID,
-            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
+            Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft) {
         super(userID, sessionID, timeStamp, "BossEncounterFail",
-            encounterName, difficulty, stageNumber, livesLeft);
+                encounterName, difficulty, stageNumber, livesLeft);
     }
 }

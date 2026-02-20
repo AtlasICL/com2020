@@ -17,7 +17,7 @@ public class Player implements PlayerInterface {
     private int magic;
     private int coins;
     private int lives;
-    private DifficultyEnum difficulty;
+    private final DifficultyEnum difficulty;
 
     public Player(DifficultyEnum difficulty) {
         SettingsInterface settings = SettingsSingleton.getInstance();
@@ -55,7 +55,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<AbilityEnum> getAbilities() {
-        List<AbilityEnum> l =  new LinkedList<AbilityEnum>();
+        List<AbilityEnum> l =  new LinkedList<>();
         l.add(AbilityEnum.PUNCH);
         return l;
     }
@@ -137,7 +137,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<UpgradeEnum> getUpgrades() {
-        return new LinkedList<UpgradeEnum>();
+        return new LinkedList<>();
     }
 
     @Override

@@ -24,7 +24,8 @@ public enum RoleEnum {
     }
 
     /**
-     * Converts the user's role from string format in the JSON file to a RoleEnum object.
+     * Converts the user's role from string format in the JSON file to a RoleEnum
+     * object.
      *
      * @param jsonName the user role specified in the JSON file.
      * @return the user role as a RoleEnum object.

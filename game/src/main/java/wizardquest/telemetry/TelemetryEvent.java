@@ -13,17 +13,17 @@ public abstract class TelemetryEvent {
      * Constructor for the base telemetry event. Produces a telemetry event storing
      * common data.
      * 
-     * @param source        the object that constructed the telemetry event.
-     * @param userID        the ID of the user who is playing the game when the
-     *                      event is
-     *                      constructed.
-     * @param sessionID     the ID of the session the user is currently playing. See
-     *                      TelemetryListenerInterface for information about
-     *                      sessions.
-     * @param timeStamp     the time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss
-     * @param event         the name of the telemetry event according to the JSON
-     *                      telemetry specification.
+     * @param source    the object that constructed the telemetry event.
+     * @param userID    the ID of the user who is playing the game when the
+     *                  event is
+     *                  constructed.
+     * @param sessionID the ID of the session the user is currently playing. See
+     *                  TelemetryListenerInterface for information about
+     *                  sessions.
+     * @param timeStamp the time the event was constructed in the format
+     *                  yyyy/mm/dd/hh/mm/ss
+     * @param event     the name of the telemetry event according to the JSON
+     *                  telemetry specification.
      */
     public TelemetryEvent(String userID, Instant timeStamp, String event) {
         this.userID = userID;

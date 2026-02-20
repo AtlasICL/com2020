@@ -69,9 +69,11 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
 
     /**
      * Applies an upgrade to a given player.
+     * 
      * @param player the player to decorate with the upgrade.
      * @return a reference to the decorated player.
-     * @throws IllegalStateException if the decoration fails due to reflection failing.
+     * @throws IllegalStateException if the decoration fails due to reflection
+     *                               failing.
      */
     public PlayerInterface applyUpgrade(PlayerInterface player) throws IllegalStateException, IllegalArgumentException {
         try {
@@ -83,6 +85,7 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
 
     /**
      * Returns the name of the upgrade following the telemetry specification.
+     * 
      * @return the name of the upgrade.
      */
     public String getTelemetryName() {
@@ -91,9 +94,10 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
 
     /**
      * Get the human readable name for the upgrade.
+     * 
      * @return the display name.
      */
-    public String getDisplayName(){
+    public String getDisplayName() {
         return this.displayName;
     }
 }

@@ -6,17 +6,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.io.TempDir;
 
-import wizardquest.*;
-import wizardquest.auth.AuthenticationException;
-import wizardquest.auth.AuthenticationResult;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+import wizardquest.auth.RoleEnum;
+import wizardquest.gamemanager.EncounterEnum;
+import wizardquest.gamemanager.GameManagerSingleton;
+import wizardquest.settings.DifficultyEnum;
+import wizardquest.settings.SettingsSingleton;
+import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.StartSessionEvent;
+import wizardquest.telemetry.TelemetryListenerSingleton;
 
 public class TelemetryListenerIntegrationTests {
 

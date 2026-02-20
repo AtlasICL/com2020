@@ -9,15 +9,16 @@ public class SettingsChangeEvent extends TelemetryEvent {
     private final String setting_value;
 
     /**
-     * Constructor for the settings change telemetry event. Produces a telemetry event storing
+     * Constructor for the settings change telemetry event. Produces a telemetry
+     * event storing
      * common data.
      *
-     * @param userID        The userID for the currently authenticated user.
-     * @param source        The object that constructed the telemetry event.
-     * @param timeStamp     The time the event was constructed in the format
-     *                      yyyy/mm/dd/hh/mm/ss,
-     * @param setting       The setting being changed in this event.
-     * @param settingValue  The value that the setting is set to in this event.
+     * @param userID       The userID for the currently authenticated user.
+     * @param source       The object that constructed the telemetry event.
+     * @param timeStamp    The time the event was constructed in the format
+     *                     yyyy/mm/dd/hh/mm/ss,
+     * @param setting      The setting being changed in this event.
+     * @param settingValue The value that the setting is set to in this event.
      */
     public SettingsChangeEvent(String userID, Instant timeStamp, SettingsEnum setting, String settingValue) {
         super(userID, timeStamp, "SettingsChange");

@@ -5,7 +5,7 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
-public abstract class EncounterFailEvent extends EncounterEvent{
+public abstract class EncounterFailEvent extends EncounterEvent {
     private final int lives_left;
 
     /**
@@ -25,7 +25,8 @@ public abstract class EncounterFailEvent extends EncounterEvent{
      * @param livesLeft     player lives remaining after completion.
      */
     public EncounterFailEvent(String userID, int sessionID,
-            Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber, int livesLeft){
+            Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty,
+            int stageNumber, int livesLeft) {
         super(userID, sessionID, timeStamp, telemetryName, encounterName, difficulty, stageNumber);
         this.lives_left = livesLeft;
     }
@@ -35,7 +36,7 @@ public abstract class EncounterFailEvent extends EncounterEvent{
      *
      * @return lives left after encounter failure.
      */
-    public int getLives_left(){
+    public int getLives_left() {
         return this.lives_left;
     }
 }
