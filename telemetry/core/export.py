@@ -6,4 +6,4 @@ form.
 """
 
 class CSVExporter:
-    raise NotImplementedError()
+    pass
