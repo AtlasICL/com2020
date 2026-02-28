@@ -20,7 +20,12 @@ from gui.plotting import PlotTab
 from auth.auth import google_login, Role
 
 
-ROOT_DIRECTORY = Path.cwd().parent
+ROOT_DIRECTORY: Path = Path.cwd().parent
+EVENT_LOGS_DIRECTORY: str = "event_logs"
+TELEMETRY_EVENTS_FILE: str = "telemetry_events.json"
+SIMULATION_EVENTS_FILE: str = "simulation_events.json"
+
+# Polling interval for refreshing data.
 POLLING_INTERVAL_MS = 3000
 
 
@@ -30,9 +35,9 @@ class GUI_SETTINGS:
     WINDOW_GEOMETRY = "800x600"      # Size at startup.
     WINDOW_MINIMUM_WIDTH = 600       # Minimum width of window.
     WINDOW_MINIMUM_HEIGHT = 450      # Minimum height of window. 
-    FONT_FAMILY = "Arial"
-    FONT_SIZE = 12
-    BACKGROUND_COLOR = "#edd68f"
+    FONT_FAMILY = "Arial"            # Font for GUI.
+    FONT_SIZE = 12                   # Font size.
+    BACKGROUND_COLOR = "#edd68f"   # Background colour for the window.
 
 
 class TelemetryAppGUI(tk.Tk):
@@ -40,14 +45,17 @@ class TelemetryAppGUI(tk.Tk):
         super().__init__()
         self.title(GUI_SETTINGS.WINDOW_TITLE)
         self.geometry(GUI_SETTINGS.WINDOW_GEOMETRY)
-        self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
-        style = ttk.Style(self)
-        style.theme_use("clam")
-        self.file_name = ROOT_DIRECTORY / "event_logs" / "telemetry_events.json"
+
+        self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+            / TELEMETRY_EVENTS_FILE
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None
 
+        # Set GUI colours / font styles.
+        self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
+        style = ttk.Style(self)
+        style.theme_use("clam")
         style.configure(
             ".",
             font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.FONT_SIZE),
@@ -62,16 +70,20 @@ class TelemetryAppGUI(tk.Tk):
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
 
+        # Set a minimum size for the window - this prevents users from
+        # making the window much too small.
         self.minsize(
             width=GUI_SETTINGS.WINDOW_MINIMUM_WIDTH, 
             height=GUI_SETTINGS.WINDOW_MINIMUM_HEIGHT
         )
 
+        # We use notebook for the "tabs" structure of the window
         self.notebook = ttk.Notebook(self)
         self.notebook.grid(row=0, column=0, sticky="nsew")
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
+        # Create notebook tabs
         self.tab_home = ttk.Frame(self.notebook)
         self.tab_funnel = ttk.Frame(self.notebook)
         self.tab_spike = ttk.Frame(self.notebook)
@@ -79,14 +91,16 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_fairness = ttk.Frame(self.notebook)
         self.tab_suggestions = ttk.Frame(self.notebook)
 
+        # Only add the "Home" screen on startup.
+        # The other tabs will be added if appropriate upon 
+        # authentication.
         self.notebook.add(self.tab_home, text="Home")
-
         self.make_welcome_screen()
 
         sns.set_theme(style="dark", context="notebook")
 
 
-    def make_welcome_screen(self):
+    def make_welcome_screen(self) -> None:
         self.welcome_label = ttk.Label(
             self.tab_home,
             text=self.get_personalised_welcome_message(),
@@ -103,26 +117,40 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def get_personalised_welcome_message(self) -> str:
-        return "Welcome to the Telemetry App" if self.current_user_name is None else "Welcome to the Telemetry App, " + self.current_user_name
+        """Gets a personalised welcome message for the user, with the
+        user's name (provided by their Google account)."""
+        return "Welcome to the Telemetry App" if self.current_user_name is None \
+            else "Welcome to the Telemetry App, " + self.current_user_name
 
 
-    def handle_sign_in(self):
-        _, self.current_user_name, role = google_login() # TODO: DEAL WITH ROLE RETURN
+    def handle_sign_in(self) -> None:
+        """
+        Handles sign in. 
+        If the authenticated user's role is authorised to see telemetry,
+        then the other tabs (with telemetry info) will appear.
+        If the user's role is not authorised for viewing telemetry,
+        then an error message will be shown indicating this, and the 
+        user will be returned to the Home tab, with the option to sign 
+        in again.
+        """
+        _, self.current_user_name, role = google_login()
         self.authenticated = True
         AUTHORISED_ROLES = [Role.DESIGNER, Role.DEVELOPER]
         if role in AUTHORISED_ROLES:
             self.sign_in_button.pack_forget()
-            self.welcome_label.config(text=self.get_personalised_welcome_message())
+            self.welcome_label.config(
+                text=self.get_personalised_welcome_message()
+            )
             self.on_authenticated()
         else:
-            # self.make_welcome_screen()
+            # Error message for non-developer / non-designer users.
             messagebox.showerror(
                 "Authorisation Error", 
-                "Only Designers and Developers may access telemetry data"
+                "Only Designers and Developers may access telemetry data."
             )
 
 
-    def on_authenticated(self):
+    def on_authenticated(self) -> None:
         self.switch_btn_text = tk.StringVar()
         self.switch_btn_text.set("Change to simulation data")
 
@@ -183,41 +211,56 @@ class TelemetryAppGUI(tk.Tk):
         self.do_auto_refresh()
 
 
-    def do_auto_refresh(self, interval_ms=POLLING_INTERVAL_MS):
+    def do_auto_refresh(self, interval_ms: int = POLLING_INTERVAL_MS) -> None:
         """Use polling to refresh data for plots."""
         self.refresh_all()
         self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
 
-    def toggle_file(self):
+    def toggle_file(self) -> None:
+        """Toggles between viewing telemetry data and simulation 
+        data."""
         if self.switch_btn_text.get() == "Change to simulation data":
+            # Change the button text to reflect data source change
             self.switch_btn_text.set("Change to telemetry data")
-            self.file_name = ROOT_DIRECTORY / "event_logs" / "simulation_events.json"
-            self.refresh_all()
+            # Switch the data source
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / SIMULATION_EVENTS_FILE
+            self.refresh_all() # Refresh data after switch
         else:
+            # Change the button text to reflect data source change
             self.switch_btn_text.set("Change to simulation data")
-            self.file_name = ROOT_DIRECTORY / "event_logs" / "telemetry_events.json"
-            self.refresh_all()
+            # Switch the data source
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / TELEMETRY_EVENTS_FILE
+            # Refresh data
+            self.refresh_all() # Refresh data after switch
 
 
-    def reset_telemetry(self):
+    def reset_telemetry(self) -> None:
+        """Resets / erases all telemetry data. This is permanent."""
         confirmed = messagebox.askyesno(
         title = "Switch Data Source",
         message = "Are you sure you want to reset telemetry data? " 
             + "All existing telemetry data will be lost")
         if confirmed:
-            with open(ROOT_DIRECTORY / "event_logs" / "telemetry_events.json", 'w') as f:
+            with open(
+                ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE,
+                'w'
+            ) as f:
                 f.write('')
 
 
-    def refresh_all(self):
+    def refresh_all(self) -> None:
+        """Refreshes data from events source file.
+        Updates all graphs."""
         self.refresh_funnel_graph()
         self.refresh_coins_gained_plots()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
 
 
-    def refresh_funnel_graph(self):
+    def refresh_funnel_graph(self) -> None:
         """
         Refreshes the plot of players remaining per stage (referred to
         as funnel view).
@@ -231,19 +274,21 @@ class TelemetryAppGUI(tk.Tk):
         )
 
 
-    def refresh_difficulty_spike_failure_plot(self):
+    def refresh_difficulty_spike_failure_plot(self) -> None:
         """
         Refreshes the plots for difficulty spike in terms of number 
         of failures per stage.
         """
         self.logic_engine.categorise_events(self.file_name)
-        spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
+        spike_data: dict[int, int] = \
+            self.logic_engine.fail_difficulty_spikes()
         self.spike_plot.plot_line(
             spike_data.keys(), 
             spike_data.values(), 
             label="Difficulty spikes (by failure rate)"
         )
-        self.spike_suggestion.config(text="Suggestion: " + self.generate_spike_suggestion())
+        self.spike_suggestion.config(text="Suggestion: " \
+                                     + self.generate_spike_suggestion())
 
 
     def get_average_dict_of_stage_dicts(
@@ -273,7 +318,7 @@ class TelemetryAppGUI(tk.Tk):
         return averages
     
 
-    def refresh_health_plots(self):
+    def refresh_health_plots(self) -> None:
         """
         Refreshes the plots of HP remaining per stage per difficulty.
         """
@@ -290,7 +335,7 @@ class TelemetryAppGUI(tk.Tk):
         self.curves_plot.plot_multi_line(series)
 
 
-    def refresh_coins_gained_plots(self):
+    def refresh_coins_gained_plots(self) -> None:
         """
         Refreshed the plots for average coins gained per stage per
         difficulty.
@@ -308,18 +353,19 @@ class TelemetryAppGUI(tk.Tk):
         self.fairness_plot.plot_multi_line(series)
 
 
-    def generate_spike_suggestion(self):
+    def generate_spike_suggestion(self) -> str:
         """
-        Generates a difficulty change suggestion 
-        for difficulty spikes.
+        Generates a difficulty change suggestion for difficulty spikes.
+        
+        :return: Suggestion text. 
+        :rtype: str
         """
         stages = ""
         spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values())/len(spikes)
+        mean = sum(spikes.values()) / len(spikes)
         for stage in spikes:
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
-        if stages != "":
+        if stages:
             return "High failure rate in " + stages + " consider increasing lives by 2."
         return "No suggestions available"
-

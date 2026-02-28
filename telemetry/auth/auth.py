@@ -27,19 +27,7 @@ import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
 
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-logging_handler = logging.FileHandler("auth/logs.txt", encoding="utf-8")
-logging_handler.setLevel(logging.INFO)
-
-logging_handler.setFormatter(logging.Formatter(
-    fmt="%(asctime)s\n    %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
-))
-
-logger.addHandler(logging_handler)
+from auth.auth_logger import setup_logger
 
 
 ISSUER = "https://accounts.google.com"
@@ -55,9 +43,11 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 #  code of your application. (In this context, the client secret is 
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
-SCOPES = ["profile", "email"]
+SCOPES: list[str] = ["profile", "email"]
 
 LOGGING_ENABLED: bool = True
+LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
+LOGGER: logging.Logger = setup_logger(output_file=LOGGING_OUTPUT_FILE)
 
 
 def validate_env_vars() -> None:
@@ -115,7 +105,7 @@ def server_run() -> tuple[HTTPServer, threading.Thread]:
 
 
 class CallbackHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
+    def do_GET(self) -> None:
         parsed_url = urlparse(self.path)
         if parsed_url.path != "/callback":
             self.send_response(404)
@@ -194,21 +184,21 @@ def google_login() -> tuple[str, str, Role]:
 
     open_browser(auth_url)
     if LOGGING_ENABLED:
-        logger.info("[SIE ] Sign-in prompted.")
+        LOGGER.info("[SIE ] Sign-in prompted.")
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
         if LOGGING_ENABLED:
-            logger.warning(
+            LOGGER.warning(
                 "[SIE ] Sign-in failed: no authorization code received."
             )
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
         if LOGGING_ENABLED:
-            logger.warning("[SIE ] Sign-in failed: state mismatch.")
+            LOGGER.warning("[SIE ] Sign-in failed: state mismatch.")
         raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
@@ -221,11 +211,11 @@ def google_login() -> tuple[str, str, Role]:
             "client_secret": CLIENT_SECRET,
             "code_verifier": code_verifier
         },
-        timeout=15,
+        timeout=25,
     )
     if not token_resp.ok:
         if LOGGING_ENABLED:
-            logger.error("[SIE ] Sign-in failed: token exchange error" +
+            LOGGER.error("[SIE ] Sign-in failed: token exchange error" +
                          "(status = {token_resp.status_code})")
         print("---- AUTH ERROR OCCURRED ----")
         print("|  Token status:", token_resp.status_code)
@@ -243,7 +233,7 @@ def google_login() -> tuple[str, str, Role]:
     userinfo = userinfo_resp.json()
 
     if LOGGING_ENABLED:
-        logger.info(f"[SIE ] Sign-in successful: " +
+        LOGGER.info(f"[SIE ] Sign-in successful: " +
                     f"user {userinfo.get('name')} authenticated.")
     
     sub = userinfo.get("sub")
@@ -276,13 +266,13 @@ def get_role(filename: str, userID: str) -> Role:
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
                 if LOGGING_ENABLED:
-                    logger.info(f"[AE  ] New user authenticated " + 
+                    LOGGER.info(f"[AE  ] New user authenticated " + 
                                 f"with role {Role.PLAYER.value}.")
                 return Role.PLAYER
             else:
                 try:
                     if LOGGING_ENABLED:
-                        logger.info(f"[AE  ] Existing user authenticated " + 
+                        LOGGER.info(f"[AE  ] Existing user authenticated " + 
                                     f"with role {this_user}.")
                     return Role(this_user) 
                 except ValueError:
@@ -297,14 +287,3 @@ def get_role(filename: str, userID: str) -> Role:
             f"Could not parse user roles file at {filename}" + 
             f"- invalid json."
         )
-
-
-
-
-
-# TESTING
-def main():
-    print(google_login())
-
-if __name__ == "__main__":
-    main()
