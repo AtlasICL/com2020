@@ -47,8 +47,7 @@ class PlotTab:
             "Hard": "red"
         }
 
-
-    def plot_line(self, x, y, label=None):
+    def plot_line(self, x, y, label=None) -> None:
         self.axes.clear()
         self.axes.set_title(self.title)
         self.axes.set_xlabel(self.xlabel)
@@ -77,7 +76,7 @@ class PlotTab:
         self.axes.grid(True)
         self.canvas.draw()
 
-    def plot_multi_line(self, series: list[tuple[list, list, str]]):
+    def plot_multi_line(self, series: list[tuple[list, list, str]]) -> None:
         self.axes.clear()
         self.axes.set_title(self.title)
         self.axes.set_xlabel(self.xlabel)
@@ -90,18 +89,18 @@ class PlotTab:
             self.axes.plot(
                 x, 
                 y, 
-                linestyle=':', # dotted lines
-                marker='o',    # dots on the points
-                linewidth=3,   # thicker lines
-                markersize=6,  # bolder points
+                linestyle=':',  # dotted lines
+                marker='o',     # dots on the points
+                linewidth=3,    # thicker lines
+                markersize=6,   # bolder points
                 label=label, 
                 color=self.color_map[label] # map colour to difficulty
             )
         self.axes.legend(
-            handlelength=0.5,    # longer line in legend
-            markerscale=1,     # dot scale in legend
-            handletextpad=0.4, # padding with text
-            borderaxespad=0.2, # padding from border
+            handlelength=0.5,   # longer line in legend
+            markerscale=1,      # dot scale in legend
+            handletextpad=0.4,  # padding with text
+            borderaxespad=0.2,  # padding from border
         )
         self.axes.grid(True)
         self.canvas.draw()
