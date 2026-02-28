@@ -11,19 +11,16 @@ import wizardquest.settings.DifficultyEnum;
  * Each of the types in this class has a reference to their concrete class used
  * for instantiation, done via reflection
  */
-
 public enum EntityEnum {
     PLAYER(Player.class, "Player", "Player"),
-    GOBLIN(Goblin.class, "Goblin", "Goblin"), // enemy 1
-    FISH_MAN(FishMan.class, "Fishman", "Fish Man");// enemy 2
-    /*
-     * PYROMANCER(null, "Pyromancer"), // PLACEHOLDER ARGS
-     * EVIL_WIZARD(null, "EvilWizard"), // PLACEHOLDER ARGS
-     * ARMOURED_GOBLIN(null, "ArmouredGoblin"), // PLACEHOLDER ARGS
-     * GHOST(null, "Ghost"), // PLACEHOLDER ARGS
-     * BLACK_KNIGHT(null, "Black Knight"), // PLACEHOLDER ARGS
-     * DRAGON(null, "Dragon"),; // PLACEHOLDER ARGS
-     */
+    GOBLIN(Goblin.class, "Goblin", "Goblin"),
+    FISH_MAN(FishMan.class, "Fishman", "Fish Man"),
+    PYROMANCER(Pyromancer.class, "Pyromancer", "Pyromancer"),
+    EVIL_WIZARD(EvilWizard.class, "EvilWizard", "Evil Wizard"),
+    ARMOURED_GOBLIN(ArmouredGoblin.class, "ArmouredGoblin", "Armoured Goblin"),
+    GHOST(Ghost.class, "Ghost", "Ghost"),
+    BLACK_KNIGHT(BlackKnight.class, "BlackKnight", "Black Knight"),
+    DRAGON(Dragon.class, "Dragon", "Dragon");
 
     private final Class<? extends EntityInterface> enemyClass;
     private final String telemetryName;

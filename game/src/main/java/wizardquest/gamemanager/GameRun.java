@@ -13,16 +13,16 @@ public class GameRun implements GameRunInterface {
     // Drawn from for stages 1 and 2.
     private final EncounterInterface[] phase1NormalEncounters;
 
-    // Drawn from for stages 4 and 5.
+    // Drawn from for stages 4, 5 and 6.
     private final EncounterInterface[] phase2NormalEncounters;
 
-    // Drawn from for stages 7 and 8.
+    // Drawn from for stage 8.
     private final EncounterInterface[] phase3NormalEncounters;
 
     // Drawn from for stage 3.
     private final EncounterInterface phase1Boss;
 
-    // Drawn from for stage 6.
+    // Drawn from for stage 7.
     private final EncounterInterface phase2Boss;
 
     // Drawn from for stage 9.
@@ -53,29 +53,38 @@ public class GameRun implements GameRunInterface {
     public GameRun(DifficultyEnum difficulty, int sessionID) {
         phase1NormalEncounters = new EncounterInterface[] {
                 new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
-                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty)
+                new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.PYROMANCER_ENCOUNTER, difficulty)
         };
-        phase2NormalEncounters = null;
-        phase3NormalEncounters = null;
-        phase1Boss = null; // Placeholder, contents are TBC -put back to null
-                           // after testing
-        phase2Boss = null; // Placeholder, contents are TBC -put back to null
-                           // after testing
-        phase3Boss = null; // Placeholder, contents are TBC -put back to null
-                           // after testing
-        finalBoss = null; // Placeholder, contents are TBC -put back to null
-                          // after testing
+        phase2NormalEncounters = new EncounterInterface[] {
+                new Encounter(EncounterEnum.GOBLIN_DUO_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.GOBLIN_FISHMAN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.ARMOURED_GOBLIN_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.PYROMANCER_FISHMAN_ENCOUNTER, difficulty)
+        };
+        phase3NormalEncounters = new EncounterInterface[] {
+                new Encounter(EncounterEnum.ARMOURED_GOBLIN_PYROMANCER_ENCOUNTER, difficulty),
+                new Encounter(EncounterEnum.GOBLIN_FISHMAN_PYROMANCER_ENCOUNTER, difficulty)
+        };
+        phase1Boss = new Encounter(EncounterEnum.EVIL_WIZARD_ENCOUNTER, difficulty);
+        phase2Boss = new Encounter(EncounterEnum.GHOST_ENCOUNTER, difficulty);
+        phase3Boss = new Encounter(EncounterEnum.BLACK_KNIGHT_ENCOUNTER, difficulty);
+        finalBoss = new Encounter(EncounterEnum.DRAGON_ENCOUNTER, difficulty);
         shopUpgrades = new UpgradeEnum[] {
                 UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
                 UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
                 UpgradeEnum.WATER_DAMAGE_RESISTANCE,
                 UpgradeEnum.THUNDER_DAMAGE_RESISTANCE,
+                UpgradeEnum.IMPROVED_PHYSICAL_DAMAGE,
+                UpgradeEnum.IMPROVED_FIRE_DAMAGE,
+                UpgradeEnum.IMPROVED_WATER_DAMAGE,
+                UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
                 UpgradeEnum.SLASH_UNLOCK,
                 UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
                 UpgradeEnum.WATER_JET_UNLOCK,
                 UpgradeEnum.FIRE_BALL_UNLOCK,
                 UpgradeEnum.THUNDER_STORM_UNLOCK
-        }; // Contents of this array are TBC
+        };
 
         this.player = new Player(difficulty);
         this.currentStage = 1;
@@ -96,9 +105,9 @@ public class GameRun implements GameRunInterface {
         return switch (this.currentStage) {
             case 1, 2 -> pickEncounterFrom(this.phase1NormalEncounters);
             case 3 -> this.phase1Boss;
-            case 4, 5 -> pickEncounterFrom(this.phase2NormalEncounters);
-            case 6 -> this.phase2Boss;
-            case 7, 8 -> pickEncounterFrom(this.phase3NormalEncounters);
+            case 4, 5, 6 -> pickEncounterFrom(this.phase2NormalEncounters);
+            case 7 -> this.phase2Boss;
+            case 8 -> pickEncounterFrom(this.phase3NormalEncounters);
             case 9 -> this.phase3Boss;
             case 10 -> this.finalBoss;
             default -> null;
