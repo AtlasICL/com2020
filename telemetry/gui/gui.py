@@ -46,7 +46,8 @@ class TelemetryAppGUI(tk.Tk):
         self.title(GUI_SETTINGS.WINDOW_TITLE)
         self.geometry(GUI_SETTINGS.WINDOW_GEOMETRY)
 
-        self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE
+        self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+            / TELEMETRY_EVENTS_FILE
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None
@@ -137,13 +138,15 @@ class TelemetryAppGUI(tk.Tk):
         AUTHORISED_ROLES = [Role.DESIGNER, Role.DEVELOPER]
         if role in AUTHORISED_ROLES:
             self.sign_in_button.pack_forget()
-            self.welcome_label.config(text=self.get_personalised_welcome_message())
+            self.welcome_label.config(
+                text=self.get_personalised_welcome_message()
+            )
             self.on_authenticated()
         else:
             # Error message for non-developer / non-designer users.
             messagebox.showerror(
                 "Authorisation Error", 
-                "Only Designers and Developers may access telemetry data"
+                "Only Designers and Developers may access telemetry data."
             )
 
 
@@ -221,13 +224,15 @@ class TelemetryAppGUI(tk.Tk):
             # Change the button text to reflect data source change
             self.switch_btn_text.set("Change to telemetry data")
             # Switch the data source
-            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / SIMULATION_EVENTS_FILE
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / SIMULATION_EVENTS_FILE
             self.refresh_all() # Refresh data after switch
         else:
             # Change the button text to reflect data source change
             self.switch_btn_text.set("Change to simulation data")
             # Switch the data source
-            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / TELEMETRY_EVENTS_FILE
             # Refresh data
             self.refresh_all() # Refresh data after switch
 
@@ -239,7 +244,10 @@ class TelemetryAppGUI(tk.Tk):
         message = "Are you sure you want to reset telemetry data? " 
             + "All existing telemetry data will be lost")
         if confirmed:
-            with open(ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE, 'w') as f:
+            with open(
+                ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE,
+                'w'
+            ) as f:
                 f.write('')
 
 
@@ -272,13 +280,15 @@ class TelemetryAppGUI(tk.Tk):
         of failures per stage.
         """
         self.logic_engine.categorise_events(self.file_name)
-        spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
+        spike_data: dict[int, int] = \
+            self.logic_engine.fail_difficulty_spikes()
         self.spike_plot.plot_line(
             spike_data.keys(), 
             spike_data.values(), 
             label="Difficulty spikes (by failure rate)"
         )
-        self.spike_suggestion.config(text="Suggestion: " + self.generate_spike_suggestion())
+        self.spike_suggestion.config(text="Suggestion: " \
+                                     + self.generate_spike_suggestion())
 
 
     def get_average_dict_of_stage_dicts(
@@ -352,7 +362,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         stages = ""
         spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values())/len(spikes)
+        mean = sum(spikes.values()) / len(spikes)
         for stage in spikes:
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
