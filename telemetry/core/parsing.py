@@ -12,7 +12,7 @@ from typing import TypeAlias
 from datetime import datetime
 from pathlib import Path
 
-from telemetry.core.events import (
+from core.events import (
     KillEnemy,
     EventParameter,
     BossEncounterFail,

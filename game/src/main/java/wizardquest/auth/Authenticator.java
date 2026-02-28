@@ -24,7 +24,7 @@ public class Authenticator implements AuthenticatorInterface {
         ProcessBuilder procBuilder = new ProcessBuilder(
                 "python3",
                 "-m",
-                "telemetry.auth.auth_wrapper");
+                "auth.auth_wrapper");
         procBuilder.directory(new File("../telemetry"));
 
         // We only want stdout not stderror
