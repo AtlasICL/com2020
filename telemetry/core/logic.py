@@ -10,7 +10,7 @@ This functionality is provided by the EventLogicEngine class.
 
 from pathlib import Path
 
-from telemetry.core.events import (
+from core.events import (
     BossEncounterComplete,
     BossEncounterFail,
     BossEncounterStart,
@@ -25,7 +25,7 @@ from telemetry.core.events import (
     SettingsChange,
     StartSession,
 )
-from telemetry.core.parsing import parse_file, ValidEvent
+from core.parsing import parse_file, ValidEvent
 
 
 class EventLogicEngine:
