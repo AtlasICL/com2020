@@ -21,14 +21,22 @@ public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability extern
             5,
             ThunderDamageResistanceUpgrade.class,
             "ThunderDamageResistance", "Thunder Damage Resistance"),
-    // IMPROVED_PHYSICAL_DAMAGE(20, ImprovedPhysicalDamageUpgrade.class,
-    // "ImprovedPhysicalDamage"),
-    // IMPROVED_FIRE_DAMAGE(15, ImprovedFireDamageUpgrade.class,
-    // "ImprovedFireDamage"),
-    // IMPROVED_WATER_DAMAGE(10, ImprovedWaterDamageUpgrade.class,
-    // "ImprovedWaterDamage"),
-    // IMPROVED_THUNDER_DAMAGE(10, ImprovedThunderDamageUpgrade.class,
-    // "ImprovedThunderDamage"),
+    IMPROVED_PHYSICAL_DAMAGE(
+            20,
+            ImprovedPhysicalDamageUpgrade.class,
+            "ImprovedPhysicalDamage", "Improved Physical Damage"),
+    IMPROVED_FIRE_DAMAGE(
+            15,
+            ImprovedFireDamageUpgrade.class,
+            "ImprovedFireDamage", "Improved Fire Damage"),
+    IMPROVED_WATER_DAMAGE(
+            10,
+            ImprovedWaterDamageUpgrade.class,
+            "ImprovedWaterDamage", "Improved Water Damage"),
+    IMPROVED_THUNDER_DAMAGE(
+            10,
+            ImprovedThunderDamageUpgrade.class,
+            "ImprovedThunderDamage", "Improved Thunder Damage"),
     SLASH_UNLOCK(
             15,
             SlashUnlockUpgrade.class,

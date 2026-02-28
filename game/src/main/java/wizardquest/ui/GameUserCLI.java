@@ -256,9 +256,8 @@ public class GameUserCLI {
                 continue;
             }
 
-            // stop after stage 2 (no shop after finishing)
             GameRunInterface run = gameManager.getCurrentRun();
-            if (run != null && run.getStage() >= 2) {
+            if (run != null && run.getStage() > 10) {
                 System.out.println();
                 System.out.println(GREEN + BOLD + "Stage 2 complete. Ending prototype run." + RESET);
                 endScreen(lastRun, lastPlayer);
@@ -575,9 +574,8 @@ public class GameUserCLI {
                 continue;
             }
 
-            // stop after stage 2 (no shop after finishing)
             GameRunInterface run = gameManager.getCurrentRun();
-            if (run != null && run.getStage() >= 2) {
+            if (run != null && run.getStage() > 10) {
                 System.out.println();
                 System.out.println(GREEN + BOLD + "Stage 2 complete. Ending prototype run." + RESET);
                 endScreen(lastRun, lastPlayer);

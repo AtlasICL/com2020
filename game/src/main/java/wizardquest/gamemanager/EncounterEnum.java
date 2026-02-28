@@ -7,8 +7,32 @@ import wizardquest.settings.DifficultyEnum;
  * Enumerates all encounter types in the game.
  */
 public enum EncounterEnum {
+    // Phase 1 normal encounters (1 enemy each)
     GOBLIN_ENCOUNTER(new EntityEnum[] { EntityEnum.GOBLIN }, "GoblinEncounter", "Goblin Encounter"),
-    FISHMAN_ENCOUNTER(new EntityEnum[] { EntityEnum.FISH_MAN }, "FishManEncounter", "Fish Man Encounter");
+    FISHMAN_ENCOUNTER(new EntityEnum[] { EntityEnum.FISH_MAN }, "FishManEncounter", "Fish Man Encounter"),
+    PYROMANCER_ENCOUNTER(new EntityEnum[] { EntityEnum.PYROMANCER }, "PyromancerEncounter", "Pyromancer Encounter"),
+
+    // Phase 1 boss
+    EVIL_WIZARD_ENCOUNTER(new EntityEnum[] { EntityEnum.EVIL_WIZARD }, "EvilWizardEncounter", "Evil Wizard Encounter"),
+
+    // Phase 2 normal encounters (up to 2 enemies)
+    GOBLIN_DUO_ENCOUNTER(new EntityEnum[] { EntityEnum.GOBLIN, EntityEnum.GOBLIN }, "GoblinDuoEncounter", "Goblin Duo Encounter"),
+    GOBLIN_FISHMAN_ENCOUNTER(new EntityEnum[] { EntityEnum.GOBLIN, EntityEnum.FISH_MAN }, "GoblinFishManEncounter", "Goblin & Fish Man Encounter"),
+    ARMOURED_GOBLIN_ENCOUNTER(new EntityEnum[] { EntityEnum.ARMOURED_GOBLIN }, "ArmouredGoblinEncounter", "Armoured Goblin Encounter"),
+    PYROMANCER_FISHMAN_ENCOUNTER(new EntityEnum[] { EntityEnum.PYROMANCER, EntityEnum.FISH_MAN }, "PyromancerFishManEncounter", "Pyromancer & Fish Man Encounter"),
+
+    // Phase 2 boss
+    GHOST_ENCOUNTER(new EntityEnum[] { EntityEnum.GHOST }, "GhostEncounter", "Ghost Encounter"),
+
+    // Phase 3 normal encounters (up to 3 enemies)
+    ARMOURED_GOBLIN_PYROMANCER_ENCOUNTER(new EntityEnum[] { EntityEnum.ARMOURED_GOBLIN, EntityEnum.PYROMANCER }, "ArmouredGoblinPyromancerEncounter", "Armoured Goblin & Pyromancer Encounter"),
+    GOBLIN_FISHMAN_PYROMANCER_ENCOUNTER(new EntityEnum[] { EntityEnum.GOBLIN, EntityEnum.FISH_MAN, EntityEnum.PYROMANCER }, "GoblinFishManPyromancerEncounter", "Goblin, Fish Man & Pyromancer Encounter"),
+
+    // Phase 3 boss
+    BLACK_KNIGHT_ENCOUNTER(new EntityEnum[] { EntityEnum.BLACK_KNIGHT }, "BlackKnightEncounter", "Black Knight Encounter"),
+
+    // Final boss
+    DRAGON_ENCOUNTER(new EntityEnum[] { EntityEnum.DRAGON }, "DragonEncounter", "Dragon Encounter");
 
     private final EntityEnum[] enemies;
     private final String telemetryName;
