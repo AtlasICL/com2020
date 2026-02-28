@@ -105,9 +105,9 @@ public class GameRun implements GameRunInterface {
         return switch (this.currentStage) {
             case 1, 2 -> pickEncounterFrom(this.phase1NormalEncounters);
             case 3 -> this.phase1Boss;
-            case 4, 5, 6 -> pickEncounterFrom(this.phase2NormalEncounters);
-            case 7 -> this.phase2Boss;
-            case 8 -> pickEncounterFrom(this.phase3NormalEncounters);
+            case 4, 5 -> pickEncounterFrom(this.phase2NormalEncounters);
+            case 6 -> this.phase2Boss;
+            case 7, 8 -> pickEncounterFrom(this.phase3NormalEncounters);
             case 9 -> this.phase3Boss;
             case 10 -> this.finalBoss;
             default -> null;
