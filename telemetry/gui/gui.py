@@ -133,7 +133,15 @@ class TelemetryAppGUI(tk.Tk):
         user will be returned to the Home tab, with the option to sign 
         in again.
         """
-        _, self.current_user_name, role = google_login()
+        try:
+            _, self.current_user_name, role = google_login()
+        except KeyError as e:
+            messagebox.showerror(
+                "Configuration Error",
+                "OIDC_CLIENT_ID and OIDC_CLIENT_SECRET environment " \
+                "variables are not set."
+            )
+            return
         self.authenticated = True
         AUTHORISED_ROLES = [Role.DESIGNER, Role.DEVELOPER]
         if role in AUTHORISED_ROLES:

@@ -157,6 +157,7 @@ def google_login() -> tuple[str, str, Role]:
     :return: User unique identifier, user name.
     :rtype: tuple[str, str, Role]
     :raises HTTPError: If an HTTP error occurs. 
+    :raises KeyError: If the required environment variables are not set.
     """
     validate_env_vars()
 
