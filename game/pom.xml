@@ -22,7 +22,7 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -59,7 +59,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.thespecialcharacters.game.MainApp</mainClass>
+                    <mainClass>wizardquest.ui.GameRunPage</mainClass>
                 </configuration>
             </plugin>
 
