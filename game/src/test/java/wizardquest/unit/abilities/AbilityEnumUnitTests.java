@@ -12,7 +12,9 @@ import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AbilityEnumUnitTests {
 
@@ -27,7 +29,7 @@ public class AbilityEnumUnitTests {
      * and the other being the Absolute Pulse, which costs 20 magic points.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         source = new Player(DifficultyEnum.MEDIUM);
         target = new Dragon(DifficultyEnum.MEDIUM);
         freeAbility = AbilityEnum.PUNCH;
