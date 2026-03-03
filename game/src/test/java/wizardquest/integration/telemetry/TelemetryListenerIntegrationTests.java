@@ -1,4 +1,4 @@
-package wizardquest.integration;
+package wizardquest.integration.telemetry;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
