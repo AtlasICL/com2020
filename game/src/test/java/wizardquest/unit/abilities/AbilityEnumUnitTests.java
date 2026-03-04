@@ -86,6 +86,10 @@ public class AbilityEnumUnitTests {
         assertEquals(magicBeforeExecution - magicAbility.getMagicCost(), source.getMagic());
     }
 
+    /**
+     * When an entity tries to execute an ability, they should be validated as a non-null
+     * Entity object. Otherwise, RuntimeException should be thrown.
+     */
     @Test
     @DisplayName("AbilityEnum - Source Entity validated before execution")
     void execute_sourceEntityValidated() {
@@ -100,5 +104,21 @@ public class AbilityEnumUnitTests {
         assertDoesNotThrow(() -> {
             freeAbility.execute(source, target);
         });
+    }
+
+    /**
+     * When an entity executes an ability, the target's health should be impacted accordingly.
+     *
+     * @throws LackingResourceException if the source entity lacks the magic points to
+     * execute an ability.
+     */
+    @Test
+    @DisplayName("AbilityEnum - Executed attack impacts target Entity")
+    void execute_targetImpacted() throws LackingResourceException {
+        // Executing the Punch ability should impact the target's health, decreasing it by its
+        // base damage.
+        int targetHealthBeforeExecution = target.getHealth();
+        freeAbility.execute(source, target);
+        assertEquals(targetHealthBeforeExecution - freeAbility.getBaseDamage(), target.getHealth());
     }
 }
