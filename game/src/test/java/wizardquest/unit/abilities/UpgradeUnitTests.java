@@ -15,8 +15,7 @@ import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UpgradeUnitTests {
 
@@ -80,7 +79,7 @@ public class UpgradeUnitTests {
      */
     @Test
     @DisplayName("UpgradeBase - Resistance Upgrade reduces damage taken")
-    void calcDamage_resistanceUpgradeReducesDamage() {
+    void loseHealth_resistanceUpgradeReducesDamage() {
         // Apply the FireDamageResistanceUpgrade to the player.
         UpgradeBase resistanceUpgrade = new FireDamageResistanceUpgrade(player);
         int playerHealthBeforeAttack = player.getHealth();
@@ -92,5 +91,23 @@ public class UpgradeUnitTests {
         playerHealthBeforeAttack = player.getHealth();
         resistanceUpgrade.loseHealth(baseDamage, DamageEnum.ABSOLUTE);
         assertEquals(playerHealthBeforeAttack - baseDamage, player.getHealth());
+    }
+
+    /**
+     * When an upgrade is applied to a player, this should be represented in their list of
+     * owned upgrades.
+     * AbsolutePulseUnlockUpgrade is the implementation used as an example for this test.
+     */
+    @Test
+    @DisplayName("UpgradeEnum - Upgrade applied to Player")
+    void applyUpgrade_upgradeAppliedToPlayer() {
+        // Initially, the upgrade should not belong to the player.
+        assertFalse(player.getUpgrades().contains(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK));
+        // Apply the AbsolutePulseUnlockUpgrade to the player.
+        UpgradeEnum upgrade = UpgradeEnum.ABSOLUTE_PULSE_UNLOCK;
+        // Decorate the Player object with this upgrade. This should now appear as an
+        // upgrade that belongs to them.
+        player = upgrade.applyUpgrade(player);
+        assertTrue(player.getUpgrades().contains(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK));
     }
 }
