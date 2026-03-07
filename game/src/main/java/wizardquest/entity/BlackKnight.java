@@ -8,7 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
-
+/**
+ * Black Knight - is a skill based boss enemy
+ * Uses a singular slash attack, and is highly defensive, but weak to thunder damage
+ * Phase 3 enemy
+ */
 public class BlackKnight extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete

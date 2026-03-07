@@ -8,7 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
-
+/**
+ * Evil Wizard - is a gimmick based boss enemy
+ * Uses many techniques, and is invulnerable to magical damage (non- physical and non-absolute), but weak to absolute damage
+ * Phase 2 enemy
+ */
 public class EvilWizard extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete
@@ -33,7 +37,9 @@ public class EvilWizard extends EnemyBase {
 
     @Override
     public void loseHealth(int amount, DamageEnum type) {
-        if (type != DamageEnum.PHYSICAL && type != DamageEnum.ABSOLUTE) {
+        if (type == DamageEnum.ABSOLUTE || type == DamageEnum.PHYSICAL) {
+            amount = amount * 2;
+        } else {
             amount = 0;
         }
         super.loseHealth(amount, type);
