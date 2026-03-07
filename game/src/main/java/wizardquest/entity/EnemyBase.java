@@ -38,7 +38,12 @@ public abstract class EnemyBase implements EntityInterface {
         if (amount < 0) {
             throw new IllegalArgumentException("Damage amount cannot be negative");
         }
-        this.health = Math.max(0, this.health - amount); // s.t health never goes below 0
+        if (amount >= this.health) {
+            this.health = 0;
+        }
+        else {
+            this.health -= amount;
+        }
     }
 
     @Override
