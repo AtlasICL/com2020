@@ -8,7 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
-
+/**
+ * Pyromancer - is a fire-based beginner-level enemy
+ * Uses fire based techniques, and is fire damage resistant
+ * Phase 1 enemy
+ */
 public class Pyromancer extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete
