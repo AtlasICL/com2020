@@ -8,26 +8,34 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.RoleEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 
 public class SettingsPage {
 
-    private final SettingsInterface settings = SettingsSingleton.getInstance();
+    private final SettingsInterface settings = SettingsSingleton.getInstance(); // Access settings to read and update values
     private final Label output = new Label("");
 
     public VBox createView(Runnable backAction) {
-        Label roleLabel = new Label("Role: PLAYER (placeholder)");
+        Label roleLabel = new Label();
 
-        Label telemetryLabel = new Label("Telemetry: OFF");
+        try {
+            roleLabel.setText("Role: " + settings.getUserRole()); // Display the user's role at the top of the settings page
+        } catch (AuthenticationException e) {
+            roleLabel.setText("Role: UNKNOWN");
+        }
+
+        Label telemetryLabel = new Label("Telemetry: OFF"); // Displays current telemetry state
         try {
             telemetryLabel.setText("Telemetry: " + (settings.isTelemetryEnabled() ? "ON" : "OFF"));
         } catch (Exception e) {
             telemetryLabel.setText("Telemetry: OFF");
         }
 
-        Button toggleTelemetryButton = new Button("Toggle Telemetry");
+        Button toggleTelemetryButton = new Button("Toggle Telemetry"); // Button to toggle telemetry on and off
         toggleTelemetryButton.setOnAction(e -> {
             try {
                 boolean current = settings.isTelemetryEnabled();
@@ -37,7 +45,7 @@ public class SettingsPage {
                 telemetryLabel.setText("Telemetry: OFF");
             }
         });
-
+        // Disclosure explaining telemetry data collection to the user
         Label telemetryDisclosure = new Label(
             "If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.\n\n" +
             "This includes:\n" +
@@ -53,7 +61,7 @@ public class SettingsPage {
         );
 
         telemetryDisclosure.setWrapText(true);
-        
+        // Text fields for each editable design parameter (pre-populated with current values)
         TextField easyHpField = new TextField(String.valueOf(settings.getPlayerMaxHealth(DifficultyEnum.EASY)));
         TextField easyLivesField = new TextField(String.valueOf(settings.getStartingLives(DifficultyEnum.EASY)));
         TextField easyEnemyDmgField = new TextField(String.valueOf(settings.getEnemyDamageMultiplier(DifficultyEnum.EASY)));
@@ -65,6 +73,8 @@ public class SettingsPage {
         TextField hardHpField = new TextField(String.valueOf(settings.getPlayerMaxHealth(DifficultyEnum.HARD)));
         TextField hardLivesField = new TextField(String.valueOf(settings.getStartingLives(DifficultyEnum.HARD)));
         TextField hardEnemyDmgField = new TextField(String.valueOf(settings.getEnemyDamageMultiplier(DifficultyEnum.HARD)));
+
+        // Input validation to ensure only valid values can be entered
         makeIntegerOnly(easyLivesField);
         makeIntegerOnly(mediumLivesField);
         makeIntegerOnly(hardLivesField);
@@ -77,6 +87,7 @@ public class SettingsPage {
         makeDecimalOnly(mediumEnemyDmgField);
         makeDecimalOnly(hardEnemyDmgField);
 
+        // Fixing widths of text fields for better formatting
         easyHpField.setPrefWidth(60);
         easyLivesField.setPrefWidth(60);
         easyEnemyDmgField.setPrefWidth(60);
@@ -92,22 +103,26 @@ public class SettingsPage {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        //moved to grid for easier formatting
+        // Grid layout for design parameters, improves formatting
+        // Headers for each column
         grid.add(new Label("Difficulty"), 0, 0);
         grid.add(new Label("HP"), 1, 0);
         grid.add(new Label("Lives"), 2, 0);
         grid.add(new Label("EnemyDmg"), 3, 0);
 
+        //Easy difficulty parameters
         grid.add(new Label("EASY"), 0, 1);
         grid.add(easyHpField, 1, 1);
         grid.add(easyLivesField, 2, 1);
         grid.add(easyEnemyDmgField, 3, 1);
 
+        //Medium difficulty parameters
         grid.add(new Label("MEDIUM"), 0, 2);
         grid.add(mediumHpField, 1, 2);
         grid.add(mediumLivesField, 2, 2);
         grid.add(mediumEnemyDmgField, 3, 2);
 
+        //Hard difficulty parameters
         grid.add(new Label("HARD"), 0, 3);
         grid.add(hardHpField, 1, 3);
         grid.add(hardLivesField, 2, 3);
@@ -115,10 +130,17 @@ public class SettingsPage {
 
         grid.setAlignment(Pos.CENTER_LEFT);
 
-
+        // Allows for modified values to be written back to settings
         Button saveButton = new Button("Save");
         saveButton.setOnAction(e -> {
             try {
+
+                RoleEnum role = settings.getUserRole();
+                if (role != RoleEnum.DESIGNER && role != RoleEnum.DEVELOPER) {
+                    output.setText("You do not have permission to modify design parameters.");
+                    return;
+                }
+
                 int easyHp = Integer.parseInt(easyHpField.getText());
                 int mediumHp = Integer.parseInt(mediumHpField.getText());
                 int hardHp = Integer.parseInt(hardHpField.getText());
@@ -131,6 +153,7 @@ public class SettingsPage {
                 float mediumEnemyDmg = Float.parseFloat(mediumEnemyDmgField.getText());
                 float hardEnemyDmg = Float.parseFloat(hardEnemyDmgField.getText());
 
+                // Update settings with new values from text fields
                 settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
                 settings.setPlayerMaxHealth(DifficultyEnum.MEDIUM, mediumHp);
                 settings.setPlayerMaxHealth(DifficultyEnum.HARD, hardHp);
@@ -151,6 +174,8 @@ public class SettingsPage {
             }
         });
 
+
+        // Root layout for settings page
         VBox root = new VBox(14,
              roleLabel,
               grid,
@@ -168,6 +193,7 @@ public class SettingsPage {
         return root;
     }
 
+    // Restricts a text field to only allow positive integers (1 and above), used for HP and Lives fields
     private void makeIntegerOnly(TextField field) {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
@@ -183,6 +209,7 @@ public class SettingsPage {
         }));
     }
 
+    // Restricts a text field to only allow positive decimals (0.1 and above), used for enemy damage multiplier fields
     private void makeDecimalOnly(TextField field) {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
