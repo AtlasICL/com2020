@@ -17,26 +17,30 @@ import wizardquest.settings.SettingsSingleton;
 
 public class SettingsPage {
 
-    private final SettingsInterface settings = SettingsSingleton.getInstance(); // Access settings to read and update values
+    // Access settings to read and update values
+    private final SettingsInterface settings = SettingsSingleton.getInstance(); 
     private final Label output = new Label("");
 
     public VBox createView(Runnable backAction) {
         Label roleLabel = new Label();
 
         try {
-            roleLabel.setText("Role: " + settings.getUserRole()); // Display the user's role at the top of the settings page
+            // Display the user's role at the top of the settings page
+            roleLabel.setText("Role: " + settings.getUserRole()); 
         } catch (AuthenticationException e) {
             roleLabel.setText("Role: UNKNOWN");
         }
 
-        Label telemetryLabel = new Label("Telemetry: OFF"); // Displays current telemetry state
+        // Displays current telemetry state
+        Label telemetryLabel = new Label("Telemetry: OFF"); 
         try {
             telemetryLabel.setText("Telemetry: " + (settings.isTelemetryEnabled() ? "ON" : "OFF"));
         } catch (Exception e) {
             telemetryLabel.setText("Telemetry: OFF");
         }
 
-        Button toggleTelemetryButton = new Button("Toggle Telemetry"); // Button to toggle telemetry on and off
+        // Button to toggle telemetry on and off
+        Button toggleTelemetryButton = new Button("Toggle Telemetry"); 
         toggleTelemetryButton.setOnAction(e -> {
             try {
                 boolean current = settings.isTelemetryEnabled();
@@ -62,6 +66,7 @@ public class SettingsPage {
         );
 
         telemetryDisclosure.setWrapText(true);
+
         // Text fields for each editable design parameter (pre-populated with current values)
         TextField easyHpField = new TextField(String.valueOf(settings.getPlayerMaxHealth(DifficultyEnum.EASY)));
         TextField easyLivesField = new TextField(String.valueOf(settings.getStartingLives(DifficultyEnum.EASY)));
@@ -111,19 +116,19 @@ public class SettingsPage {
         grid.add(new Label("Lives"), 2, 0);
         grid.add(new Label("EnemyDmg"), 3, 0);
 
-        //Easy difficulty parameters
+        // Easy difficulty parameters
         grid.add(new Label("EASY"), 0, 1);
         grid.add(easyHpField, 1, 1);
         grid.add(easyLivesField, 2, 1);
         grid.add(easyEnemyDmgField, 3, 1);
 
-        //Medium difficulty parameters
+        // Medium difficulty parameters
         grid.add(new Label("MEDIUM"), 0, 2);
         grid.add(mediumHpField, 1, 2);
         grid.add(mediumLivesField, 2, 2);
         grid.add(mediumEnemyDmgField, 3, 2);
 
-        //Hard difficulty parameters
+        // Hard difficulty parameters
         grid.add(new Label("HARD"), 0, 3);
         grid.add(hardHpField, 1, 3);
         grid.add(hardLivesField, 2, 3);
@@ -135,13 +140,14 @@ public class SettingsPage {
         Button saveButton = new Button("Save");
         saveButton.setOnAction(e -> {
             try {
-
+                // Checks if the user has the required role (Designer or Developer) before allowing design parameter changes
                 RoleEnum role = settings.getUserRole();
                 if (role != RoleEnum.DESIGNER && role != RoleEnum.DEVELOPER) {
                     output.setText("You do not have permission to modify design parameters.");
                     return;
                 }
 
+                // Reads the difficulty parameters entered in the UI and converts the text values into integers
                 int easyHp = Integer.parseInt(easyHpField.getText());
                 int mediumHp = Integer.parseInt(mediumHpField.getText());
                 int hardHp = Integer.parseInt(hardHpField.getText());
@@ -150,19 +156,22 @@ public class SettingsPage {
                 int mediumLives = Integer.parseInt(mediumLivesField.getText());
                 int hardLives = Integer.parseInt(hardLivesField.getText());
 
+                // Reads the difficulty parameters entered in the UI and converts the text values into floats
                 float easyEnemyDmg = Float.parseFloat(easyEnemyDmgField.getText());
                 float mediumEnemyDmg = Float.parseFloat(mediumEnemyDmgField.getText());
                 float hardEnemyDmg = Float.parseFloat(hardEnemyDmgField.getText());
 
-                // Update settings with new values from text fields
+                // Update Max Health with new values from text fields
                 settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
                 settings.setPlayerMaxHealth(DifficultyEnum.MEDIUM, mediumHp);
                 settings.setPlayerMaxHealth(DifficultyEnum.HARD, hardHp);
 
+                // Update Starting Lives with new values from text fields
                 settings.setStartingLives(DifficultyEnum.EASY, easyLives);
                 settings.setStartingLives(DifficultyEnum.MEDIUM, mediumLives);
                 settings.setStartingLives(DifficultyEnum.HARD, hardLives);
 
+                // Update Enemy Damage Multiplier with new values from text fields
                 settings.setEnemyDamageMultiplier(DifficultyEnum.EASY, easyEnemyDmg);
                 settings.setEnemyDamageMultiplier(DifficultyEnum.MEDIUM, mediumEnemyDmg);
                 settings.setEnemyDamageMultiplier(DifficultyEnum.HARD, hardEnemyDmg);
@@ -186,6 +195,7 @@ public class SettingsPage {
                 toggleTelemetryButton, 
                 telemetryDisclosure);
         root.setPadding(new Insets(20));
+        // Back button returns to main menu
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> backAction.run());
 
@@ -200,10 +210,11 @@ public class SettingsPage {
             String newText = change.getControlNewText();
 
             if (newText.isEmpty()) return change;
-
+            // Positives integers only
             if (!newText.matches("\\d+")) return null;
 
             int value = Integer.parseInt(newText);
+            // Minimum = 1
             if (value < 1) return null;
 
             return change;
@@ -216,11 +227,12 @@ public class SettingsPage {
             String newText = change.getControlNewText();
 
             if (newText.isEmpty()) return change;
-
+            // Positive floats only
             if (!newText.matches("\\d*(\\.\\d*)?")) return null;
 
             try {
                 float value = Float.parseFloat(newText);
+                // Minimum = 0.1
                 if (value < 0.1f) return null;
             } catch (NumberFormatException e) {
                 return null;
