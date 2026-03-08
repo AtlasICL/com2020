@@ -42,16 +42,22 @@ class TestLogic(unittest.TestCase):
             self.logic_engine.start_session_events, 
             {
             StartSession(
-                '1', 
-                1, 
-                datetime(2026, 3, 7, 0, 0, 0), 
-                Difficulty.EASY
+                userID='1', 
+                sessionID=1, 
+                timestamp=datetime(2026, 3, 7, 0, 0, 0), 
+                difficulty=Difficulty.EASY
             )
             }
         )
         self.assertEqual(
             self.logic_engine.end_session_events, 
-            {EndSession('1', 1, datetime(2026, 3, 7, 0, 0, 1))}
+            {
+            EndSession(
+                userID='1',
+                sessionID=1, 
+                timestamp=datetime(2026, 3, 7, 0, 0, 1)
+            )
+            }
         )
 
 

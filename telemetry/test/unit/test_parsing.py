@@ -87,10 +87,10 @@ class TestParsing(unittest.TestCase):
         """
         path = self.resource_file_path / "test_events_short.json"
         session_start = StartSession(
-            '1', 
-            1, 
-            datetime(2026, 3, 7, 0, 0, 0),
-            Difficulty.EASY
+            userID='1', 
+            sessionID=1, 
+            timestamp=datetime(2026, 3, 7, 0, 0, 0),
+            difficulty=Difficulty.EASY
         )
         session_end = EndSession('1', 1, datetime(2026, 3, 7, 0, 0, 1))
         self.assertEqual(parse_file(path), [session_start, session_end])
@@ -109,10 +109,10 @@ class TestParsing(unittest.TestCase):
                 "timestamp" : "2026/03/07/00/00/00"
                 }
         event = StartSession(
-            '1', 
-            1, 
-            datetime(2026, 3, 7, 0, 0, 0), 
-            Difficulty.EASY
+            userID='1', 
+            sessionID=1, 
+            timestamp=datetime(2026, 3, 7, 0, 0, 0), 
+            difficulty=Difficulty.EASY
         )
         self.assertEqual(parse_event(event_dict), event)
 
