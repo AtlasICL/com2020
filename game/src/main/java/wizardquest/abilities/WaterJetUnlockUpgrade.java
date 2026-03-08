@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Water Jet Unlock Upgrade - upgrade that unlocks the Water Jet attack
+ */
 public class WaterJetUnlockUpgrade extends UpgradeBase {
     public WaterJetUnlockUpgrade(PlayerInterface player) {
         super(player);

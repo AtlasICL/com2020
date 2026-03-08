@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Physical Damage Resistance Upgrade - upgrade that gives player resistance to physical damage.
+ */
 public class PhysicalDamageResistanceUpgrade extends UpgradeBase {
 
     public PhysicalDamageResistanceUpgrade(PlayerInterface player) {

@@ -6,6 +6,9 @@ import wizardquest.abilities.UpgradeEnum;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * BuyUpgradeEvent - when player buys upgrade in shop
+ */
 public class BuyUpgradeEvent extends EncounterEvent {
     private final UpgradeEnum upgrade_bought;
     private final int coins_spent;

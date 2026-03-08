@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import wizardquest.entity.EntityInterface;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.LackingResourceException;
-
+/**
+ * AbilityEnum -enumerates all abilities
+ */
 public enum AbilityEnum {
     // Organised by description, damage type, base damage, base magic points.
     PUNCH(

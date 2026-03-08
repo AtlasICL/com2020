@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Improved Thunder Damage Upgrade - upgrade that increases the player's thunder damage.
+ */
 public class ImprovedThunderDamageUpgrade extends UpgradeBase {
 
     public ImprovedThunderDamageUpgrade(PlayerInterface player) {

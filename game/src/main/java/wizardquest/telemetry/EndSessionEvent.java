@@ -2,6 +2,9 @@ package wizardquest.telemetry;
 
 import java.time.Instant;
 
+/**
+ * EndSessionEvent - for when player ends session
+ */
 public class EndSessionEvent extends SessionEvent {
     /**
      * Constructor for EndSessionEvent.

@@ -10,6 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Authenticator - handles user auth. by calling the python-side auth module, parses the output, and returns AuthecationResult
+ */
 public class Authenticator implements AuthenticatorInterface {
 
     @Override

@@ -4,6 +4,9 @@ import java.util.List;
 
 import wizardquest.abilities.UpgradeEnum;
 
+/**
+ * PlayerInterface - defines methods to be implemented for player
+ */
 public interface PlayerInterface extends EntityInterface {
     /**
      * Gets the amount of coins a player currently has.

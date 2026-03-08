@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Absolute Pulse Unlock Upgrade - upgrade that unlocks the Absolute Pulse attack.
+ */
 public class AbsolutePulseUnlockUpgrade extends UpgradeBase {
     public AbsolutePulseUnlockUpgrade(PlayerInterface player) {
         super(player);

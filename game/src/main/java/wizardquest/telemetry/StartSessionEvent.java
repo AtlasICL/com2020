@@ -4,6 +4,9 @@ import java.time.Instant;
 
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * StartSessionEvent - for when player starts session
+ */
 public class StartSessionEvent extends SessionEvent {
 
     private final DifficultyEnum difficulty;
