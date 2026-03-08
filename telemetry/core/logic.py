@@ -164,7 +164,7 @@ class EventLogicEngine:
         return uniqueIDs
     
 
-    def count_starts(self, stage_number) -> int:
+    def count_starts(self, stage_number: int) -> int:
         """
         Counts the number of starts of a given stage.
         
@@ -182,7 +182,7 @@ class EventLogicEngine:
         return start_count     
        
 
-    def count_fails(self, stage_number) -> int:
+    def count_fails(self, stage_number: int) -> int:
         """
         Counts the number of failures on a given stage.
         
@@ -256,19 +256,19 @@ class EventLogicEngine:
         f"session ID: {sessionID}")
     
     
-    def get_sessionIDs_of_difficulty(self, difficulty: Difficulty) -> list[int]:
+    def get_sessionIDs_of_difficulty(self, difficulty: Difficulty) -> set[int]:
         """
-        Get the list of all sessionIDs of a given difficulty.
+        Get the set of all sessionIDs of a given difficulty.
         
         :param difficulty: The difficulty level to search for.
         :type difficulty: Difficulty
         :return: The list of sessionIDs with the given difficulty.
         :rtype: list[int]
         """
-        difficulty_sessionIDs: list[int] = []
+        difficulty_sessionIDs: set[int] = set()
         for start_event in self.start_session_events:
             if start_event.difficulty == difficulty:
-                difficulty_sessionIDs.append(start_event.sessionID)
+                difficulty_sessionIDs.add(start_event.sessionID)
         return difficulty_sessionIDs
         
 
