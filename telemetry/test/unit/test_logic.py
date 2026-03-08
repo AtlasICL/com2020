@@ -1,3 +1,12 @@
+"""
+This submodule is responsible for testing the event interpretation and
+analysis logic of the telemetry application, which is present in 
+core.logic.
+
+This submodule defines a suite of unit tests using Python's 
+unittest library.
+"""
+
 import unittest
 from pathlib import Path
 from datetime import datetime
@@ -12,6 +21,10 @@ from core.logic import EventLogicEngine
 
 class TestLogic(unittest.TestCase):
     def setUp(self):
+        """
+        Setup / bootstrapping method to set up environment and
+        resources for testing.
+        """
         self.resource_file_path = Path(__file__).resolve().parents[1] \
             / "resources"
         self.logic_engine = EventLogicEngine()

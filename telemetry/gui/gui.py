@@ -117,8 +117,10 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def get_personalised_welcome_message(self) -> str:
-        """Gets a personalised welcome message for the user, with the
-        user's name (provided by their Google account)."""
+        """
+        Gets a personalised welcome message for the user, with the
+        user's name (provided by their Google account).
+        """
         return "Welcome to the Telemetry App" if self.current_user_name is None \
             else "Welcome to the Telemetry App, " + self.current_user_name
 
@@ -331,7 +333,8 @@ class TelemetryAppGUI(tk.Tk):
         Refreshes the plots of HP remaining per stage per difficulty.
         """
         self.logic_engine.categorise_events(self.file_name)
-        health_by_difficulty = self.logic_engine.compare_health_per_stage_per_difficulty()
+        health_by_difficulty = \
+            self.logic_engine.compare_health_per_stage_per_difficulty()
 
         series = []
         for difficulty, list_of_dicts in health_by_difficulty.items():
@@ -349,7 +352,8 @@ class TelemetryAppGUI(tk.Tk):
         difficulty.
         """
         self.logic_engine.categorise_events(self.file_name)
-        coins_by_difficulty = self.logic_engine.compare_coins_per_stage_per_difficulty()
+        coins_by_difficulty = \
+            self.logic_engine.compare_coins_per_stage_per_difficulty()
 
         series = []
         for difficulty, list_of_dicts in coins_by_difficulty.items():
