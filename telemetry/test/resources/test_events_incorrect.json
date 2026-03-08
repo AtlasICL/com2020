@@ -1,0 +1,15 @@
+[
+{
+  "userID" : "115697956126888034818",
+  "event" : "StartSession",
+  "sessionID" : -1598784765,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/17/08/38"
+}
+{
+  "userID" : "115697956126888034818",
+  "event" : "EndSession",
+  "sessionID" : -1598784765,
+  "timestamp" : "2026/03/07/17/09/07"
+}
+]

@@ -1,0 +1,95 @@
+[
+{
+  "userID" : "1",
+  "event" : "StartSession",
+  "sessionID" : 1,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/00/00/00"
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/01",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 1,
+  "event": "NormalEncounterStart"
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/01",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 1,
+  "event": "GainCoin",
+  "coins_gained": 15
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/01",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 1,
+  "event": "NormalEncounterComplete",
+  "player_HP_remaining": 5
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/01",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 2,
+  "event": "NormalEncounterStart"
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/02",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 2,
+  "event": "NormalEncounterFail",
+  "lives_left": 2
+},
+{
+  "userID" : "1",
+  "event" : "EndSession",
+  "sessionID" : 1,
+  "timestamp" : "2026/03/07/00/00/03"
+},
+{
+  "userID" : "1",
+  "event" : "StartSession",
+  "sessionID" : 1,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/00/00/03"
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/01",
+  "encounter_name": "FISHMAN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 3,
+  "event": "BossEncounterStart"
+},
+{
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/02",
+  "encounter_name": "FISHMAN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 3,
+  "event": "BossEncounterFail",
+  "lives_left": 2
+},
+{
+  "userID" : "1",
+  "event" : "EndSession",
+  "sessionID" : 1,
+  "timestamp" : "2026/03/07/00/00/04"
+}
+]
