@@ -19,6 +19,7 @@ public class ShopPage {
         this.log = log;
         this.onLeaveShop = onLeaveShop;
     }
+    // Renders the shop: lists upgrades, disables button on purchase
     public void show() {
         root.getChildren().clear();
         PlayerInterface player = gameManager.getCurrentPlayer();
@@ -38,11 +39,12 @@ public class ShopPage {
                     try {
                         gameManager.purchaseUpgrade(u);
                         log.setText("Bought " + u.getDisplayName());
-                        b.setDisable(true);
+                        b.setDisable(true); // greys out the button after the purchase
                         b.setText(u.getDisplayName() + " (bought)");
                     } catch (LackingResourceException ex) {
                         log.setText("Not enough coins");
                     }
+                    // Updates the coin display
                     PlayerInterface p = gameManager.getCurrentPlayer();
                     if (p!=null){heading.setText("SHOP   (Coins: "+p.getCoins() + ")");}
                 });
