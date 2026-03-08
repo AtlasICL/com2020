@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.Authenticator;
@@ -29,13 +28,16 @@ public class GameRunPage extends Application {
     private final GameManagerInterface gameManager = GameManagerSingleton.getInstance();
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final EntityAIInterface ai = EntityAISingleton.getInstance();
-    private VBox root; // Root container for entire UI
+    // Root container for entire UI
+    private VBox root; 
 
     @Override
     public void start(Stage stage) {
-        root = new VBox(8); // Main container for swapping between different frames
+        // Main container for swapping between different frames
+        root = new VBox(8); 
         root.setPadding(new Insets(12));
-        showLoginPage(); // First screen shown when the game launches
+        // First screen shown when the game launches
+        showLoginPage(); 
         stage.setScene(new Scene(root, 800, 700));
         stage.setTitle("WizardQuest");
         stage.show();
@@ -79,15 +81,16 @@ public class GameRunPage extends Application {
      * Allows the player, designer or developer to start a run, open settings, or quit.
      */
     private void showMainMenu() {
+        // Removes all existing UI elements from the root container
         root.getChildren().clear();
+        // Aligns page to the center
         root.setAlignment(Pos.CENTER);
-
         Label title = new Label("WIZARD QUEST");
-
         Button startBtn = new Button("Start New Game");
+        // Opens the select difficulty page in same root container
         startBtn.setOnAction(e -> showDifficultySelect());
-
         Button settingsBtn = new Button("Settings");
+    
         // Opens the settings page inside the same root container
         settingsBtn.setOnAction(e -> {
             root.getChildren().clear();
@@ -101,12 +104,13 @@ public class GameRunPage extends Application {
 
         Button quitBtn = new Button("Quit");
         quitBtn.setOnAction(e -> System.exit(0));
-
+        // Adds the title and buttons to the root layout so they appear in the UI
         root.getChildren().addAll(title, startBtn, settingsBtn, quitBtn);
     }
 
     // Player selects game difficulty
     private void showDifficultySelect() {
+        // Removes all existing UI elements from the root container
         root.getChildren().clear();
         Label heading = new Label("SELECT DIFFICULTY");
 
@@ -123,9 +127,11 @@ public class GameRunPage extends Application {
             buttons.getChildren().add(b);
         }
 
+        // Back button returns to main menu
         Button back = new Button("Back");
         back.setOnAction(e -> showMainMenu());
 
+        // Adds the headings and buttons to the root layout so they appear in the UI
         root.getChildren().addAll(heading, buttons, back);
     }
 
@@ -135,6 +141,11 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
+
+        /**
+         * Gets the next encounter and current player.
+         * If either is missing the game ends and the end screen is shown.
+         */
         EncounterInterface encounter = gameManager.pickEncounter();
         PlayerInterface player = gameManager.getCurrentPlayer();
         if (player == null || encounter == null) {
@@ -143,7 +154,7 @@ public class GameRunPage extends Application {
             return;
         }
 
-        //Reset health and magic before starting a new encounter
+        // Reset health and magic before starting a new encounter
         player.resetHealth();
         player.resetMagic();
         showEncounter(encounter);
@@ -167,12 +178,13 @@ public class GameRunPage extends Application {
             return;
         }
 
-        //Determines current stage
+        // Determines current stage
         int stage;
         if (run != null) {
             stage = run.getStage();
         } 
         else {
+            // IF run not already assigned a value, will assume stage 1
             stage = 1;
         }
 
