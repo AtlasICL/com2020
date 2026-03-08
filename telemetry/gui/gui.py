@@ -89,6 +89,7 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_spike = ttk.Frame(self.notebook)
         self.tab_curves = ttk.Frame(self.notebook)
         self.tab_fairness = ttk.Frame(self.notebook)
+        self.tab_completion_time = ttk.Frame(self.notebook)
         self.tab_suggestions = ttk.Frame(self.notebook)
 
         # Only add the "Home" screen on startup.
@@ -182,6 +183,7 @@ class TelemetryAppGUI(tk.Tk):
         self.notebook.add(self.tab_spike, text="Difficulty spike")
         self.notebook.add(self.tab_curves, text="Health")
         self.notebook.add(self.tab_fairness, text="Coins")
+        self.notebook.add(self.tab_completion_time, text="Completion time")
         self.notebook.add(self.tab_suggestions, text="Suggestions")
 
         self.tab_spike.rowconfigure(0, weight=1)
@@ -215,6 +217,12 @@ class TelemetryAppGUI(tk.Tk):
             title="Coins gained per stage",
             xlabel="Stage",
             ylabel="Coins gained",
+        )
+        self.completion_time_plot = PlotTab(
+            parent=self.tab_completion_time,
+            title="Average time to complete per stage",
+            xlabel="Stage",
+            ylabel="Time (seconds)",
         )
 
         self.refresh_all()
@@ -262,12 +270,15 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def refresh_all(self) -> None:
-        """Refreshes data from events source file.
-        Updates all graphs."""
+        """
+        Refreshes data from events source file.
+        Updates all graphs.
+        """
         self.refresh_funnel_graph()
         self.refresh_coins_gained_plots()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
+        self.refresh_completion_time_plot()
 
 
     def refresh_funnel_graph(self) -> None:
@@ -365,6 +376,20 @@ class TelemetryAppGUI(tk.Tk):
         self.fairness_plot.plot_multi_line(series)
 
 
+    def refresh_completion_time_plot(self) -> None:
+        """
+        Refreshes the plot of average time to complete per stage.
+        """
+        self.logic_engine.categorise_events(self.file_name)
+        completion_data: dict[int, float] = \
+            self.logic_engine.average_time_to_complete_per_stage()
+        self.completion_time_plot.plot_line(
+            completion_data.keys(),
+            completion_data.values(),
+            label="Avg completion time"
+        )
+
+
     def generate_spike_suggestion(self) -> str:
         """
         Generates a difficulty change suggestion for difficulty spikes.
@@ -379,5 +404,6 @@ class TelemetryAppGUI(tk.Tk):
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
         if stages:
-            return "High failure rate in " + stages + " consider increasing lives by 2."
+            return "High failure rate in " + stages + \
+                " consider increasing lives by 2."
         return "No suggestions available"
