@@ -8,6 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
+/**
+ * ArmouredGoblin - is a higher-level equivalent to the Goblin enemy
+ * Uses physical  techniques, and is resistant to many types of damage
+ * Phase 2 enemy
+ */
 public class ArmouredGoblin extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete

@@ -8,6 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
+/**
+ * Ghost - is a gimmick based boss enemy
+ * Uses many techniques, and is invulnerable to physical damage, but weak to absolute damage
+ * Phase 1 enemy
+ */
 public class Ghost extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete
