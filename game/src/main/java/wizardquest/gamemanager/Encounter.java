@@ -4,6 +4,9 @@ import wizardquest.entity.EntityEnum;
 import wizardquest.entity.EntityInterface;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * Encounter - single encounter consisting of 1-3 of enemies.
+ */
 public class Encounter implements EncounterInterface {
     private EntityInterface[] enemies;
     private boolean completed;

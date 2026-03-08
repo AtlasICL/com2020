@@ -8,7 +8,9 @@ import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
-
+/**
+ * GameRun - single run of game, containing all information about the current state of the run.
+ */
 public class GameRun implements GameRunInterface {
     // Drawn from for stages 1 and 2.
     private final EncounterInterface[] phase1NormalEncounters;

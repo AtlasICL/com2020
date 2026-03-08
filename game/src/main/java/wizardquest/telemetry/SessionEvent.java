@@ -2,6 +2,9 @@ package wizardquest.telemetry;
 
 import java.time.Instant;
 
+/**
+ * SessionEvent - abstract, stores common data for session events
+ */
 public class SessionEvent extends TelemetryEvent {
     private final int sessionID;
 

@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * EncounterEvent - abstract, stores common data for encounter events
+ */
 public abstract class EncounterEvent extends SessionEvent {
     private final int stage_number;
     private final EncounterEnum encounter_name;
