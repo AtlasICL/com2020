@@ -1,6 +1,7 @@
 # Team Project for COM2020
 
 - [Build instructions](#build-instructions)
+- [Test instructions](#test-instructions)
 - [Style guide](#style-guide)
 - [Software Bill of Materials (SBOM)](#software-bill-of-materials-sbom)
 - [Licensing](#licensing)
@@ -19,14 +20,14 @@
 | Harry Taylor      | ht555@exeter.ac.uk   | Python lead + Java dev                  |
 
 
-# Build instructions
+## Build instructions
 
-## Requirements / prerequisites
+### Requirements / prerequisites
 - Java 17+
 - Maven
 - Python 3.13+
 
-## Set environment variables
+#### Set environment variables
 
 | OS      | Commands                                                                                                       |
 | ------- | -------------------------------------------------------------------------------------------------------------- |
@@ -34,13 +35,13 @@
 | Linux   | export OIDC_ISSUER="https://accounts.google.com"<br> export OIDC_CLIENT_ID=""<br> export OIDC_CLIENT_SECRET="" |
 
 
-## Run the game
+### Run the game
 ```
 cd game
 mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameUserCLI"
 ```
 
-## Run the telemetry app 
+### Run the telemetry app 
 **Windows:**
 ```
 cd telemetry
@@ -59,15 +60,15 @@ pip install -r requirements.txt
 python3 telemetry_app.py
 ```
 
-# Test instructions
+## Test instructions
 
-### Run the game test suite
+#### Run the game test suite
 ```
 cd game
 mvn test
 ```
 
-### Run the telemetry app test suite
+#### Run the telemetry app test suite
 ```
 cd telemetry
 python -m unittest
@@ -119,7 +120,7 @@ python -m unittest
 | Testing | pytest     | 3.3.0   |
 
 
-### External dependencies
+#### External dependencies
 
 | Service          | Provider |
 | ---------------- | -------- |
@@ -128,7 +129,7 @@ python -m unittest
 Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables.
 
 
-### System dependencies
+#### System dependencies
 
 | Requirement    | Details                   |
 | -------------- | ------------------------- |
@@ -139,11 +140,11 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 
 ## Licensing
 
-### Project Licence
+#### Project Licence
 
 This project is released under an MIT License. 
 
-### Dependency Licences
+#### Dependency Licences
 
 | Dependency              | Licence         | Link                                                                                  |
 | ----------------------- | --------------- | ------------------------------------------------------------------------------------- |
