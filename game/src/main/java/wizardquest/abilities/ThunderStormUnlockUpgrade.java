@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Thunder Storm Unlock Upgrade - upgrade that unlocks the Thunder Storm attack.
+ */
 public class ThunderStormUnlockUpgrade extends UpgradeBase {
     public ThunderStormUnlockUpgrade(PlayerInterface player) {
         super(player);

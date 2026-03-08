@@ -10,6 +10,10 @@ import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 
+/**
+ * Player - the "wizzard", controlled by the user
+ * Has range of stats, can gain coins and upgrades
+ */
 public class Player implements PlayerInterface {
     private final int maxMagic;
     private final int maxHealth;
@@ -19,6 +23,12 @@ public class Player implements PlayerInterface {
     private int lives;
     private final DifficultyEnum difficulty;
 
+    /**
+     * Constructor for Player class
+     * Stats based on the difficulty level
+     * @param difficulty defines the current game difficulty for concrete
+     *                   player, used to scale vrious player parameters.
+     */
     public Player(DifficultyEnum difficulty) {
         SettingsInterface settings = SettingsSingleton.getInstance();
         this.maxMagic = settings.getMaxMagic(difficulty);

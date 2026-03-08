@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Fire Damage Resistance Upgrade - upgrade that gives player resistance to fire damage.
+ */
 public class FireDamageResistanceUpgrade extends UpgradeBase {
 
     public FireDamageResistanceUpgrade(PlayerInterface player) {
