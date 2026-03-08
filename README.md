@@ -59,6 +59,13 @@ pip install -r requirements.txt
 python3 telemetry_app.py
 ```
 
+# Test instructions
+
+## Run the game's test suite
+```
+cd game
+mvn test
+```
 
 # Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
