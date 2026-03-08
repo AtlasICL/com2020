@@ -59,13 +59,27 @@ pip install -r requirements.txt
 python3 telemetry_app.py
 ```
 
+# Test instructions
 
-# Style guide
+### Run the game test suite
+```
+cd game
+mvn test
+```
+
+### Run the telemetry app test suite
+```
+cd telemetry
+python -m unittest
+```
+
+
+## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
 
-# Software Bill of Materials (SBOM) 
+## Software Bill of Materials (SBOM) 
 
 |                        |                       |
 | ---------------------- | --------------------- |
@@ -123,7 +137,7 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 | Network        | Required for Google OAuth |
 
 
-# Licensing
+## Licensing
 
 ### Project Licence
 
@@ -149,7 +163,7 @@ This project is released under an MIT License.
 All dependency licences are compatible with this project's MIT licence.
 
 
-# Folder structure
+## Project folder structure
 ```
 com2020/
 ├── game/
