@@ -1,0 +1,81 @@
+[
+{
+  "userID" : "115697956126888034818",
+  "event" : "StartSession",
+  "sessionID" : -1598784765,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/17/08/38"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1598784765,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/17/08/38"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "KillEnemy",
+  "sessionID" : -1598784765,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "enemy_type" : "Fishman",
+  "timestamp" : "2026/03/07/17/08/48"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : -1598784765,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "player_HP_remaining" : 150,
+  "timestamp" : "2026/03/07/17/08/48"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "GainCoin",
+  "sessionID" : -1598784765,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "coins_gained" : 25,
+  "timestamp" : "2026/03/07/17/08/48"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "BuyUpgrade",
+  "sessionID" : -1598784765,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "upgrade_bought" : "SLASH_UNLOCK",
+  "coins_spent" : 15,
+  "timestamp" : "2026/03/07/17/08/52"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -1598784765,
+  "stage_number" : 2,
+  "encounter_name" : "PYROMANCER_ENCOUNTER",
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/07/17/09/00"
+}
+,
+{
+  "userID" : "115697956126888034818",
+  "event" : "EndSession",
+  "sessionID" : -1598784765,
+  "timestamp" : "2026/03/07/17/09/07"
+}
+]
