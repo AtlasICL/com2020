@@ -22,7 +22,8 @@ public class Authenticator implements AuthenticatorInterface {
         // Instantiate the process builder, and set it up to be able
         // to run the login python script.
         ProcessBuilder procBuilder = new ProcessBuilder(
-                "python3",
+                "py", //change to "py" if on windows and python3 command is not available
+                "-3",
                 "-m",
                 "auth.auth_wrapper");
         procBuilder.directory(new File("../telemetry"));

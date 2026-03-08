@@ -4,27 +4,24 @@
  */
 package wizardquest.ui;
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import wizardquest.abilities.AbilityEnum;
-import wizardquest.abilities.UpgradeEnum;
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+import wizardquest.auth.Authenticator;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
-import wizardquest.entity.EntityInterface;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.EncounterInterface;
 import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
-import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
@@ -39,20 +36,58 @@ public class GameRunPage extends Application {
     public void start(Stage stage) {
         root = new VBox(8);
         root.setPadding(new Insets(12));
-        showMainMenu();
-        stage.setScene(new Scene(root, 500, 500));
+        showLoginPage();
+        stage.setScene(new Scene(root, 800, 700));
         stage.setTitle("WizardQuest");
         stage.show();
     }
+
+    private void showLoginPage() {
+        root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+
+        Label title = new Label("WizardQuest");
+
+        Button loginBtn = new Button("Login with SSO");
+
+        loginBtn.setOnAction(e -> {
+            try {
+                Authenticator auth = new Authenticator();
+                AuthenticationResult result = auth.login();
+
+                settings.loginWithResult(result);
+
+                showMainMenu();
+            } catch (AuthenticationException ex) {
+                Label error = new Label("Login failed: " + ex.getMessage());
+                root.getChildren().add(error);
+            }
+        });
+
+        root.getChildren().addAll(title, loginBtn);
+    }
+
+
+    
     private void showMainMenu() {
         root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+
         Label title = new Label("WIZARD QUEST");
 
         Button startBtn = new Button("Start New Game");
         startBtn.setOnAction(e -> showDifficultySelect());
 
         Button settingsBtn = new Button("Settings");
-        settingsBtn.setOnAction(e -> showSettings());
+        settingsBtn.setOnAction(e -> {
+            root.getChildren().clear();
+            root.setAlignment(Pos.CENTER_LEFT);
+
+            SettingsPage settingsPage = new SettingsPage();
+            VBox settingsView = settingsPage.createView(this::showMainMenu);
+
+            root.getChildren().add(settingsView);
+        });
 
         Button quitBtn = new Button("Quit");
         quitBtn.setOnAction(e -> System.exit(0));
@@ -60,22 +95,6 @@ public class GameRunPage extends Application {
         root.getChildren().addAll(title, startBtn, settingsBtn, quitBtn);
     }
 
-    private void showSettings() {
-        root.getChildren().clear();
-        Label heading = new Label("SETTINGS");
-
-        StringBuilder sb = new StringBuilder();
-        for (DifficultyEnum d : DifficultyEnum.values()) {
-            sb.append(d).append(": HP=").append(settings.getPlayerMaxHealth(d))
-                    .append(" Lives=").append(settings.getStartingLives(d))
-                    .append(" EnemyDmg=").append(settings.getEnemyDamageMultiplier(d))
-                    .append("\n");
-        }
-        Label info = new Label(sb.toString());
-        Button back = new Button("Back");
-        back.setOnAction(e -> showMainMenu());
-        root.getChildren().addAll(heading, info, back);
-    }
 
     private void showDifficultySelect() {
         root.getChildren().clear();
