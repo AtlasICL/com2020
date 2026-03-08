@@ -163,6 +163,7 @@ public class GameRunPage extends Application {
                 ));
             }
         }
+
         VBox abilityBox = new VBox(4);
         abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
         for (AbilityEnum ability : player.getAbilities()) {

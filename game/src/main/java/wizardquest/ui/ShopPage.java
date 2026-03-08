@@ -38,10 +38,13 @@ public class ShopPage {
                     try {
                         gameManager.purchaseUpgrade(u);
                         log.setText("Bought " + u.getDisplayName());
+                        b.setDisable(true);
+                        b.setText(u.getDisplayName() + " (bought)");
                     } catch (LackingResourceException ex) {
                         log.setText("Not enough coins");
                     }
-                    show();
+                    PlayerInterface p = gameManager.getCurrentPlayer();
+                    if (p!=null){heading.setText("SHOP   (Coins: "+p.getCoins() + ")");}
                 });
                 items.getChildren().add(b);
             }
