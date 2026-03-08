@@ -11,6 +11,11 @@ from dataclasses import dataclass
 
 
 class EventType(str, Enum):
+    """
+    Enumerates the possible event types. These represent the telemetry
+    events which are emitted by the game, and interpreted by the
+    telemetry application.
+    """
     START_SESSION = "StartSession"
     END_SESSION = "EndSession"
 
@@ -29,6 +34,10 @@ class EventType(str, Enum):
 
 
 class EventParameter():
+    """
+    Helper class which stores the string literals corresponding to the
+    various parameters passed in JSON format.
+    """
     EVENT_TYPE = "event"
     USER_ID = "userID"
     SESSION_ID = "sessionID"
@@ -47,11 +56,17 @@ class EventParameter():
 
 
 class EncounterName(str, Enum):
+    """
+    Enumerates the possible encounters. 
+    """
     GOBLIN_ENCOUNTER = "GOBLIN_ENCOUNTER"
     FISHMAN_ENCOUNTER = "FISHMAN_ENCOUNTER"
 
 
 class UpgradeName(str, Enum):
+    """
+    Enumerates the possible upgrades players may buy.
+    """
     PHYSICAL_DAMAGE_RESISTANCE = "PHYSICAL_DAMAGE_RESISTANCE"
     FIRE_DAMAGE_RESISTANCE = "FIRE_DAMAGE_RESISTANCE"
     WATER_DAMAGE_RESISTANCE = "WATER_DAMAGE_RESISTANCE"
@@ -64,11 +79,19 @@ class UpgradeName(str, Enum):
 
 
 class EnemyType(str, Enum):
+    """
+    Enumerates the types of enemies which may be present across
+    encounters.
+    """
     GOBLIN = "Goblin"
     FISHMAN = "Fishman"
 
 
 class SettingName(str, Enum):
+    """
+    Enumerates the possible settings which developers and designers may
+    change.
+    """
     TELEMETRY_ENABLED = "TELEMETRY_ENABLED"
     PLAYER_MAX_HEALTH = "PLAYER_MAX_HEALTH"
     ENEMY_DAMAGE_MULTIPLIER = "ENEMY_DAMAGE_MULTIPLIER"
@@ -80,9 +103,13 @@ class SettingName(str, Enum):
 
 
 class Difficulty(str, Enum):
+    """
+    Enumerates the possible difficulties the game may be set to.
+    """
     EASY = "Easy"
     MEDIUM = "Medium"
     HARD = "Hard"
+
 
 @dataclass(frozen=True)
 class StartSession:
@@ -104,7 +131,6 @@ class StartSession:
     sessionID: int
     timestamp: datetime
     difficulty: Difficulty
-
 
 
 @dataclass(frozen=True)
@@ -138,6 +164,7 @@ class NormalEncounterComplete:
     difficulty: Difficulty
     stage_number: int
     player_HP_remaining: int
+
 
 @dataclass(frozen=True)
 class NormalEncounterStart:
@@ -226,6 +253,7 @@ class BossEncounterStart:
     difficulty: Difficulty
     stage_number: int
 
+
 @dataclass(frozen=True)
 class BossEncounterComplete:
     """
@@ -289,6 +317,7 @@ class BossEncounterFail:
     stage_number: int
     lives_left: int
 
+
 @dataclass(frozen=True)
 class GainCoin:
     """
@@ -346,6 +375,7 @@ class BuyUpgrade:
     coins_spent: int
     upgrade_bought: UpgradeName
 
+
 @dataclass(frozen=True)
 class EndSession:
     """
@@ -384,6 +414,7 @@ class SettingsChange:
     timestamp: datetime
     setting: SettingName
     value: int
+
     
 @dataclass(frozen=True)
 class KillEnemy:
