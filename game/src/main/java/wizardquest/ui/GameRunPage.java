@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package wizardquest.ui;
 
 import javafx.application.Application;
@@ -150,10 +146,12 @@ public class GameRunPage extends Application {
             return;
         }
         int stage;
-        if (run!=null)
+        if (run != null) {
             stage = run.getStage();
-        else
+        } 
+        else {
             stage = 1;
+        }
 
         Label h = new Label("STAGE " + stage + " — " + encounter.getType().getDisplayName());
 
