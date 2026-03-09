@@ -9,6 +9,8 @@ This module is responsible for the logic of refreshing plot data.
 
 The GUI logic lives in the TelemetryAppGUI class.
 """
+import csv
+import dataclasses
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -165,6 +167,7 @@ class TelemetryAppGUI(tk.Tk):
         self.switch_btn_text = tk.StringVar()
         self.switch_btn_text.set("Change to simulation data")
 
+        # Show a button for switching telemetry source in the home page
         switch_simulation_button = ttk.Button(
             self.tab_home,
             textvariable=self.switch_btn_text,
@@ -172,6 +175,16 @@ class TelemetryAppGUI(tk.Tk):
         )
         switch_simulation_button.pack(pady=(10,20))
 
+        # Show a button for exporting telemetry data to csv in the
+        # home page
+        export_telemetry_button = ttk.Button(
+            self.tab_home,
+            text="Export data to csv",
+            command=self.export_to_csv
+        )
+        export_telemetry_button.pack(pady=(10, 20))
+
+        # Show a button for resetting telemetry data in the home page
         reset_telemetry_button = ttk.Button(
             self.tab_home,
             text="Reset Telemetry Data",
@@ -179,6 +192,8 @@ class TelemetryAppGUI(tk.Tk):
         )
         reset_telemetry_button.pack(pady=(10,20))
 
+        # Once the user is authenticated (since this function has been
+        # called), we now show all the telemetry views.
         self.notebook.add(self.tab_funnel, text="Funnel view")
         self.notebook.add(self.tab_spike, text="Difficulty spike")
         self.notebook.add(self.tab_curves, text="Health")
@@ -189,6 +204,7 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_spike.rowconfigure(0, weight=1)
         self.tab_spike.columnconfigure(0, weight=1)
 
+        # Add the plots to their respective tabs.
         self.funnel_plot = PlotTab(
             parent=self.tab_funnel,
             title="Funnel view",
@@ -236,8 +252,10 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def toggle_file(self) -> None:
-        """Toggles between viewing telemetry data and simulation 
-        data."""
+        """
+        Toggles between viewing telemetry data and simulation 
+        data.
+        """
         if self.switch_btn_text.get() == "Change to simulation data":
             # Change the button text to reflect data source change
             self.switch_btn_text.set("Change to telemetry data")
@@ -256,17 +274,49 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def reset_telemetry(self) -> None:
-        """Resets / erases all telemetry data. This is permanent."""
-        confirmed = messagebox.askyesno(
-        title = "Switch Data Source",
-        message = "Are you sure you want to reset telemetry data? " 
-            + "All existing telemetry data will be lost")
-        if confirmed:
-            with open(
-                ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY / TELEMETRY_EVENTS_FILE,
-                'w'
-            ) as f:
-                f.write('')
+        """
+        Resets/erases all telemetry data. This action is permanent.
+        """
+        confirmed: bool = messagebox.askyesno(
+            title="Switch Data Source",
+            message="Are you sure you want to reset telemetry data? " 
+                + "All existing telemetry data will be lost"
+        )
+        if not confirmed:
+            return
+        with open(ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                  / TELEMETRY_EVENTS_FILE,'w') as f:
+            f.write('')
+
+    
+    def export_to_csv(self) -> None:
+        """
+        Exports the telemetry data to a csv file.
+        """
+        # Get the list of telemetry events from the logic engine.
+        all_events = []
+        self.logic_engine.categorise_events(self.file_name)
+        for attr in self.logic_engine._attributes:
+            for event in attr:
+                event_type = type(event).__name__
+                event_dict = dataclasses.asdict(event)
+                event_dict["event_type"] = event_type
+                all_events.append(event_dict)
+
+        # If no events exist, return.
+        if not all_events:
+            return
+
+        # Get the field names for each event type.
+        fieldnames = list(dict.fromkeys(
+            key for event in all_events for key in event
+        ))
+
+        # Write the telemetry events to csv
+        with open("export.csv", 'w', newline='', encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(all_events)
 
 
     def refresh_all(self) -> None:
