@@ -18,8 +18,10 @@ public class EnemyUnitTests {
     private int baseDamage;
 
     /**
-     * Creates an Enemy object, using the Dragon implementation as an example for these tests.
-     * Also assigns the value of the base damage to be inflicted upon the Dragon, to demonstrate
+     * Creates an Enemy object, using the Dragon implementation as an example for
+     * these tests.
+     * Also assigns the value of the base damage to be inflicted upon the Dragon, to
+     * demonstrate
      * how this value varies with different damage types.
      */
     @BeforeEach
@@ -30,7 +32,8 @@ public class EnemyUnitTests {
     }
 
     /**
-     * If a Dragon has an Absolute attack inflicted upon them, double damage should be dealt.
+     * If a Dragon has an Absolute attack inflicted upon them, double damage should
+     * be dealt.
      */
     @Test
     @DisplayName("Enemy - Relevant damage types deal increased damage")
@@ -40,7 +43,8 @@ public class EnemyUnitTests {
     }
 
     /**
-     * If a Dragon has a Fire or Thunder attack inflicted upon them, half damage should be dealt.
+     * If a Dragon has a Fire or Thunder attack inflicted upon them, half damage
+     * should be dealt.
      * A Fire attack is used in this test to demonstrate this.
      */
     @Test
@@ -51,7 +55,8 @@ public class EnemyUnitTests {
     }
 
     /**
-     * If a Dragon has any other damage type inflicted upon them, standard damage should be dealt.
+     * If a Dragon has any other damage type inflicted upon them, standard damage
+     * should be dealt.
      * A Water attack is used in this test to demonstrate this.
      */
     @Test
