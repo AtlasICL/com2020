@@ -8,11 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.Authenticator;
-import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityInterface;
@@ -316,6 +315,13 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
+
+        // if player finishes final stage
+        if (run.getStage() >= 10) {
+        showEndScreen();
+        return;
+    }
+
         gameManager.advanceToNextLevel();
         if (!gameManager.isGameRunning()) {
             showEndScreen();
