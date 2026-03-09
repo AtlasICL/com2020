@@ -13,40 +13,52 @@ public class ShopPage {
     private final VBox root;
     private final Label log;
     private final Runnable onLeaveShop;
+
     public ShopPage(GameManagerInterface gameManager, VBox root, Label log, Runnable onLeaveShop) {
         this.gameManager = gameManager;
         this.root = root;
         this.log = log;
         this.onLeaveShop = onLeaveShop;
     }
+
     // Renders the shop: lists upgrades, disables button on purchase
     public void show() {
         root.getChildren().clear();
         PlayerInterface player = gameManager.getCurrentPlayer();
         Label heading;
-        if (player != null)
+        if (player != null) {
             heading = new Label("SHOP  (Coins: " + player.getCoins() + ")");
-        else
+        }
+        else {
             heading = new Label("SHOP  (Coins: " + 0 + ")");
+        }
 
         UpgradeEnum[] upgrades = gameManager.viewShop();
         VBox items = new VBox(4);
+
         if (upgrades != null) {
             for (UpgradeEnum u : upgrades) {
-                if (u == null) continue;
+
+                if (u == null) {
+                    continue;
+                }
+
                 Button b = new Button(u.getDisplayName() + " (cost: " + u.getPrice() + ")");
                 b.setOnAction(e -> {
                     try {
                         gameManager.purchaseUpgrade(u);
                         log.setText("Bought " + u.getDisplayName());
-                        b.setDisable(true); // greys out the button after the purchase
+                        b.setDisable(true); // Greys out the button after the purchase.
                         b.setText(u.getDisplayName() + " (bought)");
                     } catch (LackingResourceException ex) {
                         log.setText("Not enough coins");
                     }
+
                     // Updates the coin display
                     PlayerInterface p = gameManager.getCurrentPlayer();
-                    if (p!=null){heading.setText("SHOP   (Coins: "+p.getCoins() + ")");}
+                    if (p != null) {
+                        heading.setText("SHOP   (Coins: " + p.getCoins() + ")");
+                    }
                 });
                 items.getChildren().add(b);
             }

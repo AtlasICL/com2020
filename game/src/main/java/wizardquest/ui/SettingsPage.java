@@ -35,7 +35,7 @@ public class SettingsPage {
         Label telemetryLabel = new Label("Telemetry: OFF");
         try {
             telemetryLabel.setText("Telemetry: " + (settings.isTelemetryEnabled() ? "ON" : "OFF"));
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             telemetryLabel.setText("Telemetry: OFF");
         }
 
@@ -46,7 +46,7 @@ public class SettingsPage {
                 boolean current = settings.isTelemetryEnabled();
                 settings.setTelemetryEnabled(!current);
                 telemetryLabel.setText("Telemetry: " + (!current ? "ON" : "OFF"));
-            } catch (Exception ex) {
+            } catch (AuthenticationException ex) {
                 telemetryLabel.setText("Telemetry: OFF");
             }
         });
@@ -109,6 +109,7 @@ public class SettingsPage {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+
         // Grid layout for design parameters, improves formatting
         // Headers for each column
         grid.add(new Label("Difficulty"), 0, 0);
@@ -179,7 +180,7 @@ public class SettingsPage {
                 output.setText("Settings updated.");
             } catch (NumberFormatException ex) {
                 output.setText("Please enter valid numbers.");
-            } catch (Exception ex) {
+            } catch (AuthenticationException ex) {
                 output.setText("Could not update settings.");
             }
         });
@@ -209,8 +210,11 @@ public class SettingsPage {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
 
-            if (newText.isEmpty()) return change;
-            // Positives integers only
+            if (newText.isEmpty()) {
+                return change;
+            }
+
+            // Positive integers only.
             if (!newText.matches("\\d+")) return null;
 
             int value = Integer.parseInt(newText);
@@ -226,7 +230,9 @@ public class SettingsPage {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
 
-            if (newText.isEmpty()) return change;
+            if (newText.isEmpty()) {
+                return change;
+            }
             // Positive floats only
             if (!newText.matches("\\d*(\\.\\d*)?")) return null;
 
