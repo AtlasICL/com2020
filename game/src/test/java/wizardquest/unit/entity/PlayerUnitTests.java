@@ -3,16 +3,15 @@ package wizardquest.unit.entity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.DamageEnum;
 import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerUnitTests {
 
@@ -44,15 +43,18 @@ public class PlayerUnitTests {
         assertThrows(IllegalArgumentException.class, () -> {
             player.loseMagic(-10);
         });
+
         // If the player attempts to gain an amount of magic that would see
         // them exceed their maxMagic, their magic should be equated to maxMagic.
         player.gainMagic(player.getMaxMagic() + 10);
         assertEquals(player.getMaxMagic(), player.getMagic());
+
         // If the player attempts to lose an amount of magic that would see
         // them fall below 0, their magic should be equated to 0.
-        int magicToLose =  player.getMagic() + 10;
+        int magicToLose = player.getMagic() + 10;
         player.loseMagic(magicToLose);
         assertEquals(0, player.getMagic());
+
         // If the player's magic is reset, it should be equated to 0.
         player.gainMagic(10);
         player.resetMagic();
@@ -74,11 +76,13 @@ public class PlayerUnitTests {
         assertThrows(IllegalArgumentException.class, () -> {
             player.loseHealth(-10, DamageEnum.ABSOLUTE);
         });
+
         // If the player attempts to lose an amount of health that would see
         // them fall below 0, their health should be equated to 0.
-        int healthToLose =  player.getHealth() + 10;
+        int healthToLose = player.getHealth() + 10;
         player.loseHealth(healthToLose, DamageEnum.ABSOLUTE);
         assertEquals(0, player.getHealth());
+
         // If the player's health is reset, it should be equated to their maxHealth.
         player.resetHealth();
         assertEquals(player.getMaxHealth(), player.getHealth());
@@ -101,9 +105,10 @@ public class PlayerUnitTests {
         assertThrows(IllegalArgumentException.class, () -> {
             player.loseCoins(-10);
         });
+
         // If the player attempts to lose an amount of health that would see
         // them fall below 0, their health should be equated to 0.
-        int coinsToLose =  player.getCoins() + 10;
+        int coinsToLose = player.getCoins() + 10;
         player.loseCoins(coinsToLose);
         assertEquals(0, player.getCoins());
     }
@@ -122,9 +127,10 @@ public class PlayerUnitTests {
         assertThrows(IllegalArgumentException.class, () -> {
             player.loseLives(-10);
         });
+
         // If the player attempts to lose an amount of lives that would see
         // them fall below 0, their lives should be equated to 0.
-        int livesToLose =  player.getLives() + 10;
+        int livesToLose = player.getLives() + 10;
         player.loseLives(livesToLose);
         assertEquals(0, player.getLives());
     }

@@ -2,12 +2,11 @@ package wizardquest.integration.entity;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import wizardquest.entity.EntityEnum;
 import wizardquest.entity.EntityInterface;
 import wizardquest.settings.DifficultyEnum;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EntityEnumIntegrationTests {
 

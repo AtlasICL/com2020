@@ -2,6 +2,7 @@ package wizardquest.integration.abilities;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.FireDamageResistanceUpgrade;
@@ -11,8 +12,6 @@ import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbilityEnumIntegrationTests {
 
