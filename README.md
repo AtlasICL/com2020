@@ -80,6 +80,13 @@ In the `/telemetry` directory, run:
 python -m unittest
 ```
 
+#### Or, to run the telemetry app test suite code coverage analysis:
+In the `/telemetry` directory, run:
+```
+coverage run -m unittest
+coverage report -m
+```
+
 
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)

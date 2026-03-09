@@ -1,0 +1,10 @@
+[run]
+source =
+    core
+    auth
+    gui
+
+[report]
+omit =
+    test/*
+    */__init__.py
