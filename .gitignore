@@ -19,6 +19,12 @@ game/target
 telemetry_events.json
 logs.txt
 
+# Event exports
+export.csv
+
+# Unit test code coverage analysis
+.coverage
+
 # WSL
 *Zone.Identifier
 
