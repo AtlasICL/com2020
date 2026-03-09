@@ -34,9 +34,9 @@ POLLING_INTERVAL_MS = 3000
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
     WINDOW_TITLE = "Telemetry App"   # Title of window.
-    WINDOW_GEOMETRY = "800x600"      # Size at startup.
-    WINDOW_MINIMUM_WIDTH = 600       # Minimum width of window.
-    WINDOW_MINIMUM_HEIGHT = 450      # Minimum height of window. 
+    WINDOW_GEOMETRY = "1200x750"     # Size at startup.
+    WINDOW_MINIMUM_WIDTH = 1000      # Minimum width of window.
+    WINDOW_MINIMUM_HEIGHT = 700      # Minimum height of window. 
     FONT_FAMILY = "Arial"            # Font for GUI.
     FONT_SIZE = 12                   # Font size.
     BACKGROUND_COLOR = "#edd68f"   # Background colour for the window.
@@ -140,7 +140,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         try:
             _, self.current_user_name, role = google_login()
-        except KeyError as e:
+        except KeyError as _:
             messagebox.showerror(
                 "Configuration Error",
                 "OIDC_CLIENT_ID and OIDC_CLIENT_SECRET environment " \
@@ -246,7 +246,12 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def do_auto_refresh(self, interval_ms: int = POLLING_INTERVAL_MS) -> None:
-        """Use polling to refresh data for plots."""
+        """
+        Use polling to refresh data for plots.
+
+        :param interval_ms: The polling interval in milliseconds.
+        :type interval_ms: int
+        """
         self.refresh_all()
         self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
@@ -426,6 +431,7 @@ class TelemetryAppGUI(tk.Tk):
 
         self.fairness_plot.plot_multi_line(series)
     
+
     def refresh_suggestions(self) -> None:
         """
         Refreshes the suggestions generated.
@@ -467,6 +473,7 @@ class TelemetryAppGUI(tk.Tk):
             return "High failure rate in " + stages + " consider increasing lives by 2.\n"
         return ""
     
+
     def generate_health_suggestion(self) -> str:
         """
         Generates a health change suggestion for low health.
@@ -513,4 +520,3 @@ class TelemetryAppGUI(tk.Tk):
             return "High health loss in " + "".join(suggestion_parts) + \
             " Consider lowering difficulty or changing the max health.\n"
         return ""
-    
