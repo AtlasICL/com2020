@@ -464,11 +464,11 @@ class TelemetryAppGUI(tk.Tk):
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
         if stages:
-            return "High failure rate in " + stages + " consider increasing lives by 2.\n"
+            return "High failure rate in " + stages + "consider increasing lives by 2.\n"
         return ""
 
 
-    def generate_health_suggestion(self) -> str:
+    def generate_low_health_suggestion(self) -> str:
         """
         Generates a health change suggestion for low health.
 
@@ -512,7 +512,7 @@ class TelemetryAppGUI(tk.Tk):
         # Return full suggestion
         if suggestion_parts:
             return "High health loss in " + "".join(suggestion_parts) + \
-            " Consider lowering difficulty or changing the max health.\n"
+            " Consider lowering difficulty or increasing the max health.\n"
         return ""
 
 
@@ -530,7 +530,54 @@ class TelemetryAppGUI(tk.Tk):
                 if spikes[stage] < mean:
                     stages += str(stage) + ", "
             if stages:
-                return "High pass rate in " + stages + " consider decreasing lives by 2.\n"
+                return "High pass rate in " + stages + "consider decreasing lives by 2.\n"
             return ""
 
+
+    def generate_high_health_suggestion(self) -> str:
+            """
+            Generates a health change suggestion for maintained high health.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, hp_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for health_per_stage in hp_list:
+                    for stage, hp_loss in health_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + hp_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average health remaining per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 hp (i.e. not played yet)
+                active_hp_values = [hp for hp in averages.values() if hp > 0]
+                if not active_hp_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_hp_values) / len(active_hp_values)
+                # Add stages less than mean until 0hp stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] > mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)}, " +
+                                            ", ".join(stages_flagged))
+            # Return full suggestion
+            if suggestion_parts:
+                return "Low health loss in " + "".join(suggestion_parts) + \
+                " Consider increasing difficulty or lowering the max health.\n"
+            return ""
 
