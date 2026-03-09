@@ -3,16 +3,15 @@ package wizardquest.unit.entity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.DamageEnum;
 import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerUnitTests {
 
@@ -128,7 +127,7 @@ public class PlayerUnitTests {
         assertThrows(IllegalArgumentException.class, () -> {
             player.loseLives(-10);
         });
-        
+
         // If the player attempts to lose an amount of lives that would see
         // them fall below 0, their lives should be equated to 0.
         int livesToLose = player.getLives() + 10;

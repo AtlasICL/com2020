@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 
-
 public class RandomEntityAIUnitTests {
 
     /**

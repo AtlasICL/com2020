@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,8 +14,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.time.Instant;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
@@ -273,7 +272,7 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
-                
+
         // The timestamp for the first event is valid, so calling onNormalEncounterStart
         // should cause no issues.
         TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);

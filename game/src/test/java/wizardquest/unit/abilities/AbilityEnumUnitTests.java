@@ -3,6 +3,9 @@ package wizardquest.unit.abilities;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.Dragon;
@@ -11,10 +14,6 @@ import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AbilityEnumUnitTests {
 
@@ -50,7 +49,7 @@ public class AbilityEnumUnitTests {
         assertDoesNotThrow(() -> {
             freeAbility.execute(source, target);
         });
-        
+
         // However, attempting to execute the Absolute Pulse ability should throw the
         // LackingResourceException, as the player is 20 magic points short.
         assertThrows(LackingResourceException.class, () -> {
