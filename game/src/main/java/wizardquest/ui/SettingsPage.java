@@ -52,18 +52,20 @@ public class SettingsPage {
         });
         // Disclosure explaining telemetry data collection to the user
         Label telemetryDisclosure = new Label(
-                "If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.\n\n" +
-                        "This includes:\n" +
-                        "• timestamp, session id, user id\n" +
-                        "• encounter start, completion, or fail (stage, difficulty, encounter name)\n" +
-                        "• player state on completion or fail (health remaining, lives left if relevant)\n" +
-                        "• coins gained and upgrades purchased\n" +
-                        "• settings changes (new values)\n" +
-                        "• enemies defeated\n\n" +
-                        "Why we collect it:\n" +
-                        "• to spot difficulty spikes and unfair encounters\n" +
-                        "• to support balancing changes with evidence"
-        );
+                """
+                If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.
+                
+                This includes:
+                \u2022 timestamp, session id, user id
+                \u2022 encounter start, completion, or fail (stage, difficulty, encounter name)
+                \u2022 player state on completion or fail (health remaining, lives left if relevant)
+                \u2022 coins gained and upgrades purchased
+                \u2022 settings changes (new values)
+                \u2022 enemies defeated
+                
+                Why we collect it:
+                \u2022 to spot difficulty spikes and unfair encounters
+                \u2022 to support balancing changes with evidence""");
 
         telemetryDisclosure.setWrapText(true);
 
