@@ -212,7 +212,6 @@ public class GameRunPage extends Application {
         }
         Button quitRun = new Button("Quit Run");
         quitRun.setOnAction(e -> {
-            gameManager.endGame();
             showEndScreen();
         });
 
