@@ -425,10 +425,10 @@ class TelemetryAppGUI(tk.Tk):
         :rtype: str
         """
         spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
-        #suggestion parts are the full suggestion
+        # Suggestion parts are the full suggestion
         suggestion_parts = []
         for difficulty, hp_list in spikes.items():
-            #iterate for each difficulty level
+            # Iterate for each difficulty level
             totals = {}
             counts = {}
             for health_per_stage in hp_list:
@@ -437,16 +437,16 @@ class TelemetryAppGUI(tk.Tk):
                     counts[stage] = counts.get(stage, 0) + 1
             averages = {}
             for stage in totals:
-                #calculate average health remaining per stage
+                # Calculate average health remaining per stage
                 averages[stage] = totals[stage] / counts[stage]
 
-            #filter to only stages which aren't 0 hp (i.e. not played yet)
+            # Filter to only stages which aren't 0 hp (i.e. not played yet)
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
-            #calculate average based on filtered values
+            # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
-            #add stages less than mean until 0hp stage
+            # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
                 if averages[stage] < mean:
@@ -454,11 +454,11 @@ class TelemetryAppGUI(tk.Tk):
                 if averages[stage] == 0:
                     break
                 
-            #create list of difficulties to stages string
+            # Create list of difficulties to stages string
             if stages_flagged:
                 suggestion_parts.append(f"{str(difficulty.value)}, " + 
                                         ", ".join(stages_flagged))
-        #return full suggestion
+        # Return full suggestion
         if suggestion_parts:
             return "High health loss in " + "".join(suggestion_parts) + \
             " Consider lowering difficulty or changing the max health.\n"
