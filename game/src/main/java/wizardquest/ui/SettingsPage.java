@@ -109,6 +109,7 @@ public class SettingsPage {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+
         // Grid layout for design parameters, improves formatting
         // Headers for each column
         grid.add(new Label("Difficulty"), 0, 0);
@@ -209,8 +210,11 @@ public class SettingsPage {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
 
-            if (newText.isEmpty()) return change;
-            // Positives integers only
+            if (newText.isEmpty()) {
+                return change;
+            }
+
+            // Positive integers only.
             if (!newText.matches("\\d+")) return null;
 
             int value = Integer.parseInt(newText);
@@ -226,7 +230,9 @@ public class SettingsPage {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
 
-            if (newText.isEmpty()) return change;
+            if (newText.isEmpty()) {
+                return change;
+            }
             // Positive floats only
             if (!newText.matches("\\d*(\\.\\d*)?")) return null;
 

@@ -15,17 +15,19 @@ import wizardquest.auth.Authenticator;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
+import wizardquest.entity.EntityInterface;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.EncounterInterface;
 import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
+import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 
 public class GameRunPage extends Application {
-    
+
     // Access to core game systems through their singleton interfaces
     private final GameManagerInterface gameManager = GameManagerSingleton.getInstance();
     private final SettingsInterface settings = SettingsSingleton.getInstance();
@@ -49,6 +51,7 @@ public class GameRunPage extends Application {
         stage.setTitle("WizardQuest");
         stage.show();
     }
+
     /**
      * Displays the login screen where the user authenticates via SSO.
      * Once authenticated, the user is taken to the main menu.
@@ -81,9 +84,11 @@ public class GameRunPage extends Application {
 
         root.getChildren().addAll(title, loginBtn);
     }
+
     /**
      * Displays the main menu of the game.
-     * Allows the player, designer or developer to start a run, open settings, or quit.
+     * Allows the player, designer or developer to start a run, open settings, or
+     * quit.
      */
     private void showMainMenu() {
         // Removes all existing UI elements from the root container
@@ -134,9 +139,10 @@ public class GameRunPage extends Application {
         // Back button returns to main menu
         Button back = new Button("Back");
         back.setOnAction(e -> showMainMenu());
-        // Adds the headings and buttons to the root layout so they appear in the UI
+        // Adds the headings and buttons to the root layout so they appear in the UI/
         root.getChildren().addAll(heading, buttons, back);
     }
+
     // Advance game to the next encounter
     private void nextEncounter() {
         if (!gameManager.isGameRunning()) {
@@ -155,13 +161,14 @@ public class GameRunPage extends Application {
             return;
         }
 
-        // Reset health and magic before starting a new encounter
+        // Reset health and magic before starting a new encounter.
         player.resetHealth();
         player.resetMagic();
         player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
         showEncounter();
     }
-    // Displays current encounter and player stats
+
+    // Displays current encounter and player stats.
     private void showEncounter() {
         root.getChildren().clear();
         PlayerInterface player = gameManager.getCurrentPlayer();
@@ -171,7 +178,9 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
-        // if the player died last turn, deducts 1 life, resets the enemies, or end if no more lives
+
+        // If the player died last turn, deducts 1 life, resets the enemies, or end if
+        // no more lives.
         if (player.getHealth() <= 0) {
             gameManager.resetFailedEncounter();
             if (player.getLives() == 0) {
@@ -181,7 +190,7 @@ public class GameRunPage extends Application {
             player.resetHealth();
             player.resetMagic();
         }
-        //Determines current stage
+        // Determines current stage
         int stage = run != null ? run.getStage() : 1;
         Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
         // Display of basic player stats
@@ -189,8 +198,7 @@ public class GameRunPage extends Application {
                 "HP: " + player.getHealth() + "/" + player.getMaxHealth() +
                         "  Magic: " + player.getMagic() + "/" + player.getMaxMagic() +
                         "  Lives: " + player.getLives() +
-                        "  Coins: " + player.getCoins()
-        );
+                        "  Coins: " + player.getCoins());
         VBox enemyList = new VBox(2);
         enemyList.getChildren().add(new Label("ENEMIES:"));
         EntityInterface[] enemies = currentEncounter.getEnemies();
@@ -198,15 +206,15 @@ public class GameRunPage extends Application {
             if (enemy != null && enemy.getHealth() > 0) {
                 enemyList.getChildren().add(new Label(
                         "  " + enemy.getType().getDisplayName() +
-                                "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
-                ));
+                                "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()));
             }
         }
 
         VBox abilityBox = new VBox(4);
         abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
         for (AbilityEnum ability : player.getAbilities()) {
-            Button ab = new Button(ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:" + ability.getMagicCost() + ")");
+            Button ab = new Button(ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:"
+                    + ability.getMagicCost() + ")");
             ab.setOnAction(e -> showTargetSelection(ability));
             abilityBox.getChildren().add(ab);
         }
@@ -218,7 +226,8 @@ public class GameRunPage extends Application {
 
         root.getChildren().addAll(heading, playerStats, enemyList, abilityBox, log, quitRun);
     }
-    // Shows alive enemies as clickable targets after the player picks an ability
+
+    // Shows alive enemies as clickable targets after the player picks an ability.
     private void showTargetSelection(AbilityEnum ability) {
         PlayerInterface player = gameManager.getCurrentPlayer();
         if (player == null || !gameManager.isGameRunning()) {
@@ -244,7 +253,8 @@ public class GameRunPage extends Application {
         targetBox.getChildren().add(new Label("CHOOSE A TARGET:"));
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0) continue;
+            if (enemy == null || enemy.getHealth() <= 0)
+                continue;
             Button tb = new Button(enemy.getType().getDisplayName()
                     + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
@@ -256,7 +266,8 @@ public class GameRunPage extends Application {
         log.setText("");
         root.getChildren().addAll(heading, info, targetBox, log, back);
     }
-    // player attacks, then each enemy retailiates
+
+    // Player attacks, then each enemy retalliates.
     private void doPlayerTurn(AbilityEnum ability, EntityInterface target) {
         PlayerInterface player = gameManager.getCurrentPlayer();
         if (player == null || !gameManager.isGameRunning()) {
@@ -280,7 +291,9 @@ public class GameRunPage extends Application {
                 .append(" for ").append(dmg).append(" dmg.\n");
 
         EntityInterface[] enemies = currentEncounter.getEnemies();
-        // if all enemies are dead, you win the encounter, get awarded coins and advance
+
+        // If all enemies are dead, you win the encounter, get awarded coins and
+        // advance.
         if (allDead(enemies)) {
             gameManager.completeCurrentEncounter();
             player.gainCoins(COINS_GAINED);
@@ -291,19 +304,26 @@ public class GameRunPage extends Application {
         }
         // each alive enemy attacks the player
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0) continue;
+            if (enemy == null || enemy.getHealth() <= 0)
+                continue;
             AbilityEnum a = ai.pickAbility(enemy);
-            if (a == null) continue;
+            if (a == null)
+                continue;
             int pBefore = player.getHealth();
-            try { a.execute(enemy, player); } catch (LackingResourceException ignored) {}
+            try {
+                a.execute(enemy, player);
+            } catch (LackingResourceException ignored) {
+            }
             int taken = pBefore - player.getHealth();
             msg.append(enemy.getType().getDisplayName()).append(" hit you for ").append(taken).append(" dmg.\n");
         }
-        // regeneration is capped at max
+
+        // Regeneration is capped at maximum.
         player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
         log.setText(msg.toString());
         showEncounter();
     }
+
     // Advances stage, pre-picks the next encounter, then opens shop(or ends game).
     private void onEncounterWon() {
         if (!gameManager.isGameRunning()) {
@@ -330,7 +350,9 @@ public class GameRunPage extends Application {
         currentEncounter = nextEnc;
         showShop();
     }
-    // Delegates to ShopPage, on leave resets the player and starts the next encounter
+
+    // Delegates to ShopPage, on leave resets the player and starts the next
+    // encounter
     private void showShop() {
         if (!gameManager.isGameRunning()) {
             showEndScreen();
@@ -346,7 +368,7 @@ public class GameRunPage extends Application {
                 showEndScreen();
                 return;
             }
-            //Reset health and magic before starting a new encounter
+            // Reset health and magic before starting a new encounter
             player.resetHealth();
             player.resetMagic();
             player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
@@ -354,6 +376,7 @@ public class GameRunPage extends Application {
         });
         shopPage.show();
     }
+
     // Displays the end screen, shows the run summary
     private void showEndScreen() {
         root.getChildren().clear();
@@ -378,15 +401,17 @@ public class GameRunPage extends Application {
 
         root.getChildren().addAll(heading, stats, back);
     }
+
     // Return true if every enemy is null or has 0 HP
     private boolean allDead(EntityInterface[] enemies) {
         for (EntityInterface e : enemies) {
-            if (e != null && e.getHealth() > 0){
+            if (e != null && e.getHealth() > 0) {
                 return false;
             }
         }
         return true;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
