@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Improved Fire Damage Upgrade - upgrade that increases the player's fire damage.
+ */
 public class ImprovedFireDamageUpgrade extends UpgradeBase {
 
     public ImprovedFireDamageUpgrade(PlayerInterface player) {

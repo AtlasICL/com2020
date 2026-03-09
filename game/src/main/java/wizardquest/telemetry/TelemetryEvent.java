@@ -4,6 +4,9 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ * TelemetryEvent - abstract, stores common data for telemetry events
+ */
 public abstract class TelemetryEvent {
     private final String userID;
     private final Instant timeStamp;

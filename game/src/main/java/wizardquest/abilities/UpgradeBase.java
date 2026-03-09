@@ -5,6 +5,9 @@ import java.util.List;
 import wizardquest.entity.EntityEnum;
 import wizardquest.entity.PlayerInterface;
 
+/**
+ * UpgradeBase - abstract class for upgrades, decorates player.
+ */
 public abstract class UpgradeBase implements PlayerInterface {
     protected final PlayerInterface player;
 

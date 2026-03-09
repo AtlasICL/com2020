@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * EncounterCompleteEvent - abstract, stores player health remaining after completion
+ */
 public abstract class EncounterCompleteEvent extends EncounterEvent {
     private final int player_HP_remaining;
 

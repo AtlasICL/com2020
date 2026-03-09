@@ -1,8 +1,8 @@
 package wizardquest.integration.abilities;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.FireDamageResistanceUpgrade;
@@ -13,24 +13,7 @@ import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class AbilityEnumIntegrationTests {
-
-    private EntityInterface source;
-    private PlayerInterface target;
-    private AbilityEnum ability;
-
-    /**
-     * Creates two entities: one Player for the source, and one Dragon for the target.
-     * Also creates an ability - the Fire Ball, which is of the Fire damage type.
-     */
-    @BeforeEach
-    void setUp() {
-        source = new Dragon(DifficultyEnum.MEDIUM);
-        target = new Player(DifficultyEnum.MEDIUM);
-        ability = AbilityEnum.FIRE_BALL;
-    }
 
     /**
      * When a player - who has a damage resistance upgrade for a particular damage type - is
@@ -43,6 +26,11 @@ public class AbilityEnumIntegrationTests {
     @Test
     @DisplayName("AbilityEnum - Executed attack on target entity with Damage Resistance upgrade has reduced damage")
     void execute_upgradedTargetTakesReducedDamage() throws LackingResourceException {
+        // Creates two entities: one Player for the source, and one Dragon for the target.
+        // Also creates an ability - the Fire Ball, which is of the Fire damage type.
+        EntityInterface source = new Dragon(DifficultyEnum.MEDIUM);
+        PlayerInterface target = new Player(DifficultyEnum.MEDIUM);
+        AbilityEnum ability = AbilityEnum.FIRE_BALL;
         // Decorate the target Player object with a Fire Damage Resistance upgrade.
         PlayerInterface upgradedTarget = new FireDamageResistanceUpgrade(target);
         // As a result, the damage they take from a Fire attack should be half of its base damage.

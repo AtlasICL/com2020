@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Slash Unlock Upgrade - upgrade that unlocks the Slash attack.
+ */
 public class SlashUnlockUpgrade extends UpgradeBase {
     public SlashUnlockUpgrade(PlayerInterface player) {
         super(player);

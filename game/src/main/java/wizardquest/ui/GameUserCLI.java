@@ -5,12 +5,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+import wizardquest.abilities.AbilityEnum;
+import wizardquest.abilities.UpgradeEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.Authenticator;
 import wizardquest.auth.RoleEnum;
-import wizardquest.abilities.AbilityEnum;
-import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityInterface;

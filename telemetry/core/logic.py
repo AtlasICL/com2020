@@ -8,6 +8,7 @@ averages by difficulty, etc...
 This functionality is provided by the EventLogicEngine class.
 """
 
+from datetime import datetime
 from pathlib import Path
 
 from core.events import (
@@ -90,10 +91,6 @@ class EventLogicEngine:
         :param filename: json file with custom schema.
         :type filename: Path
         """
-        # TODO: We would need to implement __eq__ methods for our 
-        # event classes if we want the set() functionality of 
-        # avoiding duplicates. Until then, temporary fix: clear the 
-        # attributes before reading them back in again.
         for attr in self._attributes:
             attr.clear()
         
@@ -364,3 +361,50 @@ class EventLogicEngine:
         """
         return {diff: self.get_coins_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
+
+
+    def average_time_to_complete_per_stage(self) -> dict[int, float]:
+        """
+        Calculate the average time (in seconds) to complete each stage,
+        across all sessions. Time to complete is the difference between
+        the encounter start and encounter complete timestamps for a
+        given session and stage.
+
+        :return: Dictionary of stage number to average completion time
+        in seconds.
+        :rtype: dict[int, float]
+        """
+        # Build lookup of start timestamps keyed by (sessionID, stage)
+        start_times: dict[tuple[int, int], datetime] = {}
+        for event in self.normal_encounter_start_events:
+            key = (event.sessionID, event.stage_number)
+            start_times[key] = event.timestamp
+        for event in self.boss_encounter_start_events:
+            key = (event.sessionID, event.stage_number)
+            start_times[key] = event.timestamp
+
+        # Get completion times per stage
+        stage_times: dict[int, list[float]] = {
+            stage: [] for stage in range(1, 11)
+        }
+        for event in self.normal_encounter_complete_events:
+            key = (event.sessionID, event.stage_number)
+            if key in start_times:
+                duration = (
+                    event.timestamp - start_times[key]
+                ).total_seconds()
+                stage_times[event.stage_number].append(duration)
+        for event in self.boss_encounter_complete_events:
+            key = (event.sessionID, event.stage_number)
+            if key in start_times:
+                duration = (
+                    event.timestamp - start_times[key]
+                ).total_seconds()
+                stage_times[event.stage_number].append(duration)
+
+        # Calculate averages per stage
+        averages: dict[int, float] = {}
+        for stage in range(1, 11):
+            times = stage_times[stage]
+            averages[stage] = (sum(times) / len(times)) if times else 0.0
+        return averages

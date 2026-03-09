@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,8 +14,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.time.Instant;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
@@ -118,11 +117,13 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
+
         // As a result of this mismatch, UserValidationException should be thrown when
         // an event occurs.
         TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
         assertTrue(this.exError.toString().contains("UserID of event " + invalidTestEvent.getEvent() +
                 " " + invalidTestEvent.getUserID() + " not equal to current sessionID of "));
+
         // Reset the exception output stream.
         exError.reset();
 
@@ -135,6 +136,7 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
+
         // Now the value of userID in the authenticated user's settings matches the
         // value in the event field.
         // Therefore, no exception should be thrown and handled when the method is
@@ -168,6 +170,7 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
+
         // As a result of this mismatch, UserValidationException should be thrown when
         // an event occurs.
         TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
@@ -185,12 +188,14 @@ public class TelemetryListenerUnitTests {
                 GameManagerSingleton.getInstance().getSessionID(),
                 Instant.now(),
                 DifficultyEnum.MEDIUM);
+
         // This should result in SessionValidationException being thrown as a session is
         // already running.
         TelemetryListenerSingleton.getInstance().onStartSession(testStartEvent);
         assertTrue(this.exError.toString()
                 .contains("StartSession for session " + testStartEvent.getSessionID() +
                         " occurs before EndSession of "));
+
         // Reset the exception output stream.
         exError.reset();
 
@@ -206,13 +211,16 @@ public class TelemetryListenerUnitTests {
                 SettingsSingleton.getInstance().getUserID(),
                 GameManagerSingleton.getInstance().getSessionID(),
                 Instant.now());
+
         // This first event should be accepted, no exception should be thrown.
         TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent1);
         assertTrue(this.exError.toString().isEmpty());
+
         // This second event should result in SessionValidationException being thrown.
         TelemetryListenerSingleton.getInstance().onEndSession(testEndEvent2);
         assertTrue(this.exError.toString().contains("EndSession for session " + testEndEvent2.getSessionID() +
                 " occurs before its StartSession"));
+
         // Reset the exception output stream.
         exError.reset();
 
@@ -237,6 +245,7 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
+
         // Since the time is in the future, TimestampValidationException should be
         // thrown when an event occurs.
         TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent2);
@@ -263,6 +272,7 @@ public class TelemetryListenerUnitTests {
                 EncounterEnum.GOBLIN_ENCOUNTER,
                 DifficultyEnum.MEDIUM,
                 1);
+
         // The timestamp for the first event is valid, so calling onNormalEncounterStart
         // should cause no issues.
         TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);

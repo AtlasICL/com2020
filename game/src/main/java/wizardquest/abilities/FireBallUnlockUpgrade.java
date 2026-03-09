@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * fire ball Unlock Upgrade - upgrade that unlocks the fire ball attack.
+ */
 public class FireBallUnlockUpgrade extends UpgradeBase {
     public FireBallUnlockUpgrade(PlayerInterface player) {
         super(player);

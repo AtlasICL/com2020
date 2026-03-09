@@ -2,9 +2,11 @@ package wizardquest.abilities;
 
 import wizardquest.entity.PlayerInterface;
 
-public enum UpgradeEnum { // "Upgrade" is referred to as "passive ability externally"
+/**
+ * UpgradeEnum - enumerates upgrades
+ */
+public enum UpgradeEnum { 
     // organised as price, class, telemetry name
-    // add abilities
     PHYSICAL_DAMAGE_RESISTANCE(
             20,
             PhysicalDamageResistanceUpgrade.class,

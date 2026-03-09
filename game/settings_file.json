@@ -51,13 +51,21 @@
         "MEDIUM" : 0,
         "HARD" : 0
       }
+    },
+    "110319945316649337329" : {
+      "telemetryEnabled" : true,
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
     }
   },
   "designParameters" : {
     "playerMaxHealth" : {
-      "EASY" : 200,
+      "EASY" : 250,
       "MEDIUM" : 100,
-      "HARD" : 50
+      "HARD" : 75
     },
     "shopItemCount" : {
       "EASY" : 3,
@@ -65,7 +73,7 @@
       "HARD" : 1
     },
     "enemyDamageMultiplier" : {
-      "EASY" : 0.5,
+      "EASY" : 0.25,
       "MEDIUM" : 1.0,
       "HARD" : 2.0
     },
@@ -75,7 +83,7 @@
       "HARD" : 2.0
     },
     "startingLives" : {
-      "EASY" : 10,
+      "EASY" : 5,
       "MEDIUM" : 3,
       "HARD" : 1
     },

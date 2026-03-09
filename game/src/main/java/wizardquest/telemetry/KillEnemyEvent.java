@@ -6,6 +6,9 @@ import wizardquest.entity.EntityEnum;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * KillEnemyEvent - when player kills an enemy within encounter
+ */
 public class KillEnemyEvent extends EncounterEvent {
     private final EntityEnum enemy_type;
 
