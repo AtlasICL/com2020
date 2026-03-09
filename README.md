@@ -63,14 +63,20 @@ python3 telemetry_app.py
 ## Test instructions
 
 #### Run the game test suite
+In the `/game` directory, run:
 ```
-cd game
 mvn test
 ```
 
-#### Run the telemetry app test suite
+#### Or, to run the game rest suite with code coverage analysis:
+In the `/game` directory, run:
 ```
-cd telemetry
+mvn -U clean verify
+```
+
+#### Run the telemetry app test suite
+In the `/telemetry` directory, run:
+```
 python -m unittest
 ```
 
