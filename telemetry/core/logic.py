@@ -125,7 +125,7 @@ class EventLogicEngine:
     def fail_difficulty_spikes(self) -> dict[int, int]:
         """
         Output failure rate by stage.
-        
+
         :return: dictionary of key stage number and value number of 
         failures.
         :rtype: dict[int, int]
@@ -136,7 +136,31 @@ class EventLogicEngine:
         for event in self.boss_encounter_fail_events:
             difficulty_output[event.stage_number] += 1
         return difficulty_output
-    
+
+
+    def fail_difficulty_spikes_per_difficulty(
+            self
+    ) -> dict[Difficulty, dict[int, int]]:
+        """
+        Output failure rate by stage, separated by difficulty.
+
+        :return: Dictionary of difficulty level to dictionary of stage
+        number to number of failures.
+        :rtype: dict[Difficulty, dict[int, int]]
+        """
+        result: dict[Difficulty, dict[int, int]] = {}
+        for diff in Difficulty:
+            session_ids = self.get_sessionIDs_of_difficulty(diff)
+            spikes = {stage: 0 for stage in range(1, 11)}
+            for event in self.normal_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            for event in self.boss_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            result[diff] = spikes
+        return result
+
 
     def get_number_of_session_starts(self) -> int:
         """
@@ -210,6 +234,47 @@ class EventLogicEngine:
             self.count_starts(stage_number) - self.count_fails(stage_number) 
             for stage_number in range(1,11)
         }
+
+
+    def funnel_view_per_difficulty(
+            self
+    ) -> dict[Difficulty, dict[int, int]]:
+        """
+        Output number of players passing a given stage, separated by
+        difficulty.
+
+        :return: Dictionary of difficulty level to dictionary of stage
+        number to number of players left.
+        :rtype: dict[Difficulty, dict[int, int]]
+        """
+        result: dict[Difficulty, dict[int, int]] = {}
+        for diff in Difficulty:
+            session_ids = self.get_sessionIDs_of_difficulty(diff)
+            funnel: dict[int, int] = {}
+            for stage in range(1, 11):
+                starts = 0
+                fails = 0
+                if stage in [3, 6, 9, 10]:
+                    for event in self.boss_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.boss_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                else:
+                    for event in self.normal_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.normal_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                funnel[stage] = starts - fails
+            result[diff] = funnel
+        return result
     
     
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
@@ -408,3 +473,55 @@ class EventLogicEngine:
             times = stage_times[stage]
             averages[stage] = (sum(times) / len(times)) if times else 0.0
         return averages
+
+
+    def average_time_to_complete_per_stage_per_difficulty(
+            self
+    ) -> dict[Difficulty, dict[int, float]]:
+        """
+        Calculate the average time (in seconds) to complete each stage,
+        separated by difficulty.
+
+        :return: Dictionary of difficulty level to dictionary of stage
+        number to average completion time in seconds.
+        :rtype: dict[Difficulty, dict[int, float]]
+        """
+        result: dict[Difficulty, dict[int, float]] = {}
+        for diff in Difficulty:
+            session_ids = self.get_sessionIDs_of_difficulty(diff)
+
+            start_times: dict[tuple[int, int], datetime] = {}
+            for event in self.normal_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+            for event in self.boss_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+
+            stage_times: dict[int, list[float]] = {
+                stage: [] for stage in range(1, 11)
+            }
+            for event in self.normal_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+            for event in self.boss_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+
+            averages: dict[int, float] = {}
+            for stage in range(1, 11):
+                times = stage_times[stage]
+                averages[stage] = \
+                    (sum(times) / len(times)) if times else 0.0
+            result[diff] = averages
+        return result
