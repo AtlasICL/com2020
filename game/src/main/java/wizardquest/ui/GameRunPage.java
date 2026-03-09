@@ -41,9 +41,11 @@ public class GameRunPage extends Application {
 
     @Override
     public void start(Stage stage) {
+        // Main container for swapping between different frames
         root = new VBox(8);
         root.setPadding(new Insets(12));
-        showMainMenu();
+        // First screen shown when the game launches
+        showLoginPage();
         stage.setScene(new Scene(root, 800, 700));
         stage.setTitle("WizardQuest");
         stage.show();
