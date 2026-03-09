@@ -47,6 +47,7 @@ class PlotTab:
             "Hard": "red"
         }
 
+
     def plot_line(self, x, y, label=None) -> None:
         self.axes.clear()
         self.axes.set_title(self.title)
@@ -75,6 +76,7 @@ class PlotTab:
 
         self.axes.grid(True)
         self.canvas.draw()
+
 
     def plot_multi_line(self, series: list[tuple[list, list, str]]) -> None:
         self.axes.clear()

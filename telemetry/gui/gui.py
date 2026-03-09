@@ -470,7 +470,8 @@ class TelemetryAppGUI(tk.Tk):
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
         if stages:
-            return "High failure rate in " + stages + " consider increasing lives by 2.\n"
+            return "High failure rate in " + stages + \
+                   " consider increasing lives by 2.\n"
         return ""
     
 
@@ -501,8 +502,10 @@ class TelemetryAppGUI(tk.Tk):
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
+
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
