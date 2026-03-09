@@ -74,7 +74,13 @@ public class GameRunPage extends Application {
                 showMainMenu();
             } catch (AuthenticationException ex) {
                 // Display login error to the user
-                Label error = new Label("Login failed: " + ex.getMessage());
+                Label error = new Label(
+                        "Login failed.\n\n" +
+                        "Your environment variables may not be configured correctly.\n" +
+                        "Please check the README file and make sure all required\n" +
+                        "authentication variables are set before launching the game."
+                );
+                error.setWrapText(true);
                 root.getChildren().add(error);
             }
         });
