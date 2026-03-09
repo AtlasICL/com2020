@@ -277,8 +277,8 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_coins_gained_plots()
         self.refresh_difficulty_spike_failure_plot()
         self.refresh_health_plots()
-        self.refresh_suggestions()
         self.refresh_completion_time_plot()
+        self.refresh_suggestions()
 
 
     def refresh_funnel_graph(self) -> None:
