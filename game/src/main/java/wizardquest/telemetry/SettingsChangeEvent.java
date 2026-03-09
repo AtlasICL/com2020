@@ -4,6 +4,9 @@ import java.time.Instant;
 
 import wizardquest.settings.SettingsEnum;
 
+/**
+ * SettingsChangeEvent - event for when a player changes setting in menu
+ */
 public class SettingsChangeEvent extends TelemetryEvent {
     private final SettingsEnum setting;
     private final String setting_value;

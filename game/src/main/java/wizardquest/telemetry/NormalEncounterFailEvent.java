@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * NormalEncounterFailEvent - when player fails normal encounter
+ */
 public class NormalEncounterFailEvent extends EncounterFailEvent {
     /**
      * Constructor for NormalEncounterFailEvent.

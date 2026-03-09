@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Water Damage Resistance Upgrade - an upgrade that gives player resistance to water damage.
+ */
 public class WaterDamageResistanceUpgrade extends UpgradeBase {
 
     public WaterDamageResistanceUpgrade(PlayerInterface player) {

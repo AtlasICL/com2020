@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Improved Physical Damage Upgrade - upgrade that increases the player's physical damage.
+ */
 public class ImprovedPhysicalDamageUpgrade extends UpgradeBase {
 
     public ImprovedPhysicalDamageUpgrade(PlayerInterface player) {

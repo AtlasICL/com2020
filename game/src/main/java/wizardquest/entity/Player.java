@@ -10,6 +10,10 @@ import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 
+/**
+ * Player - the "wizzard", controlled by the user
+ * Has range of stats, can gain coins and upgrades
+ */
 public class Player implements PlayerInterface {
     private final int maxMagic;
     private final int maxHealth;
@@ -19,6 +23,12 @@ public class Player implements PlayerInterface {
     private int lives;
     private final DifficultyEnum difficulty;
 
+    /**
+     * Constructor for Player class
+     * Stats based on the difficulty level
+     * @param difficulty defines the current game difficulty for concrete
+     *                   player, used to scale vrious player parameters.
+     */
     public Player(DifficultyEnum difficulty) {
         SettingsInterface settings = SettingsSingleton.getInstance();
         this.maxMagic = settings.getMaxMagic(difficulty);
@@ -35,7 +45,12 @@ public class Player implements PlayerInterface {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of health: %d", amount));
         }
-        this.health -= amount;
+        if (amount >= this.health) {
+            this.health = 0;
+        }
+        else {
+            this.health -= amount;
+        }
     }
 
     @Override
@@ -80,7 +95,12 @@ public class Player implements PlayerInterface {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of coins: %d", amount));
         }
-        this.coins -= amount;
+        if (amount >= this.coins) {
+            this.coins = 0;
+        }
+        else {
+            this.coins -= amount;
+        }
     }
 
     @Override
@@ -111,7 +131,12 @@ public class Player implements PlayerInterface {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player gain a negative amount of magic: %d", amount));
         }
-        this.magic += amount;
+        if (this.magic + amount >= this.maxMagic) {
+            this.magic = this.maxMagic;
+        }
+        else {
+            this.magic += amount;
+        }
     }
 
     @Override
@@ -119,7 +144,12 @@ public class Player implements PlayerInterface {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of magic: %d", amount));
         }
-        this.magic -= amount;
+        if (amount >= this.magic) {
+            this.magic = 0;
+        }
+        else {
+            this.magic -= amount;
+        }
     }
 
     @Override
@@ -132,7 +162,12 @@ public class Player implements PlayerInterface {
         if (amount < 0){
             throw new IllegalArgumentException(String.format("Tried to make the player lose a negative amount of lives: %d", amount));
         }
-        this.lives -= amount;
+        if (amount >= this.lives) {
+            this.lives = 0;
+        }
+        else {
+            this.lives -= amount;
+        }
     }
 
     @Override

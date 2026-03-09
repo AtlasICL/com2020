@@ -15,19 +15,18 @@ import wizardquest.auth.Authenticator;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
-import wizardquest.entity.EntityInterface;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.gamemanager.EncounterInterface;
 import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
-import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 
 public class GameRunPage extends Application {
-
+    
+    // Access to core game systems through their singleton interfaces
     private final GameManagerInterface gameManager = GameManagerSingleton.getInstance();
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final EntityAIInterface ai = EntityAISingleton.getInstance();
@@ -94,8 +93,8 @@ public class GameRunPage extends Application {
         Label title = new Label("WIZARD QUEST");
         // Opens the select difficulty page in same root container
         Button startBtn = new Button("Start New Game");
+        // Opens the select difficulty page in same root container
         startBtn.setOnAction(e -> showDifficultySelect());
-
         Button settingsBtn = new Button("Settings");
         // Opens the settings page inside the same root container
         settingsBtn.setOnAction(e -> {

@@ -1,5 +1,8 @@
 package wizardquest.auth;
 
+/**
+ * AuthenticatorInterface - methods to be implemented for Authenticator
+ */
 public interface AuthenticatorInterface {
 
     /**

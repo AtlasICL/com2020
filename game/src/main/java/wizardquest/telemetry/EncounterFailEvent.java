@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * EncounterFailEvent - abstract, stores player lives remaining after failure
+ */
 public abstract class EncounterFailEvent extends EncounterEvent {
     private final int lives_left;
 

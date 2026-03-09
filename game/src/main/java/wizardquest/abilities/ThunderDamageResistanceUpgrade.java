@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Thunder Damage Resistance Upgrade - an upgrade that gives player resistance to thunder damage.
+ */
 public class ThunderDamageResistanceUpgrade extends UpgradeBase {
 
     public ThunderDamageResistanceUpgrade(PlayerInterface player) {

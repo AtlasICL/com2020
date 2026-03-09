@@ -8,7 +8,11 @@ import wizardquest.abilities.DamageEnum;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 
-
+/**
+ * Dragon - is a skill based final boss enemy
+ * Uses a range of techniques, and is resistant to many types of damage, but weak to absolute damage
+ * Final Boss enemy
+ */
 public class Dragon extends EnemyBase {
     /**
      * @param difficulty defines the current game difficulty for this concrete

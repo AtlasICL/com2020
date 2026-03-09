@@ -3,7 +3,9 @@ package wizardquest.abilities;
 import java.util.List;
 
 import wizardquest.entity.PlayerInterface;
-
+/**
+ * Improved Water Damage Upgrade - upgrade that increases the player's water damage.
+ */
 public class ImprovedWaterDamageUpgrade extends UpgradeBase {
 
     public ImprovedWaterDamageUpgrade(PlayerInterface player) {

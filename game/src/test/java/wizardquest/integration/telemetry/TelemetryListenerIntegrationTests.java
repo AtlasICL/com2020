@@ -1,10 +1,4 @@
-package wizardquest.integration;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.io.TempDir;
+package wizardquest.integration.telemetry;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,6 +6,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 
 import wizardquest.auth.AuthenticationException;

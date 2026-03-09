@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * GainCoinEvent - when player earns coins after an encounter
+ */
 public class GainCoinEvent extends EncounterEvent {
     private final int coins_gained;
 

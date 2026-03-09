@@ -1,6 +1,7 @@
 # Team Project for COM2020
 
 - [Build instructions](#build-instructions)
+- [Test instructions](#test-instructions)
 - [Style guide](#style-guide)
 - [Software Bill of Materials (SBOM)](#software-bill-of-materials-sbom)
 - [Licensing](#licensing)
@@ -19,14 +20,14 @@
 | Harry Taylor      | ht555@exeter.ac.uk   | Python lead + Java dev                  |
 
 
-# Build instructions
+## Build instructions
 
-## Requirements / prerequisites
+### Requirements / prerequisites
 - Java 17+
 - Maven
 - Python 3.13+
 
-## Set environment variables
+#### Set environment variables
 
 | OS      | Commands                                                                                                       |
 | ------- | -------------------------------------------------------------------------------------------------------------- |
@@ -34,13 +35,13 @@
 | Linux   | export OIDC_ISSUER="https://accounts.google.com"<br> export OIDC_CLIENT_ID=""<br> export OIDC_CLIENT_SECRET="" |
 
 
-## Run the game
+### Run the game
 ```
 cd game
 mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameUserCLI"
 ```
 
-## Run the telemetry app 
+### Run the telemetry app 
 **Windows:**
 ```
 cd telemetry
@@ -59,13 +60,27 @@ pip install -r requirements.txt
 python3 telemetry_app.py
 ```
 
+## Test instructions
 
-# Style guide
+#### Run the game test suite
+```
+cd game
+mvn test
+```
+
+#### Run the telemetry app test suite
+```
+cd telemetry
+python -m unittest
+```
+
+
+## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
 - Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
 
-# Software Bill of Materials (SBOM) 
+## Software Bill of Materials (SBOM) 
 
 |                        |                       |
 | ---------------------- | --------------------- |
@@ -105,7 +120,7 @@ python3 telemetry_app.py
 | Testing | pytest     | 3.3.0   |
 
 
-### External dependencies
+#### External dependencies
 
 | Service          | Provider |
 | ---------------- | -------- |
@@ -114,7 +129,7 @@ python3 telemetry_app.py
 Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables.
 
 
-### System dependencies
+#### System dependencies
 
 | Requirement    | Details                   |
 | -------------- | ------------------------- |
@@ -123,13 +138,13 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 | Network        | Required for Google OAuth |
 
 
-# Licensing
+## Licensing
 
-### Project Licence
+#### Project Licence
 
 This project is released under an MIT License. 
 
-### Dependency Licences
+#### Dependency Licences
 
 | Dependency              | Licence         | Link                                                                                  |
 | ----------------------- | --------------- | ------------------------------------------------------------------------------------- |
@@ -149,7 +164,7 @@ This project is released under an MIT License.
 All dependency licences are compatible with this project's MIT licence.
 
 
-# Folder structure
+## Project folder structure
 ```
 com2020/
 ├── game/

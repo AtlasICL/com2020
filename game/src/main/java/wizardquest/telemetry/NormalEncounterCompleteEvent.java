@@ -5,6 +5,9 @@ import java.time.Instant;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.settings.DifficultyEnum;
 
+/**
+ * NormalEncounterCompleteEvent - when player completes normal encounter
+ */
 public class NormalEncounterCompleteEvent extends EncounterCompleteEvent {
     /**
      * Constructor for NormalEncounterCompleteEvent.
