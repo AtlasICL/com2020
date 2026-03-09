@@ -180,6 +180,8 @@ public class GameRunPage extends Application {
             }
             player.resetHealth();
             player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+
         }
         //Determines current stage
         int stage = run != null ? run.getStage() : 1;
@@ -225,7 +227,7 @@ public class GameRunPage extends Application {
             return;
         }
 
-        if (player.getMagic() <= ability.getMagicCost()) {
+        if (player.getMagic() < ability.getMagicCost()) {
             log.setText("Not enough magic for " + ability.getDisplayName());
             return;
         }
