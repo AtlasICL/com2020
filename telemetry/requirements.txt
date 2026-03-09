@@ -2,6 +2,6 @@ matplotlib
 numpy
 pandas
 seaborn
-pytest
 requests
 pdoc
+coverage
