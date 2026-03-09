@@ -581,3 +581,22 @@ class TelemetryAppGUI(tk.Tk):
                 " Consider increasing difficulty or lowering the max health.\n"
             return ""
 
+
+    def generate_fast_average_time_suggestion(self) -> str
+        """
+        Generates a health change suggestion for maintained high health.
+
+        :return: Suggestion text.
+        :rtype: str
+        """
+        stages = ""
+        times = self.logic_engine.average_time_to_complete_per_stage()
+        mean = sum(times.values()) / len(times)
+        for stage in times:
+            if times[stage] < mean:
+                stages += str(stage) + ", "
+            if stages:
+                return "Fast average completion time in " + stages + "consider increasing number of enemies.\n"
+        return ""
+
+
