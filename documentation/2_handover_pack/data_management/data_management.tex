@@ -70,7 +70,7 @@ In this document we will outline all data stores used by the application. For ea
 \subsection{Overview}
 Both simulation and user-generated telemetry is stored in the same format in two separate files. User-generated telemetry is stored in \verb|telemetry_events.json|. Simulation-generated data is stored in \verb|simulation_events.json|. All the stored data follows the telemetry schema specified in the report, which is duplicated here.
 \subsection{Fields}
-The log stores the events as a JSON list. Each event has several standard fields, and some feature optional fields.
+The log stores the events as a JSON list. Each event has fields described in \ref{tab:event_definitions}. The field's domains are described in \ref{tab:field_definitions}.
 \begin{table}[H]
   \begin{center}
     \begin{tabularx}{\textwidth}{
@@ -111,6 +111,7 @@ The log stores the events as a JSON list. Each event has several standard fields
       \hline
     \end{tabularx}
     \caption{Field definitions}
+    \label{tab:field_definitions}
   \end{center}
 \end{table}
 
@@ -148,6 +149,7 @@ The log stores the events as a JSON list. Each event has several standard fields
       \hline
     \end{tabularx}
     \caption{Event definitions}
+    \label{tab:event_definitions}
   \end{center}
 \end{table}
 
@@ -184,7 +186,7 @@ The decision log is used to store design parameter tweaks and justifications as 
 \section{Settings File}
 
 \subsection{Overview}
-This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings.
+This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings. This information is stored in \verb|game/settings_file.json|. 
 \subsection{Fields}
 The file contains a single JSON object with the fields \verb|users| and \verb|designParameters|. Users is a JSON object with a field for each user ID. Each field contains a user object with the fields and domains described in \ref{tab:settings_users}. The furthest level field is described in \ref{tab:per_difficulty_store}. Design parameters is a JSON object with a field for each design parameter, storing its value for each difficulty (described in \ref{tab:per_difficulty_store}). Its fields are described in \ref{tab:settings_design_parameters}. 
 \begin{table}[H]
@@ -199,7 +201,7 @@ The file contains a single JSON object with the fields \verb|users| and \verb|de
       \hline
       role & String (One of: PLAYER, DESIGNER, DEVELOPER) Note: field is unused. \\
       \hline
-      furthestLevel & JSON object \\
+      furthestLevel & JSON object (Per difficulty non-negative integer store)\\
       \hline
     \end{tabularx}
     \caption{User settings fields}
@@ -260,7 +262,7 @@ The file is read once when a user is authenticated, capturing the user settings 
 \section{Logins File}
 
 \subsection{Overview}
-The logins file stores a JSON object that holds each user's role. It is used by the Python application to obtain the authenticated user's role. 
+The logins file stores a JSON object that holds each user's role. It is used by the Python application to obtain the authenticated user's role, and by the Java application for role assignment. The information is stored in \verb|telemetry/logins_file.json|.
 \subsection{Fields}
 Each user ID is a field. All fields have the domain of String(One of: player, designer, developer).
 
