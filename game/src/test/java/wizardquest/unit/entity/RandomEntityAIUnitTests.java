@@ -47,14 +47,18 @@ public class RandomEntityAIUnitTests {
         final Integer[] testArrOriginal = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         Integer[] testArrCopy1 = testArrOriginal.clone();
         Integer[] testArrCopy2 = testArrOriginal.clone();
+
         // Use reflection to access the private RandomEntityAI class.
         Class<?> RandomEntityAI = Class.forName("wizardquest.entity.EntityAISingleton$RandomEntityAI");
+
         // Use reflection to access the private shuffleArray method.
         Method shuffleArray = RandomEntityAI.getDeclaredMethod("shuffleArray", Object[].class);
         shuffleArray.setAccessible(true);
+
         // Invoke the shuffle method on both copies of the array.
         shuffleArray.invoke(entity, (Object) testArrCopy1);
         shuffleArray.invoke(entity, (Object) testArrCopy2);
+        
         // Probability of a pair of arrays below having the same order = 1/(10!) = 1 in
         // ~3.26 million
         assertFalse(Arrays.equals(testArrOriginal, testArrCopy1));
