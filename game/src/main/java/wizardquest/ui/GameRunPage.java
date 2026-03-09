@@ -215,6 +215,7 @@ public class GameRunPage extends Application {
         Button quitRun = new Button("Quit Run");
         quitRun.setOnAction(e -> {
             showEndScreen();
+            gameManager.endGame();
         });
 
         root.getChildren().addAll(heading, playerStats, enemyList, abilityBox, log, quitRun);
