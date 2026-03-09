@@ -18,7 +18,7 @@ import wizardquest.settings.SettingsSingleton;
 public class SettingsPage {
 
     // Access settings to read and update values
-    private final SettingsInterface settings = SettingsSingleton.getInstance(); 
+    private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final Label output = new Label("");
 
     public VBox createView(Runnable backAction) {
@@ -26,13 +26,13 @@ public class SettingsPage {
 
         try {
             // Display the user's role at the top of the settings page
-            roleLabel.setText("Role: " + settings.getUserRole()); 
+            roleLabel.setText("Role: " + settings.getUserRole());
         } catch (AuthenticationException e) {
             roleLabel.setText("Role: UNKNOWN");
         }
 
         // Displays current telemetry state
-        Label telemetryLabel = new Label("Telemetry: OFF"); 
+        Label telemetryLabel = new Label("Telemetry: OFF");
         try {
             telemetryLabel.setText("Telemetry: " + (settings.isTelemetryEnabled() ? "ON" : "OFF"));
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class SettingsPage {
         }
 
         // Button to toggle telemetry on and off
-        Button toggleTelemetryButton = new Button("Toggle Telemetry"); 
+        Button toggleTelemetryButton = new Button("Toggle Telemetry");
         toggleTelemetryButton.setOnAction(e -> {
             try {
                 boolean current = settings.isTelemetryEnabled();
@@ -52,17 +52,17 @@ public class SettingsPage {
         });
         // Disclosure explaining telemetry data collection to the user
         Label telemetryDisclosure = new Label(
-            "If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.\n\n" +
-            "This includes:\n" +
-            "• timestamp, session id, user id\n" +
-            "• encounter start, completion, or fail (stage, difficulty, encounter name)\n" +
-            "• player state on completion or fail (health remaining, lives left if relevant)\n" +
-            "• coins gained and upgrades purchased\n" +
-            "• settings changes (new values)\n" +
-            "• enemies defeated\n\n" +
-            "Why we collect it:\n" +
-            "• to spot difficulty spikes and unfair encounters\n" +
-            "• to support balancing changes with evidence"
+                "If telemetry is enabled, the game records events anonymously to help balance difficulty and improve gameplay.\n\n" +
+                        "This includes:\n" +
+                        "• timestamp, session id, user id\n" +
+                        "• encounter start, completion, or fail (stage, difficulty, encounter name)\n" +
+                        "• player state on completion or fail (health remaining, lives left if relevant)\n" +
+                        "• coins gained and upgrades purchased\n" +
+                        "• settings changes (new values)\n" +
+                        "• enemies defeated\n\n" +
+                        "Why we collect it:\n" +
+                        "• to spot difficulty spikes and unfair encounters\n" +
+                        "• to support balancing changes with evidence"
         );
 
         telemetryDisclosure.setWrapText(true);
@@ -187,12 +187,12 @@ public class SettingsPage {
 
         // Root layout for settings page
         VBox root = new VBox(14,
-             roleLabel,
-              grid,
+                roleLabel,
+                grid,
                 saveButton,
                 output,
                 telemetryLabel,
-                toggleTelemetryButton, 
+                toggleTelemetryButton,
                 telemetryDisclosure);
         root.setPadding(new Insets(20));
         // Back button returns to main menu
