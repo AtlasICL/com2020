@@ -100,9 +100,9 @@ class PlotTab:
             )
         self.axes.legend(
             handlelength=0.5,   # longer line in legend
-            markerscale=1,      # dot scale in legend
-            handletextpad=0.4,  # padding with text
-            borderaxespad=0.2,  # padding from border
+            markerscale=2,      # dot scale in legend
+            handletextpad=0.6,  # padding with text
+            borderaxespad=0.4,  # padding from border
         )
         self.axes.grid(True)
         self.canvas.draw()
