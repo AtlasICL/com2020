@@ -2,12 +2,16 @@ package wizardquest.ui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import wizardquest.auth.AuthenticationException;
+import wizardquest.auth.AuthenticationResult;
+import wizardquest.auth.Authenticator;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
@@ -40,48 +44,77 @@ public class GameRunPage extends Application {
         root = new VBox(8);
         root.setPadding(new Insets(12));
         showMainMenu();
-        stage.setScene(new Scene(root, 500, 500));
+        stage.setScene(new Scene(root, 800, 700));
         stage.setTitle("WizardQuest");
         stage.show();
     }
-    // renders the main menu (start, settings, quit)
-    private void showMainMenu() {
+    /**
+     * Displays the login screen where the user authenticates via SSO.
+     * Once authenticated, the user is taken to the main menu.
+     */
+    private void showLoginPage() {
         root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+
+        Label title = new Label("WizardQuest");
+
+        Button loginBtn = new Button("Login with SSO");
+
+        loginBtn.setOnAction(e -> {
+            try {
+                // Launch OAuth authentication through the Python authenticator
+                Authenticator auth = new Authenticator();
+                AuthenticationResult result = auth.login();
+
+                // Load authenticated user settings into the settings system
+                settings.loginWithResult(result);
+
+                // Continue to main menu after successful login
+                showMainMenu();
+            } catch (AuthenticationException ex) {
+                // Display login error to the user
+                Label error = new Label("Login failed: " + ex.getMessage());
+                root.getChildren().add(error);
+            }
+        });
+
+        root.getChildren().addAll(title, loginBtn);
+    }
+    /**
+     * Displays the main menu of the game.
+     * Allows the player, designer or developer to start a run, open settings, or quit.
+     */
+    private void showMainMenu() {
+        // Removes all existing UI elements from the root container
+        root.getChildren().clear();
+        // Aligns page to the center
         log.setText("");
         Label title = new Label("WIZARD QUEST");
-
+        // Opens the select difficulty page in same root container
         Button startBtn = new Button("Start New Game");
         startBtn.setOnAction(e -> showDifficultySelect());
-        // Opens the settings page inside the same root container
+
         Button settingsBtn = new Button("Settings");
-        settingsBtn.setOnAction(e -> showSettings());
+        // Opens the settings page inside the same root container
+        settingsBtn.setOnAction(e -> {
+            root.getChildren().clear();
+            root.setAlignment(Pos.CENTER_LEFT);
+
+            SettingsPage settingsPage = new SettingsPage();
+            VBox settingsView = settingsPage.createView(this::showMainMenu);
+
+            root.getChildren().add(settingsView);
+        });
 
         Button quitBtn = new Button("Quit");
         quitBtn.setOnAction(e -> System.exit(0));
-
+        // Adds the title and buttons to the root layout so they appear in the UI
         root.getChildren().addAll(title, startBtn, settingsBtn, quitBtn);
     }
-    // Displays difficulty parameters
-    private void showSettings() {
-        root.getChildren().clear();
-        Label heading = new Label("SETTINGS");
 
-        StringBuilder sb = new StringBuilder();
-        for (DifficultyEnum d : DifficultyEnum.values()) {
-            sb.append(d).append(": HP=").append(settings.getPlayerMaxHealth(d))
-                    .append(" Lives=").append(settings.getStartingLives(d))
-                    .append(" EnemyDmg=").append(settings.getEnemyDamageMultiplier(d))
-                    .append("\n");
-        }
-        Label info = new Label(sb.toString());
-
-        Button back = new Button("Back");
-        back.setOnAction(e -> showMainMenu());
-
-        root.getChildren().addAll(heading, info, back);
-    }
     // Player selects game difficulty
     private void showDifficultySelect() {
+        // Removes all existing UI elements from the root container
         root.getChildren().clear();
         Label heading = new Label("SELECT DIFFICULTY");
 
@@ -97,10 +130,10 @@ public class GameRunPage extends Application {
             });
             buttons.getChildren().add(b);
         }
-
+        // Back button returns to main menu
         Button back = new Button("Back");
         back.setOnAction(e -> showMainMenu());
-
+        // Adds the headings and buttons to the root layout so they appear in the UI
         root.getChildren().addAll(heading, buttons, back);
     }
     // Advance game to the next encounter
@@ -109,7 +142,10 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
-
+        /**
+         * Gets the next encounter and current player.
+         * If either is missing the game ends and the end screen is shown.
+         */
         currentEncounter = gameManager.pickEncounter();
         PlayerInterface player = gameManager.getCurrentPlayer();
 
@@ -117,6 +153,8 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
+
+        // Reset health and magic before starting a new encounter
         player.resetHealth();
         player.resetMagic();
         player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
