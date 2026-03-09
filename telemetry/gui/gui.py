@@ -466,7 +466,8 @@ class TelemetryAppGUI(tk.Tk):
         if stages:
             return "High failure rate in " + stages + " consider increasing lives by 2.\n"
         return ""
-    
+
+
     def generate_health_suggestion(self) -> str:
         """
         Generates a health change suggestion for low health.
@@ -513,4 +514,23 @@ class TelemetryAppGUI(tk.Tk):
             return "High health loss in " + "".join(suggestion_parts) + \
             " Consider lowering difficulty or changing the max health.\n"
         return ""
-    
+
+
+    def generate_high_pass_rate_suggestion(self) -> str:
+            """
+            Generates a difficulty change suggestion for levels with a high pass rate.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            stages = ""
+            spikes = self.logic_engine.fail_difficulty_spikes()
+            mean = sum(spikes.values()) / len(spikes)
+            for stage in spikes:
+                if spikes[stage] < mean:
+                    stages += str(stage) + ", "
+            if stages:
+                return "High pass rate in " + stages + " consider decreasing lives by 2.\n"
+            return ""
+
+
