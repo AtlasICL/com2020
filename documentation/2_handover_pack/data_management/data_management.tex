@@ -51,6 +51,9 @@
 
 \usepackage{booktabs}
 
+\usepackage{float}
+\usepackage{tabularx}
+
 \title{Telemetry Game Report\\[0.3em]
 \large COM2020 - Project 7}
 \author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
@@ -61,41 +64,212 @@
 \newpage
 
 \section{Overview}
-In this document we will outline all data stores used by the application. For each data store we will provide an overview, then detail its schema and the domain of all fields. We will then explain which applications use the data store, what fields they access, when, and for what purpose.
+In this document we will outline all data stores used by the application. For each data store we will provide an overview, then detail its schema and the domain of all fields. When specifying the domain the type will be given, along with any other information in brackets.  We will then explain which applications use the data store, what fields they access, when, and for what purpose.
 
 \section{Telemetry Event Logs}
-
 \subsection{Overview}
-
+Both simulation and user-generated telemetry is stored in the same format in two separate files. User-generated telemetry is stored in \verb|telemetry_events.json|. Simulation-generated data is stored in \verb|simulation_events.json|. All the stored data follows the telemetry schema specified in the report, which is duplicated here.
 \subsection{Fields}
+The log stores the events as a JSON list. Each event has several standard fields, and some feature optional fields.
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.25\hsize}X
+      | >{\centering\arraybackslash\hsize=0.75\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain}  \\
+      \hline
+      event & String (One of: StartSession, NormalEncounterStart, NormalEncounterComplete, NormalEncounterFail, BossEncounterStart, BossEncounterComplete, BossEncounterFail, GainCoin, BuyUpgrade, EndSession, SettingsChange, KillEnemy)  \\
+      \hline
+      userID & String \\
+      \hline
+      sessionID & Integer \\
+      \hline
+      timestamp & String (In the format \verb|YYYY/MM/DD/HH/MM/SS|) \\
+      \hline
+      difficulty & String (One of: Easy, Medium, Hard) \\
+      \hline
+      encounter\_name & String (One of: GoblinEncounter, FishManEncounter, PyromancerEncounter, EvilWizardEncounter, GoblinDuoEncounter, GoblinFishManEncounter, PyromancerFishManEncounter, GhostEncounter, ArmouredGoblinPyromancerEncounter, GoblinFishManPyromancerEncounter, BlackKnightEncounter, DragonEncounter) \\
+      \hline
+      stage\_number & Integer (In range [1, 10]) \\
+      \hline
+      player\_HP\_remaining & Non-negative integer \\
+      \hline
+      lives\_left & Positive integer \\
+      \hline
+      coins\_gained & Positive integer \\
+      \hline
+      coins\_spent & Positive integer \\
+      \hline
+      setting & String (One of: TelemetryEnabled, PlayerMaxHealth, EnemyDamageMultiplier, EnemyMaxHealthMultiplier, StartingLives, MaxMagic, MagicRegenRate, ShopItemCount) \\
+      \hline
+      setting\_value & String (Domain is that of the setting) \\
+      \hline
+      enemy\_type & String (One of: Goblin, Fishman, Pyromancer, EvilWizard, ArmouredGoblin, Ghost, BlackKnight, Dragon)\\
+      \hline
+      upgrade\_bought & String (One of: PhysicalDamageResistance, FireDamageResistance, WaterDamageResistance, ThunderDamageResistance, ImprovedPhysicalDamage, ImprovedFireDamage, ImprovedWaterDamage, ImprovedThunderDamage, SlashUnlock, AbsolutePulseUnlock, WaterJetUnlock, FireBallUnlock, ThunderStormUnlock) \\
+      \hline
+    \end{tabularx}
+    \caption{Field definitions}
+  \end{center}
+\end{table}
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Telemetry Event} & \textbf{Fields}  \\
+      \hline
+      StartSession & userID, sessionID, timestamp, event, difficulty \\
+      \hline
+      NormalEncounterStart & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event \\
+      \hline
+      NormalEncounterComplete & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, player\_HP\_remaining \\
+      \hline
+      NormalEncounterFail & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, lives\_left \\
+      \hline
+      BossEncounterStart & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event \\
+      \hline
+      BossEncounterComplete & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, player\_HP\_remaining \\
+      \hline
+      BossEncounterFail & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, lives\_left \\
+      \hline
+      GainCoin & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, coins\_gained \\
+      \hline
+      BuyUpgrade & userID, sessionID, timestamp, stage\_number, event, upgrade\_bought, coins\_spent \\
+      \hline
+      EndSession & userID, sessionID, timestamp, event \\
+      \hline
+      SettingsChange & userID, timestamp, setting, setting\_value, event \\
+      \hline
+      KillEnemy & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, enemy\_type, event \\
+      \hline
+    \end{tabularx}
+    \caption{Event definitions}
+  \end{center}
+\end{table}
 
 \subsection{Integrations}
 
+\subsubsection{Java application}
+The Java application only ever writes to the files. When running a simulation, all events are written to the simulation store and otherwise are written to the user store. Each event is written when generated by its source, as long as the user has telemetry enabled. Below is a description of what causes each event to be written.
+\begin{itemize}
+  \item StartSession - When a run is started
+  \item NormalEncounterStart - When an encounter for stages 1, 2, 4, 5, 7 or 8 is started. These are normal encounters, consisting of one or more weak enemies.
+  \item NormalEncounterComplete - When a normal encounter is completed by killing all enemies.
+  \item NormalEncounterFail - When a normal encounter is failed by the player's health being reduced to zero.
+  \item BossEncounterStart - When an encounter for stages 3, 6, 9, or 10 is started. These are boss encounters, consisting of one strong enemy.
+  \item BossEncounterComplete - When a boss encounter is completed by killing the boss.
+  \item BossEncounterFail -  When a boss encounter is failed by the player's health being reduced to zero.
+  \item GainCoin - When the player gains any number of coins (which occurs at the end of an encounter).
+  \item BuyUpgrade - When the player buys an upgrade in the shop (which they visit after each encounter)
+  \item EndSession - When a run is completed, either by the player running out of lives, or completing stage 10.
+  \item SettingsChange - When a setting (Either a design parameter, or whether telemetry is enabled) is changed by the user.
+  \item KillEnemy - When an enemy is killed by the player in an encounter.
+\end{itemize}
+
+\subsubsection{Python application}
+The python application only ever reads the files. It does so when a user logs in, and every 3 seconds from that point to allow real time viewing. It uses this data to make design suggestions and display dashboard views.
 
 \section{Decision Log}
-
 \subsection{Overview}
-
+The decision log is used to store design parameter tweaks and justifications as to why.
+%TODO
 \subsection{Fields}
 
 \subsection{Integrations}
 
-
-\section{Design Parameters}
+\section{Settings File}
 
 \subsection{Overview}
-
+This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings.
 \subsection{Fields}
+The file contains a single JSON object with the fields \verb|users| and \verb|designParameters|. Users is a JSON object with a field for each user ID. Each field contains a user object with the fields and domains described in \ref{tab:settings_users}. The furthest level field is described in \ref{tab:per_difficulty_store}. Design parameters is a JSON object with a field for each design parameter, storing its value for each difficulty (described in \ref{tab:per_difficulty_store}). Its fields are described in \ref{tab:settings_design_parameters}. 
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      telemetryEnabled & Boolean \\
+      \hline
+      role & String (One of: PLAYER, DESIGNER, DEVELOPER) Note: field is unused. \\
+      \hline
+      furthestLevel & JSON object \\
+      \hline
+    \end{tabularx}
+    \caption{User settings fields}
+    \label{tab:settings_users}
+  \end{center}
+\end{table}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      playerMaxHealth & JSON object(Per difficulty integer store)\\
+      \hline
+      shopItemCount & JSON object(Per difficulty integer store)\\
+      \hline
+      enemyDamageMultiplier & JSON object(Per difficulty real store)\\
+      \hline
+      enemyHealthMultiplier & JSON object(Per difficulty real store) \\
+      \hline
+      startingLives & JSON object(Per difficulty integer store)\\
+      \hline
+      maxMagic & JSON object(Per difficulty integer store)\\
+      \hline
+      magicGenerationRate & JSON object(Per difficulty integer store) \\
+      \hline
+    \end{tabularx}
+    \caption{Design parameter fields}
+    \label{tab:settings_design_parameters}
+  \end{center}
+\end{table}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      EASY & D \\
+      \hline
+      MEDIUM & D\\
+      \hline
+      HARD & D \\
+      \hline
+    \end{tabularx}
+    \caption{Per Difficulty Store (Of domain D)}
+    \label{tab:per_difficulty_store}
+  \end{center}
+\end{table}
+\subsection{Integrations}
+\subsubsection{Java application}
+The file is read once when a user is authenticated, capturing the user settings and design parameters at that time. The file is written to when the user toggles telemetry, changes a design parameter and saves this change. 
+%TODO may add max level reached
+
+\section{Logins File}
+
+\subsection{Overview}
+The logins file stores a JSON object that holds each user's role. It is used by the Python application to obtain the authenticated user's role. 
+\subsection{Fields}
+Each user ID is a field. All fields have the domain of String(One of: player, designer, developer).
 
 \subsection{Integrations}
 
+\subsubsection{Java application}
+When authenticating a user the Java application makes a call to the python application, which then interacts with the file, as if it were authenticating a user. If a user is assigned a role by a developer, the Java application reads to file to find the user's ID, and if valid writes their new role. 
 
-\section{Users}
-
-\subsection{Overview}
-
-\subsection{Fields}
-
-\subsection{Integrations}
+\subsubsection{Python Application}
+When authenticating a user the Python application reads the file to find the given user ID, and on success reads their role. On failure, the Python application creates a new user with the ID provided by Google OAuth, who has the player role. 
 
 \end{document}
