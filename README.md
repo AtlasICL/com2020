@@ -38,7 +38,7 @@
 ### Run the game
 ```
 cd game
-mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage.java"
+mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"
 ```
 
 ### Run the telemetry app 
