@@ -68,7 +68,7 @@ class EventLogicEngine:
             KillEnemy
         ] = set()
 
-        self._attributes = [ 
+        self._attributes: list[set] = [ 
             self.start_session_events, 
             self.end_session_events,
             self.normal_encounter_start_events,
