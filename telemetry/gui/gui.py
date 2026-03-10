@@ -498,10 +498,17 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the suggestions generated.
         """
-        suggestion_text = self.generate_health_suggestion() + self.generate_spike_suggestion()
+        suggestion_text = self.generate_low_health_suggestion() + "\n" \
+                          + self.generate_high_health_suggestion() + "\n" \
+                          + self.generate_spike_suggestion() + "\n" \
+                          + self.generate_high_pass_rate_suggestion() + "\n" \
+                          + self.generate_low_coin_gain_suggestion() + "\n" \
+                          + self.generate_high_coin_gain_suggestion() + "\n" \
+                          + self.generate_slow_average_time_suggestion() + "\n" \
+                          + self.generate_fast_average_time_suggestion() + "\n"
         if not suggestion_text:
             suggestion_text = "No suggestions available"
-        self.spike_suggestion.config(text="Suggestion:\n" + suggestion_text)
+        self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
 
 
     def refresh_completion_time_plot(self) -> None:
