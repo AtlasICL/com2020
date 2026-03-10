@@ -11,12 +11,12 @@
 ## Team members
 | Name              | Email                | Role (Sprint 2)                         |
 | ----------------- | -------------------- | --------------------------------------- |
-| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Java dev                    |
+| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Python dev Java dev         |
 | Luca Croci        | lc1107@exeter.ac.uk  | Java dev (UI)                           |
 | Tom Croft         | tjc227@exeter.ac.uk  | Java lead                               |
 | Will Finney       | wjf207@exeter.ac.uk  | Ethics/Accessibility + Game Design lead |
-| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev (UI) + Python dev              |
-| Luca Pacitti      | ljmp201@exeter.ac.uk | Testing lead + Java dev                 |
+| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev (UI)                           |
+| Luca Pacitti      | ljmp201@exeter.ac.uk | Testing lead + Java dev + Python dev    |
 | Harry Taylor      | ht555@exeter.ac.uk   | Python lead + Java dev                  |
 
 
