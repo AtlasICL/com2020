@@ -428,6 +428,21 @@ class EventLogicEngine:
                 for diff in Difficulty}
 
 
+    def get_settings_change_events(self) -> list[SettingsChange]:
+        """
+        Returns a list of all settings change events, sorted by
+        timestamp.
+
+        :return: A list of the SettingsChange events.
+        :rtype: list[SettingsChange]
+        """
+        return sorted(
+            self.settings_change_events,
+            key=lambda e: e.timestamp,
+            reverse=True
+        )
+
+
     def average_time_to_complete_per_stage(self) -> dict[int, float]:
         """
         Calculate the average time (in seconds) to complete each stage,
