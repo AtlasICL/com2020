@@ -194,16 +194,19 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def on_authenticated(self) -> None:
-        self.switch_btn_text = tk.StringVar()
-        self.switch_btn_text.set("Change to simulation data")
+        self.data_source = tk.StringVar()
+        self.data_source.set("Telemetry data")
 
-        # Show a button for switching telemetry source in the home page.
-        switch_simulation_button = ttk.Button(
+        # Show a dropdown for switching telemetry source in the home page.
+        data_source_dropdown = ttk.Combobox(
             self.tab_home,
-            textvariable=self.switch_btn_text,
-            command=self.toggle_file
+            textvariable=self.data_source,
+            values=["Telemetry data", "Simulation data"],
+            state="readonly",
+            font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.FONT_SIZE)
         )
-        switch_simulation_button.pack(pady=(10,20))
+        data_source_dropdown.bind("<<ComboboxSelected>>", self.toggle_file)
+        data_source_dropdown.pack(pady=(10,20))
 
         # Show a button for exporting telemetry data to csv in the
         # home page.
@@ -312,26 +315,20 @@ class TelemetryAppGUI(tk.Tk):
         self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
 
-    def toggle_file(self) -> None:
+    def toggle_file(self, _event=None) -> None:
         """
         Toggles between viewing telemetry data and simulation
         data.
         """
-        if self.switch_btn_text.get() == "Change to simulation data":
-            # Change the button text to reflect data source change
-            self.switch_btn_text.set("Change to telemetry data")
+        if self.data_source.get() == "Simulation data":
             # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / SIMULATION_EVENTS_FILE
-            self.refresh_all() # Refresh data after switch
         else:
-            # Change the button text to reflect data source change
-            self.switch_btn_text.set("Change to simulation data")
             # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / TELEMETRY_EVENTS_FILE
-            # Refresh data
-            self.refresh_all() # Refresh data after switch
+        self.refresh_all()
 
 
     def reset_telemetry(self) -> None:
