@@ -8,11 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.Authenticator;
-import wizardquest.abilities.AbilityEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityInterface;
@@ -77,7 +76,13 @@ public class GameRunPage extends Application {
                 showMainMenu();
             } catch (AuthenticationException ex) {
                 // Display login error to the user
-                Label error = new Label("Login failed: " + ex.getMessage());
+                Label error = new Label(
+                        "Login failed.\n\n" +
+                        "Your environment variables may not be configured correctly.\n" +
+                        "Please check the README file and make sure all required\n" +
+                        "authentication variables are set before launching the game."
+                );
+                error.setWrapText(true);
                 root.getChildren().add(error);
             }
         });
@@ -189,6 +194,8 @@ public class GameRunPage extends Application {
             }
             player.resetHealth();
             player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+
         }
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
@@ -220,8 +227,8 @@ public class GameRunPage extends Application {
         }
         Button quitRun = new Button("Quit Run");
         quitRun.setOnAction(e -> {
-            gameManager.endGame();
             showEndScreen();
+            gameManager.endGame();
         });
 
         root.getChildren().addAll(heading, playerStats, enemyList, abilityBox, log, quitRun);
@@ -235,7 +242,7 @@ public class GameRunPage extends Application {
             return;
         }
 
-        if (player.getMagic() <= ability.getMagicCost()) {
+        if (player.getMagic() < ability.getMagicCost()) {
             log.setText("Not enough magic for " + ability.getDisplayName());
             return;
         }
@@ -335,6 +342,13 @@ public class GameRunPage extends Application {
             showEndScreen();
             return;
         }
+
+        // if player finishes final stage
+        if (run.getStage() >= 10) {
+        showEndScreen();
+        return;
+    }
+
         gameManager.advanceToNextLevel();
         if (!gameManager.isGameRunning()) {
             showEndScreen();

@@ -41,7 +41,7 @@ cd game
 mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"
 ```
 
-### Run the telemetry app 
+### Run the telemetry app
 **Windows:**
 ```
 cd telemetry
@@ -63,15 +63,28 @@ python3 telemetry_app.py
 ## Test instructions
 
 #### Run the game test suite
+In the `/game` directory, run:
 ```
-cd game
 mvn test
 ```
 
-#### Run the telemetry app test suite
+#### Or, to run the game rest suite with code coverage analysis:
+In the `/game` directory, run:
 ```
-cd telemetry
+mvn -U clean verify
+```
+
+#### Run the telemetry app test suite
+In the `/telemetry` directory, run:
+```
 python -m unittest
+```
+
+#### Or, to run the telemetry app test suite code coverage analysis:
+In the `/telemetry` directory, run:
+```
+coverage run -m unittest
+coverage report -m
 ```
 
 
@@ -80,29 +93,32 @@ python -m unittest
 - Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
 
-## Software Bill of Materials (SBOM) 
+## Software Bill of Materials (SBOM)
 
 |                        |                       |
-| ---------------------- | --------------------- |
+| ---------------------- |-----------------------|
 | **Project:**           | WizardQuest (com2020) |
 | **Version:**           | 0.1.0                 |
 | **Licence:**           | MIT                   |
-| **SBOM last updated:** | 2026-02-15            |
+| **SBOM last updated:** | 2026-03-10            |
 
 
 ### Game (Java) dependencies
 
 **Language:** Java 17  
-**Build System:** Apache Maven  
+**Build System:** Apache Maven
 
 | Type    | Dependency              | Group ID                       | Version |
 | ------- | ----------------------- | ------------------------------ | ------- |
 | Runtime | jackson-databind        | com.fasterxml.jackson.core     | 2.20.0  |
 | Runtime | jackson-datatype-jsr310 | com.fasterxml.jackson.datatype | 2.20.0  |
+| Runtime | javafx-controls         | org.openjfx                    | 21.0.1  |
 | Testing | junit-jupiter           | org.junit.jupiter              | 5.10.1  |
 | Build   | maven-compiler-plugin   | org.apache.maven.plugins       | 3.11.0  |
 | Build   | maven-surefire-plugin   | org.apache.maven.plugins       | 3.2.5   |
 | Build   | exec-maven-plugin       | org.codehaus.mojo              | 3.3.0   |
+| Build   | javafx-maven-plugin     | org.openjfx                    | 0.0.8   |
+| Build   | jacoco-maven-plugin     | org.jacoco                     | 0.8.14  |
 
 
 ### Telemetry App (Python) dependencies
@@ -111,13 +127,14 @@ python -m unittest
 **Package Manager:** pip
 
 | Type    | Dependency | Version |
-| ------- | ---------- | ------- |
+| ------- |------------|---------|
 | Runtime | matplotlib | 3.10.8  |
 | Runtime | numpy      | 2.4.2   |
 | Runtime | pandas     | 3.0.0   |
 | Runtime | seaborn    | 0.13.2  |
 | Runtime | requests   | 2.32.5  |
-| Testing | pytest     | 3.3.0   |
+| Testing | pdoc       | 16.0.0  |
+| Testing | coverage   | 7.13.4  |
 
 
 #### External dependencies
@@ -142,24 +159,28 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 
 #### Project Licence
 
-This project is released under an MIT License. 
+This project is released under an MIT License.
 
 #### Dependency Licences
 
 | Dependency              | Licence         | Link                                                                                  |
-| ----------------------- | --------------- | ------------------------------------------------------------------------------------- |
+|-------------------------|-----------------|---------------------------------------------------------------------------------------|
 | jackson-databind        | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-databind/blob/3.x/LICENSE)        |
 | jackson-datatype-jsr310 | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-datatypes-misc/blob/3.x/LICENSE)  |
+| javafx-controls         | GPL 2.0         | [License here](https://github.com/openjdk/jfx/blob/master/LICENSE)                    |
 | junit-jupiter           | EPL 2.0         | [License here](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter) |
 | maven-compiler-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | maven-surefire-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | exec-maven-plugin       | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
+| javafx-maven-plugin     | BSD 3-Clause    | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE) |
+| jacoco-maven-plugin     | EPL 2.0         | [License here](https://www.eclipse.org/legal/epl-2.0/) |
 | matplotlib              | PSF (BSD-style) | [License here](https://pypi.org/project/matplotlib/)                                  |
 | numpy                   | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
 | pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/pandas/)                                      |
 | seaborn                 | BSD             | [License here](https://pypi.org/project/seaborn/)                                     |
 | requests                | Apache 2.0      | [License here](https://pypi.org/project/requests/)                                    |
-| pytest                  | MIT             | [License here](https://pypi.org/project/pytest/)                                      |
+| pdoc                    | BSD 3-Clause    | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                                      |
+| coverage                | Apache 2.0      | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt) |
 
 All dependency licences are compatible with this project's MIT licence.
 
