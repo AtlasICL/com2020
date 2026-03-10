@@ -9,6 +9,7 @@ This module is responsible for the logic of refreshing plot data.
 
 The GUI logic lives in the TelemetryAppGUI class.
 """
+
 import csv
 import dataclasses
 
@@ -206,7 +207,7 @@ class TelemetryAppGUI(tk.Tk):
             textvariable=self.data_source,
             values=["Telemetry data", "Simulation data"],
             state="readonly",
-            font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.FONT_SIZE)
+            font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.BUTTON_FONT_SIZE)
         )
         data_source_dropdown.bind("<<ComboboxSelected>>", self.toggle_file)
         data_source_dropdown.pack(pady=(10,20))
@@ -223,7 +224,7 @@ class TelemetryAppGUI(tk.Tk):
         # Show a button for resetting telemetry data in the home page.
         reset_telemetry_button = ttk.Button(
             self.tab_home,
-            text="Reset Telemetry Data",
+            text="Reset data",
             command=self.reset_telemetry
         )
         reset_telemetry_button.pack(pady=(10,20))
@@ -336,17 +337,18 @@ class TelemetryAppGUI(tk.Tk):
 
     def reset_telemetry(self) -> None:
         """
-        Resets/erases all telemetry data. This action is permanent.
+        Resets/erases the currently active data file (telemetry events 
+        or simulation data). This action is permanent. 
         """
+        source_name = self.data_source.get()
         confirmed: bool = messagebox.askyesno(
-            title="Switch Data Source",
-            message="Are you sure you want to reset telemetry data? "
-                + "All existing telemetry data will be lost"
+            title="Reset Data",
+            message=f"Are you sure you want to reset {source_name.lower()}? "
+                + "All existing data will be lost"
         )
         if not confirmed:
             return
-        with open(ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
-                  / TELEMETRY_EVENTS_FILE,'w') as f:
+        with open(self.file_name, 'w') as f:
             f.write('')
 
 
