@@ -216,11 +216,11 @@ class TelemetryAppGUI(tk.Tk):
 
         # Once the user is authenticated (since this function has been
         # called), we now show all the telemetry views.
-        self.notebook.add(self.tab_funnel, text="Funnel view")
+        self.notebook.add(self.tab_funnel, text="Funnel")
         self.notebook.add(self.tab_spike, text="Difficulty spike")
         self.notebook.add(self.tab_curves, text="Health")
         self.notebook.add(self.tab_fairness, text="Coins")
-        self.notebook.add(self.tab_completion_time, text="Completion time")
+        self.notebook.add(self.tab_completion_time, text="Time")
         self.notebook.add(self.tab_suggestions, text="Suggestions")
 
         self.tab_spike.rowconfigure(0, weight=1)
