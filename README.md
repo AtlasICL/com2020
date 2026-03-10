@@ -11,13 +11,13 @@
 ## Team members
 | Name              | Email                | Role (Sprint 2)                         |
 | ----------------- | -------------------- | --------------------------------------- |
-| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Python dev                  |
+| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Java dev                    |
 | Luca Croci        | lc1107@exeter.ac.uk  | Java dev (UI)                           |
 | Tom Croft         | tjc227@exeter.ac.uk  | Java lead                               |
-| Will Finney       | wjf207@exeter.ac.uk  | Ethics/Accessibility + Game design lead |
-| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev (UI)                           |
-| Luca Pacitti      | ljmp201@exeter.ac.uk | Testing lead + Java dev + Python dev    |
-| Harry Taylor      | ht555@exeter.ac.uk   | Python lead                             |
+| Will Finney       | wjf207@exeter.ac.uk  | Ethics/Accessibility + Game Design lead |
+| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev (UI) + Python dev              |
+| Luca Pacitti      | ljmp201@exeter.ac.uk | Testing lead + Java dev                 |
+| Harry Taylor      | ht555@exeter.ac.uk   | Python lead + Java dev                  |
 
 
 ## Build instructions
@@ -41,7 +41,7 @@ cd game
 mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"
 ```
 
-### Run the telemetry app 
+### Run the telemetry app
 **Windows:**
 ```
 cd telemetry
@@ -93,7 +93,7 @@ coverage report -m
 - Java: [Google Java style guide](https://google.github.io/styleguide/javaguide.html)
 
 
-## Software Bill of Materials (SBOM) 
+## Software Bill of Materials (SBOM)
 
 |                        |                       |
 | ---------------------- | --------------------- |
@@ -106,16 +106,19 @@ coverage report -m
 ### Game (Java) dependencies
 
 **Language:** Java 17  
-**Build System:** Apache Maven  
+**Build System:** Apache Maven
 
 | Type    | Dependency              | Group ID                       | Version |
 | ------- | ----------------------- | ------------------------------ | ------- |
 | Runtime | jackson-databind        | com.fasterxml.jackson.core     | 2.20.0  |
 | Runtime | jackson-datatype-jsr310 | com.fasterxml.jackson.datatype | 2.20.0  |
+| Runtime | javafx-controls         | org.openjfx                    | 21.0.1  |
 | Testing | junit-jupiter           | org.junit.jupiter              | 5.10.1  |
 | Build   | maven-compiler-plugin   | org.apache.maven.plugins       | 3.11.0  |
 | Build   | maven-surefire-plugin   | org.apache.maven.plugins       | 3.2.5   |
 | Build   | exec-maven-plugin       | org.codehaus.mojo              | 3.3.0   |
+| Build   | javafx-maven-plugin     | org.openjfx                    | 0.0.8   |
+| Build   | jacoco-maven-plugin     | org.jacoco                     | 0.8.14  |
 
 
 ### Telemetry App (Python) dependencies
@@ -155,7 +158,7 @@ Requires `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment v
 
 #### Project Licence
 
-This project is released under an MIT License. 
+This project is released under an MIT License.
 
 #### Dependency Licences
 
