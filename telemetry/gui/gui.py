@@ -94,6 +94,7 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_fairness = ttk.Frame(self.notebook)
         self.tab_completion_time = ttk.Frame(self.notebook)
         self.tab_suggestions = ttk.Frame(self.notebook)
+        self.tab_decision_log = ttk.Frame(self.notebook)
 
         # Only add the "Home" screen on startup.
         # The other tabs will be added if appropriate upon
@@ -118,6 +119,34 @@ class TelemetryAppGUI(tk.Tk):
             command=self.handle_sign_in
         )
         self.sign_in_button.pack(pady=(10, 20))
+
+
+    def set_up_decision_log(self) -> None:
+        """
+        Sets up the decision log tab, with a scrollable log.
+        """
+        self.tab_decision_log.rowconfigure(0, weight=1)
+        self.tab_decision_log.columnconfigure(0, weight=1)
+        columns = ("timestamp", "setting", "value")
+        self.decision_log_tree = ttk.Treeview(
+            self.tab_decision_log,
+            columns=columns,
+            show="headings"
+        )
+        self.decision_log_tree.heading("timestamp", text="Timestamp")
+        self.decision_log_tree.heading("setting", text="Setting")
+        self.decision_log_tree.heading("value", text="Value")
+        self.decision_log_tree.column("timestamp", width=200)
+        self.decision_log_tree.column("setting", width=300)
+        self.decision_log_tree.column("value", width=100)
+        scrollbar = ttk.Scrollbar(
+            self.tab_decision_log,
+            orient="vertical",
+            command=self.decision_log_tree.yview
+        )
+        self.decision_log_tree.configure(yscrollcommand=scrollbar.set)
+        self.decision_log_tree.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
 
 
     def get_personalised_welcome_message(self) -> str:
@@ -222,6 +251,7 @@ class TelemetryAppGUI(tk.Tk):
         self.notebook.add(self.tab_fairness, text="Coins")
         self.notebook.add(self.tab_completion_time, text="Time")
         self.notebook.add(self.tab_suggestions, text="Suggestions")
+        self.notebook.add(self.tab_decision_log, text="Decision log")
 
         self.tab_spike.rowconfigure(0, weight=1)
         self.tab_spike.columnconfigure(0, weight=1)
@@ -262,6 +292,10 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Time (seconds)",
         )
+
+        # We also set up the decision log once authenticated.
+        # (to view past balancing decisions)
+        self.set_up_decision_log()
 
         self.refresh_all()
         self.do_auto_refresh()
@@ -357,6 +391,7 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_health_plots()
         self.refresh_completion_time_plot()
         self.refresh_suggestions()
+        self.refresh_decision_log()
 
 
     def refresh_funnel_graph(self) -> None:
@@ -509,6 +544,25 @@ class TelemetryAppGUI(tk.Tk):
         if not suggestion_text:
             suggestion_text = "No suggestions available"
         self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
+
+
+    def refresh_decision_log(self) -> None:
+        """
+        Refreshes the decision log tab with the latest settings
+        change events, sorted by most recent first.
+        """
+        self.logic_engine.categorise_events(self.file_name)
+        # Clear existing rows.
+        for item in self.decision_log_tree.get_children():
+            self.decision_log_tree.delete(item)
+        # Insert settings change events sorted by timestamp.
+        for event in self.logic_engine.get_settings_change_log():
+            self.decision_log_tree.insert("", "end", values=(
+                event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
+                event.userID,
+                event.setting.value,
+                event.value,
+            ))
 
 
     def refresh_completion_time_plot(self) -> None:
