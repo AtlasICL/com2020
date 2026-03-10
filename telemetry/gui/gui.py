@@ -350,6 +350,7 @@ class TelemetryAppGUI(tk.Tk):
             return
         with open(self.file_name, 'w') as f:
             f.write('')
+        self.refresh_all()
 
 
     def export_to_csv(self) -> None:
