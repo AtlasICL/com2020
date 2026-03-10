@@ -671,8 +671,9 @@ class TelemetryAppGUI(tk.Tk):
                                         ", ".join(stages_flagged) + ")")
         # Return full suggestion
         if suggestion_parts:
-            return "High health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
-            "\nSuggestion: Increase max health.\n"
+            return "High health loss.\nImpacted Stages: " + \
+                   "".join(suggestion_parts) + \
+                   "\nSuggestion: Increase max health.\n"
         return ""
 
 
