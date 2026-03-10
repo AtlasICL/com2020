@@ -96,11 +96,11 @@ coverage report -m
 ## Software Bill of Materials (SBOM)
 
 |                        |                       |
-| ---------------------- | --------------------- |
+| ---------------------- |-----------------------|
 | **Project:**           | WizardQuest (com2020) |
 | **Version:**           | 0.1.0                 |
 | **Licence:**           | MIT                   |
-| **SBOM last updated:** | 2026-02-15            |
+| **SBOM last updated:** | 2026-03-10            |
 
 
 ### Game (Java) dependencies
