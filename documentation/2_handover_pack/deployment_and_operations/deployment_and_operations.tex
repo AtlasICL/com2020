@@ -66,22 +66,23 @@
 In this document we will outline first how to install the prerequisites for each application, we will then outline how to deploy them, and lastly detailed instructions on their operation.
 \section{Prerequisite Installation}
 \subsection{Python Application}
+\label{sec:python_app_install}
 The Python application has the following dependencies
 \begin{itemize}
-    \item Python 3.12 or later
-    \item A web browser with internet access 
-    \item The environment variables set 
-    \item The packages installed through pip
+  \item Python 3.12 or later
+  \item A web browser with internet access
+  \item The environment variables set
+  \item The packages installed through pip
 \end{itemize}
 \subsubsection{Python 3.12}
-This can be installed by following the guide \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}. 
+This can be installed by following the guide \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}.
 \subsubsection{Web browser}
-All supported operating systems often come with a web browser pre-installed. On Windows edge is required, macOS comes with safari pre-installed. Many linux distributions come with Firefox pre-installed, if it is not follow the guide \href{https://support.mozilla.org/en-US/kb/install-firefox-linux}{here}. 
+All supported operating systems often come with a web browser pre-installed. On Windows edge is required, macOS comes with safari pre-installed. Many linux distributions come with Firefox pre-installed, if it is not follow the guide \href{https://support.mozilla.org/en-US/kb/install-firefox-linux}{here}.
 \subsubsection{Set Environment Variables}
-The environment variables OIDC\_ISSUER, OIDC\_CLIENT\_ID\ and OIDC\_CLIENT\_SECRET need to be set. These values will be sent via email to all clients to ensure security. Once obtained, they must be set for each new terminal, and can be set as follows. 
+The environment variables OIDC\_ISSUER, OIDC\_CLIENT\_ID\ and OIDC\_CLIENT\_SECRET need to be set. These values will be sent via email to all clients to ensure security. Once obtained, they must be set for each new terminal, and can be set as follows.
 
 \paragraph{Windows}
-Complete the following steps, replacing the values in <> with that of the environment variables. 
+Complete the following steps, replacing the values in <> with that of the environment variables.
 \begin{enumerate}
     \item Run \verb|$env:OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
     \item Run \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
@@ -89,7 +90,7 @@ Complete the following steps, replacing the values in <> with that of the enviro
 \end{enumerate}
 
 \paragraph{Linux and macOS}
-Complete the following steps, replacing the values in <> with that of the environment variables. 
+Complete the following steps, replacing the values in <> with that of the environment variables.
 \begin{enumerate}
     \item Run \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
     \item Run \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
@@ -101,7 +102,8 @@ Packages can the be installed using pip, but should be done in a virtual environ
 \begin{enumerate}
     \item Run \verb|cd telemetry|
     \item Run \verb|python3 -m venv venv|
-    \item \begin{itemize}
+  \item This step depends on operating system: \\
+    \begin{itemize}
         \item On windows, run \verb|./venv/Scripts/Activate|
         \item On Linux or macOS, run \verb|source venv/bin/activate|
     \end{itemize}
@@ -109,13 +111,51 @@ Packages can the be installed using pip, but should be done in a virtual environ
     \item To exit the virtual environment run \verb|deactivate|
 \end{enumerate}
 \subsection{Java Application}
+\label{sec:java_app_install}
 The Java application has the following dependencies
 \begin{itemize}
-    \item Java 17 or later
-    \item Maven
-    \item The Python application and its prerequisites
-    \item The packages installed through maven 
+  \item Java 17 or later
+  \item Maven
+  \item The Python application and its prerequisites
+  \item The packages installed through maven
 \end{itemize}
 \subsubsection{Java 17+}
 Java 17 or higher requires the JDK to be installed, this can be done by following the steps \href{https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html}{here}
+\subsubsection{Maven}
+Maven acts as a package manager, it can be installed by following the steps \href{https://maven.apache.org/install.html}{here}.
+\subsubsection{Python application}
+This can be installed by following the steps in \ref{sec:python_app_install}
+\subsubsection{Package Installation}
+The packages are automatically installed by maven when running the project, and thus need not be installed manually beforehand.
+\section{Deployment}
+
+\subsection{Python Application}
+To deploy and run the python application, first install the prerequisites, as described in \ref{sec:python_app_install}. Then follow the steps below.
+\begin{enumerate}
+    \item Enter the telemetry directory \verb|cd telemetry|
+  \item This step depends on operating system: \\
+    \begin{itemize}
+        \item On windows, run \verb|./venv/Scripts/Activate|
+        \item On Linux or macOS, run \verb|source venv/bin/activate|
+    \end{itemize}
+  \item This step depends on operating system: \\
+    \begin{itemize}
+        \item On windows, run \verb|python telemetry_app.py|
+        \item On Linux or macOS, run \verb|python3 telemetry_app.py|
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Java Application}
+To deploy and run the java application, first install the prerequisites, as described in \ref{sec:java_app_install}. Then follow the steps below.
+\begin{enumerate}
+    \item Enter the game directory \verb|cd game|
+    \item Run \verb|mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"|
+\end{enumerate}
+
+\section{Operations}
+\subsection{Python Application}
+\paragraph{Login}
+When you first open you will need to sign in with google, by clicking the "Sign in with Google" button. This will take you to your web browser for you to log in, and once authenticated you can close the tab. You will then be in the home page of the application.
+\paragraph{Home}
+Here you can 
 \end{document}
