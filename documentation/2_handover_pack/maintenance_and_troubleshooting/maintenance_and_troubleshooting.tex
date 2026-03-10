@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[skip=6pt]{parskip}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{comment}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+\usepackage{booktabs}
+
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+
+\title{Maintenance and Troubleshooting\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview}
+In this document we will outline the information needed to undergo routine maintenance operations for the project. We will then provide detailed troubleshooting instructions, stating possible symptoms of different problems, solutions, and verification methods to ensure problems are resolved. Lastly we will provide a detailed architecture schema followed by steps for routine application extensions. 
+
+\section{Maintenance}
+\subsection{Clearing Telemetry Data}
+Telemetry data can be cleared from within the telemetry app. This is done by opening the app, logging in, and using the "clear telemetry data" function. Detailed instructions are available in the deployment and operations guide. 
+\subsection{Clearing Logs}
+Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|. 
+\subsection{Backups}
+The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, although all stores are plaintext. 
+
+\subsection{Naming Conventions}
+The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds. 
+
+The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case. 
+\section{Troubleshooting}
+\section{Architecture}
+\section{Extension}
+\end{document}
