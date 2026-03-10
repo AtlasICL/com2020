@@ -127,13 +127,14 @@ coverage report -m
 **Package Manager:** pip
 
 | Type    | Dependency | Version |
-| ------- | ---------- | ------- |
+| ------- |------------|---------|
 | Runtime | matplotlib | 3.10.8  |
 | Runtime | numpy      | 2.4.2   |
 | Runtime | pandas     | 3.0.0   |
 | Runtime | seaborn    | 0.13.2  |
 | Runtime | requests   | 2.32.5  |
-| Testing | pytest     | 3.3.0   |
+| Testing | pdoc       | 16.0.0  |
+| Testing | coverage   | 7.13.4  |
 
 
 #### External dependencies
@@ -163,19 +164,23 @@ This project is released under an MIT License.
 #### Dependency Licences
 
 | Dependency              | Licence         | Link                                                                                  |
-| ----------------------- | --------------- | ------------------------------------------------------------------------------------- |
+|-------------------------|-----------------|---------------------------------------------------------------------------------------|
 | jackson-databind        | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-databind/blob/3.x/LICENSE)        |
 | jackson-datatype-jsr310 | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-datatypes-misc/blob/3.x/LICENSE)  |
+| javafx-controls         | GPL 2.0         | [License here](https://github.com/openjdk/jfx/blob/master/LICENSE)                    |
 | junit-jupiter           | EPL 2.0         | [License here](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter) |
 | maven-compiler-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | maven-surefire-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | exec-maven-plugin       | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
+| javafx-maven-plugin     | BSD 3-Clause    | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE) |
+| jacoco-maven-plugin     | EPL 2.0         | [License here](https://www.eclipse.org/legal/epl-2.0/) |
 | matplotlib              | PSF (BSD-style) | [License here](https://pypi.org/project/matplotlib/)                                  |
 | numpy                   | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
 | pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/pandas/)                                      |
 | seaborn                 | BSD             | [License here](https://pypi.org/project/seaborn/)                                     |
 | requests                | Apache 2.0      | [License here](https://pypi.org/project/requests/)                                    |
-| pytest                  | MIT             | [License here](https://pypi.org/project/pytest/)                                      |
+| pdoc                    | BSD 3-Clause    | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                                      |
+| coverage                | Apache 2.0      | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt) |
 
 All dependency licences are compatible with this project's MIT licence.
 
