@@ -459,19 +459,37 @@ class TelemetryAppGUI(tk.Tk):
 
     def generate_spike_suggestion(self) -> str:
         """
-        Generates a difficulty change suggestion for difficulty spikes.
-        
-        :return: Suggestion text. 
+        Generates a difficulty change suggestion for levels with a low pass rate.
+
+        :return: Suggestion text.
         :rtype: str
         """
-        stages = ""
-        spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values()) / len(spikes)
-        for stage in spikes:
-            if spikes[stage] > mean:
-                stages += str(stage) + ", "
-        if stages:
-            return "High failure rate.\nImpacted Stages: " + stages[:-2] + ".\nSuggestion: Increase starting lives.\n"
+        spikes = self.logic_engine.funnel_view_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 spikes (i.e. not played yet)
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
+            if not active_spike_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_spike_values) / len(active_spike_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] > mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Low pass rate.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Increase starting lives.\n"
         return ""
 
 
@@ -519,26 +537,44 @@ class TelemetryAppGUI(tk.Tk):
         # Return full suggestion
         if suggestion_parts:
             return "High health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
-            "\nSuggestion: Lower difficulty or increase the max health.\n"
+            "\nSuggestion: Increase max health.\n"
         return ""
 
 
     def generate_high_pass_rate_suggestion(self) -> str:
-            """
-            Generates a difficulty change suggestion for levels with a high pass rate.
+        """
+        Generates a difficulty change suggestion for levels with a high pass rate.
 
-            :return: Suggestion text.
-            :rtype: str
-            """
-            stages = ""
-            spikes = self.logic_engine.fail_difficulty_spikes()
-            mean = sum(spikes.values()) / len(spikes)
-            for stage in spikes:
-                if spikes[stage] < mean:
-                    stages += str(stage) + ", "
-            if stages:
-                return "High pass rate.\nImpacted Stages: " + stages[:-2] + ".\nSuggestion: Decrease starting lives.\n"
-            return ""
+        :return: Suggestion text.
+        :rtype: str
+        """
+        spikes = self.logic_engine.funnel_view_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 spikes (i.e. not played yet)
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
+            if not active_spike_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_spike_values) / len(active_spike_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] < mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "High pass rate.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Decrease starting lives.\n"
+        return ""
 
 
     def generate_high_health_suggestion(self) -> str:
@@ -585,7 +621,7 @@ class TelemetryAppGUI(tk.Tk):
             # Return full suggestion
             if suggestion_parts:
                 return "Low health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
-                "\nSuggestion: Increase difficulty or lower the max health.\n"
+                "\nSuggestion: Decrease max health.\n"
             return ""
 
 
@@ -692,32 +728,67 @@ class TelemetryAppGUI(tk.Tk):
         :return: Suggestion text.
         :rtype: str
         """
-        stages = ""
-        times = self.logic_engine.average_time_to_complete_per_stage()
-        mean = sum(times.values()) / len(times)
-        for stage in times:
-            if times[stage] < mean:
-                stages += str(stage) + ", "
-            if stages:
-                return "Fast average completion time.\nImpacted Stages: " + stages[:-2] \
-                + "\nSuggestion: Increase number of enemies per stage.\n"
+        spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 seconds (i.e. not played yet)
+            active_time_values = [time for time in averages.values() if time > 0]
+            if not active_time_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_time_values) / len(active_time_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] < mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Fast average completion time.\nImpacted Stages: " + "".join(suggestion_parts) \
+            + "\nSuggestion: Increase number of enemies per stage.\n"
         return ""
 
 
-    def generate_slow_average_time_suggestion(self) -> str:
-            """
-            Generates a health change suggestion for a slow average time to complete a given stage.
 
-            :return: Suggestion text.
-            :rtype: str
-            """
-            stages = ""
-            times = self.logic_engine.average_time_to_complete_per_stage()
-            mean = sum(times.values()) / len(times)
-            for stage in times:
-                if times[stage] > mean:
-                    stages += str(stage) + ", "
-                if stages:
-                    return "Slow average completion time.\nImpacted Stages: " + stages[:-2] \
-                    + "\nSuggestion: Decrease number of enemies per stage.\n"
-            return ""
+    def generate_slow_average_time_suggestion(self) -> str:
+        """
+        Generates a health change suggestion for a slow average time to complete a given stage.
+
+        :return: Suggestion text.
+        :rtype: str
+        """
+        spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 seconds (i.e. not played yet)
+            active_time_values = [time for time in averages.values() if time > 0]
+            if not active_time_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_time_values) / len(active_time_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] > mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Slow average completion time.\nImpacted Stages: " + "".join(suggestion_parts) \
+            + "\nSuggestion: Decrease number of enemies per stage.\n"
+        return ""
