@@ -53,6 +53,7 @@
 
 \usepackage{float}
 \usepackage{tabularx}
+\usepackage{wrapfig}
 
 \title{Data Management\\[0.3em]
 \large COM2020 - Project 7}
@@ -153,9 +154,17 @@ To deploy and run the java application, first install the prerequisites, as desc
 \end{enumerate}
 
 \section{Operations}
+%TODO once apps are done
 \subsection{Python Application}
 \paragraph{Login}
-When you first open you will need to sign in with google, by clicking the "Sign in with Google" button. This will take you to your web browser for you to log in, and once authenticated you can close the tab. You will then be in the home page of the application.
+When you first open you will need to sign in with google, by clicking the "Sign in with Google" button. This will take you to your web browser for you to log in, and once authenticated you can close the tab. If you have the developer or designer role you will then be taken to the home page. Otherwise you will be informed you cannot access the application, and be taken back to login screen. 
 \paragraph{Home}
-Here you can 
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=\linewidth]{images/python_home.png}
+    \caption{Home screen}
+  \end{center}
+\end{wrapfigure}
+Once logged in, you will be able to see the home page. Across the top bar are all the available dashboard views along with the decision log and suggestions view. In the middle of the screen will be some welcome text, and below it three buttons: "Change to simulation data", "Export data to csv", and "Reset telemetry data".
+
 \end{document}
