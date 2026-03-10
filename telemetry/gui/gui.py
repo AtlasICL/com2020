@@ -430,10 +430,17 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the suggestions generated.
         """
-        suggestion_text = self.generate_health_suggestion() + self.generate_spike_suggestion()
+        suggestion_text = self.generate_low_health_suggestion() + "\n" \
+                          + self.generate_high_health_suggestion() + "\n" \
+                          + self.generate_spike_suggestion() + "\n" \
+                          + self.generate_high_pass_rate_suggestion() + "\n" \
+                          + self.generate_low_coin_gain_suggestion() + "\n" \
+                          + self.generate_high_coin_gain_suggestion() + "\n" \
+                          + self.generate_slow_average_time_suggestion() + "\n" \
+                          + self.generate_fast_average_time_suggestion() + "\n"
         if not suggestion_text:
             suggestion_text = "No suggestions available"
-        self.spike_suggestion.config(text="Suggestion:\n" + suggestion_text)
+        self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
 
 
     def refresh_completion_time_plot(self) -> None:
@@ -464,7 +471,7 @@ class TelemetryAppGUI(tk.Tk):
             if spikes[stage] > mean:
                 stages += str(stage) + ", "
         if stages:
-            return "High failure rate in " + stages + "consider increasing lives by 2.\n"
+            return "High failure rate.\nImpacted Stages: " + stages[:-2] + ".\nSuggestion: Increase starting lives.\n"
         return ""
 
 
@@ -507,12 +514,12 @@ class TelemetryAppGUI(tk.Tk):
                 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(f"{str(difficulty.value)}, " + 
-                                        ", ".join(stages_flagged))
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
         # Return full suggestion
         if suggestion_parts:
-            return "High health loss in " + "".join(suggestion_parts) + \
-            " Consider lowering difficulty or increasing the max health.\n"
+            return "High health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Lower difficulty or increase the max health.\n"
         return ""
 
 
@@ -530,7 +537,7 @@ class TelemetryAppGUI(tk.Tk):
                 if spikes[stage] < mean:
                     stages += str(stage) + ", "
             if stages:
-                return "High pass rate in " + stages + "consider decreasing lives by 2.\n"
+                return "High pass rate.\nImpacted Stages: " + stages[:-2] + ".\nSuggestion: Decrease starting lives.\n"
             return ""
 
 
@@ -573,18 +580,114 @@ class TelemetryAppGUI(tk.Tk):
 
                 # Create list of difficulties to stages string
                 if stages_flagged:
-                    suggestion_parts.append(f"{str(difficulty.value)}, " +
-                                            ", ".join(stages_flagged))
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
             # Return full suggestion
             if suggestion_parts:
-                return "Low health loss in " + "".join(suggestion_parts) + \
-                " Consider increasing difficulty or lowering the max health.\n"
+                return "Low health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Increase difficulty or lower the max health.\n"
             return ""
 
 
-    def generate_fast_average_time_suggestion(self) -> str
+    def generate_low_coin_gain_suggestion(self) -> str:
+            """
+            Generates a coins change suggestion for low coin gain.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, coins_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for coins_per_stage in coins_list:
+                    for stage, coins_loss in coins_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + coins_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average coins gained per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 coins gained (i.e. not played yet)
+                active_coins_values = [coins for coins in averages.values() if coins > 0]
+                if not active_coins_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_coins_values) / len(active_coins_values)
+                # Add stages less than mean until 0 coins stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] < mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
+            # Return full suggestion
+            if suggestion_parts:
+                return "Low coin gain.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Increase coins gained per level.\n"
+            return ""
+
+
+    def generate_high_coin_gain_suggestion(self) -> str:
+            """
+            Generates a coins change suggestion for high coin gain.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, coins_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for coins_per_stage in coins_list:
+                    for stage, coins_loss in coins_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + coins_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average coins gained per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 coins gained (i.e. not played yet)
+                active_coins_values = [coins for coins in averages.values() if coins > 0]
+                if not active_coins_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_coins_values) / len(active_coins_values)
+                # Add stages less than mean until 0 coins stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] > mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
+            # Return full suggestion
+            if suggestion_parts:
+                return "High coin gain.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Decrease coins gained per level.\n"
+            return ""
+
+
+    def generate_fast_average_time_suggestion(self) -> str:
         """
-        Generates a health change suggestion for maintained high health.
+        Generates a health change suggestion for a fast average time to complete a given stage.
 
         :return: Suggestion text.
         :rtype: str
@@ -596,7 +699,25 @@ class TelemetryAppGUI(tk.Tk):
             if times[stage] < mean:
                 stages += str(stage) + ", "
             if stages:
-                return "Fast average completion time in " + stages + "consider increasing number of enemies.\n"
+                return "Fast average completion time.\nImpacted Stages: " + stages[:-2] \
+                + "\nSuggestion: Increase number of enemies per stage.\n"
         return ""
 
 
+    def generate_slow_average_time_suggestion(self) -> str:
+            """
+            Generates a health change suggestion for a slow average time to complete a given stage.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            stages = ""
+            times = self.logic_engine.average_time_to_complete_per_stage()
+            mean = sum(times.values()) / len(times)
+            for stage in times:
+                if times[stage] > mean:
+                    stages += str(stage) + ", "
+                if stages:
+                    return "Slow average completion time.\nImpacted Stages: " + stages[:-2] \
+                    + "\nSuggestion: Decrease number of enemies per stage.\n"
+            return ""
