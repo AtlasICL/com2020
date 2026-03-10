@@ -349,7 +349,7 @@ class TelemetryAppGUI(tk.Tk):
         if not confirmed:
             return
         with open(self.file_name, 'w') as f:
-            f.write('')
+            f.write('[]')
         self.refresh_all()
 
 
