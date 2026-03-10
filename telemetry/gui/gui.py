@@ -28,17 +28,17 @@ TELEMETRY_EVENTS_FILE: str = "telemetry_events.json"
 SIMULATION_EVENTS_FILE: str = "simulation_events.json"
 
 # Polling interval for refreshing data.
-POLLING_INTERVAL_MS = 4000
+POLLING_INTERVAL_MS = 3000
 
 
 class GUI_SETTINGS:
     """Stores settings for tkinter GUI appearance."""
     WINDOW_TITLE = "Telemetry App"   # Title of window.
-    WINDOW_GEOMETRY = "1200x750"     # Size at startup.
-    WINDOW_MINIMUM_WIDTH = 1000      # Minimum width of window.
-    WINDOW_MINIMUM_HEIGHT = 700      # Minimum height of window. 
+    WINDOW_GEOMETRY = "800x600"      # Size at startup.
+    WINDOW_MINIMUM_WIDTH = 600       # Minimum width of window.
+    WINDOW_MINIMUM_HEIGHT = 450      # Minimum height of window.
     FONT_FAMILY = "Arial"            # Font for GUI.
-    FONT_SIZE = 14                   # Font size.
+    FONT_SIZE = 12                   # Font size.
     BACKGROUND_COLOR = "#edd68f"   # Background colour for the window.
 
 
@@ -53,7 +53,6 @@ class TelemetryAppGUI(tk.Tk):
         self.logic_engine = EventLogicEngine()
         self.authenticated = False
         self.current_user_name = None
-        self.compare_by_difficulty = tk.BooleanVar(value=False)
 
         # Set GUI colours / font styles.
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
@@ -65,22 +64,22 @@ class TelemetryAppGUI(tk.Tk):
             padding=6,
         )
         style.configure(
-            "TFrame", 
+            "TFrame",
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
         style.configure(
-            "TLabel", 
+            "TLabel",
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
 
         # Set a minimum size for the window - this prevents users from
         # making the window much too small.
         self.minsize(
-            width=GUI_SETTINGS.WINDOW_MINIMUM_WIDTH, 
+            width=GUI_SETTINGS.WINDOW_MINIMUM_WIDTH,
             height=GUI_SETTINGS.WINDOW_MINIMUM_HEIGHT
         )
 
-        # We use notebook for the "tabs" structure of the window.
+        # We use notebook for the "tabs" structure of the window
         self.notebook = ttk.Notebook(self)
         self.notebook.grid(row=0, column=0, sticky="nsew")
         self.grid_rowconfigure(0, weight=1)
@@ -96,7 +95,7 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_suggestions = ttk.Frame(self.notebook)
 
         # Only add the "Home" screen on startup.
-        # The other tabs will be added if appropriate upon 
+        # The other tabs will be added if appropriate upon
         # authentication.
         self.notebook.add(self.tab_home, text="Home")
         self.make_welcome_screen()
@@ -131,17 +130,17 @@ class TelemetryAppGUI(tk.Tk):
 
     def handle_sign_in(self) -> None:
         """
-        Handles sign in. 
+        Handles sign in.
         If the authenticated user's role is authorised to see telemetry,
         then the other tabs (with telemetry info) will appear.
         If the user's role is not authorised for viewing telemetry,
-        then an error message will be shown indicating this, and the 
-        user will be returned to the Home tab, with the option to sign 
+        then an error message will be shown indicating this, and the
+        user will be returned to the Home tab, with the option to sign
         in again.
         """
         try:
             _, self.current_user_name, role = google_login()
-        except KeyError as _:
+        except KeyError as e:
             messagebox.showerror(
                 "Configuration Error",
                 "OIDC_CLIENT_ID and OIDC_CLIENT_SECRET environment " \
@@ -159,7 +158,7 @@ class TelemetryAppGUI(tk.Tk):
         else:
             # Error message for non-developer / non-designer users.
             messagebox.showerror(
-                "Authorisation Error", 
+                "Authorisation Error",
                 "Only Designers and Developers may access telemetry data."
             )
 
@@ -168,7 +167,7 @@ class TelemetryAppGUI(tk.Tk):
         self.switch_btn_text = tk.StringVar()
         self.switch_btn_text.set("Change to simulation data")
 
-        # Show a button for switching telemetry source in the home page.
+        # Show a button for switching telemetry source in the home page
         switch_simulation_button = ttk.Button(
             self.tab_home,
             textvariable=self.switch_btn_text,
@@ -177,7 +176,7 @@ class TelemetryAppGUI(tk.Tk):
         switch_simulation_button.pack(pady=(10,20))
 
         # Show a button for exporting telemetry data to csv in the
-        # home page.
+        # home page
         export_telemetry_button = ttk.Button(
             self.tab_home,
             text="Export data to csv",
@@ -185,34 +184,13 @@ class TelemetryAppGUI(tk.Tk):
         )
         export_telemetry_button.pack(pady=(10, 20))
 
-        # Show a button for resetting telemetry data in the home page.
+        # Show a button for resetting telemetry data in the home page
         reset_telemetry_button = ttk.Button(
             self.tab_home,
             text="Reset Telemetry Data",
             command=self.reset_telemetry
         )
         reset_telemetry_button.pack(pady=(10,20))
-
-        # Add a global toggle for comparing by difficulty above the 
-        # notebook. This will toggle whether graphs show data for all
-        # difficulties, or per-difficulty.
-        control_frame = ttk.Frame(self)
-        control_frame.grid(
-            row=0, 
-            column=0, 
-            sticky="ew", 
-            padx=10,
-            pady=(5, 0)
-        )
-        ttk.Checkbutton(
-            control_frame,
-            text="Compare by difficulty",
-            variable=self.compare_by_difficulty,
-            command=self.refresh_all,
-        ).pack(side="left")
-        self.notebook.grid(row=1, column=0, sticky="nsew")
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=1)
 
         # Once the user is authenticated (since this function has been
         # called), we now show all the telemetry views.
@@ -243,7 +221,7 @@ class TelemetryAppGUI(tk.Tk):
             self.tab_suggestions
         )
         self.spike_suggestion.pack(pady=(30, 15))
-         
+
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
             title="HP remaining by stage",
@@ -268,19 +246,14 @@ class TelemetryAppGUI(tk.Tk):
 
 
     def do_auto_refresh(self, interval_ms: int = POLLING_INTERVAL_MS) -> None:
-        """
-        Use polling to refresh data for plots.
-
-        :param interval_ms: The polling interval in milliseconds.
-        :type interval_ms: int
-        """
+        """Use polling to refresh data for plots."""
         self.refresh_all()
         self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
 
     def toggle_file(self) -> None:
         """
-        Toggles between viewing telemetry data and simulation 
+        Toggles between viewing telemetry data and simulation
         data.
         """
         if self.switch_btn_text.get() == "Change to simulation data":
@@ -306,7 +279,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         confirmed: bool = messagebox.askyesno(
             title="Switch Data Source",
-            message="Are you sure you want to reset telemetry data? " 
+            message="Are you sure you want to reset telemetry data? "
                 + "All existing telemetry data will be lost"
         )
         if not confirmed:
@@ -315,7 +288,7 @@ class TelemetryAppGUI(tk.Tk):
                   / TELEMETRY_EVENTS_FILE,'w') as f:
             f.write('')
 
-    
+
     def export_to_csv(self) -> None:
         """
         Exports the telemetry data to a csv file.
@@ -365,46 +338,33 @@ class TelemetryAppGUI(tk.Tk):
         as funnel view).
         """
         self.logic_engine.categorise_events(self.file_name)
-        if self.compare_by_difficulty.get(): 
-            funnel_by_diff = self.logic_engine.funnel_view_per_difficulty()
-            series = []
-            for diff, data in funnel_by_diff.items():
-                series.append((data.keys(), data.values(), str(diff.value)))
-            self.funnel_plot.plot_multi_line(series)
-        else:
-            funnel_data: dict[int, int] = self.logic_engine.funnel_view()
-            self.funnel_plot.plot_line(
-                funnel_data.keys(),
-                funnel_data.values(),
-                label="Players Remaining"
-            )
+        funnel_data: dict[int, int] = self.logic_engine.funnel_view()
+        self.funnel_plot.plot_line(
+            funnel_data.keys(),
+            funnel_data.values(),
+            label="Players Remaining"
+        )
 
 
     def refresh_difficulty_spike_failure_plot(self) -> None:
         """
-        Refreshes the plots for difficulty spike in terms of number 
+        Refreshes the plots for difficulty spike in terms of number
         of failures per stage.
         """
         self.logic_engine.categorise_events(self.file_name)
-        if self.compare_by_difficulty.get():
-            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_per_difficulty()
-            series = []
-            for diff, data in spikes_by_diff.items():
-                series.append((data.keys(), data.values(), str(diff.value))) 
-            self.spike_plot.plot_multi_line(series)
-        else:
-            spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
-            self.spike_plot.plot_line(
-                spike_data.keys(),
-                spike_data.values(),
-                label="Difficulty spikes (by failure rate)"
-            )
+        spike_data: dict[int, int] = \
+            self.logic_engine.fail_difficulty_spikes()
+        self.spike_plot.plot_line(
+            spike_data.keys(),
+            spike_data.values(),
+            label="Difficulty spikes (by failure rate)"
+        )
         self.spike_suggestion.config(text="Suggestion: " \
                                      + self.generate_spike_suggestion())
 
 
     def get_average_dict_of_stage_dicts(
-            self, 
+            self,
             per_stage_data: list[dict[int, int]]
     ) -> dict[int, float]:
         """
@@ -413,143 +373,127 @@ class TelemetryAppGUI(tk.Tk):
         gained.
         Example: Given a list of dictionaries of health per stage data,
         this function would return a dictionary which maps the stage
-        number to the average of health at that stage. 
-        
-        :param per_stage_data: List of dictionaries which represent 
-        "x per stage" data. 
+        number to the average of health at that stage.
+
+        :param per_stage_data: List of dictionaries which represent
+        "x per stage" data.
         :type per_stage_data: list[dict[int, int]]
-        :return: Average of the given data per stage. 
+        :return: Average of the given data per stage.
         :rtype: dict[int, float]
         """
         stages = range(1, 11)
         averages: dict[int, float] = {}
         for stage in stages:
-            vals = [dictionary.get(stage, 0) 
+            vals = [dictionary.get(stage, 0)
                     for dictionary in per_stage_data]
             averages[stage] = (sum(vals) / len(vals)) if vals else 0.0
         return averages
-    
+
 
     def refresh_health_plots(self) -> None:
         """
-        Refreshes the plots of HP remaining per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Refreshes the plots of HP remaining per stage per difficulty.
         """
         self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = \
             self.logic_engine.compare_health_per_stage_per_difficulty()
 
-        if self.compare_by_difficulty.get():
-            series = []
-            for difficulty, list_of_dicts in health_by_difficulty.items():
-                averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
-                series.append((
-                    averages.keys(),
-                    averages.values(),
-                    str(difficulty.value)
-                ))
-            self.curves_plot.plot_multi_line(series)
-        else:
-            all_dicts = []
-            for list_of_dicts in health_by_difficulty.values():
-                all_dicts.extend(list_of_dicts)
-            averages = self.get_average_dict_of_stage_dicts(all_dicts)
-            self.curves_plot.plot_line(
-                averages.keys(),
-                averages.values(),
-                label="Avg HP Remaining"
-            )
+        series = []
+        for difficulty, list_of_dicts in health_by_difficulty.items():
+            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
+            x = averages.keys()
+            y = averages.values()
+            series.append((x, y, str(difficulty.value)))
+
+        self.curves_plot.plot_multi_line(series)
 
 
     def refresh_coins_gained_plots(self) -> None:
         """
-        Refreshes the plots for average coins gained per stage. 
-        Shows aggregate average by default, or per difficulty when 
-        the compare toggle is enabled.
+        Refreshes the plots for average coins gained per stage per
+        difficulty.
         """
         self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = \
             self.logic_engine.compare_coins_per_stage_per_difficulty()
 
-        if self.compare_by_difficulty.get():
-            series = []
-            for difficulty, list_of_dicts in coins_by_difficulty.items():
-                averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
-                series.append((
-                    averages.keys(),
-                    averages.values(),
-                    str(difficulty.value)
-                ))
-            self.fairness_plot.plot_multi_line(series)
-        else:
-            all_dicts = []
-            for list_of_dicts in coins_by_difficulty.values():
-                all_dicts.extend(list_of_dicts)
-            averages = self.get_average_dict_of_stage_dicts(all_dicts)
-            self.fairness_plot.plot_line(
-                averages.keys(),
-                averages.values(),
-                label="Avg Coins Gained"
-            )
-    
+        series = []
+        for difficulty, list_of_dicts in coins_by_difficulty.items():
+            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
+            x = averages.keys()
+            y = averages.values()
+            series.append((x, y, str(difficulty.value)))
+
+        self.fairness_plot.plot_multi_line(series)
 
     def refresh_suggestions(self) -> None:
         """
         Refreshes the suggestions generated.
         """
-        suggestion_text = self.generate_health_suggestion() + self.generate_spike_suggestion()
+        suggestion_text = self.generate_low_health_suggestion() + "\n" \
+                          + self.generate_high_health_suggestion() + "\n" \
+                          + self.generate_spike_suggestion() + "\n" \
+                          + self.generate_high_pass_rate_suggestion() + "\n" \
+                          + self.generate_low_coin_gain_suggestion() + "\n" \
+                          + self.generate_high_coin_gain_suggestion() + "\n" \
+                          + self.generate_slow_average_time_suggestion() + "\n" \
+                          + self.generate_fast_average_time_suggestion() + "\n"
         if not suggestion_text:
             suggestion_text = "No suggestions available"
-        self.spike_suggestion.config(text="Suggestion:\n" + suggestion_text)
+        self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
 
 
     def refresh_completion_time_plot(self) -> None:
         """
         Refreshes the plot of average time to complete per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
-        if self.compare_by_difficulty.get():
-            time_by_diff = self.logic_engine \
-                .average_time_to_complete_per_stage_per_difficulty()
-            series = []
-            for diff, data in time_by_diff.items():
-                series.append(
-                    (data.keys(), data.values(), str(diff.value))
-                )
-            self.completion_time_plot.plot_multi_line(series)
-        else:
-            completion_data: dict[int, float] = \
-                self.logic_engine.average_time_to_complete_per_stage()
-            self.completion_time_plot.plot_line(
-                completion_data.keys(),
-                completion_data.values(),
-                label="Avg completion time"
-            )
+        completion_data: dict[int, float] = \
+            self.logic_engine.average_time_to_complete_per_stage()
+        self.completion_time_plot.plot_line(
+            completion_data.keys(),
+            completion_data.values(),
+            label="Avg completion time"
+        )
 
 
     def generate_spike_suggestion(self) -> str:
         """
-        Generates a difficulty change suggestion for difficulty spikes.
-        
-        :return: Suggestion text. 
+        Generates a difficulty change suggestion for levels with a low pass rate.
+
+        :return: Suggestion text.
         :rtype: str
         """
-        stages = ""
-        spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values()) / len(spikes)
-        for stage in spikes:
-            if spikes[stage] > mean:
-                stages += str(stage) + ", "
-        if stages:
-            return "High failure rate in " + stages + \
-                   " consider increasing lives by 2.\n"
-        return ""
-    
+        spikes = self.logic_engine.funnel_view_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 spikes (i.e. not played yet)
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
+            if not active_spike_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_spike_values) / len(active_spike_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] > mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
 
-    def generate_health_suggestion(self) -> str:
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Low pass rate.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Increase starting lives.\n"
+        return ""
+
+
+    def generate_low_health_suggestion(self) -> str:
         """
         Generates a health change suggestion for low health.
 
@@ -576,10 +520,8 @@ class TelemetryAppGUI(tk.Tk):
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
-
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
-
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
@@ -587,13 +529,266 @@ class TelemetryAppGUI(tk.Tk):
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
-                
+
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(f"{str(difficulty.value)}, " + 
-                                        ", ".join(stages_flagged))
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
         # Return full suggestion
         if suggestion_parts:
-            return "High health loss in " + "".join(suggestion_parts) + \
-            " Consider lowering difficulty or changing the max health.\n"
+            return "High health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Increase max health.\n"
+        return ""
+
+
+    def generate_high_pass_rate_suggestion(self) -> str:
+        """
+        Generates a difficulty change suggestion for levels with a high pass rate.
+
+        :return: Suggestion text.
+        :rtype: str
+        """
+        spikes = self.logic_engine.funnel_view_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 spikes (i.e. not played yet)
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
+            if not active_spike_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_spike_values) / len(active_spike_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] < mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "High pass rate.\nImpacted Stages: " + "".join(suggestion_parts) + \
+            "\nSuggestion: Decrease starting lives.\n"
+        return ""
+
+
+    def generate_high_health_suggestion(self) -> str:
+            """
+            Generates a health change suggestion for maintained high health.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, hp_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for health_per_stage in hp_list:
+                    for stage, hp_loss in health_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + hp_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average health remaining per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 hp (i.e. not played yet)
+                active_hp_values = [hp for hp in averages.values() if hp > 0]
+                if not active_hp_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_hp_values) / len(active_hp_values)
+                # Add stages less than mean until 0hp stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] > mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
+            # Return full suggestion
+            if suggestion_parts:
+                return "Low health loss.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Decrease max health.\n"
+            return ""
+
+
+    def generate_low_coin_gain_suggestion(self) -> str:
+            """
+            Generates a coins change suggestion for low coin gain.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, coins_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for coins_per_stage in coins_list:
+                    for stage, coins_loss in coins_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + coins_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average coins gained per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 coins gained (i.e. not played yet)
+                active_coins_values = [coins for coins in averages.values() if coins > 0]
+                if not active_coins_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_coins_values) / len(active_coins_values)
+                # Add stages less than mean until 0 coins stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] < mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
+            # Return full suggestion
+            if suggestion_parts:
+                return "Low coin gain.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Increase coins gained per level.\n"
+            return ""
+
+
+    def generate_high_coin_gain_suggestion(self) -> str:
+            """
+            Generates a coins change suggestion for high coin gain.
+
+            :return: Suggestion text.
+            :rtype: str
+            """
+            spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
+            # Suggestion parts are the full suggestion
+            suggestion_parts = []
+            for difficulty, coins_list in spikes.items():
+                # Iterate for each difficulty level
+                totals = {}
+                counts = {}
+                for coins_per_stage in coins_list:
+                    for stage, coins_loss in coins_per_stage.items():
+                        totals[stage] = totals.get(stage, 0) + coins_loss
+                        counts[stage] = counts.get(stage, 0) + 1
+                averages = {}
+                for stage in totals:
+                    # Calculate average coins gained per stage
+                    averages[stage] = totals[stage] / counts[stage]
+
+                # Filter to only stages which aren't 0 coins gained (i.e. not played yet)
+                active_coins_values = [coins for coins in averages.values() if coins > 0]
+                if not active_coins_values:
+                    continue
+                # Calculate average based on filtered values
+                mean = sum(active_coins_values) / len(active_coins_values)
+                # Add stages less than mean until 0 coins stage
+                stages_flagged = []
+                for stage in averages.keys():
+                    if averages[stage] > mean:
+                        stages_flagged.append(str(stage))
+                    if averages[stage] == 0:
+                        break
+
+                # Create list of difficulties to stages string
+                if stages_flagged:
+                    suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                            ", ".join(stages_flagged) + ")" )
+            # Return full suggestion
+            if suggestion_parts:
+                return "High coin gain.\nImpacted Stages: " + "".join(suggestion_parts) + \
+                "\nSuggestion: Decrease coins gained per level.\n"
+            return ""
+
+
+    def generate_fast_average_time_suggestion(self) -> str:
+        """
+        Generates a health change suggestion for a fast average time to complete a given stage.
+
+        :return: Suggestion text.
+        :rtype: str
+        """
+        spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 seconds (i.e. not played yet)
+            active_time_values = [time for time in averages.values() if time > 0]
+            if not active_time_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_time_values) / len(active_time_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] < mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Fast average completion time.\nImpacted Stages: " + "".join(suggestion_parts) \
+            + "\nSuggestion: Increase number of enemies per stage.\n"
+        return ""
+
+
+
+    def generate_slow_average_time_suggestion(self) -> str:
+        """
+        Generates a health change suggestion for a slow average time to complete a given stage.
+
+        :return: Suggestion text.
+        :rtype: str
+        """
+        spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
+        # Suggestion parts are the full suggestion
+        suggestion_parts = []
+        for difficulty, averages in spikes.items():
+            # Filter to only stages which aren't 0 seconds (i.e. not played yet)
+            active_time_values = [time for time in averages.values() if time > 0]
+            if not active_time_values:
+                continue
+            # Calculate average based on filtered values
+            mean = sum(active_time_values) / len(active_time_values)
+            # Add stages less than mean until 0 spikes stage
+            stages_flagged = []
+            for stage in averages.keys():
+                if averages[stage] > mean:
+                    stages_flagged.append(str(stage))
+                if averages[stage] == 0:
+                    break
+
+            # Create list of difficulties to stages string
+            if stages_flagged:
+                suggestion_parts.append(f"{str(difficulty.value)} (" +
+                                        ", ".join(stages_flagged) + ")")
+        # Return full suggestion
+        if suggestion_parts:
+            return "Slow average completion time.\nImpacted Stages: " + "".join(suggestion_parts) \
+            + "\nSuggestion: Decrease number of enemies per stage.\n"
         return ""
