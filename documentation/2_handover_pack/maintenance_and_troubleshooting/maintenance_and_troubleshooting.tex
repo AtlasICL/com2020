@@ -64,21 +64,149 @@
 \tableofcontents
 \newpage
 \section{Overview}
-In this document we will outline the information needed to undergo routine maintenance operations for the project. We will then provide detailed troubleshooting instructions, stating possible symptoms of different problems, solutions, and verification methods to ensure problems are resolved. Lastly we will provide a detailed architecture schema followed by steps for routine application extensions. 
+In this document we will outline the information needed to undergo routine maintenance operations for the project. We will then provide detailed troubleshooting instructions, stating possible symptoms of different problems, solutions, and verification methods to ensure problems are resolved. Lastly we will provide a detailed architecture schema followed by steps for routine application extensions.
 
 \section{Maintenance}
 \subsection{Clearing Telemetry Data}
-Telemetry data can be cleared from within the telemetry app. This is done by opening the app, logging in, and using the "clear telemetry data" function. Detailed instructions are available in the deployment and operations guide. 
+Telemetry data can be cleared from within the telemetry app. This is done by opening the app, logging in, and using the "clear telemetry data" function. Detailed instructions are available in the deployment and operations guide.
 \subsection{Clearing Logs}
-Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|. 
+Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|.
 \subsection{Backups}
-The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, although all stores are plaintext. 
+The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext. 
 
 \subsection{Naming Conventions}
-The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds. 
+The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
 
-The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case. 
+The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case.
 \section{Troubleshooting}
+
+\subsection{Cannot Launch Python Application}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Get an error: \verb|ModuleNotFoundError: No module named '<Module>'|
+  \item Get an error: \verb|python : The term 'python' is not recognized as ...|\\ or \verb|python3 : The term 'python3' is not recognized as ...|
+  \item Get an error: \verb|Command 'python3' not found, did you mean: ...|
+
+\end{itemize}
+\subsubsection{Solutions}
+Try each of these solutions, and verify if it worked before trying the next.
+\begin{enumerate}
+  \item Ensure you're using a supported operating system (Linux, Windows or macOS)
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide. 
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment. 
+\end{enumerate}
+
+\subsubsection{Verification}
+The Python application launches with no errors. 
+
+\subsection{Cannot Launch Java Application}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Get an error: \verb|mvn : The term 'mvn' is not recognized as ...|
+  \item Get an error: \verb|Command 'mvn' not found, did you mean: ..|
+  \item Get an error: \\\verb|The JAVA_HOME environment variable is not defined correctly ...|
+\end{itemize}
+\subsubsection{Solutions}
+Try each of these solutions, and verify if it worked before trying the next.
+\begin{enumerate}
+  \item Ensure you're using a supported operating system (Linux, Windows or macOS)
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide. 
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment. 
+\end{enumerate}
+
+\subsubsection{Verification}
+The Java application launches with no errors. 
+
+\subsection{Cannot Log In}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Java application displays something like \ref{fig:java_login_fail}.
+  \item Python application displays something like \ref{fig:python_login_fail}.
+    \item Error in terminal appears: \verb|Failed to resolve 'accounts.google.com'|
+    \item Error in terminal appears:\\\verb|RuntimeError: Could not parse user roles file at logins_file.json- invalid json.|
+    \item Error in terminal appear: \\ \verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/java_login_fail.png}
+    \caption{Error causes Java application to be unable to authenticate user.}
+    \label{fig:java_login_fail}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/python_login_fail.png}
+    \caption{Error causes Python application to be unable to authenticate user.}
+    \label{fig:python_login_fail}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{Solutions}
+For each solution, check if it worked using the verification steps before attempting the next.
+\begin{enumerate}
+  \item Set environment variables, as described in the deployment and operations guide.
+  \item Ensure a web browser is installed
+  \item Ensure you have internet access
+    \item Ensure \verb|logins_file.json| is syntactically valid using \href{https://jsonformatter.org/}{this}.
+    \item Ensure that all roles in \verb|logins_file.json| are the correct domain described in the data management guide.
+\end{enumerate}
+
+\subsubsection{Verification}
+The issue is fixed if \verb|logins_file.json| is syntactically correct, and you can log in on the desired application.
+
+\subsection{Syntax Errors in Telemetry Store}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Dashboard views are blank like \ref{fig:blank_dashboards}.
+  \item Dashboard views don't update.
+    \item A runtime error appears in the terminal \\\verb|RuntimeError: Could not parse - invalid json.|
+\end{itemize}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/blank_dashboards.png}
+  \caption{Error causes dashboards to display blank}
+  \label{fig:blank_dashboards}
+\end{figure}
+\subsubsection{Solutions}
+First find which event store(s) has syntax errors. This can be done by going through the following steps on both event stores.
+\begin{enumerate}
+  \item Check the file is not empty.
+    \item Check the file starts with \verb|[| and ends with \verb|]|.
+  \item Check between each JSON object is a comma.
+  \item Place the JSON file into an online JSON validator such as \href{https://jsonformatter.org/}{this}. If it says it's invalid this file has a syntax error.
+\end{enumerate}
+
+Then, correct the syntax error by trying each of the following steps, then using the verification steps to see if it has resolved the problem. If the previous step does not work, try the next.
+\begin{enumerate}
+  \item Correct the syntax error manually, by for example adding a comma.
+  \item Removing the object with the syntax error.
+  \item Deleting the telemetry event store.
+  \item Deleting both telemetry event stores.
+\end{enumerate}
+\subsubsection{Verification}
+To verify the problem is resolved, first place the JSON store in an online \href{https://jsonformatter.org/}{validator}. If the validator says it is valid, next test that none of the symptoms observed appear in either application after restarting them. If no symptoms persist the issue is resolved.
+
+\subsection{Missing Fields in telemetry Store}
+\subsubsection{Symptoms}
+\begin{itemize}
+    \item An error appears in the terminal:\\\verb|RuntimeError: An event of type <Event Type> is missing the field '<Field>'|
+\end{itemize}
+\subsubsection{Solutions}
+\begin{enumerate}
+  \item First identify which of the telemetry stores contains the error, this is the store the telemetry app is reading from when the error occurs.
+  \item Then search through that file, checking each event of the type given in the error contains the field that is missing.
+  \item Remove the event that is missing that field.
+  \item Restart the Python application. 
+\end{enumerate}
+
+\subsubsection{Verification}
+The error no longer occurs when loading the data in the Python application. 
+
+%TODO one where user data is in logins but not settings. Need for java update first.
+
 \section{Architecture}
 \section{Extension}
 \end{document}
