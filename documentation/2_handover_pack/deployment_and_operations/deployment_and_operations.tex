@@ -1,0 +1,121 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[skip=6pt]{parskip}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{comment}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+\usepackage{booktabs}
+
+\usepackage{float}
+\usepackage{tabularx}
+
+\title{Data Management\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview}
+In this document we will outline first how to install the prerequisites for each application, we will then outline how to deploy them, and lastly detailed instructions on their operation.
+\section{Prerequisite Installation}
+\subsection{Python Application}
+The Python application has the following dependencies
+\begin{itemize}
+    \item Python 3.12 or later
+    \item A web browser with internet access 
+    \item The environment variables set 
+    \item The packages installed through pip
+\end{itemize}
+\subsubsection{Python 3.12}
+This can be installed by following the guide \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}. 
+\subsubsection{Web browser}
+All supported operating systems often come with a web browser pre-installed. On Windows edge is required, macOS comes with safari pre-installed. Many linux distributions come with Firefox pre-installed, if it is not follow the guide \href{https://support.mozilla.org/en-US/kb/install-firefox-linux}{here}. 
+\subsubsection{Set Environment Variables}
+The environment variables OIDC\_ISSUER, OIDC\_CLIENT\_ID\ and OIDC\_CLIENT\_SECRET need to be set. These values will be sent via email to all clients to ensure security. Once obtained, they must be set for each new terminal, and can be set as follows. 
+
+\paragraph{Windows}
+Complete the following steps, replacing the values in <> with that of the environment variables. 
+\begin{enumerate}
+    \item Run \verb|$env:OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+    \item Run \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+    \item Run \verb|$env:OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+\end{enumerate}
+
+\paragraph{Linux and macOS}
+Complete the following steps, replacing the values in <> with that of the environment variables. 
+\begin{enumerate}
+    \item Run \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+    \item Run \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+    \item Run \verb|export OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+\end{enumerate}
+
+\subsubsection{Install packages}
+Packages can the be installed using pip, but should be done in a virtual environment. All these commands must be ran sequentially from the top directory, containing the game and telemetry folders. The steps taken to install the packages are as follows:
+\begin{enumerate}
+    \item Run \verb|cd telemetry|
+    \item Run \verb|python3 -m venv venv|
+    \item \begin{itemize}
+        \item On windows, run \verb|./venv/Scripts/Activate|
+        \item On Linux or macOS, run \verb|source venv/bin/activate|
+    \end{itemize}
+    \item Run \verb|pip install -r requirements.txt|
+    \item To exit the virtual environment run \verb|deactivate|
+\end{enumerate}
+\subsection{Java Application}
+The Java application has the following dependencies
+\begin{itemize}
+    \item Java 17 or later
+    \item Maven
+    \item The Python application and its prerequisites
+    \item The packages installed through maven 
+\end{itemize}
+\subsubsection{Java 17+}
+Java 17 or higher requires the JDK to be installed, this can be done by following the steps \href{https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html}{here}
+\end{document}
