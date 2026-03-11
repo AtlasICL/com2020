@@ -23,7 +23,7 @@ public class SettingsChangeEvent extends TelemetryEvent {
      * @param setting      The setting being changed in this event.
      * @param settingValue The value that the setting is set to in this event.
      */
-    public SettingsChangeEvent(String userID, Instant timeStamp, SettingsEnum setting, String settingValue) {
+    public SettingsChangeEvent(String userID, Instant timeStamp, SettingsEnum setting, String settingValue, String justification) {
         super(userID, timeStamp, "SettingsChange");
         this.setting = setting;
         this.setting_value = settingValue;
