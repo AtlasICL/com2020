@@ -430,11 +430,15 @@ class SettingsChange:
     :param value: The new value to which the changed 
     setting was set to. 
     :type value: int
+    :param justification: Optional justification for the settings
+    change.
+    :type justification: str 
     """
     userID: str
     timestamp: datetime
     setting: SettingName
     value: int
+    justification: str
 
     
 @dataclass(frozen=True)
