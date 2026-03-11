@@ -32,23 +32,7 @@ public class SimulatedGameRun implements GameRunInterface {
     private final EncounterInterface phase2Boss;
     private final EncounterInterface phase3Boss;
     private final EncounterInterface finalBoss;
-
-    private final UpgradeEnum[] shopUpgrades = new UpgradeEnum[] {
-        UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
-        UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
-        UpgradeEnum.WATER_DAMAGE_RESISTANCE,
-        UpgradeEnum.THUNDER_DAMAGE_RESISTANCE,
-        UpgradeEnum.IMPROVED_PHYSICAL_DAMAGE,
-        UpgradeEnum.IMPROVED_FIRE_DAMAGE,
-        UpgradeEnum.IMPROVED_WATER_DAMAGE,
-        UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
-        UpgradeEnum.SLASH_UNLOCK,
-        UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
-        UpgradeEnum.WATER_JET_UNLOCK,
-        UpgradeEnum.FIRE_BALL_UNLOCK,
-        UpgradeEnum.THUNDER_STORM_UNLOCK
-    };
-
+    private final UpgradeEnum[] shopUpgrades;
     private PlayerInterface player;
     private int currentStage;
     private final DifficultyEnum difficulty;
@@ -95,7 +79,21 @@ public class SimulatedGameRun implements GameRunInterface {
         phase2Boss = new Encounter(EncounterEnum.GHOST_ENCOUNTER, difficulty);
         phase3Boss = new Encounter(EncounterEnum.BLACK_KNIGHT_ENCOUNTER, difficulty);
         finalBoss = new Encounter(EncounterEnum.DRAGON_ENCOUNTER, difficulty);
-        shopUpgrades = UpgradeEnum.values();
+        this.shopUpgrades = new UpgradeEnum[] {
+            UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
+            UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
+            UpgradeEnum.WATER_DAMAGE_RESISTANCE,
+            UpgradeEnum.THUNDER_DAMAGE_RESISTANCE,
+            UpgradeEnum.IMPROVED_PHYSICAL_DAMAGE,
+            UpgradeEnum.IMPROVED_FIRE_DAMAGE,
+            UpgradeEnum.IMPROVED_WATER_DAMAGE,
+            UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
+            UpgradeEnum.SLASH_UNLOCK,
+            UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
+            UpgradeEnum.WATER_JET_UNLOCK,
+            UpgradeEnum.FIRE_BALL_UNLOCK,
+            UpgradeEnum.THUNDER_STORM_UNLOCK
+        };
         telemetryListener.setDestinationFile(new File("../event_logs/simulation_events.json"));
 
         DifficultyEnum d = selectDifficulty();
@@ -312,7 +310,6 @@ public class SimulatedGameRun implements GameRunInterface {
             }
         }
     }
-
 
     @Override
     public EncounterInterface pickEncounter() throws IllegalStateException {
