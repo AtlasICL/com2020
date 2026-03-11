@@ -60,7 +60,6 @@ public class SimulatedGameRun implements GameRunInterface {
         }
 
         return shop;
-    }ow new UnsupportedOperationException();
     }
 
 @Override
@@ -85,54 +84,69 @@ public class SimulatedGameRun implements GameRunInterface {
 
     @Override
     public PlayerInterface getPlayer() {
-
-        throw new UnsupportedOperationException();
+        return player;
     }
 
     @Override
     public void nextStage() {
-
-        throw new UnsupportedOperationException();
+        currentStage++;
     }
 
     @Override
     public int getStage() {
-
-        throw new UnsupportedOperationException();
+        return currentStage;
     }
 
     @Override
     public LocalDateTime getRunStartTime() {
-
-        throw new UnsupportedOperationException();
+        return startTime;
     }
 
     @Override
     public int getDeathCount() {
-
-        throw new UnsupportedOperationException();
+        return deathCount;
     }
 
     @Override
     public void incrementDeathCount() {
-
-        throw new UnsupportedOperationException();
+        player.loseLives(1);
+        deathCount++;
+        player.resetHealth();
     }
 
     @Override
     public DifficultyEnum getDifficulty() {
-
-        throw new UnsupportedOperationException();
+        return difficulty;
     }
 
     @Override
     public int getSessionID() {
-
-        throw new UnsupportedOperationException();
+        return sessionID;
     }
 
     private Instant getTimestamp() {
+        return Instant.now(); // not dynamic yet
+    }
 
-        throw new UnsupportedOperationException();
+        private void removeUpgradeFromPool(UpgradeEnum upgrade) {
+
+        for (int i = 0; i < shopUpgrades.length; i++) {
+
+            if (shopUpgrades[i] == upgrade) {
+                shopUpgrades[i] = null;
+            }
+        }
+    }
+
+    private <T> void shuffleArray(T[] arr) {
+
+        for (int i = arr.length - 1; i > 0; i--) {
+
+            int j = random.nextInt(i + 1);
+
+            T temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
     }
 }
