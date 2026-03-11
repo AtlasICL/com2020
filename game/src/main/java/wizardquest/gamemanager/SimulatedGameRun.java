@@ -9,9 +9,15 @@ import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
+import wizardquest.telemetry.StartSessionEvent;
+import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.BossEncounterStartEvent;
+import wizardquest.telemetry.BossEncounterCompleteEvent;
+import wizardquest.telemetry.BossEncounterFailEvent;
+import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.NormalEncounterCompleteEvent;
+import wizardquest.telemetry.NormalEncounterFailEvent;
 
-/**
- */
 public class SimulatedGameRun implements GameRunInterface {
 
     private final EncounterInterface[] phase1NormalEncounters;
@@ -78,6 +84,14 @@ public class SimulatedGameRun implements GameRunInterface {
         telemetryListener.setDestinationFile(new File("../event_logs/simulation_events.json"));
 
         DifficultyEnum d = selectDifficulty();
+        
+        telemetryListener.onStartSession(
+                new StartSessionEvent(
+                        settings.getUserID(), 
+                        gameManager.getSessionID(),
+                        TimeManagerSingleton.getInstance().getCurrentTime(),
+                        d));
+        
         gameManager.startNewGame(d);
 
         GameRunInterface lastRun = null;
@@ -95,7 +109,7 @@ public class SimulatedGameRun implements GameRunInterface {
                 lastPlayer = gameManager.getCurrentPlayer();
             } catch (Exception ignored) {}
 
-            boolean encounterWon = simulateEncounter(currentEncounter);
+            boolean encounterWon = simulateEncounter(currentEncounter, isBossEncounterEncounter(currentEncounter.getType()));
 
             if (!encounterWon) {
                 continue;
@@ -104,7 +118,7 @@ public class SimulatedGameRun implements GameRunInterface {
             GameRunInterface run = gameManager.getCurrentRun();
 
             if (run != null && run.getStage() > 10) {
-                endScreen(lastRun, lastPlayer);
+                endSimulation(lastRun, lastPlayer);
                 return;
             }
 
@@ -115,23 +129,32 @@ public class SimulatedGameRun implements GameRunInterface {
             currentEncounter = gameManager.pickEncounter();
         }
 
-        endScreen(lastRun, lastPlayer);
+        endSimulation(lastRun, lastPlayer);
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
-    private boolean simulateEncounter(EncounterInterface encounter) {
+    private boolean simulateEncounter(EncounterInterface encounter, boolean isBossEncounter) {
 
         GameRunInterface run = gameManager.getCurrentRun();
 
-        telemetryListener.onNormalEncounterStart(
-                new NormalEncounterStartEvent(
-                        settings.getUserID(), gameManager.getSessionID(),
-                        TimeManagerSingleton.getInstance().getCurrentTime(),
-                        encounter.getType(),
-                        gameManager.getCurrentDifficulty(),
-                        run != null ? run.getStage() : 1));
+        if (isBossEncounter) {
+            telemetryListener.onBossEncounterStart(
+                    new BossEncounterStartEvent(
+                            settings.getUserID(), gameManager.getSessionID(),
+                            TimeManagerSingleton.getInstance().getCurrentTime(),
+                            encounter.getType(),
+                            gameManager.getCurrentDifficulty(),
+                            run != null ? run.getStage() : 1));
+        } else {
+            telemetryListener.onNormalEncounterStart(
+                    new NormalEncounterStartEvent(
+                            settings.getUserID(), gameManager.getSessionID(),
+                            TimeManagerSingleton.getInstance().getCurrentTime(),
+                            encounter.getType(),
+                            gameManager.getCurrentDifficulty(),
+                            run != null ? run.getStage() : 1));
+        }
 
-        // Reset player at the start of the encounter
         PlayerInterface player = gameManager.getCurrentPlayer();
         if (player == null) {
             gameManager.endGame();
@@ -140,7 +163,6 @@ public class SimulatedGameRun implements GameRunInterface {
         player.resetHealth();
         player.resetMagic();
 
-        // Encounter Loop
         while (true) {
 
             player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
@@ -148,14 +170,25 @@ public class SimulatedGameRun implements GameRunInterface {
             EntityInterface[] enemies = encounter.getEnemies();
 
             if (player.getHealth() <= 0) {
-                telemetryListener.onNormalEncounterFail(
-                        new NormalEncounterFailEvent(
-                                settings.getUserID(), gameManager.getSessionID(),
-                                timeManager.getCurrentTime(),
-                                encounter.getType(),
-                                gameManager.getCurrentDifficulty(),
-                                run != null ? run.getStage() : 1,
-                                player.getLives()));
+                if (isBossEncounter) {
+                    telemetryListener.onBossEncounterFail(
+                            new BossEncounterFailEvent(
+                                    settings.getUserID(), gameManager.getSessionID(),
+                                    timeManager.getCurrentTime(),
+                                    encounter.getType(),
+                                    gameManager.getCurrentDifficulty(),
+                                    run != null ? run.getStage() : 1,
+                                    player.getLives()));
+                } else {
+                    telemetryListener.onNormalEncounterFail(
+                            new NormalEncounterFailEvent(
+                                    settings.getUserID(), gameManager.getSessionID(),
+                                    timeManager.getCurrentTime(),
+                                    encounter.getType(),
+                                    gameManager.getCurrentDifficulty(),
+                                    run != null ? run.getStage() : 1,
+                                    player.getLives()));
+                }
                 gameManager.resetFailedEncounter();
 
                 if (player.getLives() == 0) {
@@ -195,13 +228,23 @@ public class SimulatedGameRun implements GameRunInterface {
             }
 
             if (allEnemiesDead(enemies)) {
-                telemetryListener.onNormalEncounterComplete(
-                        new NormalEncounterCompleteEvent(
-                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
-                                encounter.getType(),
-                                gameManager.getCurrentDifficulty(),
-                                run != null ? run.getStage() : 1,
-                                player.getHealth()));
+                if (isBossEncounter) {
+                    telemetryListener.onBossEncounterComplete(
+                            new BossEncounterCompleteEvent(
+                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                    encounter.getType(),
+                                    gameManager.getCurrentDifficulty(),
+                                    run != null ? run.getStage() : 1,
+                                    player.getHealth()));
+                } else {
+                    telemetryListener.onNormalEncounterComplete(
+                            new NormalEncounterCompleteEvent(
+                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                    encounter.getType(),
+                                    gameManager.getCurrentDifficulty(),
+                                    run != null ? run.getStage() : 1,
+                                    player.getHealth()));
+                }
                 gameManager.completeCurrentEncounter();
                 player.gainCoins(COINS_GAINED);
                 telemetryListener.onGainCoin(
@@ -214,7 +257,6 @@ public class SimulatedGameRun implements GameRunInterface {
                 return true;
             }
 
-            // each enemy takes their turn
             for (EntityInterface enemy : enemies) {
                 if (enemy == null)
                     continue;
@@ -232,7 +274,6 @@ public class SimulatedGameRun implements GameRunInterface {
 
     }
 
-    // Buys between 0 and 1 upgrades from the shop.
     @SuppressWarnings("CallToPrintStackTrace")
     private void simulateShop() {
         UpgradeEnum[] upgrades = gameManager.viewShop();
@@ -281,6 +322,13 @@ public class SimulatedGameRun implements GameRunInterface {
     }
     throw new IllegalStateException("Out of Encounters for stage: " + this.currentStage);
 }
+
+    private boolean isBossEncounterEncounter(EncounterEnum encounterType) {
+        return encounterType == EncounterEnum.EVIL_WIZARD_ENCOUNTER ||
+               encounterType == EncounterEnum.GHOST_ENCOUNTER ||
+               encounterType == EncounterEnum.BLACK_KNIGHT_ENCOUNTER ||
+               encounterType == EncounterEnum.DRAGON_ENCOUNTER;
+    }
 
     @Override
     public UpgradeEnum[] viewShop() {
@@ -384,5 +432,13 @@ public class SimulatedGameRun implements GameRunInterface {
             arr[i] = arr[j];
             arr[j] = temp;
         }
+    }
+
+    private void endSimulation(GameRunInterface lastRun, PlayerInterface lastPlayer) {
+        telemetryListener.onEndSession(
+                new EndSessionEvent(
+                        settings.getUserID(),
+                        gameManager.getSessionID(),
+                        TimeManagerSingleton.getInstance().getCurrentTime()));
     }
 }
