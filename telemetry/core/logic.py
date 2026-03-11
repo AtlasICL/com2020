@@ -184,6 +184,17 @@ class EventLogicEngine:
             uniqueIDs.add(event.userID)
         return uniqueIDs
     
+    def get_unique_sessionIDs(self) -> set[str]:
+        """
+        Returns the set of unique session IDs.
+        
+        :return: set of unique session IDs.
+        :rtype: set[int]
+        """
+        uniqueIDs = set()
+        for event in self.start_session_events:
+            uniqueIDs.add(event.sessionID)
+        return uniqueIDs
 
     def count_starts(self, stage_number: int) -> int:
         """
