@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
+import wizardquest.settings.SettingsInterface;
+import wizardquest.settings.SettingsSingleton;
 
 /**
  */
@@ -285,7 +287,8 @@ public class SimulatedGameRun implements GameRunInterface {
 
         shuffleArray(this.shopUpgrades);
 
-        int shopSize = Math.min(3, shopUpgrades.length); // placeholder for design parameter
+        SettingsInterface settings = SettingsSingleton.getInstance();
+        int shopSize = settings.getShopItemCount(this.difficulty);
         UpgradeEnum[] shop = new UpgradeEnum[shopSize];
 
         int i = 0;
