@@ -109,6 +109,8 @@ The log stores the events as a JSON list. Each event has fields described in \re
       \hline
       upgrade\_bought & String (One of: PhysicalDamageResistance, FireDamageResistance, WaterDamageResistance, ThunderDamageResistance, ImprovedPhysicalDamage, ImprovedFireDamage, ImprovedWaterDamage, ImprovedThunderDamage, SlashUnlock, AbsolutePulseUnlock, WaterJetUnlock, FireBallUnlock, ThunderStormUnlock) \\
       \hline
+      justification & String \\
+      \hline
     \end{tabularx}
     \caption{Field definitions}
     \label{tab:field_definitions}
@@ -143,7 +145,7 @@ The log stores the events as a JSON list. Each event has fields described in \re
       \hline
       EndSession & userID, sessionID, timestamp, event \\
       \hline
-      SettingsChange & userID, timestamp, setting, setting\_value, event \\
+      SettingsChange & userID, timestamp, setting, setting\_value, event, justification \\
       \hline
       KillEnemy & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, enemy\_type, event \\
       \hline
@@ -174,14 +176,6 @@ The Java application only ever writes to the files, and all writing is done by \
 
 \subsubsection{Python application}
 The python application only ever reads the files, which is done by \verb|telemetry.core.parsing|. It does so when a user logs in, and every 3 seconds from that point to allow real time viewing. It uses this data to make design suggestions and display dashboard views.
-
-\section{Decision Log}
-\subsection{Overview}
-The decision log is used to store design parameter tweaks and justifications as to why.
-%TODO
-\subsection{Fields}
-
-\subsection{Integrations}
 
 \section{Settings File}
 
@@ -257,7 +251,7 @@ The file contains a single JSON object with the fields \verb|users| and \verb|de
 \subsection{Integrations}
 \subsubsection{Java application}
 The file is read once when a user is authenticated by \verb|wizardquest.settings.SettingsSingleton|, capturing the user settings and design parameters at that time. The file is written to by the class, when the user toggles telemetry or changes a design parameter and saves this change. 
-%TODO may add max level reached
+% TODO may add max level reached
 
 \section{Logins File}
 
@@ -272,6 +266,36 @@ Each user ID is a field. All fields have the domain of String(One of: player, de
 When authenticating a user the Java application makes a call to the python application, which then interacts with the file, as if it were authenticating a user. This call is made by \verb|wizardquest.auth.authenticator|. If a user is assigned a role by a developer, the Java application reads the file to find the user's ID, and if valid writes their new role. This is done by \verb|wizardquest.settings.SettingsSingleton| 
 
 \subsubsection{Python Application}
-When authenticating a user the Python application reads the file to find the given user ID, and on success reads their role. On failure, the Python application creates a new user with the ID provided by Google OAuth, who has the player role. This is all handled by \verb|telemetry.auth.auth|. 
+When authenticating a user the Python application reads the file to find the given user ID, and on success reads their role. On failure, the Python application creates a new user with the ID provided by Google OAuth, who has the player role. This is all handled by \verb|telemetry.auth.auth|.
 
+\section{Authentication Log}
+\subsection{Overview}
+This log stores information related to authentication for both applications. It is only ever written to by the Python application, but this write call is also triggered when the Java application authenticates a user via the Python application. This information is stored in \verb|telemetry/auth/logs.txt|. 
+\subsection{Fields}
+Each event follows the syntax described below, where anything in <> varies from event to event.
+\begin{verbatim}
+  <timestamp>
+      [<Event Type>] <Description>
+\end{verbatim}
+
+Timestamp is in the format yyyy-mm-dd hh:mm:ss, starting with year, then month, day, hour, minute, and lastly second. 
+
+Event Type is either SIE for sign in event, or AE for authentication event.
+
+Lastly the description is one of the following:
+\begin{itemize}
+  \item Sign-in prompted.
+  \item Sign-in successful: user authenticated.
+  \item Existing user authenticated with role <Role>
+  \item Sign-in failed: no authorization code received.
+  \item Sign-in failed: state mismatch.
+  \item Sign-in failed: token exchange error (status = <Status Code>)
+\end{itemize}
+
+Role is their role (player, designer, or developer), and Status Code is the error code returned by Google OAuth if it fails. 
+\subsection{Integrations}
+\subsubsection{Java Application}
+The Java application doesn't directly interact with the log, but calls the Python application to do so during authentication. This call is made by \verb|auth.Authenticator|. 
+\subsubsection{Python Application}
+They Python application writes to the log during authentication using \verb|auth.auth_logger| which is called by |auth.auth|. It never reads from the log. 
 \end{document}
