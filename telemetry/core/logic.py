@@ -445,15 +445,13 @@ class EventLogicEngine:
     def get_sessionIDs_of_speed(self, speed: Speed) -> set[int]:
         session_avg_times: dict[int, float] = {}
         for sessionID in self.get_unique_sessionIDs():
-            start_times: dict[tuple[int, int], datetime] = {}
+            start_times: dict[int, datetime] = {}
             for event in self.normal_encounter_start_events:
                 if event.sessionID == sessionID:
-                    key = (event.sessionID, event.stage_number)
-                    start_times[key] = event.timestamp
+                    start_times[event.stage_number] = event.timestamp
             for event in self.boss_encounter_start_events:
                 if event.sessionID == sessionID:
-                    key = (event.sessionID, event.stage_number)
-                    start_times[key] = event.timestamp
+                    start_times[event.stage_number] = event.timestamp
 
             # Get completion times per stage
             stage_times: dict[int, list[float]] = {
@@ -461,18 +459,16 @@ class EventLogicEngine:
             }
             for event in self.normal_encounter_complete_events:
                 if event.sessionID == sessionID:
-                    key = (event.sessionID, event.stage_number)
-                    if key in start_times:
+                    if event.stage_number in start_times:
                         duration = (
-                            event.timestamp - start_times[key]
+                            event.timestamp - start_times[event.stage_number]
                         ).total_seconds()
                         stage_times[event.stage_number].append(duration)
             for event in self.boss_encounter_complete_events:
                 if event.sessionID == sessionID:
-                    key = (event.sessionID, event.stage_number)
-                    if key in start_times:
+                    if event.stage_number in start_times:
                         duration = (
-                            event.timestamp - start_times[key]
+                            event.timestamp - start_times[event.stage_number]
                         ).total_seconds()
                         stage_times[event.stage_number].append(duration)
 
@@ -508,8 +504,59 @@ class EventLogicEngine:
         return result
     
     def get_sessionIDs_of_coin_hold(self, coinHold: CoinHold) -> set[int]:
-        #TODO: implement
-        return set()
+        session_avg_coins: dict[int, float] = {}
+        for sessionID in self.get_unique_sessionIDs():
+            start_coins: dict[int, int] = {}
+            
+            for event in sorted(self.gain_coin_events, key = lambda e: e.timestamp):
+                if event.sessionID == sessionID:
+                    start_coins[event.stage_number] = event.coins_gained
+            
+            coins_held: dict[int, int] = {
+                stage: 0 for stage in range(1,11)
+            }
+
+            for event in sorted(self.buy_upgrade_events, key = lambda e: e.timestamp):
+                if event.sessionID == sessionID:
+                    if event.stage_number != 1:
+                        coin_hold = start_coins[event.stage_number] \
+                            - event.coins_spent
+                    else:
+                        coin_hold = coins_held[event.stage_number] \
+                            + start_coins[event.stage_number] - event.coins_spent
+                    coins_held[event.stage_number] = coin_hold
+
+            # For stages with coins gained but no upgrades bought,
+            # the player held all their coins
+            for stage in start_coins:
+                if coins_held[stage] == 0:
+                    coins_held[stage] = start_coins[stage]
+
+            # Average of all stage coin holds for this session
+            played_stages = [coins_held[s] for s in coins_held
+                             if coins_held[s] != 0]
+            if played_stages:
+                session_avg_coins[sessionID] = sum(played_stages) / len(played_stages)
+
+        if not session_avg_coins:
+            return set()
+
+        # Find median to split Long/Short
+        sorted_coins = sorted(session_avg_coins.values())
+        mid = len(sorted_coins) // 2
+        if len(sorted_coins) % 2 == 0:
+            median = (sorted_coins[mid - 1] + sorted_coins[mid]) / 2
+        else:
+            median = sorted_coins[mid]
+
+        result: set[int] = set()
+        for sid, avg_coins in session_avg_coins.items():
+            if coinHold == CoinHold.LONG and avg_coins >= median:
+                result.add(sid)
+            elif coinHold == CoinHold.SHORT and avg_coins < median:
+                result.add(sid)
+        return result
+
     
     def get_health_per_stage_by_difficulty(
             self,
