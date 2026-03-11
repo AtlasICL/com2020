@@ -343,8 +343,76 @@ class EventLogicEngine:
             if start_event.difficulty == difficulty:
                 difficulty_sessionIDs.add(start_event.sessionID)
         return difficulty_sessionIDs
-        
+    
+    def get_sessionIDs_of_speed(self, speed: Speed) -> set[int]:
+        session_avg_times: dict[int, float] = {}
+        for sessionID in self.get_unique_sessionIDs():
+            start_times: dict[tuple[int, int], datetime] = {}
+            for event in self.normal_encounter_start_events:
+                if event.sessionID == sessionID:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+            for event in self.boss_encounter_start_events:
+                if event.sessionID == sessionID:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
 
+            # Get completion times per stage
+            stage_times: dict[int, list[float]] = {
+                stage: [] for stage in range(1, 11)
+            }
+            for event in self.normal_encounter_complete_events:
+                if event.sessionID == sessionID:
+                    key = (event.sessionID, event.stage_number)
+                    if key in start_times:
+                        duration = (
+                            event.timestamp - start_times[key]
+                        ).total_seconds()
+                        stage_times[event.stage_number].append(duration)
+            for event in self.boss_encounter_complete_events:
+                if event.sessionID == sessionID:
+                    key = (event.sessionID, event.stage_number)
+                    if key in start_times:
+                        duration = (
+                            event.timestamp - start_times[key]
+                        ).total_seconds()
+                        stage_times[event.stage_number].append(duration)
+
+            # Calculate averages per stage
+            averages: dict[int, float] = {}
+            for stage in range(1, 11):
+                times = stage_times[stage]
+                averages[stage] = (sum(times) / len(times)) if times else 0.0
+
+            # Average of all stage averages for this session
+            played_stages = [averages[s] for s in averages
+                             if stage_times[s]]
+            if played_stages:
+                session_avg_times[sessionID] = sum(played_stages) / len(played_stages)
+
+        if not session_avg_times:
+            return set()
+
+        # Find median to split Fast/Slow
+        sorted_times = sorted(session_avg_times.values())
+        mid = len(sorted_times) // 2
+        if len(sorted_times) % 2 == 0:
+            median = (sorted_times[mid - 1] + sorted_times[mid]) / 2
+        else:
+            median = sorted_times[mid]
+
+        result: set[int] = set()
+        for sid, avg_time in session_avg_times.items():
+            if speed == Speed.FAST and avg_time <= median:
+                result.add(sid)
+            elif speed == Speed.SLOW and avg_time > median:
+                result.add(sid)
+        return result
+    
+    def get_sessionIDs_of_coin_hold(self, coinHold: CoinHold) -> set[int]:
+        #TODO: implement
+        return set()
+    
     def get_health_per_stage_by_difficulty(
             self,
             difficulty: Difficulty
