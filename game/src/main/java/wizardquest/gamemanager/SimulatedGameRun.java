@@ -3,9 +3,12 @@ package wizardquest.gamemanager;
 import java.security.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-
+import java.util.Random;
+import java.io.File;
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
+import wizardquest.entity.EntityAISingleton;
+import wizardquest.entity.EntityAIInterface;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
@@ -17,13 +20,14 @@ import wizardquest.telemetry.BossEncounterFailEvent;
 import wizardquest.telemetry.NormalEncounterStartEvent;
 import wizardquest.telemetry.NormalEncounterCompleteEvent;
 import wizardquest.telemetry.NormalEncounterFailEvent;
+import wizardquest.telemetry.TelemetryListenerSingleton;
+import wizardquest.telemetry.TelemetryListenerInterface;
 
 public class SimulatedGameRun implements GameRunInterface {
 
     private final EncounterInterface[] phase1NormalEncounters;
     private final EncounterInterface[] phase2NormalEncounters;
     private final EncounterInterface[] phase3NormalEncounters;
-
     private final EncounterInterface phase1Boss;
     private final EncounterInterface phase2Boss;
     private final EncounterInterface phase3Boss;
@@ -52,6 +56,11 @@ public class SimulatedGameRun implements GameRunInterface {
     private final Random random;
     private int deathCount;
     private final int sessionID;
+    private final GameManagerInterface gameManager;
+    private final TelemetryListenerInterface telemetryListener;
+    private final SettingsInterface settings;
+    private final TimeManagerInterface timeManager;
+    private final EntityAIInterface ai;
 
     public SimulatedGameRun(DifficultyEnum difficulty, int sessionID) {
         this.difficulty = difficulty;
@@ -61,7 +70,12 @@ public class SimulatedGameRun implements GameRunInterface {
         this.random = new Random();
         this.deathCount = 0;
         this.player = new Player(difficulty);
-        
+        this.gameManager = GameManagerSingleton.getInstance();
+        this.telemetryListener = TelemetryListenerSingleton.getInstance();
+        this.settings = SettingsSingleton.getInstance();
+        this.timeManager = TimeManagerSingleton.getInstance();
+        this.ai = EntityAISingleton.getInstance();
+
         phase1NormalEncounters = new EncounterInterface[] {
         new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
         new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty),
