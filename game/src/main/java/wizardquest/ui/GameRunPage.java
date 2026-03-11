@@ -8,6 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.ProgressBar;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
@@ -46,7 +51,7 @@ public class GameRunPage extends Application {
         root.setPadding(new Insets(12));
         // First screen shown when the game launches
         showLoginPage();
-        stage.setScene(new Scene(root, 800, 700));
+        stage.setScene(new Scene(root, 1280, 720));
         stage.setTitle("WizardQuest");
         stage.show();
     }
@@ -176,6 +181,7 @@ public class GameRunPage extends Application {
     // Displays current encounter and player stats.
     private void showEncounter() {
         root.getChildren().clear();
+        root.setAlignment(Pos.TOP_CENTER);
         PlayerInterface player = gameManager.getCurrentPlayer();
         GameRunInterface run = gameManager.getCurrentRun();
 
@@ -200,24 +206,60 @@ public class GameRunPage extends Application {
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
         Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
-        // Display of basic player stats
-        Label playerStats = new Label(
-                "HP: " + player.getHealth() + "/" + player.getMaxHealth() +
-                        "  Magic: " + player.getMagic() + "/" + player.getMaxMagic() +
-                        "  Lives: " + player.getLives() +
-                        "  Coins: " + player.getCoins());
-        VBox enemyList = new VBox(2);
+        heading.setMaxWidth(Double.MAX_VALUE);
+
+        // Centers heading
+        heading.setAlignment(Pos.CENTER);
+
+        Label statsText = new Label(
+                "Lives: " + player.getLives() +
+                "  Coins: " + player.getCoins()
+        );
+
+        Label hpLabel = new Label("HP: " + player.getHealth() + "/" + player.getMaxHealth());
+        // HP Bar
+        ProgressBar hpBar = new ProgressBar(
+                (double) player.getHealth() / player.getMaxHealth()
+        );
+        hpBar.setPrefWidth(250);
+        hpBar.setStyle("-fx-accent: green;");
+
+        Label magicLabel = new Label("Magic: " + player.getMagic() + "/" + player.getMaxMagic());
+        // Magic Bar
+        ProgressBar magicBar = new ProgressBar(
+                (double) player.getMagic() / player.getMaxMagic()
+        );
+        magicBar.setPrefWidth(250);
+        magicBar.setStyle("-fx-accent: lightblue;");
+
+        VBox playerStats = new VBox(4, statsText, hpLabel, hpBar, magicLabel, magicBar);
+
+        VBox enemyList = new VBox(6);
         enemyList.getChildren().add(new Label("ENEMIES:"));
+
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
-            if (enemy != null && enemy.getHealth() > 0) {
-                enemyList.getChildren().add(new Label(
-                        "  " + enemy.getType().getDisplayName() +
-                                "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()));
+            if (enemy == null || enemy.getHealth() <= 0) {
+                continue;
             }
+
+            Label enemyLabel = new Label(
+                    enemy.getType().getDisplayName() +
+                    "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+            );
+
+            ProgressBar enemyHpBar = new ProgressBar(
+                    (double) enemy.getHealth() / enemy.getMaxHealth()
+            );
+            enemyHpBar.setPrefWidth(250);
+            enemyHpBar.setStyle("-fx-accent: red;");
+
+            enemyList.getChildren().addAll(enemyLabel, enemyHpBar);
         }
 
+        // Ability VBox
         VBox abilityBox = new VBox(4);
+        abilityBox.setAlignment(Pos.TOP_CENTER);
         abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
         for (AbilityEnum ability : player.getAbilities()) {
             Button ab = new Button(ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:"
@@ -225,13 +267,20 @@ public class GameRunPage extends Application {
             ab.setOnAction(e -> showTargetSelection(ability));
             abilityBox.getChildren().add(ab);
         }
-        Button quitRun = new Button("Quit Run");
-        quitRun.setOnAction(e -> {
-            showEndScreen();
-            gameManager.endGame();
-        });
 
-        root.getChildren().addAll(heading, playerStats, enemyList, abilityBox, log, quitRun);
+        playerStats.setMinWidth(280);
+        abilityBox.setMinWidth(220);
+        enemyList.setMinWidth(280);
+
+        // HBox alignment
+        HBox mainContent = new HBox(40);
+        mainContent.setAlignment(Pos.TOP_CENTER);
+        mainContent.getChildren().addAll(playerStats, abilityBox, enemyList);
+
+        Button quitRun = new Button("Quit Run");
+        quitRun.setOnAction(e -> showEndScreen());
+
+        root.getChildren().addAll(heading, mainContent, log, quitRun);
     }
 
     // Shows alive enemies as clickable targets after the player picks an ability.
