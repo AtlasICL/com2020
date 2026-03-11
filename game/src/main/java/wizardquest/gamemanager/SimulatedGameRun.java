@@ -12,6 +12,22 @@ import wizardquest.settings.DifficultyEnum;
  */
 public class SimulatedGameRun implements GameRunInterface {
 
+    private final UpgradeEnum[] shopUpgrades = new UpgradeEnum[] {
+            UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
+            UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
+            UpgradeEnum.WATER_DAMAGE_RESISTANCE,
+            UpgradeEnum.THUNDER_DAMAGE_RESISTANCE,
+            UpgradeEnum.IMPROVED_PHYSICAL_DAMAGE,
+            UpgradeEnum.IMPROVED_FIRE_DAMAGE,
+            UpgradeEnum.IMPROVED_WATER_DAMAGE,
+            UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
+            UpgradeEnum.SLASH_UNLOCK,
+            UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
+            UpgradeEnum.WATER_JET_UNLOCK,
+            UpgradeEnum.FIRE_BALL_UNLOCK,
+            UpgradeEnum.THUNDER_STORM_UNLOCK
+    };
+
     public SimulatedGameRun() {
 
     }
@@ -25,7 +41,26 @@ public class SimulatedGameRun implements GameRunInterface {
     @Override
     public UpgradeEnum[] viewShop() {
 
-        throw new UnsupportedOperationException();
+        shuffleArray(this.shopUpgrades);
+
+        int shopSize = Math.min(3, shopUpgrades.length); // placeholder for design parameter
+        UpgradeEnum[] shop = new UpgradeEnum[shopSize];
+
+        int i = 0;
+
+        for (UpgradeEnum u : shopUpgrades) {
+            if (u != null) {
+                shop[i] = u;
+                i++;
+
+                if (i == shopSize) {
+                    break;
+                }
+            }
+        }
+
+        return shop;
+    }ow new UnsupportedOperationException();
     }
 
     @Override
