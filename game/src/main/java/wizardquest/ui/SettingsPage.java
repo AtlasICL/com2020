@@ -1,5 +1,7 @@
 package wizardquest.ui;
 
+import java.time.Instant;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,13 +14,18 @@ import javafx.scene.layout.VBox;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.RoleEnum;
 import wizardquest.settings.DifficultyEnum;
+import wizardquest.settings.SettingsEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
+import wizardquest.telemetry.SettingsChangeEvent;
+import wizardquest.telemetry.TelemetryListenerInterface;
+import wizardquest.telemetry.TelemetryListenerSingleton;
 
 public class SettingsPage {
 
     // Access settings to read and update values
     private final SettingsInterface settings = SettingsSingleton.getInstance();
+    private final TelemetryListenerInterface telemetryListener = TelemetryListenerSingleton.getInstance();
     private final Label output = new Label("");
 
     public VBox createView(Runnable backAction) {
@@ -166,6 +173,15 @@ public class SettingsPage {
 
                 // Update Max Health with new values from text fields
                 settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
+                telemetryListener.onSettingsChange(
+                    new SettingsChangeEvent(
+                        settings.getUserID(), 
+                        Instant.now(), 
+                        SettingsEnum.PLAYER_MAX_HEALTH, 
+                        String.valueOf(easyHp), 
+                        "some justification here"
+                    )
+                );
                 settings.setPlayerMaxHealth(DifficultyEnum.MEDIUM, mediumHp);
                 settings.setPlayerMaxHealth(DifficultyEnum.HARD, hardHp);
 

@@ -36,7 +36,7 @@ public class SettingsChangeEvent extends TelemetryEvent {
     /**
      * Gets the name of the setting being changed
      * 
-     * @return the setting's name
+     * @return The setting's name.
      */
     public SettingsEnum getSetting() {
         return this.setting;
@@ -45,9 +45,19 @@ public class SettingsChangeEvent extends TelemetryEvent {
     /**
      * Gets the new value of the setting being changed
      * 
-     * @return
+     * @return The new value of the setting.
      */
-    public String getSetting_value() {
+    public String getSettingValue() {
         return this.settingValue;
     }
+
+    /**
+     * Gets the justification 
+     * 
+     * @return The justification for the settings change.
+     */
+    public String getSettingsChangeJustification() {
+        return this.settingChangeJustification;
+    }
+
 }

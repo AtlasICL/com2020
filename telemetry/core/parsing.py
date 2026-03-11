@@ -203,7 +203,8 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.USER_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.SETTING],
-                    event[EventParameter.SETTING_VALUE]
+                    event[EventParameter.SETTING_VALUE],
+                    event[EventParameter.JUSTIFICATION]
                 )
             case EventType.KILL_ENEMY:
                 return KillEnemy(
