@@ -46,7 +46,9 @@ class PlotTab:
             "Medium": "orange",
             "Hard": "red",
             "Fast": "green",
-            "Slow": "red"
+            "Slow": "red",
+            "Long": "blue",
+            "Short": "purple"
         }
 
 
