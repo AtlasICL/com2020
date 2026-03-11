@@ -503,34 +503,44 @@ class EventLogicEngine:
                 result.add(sid)
         return result
     
-    def get_sessionIDs_of_coin_hold(self, coinHold: CoinHold) -> set[int]:
+    def get_sessionIDs_of_coin_hold(self, coin_hold: CoinHold) -> set[int]:
+        """
+        Get the set of all sessionIDs of a given coin holding type.
+        
+        :param coin_hold: The coin holding type to search for.
+        :type coin_hold: coin_hold
+        :return: The list of sessionIDs with the given CoinHold.
+        :rtype: list[int]
+        """
         session_avg_coins: dict[int, float] = {}
         for sessionID in self.get_unique_sessionIDs():
-            start_coins: dict[int, int] = {}
+            coins_gained: dict[int, int] = {}
             
+            # Coins gained in each stage
             for event in sorted(self.gain_coin_events, key = lambda e: e.timestamp):
                 if event.sessionID == sessionID:
-                    start_coins[event.stage_number] = event.coins_gained
+                    coins_gained[event.stage_number] = event.coins_gained
             
             coins_held: dict[int, int] = {
                 stage: 0 for stage in range(1,11)
             }
 
-            for event in sorted(self.buy_upgrade_events, key = lambda e: e.timestamp):
+            # Calculates coins held each stage, cumulative 
+            for event in sorted(
+                self.buy_upgrade_events, key = lambda e: e.timestamp):
                 if event.sessionID == sessionID:
                     if event.stage_number != 1:
-                        coin_hold = start_coins[event.stage_number] \
+                        coin_holding = coins_gained[event.stage_number] \
                             - event.coins_spent
                     else:
-                        coin_hold = coins_held[event.stage_number] \
-                            + start_coins[event.stage_number] - event.coins_spent
-                    coins_held[event.stage_number] = coin_hold
+                        coin_holding = coins_held[event.stage_number] \
+                            + coins_gained[event.stage_number] - event.coins_spent
+                    coins_held[event.stage_number] = coin_holding
 
-            # For stages with coins gained but no upgrades bought,
-            # the player held all their coins
-            for stage in start_coins:
+            # For stages with coins gained but no upgrades bought
+            for stage in coins_gained:
                 if coins_held[stage] == 0:
-                    coins_held[stage] = start_coins[stage]
+                    coins_held[stage] = coins_gained[stage]
 
             # Average of all stage coin holds for this session
             played_stages = [coins_held[s] for s in coins_held
@@ -551,9 +561,9 @@ class EventLogicEngine:
 
         result: set[int] = set()
         for sid, avg_coins in session_avg_coins.items():
-            if coinHold == CoinHold.LONG and avg_coins >= median:
+            if coin_hold == CoinHold.LONG and avg_coins >= median:
                 result.add(sid)
-            elif coinHold == CoinHold.SHORT and avg_coins < median:
+            elif coin_hold == CoinHold.SHORT and avg_coins < median:
                 result.add(sid)
         return result
 
@@ -597,6 +607,8 @@ class EventLogicEngine:
     def compare_health_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
+        """
+        """
         result: dict[Speed, dict[int, int]] = {}
         for speed in Speed:
             session_ids = self.get_sessionIDs_of_speed(speed)
@@ -618,6 +630,8 @@ class EventLogicEngine:
     def compare_health_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
+        """
+        """
         result: dict[CoinHold, dict[int, int]] = {}
         for coin_hold in CoinHold:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
