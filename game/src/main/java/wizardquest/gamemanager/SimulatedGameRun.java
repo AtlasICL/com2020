@@ -63,10 +63,24 @@ public class SimulatedGameRun implements GameRunInterface {
     }ow new UnsupportedOperationException();
     }
 
-    @Override
+@Override
     public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
 
-        throw new UnsupportedOperationException();
+        if (upgrade.getPrice() > player.getCoins()) {
+
+            int difference = upgrade.getPrice() - player.getCoins();
+
+            throw new LackingResourceException(
+                    "Not enough coins to purchase this upgrade. " + difference + " more coins needed.");
+
+        } else {
+
+            removeUpgradeFromPool(upgrade);
+
+            player.loseCoins(upgrade.getPrice());
+
+            player = upgrade.applyUpgrade(player);
+        }
     }
 
     @Override
