@@ -42,7 +42,7 @@ class GUI_SETTINGS:
     FONT_FAMILY = "Arial"            # Font for GUI.
     FONT_SIZE = 14                   # Font size.
     BUTTON_FONT_SIZE = 16            # Bigger font size for buttons.
-    BACKGROUND_COLOR = "#edd68f"     # Background colour for the window.
+    BACKGROUND_COLOR = "#edd68f"   # Background colour for the window.
 
 
 class TelemetryAppGUI(tk.Tk):
@@ -131,7 +131,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         self.tab_decision_log.rowconfigure(0, weight=1)
         self.tab_decision_log.columnconfigure(0, weight=1)
-        columns = ("timestamp", "setting", "value")
+        columns = ("timestamp", "setting", "value", "justification")
         self.decision_log_tree = ttk.Treeview(
             self.tab_decision_log,
             columns=columns,
@@ -140,9 +140,11 @@ class TelemetryAppGUI(tk.Tk):
         self.decision_log_tree.heading("timestamp", text="Timestamp")
         self.decision_log_tree.heading("setting", text="Setting")
         self.decision_log_tree.heading("value", text="Value")
+        self.decision_log_tree.heading("justification", text="Justification")
         self.decision_log_tree.column("timestamp", width=200)
-        self.decision_log_tree.column("setting", width=300)
+        self.decision_log_tree.column("setting", width=200)
         self.decision_log_tree.column("value", width=100)
+        self.decision_log_tree.column("value", width=200)
         scrollbar = ttk.Scrollbar(
             self.tab_decision_log,
             orient="vertical",
@@ -566,9 +568,9 @@ class TelemetryAppGUI(tk.Tk):
         for event in self.logic_engine.get_settings_change_events():
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
-                event.userID,
-                event.setting.value,
+                event.setting,
                 event.value,
+                event.justification
             ))
 
 

@@ -63,7 +63,7 @@
   },
   "designParameters" : {
     "playerMaxHealth" : {
-      "EASY" : 250,
+      "EASY" : 85,
       "MEDIUM" : 100,
       "HARD" : 75
     },
@@ -83,7 +83,7 @@
       "HARD" : 2.0
     },
     "startingLives" : {
-      "EASY" : 5,
+      "EASY" : 14,
       "MEDIUM" : 3,
       "HARD" : 1
     },
