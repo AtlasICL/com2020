@@ -58,6 +58,7 @@ class TelemetryAppGUI(tk.Tk):
         self.authenticated = False
         self.current_user_name = None
         self.compare_by_difficulty = tk.BooleanVar(value=False)
+        self.compare_by_time = tk.BooleanVar(value=False)
 
         # Set GUI colours / font styles.
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
@@ -240,12 +241,20 @@ class TelemetryAppGUI(tk.Tk):
             padx=10,
             pady=(5, 0)
         )
-        ttk.Checkbutton(
+        self.difficulty_checkbox = ttk.Checkbutton(
             control_frame,
             text="Compare by difficulty",
             variable=self.compare_by_difficulty,
-            command=self.refresh_all,
-        ).pack(side="left")
+            command=self.on_toggle_difficulty,
+        )
+        self.difficulty_checkbox.pack(side="left")
+        self.time_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by time",
+            variable=self.compare_by_time,
+            command=self.on_toggle_time
+        )
+        self.time_checkbox.pack(side="left")
         self.notebook.grid(row=1, column=0, sticky="nsew")
         self.grid_rowconfigure(0, weight=0)
         self.grid_rowconfigure(1, weight=1)
@@ -382,6 +391,21 @@ class TelemetryAppGUI(tk.Tk):
             writer.writeheader()
             writer.writerows(all_events)
 
+    def on_toggle_difficulty(self) -> None:
+        if self.compare_by_difficulty.get():
+            self.compare_by_time.set(False)
+            self.time_checkbox.state(["disabled"])
+        else:
+            self.time_checkbox.state(["!disabled"])
+        self.refresh_all()
+
+    def on_toggle_time(self) -> None:
+        if self.compare_by_time.get():
+            self.compare_by_difficulty.set(False)
+            self.difficulty_checkbox.state(["disabled"])
+        else:
+            self.difficulty_checkbox.state(["!disabled"])
+        self.refresh_all()
 
     def refresh_all(self) -> None:
         """
@@ -408,6 +432,12 @@ class TelemetryAppGUI(tk.Tk):
             series = []
             for diff, data in funnel_by_diff.items():
                 series.append((data.keys(), data.values(), str(diff.value)))
+            self.funnel_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            funnel_by_time = self.logic_engine.funnel_view_speed()
+            series = []
+            for speed, data in funnel_by_time.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
             self.funnel_plot.plot_multi_line(series)
         else:
             funnel_data: dict[int, int] = self.logic_engine.funnel_view()
