@@ -227,15 +227,79 @@ This component, tests the logic component of the Python application.
 \paragraph{test\_parsing}
 This component, tests the parsing component of the python application. 
 \subsection{Java Application}
-%TODO tomorrow 
 \subsubsection{Overview}
+The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface. 
+%TODO now write the paragraphs 
 \subsubsection{abilities}
+\paragraph{UpgradeBase}
+\paragraph{UpgradeEnum}
+\paragraph{AbilityEnum}
+\paragraph{AttackAbilityUnlockUpgrade}
+\paragraph{DamageEnum}
+\paragraph{ImprovedDamageUpgrade}
+\paragraph{DamageResistanceUpgrade}
 \subsubsection{auth}
+\paragraph{AuthenticationException}
+\paragraph{AuthenticationResult}
+\paragraph{AuthenticatorInterface}
+\paragraph{Authenticator}
+\paragraph{RoleEnum}
 \subsubsection{entitiy}
+\paragraph{EnemyInterface}
+\paragraph{EnemyBase}
+\paragraph{ConcreteEnemy}
+\paragraph{PlayerInterface}
+\paragraph{Player}
+\paragraph{EntityAIInterface}
+\paragraph{EntityAISingleton}
+\paragraph{EntityEnum}
 \subsubsection{gamemanger}
+\paragraph{LackingResourceException}
+\paragraph{Encounter}
+\paragraph{EncounterInterface}
+\paragraph{EncounterEnum}
+\paragraph{GameManger}
+\paragraph{GameMangerInterface}
+\paragraph{GameRun}
+\paragraph{GameRunterface}
+\paragraph{TimeManagerInterface}
+\paragraph{TimeManagerSingleton}
 \subsubsection{settings}
+\paragraph{DifficultyEnum}
+\paragraph{SettingsEnum}
+\paragraph{SettingsInterface}
+\paragraph{SettingsSingleton}
 \subsubsection{telemmetry}
+\paragraph{TelemetryEvent}
+\paragraph{SessionEvent}
+\paragraph{EncounterEvent}
+\paragraph{EncounterCompleteEvent}
+\paragraph{EncounterFailEvent}
+\paragraph{ConcreteTelemetryEvent}
+\paragraph{SessionValidationException}
+\paragraph{TimestampValidationException}
+\paragraph{UserValidationException}
+\paragraph{TelemetryListenerInterface}
+\paragraph{TelemetryListenerSingleton}
 \subsubsection{ui}
+\paragraph{GameRunPage}
+\paragraph{SettingsPage}
+\paragraph{ShopPage}
 \subsection{Java Tests}
+\subsubsection{Overview}
+The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. For ease of reading both unit and integration tests are included for each module's test description 
+\subsubsection{abilities}
+\paragraph{AbilityEnumUnitTests}
+\paragraph{UpgradeUnitTests}
+\paragraph{AbilityEnumIntegrationTests}
+\subsubsection{entity}
+\paragraph{EnemyUnitTests}
+\paragraph{PlayerUnitTests}
+\paragraph{RandomEntityAIUnitTests}
+\paragraph{EntityEnumIntegrationTests}
+\subsubsection{telemetry}
+\paragraph{TelemetryListenerUnitTests}
+\paragraph{TelemetryListenerIntegrationTests}
 \section{Extension}
+
 \end{document}
