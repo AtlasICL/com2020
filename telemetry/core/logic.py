@@ -184,7 +184,7 @@ class EventLogicEngine:
             uniqueIDs.add(event.userID)
         return uniqueIDs
     
-    def get_unique_sessionIDs(self) -> set[str]:
+    def get_unique_sessionIDs(self) -> set[int]:
         """
         Returns the set of unique session IDs.
         
