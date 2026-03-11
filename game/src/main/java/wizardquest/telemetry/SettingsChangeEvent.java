@@ -9,8 +9,8 @@ import wizardquest.settings.SettingsEnum;
  */
 public class SettingsChangeEvent extends TelemetryEvent {
     private final SettingsEnum setting;
-    private final String setting_value;
-    private final String setting_change_justification;
+    private final String settingValue;
+    private final String settingChangeJustification;
 
     /**
      * Constructor for the settings change telemetry event. Produces a telemetry
@@ -29,8 +29,8 @@ public class SettingsChangeEvent extends TelemetryEvent {
             String justification) {
         super(userID, timeStamp, "SettingsChange");
         this.setting = setting;
-        this.setting_value = settingValue;
-        this.setting_change_justification = justification;
+        this.settingValue = settingValue;
+        this.settingChangeJustification = justification;
     }
 
     /**
