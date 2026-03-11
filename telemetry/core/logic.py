@@ -8,6 +8,8 @@ averages by difficulty, etc...
 This functionality is provided by the EventLogicEngine class.
 """
 
+#TODO: add pydoc comments for new methods
+
 from datetime import datetime
 from pathlib import Path
 
@@ -17,6 +19,8 @@ from core.events import (
     BossEncounterStart,
     BuyUpgrade,
     Difficulty,
+    Speed,
+    CoinHold,
     EndSession,
     GainCoin,
     KillEnemy,
@@ -161,6 +165,37 @@ class EventLogicEngine:
             result[diff] = spikes
         return result
 
+    def fail_difficulty_spikes_speed(
+            self
+    ) -> dict[Speed, dict[int, int]]:
+        result: dict[Speed, dict[int, int]] = {}
+        for speed in Speed:
+            session_ids = self.get_sessionIDs_of_speed(speed)
+            spikes = {stage: 0 for stage in range(1, 11)}
+            for event in self.normal_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            for event in self.boss_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            result[speed] = spikes
+        return result
+    
+    def fail_difficulty_spikes_coin_hold(
+            self
+    ) -> dict[CoinHold, dict[int, int]]:
+        result: dict[CoinHold, dict[int, int]] = {}
+        for coin_hold in CoinHold:
+            session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
+            spikes = {stage: 0 for stage in range(1, 11)}
+            for event in self.normal_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            for event in self.boss_encounter_fail_events:
+                if event.sessionID in session_ids:
+                    spikes[event.stage_number] += 1
+            result[coin_hold] = spikes
+        return result
 
     def get_number_of_session_starts(self) -> int:
         """
@@ -287,6 +322,69 @@ class EventLogicEngine:
             result[diff] = funnel
         return result
     
+    def funnel_view_speed(
+            self
+    ) -> dict[Speed, dict[int, int]]:
+        result: dict[Speed, dict[int, int]] = {}
+        for speed in Speed:
+            session_ids = self.get_sessionIDs_of_speed(speed)
+            funnel: dict[int, int] = {}
+            for stage in range(1, 11):
+                starts = 0
+                fails = 0
+                if stage in [3, 6, 9, 10]:
+                    for event in self.boss_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.boss_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                else:
+                    for event in self.normal_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.normal_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                funnel[stage] = starts - fails
+            result[speed] = funnel
+        return result
+    
+    def funnel_view_coin_hold(
+            self
+    ) -> dict[CoinHold, dict[int, int]]:
+        result: dict[CoinHold, dict[int, int]] = {}
+        for coin_hold in CoinHold:
+            session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
+            funnel: dict[int, int] = {}
+            for stage in range(1, 11):
+                starts = 0
+                fails = 0
+                if stage in [3, 6, 9, 10]:
+                    for event in self.boss_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.boss_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                else:
+                    for event in self.normal_encounter_start_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            starts += 1
+                    for event in self.normal_encounter_fail_events:
+                        if event.sessionID in session_ids \
+                                and event.stage_number == stage:
+                            fails += 1
+                funnel[stage] = starts - fails
+            result[coin_hold] = funnel
+        return result
     
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
         """
@@ -449,6 +547,48 @@ class EventLogicEngine:
         return {diff: self.get_health_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
     
+    def compare_health_speed(
+            self
+    ) -> dict[Speed, dict[int, int]]:
+        result: dict[Speed, dict[int, int]] = {}
+        for speed in Speed:
+            session_ids = self.get_sessionIDs_of_speed(speed)
+            health_remaining_per_stage = {stage_number: 0 
+                                            for stage_number in range(1,11)}
+            for event in self.normal_encounter_complete_events:
+                if event.sessionID in session_ids:
+                    health_remaining_per_stage[
+                        event.stage_number
+                    ] = event.player_HP_remaining
+            for event in self.boss_encounter_complete_events:
+                if event.sessionID in session_ids:
+                    health_remaining_per_stage[
+                        event.stage_number
+                    ] = event.player_HP_remaining
+            result[speed] = health_remaining_per_stage
+        return result
+    
+    def compare_health_coin_hold(
+            self
+    ) -> dict[CoinHold, dict[int, int]]:
+        result: dict[CoinHold, dict[int, int]] = {}
+        for coin_hold in CoinHold:
+            session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
+            health_remaining_per_stage = {stage_number: 0 
+                                            for stage_number in range(1,11)}
+            for event in self.normal_encounter_complete_events:
+                if event.sessionID in session_ids:
+                    health_remaining_per_stage[
+                        event.stage_number
+                    ] = event.player_HP_remaining
+            for event in self.boss_encounter_complete_events:
+                if event.sessionID in session_ids:
+                    health_remaining_per_stage[
+                        event.stage_number
+                    ] = event.player_HP_remaining
+            result[coin_hold] = health_remaining_per_stage
+        return result
+    
 
     def get_coins_gained_per_stage(
             self, 
@@ -505,7 +645,32 @@ class EventLogicEngine:
         """
         return {diff: self.get_coins_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
-
+  
+    def compare_coins_speed(
+            self
+    ) -> dict[Speed, dict[int, int]]:
+        result: dict[Speed, dict[int, int]] = {}
+        for speed in Speed:
+            session_ids = self.get_sessionIDs_of_speed(speed)
+            coins_gained_per_stage: dict[int, int] = {i: 0 for i in range(1, 11)}
+            for event in self.gain_coin_events:
+                if event.sessionID in session_ids:
+                    coins_gained_per_stage[event.stage_number] += event.coins_gained
+            result[speed] = coins_gained_per_stage
+        return result
+    
+    def compare_coins_coin_hold(
+            self
+    ) -> dict[CoinHold, dict[int, int]]:
+        result: dict[CoinHold, dict[int, int]] = {}
+        for coin_hold in CoinHold:
+            session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
+            coins_gained_per_stage: dict[int, int] = {i: 0 for i in range(1, 11)}
+            for event in self.gain_coin_events:
+                if event.sessionID in session_ids:
+                    coins_gained_per_stage[event.stage_number] += event.coins_gained
+            result[coin_hold] = coins_gained_per_stage
+        return result
 
     def get_settings_change_events(self) -> list[SettingsChange]:
         """
@@ -618,4 +783,90 @@ class EventLogicEngine:
                 averages[stage] = \
                     (sum(times) / len(times)) if times else 0.0
             result[diff] = averages
+        return result
+
+    def average_time_to_complete_per_stage_speed(
+        self
+    ) -> dict[Speed, dict[int, float]]:
+        result: dict[Speed, dict[int, float]] = {}
+        for speed in Speed:
+            session_ids = self.get_sessionIDs_of_speed(speed)
+
+            start_times: dict[tuple[int, int], datetime] = {}
+            for event in self.normal_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+            for event in self.boss_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+
+            stage_times: dict[int, list[float]] = {
+                stage: [] for stage in range(1, 11)
+            }
+            for event in self.normal_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+            for event in self.boss_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+
+            averages: dict[int, float] = {}
+            for stage in range(1, 11):
+                times = stage_times[stage]
+                averages[stage] = \
+                    (sum(times) / len(times)) if times else 0.0
+            result[speed] = averages
+        return result
+    
+    def average_time_to_complete_per_stage_coin_hold(
+            self
+    ) -> dict[CoinHold, dict[int, float]]:
+        result: dict[CoinHold, dict[int, float]] = {}
+        for coin_hold in CoinHold:
+            session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
+
+            start_times: dict[tuple[int, int], datetime] = {}
+            for event in self.normal_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+            for event in self.boss_encounter_start_events:
+                if event.sessionID in session_ids:
+                    key = (event.sessionID, event.stage_number)
+                    start_times[key] = event.timestamp
+
+            stage_times: dict[int, list[float]] = {
+                stage: [] for stage in range(1, 11)
+            }
+            for event in self.normal_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+            for event in self.boss_encounter_complete_events:
+                key = (event.sessionID, event.stage_number)
+                if key in start_times:
+                    duration = (
+                        event.timestamp - start_times[key]
+                    ).total_seconds()
+                    stage_times[event.stage_number].append(duration)
+
+            averages: dict[int, float] = {}
+            for stage in range(1, 11):
+                times = stage_times[stage]
+                averages[stage] = \
+                    (sum(times) / len(times)) if times else 0.0
+            result[coin_hold] = averages
         return result
