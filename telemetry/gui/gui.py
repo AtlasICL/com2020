@@ -460,6 +460,12 @@ class TelemetryAppGUI(tk.Tk):
             for diff, data in spikes_by_diff.items():
                 series.append((data.keys(), data.values(), str(diff.value)))
             self.spike_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_speed()
+            series = []
+            for speed, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.spike_plot.plot_multi_line(series)
         else:
             spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
             self.spike_plot.plot_line(
@@ -520,6 +526,12 @@ class TelemetryAppGUI(tk.Tk):
                     str(difficulty.value)
                 ))
             self.curves_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            health_by_speed = self.logic_engine.compare_health_speed()
+            series = []
+            for speed, data in health_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.curves_plot.plot_multi_line(series)
         else:
             all_dicts = []
             for list_of_dicts in health_by_difficulty.values():
@@ -551,6 +563,12 @@ class TelemetryAppGUI(tk.Tk):
                     averages.values(),
                     str(difficulty.value)
                 ))
+            self.fairness_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            coins_by_speed = self.logic_engine.compare_coins_speed()
+            series = []
+            for speed, data in coins_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
             self.fairness_plot.plot_multi_line(series)
         else:
             all_dicts = []
@@ -619,11 +637,20 @@ class TelemetryAppGUI(tk.Tk):
                 )
             self.completion_time_plot.plot_multi_line(series)
             return
-        
-        completion_data: dict[int, float] = \
-            self.logic_engine.average_time_to_complete_per_stage()
-        self.completion_time_plot.plot_line(
-            completion_data.keys(),
-            completion_data.values(),
-            label="Avg completion time"
-        )
+        elif self.compare_by_time.get():
+            time_by_speed = self.logic_engine \
+                .average_time_to_complete_per_stage_speed()
+            series = []
+            for speed, data in time_by_speed.items():
+                series.append(
+                    (data.keys(), data.values(), str(speed.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+        else:
+            completion_data: dict[int, float] = \
+                self.logic_engine.average_time_to_complete_per_stage()
+            self.completion_time_plot.plot_line(
+                completion_data.keys(),
+                completion_data.values(),
+                label="Avg completion time"
+            )
