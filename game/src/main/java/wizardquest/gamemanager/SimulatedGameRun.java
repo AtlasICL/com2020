@@ -53,7 +53,15 @@ public class SimulatedGameRun implements GameRunInterface {
     private int deathCount;
     private final int sessionID;
 
-    public SimulatedGameRun() {
+    public SimulatedGameRun(DifficultyEnum difficulty, int sessionID) {
+        this.difficulty = difficulty;
+        this.sessionID = sessionID;
+        this.currentStage = 1;
+        this.startTime = LocalDateTime.now();
+        this.random = new Random();
+        this.deathCount = 0;
+        this.player = new Player(difficulty);
+        
         phase1NormalEncounters = new EncounterInterface[] {
         new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
         new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty),
@@ -74,13 +82,6 @@ public class SimulatedGameRun implements GameRunInterface {
         phase3Boss = new Encounter(EncounterEnum.BLACK_KNIGHT_ENCOUNTER, difficulty);
         finalBoss = new Encounter(EncounterEnum.DRAGON_ENCOUNTER, difficulty);
         shopUpgrades = UpgradeEnum.values();
-        this.player = new Player(difficulty);
-        this.currentStage = 1;
-        this.difficulty = difficulty;
-        this.startTime = LocalDateTime.now();
-        this.random = new Random();
-        this.deathCount = 0;
-        this.sessionID = sessionID;
         telemetryListener.setDestinationFile(new File("../event_logs/simulation_events.json"));
 
         DifficultyEnum d = selectDifficulty();
