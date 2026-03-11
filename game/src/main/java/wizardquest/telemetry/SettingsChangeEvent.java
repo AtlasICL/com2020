@@ -48,6 +48,6 @@ public class SettingsChangeEvent extends TelemetryEvent {
      * @return
      */
     public String getSetting_value() {
-        return this.setting_value;
+        return this.settingValue;
     }
 }
