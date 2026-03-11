@@ -1,6 +1,7 @@
 package wizardquest.gamemanager;
 
 import java.security.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import wizardquest.abilities.UpgradeEnum;
@@ -81,7 +82,7 @@ public class SimulatedGameRun implements GameRunInterface {
         throw new UnsupportedOperationException();
     }
 
-    private Timestamp getTimestamp() {
+    private Instant getTimestamp() {
 
         throw new UnsupportedOperationException();
     }
