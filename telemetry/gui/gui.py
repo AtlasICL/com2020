@@ -435,14 +435,17 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_all()
 
     def on_toggle_google_sso(self) -> None:
-        self.welcome_label = ttk.Label(
+        self.sign_in_button.state(["disabled"])
+        self.browser_label = ttk.Label(
             self.tab_home,
             text="Opening browser...",
             justify="center"
         )
-        self.welcome_label.pack(pady=(30, 15))
-
+        self.browser_label.pack(pady=(30, 15))
+        self.update()
         self.handle_sign_in()
+        self.browser_label.destroy()
+        self.sign_in_button.state(["!disabled"])
 
     def refresh_all(self) -> None:
         """
