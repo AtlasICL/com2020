@@ -51,7 +51,8 @@ class EventParameter():
     COINS_SPENT = "coins_spent"
     PLAYER_HP_REMAINING = "player_HP_remaining"
     SETTING = "setting"
-    SETTING_VALUE = "setting_value"
+    SETTING_VALUE = "settingValue"
+    JUSTIFICATION = "settingsChangeJustification"
     ENEMY_TYPE = "enemy_type"
 
 
@@ -131,6 +132,19 @@ class Difficulty(str, Enum):
     MEDIUM = "Medium"
     HARD = "Hard"
 
+class Speed(str, Enum):
+    """
+    Enumerates the possible speeds of player progress.
+    """
+    FAST = "Fast"
+    SLOW = "Slow"
+
+class CoinHold(str, Enum):
+    """
+    Enumerates the possible length of time players hold onto coins.
+    """
+    LONG = "Long"
+    SHORT = "Short"
 
 @dataclass(frozen=True)
 class StartSession:
@@ -430,11 +444,15 @@ class SettingsChange:
     :param value: The new value to which the changed 
     setting was set to. 
     :type value: int
+    :param justification: Optional justification for the settings
+    change.
+    :type justification: str 
     """
     userID: str
     timestamp: datetime
     setting: SettingName
     value: int
+    justification: str
 
     
 @dataclass(frozen=True)
