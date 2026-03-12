@@ -37,6 +37,7 @@ public class SimulatedGameRun implements GameRunInterface {
     private int currentStage;
     private final DifficultyEnum difficulty;
     private final LocalDateTime startTime;
+    private Instant simTime;
     private final Random random;
     private int deathCount;
     private final int sessionID;
@@ -46,11 +47,13 @@ public class SimulatedGameRun implements GameRunInterface {
     private final TimeManagerInterface timeManager;
     private final EntityAIInterface ai;
 
+
     public SimulatedGameRun(DifficultyEnum difficulty, int sessionID) {
         this.difficulty = difficulty;
         this.sessionID = sessionID;
         this.currentStage = 1;
         this.startTime = LocalDateTime.now();
+        this.Time = Instant.now();
         this.random = new Random();
         this.deathCount = 0;
         this.player = new Player(difficulty);
@@ -424,7 +427,9 @@ public class SimulatedGameRun implements GameRunInterface {
     }
 
     private Instant getTimestamp() {
-        return Instant.now(); // not dynamic yet
+        int randTime = random.nextInt(10) + 1; // does not take situation into account, currently.
+        simTime = simTime.plusSeconds(randTime);
+        return simTime;
     }
 
         private void removeUpgradeFromPool(UpgradeEnum upgrade) {
