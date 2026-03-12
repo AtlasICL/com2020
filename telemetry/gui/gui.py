@@ -659,6 +659,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the suggestions generated.
         """
+        self.logic_engine.categorise_events(self.file_name)
         suggestions = [
             self.suggestion_generator.generate_low_health_suggestion(),
             self.suggestion_generator.generate_high_health_suggestion(),
