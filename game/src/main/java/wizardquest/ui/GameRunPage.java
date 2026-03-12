@@ -345,9 +345,9 @@ public class GameRunPage extends Application {
 
         // if player finishes final stage
         if (run.getStage() >= 10) {
-        showEndScreen();
-        return;
-    }
+            showEndScreen();
+            return;
+        }
 
         gameManager.advanceToNextLevel();
         if (!gameManager.isGameRunning()) {

@@ -62,7 +62,6 @@
 \maketitle
 \tableofcontents
 \newpage
-
 \section{Overview}
 In this document we will outline all data stores used by the application. For each data store we will provide an overview, then detail its schema and the domain of all fields. When specifying the domain the type will be given, along with any other information in brackets.  We will then explain which applications use the data store, what fields they access, when, and for what purpose.
 
@@ -103,7 +102,7 @@ The log stores the events as a JSON list. Each event has fields described in \re
       \hline
       setting & String (One of: TelemetryEnabled, PlayerMaxHealth, EnemyDamageMultiplier, EnemyMaxHealthMultiplier, StartingLives, MaxMagic, MagicRegenRate, ShopItemCount) \\
       \hline
-      setting\_value & String (Domain is that of the setting) \\
+      setting\_value & String (One of: Domain is that of the setting) \\
       \hline
       enemy\_type & String (One of: Goblin, Fishman, Pyromancer, EvilWizard, ArmouredGoblin, Ghost, BlackKnight, Dragon)\\
       \hline

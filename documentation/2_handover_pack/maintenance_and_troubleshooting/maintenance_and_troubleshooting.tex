@@ -75,6 +75,7 @@ Logs can be cleared by simply deleting them, or their contents. Authentication l
 The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext.
 
 \subsection{Naming Conventions}
+\label{sec:naming_conventions}
 The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
 
 The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case.
@@ -389,4 +390,89 @@ The tests are split up into integration and unit tests. From there each test typ
 
 \section{Extension}
 
+\subsection{Overview}
+In this section we will provide detailed instructions on how to make several common extensions to the application. Each extension is its own section, containing a numbered list of steps that need to be taken.
+
+\subsection{Adding a New Upgrade}
+\label{sec:add_upgrade}
+This section describes adding a new generic upgrade, which its functionality can be implemented by overriding the relevant UpgradeBase methods.
+
+\begin{enumerate}
+  \item Create a new class that extends UpgradeBase.
+  \item Create a constructor that takes in a PlayerInterface and passes this to the superclass.
+  \item Override any relevant PlayerInterface methods to implement the desired functionality.
+  \item In UpgradeEnum add a new entry, containing the upgrade's cost, class, its name in pascal case as a string, and its name in a human readable format. 
+  \item In GameRun add the UpgradeEnum value to the shopUpgrades field. 
+  \item Inside the concrete upgrade class, override the getUpgrades method. In this method it should get the upgrades from super.player, then append to this list the UpgradeEnum value of the upgrade. 
+\end{enumerate}
+\subsection{Adding a New Attack Ability}
+This section describes adding a new attack ability to the game, that can optionally cost magic to use.
+
+\begin{enumerate}
+  \item Add a new entry to AbilityEnum, containing a description of the ability, its base damage, how much magic it costs to use (0 if it costs none), the type of damage it deals as a DamageEnum, and a name for the ability.
+  \item To make the ability purchasable by the player, create an upgrade as described in \ref{sec:add_upgrade}. Override the getAbilities() method to obtain the abilities from the superclass, then append to it the AbilityEnum value of the new attack ability.
+  \item To allow an enemy to use it, go into the class of the enemy and add to the getAbilities() method code to add the new ability's AbilityEnum value to the end of the list of abilities the method returns. 
+\end{enumerate}
+\subsection{Adding a New Damage Type}
+This section describes the steps required to add a new damage type to the game.
+
+\begin{enumerate}
+  \item Add to DamageEnum the new damage type.
+  \item If you wish to make an ability use this damage type, you can change the damage type of the ability in AbilityEnum.
+  \item If you wish to make an Enemy resistant or vulnerable to the damage type, inside the enemy's loseHealth() method half or double the damage respectively, if it is of the new type. 
+  \item If you wish to add an upgrade that makes the player resistant to it, follow the steps in \ref{sec:add_upgrade}, then in loseHealth() check if the damage type is that of the new damage type, and half it if so, before passing the halved value to the super.loseHealth.
+  \item If you wish to add an upgrade that improves the players damage of the type, follow the steps in \ref{sec:add_upgrade}, then in calcDamage() check if the damage type is that of the new damage type, and if so double the result of super.calcDamage before returning it.  
+\end{enumerate}
+
+\subsection{Adding a New Enemy}
+This section describes the steps to create a new enemy, with any set of already-existing abilities and different damage resistances/vulnerabilities. 
+
+\begin{enumerate}
+  \item First create a new class that extends EnemyBase.
+  \item In the constructor, add an argument for the current difficulty, pass to the superclass the desired maximum health, multiplied by\\\verb|SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)|. 
+  \item Override getAbilities() to return a list of the abilities the entity should have, as AbilityEnum values.
+  \item Add any vulnerabilities or resistances to loseHealth by checking the damage type and multiplying or dividing it by 2 if they're vulnerable or resistant respectively, then passing this value to the superclass.
+  \item Add the Enemy to EntityEnum, including the class just defined, its name for use in telemetry, and a display name.
+  \item Inside the enemy class, override the getType() method to return its EntityEnum value. 
+  \item To add this enemy to a pre-existing encounter, find the encounter in EncounterEnum, and add a reference to the enemy's class inside the list of enemies within that encounter. 
+\end{enumerate}
+
+\subsection{Adding a New Encounter}
+This section describes adding a new encounter to the game, containing pre-existing enemies.
+
+\begin{enumerate}
+  \item First create a new value in EncounterEnum, specifying which enemies are in the encounter, its name for telemetry events, and its display name.
+  \item To add this encounter to a stage, in GameRun select which phase the encounter should belong to and add it to that list. 
+\end{enumerate}
+
+\subsection{Adding a New Stage}
+This section describes adding a new stage to the game that the player can progress through.
+
+\begin{enumerate}
+  \item First, in the GameRunPage update onEncounterWon() set the final stage to be greater than 10.
+  \item Then, in GameRun update pickEncounter() to pick an encounter for the new stage.
+  \item If you want a new phase for this stage, add a new phase as a member variable to GameRun. It should be an array of Encounters for that phase. The pickEncounter() method should then pull the encounter from that phase instead. 
+\end{enumerate}
+
+\subsection{Adding a New Telemetry Event}
+This section describes how to add a new telemetry event. This requires modifications on both the Java and Python applications, so each of those steps are outlined separately. 
+
+Adding a new telemetry event to Java:
+\begin{enumerate}
+  \item Create a new telemetry event class that extends TelemetryEvent or one of its abstract subclasses. 
+  \item Create a constructor that takes in all the event's fields, and passes the relevant ones to the superclass. It should also pass its telemetry safe name to the superclass.
+  \item Create a final field for each data item the telemetry event stores, that is not stored in a superclass. 
+  \item Create a get<Field> method for each of the above fields, that returns that field's value. 
+  \item In TelemetryListenerInterface create a method called on<New Event Name> that takes in the new event.
+  \item In TelemetryListenerSingleton's implementation of TelemetryListenerInterface, implement the above method. It should first try validate the event by calling isCorrectSession(), isCorrectTimeStamp(), isCorrectUser() and lastly save() to save the event.
+  \item Lastly add a source of the event that constructs it, and passes it to TelemetryListenerSingleton.getInstance().on<Event name>()
+\end{enumerate}
+
+Adding a new telemetry event to Python:
+\begin{enumerate}
+  \item Create a new dataclass in events that contains all the fields of the telemetry event.
+  \item Create a value for the event in the events.EventParameter class. The value should be the same as the event's name, and the variable name should be the event's in screaming snake case. 
+  \item In parsing, add the dataclass made in step one to the ValidEvent type alias. 
+  \item Then in the match statement, add a section checking for the new event. In this section construct the dataclass made in step one by obtaining and parsing the values stored in the event dictionary.
+\end{enumerate}
 \end{document}
