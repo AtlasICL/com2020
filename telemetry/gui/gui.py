@@ -377,14 +377,6 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_all()
 
 
-    def get_active_file(self) -> Path:
-        """
-        Returns the currently filename of the file currently acting as
-        the data source.
-        """
-        return self.file_name
-
-
     def export_to_csv(self) -> None:
         """
         Exports the telemetry data to a csv file.
