@@ -193,7 +193,7 @@ To verify the problem is resolved, first place the JSON store in an online \href
 \subsection{Overview}
 The project is split into two applications, one written in Python and the other written in Java. The Python application is in charge of reading telemetry data, interpreting this information, and displaying this to the user. The Java application is in charge of managing user roles, settings, and achievements, design parameters, telemetry generation, and gameplay.
 
-Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc.
+Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc. The testing sections only outline the testing architecture as each test file is clear on what it tests, so describing such information serves no purpose. 
 \subsection{Python Application}
 \subsubsection{Overview}
 The Python application is split into 3 sub-modules. Auth handles user authentication through Google OAuth, and provides a wrapper for interfacing with the Java application. Core handles data ingestion, and interpretation. GUI handles the display and refreshing of telemetry data.
@@ -219,13 +219,9 @@ GUI creates the majority of the user interface, creating the window tabs, the de
 \paragraph{plotting}
 Plotting is in charge of generating and displaying all dashboard views of the telemetry, it calls the logic to interpret the telemetry data, and displays this data using matplotlib.
 \subsection{Python Tests}
-\subsubsection{Overview}
-The testing architecture consists of a unit testing folder, and a resources folder for testing data.
-\subsubsection{unit}
-\paragraph{test\_logic}
-This component, tests the logic component of the Python application.
-\paragraph{test\_parsing}
-This component, tests the parsing component of the python application.
+The testing architecture consists of a unit testing folder, and a resources folder for testing data. Each unit tests is named after which component of the python application it provides unit tests for, and as a result they are not explicitly named here. 
+
+
 \subsection{Java Application}
 \subsubsection{Overview}
 The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface.
@@ -329,42 +325,68 @@ This defines the interface for the TimeManger, used for handling timestamping.
 This singleton provides singleton access to the TimeManager for event timestamping. This is done to allow testability, as reflection can be used to switch out the TimeManger for a mock object. 
 
 \subsubsection{settings}
-% TODO
+
 \paragraph{DifficultyEnum}
+This enum lists all the difficulties of the game, along with the name used for telemetry events. 
+
 \paragraph{SettingsEnum}
+This enum lists all the settings, along with their name for use in telemetry events.
+
 \paragraph{SettingsInterface}
+This defines the interfaces for the settings, providing methods for logging in with an AuthenticationResult, obtaining user information such as their role, and modifying and reading the values of the design parameters. It also contains methods for changing which file data is written to.
+
 \paragraph{SettingsSingleton}
+This class provides singleton access to the game settings through a static method. The internal Settings class then implements the SettingsInterface, storing the value of design parameters and user information, and updating them in the relevant file when needed.
+
 \subsubsection{telemmetry}
+
 \paragraph{TelemetryEvent}
+This is the base abstract class for all telemetry events, containing the time the event was created, the event name, and the user ID.
+
 \paragraph{SessionEvent}
+This abstract class extends TelemetryEvent to also store the sessionID of a run or session for telemetry events associated with game runs. 
+
 \paragraph{EncounterEvent}
+This abstract class extends SessionEvent to contain encounter related information including stage number, difficulty, and and the name of the encounter.
+
 \paragraph{EncounterCompleteEvent}
+This abstract class extends EncounterEvent to include how much health the player had when they completed the encounter. 
+
 \paragraph{EncounterFailEvent}
+This abstract class extends EncounterEvent to include how many lives the player has left after failing an encounter, being 0 on run end.
+
 \paragraph{ConcreteTelemetryEvent}
+Every telemetry event has its own concrete event class, that extends one of the base events described above, and may implement additional functionality if required by the telemetry schema in data management and the report. 
+
 \paragraph{SessionValidationException}
+This exception is thrown if when attempting to validate an incoming telemetry event, the Java application notices it's session ID is invalid (e.g. it receives an event before receiving a StartSessionEvent).
+
 \paragraph{TimestampValidationException}
+This exception is thrown if a timestamp cannot be validated, e.g. a StartSessionEvent occurs before an EndSessionEvent of the same session. 
+
 \paragraph{UserValidationException}
+This exception is thrown if a telemetry event is from a different user to the user who started a session. 
+
 \paragraph{TelemetryListenerInterface}
+This defines the interface for the telemetry listener, containing methods to handle each kind of telemetry event and write this to the telemetry log. 
+
 \paragraph{TelemetryListenerSingleton}
+This class provides singleton access to the TelemetryListener via a static method. The TelemetryListener implements the above interface, storing the current session ID and user ID and keeping track of time to ensure events are validated. 
+
 \subsubsection{ui}
+
 \paragraph{GameRunPage}
+This class contains the majority of the logic for the GUI, it is the entry point of the Java application and contains the logic for displaying the login, main menu, starting runs, and being in an encounter, as well as a game over screen. 
+
 \paragraph{SettingsPage}
+This class contains the GUI logic for displaying the settings page, including changing of design parameters, entering a justification, toggling telemetry, viewing the telemetry disclosure, and assigning roles. 
+
 \paragraph{ShopPage}
+This class contains the GUI logic for displaying the shop between encounters. 
+
 \subsection{Java Tests}
-\subsubsection{Overview}
-The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. For ease of reading both unit and integration tests are included for each module's test description
-\subsubsection{abilities}
-\paragraph{AbilityEnumUnitTests}
-\paragraph{UpgradeUnitTests}
-\paragraph{AbilityEnumIntegrationTests}
-\subsubsection{entity}
-\paragraph{EnemyUnitTests}
-\paragraph{PlayerUnitTests}
-\paragraph{RandomEntityAIUnitTests}
-\paragraph{EntityEnumIntegrationTests}
-\subsubsection{telemetry}
-\paragraph{TelemetryListenerUnitTests}
-\paragraph{TelemetryListenerIntegrationTests}
+The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. Each file within that folder represents a collection of tests for that Java class. The resources folder contains resources for testing. 
+
 \section{Extension}
 
 \end{document}
