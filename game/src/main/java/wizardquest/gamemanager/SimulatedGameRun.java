@@ -48,7 +48,7 @@ public class SimulatedGameRun implements GameRunInterface {
     private final EntityAIInterface ai;
 
 
-    public SimulatedGameRun(DifficultyEnum difficulty, int sessionID) {
+    public SimulatedGameRun(DifficultyEnum difficulty, int sessionID, String filepath) {
         this.difficulty = difficulty;
         this.sessionID = sessionID;
         this.currentStage = 1;
@@ -97,7 +97,7 @@ public class SimulatedGameRun implements GameRunInterface {
             UpgradeEnum.FIRE_BALL_UNLOCK,
             UpgradeEnum.THUNDER_STORM_UNLOCK
         };
-        telemetryListener.setDestinationFile(new File("../event_logs/simulation_events.json"));
+        telemetryListener.setDestinationFile(new File(filepath));
 
         DifficultyEnum d = selectDifficulty();
         
