@@ -5,8 +5,11 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.io.File;
+import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
+import wizardquest.entity.Player;
+import wizardquest.entity.EntityInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.settings.DifficultyEnum;
@@ -14,7 +17,10 @@ import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
 import wizardquest.telemetry.StartSessionEvent;
 import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.GainCoinEvent;
+import wizardquest.telemetry.KillEnemyEvent;
 import wizardquest.telemetry.BossEncounterStartEvent;
+import wizardquest.telemetry.BuyUpgradeEvent;
 import wizardquest.telemetry.BossEncounterCompleteEvent;
 import wizardquest.telemetry.BossEncounterFailEvent;
 import wizardquest.telemetry.NormalEncounterStartEvent;
@@ -53,7 +59,7 @@ public class SimulatedGameRun implements GameRunInterface {
         this.sessionID = sessionID;
         this.currentStage = 1;
         this.startTime = LocalDateTime.now();
-        this.Time = Instant.now();
+        this.simTime = Instant.now();
         this.random = new Random();
         this.deathCount = 0;
         this.player = new Player(difficulty);
@@ -99,7 +105,7 @@ public class SimulatedGameRun implements GameRunInterface {
         };
         telemetryListener.setDestinationFile(new File(filepath));
 
-        DifficultyEnum d = selectDifficulty();
+        DifficultyEnum d = getDifficulty();
         
         telemetryListener.onStartSession(
                 new StartSessionEvent(
