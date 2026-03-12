@@ -40,17 +40,20 @@ public class ExampleEventsGenerator {
             // User's first session on easy difficulty
             SimulatedGameRun easyRun = new SimulatedGameRun(
                 DifficultyEnum.EASY,
-                generator.sessionIDs.get(i));
+                generator.sessionIDs.get(i),
+                "../event_logs/example_events.json");
 
             // User's second session on medium difficulty
             SimulatedGameRun mediumRun = new SimulatedGameRun(
                 DifficultyEnum.MEDIUM,
-                generator.sessionIDs.get(i + generator.userIDs.size()));
+                generator.sessionIDs.get(i + generator.userIDs.size()),
+                "../event_logs/example_events.json");
 
             // User's third session on hard difficulty
             SimulatedGameRun hardRun = new SimulatedGameRun(
                 DifficultyEnum.HARD,
-                generator.sessionIDs.get(i + (generator.userIDs.size() * 2)));
+                generator.sessionIDs.get(i + (generator.userIDs.size() * 2)),
+                "../event_logs/example_events.json");
         }
     }
 
