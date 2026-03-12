@@ -446,7 +446,6 @@ public class GameRunPage extends Application {
         }
 
         currentEncounter = nextEnc;
-        emitEncounterStartEvent();
         showShop(completedEncType, completedStage);
     }
 
@@ -477,6 +476,7 @@ public class GameRunPage extends Application {
                     player.resetHealth();
                     player.resetMagic();
                     player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+                    emitEncounterStartEvent();
                     showEncounter();
                 });
         shopPage.show();
