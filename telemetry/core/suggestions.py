@@ -12,9 +12,6 @@ class SuggestionGenerator:
         :return: Suggestion text.
         :rtype: str
         """
-        # First, refresh the data.
-        self.logic_engine.categorise_events(gui.get_active_file())
-
         spikes = self.logic_engine.funnel_view_per_difficulty()
         # Suggestion parts are the full suggestion
         suggestion_parts = []
