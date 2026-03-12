@@ -1,6 +1,7 @@
 package wizardquest.ui;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -60,21 +61,40 @@ public class GameRunPage extends Application {
         root.setAlignment(Pos.CENTER);
 
         Label title = new Label("WizardQuest");
+        Label status = new Label("");
 
         Button loginBtn = new Button("Login with SSO");
 
         loginBtn.setOnAction(e -> {
-            try {
-                // Launch OAuth authentication through the Python authenticator
-                Authenticator auth = new Authenticator();
-                AuthenticationResult result = auth.login();
+            // loginBtn.setDisable(true);
+            status.setText("Opening browser...");
+            Task<AuthenticationResult> authenticationTask = new Task<>() {
+                @Override
+                protected AuthenticationResult call() throws AuthenticationException{
+                    Authenticator auth = new Authenticator();
+                    return auth.login();
+                }
+            };
 
-                // Load authenticated user settings into the settings system
-                settings.loginWithResult(result);
+            authenticationTask.setOnSucceeded(event ->{
+                try{
+                    settings.loginWithResult(authenticationTask.getValue());
+                    showMainMenu();
+                } catch (AuthenticationException ex){
+                    // Display login error to the user
+                    Label error = new Label(
+                            "Login failed.\n\n" +
+                            "Your environment variables may not be configured correctly.\n" +
+                            "Please check the README file and make sure all required\n" +
+                            "authentication variables are set before launching the game."
+                    );
+                    error.setWrapText(true);
+                    root.getChildren().add(error);
+                    loginBtn.setDisable(false);
+                }
+            });
 
-                // Continue to main menu after successful login
-                showMainMenu();
-            } catch (AuthenticationException ex) {
+            authenticationTask.setOnFailed(event -> {
                 // Display login error to the user
                 Label error = new Label(
                         "Login failed.\n\n" +
@@ -84,10 +104,14 @@ public class GameRunPage extends Application {
                 );
                 error.setWrapText(true);
                 root.getChildren().add(error);
-            }
+                loginBtn.setDisable(false);
+            });
+            Thread t = new Thread(authenticationTask, "sso-login-thread");
+            t.setDaemon(true);
+            t.start();
         });
 
-        root.getChildren().addAll(title, loginBtn);
+        root.getChildren().addAll(title, loginBtn, status);
     }
 
     /**
