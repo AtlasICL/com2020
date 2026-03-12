@@ -64,110 +64,88 @@
 \tableofcontents
 \newpage
 \section{Overview}
-In this document we will outline first how to install the prerequisites for each application, we will then outline how to deploy them, and lastly detailed instructions on their operation.
-%TODO refactor so there is a build from source, and a run from exe section.
-%TODO test running instructions
+In this document we will outline first how to deploy both applications, and the test suite. We will then provide detailed operation instructions for both applications.
 
-\section{Prerequisite Installation}
-\subsection{Python Application}
-\label{sec:python_app_install}
-The Python application has the following dependencies
-\begin{itemize}
-  \item Python 3.12 or later
-  \item A web browser with internet access
-  \item The environment variables set
-  \item The packages installed through pip
-\end{itemize}
-\subsubsection{Python 3.12}
-This can be installed by following the guide \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}.
-\subsubsection{Web browser}
-All supported operating systems often come with a web browser pre-installed. On Windows edge is required, macOS comes with safari pre-installed. Many linux distributions come with Firefox pre-installed, if it is not follow the guide \href{https://support.mozilla.org/en-US/kb/install-firefox-linux}{here}.
-\subsubsection{Set Environment Variables}
-The environment variables OIDC\_ISSUER, OIDC\_CLIENT\_ID\ and OIDC\_CLIENT\_SECRET need to be set. These values will be sent via email to all clients to ensure security. Once obtained, they must be set for each new terminal, and can be set as follows.
-
-\paragraph{Windows}
-Complete the following steps, replacing the values in <> with that of the environment variables.
-\begin{enumerate}
-    \item Run \verb|$env:OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
-    \item Run \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
-    \item Run \verb|$env:OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
-\end{enumerate}
-
-\paragraph{Linux and macOS}
-Complete the following steps, replacing the values in <> with that of the environment variables.
-\begin{enumerate}
-    \item Run \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
-    \item Run \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
-    \item Run \verb|export OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
-\end{enumerate}
-
-\subsubsection{Install packages}
-Packages can the be installed using pip, but should be done in a virtual environment. All these commands must be ran sequentially from the top directory, containing the game and telemetry folders. The steps taken to install the packages are as follows:
-\begin{enumerate}
-    \item Run \verb|cd telemetry|
-    \item Run \verb|python3 -m venv venv|
-  \item This step depends on operating system: \\
-    \begin{itemize}
-        \item On windows, run \verb|./venv/Scripts/Activate|
-        \item On Linux or macOS, run \verb|source venv/bin/activate|
-    \end{itemize}
-    \item Run \verb|pip install -r requirements.txt|
-    \item To exit the virtual environment run \verb|deactivate|
-\end{enumerate}
-\subsection{Java Application}
-\label{sec:java_app_install}
-The Java application has the following dependencies
-\begin{itemize}
-  \item Java 17 or later
-  \item Maven
-  \item The Python application and its prerequisites
-  \item The packages installed through maven
-\end{itemize}
-\subsubsection{Java 17+}
-Java 17 or higher requires the JDK to be installed, this can be done by following the steps \href{https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html}{here}
-\subsubsection{Maven}
-Maven acts as a package manager, it can be installed by following the steps \href{https://maven.apache.org/install.html}{here}.
-\subsubsection{Python application}
-This can be installed by following the steps in \ref{sec:python_app_install}
-\subsubsection{Package Installation}
-The packages are automatically installed by maven when running the project, and thus need not be installed manually beforehand.
 \section{Deployment}
+\subsection{prerequisites}
+To be able to follow and complete deployment, as well as operate the applications, the following are required.
+\begin{itemize}
+  \item Internet access
+  \item A web browser
+\end{itemize}
 
-\subsection{Python Application}
-To deploy and run the python application, first install the prerequisites, as described in \ref{sec:python_app_install}. Then follow the steps below.
+Internat access is assumed, most supported operating systems contain a web browser, however if one is not installed, firefox can be installed by following the steps \href{https://www.firefox.com/en-US/download}{here}.
+
+\subsection{From Executable}
+%TODO once KK packaged the apps
+\subsubsection{Python Application}
+\subsubsection{Java Application}
+
+\subsection{From Source}
+\subsubsection{Common}
+These steps are required for both applications.
+
 \begin{enumerate}
-    \item Enter the telemetry directory \verb|cd telemetry|
-  \item This step depends on operating system: \\
+  \item Install python 3.12 or later. Instructions can be found \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}.
+    \item Install requests: \verb|pip install requests|
+  \item Setup environment variables. First obtain them from the email that is sent to all clients, then follow the below steps:
     \begin{itemize}
-        \item On windows, run \verb|./venv/Scripts/Activate|
-        \item On Linux or macOS, run \verb|source venv/bin/activate|
-    \end{itemize}
-  \item This step depends on operating system: \\
-    \begin{itemize}
-        \item On windows, run \verb|python telemetry_app.py|
-        \item On Linux or macOS, run \verb|python3 telemetry_app.py|
+      \item On Windows run:
+        \begin{enumerate}
+            \item \verb|$env:OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|$env:OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+        \end{enumerate}
+      \item On macOS or Linux run:
+        \begin{enumerate}
+            \item \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|export OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+        \end{enumerate}
     \end{itemize}
 \end{enumerate}
 
-\subsection{Java Application}
-To deploy and run the java application, first install the prerequisites, as described in \ref{sec:java_app_install}. Then follow the steps below.
+\subsubsection{Python Application}
+\label{sec:python_src_deployment}
 \begin{enumerate}
+    \item Enter the telemetry directory: \verb|cd telemetry|
+    \item Create a virtual environment: \verb|python3 -m venv venv|
+  \item Activate the virtual environment:
+    \begin{itemize}
+        \item On windows: \verb|./venv/Scripts/Activate|
+        \item On macOS or Linux: \verb|source venv/bin/activate|
+    \end{itemize}
+    \item Install packages: \verb|pip install -r requirements.txt|
+  \item Run the program:
+    \begin{itemize}
+        \item On windows: \verb|python telemetry_app.py|
+        \item On macOS or Linux: \verb|python3 telemetry_app.py|
+    \end{itemize}
+    \item To exit the venv run: \verb|deactivate|
+\end{enumerate}
+
+\subsubsection{Java Application}
+\label{sec:java_src_deployment}
+\begin{enumerate}
+  \item Install java 17+. Instructions can be found \href{https://www.java.com/en/download/manual.jsp}{here}
+  \item Install maven. Instructions can be found \href{https://maven.apache.org/install.html}{here}
     \item Enter the game directory \verb|cd game|
     \item Run \verb|mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"|
 \end{enumerate}
 
+\subsection{Test Suite}
+
+\subsubsection{Python Application}
+\begin{enumerate}
+  \item Complete the deployment steps for the Python application in \ref{sec:python_src_deployment}
+  \item While inside the virtual environment run: \verb|pytest|
+\end{enumerate}
+\subsubsection{Java Application}
+\begin{enumerate}
+  \item Complete the deployment steps for the Java application in \ref{sec:java_src_deployment}
+  \item Run \verb|mvn test|
+\end{enumerate}
+
 \section{Operations}
 %TODO once apps are done
-\subsection{Python Application}
-\paragraph{Login}
-When you first open you will need to sign in with google, by clicking the "Sign in with Google" button. This will take you to your web browser for you to log in, and once authenticated you can close the tab. If you have the developer or designer role you will then be taken to the home page. Otherwise you will be informed you cannot access the application, and be taken back to login screen. 
-\paragraph{Home}
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \begin{center}
-    \includegraphics[width=\linewidth]{images/python_home.png}
-    \caption{Home screen}
-  \end{center}
-\end{wrapfigure}
-Once logged in, you will be able to see the home page. Across the top bar are all the available dashboard views along with the decision log and suggestions view. In the middle of the screen will be some welcome text, and below it three buttons: "Change to simulation data", "Export data to csv", and "Reset telemetry data".
-
 \end{document}

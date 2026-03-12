@@ -2,7 +2,7 @@
 The project is split into two applications, one written in Python and the other written in Java. The reason for this is we determined that much of the functionality of displaying graphs of data, and handling data in general was much better suited to Python than to any other programming language we were confident with. Furthermore we determined that Java would be much better suited to create the video game in than Python given the more rigorous syntax and typing, and better object oriented support. From there we divided the responsibility of the system between the two applications as described below.  
 
 Communication between the game and the telemetry app is ensured by a set of shared JSON files, which the game writes to and the telemetry app reads from. The JSON conforms to a custom schema we designed. The choice of JSON for this communication protocol comes with the drawback that JSON is slower than a custom binary protocol. However, we deemed that the advantages outweighed the aforementioned drawback, since JSON is human-readable, and allows us to provide clear and explicit error messages and logging.
-
+% TODO update
 \textbf{Python}
 \begin{itemize}
     \item \textbf{Dashboard views}, as the handling of data and generation of graphs is very well supported in Python.
