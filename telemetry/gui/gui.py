@@ -127,7 +127,7 @@ class TelemetryAppGUI(tk.Tk):
         self.sign_in_button = ttk.Button(
             self.tab_home,
             text="Sign in with Google",
-            command=self.handle_sign_in
+            command=self.on_toggle_google_sso
         )
         self.sign_in_button.pack(pady=(10, 20))
 
@@ -438,6 +438,19 @@ class TelemetryAppGUI(tk.Tk):
             self.difficulty_checkbox.state(["!disabled"])
             self.time_checkbox.state(["!disabled"])
         self.refresh_all()
+
+    def on_toggle_google_sso(self) -> None:
+        self.sign_in_button.state(["disabled"])
+        self.browser_label = ttk.Label(
+            self.tab_home,
+            text="Opening browser...",
+            justify="center"
+        )
+        self.browser_label.pack(pady=(30, 15))
+        self.update()
+        self.handle_sign_in()
+        self.browser_label.destroy()
+        self.sign_in_button.state(["!disabled"])
 
     def refresh_all(self) -> None:
         """
