@@ -72,7 +72,7 @@ Telemetry data can be cleared from within the telemetry app. This is done by ope
 \subsection{Clearing Logs}
 Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|.
 \subsection{Backups}
-The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext. 
+The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext.
 
 \subsection{Naming Conventions}
 The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
@@ -92,12 +92,12 @@ The Python application uses snake case for all methods and fields, and uses pasc
 Try each of these solutions, and verify if it worked before trying the next.
 \begin{enumerate}
   \item Ensure you're using a supported operating system (Linux, Windows or macOS)
-  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide. 
-  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment. 
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide.
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment.
 \end{enumerate}
 
 \subsubsection{Verification}
-The Python application launches with no errors. 
+The Python application launches with no errors.
 
 \subsection{Cannot Launch Java Application}
 \subsubsection{Symptoms}
@@ -110,21 +110,21 @@ The Python application launches with no errors.
 Try each of these solutions, and verify if it worked before trying the next.
 \begin{enumerate}
   \item Ensure you're using a supported operating system (Linux, Windows or macOS)
-  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide. 
-  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment. 
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide.
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment.
 \end{enumerate}
 
 \subsubsection{Verification}
-The Java application launches with no errors. 
+The Java application launches with no errors.
 
 \subsection{Cannot Log In}
 \subsubsection{Symptoms}
 \begin{itemize}
   \item Java application displays something like \ref{fig:java_login_fail}.
   \item Python application displays something like \ref{fig:python_login_fail}.
-    \item Error in terminal appears: \verb|Failed to resolve 'accounts.google.com'|
-    \item Error in terminal appears:\\\verb|RuntimeError: Could not parse user roles file at logins_file.json- invalid json.|
-    \item Error in terminal appear: \\ \verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
+  \item Error in terminal appears: \verb|Failed to resolve 'accounts.google.com'|
+  \item Error in terminal appears:\\\verb|RuntimeError: Could not parse user roles file at logins_file.json- invalid json.|
+  \item Error in terminal appear: \\ \verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
 \end{itemize}
 
 \begin{figure}[H]
@@ -150,8 +150,8 @@ For each solution, check if it worked using the verification steps before attemp
   \item Set environment variables, as described in the deployment and operations guide.
   \item Ensure a web browser is installed
   \item Ensure you have internet access
-    \item Ensure \verb|logins_file.json| is syntactically valid using \href{https://jsonformatter.org/}{this}.
-    \item Ensure that all roles in \verb|logins_file.json| are the correct domain described in the data management guide.
+  \item Ensure \verb|logins_file.json| is syntactically valid using \href{https://jsonformatter.org/}{this}.
+  \item Ensure that all roles in \verb|logins_file.json| are the correct domain described in the data management guide.
 \end{enumerate}
 
 \subsubsection{Verification}
@@ -162,7 +162,7 @@ The issue is fixed if \verb|logins_file.json| is syntactically correct, and you 
 \begin{itemize}
   \item Dashboard views are blank like \ref{fig:blank_dashboards}.
   \item Dashboard views don't update.
-    \item A runtime error appears in the terminal \\\verb|RuntimeError: Could not parse - invalid json.|
+  \item A runtime error appears in the terminal \\\verb|RuntimeError: Could not parse - invalid json.|
 \end{itemize}
 
 \begin{figure}[H]
@@ -174,7 +174,7 @@ The issue is fixed if \verb|logins_file.json| is syntactically correct, and you 
 First find which event store(s) has syntax errors. This can be done by going through the following steps on both event stores.
 \begin{enumerate}
   \item Check the file is not empty.
-    \item Check the file starts with \verb|[| and ends with \verb|]|.
+  \item Check the file starts with \verb|[| and ends with \verb|]|.
   \item Check between each JSON object is a comma.
   \item Place the JSON file into an online JSON validator such as \href{https://jsonformatter.org/}{this}. If it says it's invalid this file has a syntax error.
 \end{enumerate}
@@ -191,80 +191,145 @@ To verify the problem is resolved, first place the JSON store in an online \href
 
 \section{Architecture}
 \subsection{Overview}
-The project is split into two applications, one written in Python and the other written in Java. The Python application is in charge of reading telemetry data, interpreting this information, and displaying this to the user. The Java application is in charge of managing user roles, settings, and achievements, design parameters, telemetry generation, and gameplay. 
+The project is split into two applications, one written in Python and the other written in Java. The Python application is in charge of reading telemetry data, interpreting this information, and displaying this to the user. The Java application is in charge of managing user roles, settings, and achievements, design parameters, telemetry generation, and gameplay.
 
-Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc. 
+Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc.
 \subsection{Python Application}
 \subsubsection{Overview}
-The Python application is split into 3 sub-modules. Auth handles user authentication through Google OAuth, and provides a wrapper for interfacing with the Java application. Core handles data ingestion, and interpretation. GUI handles the display and refreshing of telemetry data. 
+The Python application is split into 3 sub-modules. Auth handles user authentication through Google OAuth, and provides a wrapper for interfacing with the Java application. Core handles data ingestion, and interpretation. GUI handles the display and refreshing of telemetry data.
 
 The app entry point is \verb|telemetry_app.py| which instantiates the GUI and starts the main loop within it.
 \subsubsection{auth}
 \paragraph{auth\_logger}
 This component writes authentication events to the authentication log. This event writing is called by auth.
 \paragraph{auth\_wrapper}
-This component is called by the Java application to authenticate users. It wraps this information in a JSON string and outputs it to standard out. 
+This component is called by the Java application to authenticate users. It wraps this information in a JSON string and outputs it to standard out.
 \paragraph{auth}
-This component handles authenticating the user, creating a new user account for new users, and getting user roles. 
+This component handles authenticating the user, creating a new user account for new users, and getting user roles.
 \subsubsection{core}
 \paragraph{events}
-This component contains all enums for each enumerated field within telemetry events. It also contains a dataclass for each telemetry event, containing all their fields. 
+This component contains all enums for each enumerated field within telemetry events. It also contains a dataclass for each telemetry event, containing all their fields.
 \paragraph{logic}
 This component interprets data passed into it, providing metrics used by the GUI for display, getters for obtaining all events of a given type, and methods to classify ingested data.
 \paragraph{parsing}
-This component ingests data from the telemetry stores, and returns the event as a dataclass described in events. 
+This component ingests data from the telemetry stores, and returns the event as a dataclass described in events.
 \subsubsection{gui}
 \paragraph{gui}
-GUI creates the majority of the user interface, creating the window tabs, the decision log, suggestions, and the home page. It also handles button presses and propagates those to the backend. It also refreshes the graphs every three seconds. 
+GUI creates the majority of the user interface, creating the window tabs, the decision log, suggestions, and the home page. It also handles button presses and propagates those to the backend. It also refreshes the graphs every three seconds.
 \paragraph{plotting}
-Plotting is in charge of generating and displaying all dashboard views of the telemetry, it calls the logic to interpret the telemetry data, and displays this data using matplotlib. 
+Plotting is in charge of generating and displaying all dashboard views of the telemetry, it calls the logic to interpret the telemetry data, and displays this data using matplotlib.
 \subsection{Python Tests}
 \subsubsection{Overview}
-The testing architecture consists of a unit testing folder, and a resources folder for testing data. 
+The testing architecture consists of a unit testing folder, and a resources folder for testing data.
 \subsubsection{unit}
 \paragraph{test\_logic}
 This component, tests the logic component of the Python application.
 \paragraph{test\_parsing}
-This component, tests the parsing component of the python application. 
+This component, tests the parsing component of the python application.
 \subsection{Java Application}
 \subsubsection{Overview}
-The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface. 
-%TODO now write the paragraphs 
+The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface.
+
 \subsubsection{abilities}
+
 \paragraph{UpgradeBase}
+Acts as a base class for all upgrades. Holds a reference to a PlayerInterface, which concrete upgrades decorate. It forwards all PlayerInterface calls to the held interface.
+
 \paragraph{UpgradeEnum}
+Contains a list of all upgrades, holding their common attributes such as name and price. Is used by the system to decorate the 
+player with upgrades. 
+
 \paragraph{AbilityEnum}
-\paragraph{AttackAbilityUnlockUpgrade}
+Contains a list of all attack abilities, storing their common attributes such as damage type and magic cost. Contains the logic to execute an attack ability on an entity. 
+
 \paragraph{DamageEnum}
+Contains a list of all damage types, along with common attributes such as display names. 
+
+\paragraph{AttackAbilityUnlockUpgrade}
+All attack abilities are unlocked via this concrete upgrade. It extends UpgradeBase such that the getAbilities() method returns the ability this upgrade unlocks. 
+
 \paragraph{ImprovedDamageUpgrade}
+All damage types bar absolute have a damage improvement upgrade, which extends UpgradeBase to override the calcDamage() method, causing it to return double of the damage type this upgrade improves. 
+
 \paragraph{DamageResistanceUpgrade}
+All damage types bar absolute have a damage resistance upgrade, halving the incoming damage the decorated player takes of the relevant damage type. It extends UpgradeBase. 
+
 \subsubsection{auth}
+
 \paragraph{AuthenticationException}
+This is an exception thrown if any errors occur during authentication, or in relation to obtaining information about an authenticated user. Examples include authentication failing, or trying to access user settings while no user is authenticated. 
+
 \paragraph{AuthenticationResult}
+This record stores the results of a successful authentication, including name, userID and role. This is returned by the authenticator and its information is then stored by the system for use in access control. 
+
 \paragraph{AuthenticatorInterface}
+This describes the interface for the authenticator, providing a single method that prompts Google login, either throwing an AuthenticationException on failure or returning an AuthenticationResult on success.
+
 \paragraph{Authenticator}
+This class implements the AuthenticatorInterface, making authentication requests to the Python application and returning the results as an AuthenticationResult. 
+
 \paragraph{RoleEnum}
+This enum stores all three roles, along with their telemetry safe names.
+
 \subsubsection{entitiy}
+
 \paragraph{EnemyInterface}
+This describes the interface for all entities including the player. It contains methods for handling health, getting abilities, and determining ability base damage. 
+
 \paragraph{EnemyBase}
+This class implements the common functionality of all enemies, including health and damage calculation. 
+
 \paragraph{ConcreteEnemy}
+Each enemy has their own concrete extension of EnemyBase. These extensions include damage resistances and vulnerabilities, as well as how much max health they have and their abilities. 
+
 \paragraph{PlayerInterface}
+This defines the interface for the player, extending the EntityInterface. It additionally contains methods for handling of coins, magic, lives and upgrades. 
+
 \paragraph{Player}
+This contains the base logic for all methods in PlayerInterface, including obtaining relevant values from the settings when they're influenced by design parameters, 
+
 \paragraph{EntityAIInterface}
+This defines the interface for all entity AIs, containing methods for choosing which ability to use, as well as simulation used methods for determining which enemy to target with an ability, and what upgrades to buy in the shop. 
+
 \paragraph{EntityAISingleton}
+This class provides singleton access to the concrete implementation of EntityAIInterface. It stores this class in a private member variables that is accessed via static methods. The internal class must be accessed before its AI methods are called. 
+
 \paragraph{EntityEnum}
+This class lists all entities along with their common characteristics such as display names and telemetry names. It includes the player. It also contains methods for instantiating the entity referenced through reflection.
+
 \subsubsection{gamemanger}
 \paragraph{LackingResourceException}
-\paragraph{Encounter}
+This exception is thrown when the player attempts to perform an action that they lack the resources to perform, for example if they try to buy an upgrade without having enough coins to purchase it. 
+
 \paragraph{EncounterInterface}
+This defines the interface for encounters, containing the methods for handling encounter completeness, resetting the encounter, and obtaining its type in EncounterEnum. 
+
+\paragraph{Encounter}
+Encounter contains the logic and implementation for the EncounterInterface, storing the enemy instances used in the encounter. 
+
 \paragraph{EncounterEnum}
-\paragraph{GameManger}
+This lists all encounters available in the game, including common characteristics such as display name or telemetry name. It also contains logic for instantiating an encounter its enum value using reflection.
+
 \paragraph{GameMangerInterface}
-\paragraph{GameRun}
+This defines the interface for the GameManger, containing all functionality to interface with the game portion of the Java Application. It contains methods for creating and managing game runs, getting information about the entities in the run, interfacing with the run's shop and obtaining the run's session ID. 
+
+\paragraph{GameMangerSingleton}
+This class provides singleton access to the game manager through a static method. The singleton contained within implements the GameMangerInterface, and stores the current run and encounter. 
+
 \paragraph{GameRunterface}
+This defines the interface for a game run, containing methods for handling sessions, the shop system and upgrades, and run state including encounter state. 
+
+\paragraph{GameRun}
+This class implements GameRunterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
+
 \paragraph{TimeManagerInterface}
+This defines the interface for the TimeManger, used for handling timestamping. 
+
 \paragraph{TimeManagerSingleton}
+This singleton provides singleton access to the TimeManager for event timestamping. This is done to allow testability, as reflection can be used to switch out the TimeManger for a mock object. 
+
 \subsubsection{settings}
+% TODO
 \paragraph{DifficultyEnum}
 \paragraph{SettingsEnum}
 \paragraph{SettingsInterface}
@@ -287,7 +352,7 @@ The Java application is split into several submodules, each handling a different
 \paragraph{ShopPage}
 \subsection{Java Tests}
 \subsubsection{Overview}
-The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. For ease of reading both unit and integration tests are included for each module's test description 
+The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. For ease of reading both unit and integration tests are included for each module's test description
 \subsubsection{abilities}
 \paragraph{AbilityEnumUnitTests}
 \paragraph{UpgradeUnitTests}

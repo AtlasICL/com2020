@@ -35,6 +35,7 @@ export.csv
 *.out
 *.xml
 *.toc
+*.bbl
 
 # Report
 cw2_final_report.log
@@ -60,3 +61,4 @@ deployment_and_operations.log
 deployment_and_operations.pdf
 maintenance_and_troubleshooting.log
 maintenance_and_troubleshooting.pdf
+
