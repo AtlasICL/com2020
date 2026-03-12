@@ -18,6 +18,7 @@ from tkinter import ttk, messagebox
 import seaborn as sns
 from pathlib import Path
 
+from core.events import SettingName
 from core.logic import EventLogicEngine
 from core.suggestions import SuggestionGenerator
 from gui.plotting import PlotTab
@@ -660,6 +661,29 @@ class TelemetryAppGUI(tk.Tk):
         self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
 
 
+    def _settingToSentenceCase(self, setting_name: SettingName) -> str:
+        """
+        Helper function which returns a sentence case mapping of 
+        settings names.
+        """
+        mapping: dict[SettingName, str] = {
+            SettingName.TELEMETRY_ENABLED: "Telemetry enabled",
+            SettingName.PLAYER_MAX_HEALTH: "Player max health",
+            SettingName.ENEMY_DAMAGE_MULTIPLIER: "Enemy damage multiplier",
+            SettingName.ENEMY_MAX_HEALTH_MULTIPLIER: "Enemy max health",
+            SettingName.STARTING_LIVES: "Lives",
+            SettingName.MAX_MAGIC: "Magic cap",
+            SettingName.MAGIC_REGEN_RATE: "Magic generation rate",
+            SettingName.SHOP_ITEM_COUNT: "Shop item count"
+        }
+        try:
+            return mapping[setting_name]
+        except KeyError as e:
+            raise RuntimeError(
+                f"A setting name: {setting_name} is missing a mapping. {e}"
+            )
+        
+
     def refresh_decision_log(self) -> None:
         """
         Refreshes the decision log tab with the latest settings
@@ -673,7 +697,7 @@ class TelemetryAppGUI(tk.Tk):
         for event in self.logic_engine.get_settings_change_events():
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
-                event.setting,
+                self._settingToSentenceCase(event.setting),
                 event.value,
                 event.justification
             ))
