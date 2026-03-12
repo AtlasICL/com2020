@@ -58,6 +58,8 @@ class TelemetryAppGUI(tk.Tk):
         self.authenticated = False
         self.current_user_name = None
         self.compare_by_difficulty = tk.BooleanVar(value=False)
+        self.compare_by_time = tk.BooleanVar(value=False)
+        self.compare_by_coin_hold = tk.BooleanVar(value=False)
 
         # Set GUI colours / font styles.
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
@@ -242,12 +244,27 @@ class TelemetryAppGUI(tk.Tk):
             padx=10,
             pady=(5, 0)
         )
-        ttk.Checkbutton(
+        self.difficulty_checkbox = ttk.Checkbutton(
             control_frame,
             text="Compare by difficulty",
             variable=self.compare_by_difficulty,
-            command=self.refresh_all,
-        ).pack(side="left")
+            command=self.on_toggle_difficulty,
+        )
+        self.difficulty_checkbox.pack(side="left")
+        self.time_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by time",
+            variable=self.compare_by_time,
+            command=self.on_toggle_time
+        )
+        self.time_checkbox.pack(side="left")
+        self.coin_hold_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by Coin Hold",
+            variable=self.compare_by_coin_hold,
+            command=self.on_toggle_coin_hold
+        )
+        self.coin_hold_checkbox.pack(side="left")
         self.notebook.grid(row=1, column=0, sticky="nsew")
         self.grid_rowconfigure(0, weight=0)
         self.grid_rowconfigure(1, weight=1)
@@ -384,6 +401,38 @@ class TelemetryAppGUI(tk.Tk):
             writer.writeheader()
             writer.writerows(all_events)
 
+    def on_toggle_difficulty(self) -> None:
+        if self.compare_by_difficulty.get():
+            self.compare_by_time.set(False)
+            self.compare_by_coin_hold.set(False)
+            self.time_checkbox.state(["disabled"])
+            self.coin_hold_checkbox.state(["disabled"])
+        else:
+            self.time_checkbox.state(["!disabled"])
+            self.coin_hold_checkbox.state(["!disabled"])
+        self.refresh_all()
+
+    def on_toggle_time(self) -> None:
+        if self.compare_by_time.get():
+            self.compare_by_difficulty.set(False)
+            self.compare_by_coin_hold.set(False)
+            self.difficulty_checkbox.state(["disabled"])
+            self.coin_hold_checkbox.state(["disabled"])
+        else:
+            self.difficulty_checkbox.state(["!disabled"])
+            self.coin_hold_checkbox.state(["!disabled"])
+        self.refresh_all()
+    
+    def on_toggle_coin_hold(self) -> None:
+        if self.compare_by_coin_hold.get():
+            self.compare_by_difficulty.set(False)
+            self.compare_by_time.set(False)
+            self.difficulty_checkbox.state(["disabled"])
+            self.time_checkbox.state(["disabled"])
+        else:
+            self.difficulty_checkbox.state(["!disabled"])
+            self.time_checkbox.state(["!disabled"])
+        self.refresh_all()
 
     def refresh_all(self) -> None:
         """
@@ -402,7 +451,9 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_funnel_graph(self) -> None:
         """
         Refreshes the plot of players remaining per stage (referred to
-        as funnel view).
+        as funnel view). 
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
@@ -410,6 +461,18 @@ class TelemetryAppGUI(tk.Tk):
             series = []
             for diff, data in funnel_by_diff.items():
                 series.append((data.keys(), data.values(), str(diff.value)))
+            self.funnel_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            funnel_by_time = self.logic_engine.funnel_view_speed()
+            series = []
+            for speed, data in funnel_by_time.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.funnel_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            funnel_by_coin_hold = self.logic_engine.funnel_view_coin_hold()
+            series = []
+            for coin_hold, data in funnel_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
             self.funnel_plot.plot_multi_line(series)
         else:
             funnel_data: dict[int, int] = self.logic_engine.funnel_view()
@@ -424,6 +487,8 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the plots for difficulty spike in terms of number
         of failures per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
@@ -431,6 +496,18 @@ class TelemetryAppGUI(tk.Tk):
             series = []
             for diff, data in spikes_by_diff.items():
                 series.append((data.keys(), data.values(), str(diff.value)))
+            self.spike_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_speed()
+            series = []
+            for speed, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.spike_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_coin_hold()
+            series = []
+            for coin_hold, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
             self.spike_plot.plot_multi_line(series)
         else:
             spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
@@ -475,8 +552,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_health_plots(self) -> None:
         """
         Refreshes the plots of HP remaining per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = \
@@ -491,6 +568,18 @@ class TelemetryAppGUI(tk.Tk):
                     averages.values(),
                     str(difficulty.value)
                 ))
+            self.curves_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            health_by_speed = self.logic_engine.compare_health_speed()
+            series = []
+            for speed, data in health_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.curves_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            health_by_coin_hold = self.logic_engine.compare_health_coin_hold()
+            series = []
+            for coin_hold, data in health_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
             self.curves_plot.plot_multi_line(series)
         else:
             all_dicts = []
@@ -507,8 +596,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_coins_gained_plots(self) -> None:
         """
         Refreshes the plots for average coins gained per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = \
@@ -523,6 +612,18 @@ class TelemetryAppGUI(tk.Tk):
                     averages.values(),
                     str(difficulty.value)
                 ))
+            self.fairness_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            coins_by_speed = self.logic_engine.compare_coins_speed()
+            series = []
+            for speed, data in coins_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.fairness_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            coins_by_coin_hold = self.logic_engine.compare_coins_coin_hold()
+            series = []
+            for coin_hold, data in coins_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
             self.fairness_plot.plot_multi_line(series)
         else:
             all_dicts = []
@@ -577,8 +678,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_completion_time_plot(self) -> None:
         """
         Refreshes the plot of average time to complete per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
@@ -591,11 +692,29 @@ class TelemetryAppGUI(tk.Tk):
                 )
             self.completion_time_plot.plot_multi_line(series)
             return
-        
-        completion_data: dict[int, float] = \
-            self.logic_engine.average_time_to_complete_per_stage()
-        self.completion_time_plot.plot_line(
-            completion_data.keys(),
-            completion_data.values(),
-            label="Avg completion time"
-        )
+        elif self.compare_by_time.get():
+            time_by_speed = self.logic_engine \
+                .average_time_to_complete_per_stage_speed()
+            series = []
+            for speed, data in time_by_speed.items():
+                series.append(
+                    (data.keys(), data.values(), str(speed.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            time_by_coin_hold = self.logic_engine \
+                .average_time_to_complete_per_stage_coin_hold()
+            series = []
+            for coin_hold, data in time_by_coin_hold.items():
+                series.append(
+                    (data.keys(), data.values(), str(coin_hold.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+        else:
+            completion_data: dict[int, float] = \
+                self.logic_engine.average_time_to_complete_per_stage()
+            self.completion_time_plot.plot_line(
+                completion_data.keys(),
+                completion_data.values(),
+                label="Avg completion time"
+            )

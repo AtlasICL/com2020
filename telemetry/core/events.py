@@ -132,6 +132,19 @@ class Difficulty(str, Enum):
     MEDIUM = "Medium"
     HARD = "Hard"
 
+class Speed(str, Enum):
+    """
+    Enumerates the possible speeds of player progress.
+    """
+    FAST = "Fast"
+    SLOW = "Slow"
+
+class CoinHold(str, Enum):
+    """
+    Enumerates the possible length of time players hold onto coins.
+    """
+    LONG = "Long"
+    SHORT = "Short"
 
 @dataclass(frozen=True)
 class StartSession:
