@@ -8,8 +8,6 @@ averages by difficulty, etc...
 This functionality is provided by the EventLogicEngine class.
 """
 
-#TODO: add pydoc comments for new methods
-
 from datetime import datetime
 from pathlib import Path
 
@@ -168,6 +166,13 @@ class EventLogicEngine:
     def fail_difficulty_spikes_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
+        """
+        Output failure rate by stage, separated by speed.
+
+        :return: Dictionary of speed level to dictionary of stage
+        number to number of failures.
+        :rtype: dict[Speed, dict[int, int]]
+        """
         result: dict[Speed, dict[int, int]] = {}
         for speed in Speed:
             session_ids = self.get_sessionIDs_of_speed(speed)
@@ -184,6 +189,13 @@ class EventLogicEngine:
     def fail_difficulty_spikes_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
+        """
+        Output failure rate by stage, separated by coin hold.
+
+        :return: Dictionary of coin hold level to dictionary of stage
+        number to number of failures.
+        :rtype: dict[CoinHold, dict[int, int]]
+        """
         result: dict[CoinHold, dict[int, int]] = {}
         for coin_hold in CoinHold:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
@@ -325,6 +337,14 @@ class EventLogicEngine:
     def funnel_view_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
+        """
+        Output number of players passing a given stage, separated by
+        speed.
+
+        :return: Dictionary of speed level to dictionary of stage
+        number to number of players left.
+        :rtype: dict[Speed, dict[int, int]]
+        """
         result: dict[Speed, dict[int, int]] = {}
         for speed in Speed:
             session_ids = self.get_sessionIDs_of_speed(speed)
@@ -357,6 +377,14 @@ class EventLogicEngine:
     def funnel_view_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
+        """
+        Output number of players passing a given stage, separated by
+        coin hold.
+
+        :return: Dictionary of coin hold level to dictionary of stage
+        number to number of players left.
+        :rtype: dict[CoinHold, dict[int, int]]
+        """
         result: dict[CoinHold, dict[int, int]] = {}
         for coin_hold in CoinHold:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
@@ -434,7 +462,7 @@ class EventLogicEngine:
         :param difficulty: The difficulty level to search for.
         :type difficulty: Difficulty
         :return: The list of sessionIDs with the given difficulty.
-        :rtype: list[int]
+        :rtype: set[int]
         """
         difficulty_sessionIDs: set[int] = set()
         for start_event in self.start_session_events:
@@ -443,6 +471,15 @@ class EventLogicEngine:
         return difficulty_sessionIDs
     
     def get_sessionIDs_of_speed(self, speed: Speed) -> set[int]:
+        """
+        Get the set of all sessionIDs of a given play speed.
+        
+        :param speed: The play speed to search for.
+        :type speed: Speed
+        :return: The list of sessionIDs with the given speed.
+        :rtype: set[int]
+        """
+        # Get start times for each stage
         session_avg_times: dict[int, float] = {}
         for sessionID in self.get_unique_sessionIDs():
             start_times: dict[int, datetime] = {}
@@ -457,6 +494,8 @@ class EventLogicEngine:
             stage_times: dict[int, list[float]] = {
                 stage: [] for stage in range(1, 11)
             }
+
+            # Calculate total time for each stage
             for event in self.normal_encounter_complete_events:
                 if event.sessionID == sessionID:
                     if event.stage_number in start_times:
@@ -495,6 +534,7 @@ class EventLogicEngine:
         else:
             median = sorted_times[mid]
 
+        # Add to result only if it means passed in Speed parameter
         result: set[int] = set()
         for sid, avg_time in session_avg_times.items():
             if speed == Speed.FAST and avg_time <= median:
@@ -559,6 +599,7 @@ class EventLogicEngine:
         else:
             median = sorted_coins[mid]
 
+        # Add to result only if it means passed in coin hold parameter
         result: set[int] = set()
         for sid, avg_coins in session_avg_coins.items():
             if coin_hold == CoinHold.LONG and avg_coins >= median:
@@ -608,6 +649,14 @@ class EventLogicEngine:
             self
     ) -> dict[Speed, dict[int, int]]:
         """
+        Get a dictionary with Speed type as the key, and the list
+        of the health_per_stage objects of all sessions with that 
+        speed level as the value.
+
+        :return: Dictionary with Speed type as the key, and the list of 
+        health_per_stage dictionaries of all sessions with the given
+        speed level.
+        :rtype: dict[Speed, dict[int, int]]
         """
         result: dict[Speed, dict[int, int]] = {}
         for speed in Speed:
@@ -631,6 +680,14 @@ class EventLogicEngine:
             self
     ) -> dict[CoinHold, dict[int, int]]:
         """
+        Get a dictionary with CoinHold type as the key, and the list
+        of the health_per_stage objects of all sessions with that 
+        difficulty level as the value.
+
+        :return: Dictionary with CoinHold type as the key, and the list of 
+        health_per_stage dictionaries of all sessions with the given
+        speed level.
+        :rtype: dict[CoinHold, dict[int, int]]
         """
         result: dict[CoinHold, dict[int, int]] = {}
         for coin_hold in CoinHold:
@@ -710,6 +767,16 @@ class EventLogicEngine:
     def compare_coins_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
+        """
+        Get a dictionary with Speed level as the key, and the list 
+        of the coins gained per stage dictionary objects of all sessions
+        with that difficulty level as the value.
+
+        :return: Dictionary of Speed level to list of all 
+        coins gained per stage dictionaries of all sessions with the 
+        given Speed level.
+        :rtype: dict[Speed, dict[int, int]]
+        """
         result: dict[Speed, dict[int, int]] = {}
         for speed in Speed:
             session_ids = self.get_sessionIDs_of_speed(speed)
@@ -723,6 +790,16 @@ class EventLogicEngine:
     def compare_coins_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
+        """
+        Get a dictionary with CoinHold level as the key, and the list 
+        of the coins gained per stage dictionary objects of all sessions
+        with that difficulty level as the value.
+
+        :return: Dictionary of CoinHold level to list of all 
+        coins gained per stage dictionaries of all sessions with the 
+        given CoinHold level.
+        :rtype: dict[CoinHold, dict[int, int]]
+        """
         result: dict[CoinHold, dict[int, int]] = {}
         for coin_hold in CoinHold:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
@@ -849,6 +926,14 @@ class EventLogicEngine:
     def average_time_to_complete_per_stage_speed(
         self
     ) -> dict[Speed, dict[int, float]]:
+        """
+        Calculate the average time (in seconds) to complete each stage,
+        separated by speed.
+
+        :return: Dictionary of speed level to dictionary of stage
+        number to average completion time in seconds.
+        :rtype: dict[Speed, dict[int, float]]
+        """
         result: dict[Speed, dict[int, float]] = {}
         for speed in Speed:
             session_ids = self.get_sessionIDs_of_speed(speed)
@@ -892,6 +977,14 @@ class EventLogicEngine:
     def average_time_to_complete_per_stage_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, float]]:
+        """
+        Calculate the average time (in seconds) to complete each stage,
+        separated by coin hold.
+
+        :return: Dictionary of coin hold level to dictionary of stage
+        number to average completion time in seconds.
+        :rtype: dict[CoinHold, dict[int, float]]
+        """
         result: dict[CoinHold, dict[int, float]] = {}
         for coin_hold in CoinHold:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)

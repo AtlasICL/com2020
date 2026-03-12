@@ -451,7 +451,9 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_funnel_graph(self) -> None:
         """
         Refreshes the plot of players remaining per stage (referred to
-        as funnel view).
+        as funnel view). 
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
@@ -485,6 +487,8 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the plots for difficulty spike in terms of number
         of failures per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
@@ -548,8 +552,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_health_plots(self) -> None:
         """
         Refreshes the plots of HP remaining per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = \
@@ -592,8 +596,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_coins_gained_plots(self) -> None:
         """
         Refreshes the plots for average coins gained per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = \
@@ -674,8 +678,8 @@ class TelemetryAppGUI(tk.Tk):
     def refresh_completion_time_plot(self) -> None:
         """
         Refreshes the plot of average time to complete per stage.
-        Shows aggregate average by default, or per difficulty when
-        the compare toggle is enabled.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         if self.compare_by_difficulty.get():
