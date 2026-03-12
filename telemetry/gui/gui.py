@@ -148,10 +148,10 @@ class TelemetryAppGUI(tk.Tk):
         self.decision_log_tree.heading("setting", text="Setting")
         self.decision_log_tree.heading("value", text="Value")
         self.decision_log_tree.heading("justification", text="Justification")
-        self.decision_log_tree.column("timestamp", width=200)
+        self.decision_log_tree.column("timestamp", width=120)
         self.decision_log_tree.column("setting", width=200)
-        self.decision_log_tree.column("value", width=100)
-        self.decision_log_tree.column("value", width=200)
+        self.decision_log_tree.column("value", width=10)
+        self.decision_log_tree.column("justification", width=300)
         scrollbar = ttk.Scrollbar(
             self.tab_decision_log,
             orient="vertical",
