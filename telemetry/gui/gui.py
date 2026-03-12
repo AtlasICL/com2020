@@ -76,6 +76,10 @@ class TelemetryAppGUI(tk.Tk):
             "TLabel",
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
+        style.configure(
+            "Treeview",
+            rowheight=int(GUI_SETTINGS.FONT_SIZE * 2.5)
+        )
 
         # Set a minimum size for the window - this prevents users from
         # making the window much too small.
