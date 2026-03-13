@@ -216,8 +216,8 @@ def google_login() -> tuple[str, str, Role]:
     )
     if not token_resp.ok:
         if LOGGING_ENABLED:
-            LOGGER.error("[SIE ] Sign-in failed: token exchange error" +
-                         "(status = {token_resp.status_code})")
+            LOGGER.error(f"[SIE ] Sign-in failed: token exchange error" +
+                          "(status = {token_resp.status_code})")
         print("---- AUTH ERROR OCCURRED ----")
         print("|  Token status:", token_resp.status_code)
         print("|  Token body:", token_resp.text)
@@ -274,12 +274,10 @@ def get_role(filename: str, user_id: str) -> Role:
                                     f"with role {this_user}.")
                     return Role(this_user) 
                 except ValueError:
-                    raise ValueError(f"Logins file at {filename}" +
+                    raise ValueError(f"Logins file at {filename} " +
                                      f"contained an unknown role")
     except FileNotFoundError:
-        raise FileNotFoundError(
-            f"Could not find user roles file at {filename}"
-        )
+        raise FileNotFoundError(f"Could not find user roles file at {filename}")
     except json.JSONDecodeError:
         raise RuntimeError(
             f"Could not parse user roles file at {filename}" + 
