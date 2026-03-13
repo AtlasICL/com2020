@@ -123,4 +123,58 @@
   "sessionID" : 141942179,
   "timestamp" : "2026/02/16/09/55/45"
 }
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "95",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/16/33/17"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "90",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/06/39"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/06/59"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/01"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/09"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/10"
+}
 ]

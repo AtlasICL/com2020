@@ -11,11 +11,11 @@
 ## Team members
 | Name              | Email                | Role (Sprint 2)                         |
 | ----------------- | -------------------- | --------------------------------------- |
-| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Java dev                    |
-| Luca Croci        | lc1107@exeter.ac.uk  | Java dev (UI)                           |
+| Emre Acarsoy      | ea616@exeter.ac.uk   | Team lead + Python dev                  |
+| Luca Croci        | lc1107@exeter.ac.uk  | UI lead + Java dev                      |
 | Tom Croft         | tjc227@exeter.ac.uk  | Java lead                               |
-| Will Finney       | wjf207@exeter.ac.uk  | Ethics/Accessibility + Game Design lead |
-| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev (UI) + Python dev              |
+| Will Finney       | wjf207@exeter.ac.uk  | Ethics/Accessibility + Game design      |
+| Kazybek Khairulla | kk598@exeter.ac.uk   | Java dev                                |
 | Luca Pacitti      | ljmp201@exeter.ac.uk | Testing lead + Java dev                 |
 | Harry Taylor      | ht555@exeter.ac.uk   | Python lead + Java dev                  |
 
@@ -172,15 +172,15 @@ This project is released under an MIT License.
 | maven-compiler-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | maven-surefire-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
 | exec-maven-plugin       | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
-| javafx-maven-plugin     | BSD 3-Clause    | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE) |
-| jacoco-maven-plugin     | EPL 2.0         | [License here](https://www.eclipse.org/legal/epl-2.0/) |
+| javafx-maven-plugin     | BSD 3-Clause    | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE)    |
+| jacoco-maven-plugin     | EPL 2.0         | [License here](https://www.eclipse.org/legal/epl-2.0/)                                |
 | matplotlib              | PSF (BSD-style) | [License here](https://pypi.org/project/matplotlib/)                                  |
 | numpy                   | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
 | pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/pandas/)                                      |
 | seaborn                 | BSD             | [License here](https://pypi.org/project/seaborn/)                                     |
 | requests                | Apache 2.0      | [License here](https://pypi.org/project/requests/)                                    |
-| pdoc                    | BSD 3-Clause    | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                                      |
-| coverage                | Apache 2.0      | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt) |
+| pdoc                    | BSD 3-Clause    | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                 |
+| coverage                | Apache 2.0      | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt)        |
 
 All dependency licences are compatible with this project's MIT licence.
 
@@ -211,12 +211,13 @@ com2020/
 │   ├── core/
 │   ├── gui/
 │   ├── auth/
-│   ├── schema.md (json schema)
+│   ├── test/
 │   ├── requirements.txt
 │   └── telemetry_app.py
 ├── event_logs/
 │   ├── telemetry_events.json
-│   └── simulation_events.json
+│   ├── simulation_events.json
+│   └── example_events.json
 ├── README.md
 ├── LICENSE
 └── .gitignore

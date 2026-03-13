@@ -1,0 +1,151 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[skip=6pt]{parskip}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{comment}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+\usepackage{booktabs}
+
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+
+\title{Deployment and Operations\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview}
+In this document we will outline first how to deploy both applications, and the test suite. We will then provide detailed operation instructions for both applications.
+
+\section{Deployment}
+\subsection{prerequisites}
+To be able to follow and complete deployment, as well as operate the applications, the following are required.
+\begin{itemize}
+  \item Internet access
+  \item A web browser
+\end{itemize}
+
+Internat access is assumed, most supported operating systems contain a web browser, however if one is not installed, firefox can be installed by following the steps \href{https://www.firefox.com/en-US/download}{here}.
+
+\subsection{From Executable}
+%TODO once KK packaged the apps
+\subsubsection{Python Application}
+\subsubsection{Java Application}
+
+\subsection{From Source}
+\subsubsection{Common}
+These steps are required for both applications.
+
+\begin{enumerate}
+  \item Install python 3.13 or later. Instructions can be found \href{https://wiki.python.org/moin/BeginnersGuide/Download}{here}.
+    \item Install requests: \verb|pip install requests|
+  \item Setup environment variables. First obtain them from the email that is sent to all clients, then follow the below steps:
+    \begin{itemize}
+      \item On Windows run:
+        \begin{enumerate}
+            \item \verb|$env:OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|$env:OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+        \end{enumerate}
+      \item On macOS or Linux run:
+        \begin{enumerate}
+            \item \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
+            \item \verb|export OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
+        \end{enumerate}
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Python Application}
+\label{sec:python_src_deployment}
+\begin{enumerate}
+    \item Enter the telemetry directory: \verb|cd telemetry|
+    \item Create a virtual environment: \verb|python3 -m venv venv|
+  \item Activate the virtual environment:
+    \begin{itemize}
+        \item On windows: \verb|./venv/Scripts/Activate|
+        \item On macOS or Linux: \verb|source venv/bin/activate|
+    \end{itemize}
+    \item Install packages: \verb|pip install -r requirements.txt|
+  \item Run the program:
+    \begin{itemize}
+        \item On windows: \verb|python telemetry_app.py|
+        \item On macOS or Linux: \verb|python3 telemetry_app.py|
+    \end{itemize}
+    \item To exit the venv run: \verb|deactivate|
+\end{enumerate}
+
+\subsubsection{Java Application}
+\label{sec:java_src_deployment}
+\begin{enumerate}
+  \item Install java 17+. Instructions can be found \href{https://www.java.com/en/download/manual.jsp}{here}
+  \item Install maven. Instructions can be found \href{https://maven.apache.org/install.html}{here}
+    \item Enter the game directory \verb|cd game|
+    \item Run \verb|mvn clean compile exec:java "-Dexec.mainClass=wizardquest.ui.GameRunPage"|
+\end{enumerate}
+
+\subsection{Test Suite}
+
+\subsubsection{Python Application}
+\begin{enumerate}
+  \item Complete the deployment steps for the Python application in \ref{sec:python_src_deployment}
+  \item While inside the virtual environment run: \verb|pytest|
+\end{enumerate}
+\subsubsection{Java Application}
+\begin{enumerate}
+  \item Complete the deployment steps for the Java application in \ref{sec:java_src_deployment}
+  \item Run \verb|mvn test|
+\end{enumerate}
+
+\section{Operations}
+%TODO once apps are done
+\end{document}

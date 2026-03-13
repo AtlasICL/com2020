@@ -44,7 +44,11 @@ class PlotTab:
         self.color_map: dict[str, str] = {
             "Easy": "green",
             "Medium": "orange",
-            "Hard": "red"
+            "Hard": "red",
+            "Fast": "green",
+            "Slow": "red",
+            "Long": "blue",
+            "Short": "purple"
         }
 
 

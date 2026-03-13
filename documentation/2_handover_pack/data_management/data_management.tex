@@ -1,0 +1,300 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[skip=6pt]{parskip}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{comment}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+\usepackage{booktabs}
+
+\usepackage{float}
+\usepackage{tabularx}
+
+\title{Data Management\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview}
+In this document we will outline all data stores used by the application. For each data store we will provide an overview, then detail its schema and the domain of all fields. When specifying the domain the type will be given, along with any other information in brackets.  We will then explain which applications use the data store, what fields they access, when, and for what purpose.
+
+\section{Telemetry Event Logs}
+\subsection{Overview}
+Both simulation and user-generated telemetry is stored in the same format in two separate files. User-generated telemetry is stored in \verb|telemetry_events.json|. Simulation-generated data is stored in \verb|simulation_events.json|. All the stored data follows the telemetry schema specified in the report, which is duplicated here.
+\subsection{Fields}
+The log stores the events as a JSON list. Each event has fields described in \ref{tab:event_definitions}. The field's domains are described in \ref{tab:field_definitions}.
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.25\hsize}X
+      | >{\centering\arraybackslash\hsize=0.75\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain}  \\
+      \hline
+      event & String (One of: StartSession, NormalEncounterStart, NormalEncounterComplete, NormalEncounterFail, BossEncounterStart, BossEncounterComplete, BossEncounterFail, GainCoin, BuyUpgrade, EndSession, SettingsChange, KillEnemy)  \\
+      \hline
+      userID & String \\
+      \hline
+      sessionID & Integer \\
+      \hline
+      timestamp & String (In the format \verb|YYYY/MM/DD/HH/MM/SS|) \\
+      \hline
+      difficulty & String (One of: Easy, Medium, Hard) \\
+      \hline
+      encounter\_name & String (One of: GoblinEncounter, FishManEncounter, PyromancerEncounter, EvilWizardEncounter, GoblinDuoEncounter, GoblinFishManEncounter, PyromancerFishManEncounter, GhostEncounter, ArmouredGoblinPyromancerEncounter, GoblinFishManPyromancerEncounter, BlackKnightEncounter, DragonEncounter) \\
+      \hline
+      stage\_number & Integer (In range [1, 10]) \\
+      \hline
+      player\_HP\_remaining & Non-negative integer \\
+      \hline
+      lives\_left & Positive integer \\
+      \hline
+      coins\_gained & Positive integer \\
+      \hline
+      coins\_spent & Positive integer \\
+      \hline
+      setting & String (One of: TelemetryEnabled, PlayerMaxHealth, EnemyDamageMultiplier, EnemyMaxHealthMultiplier, StartingLives, MaxMagic, MagicRegenRate, ShopItemCount) \\
+      \hline
+      setting\_value & String (One of: EASY: , MEDIUM: , HARD: . Followed by a string version of the setting's domain (e.g. int or real)) \\
+      \hline
+      enemy\_type & String (One of: Goblin, Fishman, Pyromancer, EvilWizard, ArmouredGoblin, Ghost, BlackKnight, Dragon)\\
+      \hline
+      upgrade\_bought & String (One of: PhysicalDamageResistance, FireDamageResistance, WaterDamageResistance, ThunderDamageResistance, ImprovedPhysicalDamage, ImprovedFireDamage, ImprovedWaterDamage, ImprovedThunderDamage, SlashUnlock, AbsolutePulseUnlock, WaterJetUnlock, FireBallUnlock, ThunderStormUnlock) \\
+      \hline
+      justification & String \\
+      \hline
+    \end{tabularx}
+    \caption{Field definitions}
+    \label{tab:field_definitions}
+  \end{center}
+\end{table}
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Telemetry Event} & \textbf{Fields}  \\
+      \hline
+      StartSession & userID, sessionID, timestamp, event, difficulty \\
+      \hline
+      NormalEncounterStart & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event \\
+      \hline
+      NormalEncounterComplete & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, player\_HP\_remaining \\
+      \hline
+      NormalEncounterFail & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, lives\_left \\
+      \hline
+      BossEncounterStart & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event \\
+      \hline
+      BossEncounterComplete & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, player\_HP\_remaining \\
+      \hline
+      BossEncounterFail & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, lives\_left \\
+      \hline
+      GainCoin & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, event, coins\_gained \\
+      \hline
+      BuyUpgrade & userID, sessionID, timestamp, stage\_number, event, upgrade\_bought, coins\_spent \\
+      \hline
+      EndSession & userID, sessionID, timestamp, event \\
+      \hline
+      SettingsChange & userID, timestamp, setting, setting\_value, event, justification \\
+      \hline
+      KillEnemy & userID, sessionID, timestamp, encounter\_name, difficulty, stage\_number, enemy\_type, event \\
+      \hline
+    \end{tabularx}
+    \caption{Event definitions}
+    \label{tab:event_definitions}
+  \end{center}
+\end{table}
+
+\subsection{Integrations}
+
+\subsubsection{Java application}
+The Java application only ever writes to the files, and all writing is done by \verb|wizardquest.telemetry.TelemetryListenerSingleton|. When running a simulation, all events are written to the simulation store and otherwise are written to the user store. Each event is written when generated by its source, as long as the user has telemetry enabled. Below is a description of what causes each event to be written.
+\begin{itemize}
+  \item StartSession - When a run is started
+  \item NormalEncounterStart - When an encounter for stages 1, 2, 4, 5, 7 or 8 is started. These are normal encounters, consisting of one or more weak enemies.
+  \item NormalEncounterComplete - When a normal encounter is completed by killing all enemies.
+  \item NormalEncounterFail - When a normal encounter is failed by the player's health being reduced to zero.
+  \item BossEncounterStart - When an encounter for stages 3, 6, 9, or 10 is started. These are boss encounters, consisting of one strong enemy.
+  \item BossEncounterComplete - When a boss encounter is completed by killing the boss.
+  \item BossEncounterFail -  When a boss encounter is failed by the player's health being reduced to zero.
+  \item GainCoin - When the player gains any number of coins (which occurs at the end of an encounter).
+  \item BuyUpgrade - When the player buys an upgrade in the shop (which they visit after each encounter)
+  \item EndSession - When a run is completed, either by the player running out of lives, or completing stage 10.
+  \item SettingsChange - When a setting (Either a design parameter, or whether telemetry is enabled) is changed by the user.
+  \item KillEnemy - When an enemy is killed by the player in an encounter.
+\end{itemize}
+
+\subsubsection{Python application}
+The python application only ever reads the files, which is done by \verb|telemetry.core.parsing|. It does so when a user logs in, and every 3 seconds from that point to allow real time viewing. It uses this data to make design suggestions and display dashboard views.
+
+\section{Settings File}
+
+\subsection{Overview}
+This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings. This information is stored in \verb|game/settings_file.json|. 
+\subsection{Fields}
+The file contains a single JSON object with the fields \verb|users| and \verb|designParameters|. Users is a JSON object with a field for each user ID. Each field contains a user object with the fields and domains described in \ref{tab:settings_users}. The furthest level field is described in \ref{tab:per_difficulty_store}. Design parameters is a JSON object with a field for each design parameter, storing its value for each difficulty (described in \ref{tab:per_difficulty_store}). Its fields are described in \ref{tab:settings_design_parameters}. 
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      telemetryEnabled & Boolean \\
+      \hline
+      role & String (One of: PLAYER, DESIGNER, DEVELOPER) Note: field is unused. \\
+      \hline
+      furthestLevel & JSON object (Per difficulty non-negative integer store)\\
+      \hline
+    \end{tabularx}
+    \caption{User settings fields}
+    \label{tab:settings_users}
+  \end{center}
+\end{table}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      playerMaxHealth & JSON object(Per difficulty integer store)\\
+      \hline
+      shopItemCount & JSON object(Per difficulty integer store)\\
+      \hline
+      enemyDamageMultiplier & JSON object(Per difficulty real store)\\
+      \hline
+      enemyHealthMultiplier & JSON object(Per difficulty real store) \\
+      \hline
+      startingLives & JSON object(Per difficulty integer store)\\
+      \hline
+      maxMagic & JSON object(Per difficulty integer store)\\
+      \hline
+      magicGenerationRate & JSON object(Per difficulty integer store) \\
+      \hline
+    \end{tabularx}
+    \caption{Design parameter fields}
+    \label{tab:settings_design_parameters}
+  \end{center}
+\end{table}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabularx}{\textwidth}{
+        | >{\centering\arraybackslash\hsize=0.4\hsize}X
+      | >{\centering\arraybackslash\hsize=0.6\hsize}X |}
+      \hline
+      \textbf{Field} & \textbf{Domain} \\
+      \hline
+      EASY & D \\
+      \hline
+      MEDIUM & D\\
+      \hline
+      HARD & D \\
+      \hline
+    \end{tabularx}
+    \caption{Per Difficulty Store (Of domain D)}
+    \label{tab:per_difficulty_store}
+  \end{center}
+\end{table}
+\subsection{Integrations}
+\subsubsection{Java application}
+The file is read once when a user is authenticated by \verb|wizardquest.settings.SettingsSingleton|, capturing the user settings and design parameters at that time. The file is written to by the class, when the user toggles telemetry or changes a design parameter and saves this change. 
+% TODO may add max level reached
+
+\section{Logins File}
+
+\subsection{Overview}
+The logins file stores a JSON object that holds each user's role. It is used by the Python application to obtain the authenticated user's role, and by the Java application for role assignment. The information is stored in \verb|telemetry/logins_file.json|.
+\subsection{Fields}
+Each user ID is a field. All fields have the domain of String(One of: player, designer, developer).
+
+\subsection{Integrations}
+
+\subsubsection{Java application}
+When authenticating a user the Java application makes a call to the python application, which then interacts with the file, as if it were authenticating a user. This call is made by \verb|wizardquest.auth.authenticator|. If a user is assigned a role by a developer, the Java application reads the file to find the user's ID, and if valid writes their new role. This is done by \verb|wizardquest.settings.SettingsSingleton| 
+
+\subsubsection{Python Application}
+When authenticating a user the Python application reads the file to find the given user ID, and on success reads their role. On failure, the Python application creates a new user with the ID provided by Google OAuth, who has the player role. This is all handled by \verb|telemetry.auth.auth|.
+
+\section{Authentication Log}
+\subsection{Overview}
+This log stores information related to authentication for both applications. It is only ever written to by the Python application, but this write call is also triggered when the Java application authenticates a user via the Python application. This information is stored in \verb|telemetry/auth/logs.txt|. 
+\subsection{Fields}
+Each event follows the syntax described below, where anything in <> varies from event to event.
+\begin{verbatim}
+  <timestamp>
+      [<Event Type>] <Description>
+\end{verbatim}
+
+Timestamp is in the format yyyy-mm-dd hh:mm:ss, starting with year, then month, day, hour, minute, and lastly second. 
+
+Event Type is either SIE for sign in event, or AE for authentication event.
+
+Lastly the description is one of the following:
+\begin{itemize}
+  \item Sign-in prompted.
+  \item Sign-in successful: user authenticated.
+  \item Existing user authenticated with role <Role>
+  \item Sign-in failed: no authorization code received.
+  \item Sign-in failed: state mismatch.
+  \item Sign-in failed: token exchange error (status = <Status Code>)
+\end{itemize}
+
+Role is their role (player, designer, or developer), and Status Code is the error code returned by Google OAuth if it fails. 
+\subsection{Integrations}
+\subsubsection{Java Application}
+The Java application doesn't directly interact with the log, but calls the Python application to do so during authentication. This call is made by \verb|auth.Authenticator|. 
+\subsubsection{Python Application}
+They Python application writes to the log during authentication using \verb|auth.auth_logger| which is called by |auth.auth|. It never reads from the log. 
+\end{document}

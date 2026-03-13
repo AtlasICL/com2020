@@ -27,7 +27,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean:
+                if averages[stage] > mean * 1.15:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -76,7 +76,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean:
+                if averages[stage] < mean * 0.85:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -116,7 +116,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean:
+                if averages[stage] < mean * 0.85:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -167,7 +167,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean:
+                if averages[stage] > mean * 1.15:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -218,7 +218,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean:
+                if averages[stage] < mean * 0.85:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -269,7 +269,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean:
+                if averages[stage] > mean * 1.15:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -308,7 +308,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean:
+                if averages[stage] < mean * 0.85:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
@@ -349,7 +349,7 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean:
+                if averages[stage] > mean * 1.15:
                     stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
