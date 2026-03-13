@@ -78,7 +78,9 @@ def open_browser(url: str) -> None:
 
 
 def b64url(data: bytes) -> str:
-    """Returns base 64 encoded url."""
+    """
+    Returns base 64 encoded url.
+    """
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
 
 
@@ -236,13 +238,10 @@ def google_login() -> tuple[str, str, Role]:
                     f"user {userinfo.get('name')} authenticated.")
     
     sub = userinfo.get("sub")
-    return sub, userinfo.get("name"), get_role(
-        "logins_file.json", 
-        userID=sub
-    )
+    return sub, userinfo.get("name"), get_role("logins_file.json", user_id=sub)
 
 
-def get_role(filename: str, userID: str) -> Role:
+def get_role(filename: str, user_id: str) -> Role:
     """
     This function returns the role of the given user. It does so by
     checking the user roles json file at the provided filepath.
@@ -251,17 +250,17 @@ def get_role(filename: str, userID: str) -> Role:
 
     :param filename: File path for the user roles json file.
     :type filename: str
-    :param userID: The user ID of the user.
-    :type userID: int
+    :param user_id: The user ID of the user.
+    :type user_id: int
     :return: Returns the role of the user.
     :rtype: Role
     """
     try:
         with open(filename, 'r') as f:
             player_roles = json.load(f)
-            this_user = player_roles.get(str(userID))
+            this_user = player_roles.get(str(user_id))
             if this_user is None:
-                player_roles[str(userID)] = Role.PLAYER.value
+                player_roles[str(user_id)] = Role.PLAYER.value
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
                 if LOGGING_ENABLED:
