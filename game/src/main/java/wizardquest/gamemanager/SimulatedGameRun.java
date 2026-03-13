@@ -1,22 +1,18 @@
 package wizardquest.gamemanager;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Random;
-
 import java.io.File;
-import wizardquest.abilities.AbilityEnum;
+
 import wizardquest.abilities.UpgradeEnum;
+
 import wizardquest.entity.PlayerInterface;
-import wizardquest.entity.Player;
 import wizardquest.entity.EntityInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityAIInterface;
+
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
-import wizardquest.telemetry.StartSessionEvent;
-import wizardquest.telemetry.EndSessionEvent;
+
 import wizardquest.telemetry.GainCoinEvent;
 import wizardquest.telemetry.KillEnemyEvent;
 import wizardquest.telemetry.BossEncounterStartEvent;
@@ -38,8 +34,7 @@ public class SimulatedGameRun {
     private int stage;
     private int deaths;
     private int coins;
-
-    private Instant currentTime;
+    private int sessionID;
 
     // Note: not static to allow the use of mock objects by instantiating a new
     // SimulatedGameRun.
@@ -47,7 +42,7 @@ public class SimulatedGameRun {
     private final TelemetryListenerInterface telemetryListener;
     private final SettingsInterface settings;
     private final EntityAIInterface ai;
-    private final Random random;
+    private final TimeManagerInterface time;
 
     /**
      * Constructs and executes a simulated run of the given difficulty, writing
@@ -59,36 +54,51 @@ public class SimulatedGameRun {
     public SimulatedGameRun(DifficultyEnum difficulty, String filepath) {
 
         // setup
-        this.currentTime = TimeManagerSingleton.getInstance().getCurrentTime();
-        this.random = new Random();
-        this.deaths = 0;
+
         this.gameManager = GameManagerSingleton.getInstance();
-        this.telemetryListener = TelemetryListenerSingleton.getInstance();
         this.settings = SettingsSingleton.getInstance();
         this.ai = EntityAISingleton.getInstance();
+
+        TimeManagerSingleton.useSimulationTime();
+        this.time = TimeManagerSingleton.getInstance();
+
+        this.telemetryListener = TelemetryListenerSingleton.getInstance();
         telemetryListener.setDestinationFile(new File(filepath));
 
+        // Run the game
         this.startSession(difficulty);
 
-        while (!this.gameOver()) {
+        while (Utils.isRunOver(this.gameManager.getCurrentRun())) {
             if (!this.simulateEncounter()) {
                 break;
             }
             this.simulateShop();
+            this.gameManager.advanceToNextLevel();
         }
 
         this.endSession();
 
     }
 
+    public int getStage() {
+        return this.stage;
+    }
+
+    public int getDeathCount() {
+        return this.deaths;
+    }
+
+    public int getSessionID() {
+        return this.sessionID;
+    }
+
+    public int getCoins() {
+        return this.coins;
+    }
+
     private void startSession(DifficultyEnum difficulty) {
 
         this.gameManager.startNewGame(difficulty);
-    }
-
-    private boolean gameOver() {
-        return (this.gameManager.getCurrentPlayer().getLives() <= 0)
-                || (this.gameManager.getCurrentRun().getStage() > 10);
     }
 
     /**
@@ -98,326 +108,182 @@ public class SimulatedGameRun {
      */
     private boolean simulateEncounter() {
         EncounterInterface currentEncounter = this.gameManager.pickEncounter();
+        GameRunInterface run = this.gameManager.getCurrentRun();
 
-        if (currentEncounter == null){
-            throw new IllegalStateException("Err: No encounters to draw from");
+        if (currentEncounter == null) {
+            throw new IllegalStateException("No encounters to draw from");
         }
 
-        while(true){
-            
-        }
-
-        if (Utils.isBossEncounter(this.gameManager.getCurrentRun().getStage()){
-            telemetryListener.onBossEncounterStart(
+        // Send event to game manager
+        if (Utils.isBossEncounter(run.getStage())) {
+            this.telemetryListener.onBossEncounterStart(
                     new BossEncounterStartEvent(
-                            settings.getUserID(), gameManager.getSessionID(),
-                            getTimestamp(),
-                            encounter.getType(),
-                            gameManager.getCurrentDifficulty(),
-                            run != null ? run.getStage() : 1));
+                            this.settings.getUserID(),
+                            this.gameManager.getSessionID(),
+                            this.time.getCurrentTime(),
+                            currentEncounter.getType(),
+                            this.gameManager.getCurrentDifficulty(),
+                            run.getStage()));
+        } else {
+            this.telemetryListener.onNormalEncounterStart(
+                    new NormalEncounterStartEvent(
+                            this.settings.getUserID(),
+                            this.gameManager.getSessionID(),
+                            this.time.getCurrentTime(),
+                            currentEncounter.getType(),
+                            this.gameManager.getCurrentDifficulty(),
+                            run.getStage()));
+        }
+
+        // Run the encounter until one team loses
+        while (true) {
+            if (this.attemptEncounter()) {
+                return true;
+            } else if (Utils.isRunFailed(run)) {
+                return false;
+            }
         }
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
-    private boolean simulateEncounter(EncounterInterface encounter, boolean isBossEncounter) {
+    /**
+     * Attempts an encounter, returning whether the player won or lost that attempt,
+     * and marking it complete if it is won.
+     * 
+     * @return true if the encounter is completed, false if it is failed.
+     */
+    private boolean attemptEncounter() {
+        EncounterInterface currentEncounter = this.gameManager.getCurrentEncounter();
+        GameRunInterface run = this.gameManager.getCurrentRun();
+        PlayerInterface player = this.gameManager.getCurrentPlayer();
 
-        GameRunInterface run = gameManager.getCurrentRun();
-
-        if (isBossEncounter) {
-            telemetryListener.onBossEncounterStart(
-                    new BossEncounterStartEvent(
-                            settings.getUserID(), gameManager.getSessionID(),
-                            getTimestamp(),
-                            encounter.getType(),
-                            gameManager.getCurrentDifficulty(),
-                            run != null ? run.getStage() : 1));
-        } else {
-            telemetryListener.onNormalEncounterStart(
-                    new NormalEncounterStartEvent(
-                            settings.getUserID(), gameManager.getSessionID(),
-                            getTimestamp(),
-                            encounter.getType(),
-                            gameManager.getCurrentDifficulty(),
-                            run != null ? run.getStage() : 1));
-        }
-
-        PlayerInterface player = gameManager.getCurrentPlayer();
-        if (player == null) {
-            gameManager.endGame();
-            return false;
-        }
         player.resetHealth();
         player.resetMagic();
-
         while (true) {
+            // Player turn
+            player.gainMagic(this.settings.getMagicRegenRate(this.gameManager.getCurrentDifficulty()));
 
-            player.gainMagic(Math.min(player.getMagicRegenRate(), (player.getMaxMagic() - player.getMagic())));
-
-            EntityInterface[] enemies = encounter.getEnemies();
-
-            if (player.getHealth() <= 0) {
-                if (isBossEncounter) {
-                    telemetryListener.onBossEncounterFail(
-                            new BossEncounterFailEvent(
-                                    settings.getUserID(), gameManager.getSessionID(),
-                                    getTimestamp(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
-                                    player.getLives()));
-                } else {
-                    telemetryListener.onNormalEncounterFail(
-                            new NormalEncounterFailEvent(
-                                    settings.getUserID(), gameManager.getSessionID(),
-                                    getTimestamp(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
-                                    player.getLives()));
-                }
-                gameManager.resetFailedEncounter();
-
-                if (player.getLives() == 0) {
-                    gameManager.endGame();
-                }
-
-                return false;
-            }
-
-            EntityInterface target = ai.pickTarget(enemies);
-            AbilityEnum ability = ai.pickAbility(player);
-
-            if (ability == null) {
-                gameManager.endGame();
-                return false;
-            }
-
-            if (target == null) {
-                gameManager.endGame();
-                return false;
-            }
-
+            EntityInterface target = this.ai.pickTarget(currentEncounter.getEnemies());
             try {
-                ability.execute(player, target);
+                this.ai.pickAbility(player).execute(player, target);
             } catch (LackingResourceException e) {
                 e.printStackTrace();
             }
 
-            if (target.getHealth() <= 0) {
-                telemetryListener.onKillEnemy(
-                        new KillEnemyEvent(
-                                settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
-                                encounter.getType(),
-                                gameManager.getCurrentDifficulty(),
-                                run != null ? run.getStage() : 1,
-                                target.getType()));
+            if (Utils.isDead(target)) {
+                this.telemetryListener.onKillEnemy(new KillEnemyEvent(
+                        this.settings.getUserID(),
+                        this.gameManager.getSessionID(),
+                        this.time.getCurrentTime(),
+                        currentEncounter.getType(),
+                        this.gameManager.getCurrentDifficulty(),
+                        run.getStage(),
+                        target.getType()));
             }
 
-            if (allEnemiesDead(enemies)) {
-                if (isBossEncounter) {
-                    telemetryListener.onBossEncounterComplete(
+            if (Utils.areAllEnemiesDead(currentEncounter)) {
+                this.telemetryListener.onGainCoin(new GainCoinEvent(
+                        this.settings.getUserID(),
+                        this.gameManager.getSessionID(),
+                        this.time.getCurrentTime(),
+                        currentEncounter.getType(),
+                        this.gameManager.getCurrentDifficulty(),
+                        run.getStage(),
+                        Utils.COINS_GAINED));
+
+                if (Utils.isBossEncounter(run.getStage())) {
+                    this.telemetryListener.onBossEncounterComplete(
                             new BossEncounterCompleteEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
+                                    this.settings.getUserID(),
+                                    this.gameManager.getSessionID(),
+                                    this.time.getCurrentTime(),
+                                    currentEncounter.getType(),
+                                    this.gameManager.getCurrentDifficulty(),
+                                    run.getStage(),
                                     player.getHealth()));
                 } else {
-                    telemetryListener.onNormalEncounterComplete(
+                    this.telemetryListener.onNormalEncounterComplete(
                             new NormalEncounterCompleteEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
-                                    encounter.getType(),
-                                    gameManager.getCurrentDifficulty(),
-                                    run != null ? run.getStage() : 1,
+                                    this.settings.getUserID(),
+                                    this.gameManager.getSessionID(),
+                                    this.time.getCurrentTime(),
+                                    currentEncounter.getType(),
+                                    this.gameManager.getCurrentDifficulty(),
+                                    run.getStage(),
                                     player.getHealth()));
                 }
-                gameManager.completeCurrentEncounter();
-                player.gainCoins(COINS_GAINED);
-                telemetryListener.onGainCoin(
-                        new GainCoinEvent(
-                                settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
-                                encounter.getType(),
-                                gameManager.getCurrentDifficulty(),
-                                run != null ? run.getStage() : 1,
-                                COINS_GAINED));
+
+                player.gainCoins(Utils.COINS_GAINED);
+                this.gameManager.completeCurrentEncounter();
                 return true;
             }
 
-            for (EntityInterface enemy : enemies) {
-                if (enemy == null)
-                    continue;
-                if (enemy.getHealth() <= 0)
-                    continue;
-
-                AbilityEnum a = ai.pickAbility(enemy);
+            // Enemy turn
+            for (EntityInterface enemy : currentEncounter.getEnemies()) {
                 try {
-                    a.execute(enemy, player);
+                    this.ai.pickAbility(enemy).execute(enemy, player);
                 } catch (LackingResourceException e) {
                     e.printStackTrace();
                 }
             }
-        }
 
+            if (Utils.isDead(player)) {
+                gameManager.resetFailedEncounter();
+
+                if (Utils.isBossEncounter(run.getStage())) {
+                    this.telemetryListener.onBossEncounterFail(
+                            new BossEncounterFailEvent(
+                                    this.settings.getUserID(),
+                                    this.gameManager.getSessionID(),
+                                    this.time.getCurrentTime(),
+                                    currentEncounter.getType(),
+                                    this.gameManager.getCurrentDifficulty(),
+                                    run.getStage(),
+                                    player.getLives()));
+                } else {
+                    this.telemetryListener.onNormalEncounterFail(
+                            new NormalEncounterFailEvent(
+                                    this.settings.getUserID(),
+                                    this.gameManager.getSessionID(),
+                                    this.time.getCurrentTime(),
+                                    currentEncounter.getType(),
+                                    this.gameManager.getCurrentDifficulty(),
+                                    run.getStage(),
+                                    player.getLives()));
+                }
+                return false;
+            }
+        }
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     private void simulateShop() {
         UpgradeEnum[] upgrades = gameManager.viewShop();
         UpgradeEnum u = ai.pickUpgrade(upgrades, gameManager.getCurrentPlayer().getCoins());
-        if (u != null) {
-            try {
-                gameManager.purchaseUpgrade(u);
-                telemetryListener.onBuyUpgrade(
-                        new BuyUpgradeEvent(
-                                settings.getUserID(),
-                                gameManager.getSessionID(),
-                                getTimestamp(),
-                                EncounterEnum.GOBLIN_ENCOUNTER,
-                                gameManager.getCurrentDifficulty(),
-                                1,
-                                u,
-                                u.getPrice()));
-            } catch (LackingResourceException e) {
-                e.printStackTrace();
-            }
+        if (u == null) {
+            return;
+        }
+        try {
+            gameManager.purchaseUpgrade(u);
+            telemetryListener.onBuyUpgrade(
+                    new BuyUpgradeEvent(
+                            this.settings.getUserID(),
+                            this.gameManager.getSessionID(),
+                            this.time.getCurrentTime(),
+                            this.gameManager.getCurrentEncounter().getType(),
+                            this.gameManager.getCurrentDifficulty(),
+                            this.gameManager.getCurrentRun().getStage(),
+                            u,
+                            u.getPrice()));
+        } catch (LackingResourceException e) {
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public EncounterInterface pickEncounter() throws IllegalStateException {
-        return switch (this.currentStage) {
-            case 1, 2 -> pickEncounterFrom(this.phase1NormalEncounters);
-            case 3 -> this.phase1Boss;
-            case 4, 5 -> pickEncounterFrom(this.phase2NormalEncounters);
-            case 6 -> this.phase2Boss;
-            case 7, 8 -> pickEncounterFrom(this.phase3NormalEncounters);
-            case 9 -> this.phase3Boss;
-            case 10 -> this.finalBoss;
-            default -> null;
-        };
-    }
-
-    private EncounterInterface pickEncounterFrom(EncounterInterface[] encounters) throws IllegalStateException {
-        shuffleArray(encounters);
-        for (EncounterInterface encounter : encounters) {
-            if (!encounter.isComplete()) {
-                return encounter;
-            }
-        }
-        throw new IllegalStateException("Out of Encounters for stage: " + this.currentStage);
-    }
-
-    @Override
-    public UpgradeEnum[] viewShop() {
-
-        shuffleArray(this.shopUpgrades);
-
-        SettingsInterface settings = SettingsSingleton.getInstance();
-        int shopSize = settings.getShopItemCount(this.difficulty);
-        UpgradeEnum[] shop = new UpgradeEnum[shopSize];
-
-        int i = 0;
-
-        for (UpgradeEnum u : shopUpgrades) {
-            if (u != null) {
-                shop[i] = u;
-                i++;
-
-                if (i == shopSize) {
-                    break;
-                }
-            }
-        }
-        return shop;
-    }
-
-    @Override
-    public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
-
-        if (upgrade.getPrice() > player.getCoins()) {
-            int difference = upgrade.getPrice() - player.getCoins();
-            throw new LackingResourceException(
-                    "Not enough coins to purchase this upgrade. " + difference + " more coins needed.");
-
-        } else {
-            removeUpgradeFromPool(upgrade);
-            player.loseCoins(upgrade.getPrice());
-            player = upgrade.applyUpgrade(player);
-        }
-    }
-
-    @Override
-    public PlayerInterface getPlayer() {
-        return player;
-    }
-
-    @Override
-    public void nextStage() {
-        currentStage++;
-    }
-
-    @Override
-    public int getStage() {
-        return currentStage;
-    }
-
-    @Override
-    public LocalDateTime getRunStartTime() {
-        return startTime;
-    }
-
-    @Override
-    public int getDeathCount() {
-        return deathCount;
-    }
-
-    @Override
-    public void incrementDeathCount() {
-        player.loseLives(1);
-        deathCount++;
-        player.resetHealth();
-    }
-
-    @Override
-    public DifficultyEnum getDifficulty() {
-        return difficulty;
-    }
-
-    @Override
-    public int getSessionID() {
-        return sessionID;
-    }
-
-    private Instant getTimestamp() {
-        int randTime = random.nextInt(10) + 1; // does not take situation into account, currently.
-        simTime = simTime.plusSeconds(randTime);
-        return simTime;
-    }
-
-    private void removeUpgradeFromPool(UpgradeEnum upgrade) {
-
-        for (int i = 0; i < shopUpgrades.length; i++) {
-
-            if (shopUpgrades[i] == upgrade) {
-                shopUpgrades[i] = null;
-            }
-        }
-    }
-
-    private <T> void shuffleArray(T[] arr) {
-        for (int i = arr.length - 1; i > 0; i--) {
-            int j = random.nextInt(i + 1);
-            T temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-    }
-
-    private void endSimulation(GameRunInterface lastRun, PlayerInterface lastPlayer) {
-        telemetryListener.onEndSession(
-                new EndSessionEvent(
-                        settings.getUserID(),
-                        gameManager.getSessionID(),
-                        getTimestamp()));
+    private void endSession() {
+        this.deaths = this.gameManager.getCurrentRun().getDeathCount();
+        this.coins = this.gameManager.getCurrentPlayer().getCoins();
+        this.sessionID = this.gameManager.getSessionID();
+        this.stage = this.gameManager.getCurrentRun().getStage();
+        this.gameManager.endGame();
+        TimeManagerSingleton.useActualTime();
     }
 }

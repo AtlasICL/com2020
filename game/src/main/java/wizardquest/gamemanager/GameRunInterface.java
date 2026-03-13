@@ -1,7 +1,5 @@
 package wizardquest.gamemanager;
 
-import java.time.LocalDateTime;
-
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
@@ -64,14 +62,6 @@ public interface GameRunInterface {
      * @return the current stage number (between 1 and 10 inclusive).
      */
     public int getStage();
-
-    /**
-     * GIves the time when this game run instance was created (and thus the run
-     * started).
-     * 
-     * @return the LocalDateTime of when the run started.
-     */
-    public LocalDateTime getRunStartTime();
 
     /**
      * Returns the number of deaths the player has had in this run.

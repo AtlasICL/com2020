@@ -1,15 +1,16 @@
 package wizardquest.gamemanager;
 
-import java.time.LocalDateTime;
-import java.util.Random;
-
 import wizardquest.abilities.UpgradeEnum;
+
 import wizardquest.entity.Player;
 import wizardquest.entity.PlayerInterface;
+
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
+
 /**
- * GameRun - single run of game, containing all information about the current state of the run.
+ * GameRun - single run of game, containing all information about the current
+ * state of the run.
  */
 public class GameRun implements GameRunInterface {
     // Drawn from for stages 1 and 2.
@@ -40,8 +41,6 @@ public class GameRun implements GameRunInterface {
     private PlayerInterface player;
     private int currentStage;
     private final DifficultyEnum difficulty;
-    private final LocalDateTime startTime;
-    private final Random random;
     private int deathCount;
     private final int sessionID;
 
@@ -91,8 +90,6 @@ public class GameRun implements GameRunInterface {
         this.player = new Player(difficulty);
         this.currentStage = 1;
         this.difficulty = difficulty;
-        this.startTime = LocalDateTime.now();
-        this.random = new Random();
         this.deathCount = 0;
         this.sessionID = sessionID;
     }
@@ -119,7 +116,7 @@ public class GameRun implements GameRunInterface {
     @Override
     public UpgradeEnum[] viewShop() {
 
-        shuffleArray(this.shopUpgrades);
+        Utils.shuffleArray(this.shopUpgrades);
         int totalUpgradesInShop = SettingsSingleton.getInstance().getShopItemCount(this.difficulty);
         UpgradeEnum[] shop = new UpgradeEnum[totalUpgradesInShop];
         int i = 0;
@@ -172,11 +169,6 @@ public class GameRun implements GameRunInterface {
     }
 
     @Override
-    public LocalDateTime getRunStartTime() {
-        return startTime;
-    }
-
-    @Override
     public int getDeathCount() {
         return this.deathCount;
     }
@@ -207,16 +199,6 @@ public class GameRun implements GameRunInterface {
         }
     }
 
-    // Fisher-Yates shuffling algorithm used to randomise a given array.
-    private <T> void shuffleArray(T[] arr) {
-        for (int i = arr.length - 1; i > 0; i--) {
-            int j = this.random.nextInt(i + 1);
-            T temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-    }
-
     /**
      * Picks a random encounter (that is not yet completed) from the given array.
      * 
@@ -225,7 +207,7 @@ public class GameRun implements GameRunInterface {
      * @throws IllegalStateException if all encounters in the array are complete.
      */
     private EncounterInterface pickEncounterFrom(EncounterInterface[] encounters) throws IllegalStateException {
-        shuffleArray(encounters);
+        Utils.shuffleArray(encounters);
         for (EncounterInterface encounter : encounters) {
             if (!encounter.isComplete()) {
                 return encounter;
