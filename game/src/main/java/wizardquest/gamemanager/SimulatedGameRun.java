@@ -1,7 +1,9 @@
 package wizardquest.gamemanager;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Random;
+
 import java.io.File;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.UpgradeEnum;
@@ -27,129 +29,93 @@ import wizardquest.telemetry.NormalEncounterFailEvent;
 import wizardquest.telemetry.TelemetryListenerSingleton;
 import wizardquest.telemetry.TelemetryListenerInterface;
 
-public class SimulatedGameRun implements GameRunInterface {
+/**
+ * Simulates a game run, runs a simulated game run upon construction, then
+ * stores
+ * the results of the run, which can be accessed via several getter methods.
+ */
+public class SimulatedGameRun {
+    private int stage;
+    private int deaths;
+    private int coins;
 
-    private static final int COINS_GAINED = 10;
+    private Instant currentTime;
 
-    private final EncounterInterface[] phase1NormalEncounters;
-    private final EncounterInterface[] phase2NormalEncounters;
-    private final EncounterInterface[] phase3NormalEncounters;
-    private final EncounterInterface phase1Boss;
-    private final EncounterInterface phase2Boss;
-    private final EncounterInterface phase3Boss;
-    private final EncounterInterface finalBoss;
-    private final UpgradeEnum[] shopUpgrades;
-    private PlayerInterface player;
-    private int currentStage;
-    private final DifficultyEnum difficulty;
-    private final LocalDateTime startTime;
-    private Instant simTime;
-    private final Random random;
-    private int deathCount;
-    private final int sessionID;
+    // Note: not static to allow the use of mock objects by instantiating a new
+    // SimulatedGameRun.
     private final GameManagerInterface gameManager;
     private final TelemetryListenerInterface telemetryListener;
     private final SettingsInterface settings;
     private final EntityAIInterface ai;
+    private final Random random;
 
+    /**
+     * Constructs and executes a simulated run of the given difficulty, writing
+     * simulation events to the given filepath.
+     * 
+     * @param difficulty the difficulty of the simulated run.
+     * @param filepath   the filepath to write events to.
+     */
+    public SimulatedGameRun(DifficultyEnum difficulty, String filepath) {
 
-    public SimulatedGameRun(DifficultyEnum difficulty, int sessionID, String filepath) {
-        this.difficulty = difficulty;
-        this.sessionID = sessionID;
-        this.currentStage = 1;
-        this.startTime = LocalDateTime.now();
-        this.simTime = Instant.now();
+        // setup
+        this.currentTime = TimeManagerSingleton.getInstance().getCurrentTime();
         this.random = new Random();
-        this.deathCount = 0;
-        this.player = new Player(difficulty);
+        this.deaths = 0;
         this.gameManager = GameManagerSingleton.getInstance();
         this.telemetryListener = TelemetryListenerSingleton.getInstance();
         this.settings = SettingsSingleton.getInstance();
         this.ai = EntityAISingleton.getInstance();
-
-        phase1NormalEncounters = new EncounterInterface[] {
-        new Encounter(EncounterEnum.GOBLIN_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.FISHMAN_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.PYROMANCER_ENCOUNTER, difficulty)
-        };
-        phase2NormalEncounters = new EncounterInterface[] {
-        new Encounter(EncounterEnum.GOBLIN_DUO_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.GOBLIN_FISHMAN_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.ARMOURED_GOBLIN_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.PYROMANCER_FISHMAN_ENCOUNTER, difficulty)
-        };
-        phase3NormalEncounters = new EncounterInterface[] {
-        new Encounter(EncounterEnum.ARMOURED_GOBLIN_PYROMANCER_ENCOUNTER, difficulty),
-        new Encounter(EncounterEnum.GOBLIN_FISHMAN_PYROMANCER_ENCOUNTER, difficulty)
-        };
-        phase1Boss = new Encounter(EncounterEnum.EVIL_WIZARD_ENCOUNTER, difficulty);
-        phase2Boss = new Encounter(EncounterEnum.GHOST_ENCOUNTER, difficulty);
-        phase3Boss = new Encounter(EncounterEnum.BLACK_KNIGHT_ENCOUNTER, difficulty);
-        finalBoss = new Encounter(EncounterEnum.DRAGON_ENCOUNTER, difficulty);
-        this.shopUpgrades = new UpgradeEnum[] {
-            UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE,
-            UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
-            UpgradeEnum.WATER_DAMAGE_RESISTANCE,
-            UpgradeEnum.THUNDER_DAMAGE_RESISTANCE,
-            UpgradeEnum.IMPROVED_PHYSICAL_DAMAGE,
-            UpgradeEnum.IMPROVED_FIRE_DAMAGE,
-            UpgradeEnum.IMPROVED_WATER_DAMAGE,
-            UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
-            UpgradeEnum.SLASH_UNLOCK,
-            UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
-            UpgradeEnum.WATER_JET_UNLOCK,
-            UpgradeEnum.FIRE_BALL_UNLOCK,
-            UpgradeEnum.THUNDER_STORM_UNLOCK
-        };
         telemetryListener.setDestinationFile(new File(filepath));
 
-        DifficultyEnum d = getDifficulty();
-        
-        telemetryListener.onStartSession(
-                new StartSessionEvent(
-                        settings.getUserID(), 
-                        gameManager.getSessionID(),
-                        getTimestamp(),
-                        d));
-        
-        gameManager.startNewGame(d);
+        this.startSession(difficulty);
 
-        GameRunInterface lastRun = null;
-        PlayerInterface lastPlayer = null;
-
-        EncounterInterface currentEncounter = gameManager.pickEncounter();
-
-        while (gameManager.isGameRunning()) {
-
-            try {
-                lastRun = gameManager.getCurrentRun();
-            } catch (Exception ignored) {}
-
-            try {
-                lastPlayer = gameManager.getCurrentPlayer();
-            } catch (Exception ignored) {}
-
-            boolean encounterWon = simulateEncounter(currentEncounter, isBossEncounterEncounter(currentEncounter.getType()));
-
-            if (!encounterWon) {
-                continue;
+        while (!this.gameOver()) {
+            if (!this.simulateEncounter()) {
+                break;
             }
-
-            GameRunInterface run = gameManager.getCurrentRun();
-
-            if (run != null && run.getStage() > 10) {
-                endSimulation(lastRun, lastPlayer);
-                return;
-            }
-
-            simulateShop();
-
-            gameManager.advanceToNextLevel();
-
-            currentEncounter = gameManager.pickEncounter();
+            this.simulateShop();
         }
 
-        endSimulation(lastRun, lastPlayer);
+        this.endSession();
+
+    }
+
+    private void startSession(DifficultyEnum difficulty) {
+
+        this.gameManager.startNewGame(difficulty);
+    }
+
+    private boolean gameOver() {
+        return (this.gameManager.getCurrentPlayer().getLives() <= 0)
+                || (this.gameManager.getCurrentRun().getStage() > 10);
+    }
+
+    /**
+     * Simulates an encounter until it is complete or the player dies.
+     * 
+     * @return true if the encounter is completed, false if the player dies.
+     */
+    private boolean simulateEncounter() {
+        EncounterInterface currentEncounter = this.gameManager.pickEncounter();
+
+        if (currentEncounter == null){
+            throw new IllegalStateException("Err: No encounters to draw from");
+        }
+
+        while(true){
+            
+        }
+
+        if (Utils.isBossEncounter(this.gameManager.getCurrentRun().getStage()){
+            telemetryListener.onBossEncounterStart(
+                    new BossEncounterStartEvent(
+                            settings.getUserID(), gameManager.getSessionID(),
+                            getTimestamp(),
+                            encounter.getType(),
+                            gameManager.getCurrentDifficulty(),
+                            run != null ? run.getStage() : 1));
+        }
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
@@ -310,12 +276,11 @@ public class SimulatedGameRun implements GameRunInterface {
                                 gameManager.getCurrentDifficulty(),
                                 1,
                                 u,
-                                u.getPrice())
-                        );
+                                u.getPrice()));
             } catch (LackingResourceException e) {
                 e.printStackTrace();
             }
-    }
+        }
     }
 
     @Override
@@ -333,20 +298,13 @@ public class SimulatedGameRun implements GameRunInterface {
     }
 
     private EncounterInterface pickEncounterFrom(EncounterInterface[] encounters) throws IllegalStateException {
-    shuffleArray(encounters);
-    for (EncounterInterface encounter : encounters) {
-        if (!encounter.isComplete()) {
-            return encounter;
+        shuffleArray(encounters);
+        for (EncounterInterface encounter : encounters) {
+            if (!encounter.isComplete()) {
+                return encounter;
+            }
         }
-    }
-    throw new IllegalStateException("Out of Encounters for stage: " + this.currentStage);
-}
-
-    private boolean isBossEncounterEncounter(EncounterEnum encounterType) {
-        return encounterType == EncounterEnum.EVIL_WIZARD_ENCOUNTER ||
-               encounterType == EncounterEnum.GHOST_ENCOUNTER ||
-               encounterType == EncounterEnum.BLACK_KNIGHT_ENCOUNTER ||
-               encounterType == EncounterEnum.DRAGON_ENCOUNTER;
+        throw new IllegalStateException("Out of Encounters for stage: " + this.currentStage);
     }
 
     @Override
@@ -373,13 +331,13 @@ public class SimulatedGameRun implements GameRunInterface {
         return shop;
     }
 
-@Override
+    @Override
     public void purchaseUpgrade(UpgradeEnum upgrade) throws LackingResourceException {
 
         if (upgrade.getPrice() > player.getCoins()) {
             int difference = upgrade.getPrice() - player.getCoins();
             throw new LackingResourceException(
-                "Not enough coins to purchase this upgrade. " + difference + " more coins needed.");
+                    "Not enough coins to purchase this upgrade. " + difference + " more coins needed.");
 
         } else {
             removeUpgradeFromPool(upgrade);
@@ -436,7 +394,7 @@ public class SimulatedGameRun implements GameRunInterface {
         return simTime;
     }
 
-        private void removeUpgradeFromPool(UpgradeEnum upgrade) {
+    private void removeUpgradeFromPool(UpgradeEnum upgrade) {
 
         for (int i = 0; i < shopUpgrades.length; i++) {
 

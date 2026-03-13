@@ -28,6 +28,7 @@ import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
 import wizardquest.gamemanager.LackingResourceException;
+import wizardquest.gamemanager.Utils;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
@@ -43,7 +44,6 @@ public class GameRunPage extends Application {
     private final EntityAIInterface ai = EntityAISingleton.getInstance();
     private final TelemetryListenerInterface telemetryListener = TelemetryListenerSingleton.getInstance();
 
-    private static final int COINS_GAINED = 25;
 
     private VBox root;
     private final Label log = new Label("");
@@ -400,15 +400,15 @@ public class GameRunPage extends Application {
         if (allDead(enemies)) {
             gameManager.completeCurrentEncounter();
             emitEncounterCompleteEvent(player.getHealth());
-            player.gainCoins(COINS_GAINED);
+            player.gainCoins(Utils.COINS_GAINED);
             GameRunInterface coinRun = gameManager.getCurrentRun();
             if (coinRun != null) {
                 telemetryListener.onGainCoin(new GainCoinEvent(
                         settings.getUserID(), coinRun.getSessionID(), Instant.now(),
                         currentEncounter.getType(), coinRun.getDifficulty(),
-                        coinRun.getStage(), COINS_GAINED));
+                        coinRun.getStage(), Utils.COINS_GAINED));
             }
-            msg.append("Encounter won! +").append(COINS_GAINED).append(" coins.\n");
+            msg.append("Encounter won! +").append(Utils.COINS_GAINED).append(" coins.\n");
             log.setText(msg.toString());
             onEncounterWon();
             return;
