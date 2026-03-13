@@ -60,8 +60,7 @@ def validate_env_vars() -> None:
     if not CLIENT_ID:
         raise KeyError("OIDC_CLIENT_ID environment variable is not set.")
     if not CLIENT_SECRET:
-        raise KeyError("OIDC_SECRET environment variable is not set.")
-    return
+        raise KeyError("OIDC_CLIENT_SECRET environment variable is not set.")
 
 
 def get_oauth_config():
