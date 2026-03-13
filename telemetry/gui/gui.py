@@ -18,6 +18,7 @@ from tkinter import ttk, messagebox
 import seaborn as sns
 from pathlib import Path
 
+from core.events import SettingName
 from core.logic import EventLogicEngine
 from core.suggestions import SuggestionGenerator
 from gui.plotting import PlotTab
@@ -78,6 +79,10 @@ class TelemetryAppGUI(tk.Tk):
             "TLabel",
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
+        style.configure(
+            "Treeview",
+            rowheight=int(GUI_SETTINGS.FONT_SIZE * 2.5)
+        )
 
         # Set a minimum size for the window - this prevents users from
         # making the window much too small.
@@ -122,7 +127,7 @@ class TelemetryAppGUI(tk.Tk):
         self.sign_in_button = ttk.Button(
             self.tab_home,
             text="Sign in with Google",
-            command=self.handle_sign_in
+            command=self.on_toggle_google_sso
         )
         self.sign_in_button.pack(pady=(10, 20))
 
@@ -143,10 +148,10 @@ class TelemetryAppGUI(tk.Tk):
         self.decision_log_tree.heading("setting", text="Setting")
         self.decision_log_tree.heading("value", text="Value")
         self.decision_log_tree.heading("justification", text="Justification")
-        self.decision_log_tree.column("timestamp", width=200)
+        self.decision_log_tree.column("timestamp", width=120)
         self.decision_log_tree.column("setting", width=200)
-        self.decision_log_tree.column("value", width=100)
-        self.decision_log_tree.column("value", width=200)
+        self.decision_log_tree.column("value", width=10)
+        self.decision_log_tree.column("justification", width=300)
         scrollbar = ttk.Scrollbar(
             self.tab_decision_log,
             orient="vertical",
@@ -434,6 +439,19 @@ class TelemetryAppGUI(tk.Tk):
             self.time_checkbox.state(["!disabled"])
         self.refresh_all()
 
+    def on_toggle_google_sso(self) -> None:
+        self.sign_in_button.state(["disabled"])
+        self.browser_label = ttk.Label(
+            self.tab_home,
+            text="Opening browser...",
+            justify="center"
+        )
+        self.browser_label.pack(pady=(30, 15))
+        self.update()
+        self.handle_sign_in()
+        self.browser_label.destroy()
+        self.sign_in_button.state(["!disabled"])
+
     def refresh_all(self) -> None:
         """
         Refreshes data from events source file.
@@ -641,6 +659,7 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the suggestions generated.
         """
+        self.logic_engine.categorise_events(self.file_name)
         suggestions = [
             self.suggestion_generator.generate_low_health_suggestion(),
             self.suggestion_generator.generate_high_health_suggestion(),
@@ -656,6 +675,29 @@ class TelemetryAppGUI(tk.Tk):
         self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
 
 
+    def _settingToSentenceCase(self, setting_name: SettingName) -> str:
+        """
+        Helper function which returns a sentence case mapping of 
+        settings names.
+        """
+        mapping: dict[SettingName, str] = {
+            SettingName.TELEMETRY_ENABLED: "Telemetry enabled",
+            SettingName.PLAYER_MAX_HEALTH: "Player max health",
+            SettingName.ENEMY_DAMAGE_MULTIPLIER: "Enemy damage multiplier",
+            SettingName.ENEMY_MAX_HEALTH_MULTIPLIER: "Enemy max health",
+            SettingName.STARTING_LIVES: "Lives",
+            SettingName.MAX_MAGIC: "Magic cap",
+            SettingName.MAGIC_REGEN_RATE: "Magic generation rate",
+            SettingName.SHOP_ITEM_COUNT: "Shop item count"
+        }
+        try:
+            return mapping[setting_name]
+        except KeyError as e:
+            raise RuntimeError(
+                f"A setting name: {setting_name} is missing a mapping. {e}"
+            )
+        
+
     def refresh_decision_log(self) -> None:
         """
         Refreshes the decision log tab with the latest settings
@@ -669,7 +711,7 @@ class TelemetryAppGUI(tk.Tk):
         for event in self.logic_engine.get_settings_change_events():
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
-                event.setting,
+                self._settingToSentenceCase(event.setting),
                 event.value,
                 event.justification
             ))

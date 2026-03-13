@@ -225,7 +225,7 @@ class NormalEncounterStart:
     sessionID: int
     timestamp: datetime
     encounter_name: EncounterName
-    difficulty: str
+    difficulty: Difficulty
     stage_number: int
 
     
