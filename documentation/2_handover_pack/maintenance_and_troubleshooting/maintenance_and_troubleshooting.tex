@@ -319,11 +319,18 @@ This defines the interface for a game run, containing methods for handling sessi
 \paragraph{GameRun}
 This class implements GameRunterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
 
+\paragraph{SimulatedGameRun}
+This class completes a simulated run of a given difficulty upon construction, and then stores the information about the simulated run for later use by other components. 
+
 \paragraph{TimeManagerInterface}
-This defines the interface for the TimeManger, used for handling timestamping. 
+This defines the interface for the TimeManger, used for handling timestamping. It also contains methods for switching between real and simulated time passing, which is used by the simulation.
 
 \paragraph{TimeManagerSingleton}
 This singleton provides singleton access to the TimeManager for event timestamping. This is done to allow testability, as reflection can be used to switch out the TimeManger for a mock object. 
+
+
+\paragraph{Utils}
+This class contains several static methods and constants for general use, such as determining if a run or enemy is dead, and how many coins should be obtained upon run completions. 
 
 \subsubsection{settings}
 

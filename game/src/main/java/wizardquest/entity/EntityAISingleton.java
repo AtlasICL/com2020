@@ -1,9 +1,9 @@
 package wizardquest.entity;
 
-import java.util.Random;
-
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.abilities.UpgradeEnum;
+
+import wizardquest.gamemanager.Utils;
 
 /**
  * Provides global access to the random entity AI.
@@ -28,19 +28,13 @@ public class EntityAISingleton {
      * relevant method is used.
      */
     private static class RandomEntityAI implements EntityAIInterface {
-        private final Random random;
-
-        public RandomEntityAI() {
-            this.random = new Random();
-        }
-
         @Override
         public EntityInterface pickTarget(EntityInterface[] enemies) {
             if (enemies == null || enemies.length == 0)
                 return null;
-            shuffleArray(enemies);
+            Utils.shuffleArray(enemies);
             for (EntityInterface e : enemies) {
-                if (e.getHealth() > 0) {
+                if (!Utils.isDead(e)) {
                     return e;
                 }
             }
@@ -52,7 +46,7 @@ public class EntityAISingleton {
             final AbilityEnum[] abilities = self.getAbilities().toArray(AbilityEnum[]::new);
             if (abilities == null || abilities.length == 0)
                 return null;
-            shuffleArray(abilities);
+            Utils.shuffleArray(abilities);
 
             // If player check that they have enough magic to use the ability.
             if (self instanceof PlayerInterface player) {
@@ -70,23 +64,13 @@ public class EntityAISingleton {
         public UpgradeEnum pickUpgrade(UpgradeEnum[] upgrades, int coins) {
             if (upgrades == null || upgrades.length == 0)
                 return null;
-            shuffleArray(upgrades);
+            Utils.shuffleArray(upgrades);
             for (UpgradeEnum u : upgrades) {
                 if (u.getPrice() <= coins) {
                     return u;
                 }
             }
             return null;
-        }
-
-        // Fisher-Yates shuffling algorithm used to randomise a given array.
-        private <T> void shuffleArray(T[] arr) {
-            for (int i = arr.length - 1; i > 0; i--) {
-                int j = this.random.nextInt(i + 1);
-                T temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
         }
     }
 }
