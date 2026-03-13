@@ -1,6 +1,4 @@
 package wizardquest.gamemanager;
-
-import java.security.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -30,6 +28,8 @@ import wizardquest.telemetry.TelemetryListenerSingleton;
 import wizardquest.telemetry.TelemetryListenerInterface;
 
 public class SimulatedGameRun implements GameRunInterface {
+
+    private static final int COINS_GAINED = 10;
 
     private final EncounterInterface[] phase1NormalEncounters;
     private final EncounterInterface[] phase2NormalEncounters;
@@ -308,16 +308,16 @@ public class SimulatedGameRun implements GameRunInterface {
                                 settings.getUserID(),
                                 gameManager.getSessionID(),
                                 TimeManagerSingleton.getInstance().getCurrentTime(),
-                                gameManager.getCurrentEncounter() != null ? gameManager.getCurrentEncounter().getType()
-                                        : null,
+                                EncounterEnum.GOBLIN_ENCOUNTER,
                                 gameManager.getCurrentDifficulty(),
-                                gameManager.getCurrentRun() != null ? gameManager.getCurrentRun().getStage() : 1,
+                                1,
                                 u,
-                                u.getPrice()));
+                                u.getPrice())
+                        );
             } catch (LackingResourceException e) {
                 e.printStackTrace();
             }
-        }
+    }
     }
 
     @Override
