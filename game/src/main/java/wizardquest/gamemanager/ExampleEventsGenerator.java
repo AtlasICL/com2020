@@ -2,6 +2,7 @@ package wizardquest.gamemanager;
 
 import java.util.ArrayList;
 
+import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.RoleEnum;
 import wizardquest.settings.DifficultyEnum;
@@ -20,7 +21,7 @@ public class ExampleEventsGenerator {
         settings = SettingsSingleton.getInstance();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         ExampleEventsGenerator generator = new ExampleEventsGenerator();
         AuthenticationResult result;
 
@@ -40,19 +41,16 @@ public class ExampleEventsGenerator {
             // User's first session on easy difficulty
             SimulatedGameRun easyRun = new SimulatedGameRun(
                 DifficultyEnum.EASY,
-                generator.sessionIDs.get(i),
                 "../event_logs/example_events.json");
 
             // User's second session on medium difficulty
             SimulatedGameRun mediumRun = new SimulatedGameRun(
                 DifficultyEnum.MEDIUM,
-                generator.sessionIDs.get(i + generator.userIDs.size()),
                 "../event_logs/example_events.json");
 
             // User's third session on hard difficulty
             SimulatedGameRun hardRun = new SimulatedGameRun(
                 DifficultyEnum.HARD,
-                generator.sessionIDs.get(i + (generator.userIDs.size() * 2)),
                 "../event_logs/example_events.json");
         }
     }
