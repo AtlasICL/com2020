@@ -74,7 +74,6 @@ def get_oauth_config():
 def open_browser(url: str) -> None:
     """
     Helper function to open the web browser.
-    TODO: Compatible with different OSs?
     """
     webbrowser.open(url)
 
