@@ -50,7 +50,6 @@ public class SimulatedGameRun implements GameRunInterface {
     private final GameManagerInterface gameManager;
     private final TelemetryListenerInterface telemetryListener;
     private final SettingsInterface settings;
-    private final TimeManagerInterface timeManager;
     private final EntityAIInterface ai;
 
 
@@ -66,7 +65,6 @@ public class SimulatedGameRun implements GameRunInterface {
         this.gameManager = GameManagerSingleton.getInstance();
         this.telemetryListener = TelemetryListenerSingleton.getInstance();
         this.settings = SettingsSingleton.getInstance();
-        this.timeManager = TimeManagerSingleton.getInstance();
         this.ai = EntityAISingleton.getInstance();
 
         phase1NormalEncounters = new EncounterInterface[] {
@@ -111,7 +109,7 @@ public class SimulatedGameRun implements GameRunInterface {
                 new StartSessionEvent(
                         settings.getUserID(), 
                         gameManager.getSessionID(),
-                        TimeManagerSingleton.getInstance().getCurrentTime(),
+                        getTimestamp(),
                         d));
         
         gameManager.startNewGame(d);
@@ -163,7 +161,7 @@ public class SimulatedGameRun implements GameRunInterface {
             telemetryListener.onBossEncounterStart(
                     new BossEncounterStartEvent(
                             settings.getUserID(), gameManager.getSessionID(),
-                            TimeManagerSingleton.getInstance().getCurrentTime(),
+                            getTimestamp(),
                             encounter.getType(),
                             gameManager.getCurrentDifficulty(),
                             run != null ? run.getStage() : 1));
@@ -171,7 +169,7 @@ public class SimulatedGameRun implements GameRunInterface {
             telemetryListener.onNormalEncounterStart(
                     new NormalEncounterStartEvent(
                             settings.getUserID(), gameManager.getSessionID(),
-                            TimeManagerSingleton.getInstance().getCurrentTime(),
+                            getTimestamp(),
                             encounter.getType(),
                             gameManager.getCurrentDifficulty(),
                             run != null ? run.getStage() : 1));
@@ -196,7 +194,7 @@ public class SimulatedGameRun implements GameRunInterface {
                     telemetryListener.onBossEncounterFail(
                             new BossEncounterFailEvent(
                                     settings.getUserID(), gameManager.getSessionID(),
-                                    timeManager.getCurrentTime(),
+                                    getTimestamp(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
@@ -205,7 +203,7 @@ public class SimulatedGameRun implements GameRunInterface {
                     telemetryListener.onNormalEncounterFail(
                             new NormalEncounterFailEvent(
                                     settings.getUserID(), gameManager.getSessionID(),
-                                    timeManager.getCurrentTime(),
+                                    getTimestamp(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
@@ -242,7 +240,7 @@ public class SimulatedGameRun implements GameRunInterface {
             if (target.getHealth() <= 0) {
                 telemetryListener.onKillEnemy(
                         new KillEnemyEvent(
-                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
                                 encounter.getType(),
                                 gameManager.getCurrentDifficulty(),
                                 run != null ? run.getStage() : 1,
@@ -253,7 +251,7 @@ public class SimulatedGameRun implements GameRunInterface {
                 if (isBossEncounter) {
                     telemetryListener.onBossEncounterComplete(
                             new BossEncounterCompleteEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                    settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
@@ -261,7 +259,7 @@ public class SimulatedGameRun implements GameRunInterface {
                 } else {
                     telemetryListener.onNormalEncounterComplete(
                             new NormalEncounterCompleteEvent(
-                                    settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                    settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
                                     encounter.getType(),
                                     gameManager.getCurrentDifficulty(),
                                     run != null ? run.getStage() : 1,
@@ -271,7 +269,7 @@ public class SimulatedGameRun implements GameRunInterface {
                 player.gainCoins(COINS_GAINED);
                 telemetryListener.onGainCoin(
                         new GainCoinEvent(
-                                settings.getUserID(), gameManager.getSessionID(), timeManager.getCurrentTime(),
+                                settings.getUserID(), gameManager.getSessionID(), getTimestamp(),
                                 encounter.getType(),
                                 gameManager.getCurrentDifficulty(),
                                 run != null ? run.getStage() : 1,
@@ -307,7 +305,7 @@ public class SimulatedGameRun implements GameRunInterface {
                         new BuyUpgradeEvent(
                                 settings.getUserID(),
                                 gameManager.getSessionID(),
-                                TimeManagerSingleton.getInstance().getCurrentTime(),
+                                getTimestamp(),
                                 EncounterEnum.GOBLIN_ENCOUNTER,
                                 gameManager.getCurrentDifficulty(),
                                 1,
@@ -462,6 +460,6 @@ public class SimulatedGameRun implements GameRunInterface {
                 new EndSessionEvent(
                         settings.getUserID(),
                         gameManager.getSessionID(),
-                        TimeManagerSingleton.getInstance().getCurrentTime()));
+                        getTimestamp()));
     }
 }
