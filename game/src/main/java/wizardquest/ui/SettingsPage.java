@@ -4,11 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.RoleEnum;
 import wizardquest.settings.DifficultyEnum;
@@ -59,9 +59,8 @@ public class SettingsPage {
                 \u2022 timestamp, session id, user id
                 \u2022 encounter start, completion, or fail (stage, difficulty, encounter name)
                 \u2022 player state on completion or fail (health remaining, lives left if relevant)
-                \u2022 coins gained and upgrades purchased
+                \u2022 coins gained, upgrades purchased and enemies defeated
                 \u2022 settings changes (new values)
-                \u2022 enemies defeated
                 
                 Why we collect it:
                 \u2022 to spot difficulty spikes and unfair encounters
@@ -137,7 +136,14 @@ public class SettingsPage {
         grid.add(hardLivesField, 2, 3);
         grid.add(hardEnemyDmgField, 3, 3);
 
-        grid.setAlignment(Pos.CENTER_LEFT);
+        grid.setAlignment(Pos.CENTER);
+
+        Label justificationLabel = new Label("Justification for changes:");
+        TextArea justificationBox = new TextArea();
+        justificationBox.setPromptText("OPTIONAL: Explain why these settings are being changed...");
+        justificationBox.setWrapText(true);
+        justificationBox.setPrefRowCount(3);
+        justificationBox.setMaxWidth(400);
 
         // Allows for modified values to be written back to settings
         Button saveButton = new Button("Save");
@@ -147,6 +153,12 @@ public class SettingsPage {
                 RoleEnum role = settings.getUserRole();
                 if (role != RoleEnum.DESIGNER && role != RoleEnum.DEVELOPER) {
                     output.setText("You do not have permission to modify design parameters.");
+                    return;
+                }
+
+                String justification = justificationBox.getText().trim();
+                if (justification.isEmpty()) {
+                    output.setText("Please provide a justification for these changes.");
                     return;
                 }
 
@@ -180,6 +192,7 @@ public class SettingsPage {
                 settings.setEnemyDamageMultiplier(DifficultyEnum.HARD, hardEnemyDmg);
 
                 output.setText("Settings updated.");
+                justificationBox.clear();
             } catch (NumberFormatException ex) {
                 output.setText("Please enter valid numbers.");
             } catch (AuthenticationException ex) {
@@ -192,12 +205,15 @@ public class SettingsPage {
         VBox root = new VBox(14,
                 roleLabel,
                 grid,
-                saveButton,
                 output,
                 telemetryLabel,
                 toggleTelemetryButton,
-                telemetryDisclosure);
+                telemetryDisclosure,
+                justificationLabel,
+                justificationBox,
+                saveButton);
         root.setPadding(new Insets(20));
+        root.setAlignment(Pos.CENTER);
         // Back button returns to main menu
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> backAction.run());

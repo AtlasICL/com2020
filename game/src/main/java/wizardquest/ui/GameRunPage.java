@@ -6,13 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import javafx.scene.layout.Region;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.ProgressBar;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
@@ -51,14 +48,14 @@ public class GameRunPage extends Application {
         root.setPadding(new Insets(12));
         // First screen shown when the game launches
         showLoginPage();
-        stage.setScene(new Scene(root, 1280, 720));
+        stage.setScene(new Scene(root, 1600, 900));
         stage.setTitle("WizardQuest");
         stage.show();
     }
 
     /**
-     * Displays the login screen where the user authenticates via SSO.
-     * Once authenticated, the user is taken to the main menu.
+     * Displays the login screen where the user authenticates via SSO. Once
+     * authenticated, the user is taken to the main menu.
      */
     private void showLoginPage() {
         root.getChildren().clear();
@@ -82,10 +79,10 @@ public class GameRunPage extends Application {
             } catch (AuthenticationException ex) {
                 // Display login error to the user
                 Label error = new Label(
-                        "Login failed.\n\n" +
-                        "Your environment variables may not be configured correctly.\n" +
-                        "Please check the README file and make sure all required\n" +
-                        "authentication variables are set before launching the game."
+                        "Login failed.\n\n"
+                        + "Your environment variables may not be configured correctly.\n"
+                        + "Please check the README file and make sure all required\n"
+                        + "authentication variables are set before launching the game."
                 );
                 error.setWrapText(true);
                 root.getChildren().add(error);
@@ -96,14 +93,14 @@ public class GameRunPage extends Application {
     }
 
     /**
-     * Displays the main menu of the game.
-     * Allows the player, designer or developer to start a run, open settings, or
-     * quit.
+     * Displays the main menu of the game. Allows the player, designer or
+     * developer to start a run, open settings, or quit.
      */
     private void showMainMenu() {
         // Removes all existing UI elements from the root container
         root.getChildren().clear();
         // Aligns page to the center
+        root.setAlignment(Pos.CENTER);
         log.setText("");
         Label title = new Label("WIZARD QUEST");
         // Opens the select difficulty page in same root container
@@ -132,9 +129,13 @@ public class GameRunPage extends Application {
     private void showDifficultySelect() {
         // Removes all existing UI elements from the root container
         root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+
         Label heading = new Label("SELECT DIFFICULTY");
 
         VBox buttons = new VBox(4);
+        buttons.setAlignment(Pos.CENTER);
+
         // Button for each difficulty
         for (DifficultyEnum d : DifficultyEnum.values()) {
             Button b = new Button(d + "  (Lives: " + settings.getStartingLives(d) + ")");
@@ -160,8 +161,8 @@ public class GameRunPage extends Application {
             return;
         }
         /**
-         * Gets the next encounter and current player.
-         * If either is missing the game ends and the end screen is shown.
+         * Gets the next encounter and current player. If either is missing the
+         * game ends and the end screen is shown.
          */
         currentEncounter = gameManager.pickEncounter();
         PlayerInterface player = gameManager.getCurrentPlayer();
@@ -178,57 +179,36 @@ public class GameRunPage extends Application {
         showEncounter();
     }
 
-    // Displays current encounter and player stats.
-    private void showEncounter() {
+    private void showBattleScreen(VBox middleBox) {
         root.getChildren().clear();
         root.setAlignment(Pos.TOP_CENTER);
+
         PlayerInterface player = gameManager.getCurrentPlayer();
         GameRunInterface run = gameManager.getCurrentRun();
 
-        if (!gameManager.isGameRunning() || player == null) {
+        if (!gameManager.isGameRunning() || player == null || currentEncounter == null) {
             showEndScreen();
             return;
         }
 
-        // If the player died last turn, deducts 1 life, resets the enemies, or end if
-        // no more lives.
-        if (player.getHealth() <= 0) {
-            gameManager.resetFailedEncounter();
-            if (player.getLives() == 0) {
-                showEndScreen();
-                return;
-            }
-            player.resetHealth();
-            player.resetMagic();
-            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
-
-        }
-        // Determines current stage
         int stage = run != null ? run.getStage() : 1;
+
         Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
         heading.setMaxWidth(Double.MAX_VALUE);
-
-        // Centers heading
         heading.setAlignment(Pos.CENTER);
 
         Label statsText = new Label(
-                "Lives: " + player.getLives() +
-                "  Coins: " + player.getCoins()
+                "Lives: " + player.getLives()
+                + "  Coins: " + player.getCoins()
         );
 
         Label hpLabel = new Label("HP: " + player.getHealth() + "/" + player.getMaxHealth());
-        // HP Bar
-        ProgressBar hpBar = new ProgressBar(
-                (double) player.getHealth() / player.getMaxHealth()
-        );
+        ProgressBar hpBar = new ProgressBar((double) player.getHealth() / player.getMaxHealth());
         hpBar.setPrefWidth(250);
         hpBar.setStyle("-fx-accent: green;");
 
         Label magicLabel = new Label("Magic: " + player.getMagic() + "/" + player.getMaxMagic());
-        // Magic Bar
-        ProgressBar magicBar = new ProgressBar(
-                (double) player.getMagic() / player.getMaxMagic()
-        );
+        ProgressBar magicBar = new ProgressBar((double) player.getMagic() / player.getMaxMagic());
         magicBar.setPrefWidth(250);
         magicBar.setStyle("-fx-accent: lightblue;");
 
@@ -244,38 +224,26 @@ public class GameRunPage extends Application {
             }
 
             Label enemyLabel = new Label(
-                    enemy.getType().getDisplayName() +
-                    "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    enemy.getType().getDisplayName()
+                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
 
-            ProgressBar enemyHpBar = new ProgressBar(
-                    (double) enemy.getHealth() / enemy.getMaxHealth()
-            );
+            ProgressBar enemyHpBar = new ProgressBar((double) enemy.getHealth() / enemy.getMaxHealth());
             enemyHpBar.setPrefWidth(250);
             enemyHpBar.setStyle("-fx-accent: red;");
 
             enemyList.getChildren().addAll(enemyLabel, enemyHpBar);
         }
 
-        // Ability VBox
-        VBox abilityBox = new VBox(4);
-        abilityBox.setAlignment(Pos.TOP_CENTER);
-        abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
-        for (AbilityEnum ability : player.getAbilities()) {
-            Button ab = new Button(ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:"
-                    + ability.getMagicCost() + ")");
-            ab.setOnAction(e -> showTargetSelection(ability));
-            abilityBox.getChildren().add(ab);
-        }
+        playerStats.setMinWidth(400);
+        middleBox.setMinWidth(300);
+        enemyList.setMinWidth(400);
 
-        playerStats.setMinWidth(280);
-        abilityBox.setMinWidth(220);
-        enemyList.setMinWidth(280);
+        middleBox.setAlignment(Pos.TOP_CENTER);
 
-        // HBox alignment
         HBox mainContent = new HBox(40);
         mainContent.setAlignment(Pos.TOP_CENTER);
-        mainContent.getChildren().addAll(playerStats, abilityBox, enemyList);
+        mainContent.getChildren().addAll(playerStats, middleBox, enemyList);
 
         Button quitRun = new Button("Quit Run");
         quitRun.setOnAction(e -> showEndScreen());
@@ -283,9 +251,45 @@ public class GameRunPage extends Application {
         root.getChildren().addAll(heading, mainContent, log, quitRun);
     }
 
+    // Displays current encounter and player stats.
+    private void showEncounter() {
+        PlayerInterface player = gameManager.getCurrentPlayer();
+
+        if (!gameManager.isGameRunning() || player == null) {
+            showEndScreen();
+            return;
+        }
+
+        if (player.getHealth() <= 0) {
+            gameManager.resetFailedEncounter();
+            if (player.getLives() == 0) {
+                showEndScreen();
+                return;
+            }
+            player.resetHealth();
+            player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+        }
+
+        VBox abilityBox = new VBox(4);
+        abilityBox.setAlignment(Pos.TOP_CENTER);
+        abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
+
+        for (AbilityEnum ability : player.getAbilities()) {
+            Button ab = new Button(
+                    ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:" + ability.getMagicCost() + ")"
+            );
+            ab.setOnAction(e -> showTargetSelection(ability));
+            abilityBox.getChildren().add(ab);
+        }
+
+        showBattleScreen(abilityBox);
+    }
+
     // Shows alive enemies as clickable targets after the player picks an ability.
     private void showTargetSelection(AbilityEnum ability) {
         PlayerInterface player = gameManager.getCurrentPlayer();
+
         if (player == null || !gameManager.isGameRunning()) {
             showEndScreen();
             return;
@@ -293,34 +297,44 @@ public class GameRunPage extends Application {
 
         if (player.getMagic() < ability.getMagicCost()) {
             log.setText("Not enough magic for " + ability.getDisplayName());
+            showEncounter();
             return;
         }
 
-        root.getChildren().clear();
-        GameRunInterface run = gameManager.getCurrentRun();
-        int stage = run != null ? run.getStage() : 1;
-        Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
-
-        Label info = new Label("Using: " + ability.getDisplayName()
-                + "  (dmg:" + ability.getBaseDamage()
-                + " cost:" + ability.getMagicCost() + ")");
-
         VBox targetBox = new VBox(4);
-        targetBox.getChildren().add(new Label("CHOOSE A TARGET:"));
+        targetBox.setAlignment(Pos.TOP_CENTER);
+
+        Label usingLabel = new Label(
+                "Using: " + ability.getDisplayName()
+                + " (dmg:" + ability.getBaseDamage()
+                + " cost:" + ability.getMagicCost() + ")"
+        );
+
+        targetBox.getChildren().addAll(
+                new Label("CHOOSE A TARGET:"),
+                usingLabel
+        );
+
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0)
+            if (enemy == null || enemy.getHealth() <= 0) {
                 continue;
-            Button tb = new Button(enemy.getType().getDisplayName()
-                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+            }
+
+            Button tb = new Button(
+                    enemy.getType().getDisplayName()
+                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+            );
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
             targetBox.getChildren().add(tb);
         }
 
-        Button back = new Button("Back");
-        back.setOnAction(e -> showEncounter());
+        Button chooseAnother = new Button("Choose Another Ability");
+        chooseAnother.setOnAction(e -> showEncounter());
+        targetBox.getChildren().add(chooseAnother);
+
         log.setText("");
-        root.getChildren().addAll(heading, info, targetBox, log, back);
+        showBattleScreen(targetBox);
     }
 
     // Player attacks, then each enemy retalliates.
@@ -360,11 +374,13 @@ public class GameRunPage extends Application {
         }
         // each alive enemy attacks the player
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0)
+            if (enemy == null || enemy.getHealth() <= 0) {
                 continue;
+            }
             AbilityEnum a = ai.pickAbility(enemy);
-            if (a == null)
+            if (a == null) {
                 continue;
+            }
             int pBefore = player.getHealth();
             try {
                 a.execute(enemy, player);
@@ -394,9 +410,9 @@ public class GameRunPage extends Application {
 
         // if player finishes final stage
         if (run.getStage() >= 10) {
-        showEndScreen();
-        return;
-    }
+            showEndScreen();
+            return;
+        }
 
         gameManager.advanceToNextLevel();
         if (!gameManager.isGameRunning()) {

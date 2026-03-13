@@ -1,5 +1,6 @@
 package wizardquest.ui;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -24,17 +25,21 @@ public class ShopPage {
     // Renders the shop: lists upgrades, disables button on purchase
     public void show() {
         root.getChildren().clear();
+        root.setAlignment(Pos.TOP_CENTER);   // centers the whole shop layout
+
         PlayerInterface player = gameManager.getCurrentPlayer();
+
         Label heading;
         if (player != null) {
             heading = new Label("SHOP  (Coins: " + player.getCoins() + ")");
-        }
-        else {
-            heading = new Label("SHOP  (Coins: " + 0 + ")");
+        } else {
+            heading = new Label("SHOP  (Coins: 0)");
         }
 
         UpgradeEnum[] upgrades = gameManager.viewShop();
-        VBox items = new VBox(4);
+
+        VBox items = new VBox(10);
+        items.setAlignment(Pos.CENTER);   // centers the shop buttons
 
         if (upgrades != null) {
             for (UpgradeEnum u : upgrades) {
@@ -44,27 +49,31 @@ public class ShopPage {
                 }
 
                 Button b = new Button(u.getDisplayName() + " (cost: " + u.getPrice() + ")");
+                b.setPrefWidth(220);   // optional but makes buttons look nicer
+
                 b.setOnAction(e -> {
                     try {
                         gameManager.purchaseUpgrade(u);
                         log.setText("Bought " + u.getDisplayName());
-                        b.setDisable(true); // Greys out the button after the purchase.
+                        b.setDisable(true);
                         b.setText(u.getDisplayName() + " (bought)");
                     } catch (LackingResourceException ex) {
                         log.setText("Not enough coins");
                     }
 
-                    // Updates the coin display
                     PlayerInterface p = gameManager.getCurrentPlayer();
                     if (p != null) {
                         heading.setText("SHOP   (Coins: " + p.getCoins() + ")");
                     }
                 });
+
                 items.getChildren().add(b);
             }
         }
+
         Button leave = new Button("Leave Shop");
         leave.setOnAction(e -> onLeaveShop.run());
+
         root.getChildren().addAll(heading, items, log, leave);
     }
 }
