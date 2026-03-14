@@ -39,17 +39,17 @@ public class ExampleEventsGenerator {
             generator.settings.loginWithResult(result);
 
             // User's first session on easy difficulty
-            SimulatedGameRun easyRun = new SimulatedGameRun(
+            new SimulatedGameRun(
                 DifficultyEnum.EASY,
                 "../event_logs/example_events.json");
 
             // User's second session on medium difficulty
-            SimulatedGameRun mediumRun = new SimulatedGameRun(
+            new SimulatedGameRun(
                 DifficultyEnum.MEDIUM,
                 "../event_logs/example_events.json");
 
             // User's third session on hard difficulty
-            SimulatedGameRun hardRun = new SimulatedGameRun(
+            new SimulatedGameRun(
                 DifficultyEnum.HARD,
                 "../event_logs/example_events.json");
         }
@@ -59,12 +59,6 @@ public class ExampleEventsGenerator {
         for (int i = 0; i < total; i++) {
             String userIDString = Integer.toString(i + 100000);
             userIDs.add(userIDString);
-        }
-    }
-
-    private void generateSessionIDs(int total) {
-        for (int i = 0; i < total; i++) {
-            sessionIDs.add(i + 100000);
         }
     }
 }

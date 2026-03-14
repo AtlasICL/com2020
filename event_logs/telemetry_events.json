@@ -177,4 +177,29 @@
   "settingsChangeJustification" : "some justification here",
   "timestamp" : "2026/03/11/17/07/10"
 }
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "StartSession",
+  "sessionID" : -25143981,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/14/00/03/22"
+}
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -25143981,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/14/00/03/22"
+}
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "EndSession",
+  "sessionID" : -25143981,
+  "timestamp" : "2026/03/14/00/03/41"
+}
 ]

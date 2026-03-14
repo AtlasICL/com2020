@@ -49,8 +49,7 @@ public class TimeManagerSingleton {
 
         @Override
         public Instant getCurrentTime() {
-            currentTime = currentTime.plusSeconds(random.nextInt(5) + 1);
-            return currentTime;
+            return Instant.now();
         }
     }
 }

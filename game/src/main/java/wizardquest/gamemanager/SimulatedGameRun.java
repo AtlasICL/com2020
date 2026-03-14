@@ -68,7 +68,7 @@ public class SimulatedGameRun {
         // Run the game
         this.startSession(difficulty);
 
-        while (Utils.isRunOver(this.gameManager.getCurrentRun())) {
+        while (!Utils.isRunOver(this.gameManager.getCurrentRun())) {
             if (!this.simulateEncounter()) {
                 break;
             }
