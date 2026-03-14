@@ -26,9 +26,10 @@ from auth.auth import google_login, Role
 
 
 ROOT_DIRECTORY: Path = Path.cwd().parent
-EVENT_LOGS_DIRECTORY: str = "event_logs"
-TELEMETRY_EVENTS_FILE: str = "telemetry_events.json"
+EVENT_LOGS_DIRECTORY: str   = "event_logs"
+TELEMETRY_EVENTS_FILE: str  = "telemetry_events.json"
 SIMULATION_EVENTS_FILE: str = "simulation_events.json"
+EXAMPLE_EVENTS_FILE: str    = "example_events.json"
 
 # Polling interval for refreshing data.
 POLLING_INTERVAL_MS = 4000
@@ -214,7 +215,7 @@ class TelemetryAppGUI(tk.Tk):
         data_source_dropdown = ttk.Combobox(
             self.tab_home,
             textvariable=self.data_source,
-            values=["Telemetry data", "Simulation data"],
+            values=["Telemetry data", "Simulation data", "Example data"],
             state="readonly",
             font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.BUTTON_FONT_SIZE)
         )
@@ -349,11 +350,12 @@ class TelemetryAppGUI(tk.Tk):
         data.
         """
         if self.data_source.get() == "Simulation data":
-            # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / SIMULATION_EVENTS_FILE
+        elif self.data_source.get() == "Example data":
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / EXAMPLE_EVENTS_FILE
         else:
-            # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / TELEMETRY_EVENTS_FILE
         self.refresh_all()
