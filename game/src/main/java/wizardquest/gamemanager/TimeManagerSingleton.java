@@ -45,6 +45,9 @@ public class TimeManagerSingleton {
 
         public SimulationTimeManager() {
             if (currentTime == null) {
+                // Start the sessions at a past date (in this case, 3 weeks ago).
+                // We do this because telemetry events will be marked invalid if they
+                // are detected as being in the future (part of our data validation).
                 long THREE_WEEKS = 86400 * 21;
                 currentTime = Instant.now().minusSeconds(THREE_WEEKS);
             }
@@ -52,6 +55,9 @@ public class TimeManagerSingleton {
 
         @Override
         public Instant getCurrentTime() {
+            // Advance the time by a random amount.
+            // TODO: we could advance time by an amount which scales with difficulty.
+            // This would make it more realistic.
             currentTime = currentTime.plusSeconds(random.nextInt(10) + 1);
             return currentTime;
         }
