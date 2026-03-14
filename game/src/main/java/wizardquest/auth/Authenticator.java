@@ -1,99 +1,123 @@
 package wizardquest.auth;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.awt.*;
+import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.sql.Struct;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
 /**
  * Authenticator - handles user auth. by calling the python-side auth module, parses the output, and returns AuthecationResult
  */
 public class Authenticator implements AuthenticatorInterface {
+    private static final String ISSUER = "https://accounts.google.com";
+    private static final String SCOPES = "profile email";
+    private static final String LOGINS_FILE = "../telemetry/logins_file.json";
 
+    private final String clientId;
+    private final String clientSecret;
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
+    public Authenticator(){
+        this.clientId = System.getenv("OIDC_CLIENT_ID");
+        this.clientSecret = System.getenv("OIDC_CLIENT_SECRET");
+    }
+    public static void main(String[] args) {
+        Authenticator auth = new Authenticator();
+        try {
+            AuthenticationResult result = auth.login();
+            System.out.println("Name: " + result.name());
+            System.out.println("UserID: " + result.userID());
+            System.out.println("Role: " + result.role());
+        } catch (AuthenticationException e) {
+            System.err.println("Login failed: " + e.getMessage());
+        }
+    }
     @Override
     public AuthenticationResult login() throws AuthenticationException {
 
-        String name = "";
-        String userID = "";
-        RoleEnum role = RoleEnum.PLAYER;
+        validateEnvVars();
 
-        // Instantiate the process builder, and set it up to be able
-        // to run the login python script.
-        ProcessBuilder procBuilder = new ProcessBuilder(
-                "python3",
-                "-m",
-                "auth.auth_wrapper");
-        procBuilder.directory(new File("../telemetry"));
+        JsonNode oauthConfig = fetchOAuthConfig();
+        String authEndpoint = oauthConfig.get("authorization_endpoint").asText();
+        String tokenEndpoint = oauthConfig.get("token_endpoint").asText();
+        String userinfoEndpoint = oauthConfig.get("userinfo_endpoint").asText();
 
-        // We only want stdout not stderror
-        procBuilder.redirectErrorStream(false);
+        CallbackHandler callbackHandler = new CallbackHandler();
 
-        try {
-            Process proc = procBuilder.start();
+        HttpServer server;
 
-            String output;
-            String errorOutput;
+        try{
+            server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+            server.createContext("/callback", callbackHandler);
+            server.start();
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-                    BufferedReader errReader = new BufferedReader(new InputStreamReader(proc.getErrorStream()))) {
-                output = reader.lines().collect(Collectors.joining());
-                errorOutput = errReader.lines().collect(Collectors.joining("\n"));
-            } catch (IOException e) {
-                throw new AuthenticationException("Auth error." + e.getMessage());
-            }
-
-            int exitCode = proc.waitFor();
-
-            if (exitCode != 0) {
-                throw new AuthenticationException(
-                        "Python auth module exited with code " + exitCode + ": " + errorOutput);
-            }
-
-            if (output.isEmpty()) {
-                throw new AuthenticationException(
-                        "Python auth module returned no output. Errors: " + errorOutput);
-            }
-
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode json = mapper.readTree(output);
-
-                if (json == null || json.isNull() || json.isMissingNode()) {
-                    throw new AuthenticationException(
-                            "Python auth module returned invalid JSON: " + output);
-                }
-
-                userID = json.get("sub") != null ? json.get("sub").asText() : "";
-                name = json.get("name") != null ? json.get("name").asText() : "";
-                JsonNode roleNode = json.get("role");
-                if (roleNode == null) {
-                    throw new AuthenticationException(
-                            "Error parsing authenticated user's role. Output: " + output);
-                }
-                String roleVal = roleNode.asText();
-                role = RoleEnum.valueOf(roleVal.toUpperCase());
-
-            } catch (JsonProcessingException e) {
-                throw new AuthenticationException(
-                        "Auth error while parsing python login module output: " + output);
-            }
-
-        } catch (InterruptedException e) {
-            throw new AuthenticationException(
-                    "Auth error while waiting for Python auth module response" + e.getMessage());
         } catch (IOException e) {
-            throw new AuthenticationException("Auth error occurred from Python process" + e.getMessage());
+            throw new AuthenticationException("Failed to start the callback server", e);
         }
 
-        return new AuthenticationResult(
-                name,
-                userID,
-                role);
+        int port = server.getAddress().getPort();
+        String redirectUri = "http://127.0.0.1:" + port + "/callback";
+        String[] pkce = makePkcePair();
+        String codeVerifier = pkce[0];
+        String codeChallenge = pkce[1];
+        String state;
+        // generate state
+        SecureRandom random = new SecureRandom();
+        byte[] stateBytes = new byte[24];
+        random.nextBytes(stateBytes);
+        state = Base64.getUrlEncoder().withoutPadding().encodeToString(stateBytes);
+
+        String authURL = buildAuthUrl(authEndpoint, redirectUri, state, codeChallenge);
+        openBrowser(authURL);
+
+        String authCode;
+        try{
+            authCode = callbackHandler.waitForCode();
+        }
+        catch (InterruptedException e){
+            throw new AuthenticationException("Login was interrupted" + e);
+        }
+        finally {
+            server.stop(0);
+        }
+        if (authCode==null){
+            throw new AuthenticationException("No auth code was received");
+        }
+
+        String accessToken = codeToToken(tokenEndpoint, authCode, redirectUri, codeVerifier);
+        JsonNode userInfo = fetchUserInfo(userinfoEndpoint, accessToken);
+        String name = userInfo.get("name").asText();
+        String sub = userInfo.get("sub").asText();
+
+        RoleEnum role = getRole(sub);
+        return new AuthenticationResult(name, sub, role);
     }
 
     // // FOR TESTING
@@ -111,4 +135,222 @@ public class Authenticator implements AuthenticatorInterface {
     // }
     // }
 
+    // TODO (KK)
+    //  getOAuthConfig(), should return the auth endpoint, token endpoint and the userinfo endpoint URLs,
+    //  openBrowser(), to use browser, have to use java.awt.Desktop.getDesktop().browse(url)
+    //  startCallbackServer(), should return the server HttpServer
+    //  makePkcePair(), generates the code verifier base64 url stuff
+    // TODO (KK), subclass CallbackHandler, has handle(), getAuthCode(), getState()
+    public void validateEnvVars() throws AuthenticationException{
+        if (this.clientId.isEmpty()){
+            throw new AuthenticationException("OIDC_CLIENT_ID env variable is not set");
+        }
+        if (this.clientSecret.isEmpty()){
+            throw new AuthenticationException("OIDC_CLIENT_SECRET env variable is not set");
+        }
+    }
+
+    public JsonNode fetchOAuthConfig() throws AuthenticationException {
+
+        try{
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(ISSUER + "/.well-known/openid-configuration")).GET().build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() !=200){
+                throw new AuthenticationException("Failed to fetch the o auth configs: HTTP " + response.statusCode());
+            }
+            return mapper.readTree(response.body());
+        } catch (IOException | InterruptedException e) {
+            throw new AuthenticationException("Failed to fetch the OAuth configuration" + e);
+        }
+
+
+    }
+    public String[] makePkcePair(){
+        SecureRandom random = new SecureRandom();
+        byte[] verifierBytes = new byte[32];
+
+        random.nextBytes(verifierBytes);
+        String codeVerifier = Base64.getUrlEncoder().withoutPadding().encodeToString(verifierBytes);
+
+        try {
+            byte[] challengeHash = MessageDigest.getInstance("SHA-256").digest(codeVerifier.getBytes(StandardCharsets.US_ASCII));
+            String codeChallenge = Base64.getUrlEncoder().withoutPadding().encodeToString(challengeHash);
+            return new String[] {codeVerifier, codeChallenge};
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static String encode(String val){
+        return URLEncoder.encode(val, StandardCharsets.UTF_8);
+    }
+    public String buildAuthUrl(String authEndpoint, String redirectUri, String state, String codeChallenge){
+        return authEndpoint + "?" + String.join("&",
+                "response_type=code",
+                "client_id=" + encode(clientId),
+                "redirect_uri="+encode(redirectUri),
+                "scope="+encode(SCOPES),
+                "state="+encode(state),
+                "code_challenge="+encode(codeChallenge),
+                "code_challenge_method=S256"
+                );
+    }
+
+    public void openBrowser(String url) throws AuthenticationException{
+        try {
+            Desktop.getDesktop().browse(URI.create(url));
+        } catch (IOException e) {
+            throw new AuthenticationException("Failed to open the browser ",e);
+        }
+
+    }
+    //URLEncoder.encode(value, StandardCharsets.UTF_8);
+    // performs exchange of code to tokens
+    public String codeToToken(String tokenEndpoint, String code, String redirectUri, String codeVerifier){
+        String body = String.join("&",
+                "grant_type=authorization_code",
+                "code=" + encode(code),
+                "redirect_uri="+encode(redirectUri),
+                "client_id="+encode(clientId),
+                "client_secret="+encode(clientSecret),
+                "code_verifier="+encode(codeVerifier)
+                );
+
+        HttpRequest request = (HttpRequest) HttpRequest
+                .newBuilder()
+                .uri(URI.create(tokenEndpoint))
+                .header("Content-type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode()!=200){
+                throw new AuthenticationException("Token exchange failure: HTTP " + response.statusCode() + response.body());
+            }
+            JsonNode tokens = mapper.readTree(response.body());
+            return tokens.get("access_token").asText();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (AuthenticationException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public JsonNode fetchUserInfo(String userinfoEndpoint, String accessToken) throws AuthenticationException {
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(userinfoEndpoint)).header("Authorization", "Bearer " + accessToken).GET().build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (response.statusCode() != 200){
+            throw new AuthenticationException("Failed to fetch user info, HTTP" + response.statusCode());
+        }
+        try {
+            return mapper.readTree(response.body());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public RoleEnum getRole(String userID) throws AuthenticationException{
+        File file = new File(LOGINS_FILE);
+
+        try{
+            ObjectNode roles;
+            if (file.exists()){
+                roles = (ObjectNode) mapper.readTree(file);
+            }
+            else{
+                roles = mapper.createObjectNode();
+            }
+            JsonNode roleNode = roles.get(userID);
+            if (roleNode == null){ // default case is player
+                roles.put(userID, "player");
+                mapper.writerWithDefaultPrettyPrinter().writeValue(file, roles);
+                return RoleEnum.PLAYER;
+            }
+            return RoleEnum.valueOf(roleNode.asText().toUpperCase());
+        } catch (IOException e) {
+            throw new AuthenticationException("Failed to read and write logins file", e);
+        }
+    }
+
+    private static class CallbackHandler implements HttpHandler{
+        private final CompletableFuture<String> codeFuture = new CompletableFuture<>();
+        private volatile String receivedState;
+
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String query = exchange.getRequestURI().getQuery();
+            Map<String, String> params = parseQuery(query);
+
+            this.receivedState = params.get("state");
+            String code = params.get("code");
+            String error = params.get("error");
+
+            String html = "<html><body><h3> Login Complete. "
+                    + "You can now close this tab.</h3></body>"
+                    + "<style>"
+                    + "body{font-family:Arial, sans-serif; display:flex;}"
+                    + "justify-content:center;align-items:center;"
+                    + "height:100vh;background:#2c2f33"
+                    + "h3{color:#9b59ff; font-size:36px;font-weight:bold}"
+                    + "</style></html>";
+
+            byte[] responseBytes = html.getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+            exchange.sendResponseHeaders(200, responseBytes.length);
+
+            OutputStream os = exchange.getResponseBody();
+            os.write(responseBytes);
+
+            if (error!=null){
+                codeFuture.completeExceptionally(new AuthenticationException("OAuth error: " + error));
+            }
+            else{
+                codeFuture.complete(code);
+            }
+        }
+
+        public String waitForCode() throws AuthenticationException, InterruptedException {
+            try{
+                return codeFuture.get();
+            } catch (ExecutionException e) {
+                if (e.getCause() instanceof AuthenticationException ae){
+                    throw ae;
+                }
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private Map<String, String> parseQuery(String query) {
+            if (query == null || query.isEmpty()){
+                return Map.of();
+            }
+            String[] params = query.split("&");
+            HashMap<String, String> m = new HashMap<>();
+
+            for (String param: params){
+                String[] parts = param.split("=", 2);
+                if (parts.length==2){
+                    String key = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
+                    String value = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
+                    m.put(key, value);
+                }
+            }
+            return m;
+        }
+
+        // get auth code, get state
+    }
 }
+
