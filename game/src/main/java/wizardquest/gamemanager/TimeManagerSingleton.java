@@ -40,16 +40,20 @@ public class TimeManagerSingleton {
     }
 
     private static class SimulationTimeManager implements TimeManagerInterface {
-        private Instant currentTime;
-        private final Random random;
+        private static Instant currentTime = null;
+        private static final Random random = new Random();
+
         public SimulationTimeManager() {
-            currentTime = Instant.now();
-            random = new Random();
+            if (currentTime == null) {
+                long THREE_WEEKS = 86400 * 21;
+                currentTime = Instant.now().minusSeconds(THREE_WEEKS);
+            }
         }
 
         @Override
         public Instant getCurrentTime() {
-            return Instant.now();
+            currentTime = currentTime.plusSeconds(random.nextInt(10) + 1);
+            return currentTime;
         }
     }
 }
