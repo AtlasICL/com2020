@@ -11,13 +11,11 @@ import wizardquest.settings.SettingsSingleton;
 
 public class ExampleEventsGenerator {
     
-    private ArrayList<String> userIDs;
-    private ArrayList<Integer> sessionIDs;
-    private SettingsInterface settings;
+    private final ArrayList<String> userIDs;
+    private final SettingsInterface settings;
 
     private ExampleEventsGenerator() {
         userIDs = new ArrayList<>();
-        sessionIDs = new ArrayList<>();
         settings = SettingsSingleton.getInstance();
     }
 
@@ -28,10 +26,10 @@ public class ExampleEventsGenerator {
         // Each user has three sessions - one for each difficulty.
         int totalUsers = 40;
         generator.generateUserIDs(totalUsers);
-        generator.generateSessionIDs(totalUsers * 3);
 
         for (int i = 0; i < generator.userIDs.size(); i++) {
-            // Authenticate the user
+            
+            // (Mock) authentication of a user
             result = new AuthenticationResult(
                 "User " + generator.userIDs.get(i),
                 generator.userIDs.get(i),
