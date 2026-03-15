@@ -5,10 +5,6 @@ import java.util.Random;
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
 import wizardquest.settings.DifficultyEnum;
-import wizardquest.settings.SettingsSingleton;
-import wizardquest.telemetry.EndSessionEvent;
-import wizardquest.telemetry.StartSessionEvent;
-import wizardquest.telemetry.TelemetryListenerSingleton;
 
 /**
  * Provides global access to the game manager.
@@ -55,10 +51,6 @@ public class GameManagerSingleton {
         @Override
         public void startNewGame(DifficultyEnum difficulty) {
             this.currentGame = new GameRun(difficulty, random.nextInt());
-            TelemetryListenerSingleton.getInstance()
-                    .onStartSession(new StartSessionEvent(SettingsSingleton.getInstance().getUserID(),
-                            currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime(),
-                            difficulty));
         }
 
         @Override
@@ -114,11 +106,6 @@ public class GameManagerSingleton {
 
         @Override
         public void endGame() {
-            if (this.currentGame != null) {
-                TelemetryListenerSingleton.getInstance()
-                        .onEndSession(new EndSessionEvent(SettingsSingleton.getInstance().getUserID(),
-                                currentGame.getSessionID(), TimeManagerSingleton.getInstance().getCurrentTime()));
-            }
             this.currentEncounter = null;
             this.currentGame = null;
         }
