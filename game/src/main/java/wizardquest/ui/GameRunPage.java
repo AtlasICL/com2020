@@ -5,15 +5,13 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import javafx.scene.layout.Region;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.ProgressBar;
 import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
@@ -45,6 +43,70 @@ public class GameRunPage extends Application {
     private final TelemetryListenerInterface telemetryListener = TelemetryListenerSingleton.getInstance();
 
 
+    private static final String PANEL_STYLE =
+        "-fx-background-color: #2b2d31;" +
+        "-fx-background-radius: 10;" +
+        "-fx-border-color: #5865F2;" +
+        "-fx-border-radius: 10;";
+
+    private static final String TITLE_STYLE =
+        "-fx-font-family: 'Trebuchet MS';" +
+        "-fx-font-size: 26px;" +
+        "-fx-text-fill: #9a7cff;" +
+        "-fx-font-weight: bold;";
+
+    private static final String HEADING_STYLE =
+            "-fx-font-family: 'Trebuchet MS';" +
+            "-fx-font-size: 18px;" +
+            "-fx-text-fill: #5865F2;" +
+            "-fx-font-weight: bold;";
+
+    private static final String TEXT_STYLE =
+            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-size: 14px;" +
+            "-fx-text-fill: #f2f3f5;";
+
+    private static final String SECONDARY_TEXT_STYLE =
+            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-size: 13px;" +
+            "-fx-text-fill: #b5bac1;";
+
+
+    private static final String PRIMARY_BUTTON_STYLE =
+        "-fx-background-color: #5865F2;" +
+        "-fx-text-fill: #f2f3f5;" +
+        "-fx-font-family: 'Segoe UI';" +
+        "-fx-font-size: 14px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-background-radius: 8;" +
+        "-fx-border-radius: 8;" +
+        "-fx-border-color: #7c84f7;" +
+        "-fx-padding: 8 16 8 16;" +
+        "-fx-cursor: hand;";
+
+private static final String SECONDARY_BUTTON_STYLE =
+        "-fx-background-color: #404249;" +
+        "-fx-text-fill: #f2f3f5;" +
+        "-fx-font-family: 'Segoe UI';" +
+        "-fx-font-size: 14px;" +
+        "-fx-background-radius: 8;" +
+        "-fx-border-radius: 8;" +
+        "-fx-border-color: #5865F2;" +
+        "-fx-padding: 8 16 8 16;" +
+        "-fx-cursor: hand;";
+
+private static final String DANGER_BUTTON_STYLE =
+        "-fx-background-color: #ed4245;" +
+        "-fx-text-fill: #f2f3f5;" +
+        "-fx-font-family: 'Segoe UI';" +
+        "-fx-font-size: 14px;" +
+        "-fx-font-weight: bold;" +
+        "-fx-background-radius: 8;" +
+        "-fx-border-radius: 8;" +
+        "-fx-border-color: #ff6b6b;" +
+        "-fx-padding: 8 16 8 16;" +
+        "-fx-cursor: hand;";
+
     private VBox root;
     private final Label log = new Label("");
 
@@ -55,25 +117,30 @@ public class GameRunPage extends Application {
         // Main container for swapping between different frames
         root = new VBox(8);
         root.setPadding(new Insets(12));
+        root.setStyle("-fx-background-color: #1e1f22;");
         // First screen shown when the game launches
         showLoginPage();
-        stage.setScene(new Scene(root, 1280, 720));
+        stage.setScene(new Scene(root, 1600, 900));
         stage.setTitle("WizardQuest");
         stage.show();
     }
 
     /**
-     * Displays the login screen where the user authenticates via SSO.
-     * Once authenticated, the user is taken to the main menu.
+     * Displays the login screen where the user authenticates via SSO. Once
+     * authenticated, the user is taken to the main menu.
      */
     private void showLoginPage() {
         root.getChildren().clear();
         root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #1e1f22;");
 
         Label title = new Label("WizardQuest");
         Label status = new Label("");
 
+        Label title = new Label("WizardQuest");
+        title.setStyle(TITLE_STYLE);
         Button loginBtn = new Button("Login with SSO");
+        loginBtn.setStyle(PRIMARY_BUTTON_STYLE);
 
         loginBtn.setOnAction(e -> {
             // loginBtn.setDisable(true);
@@ -124,21 +191,38 @@ public class GameRunPage extends Application {
     }
 
     /**
-     * Displays the main menu of the game.
-     * Allows the player, designer or developer to start a run, open settings, or
-     * quit.
+     * Displays the main menu of the game. Allows the player, designer or
+     * developer to start a run, open settings, or quit.
      */
     private void showMainMenu() {
         // Removes all existing UI elements from the root container
         root.getChildren().clear();
         // Aligns page to the center
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #1e1f22;");
+
         log.setText("");
         Label title = new Label("WIZARD QUEST");
+        title.setStyle(TITLE_STYLE);
         // Opens the select difficulty page in same root container
         Button startBtn = new Button("Start New Game");
         // Opens the select difficulty page in same root container
         startBtn.setOnAction(e -> showDifficultySelect());
         Button settingsBtn = new Button("Settings");
+        Button simBtn = new Button("Run Simulations");
+        simBtn.setOnAction(e -> {
+
+            // Sim logic to be ran here ^^
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Simulations");
+            alert.setContentText("Simulations have been executed.");
+            alert.showAndWait();
+        });
+
+        startBtn.setStyle(PRIMARY_BUTTON_STYLE);
+        simBtn.setStyle(PRIMARY_BUTTON_STYLE);
+        settingsBtn.setStyle(PRIMARY_BUTTON_STYLE);
         // Opens the settings page inside the same root container
         settingsBtn.setOnAction(e -> {
             root.getChildren().clear();
@@ -151,21 +235,40 @@ public class GameRunPage extends Application {
         });
 
         Button quitBtn = new Button("Quit");
+        quitBtn.setStyle(DANGER_BUTTON_STYLE);
         quitBtn.setOnAction(e -> System.exit(0));
         // Adds the title and buttons to the root layout so they appear in the UI
-        root.getChildren().addAll(title, startBtn, settingsBtn, quitBtn);
+        root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, quitBtn);
     }
 
     // Player selects game difficulty
     private void showDifficultySelect() {
         // Removes all existing UI elements from the root container
         root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #1e1f22;");
+
+
         Label heading = new Label("SELECT DIFFICULTY");
+        heading.setStyle(HEADING_STYLE);
 
         VBox buttons = new VBox(4);
+        buttons.setAlignment(Pos.CENTER);
+
         // Button for each difficulty
         for (DifficultyEnum d : DifficultyEnum.values()) {
-            Button b = new Button(d + "  (Lives: " + settings.getStartingLives(d) + ")");
+            int bestStage = 0;
+            try {
+                bestStage = settings.getMaxStageReached(d);
+            } catch (AuthenticationException ex) {
+                bestStage = 0;
+            }
+
+            Button b = new Button(
+                    d +
+                    "  (Lives: " + settings.getStartingLives(d) + ")" +
+                    "  [Best Stage: " + bestStage + "]"
+            );
             b.setOnAction(e -> {
                 // Initialise a new game run
                 gameManager.startNewGame(d);
@@ -177,10 +280,12 @@ public class GameRunPage extends Application {
                 // Move to encounter 1
                 nextEncounter();
             });
+            b.setStyle(PRIMARY_BUTTON_STYLE);
             buttons.getChildren().add(b);
         }
         // Back button returns to main menu
         Button back = new Button("Back");
+        back.setStyle(SECONDARY_BUTTON_STYLE);
         back.setOnAction(e -> showMainMenu());
         // Adds the headings and buttons to the root layout so they appear in the UI/
         root.getChildren().addAll(heading, buttons, back);
@@ -193,8 +298,8 @@ public class GameRunPage extends Application {
             return;
         }
         /**
-         * Gets the next encounter and current player.
-         * If either is missing the game ends and the end screen is shown.
+         * Gets the next encounter and current player. If either is missing the
+         * game ends and the end screen is shown.
          */
         currentEncounter = gameManager.pickEncounter();
         PlayerInterface player = gameManager.getCurrentPlayer();
@@ -213,14 +318,27 @@ public class GameRunPage extends Application {
         showEncounter();
     }
 
-    // Displays current encounter and player stats.
-    private void showEncounter() {
+    private void showBattleScreen(VBox middleBox) {
         root.getChildren().clear();
-        root.setAlignment(Pos.TOP_CENTER);
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #1e1f22;");
+
+
         PlayerInterface player = gameManager.getCurrentPlayer();
+        VBox abilityList = new VBox(3);
+        Label abilitiesHeading = new Label("Abilities:");
+        abilitiesHeading.setStyle(HEADING_STYLE);
+        abilityList.getChildren().add(abilitiesHeading);
+
+        for (AbilityEnum ability : player.getAbilities()) {
+            Label abilityLabel = new Label(ability.getDisplayName());
+            abilityLabel.setStyle(TEXT_STYLE);
+            abilityList.getChildren().add(abilityLabel);
+        }
+
         GameRunInterface run = gameManager.getCurrentRun();
 
-        if (!gameManager.isGameRunning() || player == null) {
+        if (!gameManager.isGameRunning() || player == null || currentEncounter == null) {
             showEndScreen();
             return;
         }
@@ -241,37 +359,42 @@ public class GameRunPage extends Application {
         }
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
-        Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
-        heading.setMaxWidth(Double.MAX_VALUE);
 
-        // Centers heading
+        Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
+        heading.setStyle(HEADING_STYLE);
+        heading.setMaxWidth(Double.MAX_VALUE);
         heading.setAlignment(Pos.CENTER);
 
         Label statsText = new Label(
-                "Lives: " + player.getLives() +
-                "  Coins: " + player.getCoins()
+                "Lives: " + player.getLives()
+                + "  Coins: " + player.getCoins()
         );
+        statsText.setStyle(TEXT_STYLE);
 
         Label hpLabel = new Label("HP: " + player.getHealth() + "/" + player.getMaxHealth());
-        // HP Bar
-        ProgressBar hpBar = new ProgressBar(
-                (double) player.getHealth() / player.getMaxHealth()
-        );
+        hpLabel.setStyle(TEXT_STYLE);
+        ProgressBar hpBar = new ProgressBar((double) player.getHealth() / player.getMaxHealth());
         hpBar.setPrefWidth(250);
         hpBar.setStyle("-fx-accent: green;");
 
         Label magicLabel = new Label("Magic: " + player.getMagic() + "/" + player.getMaxMagic());
-        // Magic Bar
-        ProgressBar magicBar = new ProgressBar(
-                (double) player.getMagic() / player.getMaxMagic()
-        );
+        magicLabel.setStyle(TEXT_STYLE);
+        ProgressBar magicBar = new ProgressBar((double) player.getMagic() / player.getMaxMagic());
         magicBar.setPrefWidth(250);
         magicBar.setStyle("-fx-accent: lightblue;");
 
-        VBox playerStats = new VBox(4, statsText, hpLabel, hpBar, magicLabel, magicBar);
+        VBox playerStats = new VBox(4, statsText, hpLabel, hpBar, magicLabel, magicBar, abilityList);
+        playerStats.setPadding(new Insets(12));
+        playerStats.setStyle(PANEL_STYLE);
 
         VBox enemyList = new VBox(6);
-        enemyList.getChildren().add(new Label("ENEMIES:"));
+
+        Label enemiesHeading = new Label("ENEMIES:");
+        enemiesHeading.setStyle(HEADING_STYLE);
+        enemyList.getChildren().add(enemiesHeading);
+
+        enemyList.setPadding(new Insets(12));
+        enemyList.setStyle(PANEL_STYLE);
 
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
@@ -280,48 +403,81 @@ public class GameRunPage extends Application {
             }
 
             Label enemyLabel = new Label(
-                    enemy.getType().getDisplayName() +
-                    "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    enemy.getType().getDisplayName()
+                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
+            enemyLabel.setStyle(TEXT_STYLE);
 
-            ProgressBar enemyHpBar = new ProgressBar(
-                    (double) enemy.getHealth() / enemy.getMaxHealth()
-            );
+            ProgressBar enemyHpBar = new ProgressBar((double) enemy.getHealth() / enemy.getMaxHealth());
             enemyHpBar.setPrefWidth(250);
             enemyHpBar.setStyle("-fx-accent: red;");
 
             enemyList.getChildren().addAll(enemyLabel, enemyHpBar);
         }
 
-        // Ability VBox
-        VBox abilityBox = new VBox(4);
-        abilityBox.setAlignment(Pos.TOP_CENTER);
-        abilityBox.getChildren().add(new Label("CHOOSE AN ABILITY:"));
-        for (AbilityEnum ability : player.getAbilities()) {
-            Button ab = new Button(ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:"
-                    + ability.getMagicCost() + ")");
-            ab.setOnAction(e -> showTargetSelection(ability));
-            abilityBox.getChildren().add(ab);
-        }
+        playerStats.setMinWidth(400);
+        middleBox.setMinWidth(300);
+        enemyList.setMinWidth(400);
 
-        playerStats.setMinWidth(280);
-        abilityBox.setMinWidth(220);
-        enemyList.setMinWidth(280);
+        middleBox.setAlignment(Pos.CENTER);
+        middleBox.setPadding(new Insets(12));
+        middleBox.setStyle(PANEL_STYLE);
 
-        // HBox alignment
         HBox mainContent = new HBox(40);
-        mainContent.setAlignment(Pos.TOP_CENTER);
-        mainContent.getChildren().addAll(playerStats, abilityBox, enemyList);
+        mainContent.setAlignment(Pos.CENTER);
+        mainContent.getChildren().addAll(playerStats, middleBox, enemyList);
 
         Button quitRun = new Button("Quit Run");
         quitRun.setOnAction(e -> showEndScreen());
+        quitRun.setStyle(DANGER_BUTTON_STYLE);
 
         root.getChildren().addAll(heading, mainContent, log, quitRun);
+    }
+
+    // Displays current encounter and player stats.
+    private void showEncounter() {
+        PlayerInterface player = gameManager.getCurrentPlayer();
+
+        if (!gameManager.isGameRunning() || player == null) {
+            showEndScreen();
+            return;
+        }
+
+        if (player.getHealth() <= 0) {
+            gameManager.resetFailedEncounter();
+            if (player.getLives() == 0) {
+                showEndScreen();
+                return;
+            }
+            player.resetHealth();
+            player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+        }
+
+        VBox abilityBox = new VBox(4);
+        abilityBox.setAlignment(Pos.CENTER);
+        Label chooseAbilityLabel = new Label("CHOOSE AN ABILITY:");
+        chooseAbilityLabel.setStyle(HEADING_STYLE);
+        abilityBox.getChildren().add(chooseAbilityLabel);
+
+        for (AbilityEnum ability : player.getAbilities()) {
+            Button ab = new Button(
+                    ability.getDisplayName() + " (dmg:" + ability.getBaseDamage() + " cost:" + ability.getMagicCost() + ")"
+            );
+            ab.setOnAction(e -> showTargetSelection(ability));
+            abilityBox.getChildren().add(ab);
+            ab.setStyle(PRIMARY_BUTTON_STYLE);
+            ab.setPrefWidth(300);
+        }
+        
+        
+        showBattleScreen(abilityBox);
     }
 
     // Shows alive enemies as clickable targets after the player picks an ability.
     private void showTargetSelection(AbilityEnum ability) {
         PlayerInterface player = gameManager.getCurrentPlayer();
+
         if (player == null || !gameManager.isGameRunning()) {
             showEndScreen();
             return;
@@ -329,34 +485,52 @@ public class GameRunPage extends Application {
 
         if (player.getMagic() < ability.getMagicCost()) {
             log.setText("Not enough magic for " + ability.getDisplayName());
+            showEncounter();
             return;
         }
 
-        root.getChildren().clear();
-        GameRunInterface run = gameManager.getCurrentRun();
-        int stage = run != null ? run.getStage() : 1;
-        Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
-
-        Label info = new Label("Using: " + ability.getDisplayName()
-                + "  (dmg:" + ability.getBaseDamage()
-                + " cost:" + ability.getMagicCost() + ")");
-
         VBox targetBox = new VBox(4);
-        targetBox.getChildren().add(new Label("CHOOSE A TARGET:"));
+        targetBox.setAlignment(Pos.CENTER);
+
+        Label chooseTargetLabel = new Label("CHOOSE A TARGET:");
+        chooseTargetLabel.setStyle(HEADING_STYLE);
+
+        Label usingLabel = new Label(
+                "Using: " + ability.getDisplayName()
+                + " (dmg:" + ability.getBaseDamage()
+                + " cost:" + ability.getMagicCost() + ")"
+        );
+
+        usingLabel.setStyle(SECONDARY_TEXT_STYLE);
+
+        targetBox.getChildren().addAll(
+                chooseTargetLabel,
+                usingLabel
+        );
+
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0)
+            if (enemy == null || enemy.getHealth() <= 0) {
                 continue;
-            Button tb = new Button(enemy.getType().getDisplayName()
-                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+            }
+
+            Button tb = new Button(
+                    enemy.getType().getDisplayName()
+                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+            );
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
             targetBox.getChildren().add(tb);
+            tb.setStyle(PRIMARY_BUTTON_STYLE);
+            tb.setPrefWidth(220);
         }
 
-        Button back = new Button("Back");
-        back.setOnAction(e -> showEncounter());
+        Button chooseAnother = new Button("Choose Another Ability");
+        chooseAnother.setOnAction(e -> showEncounter());
+        targetBox.getChildren().add(chooseAnother);
+        chooseAnother.setStyle(SECONDARY_BUTTON_STYLE);
+
         log.setText("");
-        root.getChildren().addAll(heading, info, targetBox, log, back);
+        showBattleScreen(targetBox);
     }
 
     // Player attacks, then each enemy retalliates.
@@ -415,11 +589,13 @@ public class GameRunPage extends Application {
         }
         // each alive enemy attacks the player
         for (EntityInterface enemy : enemies) {
-            if (enemy == null || enemy.getHealth() <= 0)
+            if (enemy == null || enemy.getHealth() <= 0) {
                 continue;
+            }
             AbilityEnum a = ai.pickAbility(enemy);
-            if (a == null)
+            if (a == null) {
                 continue;
+            }
             int pBefore = player.getHealth();
             try {
                 a.execute(enemy, player);
@@ -509,19 +685,36 @@ public class GameRunPage extends Application {
     // Displays the end screen, shows the run summary
     private void showEndScreen() {
         root.getChildren().clear();
+        root.setStyle("-fx-background-color: #1e1f22;");
+
         GameRunInterface run = gameManager.getCurrentRun();
         PlayerInterface player = gameManager.getCurrentPlayer();
 
         Label heading = new Label("RUN COMPLETE");
+        heading.setStyle(HEADING_STYLE);
         StringBuilder info = new StringBuilder();
         if (run != null) {
             info.append("Stage reached: ").append(run.getStage())
                     .append("  Deaths: ").append(run.getDeathCount());
+            
         }
         if (player != null) {
             info.append("  Coins: ").append(player.getCoins());
         }
         Label stats = new Label(info.toString());
+        stats.setStyle(SECONDARY_TEXT_STYLE);
+
+
+        if (run != null) {
+            try {
+                DifficultyEnum difficulty = gameManager.getCurrentDifficulty();
+                if (difficulty != null) {
+                    int reachedStage = Math.min(run.getStage(), 10);
+                    settings.setMaxStageReached(difficulty, reachedStage);
+                }
+            } catch (AuthenticationException ignored) {
+            }
+        }
 
         if (run != null) {
             telemetryListener.onEndSession(new EndSessionEvent(
@@ -533,6 +726,8 @@ public class GameRunPage extends Application {
         back.setOnAction(e -> showMainMenu());
 
         root.getChildren().addAll(heading, stats, back);
+        back.setStyle(SECONDARY_BUTTON_STYLE);
+        back.setPrefWidth(180);
     }
 
     // Return true if every enemy is null or has 0 HP
