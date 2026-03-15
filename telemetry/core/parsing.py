@@ -27,6 +27,7 @@ from core.events import (
     BossEncounterComplete,
     NormalEncounterFail,
     BossEncounterStart,
+    Difficulty,
 )
 
 
@@ -44,6 +45,17 @@ ValidEvent: TypeAlias = (
     | SettingsChange
     | KillEnemy
 )
+
+    
+def parse_difficulty(difficulty_string: str) -> Difficulty:
+    """
+    :param difficulty_string: Difficulty string from JSON ("Easy",
+    "EASY").
+    :type difficulty_string: str
+    :return: Returns the matching Difficulty enum value.
+    :rtype: Difficulty
+    """
+    return Difficulty(difficulty_string.capitalize())
 
     
 def convert_time(time_string: str) -> datetime:
@@ -113,7 +125,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.USER_ID],
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.DIFFICULTY]
+                    parse_difficulty(event[EventParameter.DIFFICULTY])
                 )
             case EventType.END_SESSION:
                 return EndSession(
@@ -127,7 +139,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.NORMAL_ENCOUNTER_COMPLETE:
@@ -136,7 +148,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.PLAYER_HP_REMAINING]
                 )
@@ -146,7 +158,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.LIVES_LEFT]
                 )
@@ -156,7 +168,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER]
                 )
             case EventType.BOSS_ENCOUNTER_COMPLETE:
@@ -165,7 +177,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.PLAYER_HP_REMAINING]
                 )
@@ -175,7 +187,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.LIVES_LEFT]
                 )
@@ -185,7 +197,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.COINS_GAINED]
                 )
@@ -203,7 +215,8 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.USER_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.SETTING],
-                    event[EventParameter.SETTING_VALUE]
+                    event[EventParameter.SETTING_VALUE],
+                    event[EventParameter.JUSTIFICATION]
                 )
             case EventType.KILL_ENEMY:
                 return KillEnemy(
@@ -211,7 +224,7 @@ def parse_event(event: dict) -> ValidEvent:
                     event[EventParameter.SESSION_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
                     event[EventParameter.ENCOUNTER],
-                    event[EventParameter.DIFFICULTY],
+                    parse_difficulty(event[EventParameter.DIFFICULTY]),
                     event[EventParameter.STAGE_NUMBER],
                     event[EventParameter.ENEMY_TYPE]
                 )

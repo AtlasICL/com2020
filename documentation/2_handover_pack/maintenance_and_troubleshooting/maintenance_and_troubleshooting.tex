@@ -1,0 +1,485 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[skip=6pt]{parskip}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{comment}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+\usepackage{booktabs}
+
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+
+\title{Maintenance and Troubleshooting\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview}
+In this document we will outline the information needed to undergo routine maintenance operations for the project. We will then provide detailed troubleshooting instructions, stating possible symptoms of different problems, solutions, and verification methods to ensure problems are resolved. Lastly we will provide a detailed architecture schema followed by steps for routine application extensions.
+
+\section{Maintenance}
+\subsection{Clearing Telemetry Data}
+Telemetry data can be cleared from within the telemetry app. This is done by opening the app, logging in, and using the "clear telemetry data" function. Detailed instructions are available in the deployment and operations guide.
+\subsection{Clearing Logs}
+Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|.
+\subsection{Backups}
+The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext.
+
+\subsection{Naming Conventions}
+\label{sec:naming_conventions}
+The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
+
+The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case.
+\section{Troubleshooting}
+
+\subsection{Cannot Launch Python Application}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Get an error: \verb|ModuleNotFoundError: No module named '<Module>'|
+  \item Get an error: \verb|python : The term 'python' is not recognized as ...|\\ or \verb|python3 : The term 'python3' is not recognized as ...|
+  \item Get an error: \verb|Command 'python3' not found, did you mean: ...|
+
+\end{itemize}
+\subsubsection{Solutions}
+Try each of these solutions, and verify if it worked before trying the next.
+\begin{enumerate}
+  \item Ensure you're using a supported operating system (Linux, Windows or macOS)
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide.
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment.
+\end{enumerate}
+
+\subsubsection{Verification}
+The Python application launches with no errors.
+
+\subsection{Cannot Launch Java Application}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Get an error: \verb|mvn : The term 'mvn' is not recognized as ...|
+  \item Get an error: \verb|Command 'mvn' not found, did you mean: ..|
+  \item Get an error: \\\verb|The JAVA_HOME environment variable is not defined correctly ...|
+\end{itemize}
+\subsubsection{Solutions}
+Try each of these solutions, and verify if it worked before trying the next.
+\begin{enumerate}
+  \item Ensure you're using a supported operating system (Linux, Windows or macOS)
+  \item Follow the prerequisite installation and deployment instructions detailed in the deployment and operations guide.
+  \item Uninstall all prerequisites and go through all the steps for prerequisite installation and app deployment.
+\end{enumerate}
+
+\subsubsection{Verification}
+The Java application launches with no errors.
+
+\subsection{Cannot Log In}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Java application displays something like \ref{fig:java_login_fail}.
+  \item Python application displays something like \ref{fig:python_login_fail}.
+  \item Error in terminal appears: \verb|Failed to resolve 'accounts.google.com'|
+  \item Error in terminal appears:\\\verb|RuntimeError: Could not parse user roles file at logins_file.json- invalid json.|
+  \item Error in terminal appear: \\ \verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/java_login_fail.png}
+    \caption{Error causes Java application to be unable to authenticate user.}
+    \label{fig:java_login_fail}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/python_login_fail.png}
+    \caption{Error causes Python application to be unable to authenticate user.}
+    \label{fig:python_login_fail}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{Solutions}
+For each solution, check if it worked using the verification steps before attempting the next.
+\begin{enumerate}
+  \item Set environment variables, as described in the deployment and operations guide.
+  \item Ensure a web browser is installed
+  \item Ensure you have internet access
+  \item Ensure \verb|logins_file.json| is syntactically valid using \href{https://jsonformatter.org/}{this}.
+  \item Ensure that all roles in \verb|logins_file.json| are the correct domain described in the data management guide.
+\end{enumerate}
+
+\subsubsection{Verification}
+The issue is fixed if \verb|logins_file.json| is syntactically correct, and you can log in on the desired application.
+
+\subsection{Syntax Errors in Telemetry Store}
+\subsubsection{Symptoms}
+\begin{itemize}
+  \item Dashboard views are blank like \ref{fig:blank_dashboards}.
+  \item Dashboard views don't update.
+  \item A runtime error appears in the terminal \\\verb|RuntimeError: Could not parse - invalid json.|
+\end{itemize}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/blank_dashboards.png}
+  \caption{Error causes dashboards to display blank}
+  \label{fig:blank_dashboards}
+\end{figure}
+\subsubsection{Solutions}
+First find which event store(s) has syntax errors. This can be done by going through the following steps on both event stores.
+\begin{enumerate}
+  \item Check the file is not empty.
+  \item Check the file starts with \verb|[| and ends with \verb|]|.
+  \item Check between each JSON object is a comma.
+  \item Place the JSON file into an online JSON validator such as \href{https://jsonformatter.org/}{this}. If it says it's invalid this file has a syntax error.
+\end{enumerate}
+
+Then, correct the syntax error by trying each of the following steps, then using the verification steps to see if it has resolved the problem. If the previous step does not work, try the next.
+\begin{enumerate}
+  \item Correct the syntax error manually, by for example adding a comma.
+  \item Removing the object with the syntax error.
+  \item Deleting the telemetry event store.
+  \item Deleting both telemetry event stores.
+\end{enumerate}
+\subsubsection{Verification}
+To verify the problem is resolved, first place the JSON store in an online \href{https://jsonformatter.org/}{validator}. If the validator says it is valid, next test that none of the symptoms observed appear in either application after restarting them. If no symptoms persist the issue is resolved.
+
+\section{Architecture}
+\subsection{Overview}
+The project is split into two applications, one written in Python and the other written in Java. The Python application is in charge of reading telemetry data, interpreting this information, and displaying this to the user. The Java application is in charge of managing user roles, settings, and achievements, design parameters, telemetry generation, and gameplay.
+
+Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc. The testing sections only outline the testing architecture as each test file is clear on what it tests, so describing such information serves no purpose. 
+\subsection{Python Application}
+\subsubsection{Overview}
+The Python application is split into 3 sub-modules. Auth handles user authentication through Google OAuth, and provides a wrapper for interfacing with the Java application. Core handles data ingestion, and interpretation. GUI handles the display and refreshing of telemetry data.
+
+The app entry point is \verb|telemetry_app.py| which instantiates the GUI and starts the main loop within it.
+\subsubsection{auth}
+\paragraph{auth\_logger}
+This component writes authentication events to the authentication log. This event writing is called by auth.
+\paragraph{auth\_wrapper}
+This component is called by the Java application to authenticate users. It wraps this information in a JSON string and outputs it to standard out.
+\paragraph{auth}
+This component handles authenticating the user, creating a new user account for new users, and getting user roles.
+\subsubsection{core}
+\paragraph{events}
+This component contains all enums for each enumerated field within telemetry events. It also contains a dataclass for each telemetry event, containing all their fields.
+\paragraph{logic}
+This component interprets data passed into it, providing metrics used by the GUI for display, getters for obtaining all events of a given type, and methods to classify ingested data.
+\paragraph{parsing}
+This component ingests data from the telemetry stores, and returns the event as a dataclass described in events.
+\subsubsection{gui}
+\paragraph{gui}
+GUI creates the majority of the user interface, creating the window tabs, the decision log, suggestions, and the home page. It also handles button presses and propagates those to the backend. It also refreshes the graphs every three seconds.
+\paragraph{plotting}
+Plotting is in charge of generating and displaying all dashboard views of the telemetry, it calls the logic to interpret the telemetry data, and displays this data using matplotlib.
+\subsection{Python Tests}
+The testing architecture consists of a unit testing folder, and a resources folder for testing data. Each unit tests is named after which component of the python application it provides unit tests for, and as a result they are not explicitly named here. 
+
+
+\subsection{Java Application}
+\subsubsection{Overview}
+The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface.
+
+\subsubsection{abilities}
+
+\paragraph{UpgradeBase}
+Acts as a base class for all upgrades. Holds a reference to a PlayerInterface, which concrete upgrades decorate. It forwards all PlayerInterface calls to the held interface.
+
+\paragraph{UpgradeEnum}
+Contains a list of all upgrades, holding their common attributes such as name and price. Is used by the system to decorate the 
+player with upgrades. 
+
+\paragraph{AbilityEnum}
+Contains a list of all attack abilities, storing their common attributes such as damage type and magic cost. Contains the logic to execute an attack ability on an entity. 
+
+\paragraph{DamageEnum}
+Contains a list of all damage types, along with common attributes such as display names. 
+
+\paragraph{AttackAbilityUnlockUpgrade}
+All attack abilities are unlocked via this concrete upgrade. It extends UpgradeBase such that the getAbilities() method returns the ability this upgrade unlocks. 
+
+\paragraph{ImprovedDamageUpgrade}
+All damage types bar absolute have a damage improvement upgrade, which extends UpgradeBase to override the calcDamage() method, causing it to return double of the damage type this upgrade improves. 
+
+\paragraph{DamageResistanceUpgrade}
+All damage types bar absolute have a damage resistance upgrade, halving the incoming damage the decorated player takes of the relevant damage type. It extends UpgradeBase. 
+
+\subsubsection{auth}
+
+\paragraph{AuthenticationException}
+This is an exception thrown if any errors occur during authentication, or in relation to obtaining information about an authenticated user. Examples include authentication failing, or trying to access user settings while no user is authenticated. 
+
+\paragraph{AuthenticationResult}
+This record stores the results of a successful authentication, including name, userID and role. This is returned by the authenticator and its information is then stored by the system for use in access control. 
+
+\paragraph{AuthenticatorInterface}
+This describes the interface for the authenticator, providing a single method that prompts Google login, either throwing an AuthenticationException on failure or returning an AuthenticationResult on success.
+
+\paragraph{Authenticator}
+This class implements the AuthenticatorInterface, making authentication requests to the Python application and returning the results as an AuthenticationResult. 
+
+\paragraph{RoleEnum}
+This enum stores all three roles, along with their telemetry safe names.
+
+\subsubsection{entitiy}
+
+\paragraph{EnemyInterface}
+This describes the interface for all entities including the player. It contains methods for handling health, getting abilities, and determining ability base damage. 
+
+\paragraph{EnemyBase}
+This class implements the common functionality of all enemies, including health and damage calculation. 
+
+\paragraph{ConcreteEnemy}
+Each enemy has their own concrete extension of EnemyBase. These extensions include damage resistances and vulnerabilities, as well as how much max health they have and their abilities. 
+
+\paragraph{PlayerInterface}
+This defines the interface for the player, extending the EntityInterface. It additionally contains methods for handling of coins, magic, lives and upgrades. 
+
+\paragraph{Player}
+This contains the base logic for all methods in PlayerInterface, including obtaining relevant values from the settings when they're influenced by design parameters, 
+
+\paragraph{EntityAIInterface}
+This defines the interface for all entity AIs, containing methods for choosing which ability to use, as well as simulation used methods for determining which enemy to target with an ability, and what upgrades to buy in the shop. 
+
+\paragraph{EntityAISingleton}
+This class provides singleton access to the concrete implementation of EntityAIInterface. It stores this class in a private member variables that is accessed via static methods. The internal class must be accessed before its AI methods are called. 
+
+\paragraph{EntityEnum}
+This class lists all entities along with their common characteristics such as display names and telemetry names. It includes the player. It also contains methods for instantiating the entity referenced through reflection.
+
+\subsubsection{gamemanger}
+\paragraph{LackingResourceException}
+This exception is thrown when the player attempts to perform an action that they lack the resources to perform, for example if they try to buy an upgrade without having enough coins to purchase it. 
+
+\paragraph{EncounterInterface}
+This defines the interface for encounters, containing the methods for handling encounter completeness, resetting the encounter, and obtaining its type in EncounterEnum. 
+
+\paragraph{Encounter}
+Encounter contains the logic and implementation for the EncounterInterface, storing the enemy instances used in the encounter. 
+
+\paragraph{EncounterEnum}
+This lists all encounters available in the game, including common characteristics such as display name or telemetry name. It also contains logic for instantiating an encounter its enum value using reflection.
+
+\paragraph{GameMangerInterface}
+This defines the interface for the GameManger, containing all functionality to interface with the game portion of the Java Application. It contains methods for creating and managing game runs, getting information about the entities in the run, interfacing with the run's shop and obtaining the run's session ID. 
+
+\paragraph{GameMangerSingleton}
+This class provides singleton access to the game manager through a static method. The singleton contained within implements the GameMangerInterface, and stores the current run and encounter. 
+
+\paragraph{GameRunterface}
+This defines the interface for a game run, containing methods for handling sessions, the shop system and upgrades, and run state including encounter state. 
+
+\paragraph{GameRun}
+This class implements GameRunterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
+
+\paragraph{SimulatedGameRun}
+This class completes a simulated run of a given difficulty upon construction, and then stores the information about the simulated run for later use by other components. 
+
+\paragraph{TimeManagerInterface}
+This defines the interface for the TimeManger, used for handling timestamping. It also contains methods for switching between real and simulated time passing, which is used by the simulation.
+
+\paragraph{TimeManagerSingleton}
+This singleton provides singleton access to the TimeManager for event timestamping. This is done to allow testability, as reflection can be used to switch out the TimeManger for a mock object. 
+
+
+\paragraph{Utils}
+This class contains several static methods and constants for general use, such as determining if a run or enemy is dead, and how many coins should be obtained upon run completions. 
+
+\subsubsection{settings}
+
+\paragraph{DifficultyEnum}
+This enum lists all the difficulties of the game, along with the name used for telemetry events. 
+
+\paragraph{SettingsEnum}
+This enum lists all the settings, along with their name for use in telemetry events.
+
+\paragraph{SettingsInterface}
+This defines the interfaces for the settings, providing methods for logging in with an AuthenticationResult, obtaining user information such as their role, and modifying and reading the values of the design parameters. It also contains methods for changing which file data is written to.
+
+\paragraph{SettingsSingleton}
+This class provides singleton access to the game settings through a static method. The internal Settings class then implements the SettingsInterface, storing the value of design parameters and user information, and updating them in the relevant file when needed.
+
+\subsubsection{telemmetry}
+
+\paragraph{TelemetryEvent}
+This is the base abstract class for all telemetry events, containing the time the event was created, the event name, and the user ID.
+
+\paragraph{SessionEvent}
+This abstract class extends TelemetryEvent to also store the sessionID of a run or session for telemetry events associated with game runs. 
+
+\paragraph{EncounterEvent}
+This abstract class extends SessionEvent to contain encounter related information including stage number, difficulty, and and the name of the encounter.
+
+\paragraph{EncounterCompleteEvent}
+This abstract class extends EncounterEvent to include how much health the player had when they completed the encounter. 
+
+\paragraph{EncounterFailEvent}
+This abstract class extends EncounterEvent to include how many lives the player has left after failing an encounter, being 0 on run end.
+
+\paragraph{ConcreteTelemetryEvent}
+Every telemetry event has its own concrete event class, that extends one of the base events described above, and may implement additional functionality if required by the telemetry schema in data management and the report. 
+
+\paragraph{SessionValidationException}
+This exception is thrown if when attempting to validate an incoming telemetry event, the Java application notices it's session ID is invalid (e.g. it receives an event before receiving a StartSessionEvent).
+
+\paragraph{TimestampValidationException}
+This exception is thrown if a timestamp cannot be validated, e.g. a StartSessionEvent occurs before an EndSessionEvent of the same session. 
+
+\paragraph{UserValidationException}
+This exception is thrown if a telemetry event is from a different user to the user who started a session. 
+
+\paragraph{TelemetryListenerInterface}
+This defines the interface for the telemetry listener, containing methods to handle each kind of telemetry event and write this to the telemetry log. 
+
+\paragraph{TelemetryListenerSingleton}
+This class provides singleton access to the TelemetryListener via a static method. The TelemetryListener implements the above interface, storing the current session ID and user ID and keeping track of time to ensure events are validated. 
+
+\subsubsection{ui}
+
+\paragraph{GameRunPage}
+This class contains the majority of the logic for the GUI, it is the entry point of the Java application and contains the logic for displaying the login, main menu, starting runs, and being in an encounter, as well as a game over screen. 
+
+\paragraph{SettingsPage}
+This class contains the GUI logic for displaying the settings page, including changing of design parameters, entering a justification, toggling telemetry, viewing the telemetry disclosure, and assigning roles. 
+
+\paragraph{ShopPage}
+This class contains the GUI logic for displaying the shop between encounters. 
+
+\subsection{Java Tests}
+The tests are split up into integration and unit tests. From there each test type is split by the module it contains tests for. Each file within that folder represents a collection of tests for that Java class. The resources folder contains resources for testing. 
+
+\section{Extension}
+
+\subsection{Overview}
+In this section we will provide detailed instructions on how to make several common extensions to the application. Each extension is its own section, containing a numbered list of steps that need to be taken.
+
+\subsection{Adding a New Upgrade}
+\label{sec:add_upgrade}
+This section describes adding a new generic upgrade, which its functionality can be implemented by overriding the relevant UpgradeBase methods.
+
+\begin{enumerate}
+  \item Create a new class that extends UpgradeBase.
+  \item Create a constructor that takes in a PlayerInterface and passes this to the superclass.
+  \item Override any relevant PlayerInterface methods to implement the desired functionality.
+  \item In UpgradeEnum add a new entry, containing the upgrade's cost, class, its name in pascal case as a string, and its name in a human readable format. 
+  \item In GameRun add the UpgradeEnum value to the shopUpgrades field. 
+  \item Inside the concrete upgrade class, override the getUpgrades method. In this method it should get the upgrades from super.player, then append to this list the UpgradeEnum value of the upgrade. 
+\end{enumerate}
+\subsection{Adding a New Attack Ability}
+This section describes adding a new attack ability to the game, that can optionally cost magic to use.
+
+\begin{enumerate}
+  \item Add a new entry to AbilityEnum, containing a description of the ability, its base damage, how much magic it costs to use (0 if it costs none), the type of damage it deals as a DamageEnum, and a name for the ability.
+  \item To make the ability purchasable by the player, create an upgrade as described in \ref{sec:add_upgrade}. Override the getAbilities() method to obtain the abilities from the superclass, then append to it the AbilityEnum value of the new attack ability.
+  \item To allow an enemy to use it, go into the class of the enemy and add to the getAbilities() method code to add the new ability's AbilityEnum value to the end of the list of abilities the method returns. 
+\end{enumerate}
+\subsection{Adding a New Damage Type}
+This section describes the steps required to add a new damage type to the game.
+
+\begin{enumerate}
+  \item Add to DamageEnum the new damage type.
+  \item If you wish to make an ability use this damage type, you can change the damage type of the ability in AbilityEnum.
+  \item If you wish to make an Enemy resistant or vulnerable to the damage type, inside the enemy's loseHealth() method half or double the damage respectively, if it is of the new type. 
+  \item If you wish to add an upgrade that makes the player resistant to it, follow the steps in \ref{sec:add_upgrade}, then in loseHealth() check if the damage type is that of the new damage type, and half it if so, before passing the halved value to the super.loseHealth.
+  \item If you wish to add an upgrade that improves the players damage of the type, follow the steps in \ref{sec:add_upgrade}, then in calcDamage() check if the damage type is that of the new damage type, and if so double the result of super.calcDamage before returning it.  
+\end{enumerate}
+
+\subsection{Adding a New Enemy}
+This section describes the steps to create a new enemy, with any set of already-existing abilities and different damage resistances/vulnerabilities. 
+
+\begin{enumerate}
+  \item First create a new class that extends EnemyBase.
+  \item In the constructor, add an argument for the current difficulty, pass to the superclass the desired maximum health, multiplied by\\\verb|SettingsSingleton.getInstance().getEnemyMaxHealthMultiplier(difficulty)|. 
+  \item Override getAbilities() to return a list of the abilities the entity should have, as AbilityEnum values.
+  \item Add any vulnerabilities or resistances to loseHealth by checking the damage type and multiplying or dividing it by 2 if they're vulnerable or resistant respectively, then passing this value to the superclass.
+  \item Add the Enemy to EntityEnum, including the class just defined, its name for use in telemetry, and a display name.
+  \item Inside the enemy class, override the getType() method to return its EntityEnum value. 
+  \item To add this enemy to a pre-existing encounter, find the encounter in EncounterEnum, and add a reference to the enemy's class inside the list of enemies within that encounter. 
+\end{enumerate}
+
+\subsection{Adding a New Encounter}
+This section describes adding a new encounter to the game, containing pre-existing enemies.
+
+\begin{enumerate}
+  \item First create a new value in EncounterEnum, specifying which enemies are in the encounter, its name for telemetry events, and its display name.
+  \item To add this encounter to a stage, in GameRun select which phase the encounter should belong to and add it to that list. 
+\end{enumerate}
+
+\subsection{Adding a New Stage}
+This section describes adding a new stage to the game that the player can progress through.
+
+\begin{enumerate}
+  \item First, in the GameRunPage update onEncounterWon() set the final stage to be greater than 10.
+  \item Then, in GameRun update pickEncounter() to pick an encounter for the new stage.
+  \item If you want a new phase for this stage, add a new phase as a member variable to GameRun. It should be an array of Encounters for that phase. The pickEncounter() method should then pull the encounter from that phase instead. 
+\end{enumerate}
+
+\subsection{Adding a New Telemetry Event}
+This section describes how to add a new telemetry event. This requires modifications on both the Java and Python applications, so each of those steps are outlined separately. 
+
+Adding a new telemetry event to Java:
+\begin{enumerate}
+  \item Create a new telemetry event class that extends TelemetryEvent or one of its abstract subclasses. 
+  \item Create a constructor that takes in all the event's fields, and passes the relevant ones to the superclass. It should also pass its telemetry safe name to the superclass.
+  \item Create a final field for each data item the telemetry event stores, that is not stored in a superclass. 
+  \item Create a get<Field> method for each of the above fields, that returns that field's value. 
+  \item In TelemetryListenerInterface create a method called on<New Event Name> that takes in the new event.
+  \item In TelemetryListenerSingleton's implementation of TelemetryListenerInterface, implement the above method. It should first try validate the event by calling isCorrectSession(), isCorrectTimeStamp(), isCorrectUser() and lastly save() to save the event.
+  \item Lastly add a source of the event that constructs it, and passes it to TelemetryListenerSingleton.getInstance().on<Event name>()
+\end{enumerate}
+
+Adding a new telemetry event to Python:
+\begin{enumerate}
+  \item Create a new dataclass in events that contains all the fields of the telemetry event.
+  \item Create a value for the event in the events.EventParameter class. The value should be the same as the event's name, and the variable name should be the event's in screaming snake case. 
+  \item In parsing, add the dataclass made in step one to the ValidEvent type alias. 
+  \item Then in the match statement, add a section checking for the new event. In this section construct the dataclass made in step one by obtaining and parsing the values stored in the event dictionary.
+\end{enumerate}
+\end{document}

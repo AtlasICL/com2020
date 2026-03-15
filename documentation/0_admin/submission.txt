@@ -1,0 +1,4 @@
+GitHub repository URL: https://github.com/AtlasICL/com2020
+Group name: TheSpecialCharacters
+Project number: 7
+TODO any admin/demo account details

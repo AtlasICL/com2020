@@ -123,4 +123,83 @@
   "sessionID" : 141942179,
   "timestamp" : "2026/02/16/09/55/45"
 }
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "95",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/16/33/17"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "90",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/06/39"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/06/59"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/01"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/09"
+}
+,
+{
+  "userID" : "105241953273671074461",
+  "event" : "SettingsChange",
+  "setting" : "PLAYER_MAX_HEALTH",
+  "settingValue" : "85",
+  "settingsChangeJustification" : "some justification here",
+  "timestamp" : "2026/03/11/17/07/10"
+}
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "StartSession",
+  "sessionID" : -25143981,
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/14/00/03/22"
+}
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -25143981,
+  "stage_number" : 1,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Easy",
+  "timestamp" : "2026/03/14/00/03/22"
+}
+,
+{
+  "userID" : "109658120688489795960",
+  "event" : "EndSession",
+  "sessionID" : -25143981,
+  "timestamp" : "2026/03/14/00/03/41"
+}
 ]

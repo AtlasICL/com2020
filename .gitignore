@@ -35,10 +35,11 @@ export.csv
 *.out
 *.xml
 *.toc
+*.bbl
 
 # Report
-cw1_prototype_report.log
-cw1_prototype_report.pdf
+cw2_final_report.log
+cw2_final_report.pdf
 meeting_minutes.log
 meeting_minutes.pdf
 risk_register.log
@@ -51,3 +52,13 @@ deployment_guide.log
 deployment_guide.pdf
 test_evidence.log
 test_evidence.pdf
+indent.log
+data_management.log
+data_management.pdf
+handover_index.log
+handover_index.pdf
+deployment_and_operations.log
+deployment_and_operations.pdf
+maintenance_and_troubleshooting.log
+maintenance_and_troubleshooting.pdf
+

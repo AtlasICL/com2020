@@ -44,8 +44,13 @@ class PlotTab:
         self.color_map: dict[str, str] = {
             "Easy": "green",
             "Medium": "orange",
-            "Hard": "red"
+            "Hard": "red",
+            "Fast": "green",
+            "Slow": "red",
+            "Long": "blue",
+            "Short": "purple"
         }
+
 
     def plot_line(self, x, y, label=None) -> None:
         self.axes.clear()
@@ -76,6 +81,7 @@ class PlotTab:
         self.axes.grid(True)
         self.canvas.draw()
 
+
     def plot_multi_line(self, series: list[tuple[list, list, str]]) -> None:
         self.axes.clear()
         self.axes.set_title(self.title)
@@ -98,9 +104,9 @@ class PlotTab:
             )
         self.axes.legend(
             handlelength=0.5,   # longer line in legend
-            markerscale=1,      # dot scale in legend
-            handletextpad=0.4,  # padding with text
-            borderaxespad=0.2,  # padding from border
+            markerscale=2,      # dot scale in legend
+            handletextpad=0.6,  # padding with text
+            borderaxespad=0.4,  # padding from border
         )
         self.axes.grid(True)
         self.canvas.draw()

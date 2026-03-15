@@ -2,19 +2,31 @@ package wizardquest.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import java.time.Instant;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import wizardquest.abilities.UpgradeEnum;
 import wizardquest.entity.PlayerInterface;
+import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.LackingResourceException;
+import wizardquest.settings.DifficultyEnum;
+import wizardquest.telemetry.BuyUpgradeEvent;
+import wizardquest.telemetry.TelemetryListenerInterface;
 
 public class ShopPage {
 
     private final GameManagerInterface gameManager;
     private final VBox root;
     private final Label log;
+    private final TelemetryListenerInterface telemetryListener;
+    private final String userID;
+    private final int sessionID;
+    private final EncounterEnum completedEncType;
+    private final DifficultyEnum difficulty;
+    private final int completedStage;
     private final Runnable onLeaveShop;
 
     private static final String PANEL_STYLE =
@@ -69,9 +81,19 @@ public class ShopPage {
             "-fx-cursor: hand;";
 
     public ShopPage(GameManagerInterface gameManager, VBox root, Label log, Runnable onLeaveShop) {
+    public ShopPage(GameManagerInterface gameManager, VBox root, Label log,
+            TelemetryListenerInterface telemetryListener, String userID,
+            int sessionID, EncounterEnum completedEncType,
+            DifficultyEnum difficulty, int completedStage, Runnable onLeaveShop) {
         this.gameManager = gameManager;
         this.root = root;
         this.log = log;
+        this.telemetryListener = telemetryListener;
+        this.userID = userID;
+        this.sessionID = sessionID;
+        this.completedEncType = completedEncType;
+        this.difficulty = difficulty;
+        this.completedStage = completedStage;
         this.onLeaveShop = onLeaveShop;
     }
 
@@ -111,6 +133,10 @@ public class ShopPage {
                 b.setOnAction(e -> {
                     try {
                         gameManager.purchaseUpgrade(u);
+                        telemetryListener.onBuyUpgrade(new BuyUpgradeEvent(
+                                userID, sessionID, Instant.now(),
+                                completedEncType, difficulty, completedStage,
+                                u, u.getPrice()));
                         log.setText("Bought " + u.getDisplayName());
                         b.setDisable(true);
                         b.setText(u.getDisplayName() + " (bought)");

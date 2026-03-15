@@ -1,6 +1,7 @@
 package wizardquest.ui;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,14 +20,19 @@ import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityInterface;
 import wizardquest.entity.PlayerInterface;
+import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.gamemanager.EncounterInterface;
 import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
 import wizardquest.gamemanager.LackingResourceException;
+import wizardquest.gamemanager.Utils;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
+import wizardquest.telemetry.*;
+
+import java.time.Instant;
 
 public class GameRunPage extends Application {
 
@@ -34,8 +40,8 @@ public class GameRunPage extends Application {
     private final GameManagerInterface gameManager = GameManagerSingleton.getInstance();
     private final SettingsInterface settings = SettingsSingleton.getInstance();
     private final EntityAIInterface ai = EntityAISingleton.getInstance();
+    private final TelemetryListenerInterface telemetryListener = TelemetryListenerSingleton.getInstance();
 
-    private static final int COINS_GAINED = 25;
 
     private static final String PANEL_STYLE =
         "-fx-background-color: #2b2d31;" +
@@ -128,6 +134,8 @@ private static final String DANGER_BUTTON_STYLE =
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: #1e1f22;");
 
+        Label title = new Label("WizardQuest");
+        Label status = new Label("");
 
         Label title = new Label("WizardQuest");
         title.setStyle(TITLE_STYLE);
@@ -135,31 +143,51 @@ private static final String DANGER_BUTTON_STYLE =
         loginBtn.setStyle(PRIMARY_BUTTON_STYLE);
 
         loginBtn.setOnAction(e -> {
-            try {
-                // Launch OAuth authentication through the Python authenticator
-                Authenticator auth = new Authenticator();
-                AuthenticationResult result = auth.login();
+            // loginBtn.setDisable(true);
+            status.setText("Opening browser...");
+            Task<AuthenticationResult> authenticationTask = new Task<>() {
+                @Override
+                protected AuthenticationResult call() throws AuthenticationException{
+                    Authenticator auth = new Authenticator();
+                    return auth.login();
+                }
+            };
 
-                // Load authenticated user settings into the settings system
-                settings.loginWithResult(result);
+            authenticationTask.setOnSucceeded(event ->{
+                try{
+                    settings.loginWithResult(authenticationTask.getValue());
+                    showMainMenu();
+                } catch (AuthenticationException ex){
+                    // Display login error to the user
+                    Label error = new Label(
+                            "Login failed.\n\n" +
+                            "Your environment variables may not be configured correctly.\n" +
+                            "Please check the README file and make sure all required\n" +
+                            "authentication variables are set before launching the game."
+                    );
+                    error.setWrapText(true);
+                    root.getChildren().add(error);
+                    loginBtn.setDisable(false);
+                }
+            });
 
-                // Continue to main menu after successful login
-                showMainMenu();
-            } catch (AuthenticationException ex) {
+            authenticationTask.setOnFailed(event -> {
                 // Display login error to the user
                 Label error = new Label(
-                        "Login failed.\n\n"
-                        + "Your environment variables may not be configured correctly.\n"
-                        + "Please check the README file and make sure all required\n"
-                        + "authentication variables are set before launching the game."
-                );
-                error.setStyle(TEXT_STYLE);
+                        "Login failed.\n\n" +
+                                "Your environment variables may not be configured correctly.\n" +
+                                "Please check the README file and make sure all required\n" +
+                                "authentication variables are set before launching the game.");
                 error.setWrapText(true);
                 root.getChildren().add(error);
-            }
+                loginBtn.setDisable(false);
+            });
+            Thread t = new Thread(authenticationTask, "sso-login-thread");
+            t.setDaemon(true);
+            t.start();
         });
 
-        root.getChildren().addAll(title, loginBtn);
+        root.getChildren().addAll(title, loginBtn, status);
     }
 
     /**
@@ -244,6 +272,11 @@ private static final String DANGER_BUTTON_STYLE =
             b.setOnAction(e -> {
                 // Initialise a new game run
                 gameManager.startNewGame(d);
+                GameRunInterface run = gameManager.getCurrentRun();
+                if (run != null) {
+                    telemetryListener.onStartSession(new StartSessionEvent(
+                            settings.getUserID(), run.getSessionID(), Instant.now(), d));
+                }
                 // Move to encounter 1
                 nextEncounter();
             });
@@ -275,6 +308,8 @@ private static final String DANGER_BUTTON_STYLE =
             showEndScreen();
             return;
         }
+
+        emitEncounterStartEvent();
 
         // Reset health and magic before starting a new encounter.
         player.resetHealth();
@@ -308,6 +343,21 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
+        // If the player died last turn, deducts 1 life, resets the enemies, or end if
+        // no more lives.
+        if (player.getHealth() <= 0) {
+            gameManager.resetFailedEncounter();
+            emitEncounterFailEvent(player.getLives());
+            if (player.getLives() == 0) {
+                showEndScreen();
+                return;
+            }
+            player.resetHealth();
+            player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+
+        }
+        // Determines current stage
         int stage = run != null ? run.getStage() : 1;
 
         Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
@@ -501,6 +551,17 @@ private static final String DANGER_BUTTON_STYLE =
         }
         int dmg = hpBefore - target.getHealth();
 
+        // Record kill event if the target was killed
+        if (target.getHealth() <= 0) {
+            GameRunInterface killRun = gameManager.getCurrentRun();
+            if (killRun != null) {
+                telemetryListener.onKillEnemy(new KillEnemyEvent(
+                        settings.getUserID(), killRun.getSessionID(), Instant.now(),
+                        currentEncounter.getType(), killRun.getDifficulty(),
+                        killRun.getStage(), target.getType()));
+            }
+        }
+
         StringBuilder msg = new StringBuilder();
         msg.append("You used ").append(ability.getDisplayName())
                 .append(" on ").append(target.getType().getDisplayName())
@@ -512,8 +573,16 @@ private static final String DANGER_BUTTON_STYLE =
         // advance.
         if (allDead(enemies)) {
             gameManager.completeCurrentEncounter();
-            player.gainCoins(COINS_GAINED);
-            msg.append("Encounter won! +").append(COINS_GAINED).append(" coins.\n");
+            emitEncounterCompleteEvent(player.getHealth());
+            player.gainCoins(Utils.COINS_GAINED);
+            GameRunInterface coinRun = gameManager.getCurrentRun();
+            if (coinRun != null) {
+                telemetryListener.onGainCoin(new GainCoinEvent(
+                        settings.getUserID(), coinRun.getSessionID(), Instant.now(),
+                        currentEncounter.getType(), coinRun.getDifficulty(),
+                        coinRun.getStage(), Utils.COINS_GAINED));
+            }
+            msg.append("Encounter won! +").append(Utils.COINS_GAINED).append(" coins.\n");
             log.setText(msg.toString());
             onEncounterWon();
             return;
@@ -560,6 +629,10 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
+        // Save completed encounter info for shop telemetry
+        EncounterEnum completedEncType = currentEncounter.getType();
+        int completedStage = run.getStage();
+
         gameManager.advanceToNextLevel();
         if (!gameManager.isGameRunning()) {
             showEndScreen();
@@ -573,32 +646,39 @@ private static final String DANGER_BUTTON_STYLE =
         }
 
         currentEncounter = nextEnc;
-        showShop();
+        showShop(completedEncType, completedStage);
     }
 
     // Delegates to ShopPage, on leave resets the player and starts the next
     // encounter
-    private void showShop() {
+    private void showShop(EncounterEnum completedEncType, int completedStage) {
         if (!gameManager.isGameRunning()) {
             showEndScreen();
             return;
         }
-        ShopPage shopPage = new ShopPage(gameManager, root, log, () -> {
-            if (!gameManager.isGameRunning()) {
-                showEndScreen();
-                return;
-            }
-            PlayerInterface player = gameManager.getCurrentPlayer();
-            if (player == null || currentEncounter == null) {
-                showEndScreen();
-                return;
-            }
-            // Reset health and magic before starting a new encounter
-            player.resetHealth();
-            player.resetMagic();
-            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
-            showEncounter();
-        });
+        GameRunInterface shopRun = gameManager.getCurrentRun();
+        ShopPage shopPage = new ShopPage(gameManager, root, log,
+                telemetryListener, settings.getUserID(),
+                shopRun != null ? shopRun.getSessionID() : 0,
+                completedEncType,
+                shopRun != null ? shopRun.getDifficulty() : DifficultyEnum.EASY,
+                completedStage, () -> {
+                    if (!gameManager.isGameRunning()) {
+                        showEndScreen();
+                        return;
+                    }
+                    PlayerInterface player = gameManager.getCurrentPlayer();
+                    if (player == null || currentEncounter == null) {
+                        showEndScreen();
+                        return;
+                    }
+                    // Reset health and magic before starting a new encounter
+                    player.resetHealth();
+                    player.resetMagic();
+                    player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+                    emitEncounterStartEvent();
+                    showEncounter();
+                });
         shopPage.show();
     }
 
@@ -636,6 +716,10 @@ private static final String DANGER_BUTTON_STYLE =
             }
         }
 
+        if (run != null) {
+            telemetryListener.onEndSession(new EndSessionEvent(
+                    settings.getUserID(), run.getSessionID(), Instant.now()));
+        }
         gameManager.endGame();
 
         Button back = new Button("Main Menu");
@@ -654,6 +738,67 @@ private static final String DANGER_BUTTON_STYLE =
             }
         }
         return true;
+    }
+
+    private boolean isBossEncounter(EncounterEnum type) {
+        return type == EncounterEnum.EVIL_WIZARD_ENCOUNTER
+                || type == EncounterEnum.GHOST_ENCOUNTER
+                || type == EncounterEnum.BLACK_KNIGHT_ENCOUNTER
+                || type == EncounterEnum.DRAGON_ENCOUNTER;
+    }
+
+    private void emitEncounterStartEvent() {
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run == null || currentEncounter == null)
+            return;
+        String userID = settings.getUserID();
+        int sessionID = run.getSessionID();
+        EncounterEnum type = currentEncounter.getType();
+        DifficultyEnum diff = run.getDifficulty();
+        int stage = run.getStage();
+        if (isBossEncounter(type)) {
+            telemetryListener.onBossEncounterStart(new BossEncounterStartEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage));
+        } else {
+            telemetryListener.onNormalEncounterStart(new NormalEncounterStartEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage));
+        }
+    }
+
+    private void emitEncounterCompleteEvent(int playerHPRemaining) {
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run == null || currentEncounter == null)
+            return;
+        String userID = settings.getUserID();
+        int sessionID = run.getSessionID();
+        EncounterEnum type = currentEncounter.getType();
+        DifficultyEnum diff = run.getDifficulty();
+        int stage = run.getStage();
+        if (isBossEncounter(type)) {
+            telemetryListener.onBossEncounterComplete(new BossEncounterCompleteEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage, playerHPRemaining));
+        } else {
+            telemetryListener.onNormalEncounterComplete(new NormalEncounterCompleteEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage, playerHPRemaining));
+        }
+    }
+
+    private void emitEncounterFailEvent(int livesLeft) {
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run == null || currentEncounter == null)
+            return;
+        String userID = settings.getUserID();
+        int sessionID = run.getSessionID();
+        EncounterEnum type = currentEncounter.getType();
+        DifficultyEnum diff = run.getDifficulty();
+        int stage = run.getStage();
+        if (isBossEncounter(type)) {
+            telemetryListener.onBossEncounterFail(new BossEncounterFailEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage, livesLeft));
+        } else {
+            telemetryListener.onNormalEncounterFail(new NormalEncounterFailEvent(
+                    userID, sessionID, Instant.now(), type, diff, stage, livesLeft));
+        }
     }
 
     public static void main(String[] args) {

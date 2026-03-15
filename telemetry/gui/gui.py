@@ -9,6 +9,7 @@ This module is responsible for the logic of refreshing plot data.
 
 The GUI logic lives in the TelemetryAppGUI class.
 """
+
 import csv
 import dataclasses
 
@@ -17,18 +18,21 @@ from tkinter import ttk, messagebox
 import seaborn as sns
 from pathlib import Path
 
+from core.events import SettingName
 from core.logic import EventLogicEngine
+from core.suggestions import SuggestionGenerator
 from gui.plotting import PlotTab
 from auth.auth import google_login, Role
 
 
 ROOT_DIRECTORY: Path = Path.cwd().parent
-EVENT_LOGS_DIRECTORY: str = "event_logs"
-TELEMETRY_EVENTS_FILE: str = "telemetry_events.json"
+EVENT_LOGS_DIRECTORY: str   = "event_logs"
+TELEMETRY_EVENTS_FILE: str  = "telemetry_events.json"
 SIMULATION_EVENTS_FILE: str = "simulation_events.json"
+EXAMPLE_EVENTS_FILE: str    = "example_events.json"
 
 # Polling interval for refreshing data.
-POLLING_INTERVAL_MS = 3000
+POLLING_INTERVAL_MS = 4000
 
 
 class GUI_SETTINGS:
@@ -36,9 +40,10 @@ class GUI_SETTINGS:
     WINDOW_TITLE = "Telemetry App"   # Title of window.
     WINDOW_GEOMETRY = "1200x750"     # Size at startup.
     WINDOW_MINIMUM_WIDTH = 1000      # Minimum width of window.
-    WINDOW_MINIMUM_HEIGHT = 700      # Minimum height of window. 
+    WINDOW_MINIMUM_HEIGHT = 700      # Minimum height of window.
     FONT_FAMILY = "Arial"            # Font for GUI.
-    FONT_SIZE = 12                   # Font size.
+    FONT_SIZE = 14                   # Font size.
+    BUTTON_FONT_SIZE = 16            # Bigger font size for buttons.
     BACKGROUND_COLOR = "#edd68f"   # Background colour for the window.
 
 
@@ -51,8 +56,12 @@ class TelemetryAppGUI(tk.Tk):
         self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
             / TELEMETRY_EVENTS_FILE
         self.logic_engine = EventLogicEngine()
+        self.suggestion_generator = SuggestionGenerator(self.logic_engine)
         self.authenticated = False
         self.current_user_name = None
+        self.compare_by_difficulty = tk.BooleanVar(value=False)
+        self.compare_by_time = tk.BooleanVar(value=False)
+        self.compare_by_coin_hold = tk.BooleanVar(value=False)
 
         # Set GUI colours / font styles.
         self.configure(background=GUI_SETTINGS.BACKGROUND_COLOR)
@@ -64,22 +73,26 @@ class TelemetryAppGUI(tk.Tk):
             padding=6,
         )
         style.configure(
-            "TFrame", 
+            "TFrame",
             background=GUI_SETTINGS.BACKGROUND_COLOR
         )
         style.configure(
-            "TLabel", 
+            "TLabel",
             background=GUI_SETTINGS.BACKGROUND_COLOR
+        )
+        style.configure(
+            "Treeview",
+            rowheight=int(GUI_SETTINGS.FONT_SIZE * 2.5)
         )
 
         # Set a minimum size for the window - this prevents users from
         # making the window much too small.
         self.minsize(
-            width=GUI_SETTINGS.WINDOW_MINIMUM_WIDTH, 
+            width=GUI_SETTINGS.WINDOW_MINIMUM_WIDTH,
             height=GUI_SETTINGS.WINDOW_MINIMUM_HEIGHT
         )
 
-        # We use notebook for the "tabs" structure of the window
+        # We use notebook for the "tabs" structure of the window.
         self.notebook = ttk.Notebook(self)
         self.notebook.grid(row=0, column=0, sticky="nsew")
         self.grid_rowconfigure(0, weight=1)
@@ -93,9 +106,10 @@ class TelemetryAppGUI(tk.Tk):
         self.tab_fairness = ttk.Frame(self.notebook)
         self.tab_completion_time = ttk.Frame(self.notebook)
         self.tab_suggestions = ttk.Frame(self.notebook)
+        self.tab_decision_log = ttk.Frame(self.notebook)
 
         # Only add the "Home" screen on startup.
-        # The other tabs will be added if appropriate upon 
+        # The other tabs will be added if appropriate upon
         # authentication.
         self.notebook.add(self.tab_home, text="Home")
         self.make_welcome_screen()
@@ -114,9 +128,69 @@ class TelemetryAppGUI(tk.Tk):
         self.sign_in_button = ttk.Button(
             self.tab_home,
             text="Sign in with Google",
-            command=self.handle_sign_in
+            command=self.on_toggle_google_sso
         )
         self.sign_in_button.pack(pady=(10, 20))
+
+
+    def set_up_decision_log(self) -> None:
+        """
+        Sets up the decision log tab, with a scrollable log.
+        """
+        self.tab_decision_log.rowconfigure(0, weight=1)
+        self.tab_decision_log.columnconfigure(0, weight=1)
+        columns = ("timestamp", "setting", "value", "justification")
+        self.decision_log_tree = ttk.Treeview(
+            self.tab_decision_log,
+            columns=columns,
+            show="headings"
+        )
+        self.decision_log_tree.heading("timestamp", text="Timestamp")
+        self.decision_log_tree.heading("setting", text="Setting")
+        self.decision_log_tree.heading("value", text="Value")
+        self.decision_log_tree.heading("justification", text="Justification")
+        self.decision_log_tree.column("timestamp", width=120)
+        self.decision_log_tree.column("setting", width=200)
+        self.decision_log_tree.column("value", width=10)
+        self.decision_log_tree.column("justification", width=300)
+        scrollbar = ttk.Scrollbar(
+            self.tab_decision_log,
+            orient="vertical",
+            command=self.decision_log_tree.yview
+        )
+        self.decision_log_tree.configure(yscrollcommand=scrollbar.set)
+        self.decision_log_tree.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
+
+
+    def set_up_suggestions(self) -> None:
+        """
+        Sets up the suggestions tab, with a scrollable view.
+        """
+        self.tab_suggestions.rowconfigure(0, weight=1)
+        self.tab_suggestions.columnconfigure(0, weight=1)
+        columns = ("problem", "difficulty", "stages", "suggestion")
+        self.suggestions_tree = ttk.Treeview(
+            self.tab_suggestions,
+            columns=columns,
+            show="headings"
+        )
+        self.suggestions_tree.heading("problem", text="Problem")
+        self.suggestions_tree.heading("difficulty", text="Difficulty")
+        self.suggestions_tree.heading("stages", text="Stages")
+        self.suggestions_tree.heading("suggestion", text="Suggestion")
+        self.suggestions_tree.column("problem", width=120)
+        self.suggestions_tree.column("difficulty", width=10)
+        self.suggestions_tree.column("stages", width=10)
+        self.suggestions_tree.column("suggestion", width=300)
+        scrollbar = ttk.Scrollbar(
+            self.tab_suggestions,
+            orient="vertical",
+            command=self.suggestions_tree.yview
+        )
+        self.suggestions_tree.configure(yscrollcommand=scrollbar.set)
+        self.suggestions_tree.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
 
 
     def get_personalised_welcome_message(self) -> str:
@@ -130,12 +204,12 @@ class TelemetryAppGUI(tk.Tk):
 
     def handle_sign_in(self) -> None:
         """
-        Handles sign in. 
+        Handles sign in.
         If the authenticated user's role is authorised to see telemetry,
         then the other tabs (with telemetry info) will appear.
         If the user's role is not authorised for viewing telemetry,
-        then an error message will be shown indicating this, and the 
-        user will be returned to the Home tab, with the option to sign 
+        then an error message will be shown indicating this, and the
+        user will be returned to the Home tab, with the option to sign
         in again.
         """
         try:
@@ -158,25 +232,28 @@ class TelemetryAppGUI(tk.Tk):
         else:
             # Error message for non-developer / non-designer users.
             messagebox.showerror(
-                "Authorisation Error", 
+                "Authorisation Error",
                 "Only Designers and Developers may access telemetry data."
             )
 
 
     def on_authenticated(self) -> None:
-        self.switch_btn_text = tk.StringVar()
-        self.switch_btn_text.set("Change to simulation data")
+        self.data_source = tk.StringVar()
+        self.data_source.set("Telemetry data")
 
-        # Show a button for switching telemetry source in the home page
-        switch_simulation_button = ttk.Button(
+        # Show a dropdown for switching telemetry source in the home page.
+        data_source_dropdown = ttk.Combobox(
             self.tab_home,
-            textvariable=self.switch_btn_text,
-            command=self.toggle_file
+            textvariable=self.data_source,
+            values=["Telemetry data", "Simulation data", "Example data"],
+            state="readonly",
+            font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.BUTTON_FONT_SIZE)
         )
-        switch_simulation_button.pack(pady=(10,20))
+        data_source_dropdown.bind("<<ComboboxSelected>>", self.toggle_file)
+        data_source_dropdown.pack(pady=(10,20))
 
         # Show a button for exporting telemetry data to csv in the
-        # home page
+        # home page.
         export_telemetry_button = ttk.Button(
             self.tab_home,
             text="Export data to csv",
@@ -184,22 +261,59 @@ class TelemetryAppGUI(tk.Tk):
         )
         export_telemetry_button.pack(pady=(10, 20))
 
-        # Show a button for resetting telemetry data in the home page
+        # Show a button for resetting telemetry data in the home page.
         reset_telemetry_button = ttk.Button(
             self.tab_home,
-            text="Reset Telemetry Data",
+            text="Reset data",
             command=self.reset_telemetry
         )
         reset_telemetry_button.pack(pady=(10,20))
 
+        # Add a global toggle for comparing by difficulty above the
+        # notebook. This will toggle whether graphs show data for all
+        # difficulties, or per-difficulty.
+        control_frame = ttk.Frame(self)
+        control_frame.grid(
+            row=0,
+            column=0,
+            sticky="ew",
+            padx=10,
+            pady=(5, 0)
+        )
+        self.difficulty_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by difficulty",
+            variable=self.compare_by_difficulty,
+            command=self.on_toggle_difficulty,
+        )
+        self.difficulty_checkbox.pack(side="left")
+        self.time_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by time",
+            variable=self.compare_by_time,
+            command=self.on_toggle_time
+        )
+        self.time_checkbox.pack(side="left")
+        self.coin_hold_checkbox = ttk.Checkbutton(
+            control_frame,
+            text="Compare by Coin Hold",
+            variable=self.compare_by_coin_hold,
+            command=self.on_toggle_coin_hold
+        )
+        self.coin_hold_checkbox.pack(side="left")
+        self.notebook.grid(row=1, column=0, sticky="nsew")
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_rowconfigure(1, weight=1)
+
         # Once the user is authenticated (since this function has been
         # called), we now show all the telemetry views.
-        self.notebook.add(self.tab_funnel, text="Funnel view")
+        self.notebook.add(self.tab_funnel, text="Funnel")
         self.notebook.add(self.tab_spike, text="Difficulty spike")
         self.notebook.add(self.tab_curves, text="Health")
         self.notebook.add(self.tab_fairness, text="Coins")
-        self.notebook.add(self.tab_completion_time, text="Completion time")
+        self.notebook.add(self.tab_completion_time, text="Time")
         self.notebook.add(self.tab_suggestions, text="Suggestions")
+        self.notebook.add(self.tab_decision_log, text="Decision log")
 
         self.tab_spike.rowconfigure(0, weight=1)
         self.tab_spike.columnconfigure(0, weight=1)
@@ -217,11 +331,8 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Number of failures",
         )
-        self.spike_suggestion = ttk.Label(
-            self.tab_suggestions
-        )
-        self.spike_suggestion.pack(pady=(30, 15))
-         
+        self.set_up_suggestions()
+
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
             title="HP remaining by stage",
@@ -241,6 +352,10 @@ class TelemetryAppGUI(tk.Tk):
             ylabel="Time (seconds)",
         )
 
+        # We also set up the decision log once authenticated.
+        # (to view past balancing decisions)
+        self.set_up_decision_log()
+
         self.refresh_all()
         self.do_auto_refresh()
 
@@ -256,44 +371,41 @@ class TelemetryAppGUI(tk.Tk):
         self.after(interval_ms, self.do_auto_refresh, interval_ms)
 
 
-    def toggle_file(self) -> None:
+    def toggle_file(self, _event=None) -> None:
         """
-        Toggles between viewing telemetry data and simulation 
+        Toggles between viewing telemetry data and simulation
         data.
         """
-        if self.switch_btn_text.get() == "Change to simulation data":
-            # Change the button text to reflect data source change
-            self.switch_btn_text.set("Change to telemetry data")
-            # Switch the data source
+        if self.data_source.get() == "Simulation data":
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / SIMULATION_EVENTS_FILE
-            self.refresh_all() # Refresh data after switch
+        elif self.data_source.get() == "Example data":
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / EXAMPLE_EVENTS_FILE
         else:
-            # Change the button text to reflect data source change
-            self.switch_btn_text.set("Change to simulation data")
-            # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / TELEMETRY_EVENTS_FILE
-            # Refresh data
-            self.refresh_all() # Refresh data after switch
+        self.refresh_all()
 
 
     def reset_telemetry(self) -> None:
         """
-        Resets/erases all telemetry data. This action is permanent.
+        Resets/erases the currently active data file (telemetry events 
+        or simulation data). This action is permanent. 
         """
+        source_name = self.data_source.get()
         confirmed: bool = messagebox.askyesno(
-            title="Switch Data Source",
-            message="Are you sure you want to reset telemetry data? " 
-                + "All existing telemetry data will be lost"
+            title="Reset Data",
+            message=f"Are you sure you want to reset {source_name.lower()}? "
+                + "All existing data will be lost"
         )
         if not confirmed:
             return
-        with open(ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
-                  / TELEMETRY_EVENTS_FILE,'w') as f:
-            f.write('')
+        with open(self.file_name, 'w') as f:
+            f.write('[]')
+        self.refresh_all()
 
-    
+
     def export_to_csv(self) -> None:
         """
         Exports the telemetry data to a csv file.
@@ -323,6 +435,51 @@ class TelemetryAppGUI(tk.Tk):
             writer.writeheader()
             writer.writerows(all_events)
 
+    def on_toggle_difficulty(self) -> None:
+        if self.compare_by_difficulty.get():
+            self.compare_by_time.set(False)
+            self.compare_by_coin_hold.set(False)
+            self.time_checkbox.state(["disabled"])
+            self.coin_hold_checkbox.state(["disabled"])
+        else:
+            self.time_checkbox.state(["!disabled"])
+            self.coin_hold_checkbox.state(["!disabled"])
+        self.refresh_all()
+
+    def on_toggle_time(self) -> None:
+        if self.compare_by_time.get():
+            self.compare_by_difficulty.set(False)
+            self.compare_by_coin_hold.set(False)
+            self.difficulty_checkbox.state(["disabled"])
+            self.coin_hold_checkbox.state(["disabled"])
+        else:
+            self.difficulty_checkbox.state(["!disabled"])
+            self.coin_hold_checkbox.state(["!disabled"])
+        self.refresh_all()
+    
+    def on_toggle_coin_hold(self) -> None:
+        if self.compare_by_coin_hold.get():
+            self.compare_by_difficulty.set(False)
+            self.compare_by_time.set(False)
+            self.difficulty_checkbox.state(["disabled"])
+            self.time_checkbox.state(["disabled"])
+        else:
+            self.difficulty_checkbox.state(["!disabled"])
+            self.time_checkbox.state(["!disabled"])
+        self.refresh_all()
+
+    def on_toggle_google_sso(self) -> None:
+        self.sign_in_button.state(["disabled"])
+        self.browser_label = ttk.Label(
+            self.tab_home,
+            text="Opening browser...",
+            justify="center"
+        )
+        self.browser_label.pack(pady=(30, 15))
+        self.update()
+        self.handle_sign_in()
+        self.browser_label.destroy()
+        self.sign_in_button.state(["!disabled"])
 
     def refresh_all(self) -> None:
         """
@@ -335,41 +492,81 @@ class TelemetryAppGUI(tk.Tk):
         self.refresh_health_plots()
         self.refresh_completion_time_plot()
         self.refresh_suggestions()
+        self.refresh_decision_log()
 
 
     def refresh_funnel_graph(self) -> None:
         """
         Refreshes the plot of players remaining per stage (referred to
-        as funnel view).
+        as funnel view). 
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
-        funnel_data: dict[int, int] = self.logic_engine.funnel_view()
-        self.funnel_plot.plot_line(
-            funnel_data.keys(), 
-            funnel_data.values(), 
-            label="Players Remaining"
-        )
+        if self.compare_by_difficulty.get():
+            funnel_by_diff = self.logic_engine.funnel_view_per_difficulty()
+            series = []
+            for diff, data in funnel_by_diff.items():
+                series.append((data.keys(), data.values(), str(diff.value)))
+            self.funnel_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            funnel_by_time = self.logic_engine.funnel_view_speed()
+            series = []
+            for speed, data in funnel_by_time.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.funnel_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            funnel_by_coin_hold = self.logic_engine.funnel_view_coin_hold()
+            series = []
+            for coin_hold, data in funnel_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
+            self.funnel_plot.plot_multi_line(series)
+        else:
+            funnel_data: dict[int, int] = self.logic_engine.funnel_view()
+            self.funnel_plot.plot_line(
+                funnel_data.keys(),
+                funnel_data.values(),
+                label="Players Remaining"
+            )
 
 
     def refresh_difficulty_spike_failure_plot(self) -> None:
         """
-        Refreshes the plots for difficulty spike in terms of number 
+        Refreshes the plots for difficulty spike in terms of number
         of failures per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
-        spike_data: dict[int, int] = \
-            self.logic_engine.fail_difficulty_spikes()
-        self.spike_plot.plot_line(
-            spike_data.keys(), 
-            spike_data.values(), 
-            label="Difficulty spikes (by failure rate)"
-        )
-        self.spike_suggestion.config(text="Suggestion: " \
-                                     + self.generate_spike_suggestion())
+        if self.compare_by_difficulty.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_per_difficulty()
+            series = []
+            for diff, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(diff.value)))
+            self.spike_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_speed()
+            series = []
+            for speed, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.spike_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            spikes_by_diff = self.logic_engine.fail_difficulty_spikes_coin_hold()
+            series = []
+            for coin_hold, data in spikes_by_diff.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
+            self.spike_plot.plot_multi_line(series)
+        else:
+            spike_data: dict[int, int] = self.logic_engine.fail_difficulty_spikes()
+            self.spike_plot.plot_line(
+                spike_data.keys(),
+                spike_data.values(),
+                label="Difficulty spikes (by failure rate)"
+            )
 
 
     def get_average_dict_of_stage_dicts(
-            self, 
+            self,
             per_stage_data: list[dict[int, int]]
     ) -> dict[int, float]:
         """
@@ -378,145 +575,224 @@ class TelemetryAppGUI(tk.Tk):
         gained.
         Example: Given a list of dictionaries of health per stage data,
         this function would return a dictionary which maps the stage
-        number to the average of health at that stage. 
-        
-        :param per_stage_data: List of dictionaries which represent 
-        "x per stage" data. 
+        number to the average of health at that stage.
+
+        :param per_stage_data: List of dictionaries which represent
+        "x per stage" data.
         :type per_stage_data: list[dict[int, int]]
-        :return: Average of the given data per stage. 
+        :return: Average of the given data per stage.
         :rtype: dict[int, float]
         """
         stages = range(1, 11)
         averages: dict[int, float] = {}
         for stage in stages:
-            vals = [dictionary.get(stage, 0) 
+            vals = [dictionary.get(stage, 0)
                     for dictionary in per_stage_data]
             averages[stage] = (sum(vals) / len(vals)) if vals else 0.0
         return averages
-    
+
 
     def refresh_health_plots(self) -> None:
         """
-        Refreshes the plots of HP remaining per stage per difficulty.
+        Refreshes the plots of HP remaining per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         health_by_difficulty = \
             self.logic_engine.compare_health_per_stage_per_difficulty()
 
-        series = []
-        for difficulty, list_of_dicts in health_by_difficulty.items():
-            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
-            x = averages.keys()
-            y = averages.values()
-            series.append((x, y, str(difficulty.value)))
-
-        self.curves_plot.plot_multi_line(series)
+        if self.compare_by_difficulty.get():
+            series = []
+            for difficulty, list_of_dicts in health_by_difficulty.items():
+                averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
+                series.append((
+                    averages.keys(),
+                    averages.values(),
+                    str(difficulty.value)
+                ))
+            self.curves_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            health_by_speed = self.logic_engine.compare_health_speed()
+            series = []
+            for speed, data in health_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.curves_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            health_by_coin_hold = self.logic_engine.compare_health_coin_hold()
+            series = []
+            for coin_hold, data in health_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
+            self.curves_plot.plot_multi_line(series)
+        else:
+            all_dicts = []
+            for list_of_dicts in health_by_difficulty.values():
+                all_dicts.extend(list_of_dicts)
+            averages = self.get_average_dict_of_stage_dicts(all_dicts)
+            self.curves_plot.plot_line(
+                averages.keys(),
+                averages.values(),
+                label="Avg HP Remaining"
+            )
 
 
     def refresh_coins_gained_plots(self) -> None:
         """
-        Refreshes the plots for average coins gained per stage per
-        difficulty.
+        Refreshes the plots for average coins gained per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
         coins_by_difficulty = \
             self.logic_engine.compare_coins_per_stage_per_difficulty()
 
-        series = []
-        for difficulty, list_of_dicts in coins_by_difficulty.items():
-            averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
-            x = averages.keys()
-            y = averages.values()
-            series.append((x, y, str(difficulty.value)))
+        if self.compare_by_difficulty.get():
+            series = []
+            for difficulty, list_of_dicts in coins_by_difficulty.items():
+                averages = self.get_average_dict_of_stage_dicts(list_of_dicts)
+                series.append((
+                    averages.keys(),
+                    averages.values(),
+                    str(difficulty.value)
+                ))
+            self.fairness_plot.plot_multi_line(series)
+        elif self.compare_by_time.get():
+            coins_by_speed = self.logic_engine.compare_coins_speed()
+            series = []
+            for speed, data in coins_by_speed.items():
+                series.append((data.keys(), data.values(), str(speed.value)))
+            self.fairness_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            coins_by_coin_hold = self.logic_engine.compare_coins_coin_hold()
+            series = []
+            for coin_hold, data in coins_by_coin_hold.items():
+                series.append((data.keys(), data.values(), str(coin_hold.value)))
+            self.fairness_plot.plot_multi_line(series)
+        else:
+            all_dicts = []
+            for list_of_dicts in coins_by_difficulty.values():
+                all_dicts.extend(list_of_dicts)
+            averages = self.get_average_dict_of_stage_dicts(all_dicts)
+            self.fairness_plot.plot_line(
+                averages.keys(),
+                averages.values(),
+                label="Avg Coins Gained"
+            )
 
-        self.fairness_plot.plot_multi_line(series)
-    
 
     def refresh_suggestions(self) -> None:
         """
         Refreshes the suggestions generated.
         """
-        suggestion_text = self.generate_health_suggestion() + self.generate_spike_suggestion()
-        if not suggestion_text:
-            suggestion_text = "No suggestions available"
-        self.spike_suggestion.config(text="Suggestion:\n" + suggestion_text)
+        self.logic_engine.categorise_events(self.file_name)
+
+        suggestions = [
+            self.suggestion_generator.generate_low_health_suggestion(),
+            self.suggestion_generator.generate_high_health_suggestion(),
+            self.suggestion_generator.generate_spike_suggestion(),
+            self.suggestion_generator.generate_high_pass_rate_suggestion(),
+            self.suggestion_generator.generate_low_coin_gain_suggestion(),
+            self.suggestion_generator.generate_high_coin_gain_suggestion(),
+            self.suggestion_generator.generate_slow_average_time_suggestion(),
+            self.suggestion_generator.generate_fast_average_time_suggestion(),
+        ]
+
+        # Clear existing rows.
+        for item in self.suggestions_tree.get_children():
+            self.suggestions_tree.delete(item)
+        # Insert settings change events sorted by timestamp.
+        for suggestion_group in suggestions:
+            for suggestion in suggestion_group:
+                self.suggestions_tree.insert("", "end", values=(
+                    suggestion["problem"],
+                    suggestion["difficulty"],
+                    suggestion["stages"],
+                    suggestion["suggestion"]
+                ))
+
+
+    def _setting_to_sentence_case(self, setting_name: SettingName) -> str:
+        """
+        Helper function which returns a sentence case mapping of 
+        settings names.
+        """
+        mapping: dict[SettingName, str] = {
+            SettingName.TELEMETRY_ENABLED: "Telemetry enabled",
+            SettingName.PLAYER_MAX_HEALTH: "Player max health",
+            SettingName.ENEMY_DAMAGE_MULTIPLIER: "Enemy damage multiplier",
+            SettingName.ENEMY_MAX_HEALTH_MULTIPLIER: "Enemy max health",
+            SettingName.STARTING_LIVES: "Lives",
+            SettingName.MAX_MAGIC: "Magic cap",
+            SettingName.MAGIC_REGEN_RATE: "Magic generation rate",
+            SettingName.SHOP_ITEM_COUNT: "Shop item count"
+        }
+        try:
+            return mapping[setting_name]
+        except KeyError as e:
+            raise RuntimeError(
+                f"A setting name: {setting_name} is missing a mapping. {e}"
+            )
+        
+
+    def refresh_decision_log(self) -> None:
+        """
+        Refreshes the decision log tab with the latest settings
+        change events, sorted by most recent first.
+        """
+        self.logic_engine.categorise_events(self.file_name)
+        # Clear existing rows.
+        for item in self.decision_log_tree.get_children():
+            self.decision_log_tree.delete(item)
+        # Insert settings change events sorted by timestamp.
+        for event in self.logic_engine.get_settings_change_events():
+            self.decision_log_tree.insert("", "end", values=(
+                event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
+                self._setting_to_sentence_case(event.setting),
+                event.value,
+                event.justification
+            ))
 
 
     def refresh_completion_time_plot(self) -> None:
         """
         Refreshes the plot of average time to complete per stage.
+        Shows aggregate average by default, per difficulty, per speed or
+        per coin hold when the compare toggles are enabled.
         """
         self.logic_engine.categorise_events(self.file_name)
-        completion_data: dict[int, float] = \
-            self.logic_engine.average_time_to_complete_per_stage()
-        self.completion_time_plot.plot_line(
-            completion_data.keys(),
-            completion_data.values(),
-            label="Avg completion time"
-        )
-
-
-    def generate_spike_suggestion(self) -> str:
-        """
-        Generates a difficulty change suggestion for difficulty spikes.
-        
-        :return: Suggestion text. 
-        :rtype: str
-        """
-        stages = ""
-        spikes = self.logic_engine.fail_difficulty_spikes()
-        mean = sum(spikes.values()) / len(spikes)
-        for stage in spikes:
-            if spikes[stage] > mean:
-                stages += str(stage) + ", "
-        if stages:
-            return "High failure rate in " + stages + " consider increasing lives by 2.\n"
-        return ""
-    
-
-    def generate_health_suggestion(self) -> str:
-        """
-        Generates a health change suggestion for low health.
-
-        :return: Suggestion text.
-        :rtype: str
-        """
-        spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts = []
-        for difficulty, hp_list in spikes.items():
-            # Iterate for each difficulty level
-            totals = {}
-            counts = {}
-            for health_per_stage in hp_list:
-                for stage, hp_loss in health_per_stage.items():
-                    totals[stage] = totals.get(stage, 0) + hp_loss
-                    counts[stage] = counts.get(stage, 0) + 1
-            averages = {}
-            for stage in totals:
-                # Calculate average health remaining per stage
-                averages[stage] = totals[stage] / counts[stage]
-
-            # Filter to only stages which aren't 0 hp (i.e. not played yet)
-            active_hp_values = [hp for hp in averages.values() if hp > 0]
-            if not active_hp_values:
-                continue
-            # Calculate average based on filtered values
-            mean = sum(active_hp_values) / len(active_hp_values)
-            # Add stages less than mean until 0hp stage
-            stages_flagged = []
-            for stage in averages.keys():
-                if averages[stage] < mean:
-                    stages_flagged.append(str(stage))
-                if averages[stage] == 0:
-                    break
-                
-            # Create list of difficulties to stages string
-            if stages_flagged:
-                suggestion_parts.append(f"{str(difficulty.value)}, " + 
-                                        ", ".join(stages_flagged))
-        # Return full suggestion
-        if suggestion_parts:
-            return "High health loss in " + "".join(suggestion_parts) + \
-            " Consider lowering difficulty or changing the max health.\n"
-        return ""
+        if self.compare_by_difficulty.get():
+            time_by_diff = self.logic_engine \
+                .average_time_to_complete_per_stage_per_difficulty()
+            series = []
+            for diff, data in time_by_diff.items():
+                series.append(
+                    (data.keys(), data.values(), str(diff.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+            return
+        elif self.compare_by_time.get():
+            time_by_speed = self.logic_engine \
+                .average_time_to_complete_per_stage_speed()
+            series = []
+            for speed, data in time_by_speed.items():
+                series.append(
+                    (data.keys(), data.values(), str(speed.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+        elif self.compare_by_coin_hold.get():
+            time_by_coin_hold = self.logic_engine \
+                .average_time_to_complete_per_stage_coin_hold()
+            series = []
+            for coin_hold, data in time_by_coin_hold.items():
+                series.append(
+                    (data.keys(), data.values(), str(coin_hold.value))
+                )
+            self.completion_time_plot.plot_multi_line(series)
+        else:
+            completion_data: dict[int, float] = \
+                self.logic_engine.average_time_to_complete_per_stage()
+            self.completion_time_plot.plot_line(
+                completion_data.keys(),
+                completion_data.values(),
+                label="Avg completion time"
+            )
