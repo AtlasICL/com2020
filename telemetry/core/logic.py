@@ -272,10 +272,12 @@ class EventLogicEngine:
         fail_count = 0
         if stage_number in [3, 6, 9, 10]:
             for fail_event in self.boss_encounter_fail_events:
-                fail_count += fail_event.stage_number == stage_number
+                if fail_event.lives_left == 0:
+                    fail_count += fail_event.stage_number == stage_number
             return fail_count
         for fail_event in self.normal_encounter_fail_events:
-            fail_count += fail_event.stage_number == stage_number
+            if fail_event.lives_left == 0:
+                fail_count += fail_event.stage_number == stage_number
         return fail_count
     
     
