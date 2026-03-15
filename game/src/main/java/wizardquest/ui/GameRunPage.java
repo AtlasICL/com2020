@@ -1,5 +1,7 @@
 package wizardquest.ui;
 
+import java.time.Instant;
+
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -30,9 +32,18 @@ import wizardquest.gamemanager.Utils;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
-import wizardquest.telemetry.*;
-
-import java.time.Instant;
+import wizardquest.telemetry.BossEncounterCompleteEvent;
+import wizardquest.telemetry.BossEncounterFailEvent;
+import wizardquest.telemetry.BossEncounterStartEvent;
+import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.GainCoinEvent;
+import wizardquest.telemetry.KillEnemyEvent;
+import wizardquest.telemetry.NormalEncounterCompleteEvent;
+import wizardquest.telemetry.NormalEncounterFailEvent;
+import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.StartSessionEvent;
+import wizardquest.telemetry.TelemetryListenerInterface;
+import wizardquest.telemetry.TelemetryListenerSingleton;
 
 public class GameRunPage extends Application {
 
@@ -137,7 +148,6 @@ private static final String DANGER_BUTTON_STYLE =
         Label title = new Label("WizardQuest");
         Label status = new Label("");
 
-        Label title = new Label("WizardQuest");
         title.setStyle(TITLE_STYLE);
         Button loginBtn = new Button("Login with SSO");
         loginBtn.setStyle(PRIMARY_BUTTON_STYLE);
