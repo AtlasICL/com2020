@@ -24,7 +24,7 @@ public class ExampleEventsGenerator {
         AuthenticationResult result;
 
         // Each user has three sessions - one for each difficulty.
-        int totalUsers = 40;
+        int totalUsers = 50;
         generator.generateUserIDs(totalUsers);
 
         for (int i = 0; i < generator.userIDs.size(); i++) {
