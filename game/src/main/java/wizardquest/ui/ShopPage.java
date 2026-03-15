@@ -1,9 +1,9 @@
 package wizardquest.ui;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import java.time.Instant;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -80,11 +80,11 @@ public class ShopPage {
             "-fx-padding: 8 16 8 16;" +
             "-fx-cursor: hand;";
 
-    public ShopPage(GameManagerInterface gameManager, VBox root, Label log, Runnable onLeaveShop) {
     public ShopPage(GameManagerInterface gameManager, VBox root, Label log,
-            TelemetryListenerInterface telemetryListener, String userID,
-            int sessionID, EncounterEnum completedEncType,
-            DifficultyEnum difficulty, int completedStage, Runnable onLeaveShop) {
+        TelemetryListenerInterface telemetryListener, String userID,
+        int sessionID, EncounterEnum completedEncType,
+        DifficultyEnum difficulty, int completedStage, Runnable onLeaveShop) {
+
         this.gameManager = gameManager;
         this.root = root;
         this.log = log;
