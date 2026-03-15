@@ -299,6 +299,8 @@ class SuggestionGenerator:
         # Return list of suggestions
         return suggestion_list
 
+        # Return list of suggestions
+        return suggestion_list
 
     def generate_fast_average_time_suggestion(self) -> list[dict[str, str]]:
         """

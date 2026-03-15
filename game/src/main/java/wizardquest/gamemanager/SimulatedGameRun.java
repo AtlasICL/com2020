@@ -219,6 +219,9 @@ public class SimulatedGameRun {
 
             // Enemy turn
             for (EntityInterface enemy : currentEncounter.getEnemies()) {
+                if (Utils.isDead(enemy)) {
+                    continue;
+                }
                 try {
                     this.ai.pickAbility(enemy).execute(enemy, player);
                 } catch (LackingResourceException e) {
