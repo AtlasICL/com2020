@@ -163,6 +163,36 @@ class TelemetryAppGUI(tk.Tk):
         scrollbar.grid(row=0, column=1, sticky="ns")
 
 
+    def set_up_suggestions(self) -> None:
+        """
+        Sets up the suggestions tab, with a scrollable view.
+        """
+        self.tab_suggestions.rowconfigure(0, weight=1)
+        self.tab_suggestions.columnconfigure(0, weight=1)
+        columns = ("problem", "difficulty", "stages", "suggestion")
+        self.suggestions_tree = ttk.Treeview(
+            self.tab_suggestions,
+            columns=columns,
+            show="headings"
+        )
+        self.suggestions_tree.heading("problem", text="Problem")
+        self.suggestions_tree.heading("difficulty", text="Difficulty")
+        self.suggestions_tree.heading("stages", text="Stages")
+        self.suggestions_tree.heading("suggestion", text="Suggestion")
+        self.suggestions_tree.column("problem", width=120)
+        self.suggestions_tree.column("difficulty", width=10)
+        self.suggestions_tree.column("stages", width=10)
+        self.suggestions_tree.column("suggestion", width=300)
+        scrollbar = ttk.Scrollbar(
+            self.tab_suggestions,
+            orient="vertical",
+            command=self.suggestions_tree.yview
+        )
+        self.suggestions_tree.configure(yscrollcommand=scrollbar.set)
+        self.suggestions_tree.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
+
+
     def get_personalised_welcome_message(self) -> str:
         """
         Gets a personalised welcome message for the user, with the
@@ -301,10 +331,7 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Number of failures",
         )
-        self.spike_suggestion = ttk.Label(
-            self.tab_suggestions
-        )
-        self.spike_suggestion.pack(pady=(30, 15))
+        self.set_up_suggestions()
 
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
@@ -536,10 +563,6 @@ class TelemetryAppGUI(tk.Tk):
                 spike_data.values(),
                 label="Difficulty spikes (by failure rate)"
             )
-        self.spike_suggestion.config(
-            text="Suggestion: " + \
-            self.suggestion_generator.generate_spike_suggestion()
-        )
 
 
     def get_average_dict_of_stage_dicts(
@@ -662,6 +685,7 @@ class TelemetryAppGUI(tk.Tk):
         Refreshes the suggestions generated.
         """
         self.logic_engine.categorise_events(self.file_name)
+
         suggestions = [
             self.suggestion_generator.generate_low_health_suggestion(),
             self.suggestion_generator.generate_high_health_suggestion(),
@@ -672,12 +696,22 @@ class TelemetryAppGUI(tk.Tk):
             self.suggestion_generator.generate_slow_average_time_suggestion(),
             self.suggestion_generator.generate_fast_average_time_suggestion(),
         ]
-        suggestion_text = "\n".join(s for s in suggestions if s)
-        # Refresh the content of the tk label
-        self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
+
+        # Clear existing rows.
+        for item in self.suggestions_tree.get_children():
+            self.suggestions_tree.delete(item)
+        # Insert settings change events sorted by timestamp.
+        for suggestion_group in suggestions:
+            for suggestion in suggestion_group:
+                self.suggestions_tree.insert("", "end", values=(
+                    suggestion["problem"],
+                    suggestion["difficulty"],
+                    suggestion["stages"],
+                    suggestion["suggestion"]
+                ))
 
 
-    def _settingToSentenceCase(self, setting_name: SettingName) -> str:
+    def _setting_to_sentence_case(self, setting_name: SettingName) -> str:
         """
         Helper function which returns a sentence case mapping of 
         settings names.
@@ -713,7 +747,7 @@ class TelemetryAppGUI(tk.Tk):
         for event in self.logic_engine.get_settings_change_events():
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
-                self._settingToSentenceCase(event.setting),
+                self._setting_to_sentence_case(event.setting),
                 event.value,
                 event.justification
             ))
