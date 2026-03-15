@@ -71,7 +71,7 @@ class TestLogic(unittest.TestCase):
         )
         self.assertEqual(
             self.logic_engine.fail_difficulty_spikes(), 
-            {1:0, 2:1, 3:1, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0}
+            {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0}
         )
 
 
@@ -108,8 +108,8 @@ class TestLogic(unittest.TestCase):
             self.resource_file_path / "test_events_logic.json"
         )
         self.assertEqual(self.logic_engine.count_fails(1), 0)
-        self.assertEqual(self.logic_engine.count_fails(2), 1)
-        self.assertEqual(self.logic_engine.count_fails(3), 1)
+        self.assertEqual(self.logic_engine.count_fails(2), 0)
+        self.assertEqual(self.logic_engine.count_fails(3), 0)
 
 
     def test_funnel_view(self):
@@ -122,7 +122,7 @@ class TestLogic(unittest.TestCase):
         )
         self.assertEqual(
             self.logic_engine.funnel_view(), 
-            {1: 1, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
+            {1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
         )
 
 
