@@ -14,6 +14,13 @@ public class ExampleEventsGenerator {
     private final ArrayList<String> userIDs;
     private final SettingsInterface settings;
 
+    /**
+     * Event generator for the seeded telemetry dataset.
+     * Uses a list of mock userIDs, which are generated in this class and then (mock)
+     * authenticated.
+     * Each mock user conducts a simulated run using the logic of SimulatedGameRun,
+     * to ensure that event order constraints are enforced correctly.
+     */
     private ExampleEventsGenerator() {
         userIDs = new ArrayList<>();
         settings = SettingsSingleton.getInstance();
