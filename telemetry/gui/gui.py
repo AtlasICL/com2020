@@ -265,7 +265,7 @@ class TelemetryAppGUI(tk.Tk):
         self.time_checkbox.pack(side="left")
         self.coin_hold_checkbox = ttk.Checkbutton(
             control_frame,
-            text="Compare by Coin Hold",
+            text="Compare by coin hold duration",
             variable=self.compare_by_coin_hold,
             command=self.on_toggle_coin_hold
         )
