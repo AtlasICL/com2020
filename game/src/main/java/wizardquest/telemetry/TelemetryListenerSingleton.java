@@ -67,13 +67,6 @@ public class TelemetryListenerSingleton {
             if (e.getEvent().equals("EndSession") && currentSessionID == -1) {
                 throw new SessionValidationException("EndSession for session " + e.getSessionID() +
                         " occurs before its StartSession");
-            } else if (currentSessionID != e.getSessionID() && !e.getEvent().equals("StartSession")) {
-                throw new SessionValidationException("SessionID of event " + e.getEvent() +
-                        " " + e.getSessionID() + " not equal to current sessionID of "
-                        + currentSessionID);
-            } else if (e.getEvent().equals("StartSession") && currentSessionID != -1) {
-                throw new SessionValidationException("StartSession for session " + e.getSessionID() +
-                        " occurs before EndSession of " + currentSessionID);
             }
         }
 

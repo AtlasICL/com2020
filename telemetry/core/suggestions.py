@@ -13,18 +13,18 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.funnel_view_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, averages in spikes.items():
             # Filter to only stages which aren't 0 spikes
             # (i.e. not played yet)
-            active_spike_values = \
-                [spike for spike in averages.values() if spike > 0]
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
             if not active_spike_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_spike_values) / len(active_spike_values)
+
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
@@ -35,11 +35,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
-            
                 suggestion_list.append({
                     "problem": "Low pass rate.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Increase starting lives."
                 })
@@ -56,9 +54,8 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, hp_list in spikes.items():
             # Iterate for each difficulty level
             totals = {}
@@ -76,8 +73,10 @@ class SuggestionGenerator:
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
+
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
@@ -87,10 +86,9 @@ class SuggestionGenerator:
                     break
 
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "High health loss.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Increase max health."
                 })
@@ -109,18 +107,18 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.funnel_view_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, averages in spikes.items():
             # Filter to only stages which aren't 0 spikes
             # (i.e. not played yet)
-            active_spike_values = \
-                [spike for spike in averages.values() if spike > 0]
+            active_spike_values = [spike for spike in averages.values() if spike > 0]
             if not active_spike_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_spike_values) / len(active_spike_values)
+
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
@@ -131,10 +129,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "High pass rate.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Decrease starting lives."
                 })
@@ -152,9 +149,8 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.compare_health_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, hp_list in spikes.items():
             # Iterate for each difficulty level
             totals = {}
@@ -173,8 +169,10 @@ class SuggestionGenerator:
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
+
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
@@ -185,10 +183,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "Low health loss.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Decrease max health."
                 })
@@ -205,9 +202,8 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, coins_list in spikes.items():
             # Iterate for each difficulty level
             totals = {}
@@ -223,12 +219,13 @@ class SuggestionGenerator:
 
             # Filter to only stages which aren't 0 coins gained
             # (i.e. not played yet)
-            active_coins_values = \
-                [coins for coins in averages.values() if coins > 0]
+            active_coins_values = [coins for coins in averages.values() if coins > 0]
             if not active_coins_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_coins_values) / len(active_coins_values)
+
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
@@ -239,10 +236,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "Low coin gain.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Increase coins gained per level."
                 })
@@ -259,9 +255,8 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.compare_coins_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, coins_list in spikes.items():
             # Iterate for each difficulty level
             totals = {}
@@ -277,12 +272,13 @@ class SuggestionGenerator:
 
             # Filter to only stages which aren't 0 coins gained
             # (i.e. not played yet)
-            active_coins_values = \
-                [coins for coins in averages.values() if coins > 0]
+            active_coins_values = [coins for coins in averages.values() if coins > 0]
             if not active_coins_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_coins_values) / len(active_coins_values)
+
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
@@ -293,10 +289,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "High coin gain.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Decrease coins gained per level."
                 })
@@ -304,6 +299,8 @@ class SuggestionGenerator:
         # Return list of suggestions
         return suggestion_list
 
+        # Return list of suggestions
+        return suggestion_list
 
     def generate_fast_average_time_suggestion(self) -> list[dict[str, str]]:
         """
@@ -314,17 +311,18 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, averages in spikes.items():
             # Filter to only stages which aren't 0 seconds
             # (i.e. not played yet)
             active_time_values = [time for time in averages.values() if time > 0]
             if not active_time_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_time_values) / len(active_time_values)
+
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
@@ -335,10 +333,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "Fast average completion time.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Increase number of enemies per stage."
                 })
@@ -357,18 +354,18 @@ class SuggestionGenerator:
         :rtype: list[dict[str, str]]
         """
         spikes = self.logic_engine.average_time_to_complete_per_stage_per_difficulty()
-        # Suggestion parts are the full suggestion
-        suggestion_parts: list[str] = []
         suggestion_list: list[dict[str, str]] = []
+
         for difficulty, averages in spikes.items():
             # Filter to only stages which aren't 0 seconds
             # (i.e. not played yet)
-            active_time_values = \
-                [time for time in averages.values() if time > 0]
+            active_time_values = [time for time in averages.values() if time > 0]
             if not active_time_values:
                 continue
+
             # Calculate average based on filtered values
             mean = sum(active_time_values) / len(active_time_values)
+
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
@@ -379,10 +376,9 @@ class SuggestionGenerator:
 
             # Create list of difficulties to stages string
             if stages_flagged:
-                suggestion_parts.append(", ".join(stages_flagged))
                 suggestion_list.append({
                     "problem": "Slow average completion time.",
-                    "stages": "".join(suggestion_parts),
+                    "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
                     "suggestion": "Decrease number of enemies per stage."
                 })
