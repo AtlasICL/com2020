@@ -355,18 +355,17 @@ private static final String DANGER_BUTTON_STYLE =
 
         // If the player died last turn, deducts 1 life, resets the enemies, or end if
         // no more lives.
-        if (player.getHealth() <= 0) {
-            gameManager.resetFailedEncounter();
-            emitEncounterFailEvent(player.getLives());
-            if (player.getLives() == 0) {
-                showEndScreen();
-                return;
-            }
-            player.resetHealth();
-            player.resetMagic();
-            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
-
-        }
+//        if (player.getHealth() <= 0) {
+//            gameManager.resetFailedEncounter();
+//            if (player.getLives() == 0) {
+//                showEndScreen();
+//                return;
+//            }
+//            player.resetHealth();
+//            player.resetMagic();
+//            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
+//            emitEncounterFailEvent(player.getLives());
+//        }
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
 
@@ -613,6 +612,18 @@ private static final String DANGER_BUTTON_STYLE =
             }
             int taken = pBefore - player.getHealth();
             msg.append(enemy.getType().getDisplayName()).append(" hit you for ").append(taken).append(" dmg.\n");
+        }
+
+        if (player.getHealth() <= 0) {
+            gameManager.resetFailedEncounter();
+            emitEncounterFailEvent(player.getLives());
+            if (player.getLives() == 0) {
+                showEndScreen();
+                return;
+            }
+            player.resetHealth();
+            player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
         }
 
         // Regeneration is capped at maximum.
