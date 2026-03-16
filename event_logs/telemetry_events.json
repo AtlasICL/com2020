@@ -177,4 +177,127 @@
   "settingsChangeJustification" : "some justification here",
   "timestamp" : "2026/03/11/17/07/10"
 }
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "StartSession",
+  "sessionID" : -309375948,
+  "difficulty" : "Medium",
+  "timestamp" : "2026/03/16/13/24/44"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "timestamp" : "2026/03/16/13/24/44"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "lives_left" : 2,
+  "timestamp" : "2026/03/16/13/24/56"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "NormalEncounterFail",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "lives_left" : 1,
+  "timestamp" : "2026/03/16/13/25/12"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "KillEnemy",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "enemy_type" : "Goblin",
+  "timestamp" : "2026/03/16/13/25/36"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "NormalEncounterComplete",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "player_HP_remaining" : 10,
+  "timestamp" : "2026/03/16/13/25/36"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "GainCoin",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "coins_gained" : 25,
+  "timestamp" : "2026/03/16/13/25/36"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "BuyUpgrade",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "upgrade_bought" : "WATER_DAMAGE_RESISTANCE",
+  "coins_spent" : 5,
+  "timestamp" : "2026/03/16/13/25/39"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "BuyUpgrade",
+  "sessionID" : -309375948,
+  "stage_number" : 1,
+  "encounter_name" : "GOBLIN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "upgrade_bought" : "IMPROVED_THUNDER_DAMAGE",
+  "coins_spent" : 10,
+  "timestamp" : "2026/03/16/13/25/40"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "NormalEncounterStart",
+  "sessionID" : -309375948,
+  "stage_number" : 2,
+  "encounter_name" : "FISHMAN_ENCOUNTER",
+  "difficulty" : "Medium",
+  "timestamp" : "2026/03/16/13/25/41"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "EndSession",
+  "sessionID" : -309375948,
+  "timestamp" : "2026/03/16/13/25/47"
+}
+,
+{
+  "userID" : "100663664964987964076",
+  "event" : "SettingsChange",
+  "setting" : "TELEMETRY_ENABLED",
+  "settingValue" : "true",
+  "settingsChangeJustification" : "",
+  "timestamp" : "2026/03/16/13/25/59"
+}
 ]

@@ -4,6 +4,7 @@
 
 # Java
 game/target
+game/dist
 
 # IDEs
 .vscode
@@ -52,3 +53,7 @@ deployment_guide.pdf
 test_evidence.log
 test_evidence.pdf
 indent.log
+
+# MacOS and app bundle plist
+!WizardQuest.app/Contents/Info.plist
+.DS_Store

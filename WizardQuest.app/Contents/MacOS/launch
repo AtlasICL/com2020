@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+export OIDC_ISSUER=""
+export OIDC_CLIENT_ID=""
+export OIDC_CLIENT_SECRET=""
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT="$(dirname "$(dirname "$(dirname "$SCRIPT_DIR")")")"
+
+GAME="$ROOT/game"
+TELEM="$ROOT/telemetry"
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 17 2>/dev/null || true)
+if [ -z "$JAVA_HOME" ] && ! command -v java &>/dev/null; then
+    osascript -e 'display alert "WizardQuest" message "Install Java 17+ (e.g. adoptium.net)" as critical'
+    exit 1
+fi
+
+if ! command -v mvn &>/dev/null; then
+    osascript -e 'display alert "WizardQuest" message "Install Maven (e.g. brew install maven)" as critical'
+    exit 1
+fi
+
+if [ ! -d "$GAME" ] || [ ! -d "$TELEM" ]; then
+    osascript -e 'display alert "WizardQuest" message "Put this app next to game/ and telemetry/ folders" as critical'
+    exit 1
+fi
+
+if ! command -v python3 &>/dev/null && ! command -v python &>/dev/null; then
+    osascript -e 'display alert "WizardQuest" message "Install Python 3 and run: pip install -r telemetry/requirements.txt" as critical'
+    exit 1
+fi
+
+cd "$GAME"
+mvn -q javafx:run &
+GAME_PID=$!
+
+sleep 10
+
+(cd "$TELEM"
+ [ -d venv ] && source venv/bin/activate
+ export PYTHONPATH="$ROOT"
+ python3 telemetry_app.py 2>/dev/null || python telemetry_app.py
+) &
+
+wait $GAME_PID

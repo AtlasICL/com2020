@@ -59,6 +59,14 @@
         "MEDIUM" : 0,
         "HARD" : 0
       }
+    },
+    "100663664964987964076" : {
+      "telemetryEnabled" : true,
+      "furthestLevel" : {
+        "EASY" : 0,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
     }
   },
   "designParameters" : {
