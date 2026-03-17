@@ -3,17 +3,26 @@ package wizardquest.gamemanager;
 import java.io.File;
 
 import wizardquest.abilities.UpgradeEnum;
-
 import wizardquest.entity.PlayerInterface;
 import wizardquest.entity.EntityInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityAIInterface;
-
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
-
-import wizardquest.telemetry.*;
+import wizardquest.telemetry.BossEncounterCompleteEvent;
+import wizardquest.telemetry.BossEncounterFailEvent;
+import wizardquest.telemetry.BossEncounterStartEvent;
+import wizardquest.telemetry.BuyUpgradeEvent;
+import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.GainCoinEvent;
+import wizardquest.telemetry.KillEnemyEvent;
+import wizardquest.telemetry.NormalEncounterCompleteEvent;
+import wizardquest.telemetry.NormalEncounterFailEvent;
+import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.StartSessionEvent;
+import wizardquest.telemetry.TelemetryListenerInterface;
+import wizardquest.telemetry.TelemetryListenerSingleton;
 
 /**
  * Simulates a game run, runs a simulated game run upon construction, then

@@ -353,19 +353,6 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
-        // If the player died last turn, deducts 1 life, resets the enemies, or end if
-        // no more lives.
-//        if (player.getHealth() <= 0) {
-//            gameManager.resetFailedEncounter();
-//            if (player.getLives() == 0) {
-//                showEndScreen();
-//                return;
-//            }
-//            player.resetHealth();
-//            player.resetMagic();
-//            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
-//            emitEncounterFailEvent(player.getLives());
-//        }
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
 
@@ -452,6 +439,8 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
+        // If the player died last turn, deducts 1 life, resets the enemies, or end if
+        // no more lives.
         if (player.getHealth() <= 0) {
             gameManager.resetFailedEncounter();
             if (player.getLives() == 0) {
