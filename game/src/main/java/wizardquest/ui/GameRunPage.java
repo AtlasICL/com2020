@@ -382,23 +382,6 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
-        // If the player died last turn, deducts 1 life, resets the enemies, or end if
-        // no more lives.
-        if (player.getHealth() <= 0) {
-            gameManager.resetFailedEncounter();
-            emitEncounterFailEvent(player.getLives());
-            if (player.getLives() == 0) {
-                log.setText("You died. No lives remaining.");
-                showEndScreen();
-                return;
-            }
-
-            log.setText("You died. You lost 1 life. Lives remaining: " + player.getLives());
-            player.resetHealth();
-            player.resetMagic();
-            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
-
-        }
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
 
@@ -532,6 +515,8 @@ private static final String DANGER_BUTTON_STYLE =
             return;
         }
 
+        // If the player died last turn, deducts 1 life, resets the enemies, or end if
+        // no more lives.
         if (player.getHealth() <= 0) {
             gameManager.resetFailedEncounter();
             // Checks if player has run out of lives
@@ -709,6 +694,18 @@ private static final String DANGER_BUTTON_STYLE =
             }
             int taken = pBefore - player.getHealth();
             msg.append(enemy.getType().getDisplayName()).append(" hit you for ").append(taken).append(" dmg.\n");
+        }
+
+        if (player.getHealth() <= 0) {
+            gameManager.resetFailedEncounter();
+            emitEncounterFailEvent(player.getLives());
+            if (player.getLives() == 0) {
+                showEndScreen();
+                return;
+            }
+            player.resetHealth();
+            player.resetMagic();
+            player.gainMagic(Math.min(player.getMagicRegenRate(), player.getMaxMagic() - player.getMagic()));
         }
 
         // Regeneration is capped at maximum.

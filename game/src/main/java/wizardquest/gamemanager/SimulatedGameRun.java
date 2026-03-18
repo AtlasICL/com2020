@@ -3,27 +3,26 @@ package wizardquest.gamemanager;
 import java.io.File;
 
 import wizardquest.abilities.UpgradeEnum;
-
 import wizardquest.entity.PlayerInterface;
 import wizardquest.entity.EntityInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityAIInterface;
-
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
 import wizardquest.settings.SettingsSingleton;
-
-import wizardquest.telemetry.GainCoinEvent;
-import wizardquest.telemetry.KillEnemyEvent;
-import wizardquest.telemetry.BossEncounterStartEvent;
-import wizardquest.telemetry.BuyUpgradeEvent;
 import wizardquest.telemetry.BossEncounterCompleteEvent;
 import wizardquest.telemetry.BossEncounterFailEvent;
-import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.BossEncounterStartEvent;
+import wizardquest.telemetry.BuyUpgradeEvent;
+import wizardquest.telemetry.EndSessionEvent;
+import wizardquest.telemetry.GainCoinEvent;
+import wizardquest.telemetry.KillEnemyEvent;
 import wizardquest.telemetry.NormalEncounterCompleteEvent;
 import wizardquest.telemetry.NormalEncounterFailEvent;
-import wizardquest.telemetry.TelemetryListenerSingleton;
+import wizardquest.telemetry.NormalEncounterStartEvent;
+import wizardquest.telemetry.StartSessionEvent;
 import wizardquest.telemetry.TelemetryListenerInterface;
+import wizardquest.telemetry.TelemetryListenerSingleton;
 
 /**
  * Simulates a game run, runs a simulated game run upon construction, then
@@ -68,6 +67,7 @@ public class SimulatedGameRun {
         // Run the game
         this.startSession(difficulty);
 
+
         while (!Utils.isRunOver(this.gameManager.getCurrentRun())) {
             if (!this.simulateEncounter()) {
                 break;
@@ -99,6 +99,11 @@ public class SimulatedGameRun {
     private void startSession(DifficultyEnum difficulty) {
 
         this.gameManager.startNewGame(difficulty);
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run != null) {
+            telemetryListener.onStartSession(new StartSessionEvent(
+                    this.settings.getUserID(), run.getSessionID(), this.time.getCurrentTime(), difficulty));
+        }
     }
 
     /**
@@ -286,6 +291,11 @@ public class SimulatedGameRun {
         this.coins = this.gameManager.getCurrentPlayer().getCoins();
         this.sessionID = this.gameManager.getSessionID();
         this.stage = this.gameManager.getCurrentRun().getStage();
+        GameRunInterface run = gameManager.getCurrentRun();
+        if (run != null) {
+            telemetryListener.onEndSession(new EndSessionEvent(
+                    settings.getUserID(), run.getSessionID(), this.time.getCurrentTime()));
+        }
         this.gameManager.endGame();
         TimeManagerSingleton.useActualTime();
     }
