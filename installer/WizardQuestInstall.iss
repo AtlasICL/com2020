@@ -7,8 +7,8 @@ OutputDir=output
 OutputBaseFilename=WizardQuestInstaller
 
 [Files]
-Source: "release\WizardQuest\*"; DestDir: "{app}\WizardQuest"; Flags: recursesubdirs
-Source: "release\telemetry_app.exe"; DestDir: "{app}"
+Source: "..\executables\WizardQuest\*"; DestDir: "{app}\WizardQuest"; Flags: recursesubdirs
+Source: "..\executables\telemetry_app.exe"; DestDir: "{app}"
 
 [Icons]
 [Icons]
