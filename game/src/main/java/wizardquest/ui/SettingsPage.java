@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -38,25 +39,25 @@ public class SettingsPage {
         "-fx-border-radius: 10;";
 
     private static final String HEADING_STYLE =
-            "-fx-font-family: 'Trebuchet MS';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 18px;" +
             "-fx-text-fill: #5865F2;" +
             "-fx-font-weight: bold;";
 
     private static final String TEXT_STYLE =
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-text-fill: #f2f3f5;";
 
     private static final String SECONDARY_TEXT_STYLE =
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 13px;" +
             "-fx-text-fill: #b5bac1;";
 
     private static final String PRIMARY_BUTTON_STYLE =
             "-fx-background-color: #5865F2;" +
             "-fx-text-fill: #f2f3f5;" +
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-font-weight: bold;" +
             "-fx-background-radius: 8;" +
@@ -68,7 +69,7 @@ public class SettingsPage {
     private static final String SECONDARY_BUTTON_STYLE =
             "-fx-background-color: #404249;" +
             "-fx-text-fill: #f2f3f5;" +
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-background-radius: 8;" +
             "-fx-border-radius: 8;" +
@@ -76,15 +77,18 @@ public class SettingsPage {
             "-fx-padding: 8 16 8 16;" +
             "-fx-cursor: hand;";
 
-    private String fieldStyle = 
-                    "-fx-background-color: #1e1f22;" +
-                        "-fx-text-fill: #ae00ff;" +
-                        "-fx-border-color: #5865F2;" +
-                        "-fx-border-radius: 6;" +
-                        "-fx-background-radius: 6;";
+    private final String fieldStyle =
+        "-fx-background-color: #1e1f22;" +
+        "-fx-control-inner-background: #1e1f22;" +
+        "-fx-text-fill: #f2f3f5;" +
+        "-fx-prompt-text-fill: #b5bac1;" +
+        "-fx-border-color: #5865F2;" +
+        "-fx-border-radius: 6;" +
+        "-fx-background-radius: 6;";
 
 
     public VBox createView(Runnable backAction) {
+        FontLoader.loadFonts();
         Label roleLabel = new Label();
         roleLabel.setStyle(HEADING_STYLE);
 
@@ -139,7 +143,24 @@ public class SettingsPage {
 
         telemetryDisclosure.setWrapText(true);
         telemetryDisclosure.setStyle(SECONDARY_TEXT_STYLE);
-
+        telemetryDisclosure.setMaxWidth(700);
+        ScrollPane telemetryScrollPane = new ScrollPane(telemetryDisclosure);
+        telemetryScrollPane.setFitToWidth(true);
+        telemetryScrollPane.setPrefViewportHeight(140);
+        telemetryScrollPane.setMinHeight(140);
+        telemetryScrollPane.setMaxHeight(300);
+        telemetryScrollPane.setMaxWidth(750);
+        telemetryScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        telemetryScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        telemetryScrollPane.setPannable(true);
+        telemetryScrollPane.setStyle(
+                "-fx-background: #1e1f22;" +
+                "-fx-background-color: #1e1f22;" +
+                "-fx-control-inner-background: #1e1f22;" +
+                "-fx-border-color: #5865F2;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;"
+);
 
         // Text fields for each editable design parameter (pre-populated with current
         // values)
@@ -371,7 +392,12 @@ public class SettingsPage {
                     output.setText("You do not have permission to modify design parameters.");
                     output.setStyle(TEXT_STYLE);
                     return;
-                }      
+                }
+                
+                String justification = justificationBox.getText().trim();
+                if (justification.isEmpty()){
+                    justification = "No Justifications Made.";
+                }
 
                 // Reads the difficulty parameters entered in the UI and converts the text
                 // values into integers
@@ -416,19 +442,19 @@ public class SettingsPage {
                     settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.PLAYER_MAX_HEALTH,
-                            "EASY: " + easyHp, ""));
+                            "EASY: " + easyHp, justification));
                 }
                 if (mediumHp != settings.getPlayerMaxHealth(DifficultyEnum.MEDIUM)) {
                     settings.setPlayerMaxHealth(DifficultyEnum.MEDIUM, mediumHp);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.PLAYER_MAX_HEALTH,
-                            "MEDIUM: " + mediumHp, ""));
+                            "MEDIUM: " + mediumHp, justification));
                 }
                 if (hardHp != settings.getPlayerMaxHealth(DifficultyEnum.HARD)) {
                     settings.setPlayerMaxHealth(DifficultyEnum.HARD, hardHp);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.PLAYER_MAX_HEALTH,
-                            "HARD: " + hardHp, ""));
+                            "HARD: " + hardHp, justification));
                 }
 
                 // Update Starting Lives - only emit telemetry if value changed
@@ -436,19 +462,19 @@ public class SettingsPage {
                     settings.setStartingLives(DifficultyEnum.EASY, easyLives);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.STARTING_LIVES,
-                            "EASY: " + easyLives, ""));
+                            "EASY: " + easyLives, justification));
                 }
                 if (mediumLives != settings.getStartingLives(DifficultyEnum.MEDIUM)) {
                     settings.setStartingLives(DifficultyEnum.MEDIUM, mediumLives);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.STARTING_LIVES,
-                            "MEDIUM: " + mediumLives, ""));
+                            "MEDIUM: " + mediumLives, justification));
                 }
                 if (hardLives != settings.getStartingLives(DifficultyEnum.HARD)) {
                     settings.setStartingLives(DifficultyEnum.HARD, hardLives);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.STARTING_LIVES,
-                            "HARD: " + hardLives, ""));
+                            "HARD: " + hardLives, justification));
                 }
 
                 // Update Enemy Damage Multiplier - only emit telemetry if value changed
@@ -456,19 +482,19 @@ public class SettingsPage {
                     settings.setEnemyDamageMultiplier(DifficultyEnum.EASY, easyEnemyDmg);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.ENEMY_DAMAGE_MULTIPLIER,
-                            "EASY: " + easyEnemyDmg, ""));
+                            "EASY: " + easyEnemyDmg, justification));
                 }
                 if (Float.compare(mediumEnemyDmg, settings.getEnemyDamageMultiplier(DifficultyEnum.MEDIUM)) != 0) {
                     settings.setEnemyDamageMultiplier(DifficultyEnum.MEDIUM, mediumEnemyDmg);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.ENEMY_DAMAGE_MULTIPLIER,
-                            "MEDIUM: " + mediumEnemyDmg, ""));
+                            "MEDIUM: " + mediumEnemyDmg, justification));
                 }
                 if (Float.compare(hardEnemyDmg, settings.getEnemyDamageMultiplier(DifficultyEnum.HARD)) != 0) {
                     settings.setEnemyDamageMultiplier(DifficultyEnum.HARD, hardEnemyDmg);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.ENEMY_DAMAGE_MULTIPLIER,
-                            "HARD: " + hardEnemyDmg, ""));
+                            "HARD: " + hardEnemyDmg, justification));
                 }
 
                 settings.setEnemyMaxHealthMultiplier(DifficultyEnum.EASY, easyEnemyHpMult);
@@ -488,13 +514,29 @@ public class SettingsPage {
                 settings.setShopItemCount(DifficultyEnum.HARD, hardShopItemCount);
 
                 output.setText("Settings updated.");
+                output.setStyle(SECONDARY_TEXT_STYLE);
                 justificationBox.clear();
             } catch (NumberFormatException ex) {
                 output.setText("Please enter valid numbers.");
+                output.setStyle(SECONDARY_TEXT_STYLE);
             } catch (AuthenticationException ex) {
                 output.setText("Could not update settings.");
+                output.setStyle(SECONDARY_TEXT_STYLE);
             }
         });
+
+        try {
+            RoleEnum role = settings.getUserRole();
+            boolean canEdit = (role == RoleEnum.DESIGNER || role == RoleEnum.DEVELOPER);
+
+            grid.setDisable(!canEdit);
+            justificationBox.setDisable(!canEdit);
+            saveButton.setDisable(!canEdit);
+        } catch (AuthenticationException e) {
+            grid.setDisable(true);
+            justificationBox.setDisable(true);
+            saveButton.setDisable(true);
+        }
 
         // Root layout for settings page
         VBox root = new VBox(14,
@@ -503,7 +545,7 @@ public class SettingsPage {
                 output,
                 telemetryLabel,
                 toggleTelemetryButton,
-                telemetryDisclosure,
+                telemetryScrollPane,
                 justificationLabel,
                 justificationBox,
                 saveButton);

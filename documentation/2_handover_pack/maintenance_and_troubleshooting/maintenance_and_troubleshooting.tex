@@ -482,4 +482,23 @@ Adding a new telemetry event to Python:
   \item In parsing, add the dataclass made in step one to the ValidEvent type alias. 
   \item Then in the match statement, add a section checking for the new event. In this section construct the dataclass made in step one by obtaining and parsing the values stored in the event dictionary.
 \end{enumerate}
+
+\subsection{Adding a new Telemetry View}
+This section describes adding a new telemetry view. This requires modification of both the frontend (telemetry/gui/gui.py) and backend (telemetry/core/logic.py) of the python telemetry app.
+\begin{enumerate}
+  \item Define a new tkinter notebook for the view tab in gui.py's TelemetryAppGUI constructor in the form:
+  \begin{verbatim}
+    self.tab_view_name = ttk.Frame(self.notebook)
+  \end{verbatim}
+  \item Define a new PlotTab instance for the graph to be displayed, with parent as the previously defined tab.
+  \item Define the backend functions:
+  \begin{enumerate}
+    \item One returning a dict of x to y to plot, defining the main logic for this view. 
+    \item One returning a dict of the main logic dictionary separated by Difficulty enum.
+    \item One returning a dict of the main logic dictionary separated by CoinHold enum. 
+    \item One returning a dict of the main logic dictionary separated by Speed enum.
+  \end{enumerate}
+  \item Create a refresh method in TelemetryAppGUI for the view which first recategorises the events in the file using self.logic\_engine.categorise\_events, then with an if statement, determines which graph is plotted based on which comparison option is on (i.e. if self.compare\_by\_coin\_hold is true, draw graph using the respective backend method).
+  \item Add this refresh method to the refresh\_all method in TelemetryAppGUI.
+\end{enumerate}
 \end{document}
