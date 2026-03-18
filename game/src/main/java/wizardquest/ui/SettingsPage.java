@@ -93,7 +93,7 @@ public class SettingsPage {
         roleLabel.setStyle(HEADING_STYLE);
 
         try {
-            // Display the user's role at the top of the settings page
+            // Display the user's role at the top of settings page
             roleLabel.setText("Role: " + settings.getUserRole());
         } catch (AuthenticationException e) {
             roleLabel.setText("Role: UNKNOWN");

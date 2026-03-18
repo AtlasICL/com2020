@@ -36,31 +36,31 @@ public class ShopPage {
             "-fx-border-radius: 10;";
 
     private static final String TITLE_STYLE =
-            "-fx-font-family: 'Trebuchet MS';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 24px;" +
             "-fx-text-fill: #9a7cff;" +
             "-fx-font-weight: bold;";
 
     private static final String HEADING_STYLE =
-            "-fx-font-family: 'Trebuchet MS';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 18px;" +
             "-fx-text-fill: #5865F2;" +
             "-fx-font-weight: bold;";
 
     private static final String TEXT_STYLE =
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-text-fill: #f2f3f5;";
 
     private static final String SECONDARY_TEXT_STYLE =
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 13px;" +
             "-fx-text-fill: #b5bac1;";
 
     private static final String PRIMARY_BUTTON_STYLE =
             "-fx-background-color: #5865F2;" +
             "-fx-text-fill: #f2f3f5;" +
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-font-weight: bold;" +
             "-fx-background-radius: 8;" +
@@ -72,7 +72,7 @@ public class ShopPage {
     private static final String SECONDARY_BUTTON_STYLE =
             "-fx-background-color: #404249;" +
             "-fx-text-fill: #f2f3f5;" +
-            "-fx-font-family: 'Segoe UI';" +
+            "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-background-radius: 8;" +
             "-fx-border-radius: 8;" +

@@ -413,7 +413,7 @@ private static final String DANGER_BUTTON_STYLE =
         Label magicLabel = new Label("Magic: " + player.getMagic() + "/" + player.getMaxMagic());
         magicLabel.setStyle(TEXT_STYLE);
 
-        // Magic bar styling
+        // Magic bar stylings
         magicBar.setPrefWidth(250);
         magicBar.setStyle("-fx-accent: lightblue;"+
             "-fx-control-inner-background: #1e1f22;" +
