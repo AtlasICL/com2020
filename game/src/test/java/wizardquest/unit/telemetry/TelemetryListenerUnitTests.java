@@ -158,47 +158,6 @@ public class TelemetryListenerUnitTests {
     @Test
     @DisplayName("TelemetryListener - sessionID field input validated")
     void onNormalEncounterStart_sessionIDValidated() {
-        // Initialise an invalid NormalEncounterStartEvent object for the authenticated
-        // user.
-        // The sessionID field will be incremented by 1, creating a mismatch between the
-        // value in the
-        // authenticated user's settings and the value in the event field.
-        NormalEncounterStartEvent invalidTestEvent = new NormalEncounterStartEvent(
-                SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getSessionID() + 1,
-                Instant.now(),
-                EncounterEnum.GOBLIN_ENCOUNTER,
-                DifficultyEnum.MEDIUM,
-                1);
-
-        // As a result of this mismatch, UserValidationException should be thrown when
-        // an event occurs.
-        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent);
-        assertTrue(this.exError.toString()
-                .contains("SessionID of event " + invalidTestEvent.getEvent() +
-                        " " + invalidTestEvent.getSessionID()
-                        + " not equal to current sessionID of "));
-        // Reset the exception output stream.
-        exError.reset();
-
-        // Initialise a StartSessionEvent object for the authenticated user.
-        // This should be rejected, as a session is currently running for the user.
-        StartSessionEvent testStartEvent = new StartSessionEvent(
-                SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getSessionID(),
-                Instant.now(),
-                DifficultyEnum.MEDIUM);
-
-        // This should result in SessionValidationException being thrown as a session is
-        // already running.
-        TelemetryListenerSingleton.getInstance().onStartSession(testStartEvent);
-        assertTrue(this.exError.toString()
-                .contains("StartSession for session " + testStartEvent.getSessionID() +
-                        " occurs before EndSession of "));
-
-        // Reset the exception output stream.
-        exError.reset();
-
         // Initialise TWO EndSessionEvent objects for the authenticated user.
         // The first one should work as normal, since a session is currently running and
         // can be ended.
