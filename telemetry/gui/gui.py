@@ -13,7 +13,6 @@ The GUI logic lives in the TelemetryAppGUI class.
 import csv
 import dataclasses
 
-from email.policy import default
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter import filedialog
