@@ -163,24 +163,25 @@ This project is released under an MIT License.
 
 #### Dependency Licences
 
-| Dependency              | Licence         | Link                                                                                  |
-|-------------------------|-----------------|---------------------------------------------------------------------------------------|
-| jackson-databind        | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-databind/blob/3.x/LICENSE)        |
-| jackson-datatype-jsr310 | Apache 2.0      | [License here](https://github.com/FasterXML/jackson-datatypes-misc/blob/3.x/LICENSE)  |
-| javafx-controls         | GPL 2.0         | [License here](https://github.com/openjdk/jfx/blob/master/LICENSE)                    |
-| junit-jupiter           | EPL 2.0         | [License here](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter) |
-| maven-compiler-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
-| maven-surefire-plugin   | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
-| exec-maven-plugin       | Apache 2.0      | [License here](https://www.apache.org/licenses/)                                      |
-| javafx-maven-plugin     | BSD 3-Clause    | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE)    |
-| jacoco-maven-plugin     | EPL 2.0         | [License here](https://www.eclipse.org/legal/epl-2.0/)                                |
-| matplotlib              | PSF (BSD-style) | [License here](https://pypi.org/project/matplotlib/)                                  |
-| numpy                   | BSD 3-Clause    | [License here](https://pypi.org/project/numpy/)                                       |
-| pandas                  | BSD 3-Clause    | [License here](https://pypi.org/project/pandas/)                                      |
-| seaborn                 | BSD             | [License here](https://pypi.org/project/seaborn/)                                     |
-| requests                | Apache 2.0      | [License here](https://pypi.org/project/requests/)                                    |
-| pdoc                    | BSD 3-Clause    | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                 |
-| coverage                | Apache 2.0      | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt)        |
+| Dependency              | Licence               | Link                                                                                  |
+| ----------------------- | --------------------- | ------------------------------------------------------------------------------------- |
+| jackson-databind        | Apache 2.0            | [License here](https://github.com/FasterXML/jackson-databind/blob/3.x/LICENSE)        |
+| jackson-datatype-jsr310 | Apache 2.0            | [License here](https://github.com/FasterXML/jackson-datatypes-misc/blob/3.x/LICENSE)  |
+| javafx-controls         | GPL 2.0               | [License here](https://github.com/openjdk/jfx/blob/master/LICENSE)                    |
+| junit-jupiter           | EPL 2.0               | [License here](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter) |
+| maven-compiler-plugin   | Apache 2.0            | [License here](https://www.apache.org/licenses/)                                      |
+| maven-surefire-plugin   | Apache 2.0            | [License here](https://www.apache.org/licenses/)                                      |
+| exec-maven-plugin       | Apache 2.0            | [License here](https://www.apache.org/licenses/)                                      |
+| javafx-maven-plugin     | BSD 3-Clause          | [License here](https://github.com/openjfx/javafx-maven-plugin/blob/master/LICENSE)    |
+| jacoco-maven-plugin     | EPL 2.0               | [License here](https://www.eclipse.org/legal/epl-2.0/)                                |
+| matplotlib              | PSF (BSD-style)       | [License here](https://pypi.org/project/matplotlib/)                                  |
+| numpy                   | BSD 3-Clause          | [License here](https://pypi.org/project/numpy/)                                       |
+| pandas                  | BSD 3-Clause          | [License here](https://pypi.org/project/pandas/)                                      |
+| seaborn                 | BSD                   | [License here](https://pypi.org/project/seaborn/)                                     |
+| requests                | Apache 2.0            | [License here](https://pypi.org/project/requests/)                                    |
+| pdoc                    | BSD 3-Clause          | [License here](https://github.com/pdoc3/pdoc/blob/master/LICENSE.txt)                 |
+| coverage                | Apache 2.0            | [License here](https://github.com/coveragepy/coveragepy/blob/main/LICENSE.txt)        |
+| JetBrains Mono (font)   | SIL Open Font License | [License here](https://www.jetbrains.com/lp/mono/#license)                            |
 
 All dependency licences are compatible with this project's MIT licence.
 
