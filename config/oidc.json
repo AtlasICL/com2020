@@ -1,0 +1,5 @@
+{
+    "OIDC_ISSUER": "https://accounts.google.com",
+    "OIDC_CLIENT_ID": "add oidc client id here",
+    "OIDC_CLIENT_SECRET": "add oidc client secret here"
+}
