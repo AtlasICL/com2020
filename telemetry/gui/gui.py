@@ -23,7 +23,6 @@ from core.logic import EventLogicEngine
 from core.suggestions import SuggestionGenerator
 from gui.plotting import PlotTab
 from auth.auth import google_login, Role
-from auth.oidc_config import OIDCConfigError
 
 
 ROOT_DIRECTORY: Path = Path.cwd().parent
@@ -213,16 +212,7 @@ class TelemetryAppGUI(tk.Tk):
         user will be returned to the Home tab, with the option to sign
         in again.
         """
-        try:
-            _, self.current_user_name, role = google_login()
-        except OIDCConfigError as error:
-            messagebox.showerror(
-                "Configuration Error",
-                "Could not load shared OIDC configuration from "
-                "config/oidc.json.\n\n"
-                + str(error)
-            )
-            return
+        _, self.current_user_name, role = google_login()
         self.authenticated = True
         AUTHORISED_ROLES = [Role.DESIGNER, Role.DEVELOPER]
         if role in AUTHORISED_ROLES:
