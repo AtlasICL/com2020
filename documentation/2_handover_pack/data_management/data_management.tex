@@ -179,9 +179,9 @@ The python application only ever reads the files, which is done by \verb|telemet
 \section{Settings File}
 
 \subsection{Overview}
-This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings. This information is stored in \verb|game/settings_file.json|. 
+This file stores the values of the current value of all design parameters, across all difficulties, as well as all user settings. This information is stored in \verb|game/settings_file.json|.
 \subsection{Fields}
-The file contains a single JSON object with the fields \verb|users| and \verb|designParameters|. Users is a JSON object with a field for each user ID. Each field contains a user object with the fields and domains described in \ref{tab:settings_users}. The furthest level field is described in \ref{tab:per_difficulty_store}. Design parameters is a JSON object with a field for each design parameter, storing its value for each difficulty (described in \ref{tab:per_difficulty_store}). Its fields are described in \ref{tab:settings_design_parameters}. 
+The file contains a single JSON object with the fields \verb|users| and \verb|designParameters|. Users is a JSON object with a field for each user ID. Each field contains a user object with the fields and domains described in \ref{tab:settings_users}. The furthest level field is described in \ref{tab:per_difficulty_store}. Design parameters is a JSON object with a field for each design parameter, storing its value for each difficulty (described in \ref{tab:per_difficulty_store}). Its fields are described in \ref{tab:settings_design_parameters}.
 \begin{table}[H]
   \begin{center}
     \begin{tabularx}{\textwidth}{
@@ -249,27 +249,28 @@ The file contains a single JSON object with the fields \verb|users| and \verb|de
 \end{table}
 \subsection{Integrations}
 \subsubsection{Java application}
-The file is read once when a user is authenticated by \verb|wizardquest.settings.SettingsSingleton|, capturing the user settings and design parameters at that time. The file is written to by the class, when the user toggles telemetry or changes a design parameter and saves this change. 
-% TODO may add max level reached
+The file is read once when a user is authenticated by \verb|wizardquest.settings.SettingsSingleton|, capturing the user settings, achievements and design parameters at that time. The file is written to by the class, when the user toggles telemetry, changes a design parameter and saves this change, or ends a run that grants them a new achievement.
 
 \section{Logins File}
 
 \subsection{Overview}
-The logins file stores a JSON object that holds each user's role. It is used by the Python application to obtain the authenticated user's role, and by the Java application for role assignment. The information is stored in \verb|telemetry/logins_file.json|.
+The logins file stores a JSON object that holds each user's role. It is used by both applications to obtain the authenticated user's role, and by the Java application for role assignment. The information is stored in \verb|telemetry/logins_file.json|.
+
 \subsection{Fields}
 Each user ID is a field. All fields have the domain of String(One of: player, designer, developer).
 
 \subsection{Integrations}
 
 \subsubsection{Java application}
-When authenticating a user the Java application makes a call to the python application, which then interacts with the file, as if it were authenticating a user. This call is made by \verb|wizardquest.auth.authenticator|. If a user is assigned a role by a developer, the Java application reads the file to find the user's ID, and if valid writes their new role. This is done by \verb|wizardquest.settings.SettingsSingleton| 
+When authenticating a user the Java application authenticates the user via Google OAuth using the \verb|wizardquest.auth.authenticator| class. It then obtains their role from the file, if they exist, and otherwise creates a new entry with the default role of player. If a user is assigned a role by a developer, the Java application reads the file to find the user's ID, and if valid writes their new role. This is done by \verb|wizardquest.settings.SettingsSingleton|
 
 \subsubsection{Python Application}
 When authenticating a user the Python application reads the file to find the given user ID, and on success reads their role. On failure, the Python application creates a new user with the ID provided by Google OAuth, who has the player role. This is all handled by \verb|telemetry.auth.auth|.
 
 \section{Authentication Log}
 \subsection{Overview}
-This log stores information related to authentication for both applications. It is only ever written to by the Python application, but this write call is also triggered when the Java application authenticates a user via the Python application. This information is stored in \verb|telemetry/auth/logs.txt|. 
+This log stores information related to authentication for the Python application, which is stored in \verb|telemetry/auth/logs.txt|.
+
 \subsection{Fields}
 Each event follows the syntax described below, where anything in <> varies from event to event.
 \begin{verbatim}
@@ -277,7 +278,7 @@ Each event follows the syntax described below, where anything in <> varies from 
       [<Event Type>] <Description>
 \end{verbatim}
 
-Timestamp is in the format yyyy-mm-dd hh:mm:ss, starting with year, then month, day, hour, minute, and lastly second. 
+Timestamp is in the format yyyy-mm-dd hh:mm:ss, starting with year, then month, day, hour, minute, and lastly second.
 
 Event Type is either SIE for sign in event, or AE for authentication event.
 
@@ -291,10 +292,10 @@ Lastly the description is one of the following:
   \item Sign-in failed: token exchange error (status = <Status Code>)
 \end{itemize}
 
-Role is their role (player, designer, or developer), and Status Code is the error code returned by Google OAuth if it fails. 
+Role is their role (player, designer, or developer), and Status Code is the error code returned by Google OAuth if it fails.
 \subsection{Integrations}
 \subsubsection{Java Application}
-The Java application doesn't directly interact with the log, but calls the Python application to do so during authentication. This call is made by \verb|auth.Authenticator|. 
+The Java application doesn't interact with this file.
 \subsubsection{Python Application}
-They Python application writes to the log during authentication using \verb|auth.auth_logger| which is called by |auth.auth|. It never reads from the log. 
+They Python application writes to the log during authentication using \verb|auth.auth_logger| which is called by \verb|auth.auth|. It never reads from the log.
 \end{document}

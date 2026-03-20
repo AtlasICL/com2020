@@ -70,7 +70,7 @@ In this document we will outline the information needed to undergo routine maint
 \subsection{Clearing Telemetry Data}
 Telemetry data can be cleared from within the telemetry app. This is done by opening the app, logging in, and using the "clear telemetry data" function. Detailed instructions are available in the deployment and operations guide.
 \subsection{Clearing Logs}
-Logs can be cleared by simply deleting them, or their contents. Authentication logs are located in \verb|telemetry/auth/logs.txt|.
+Logs can be cleared by simply deleting them, or their contents. The authentication log is located in \verb|telemetry/auth/logs.txt|.
 \subsection{Backups}
 The system does not feature explicit backup mechanisms, thus any backup mechanisms may be used. The data management guide provides details about every data store and its format, which may help in determining a backup mechanism. It should be noted all data stores are plaintext.
 
@@ -203,8 +203,6 @@ The app entry point is \verb|telemetry_app.py| which instantiates the GUI and st
 \subsubsection{auth}
 \paragraph{auth\_logger}
 This component writes authentication events to the authentication log. This event writing is called by auth.
-\paragraph{auth\_wrapper}
-This component is called by the Java application to authenticate users. It wraps this information in a JSON string and outputs it to standard out.
 \paragraph{auth}
 This component handles authenticating the user, creating a new user account for new users, and getting user roles.
 \subsubsection{core}
@@ -225,7 +223,7 @@ The testing architecture consists of a unit testing folder, and a resources fold
 
 \subsection{Java Application}
 \subsubsection{Overview}
-The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to the Python application and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface.
+The Java application is split into several submodules, each handling a different aspect of the system. The abilities module contains all purchasable abilities (called upgrades internally) for the game, as well as the logic for using attack abilities (internally called abilities). Auth makes authentication requests to Google OAuth and returns the result in a Java-friendly manner for use in other systems. The entity module contains all entities including the player, along with their AI and interfaces. The gamemanger module contains the code for the game manager, which runs the game, and game run which maintains and contains code for a single run of the game. Telemetry stores all telemetry events and the telemetry listener, and ui stores the code for running and displaying the graphical user interface.
 
 \subsubsection{abilities}
 
@@ -263,7 +261,7 @@ This record stores the results of a successful authentication, including name, u
 This describes the interface for the authenticator, providing a single method that prompts Google login, either throwing an AuthenticationException on failure or returning an AuthenticationResult on success.
 
 \paragraph{Authenticator}
-This class implements the AuthenticatorInterface, making authentication requests to the Python application and returning the results as an AuthenticationResult. 
+This class implements the AuthenticatorInterface, making authentication requests to the Google OAuth API and returning the results as an AuthenticationResult. 
 
 \paragraph{RoleEnum}
 This enum stores all three roles, along with their telemetry safe names.
