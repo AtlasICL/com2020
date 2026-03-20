@@ -4,10 +4,6 @@ Docstring for telemetry.auth.auth
 This module is responsible for Google OAuth OIDC authentication.
 This allows users of this module to get the name, unique stable 
 identifier, and role of the authenticating user.
-
-Please note that use of this module requires a shared OIDC config file
-at config/oidc.json, containing OIDC_ISSUER, OIDC_CLIENT_ID, and
-OIDC_CLIENT_SECRET.
 """
 
 import requests
@@ -27,7 +23,6 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
 
 from auth.auth_logger import setup_logger
-from auth.oidc_config import load_oidc_config
 
 # From Google's API documentation: "The client ID and client secret
 # obtained from the API Console are embedded in the source code of
@@ -39,6 +34,9 @@ from auth.oidc_config import load_oidc_config
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
 SCOPES: list[str] = ["profile", "email"]
+OIDC_ISSUER: str = "https://accounts.google.com"
+OIDC_CLIENT_ID: str = "ADD_OIDC_CLIENT_ID"
+OIDC_CLIENT_SECRET: str = "ADD_OIDC_CLIENT_ID"
 
 LOGGING_ENABLED: bool = True
 LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
@@ -130,7 +128,11 @@ class Role(str, Enum):
     DEVELOPER = "developer"
 
 
-def google_login(config_path: str | None = None) -> tuple[str, str, Role]:
+def google_login(
+    issuer: str = OIDC_ISSUER,
+    client_id: str = OIDC_CLIENT_ID,
+    client_secret: str = OIDC_CLIENT_SECRET,
+) -> tuple[str, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
@@ -138,15 +140,9 @@ def google_login(config_path: str | None = None) -> tuple[str, str, Role]:
 
     :return: User unique identifier, user name.
     :rtype: tuple[str, str, Role]
-    :raises HTTPError: If an HTTP error occurs. 
-    :raises OIDCConfigError: If the shared OIDC config file is missing
-        or invalid.
+    :raises HTTPError: If an HTTP error occurs.
     """
-    oidc_config = load_oidc_config(config_path)
-    issuer = oidc_config["OIDC_ISSUER"]
-    client_id = oidc_config["OIDC_CLIENT_ID"]
-    client_secret = oidc_config["OIDC_CLIENT_SECRET"]
-
+    issuer = issuer.rstrip("/")
     oauth_config = get_oauth_config(issuer)
     auth_endpoint = oauth_config["authorization_endpoint"]
     token_endpoint = oauth_config["token_endpoint"]
