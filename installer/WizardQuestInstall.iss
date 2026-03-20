@@ -17,7 +17,6 @@ Source: "..\game\settings_file.json"; DestDir: "{app}\game"; Flags: ignoreversio
 Source: "..\telemetry\telemetry_app.exe"; DestDir: "{app}\telemetry"; Flags: ignoreversion
 Source: "..\telemetry\logins_file.json"; DestDir: "{app}\telemetry"; Flags: ignoreversion onlyifdoesntexist
 Source: "..\telemetry\auth\*"; DestDir: "{app}\telemetry\auth"; Excludes: "__pycache__\*,*.pyc"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\config\oidc.json"; DestDir: "{app}\config"; Flags: ignoreversion onlyifdoesntexist
 Source: "..\event_logs\example_events.json"; DestDir: "{app}\event_logs"; Flags: ignoreversion onlyifdoesntexist
 Source: "..\event_logs\simulation_events.json"; DestDir: "{app}\event_logs"; Flags: ignoreversion onlyifdoesntexist
 Source: "..\event_logs\telemetry_events.json"; DestDir: "{app}\event_logs"; Flags: ignoreversion onlyifdoesntexist
