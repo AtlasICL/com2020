@@ -5,12 +5,11 @@ This module is responsible for Google OAuth OIDC authentication.
 This allows users of this module to get the name, unique stable 
 identifier, and role of the authenticating user.
 
-Please note that use of this module requires the relevant environment
-variables to be set, i.e. OIDC_ISSUER, OIDC_CLIENT_ID, and 
+Please note that use of this module requires a shared OIDC config file
+at config/oidc.json, containing OIDC_ISSUER, OIDC_CLIENT_ID, and
 OIDC_CLIENT_SECRET.
 """
 
-import os
 import requests
 import threading
 
@@ -28,11 +27,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
 
 from auth.auth_logger import setup_logger
-
-
-ISSUER = "https://accounts.google.com"
-CLIENT_ID = os.environ.get("OIDC_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
+from auth.oidc_config import load_oidc_config
 
 # From Google's API documentation: "The client ID and client secret
 # obtained from the API Console are embedded in the source code of
@@ -50,21 +45,8 @@ LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
 LOGGER: logging.Logger = setup_logger(output_file=LOGGING_OUTPUT_FILE)
 
 
-def validate_env_vars() -> None:
-    """
-    Helper function which verifies all necessary environment
-    variables are set.
-    """
-    if not ISSUER:
-        raise KeyError("OIDC_ISSUER environment variable is not set.")
-    if not CLIENT_ID:
-        raise KeyError("OIDC_CLIENT_ID environment variable is not set.")
-    if not CLIENT_SECRET:
-        raise KeyError("OIDC_CLIENT_SECRET environment variable is not set.")
-
-
-def get_oauth_config():
-    url = str(ISSUER) + "/.well-known/openid-configuration"
+def get_oauth_config(issuer: str) -> dict:
+    url = issuer + "/.well-known/openid-configuration"
     req = requests.get(url=url, timeout=10)
     req.raise_for_status()
     return req.json()
@@ -148,7 +130,7 @@ class Role(str, Enum):
     DEVELOPER = "developer"
 
 
-def google_login() -> tuple[str, str, Role]:
+def google_login(config_path: str | None = None) -> tuple[str, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
@@ -157,11 +139,15 @@ def google_login() -> tuple[str, str, Role]:
     :return: User unique identifier, user name.
     :rtype: tuple[str, str, Role]
     :raises HTTPError: If an HTTP error occurs. 
-    :raises KeyError: If the required environment variables are not set.
+    :raises OIDCConfigError: If the shared OIDC config file is missing
+        or invalid.
     """
-    validate_env_vars()
+    oidc_config = load_oidc_config(config_path)
+    issuer = oidc_config["OIDC_ISSUER"]
+    client_id = oidc_config["OIDC_CLIENT_ID"]
+    client_secret = oidc_config["OIDC_CLIENT_SECRET"]
 
-    oauth_config = get_oauth_config()
+    oauth_config = get_oauth_config(issuer)
     auth_endpoint = oauth_config["authorization_endpoint"]
     token_endpoint = oauth_config["token_endpoint"]
     userinfo_endpoint = oauth_config["userinfo_endpoint"]
@@ -174,7 +160,7 @@ def google_login() -> tuple[str, str, Role]:
 
     params = {
         "response_type": "code",
-        "client_id": CLIENT_ID,
+        "client_id": client_id,
         "redirect_uri": redirect_uri,
         "scope": " ".join(SCOPES),
         "state": state,
@@ -208,8 +194,8 @@ def google_login() -> tuple[str, str, Role]:
             "grant_type": "authorization_code",
             "code": server.auth_code, # type: ignore
             "redirect_uri": redirect_uri,
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "client_id": client_id,
+            "client_secret": client_secret,
             "code_verifier": code_verifier
         },
         timeout=25,
