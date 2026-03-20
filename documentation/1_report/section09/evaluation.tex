@@ -234,6 +234,43 @@ useful, yet are ultimately not as valuable, as the tools currently
 provided in the prototype build do not allow the game to be balanced in
 a significant way.
 
+\subsection{Fairness}
+
+% some enemy vulnerabilities aren't clear (like dragon being vulnerable to absolute)
+% 2, 1, 7 deaths: defensive
+% 5, 5, 13 deaths: offensive 
+% hard is impossible, as all enemies have more health than you, and you deal less damage than them
+
+Next, we discuss how fair to the game is, including a discussion of difficulty and different play styles. 
+
+Firstly, we find that some enemy vulnerabilities are hard to work out or unclear, this gives people who know them an unfair advantage against those who do not. A key example of this is the game's final boss, the dragon. This boss is vulnerable to absolute damage, however it is very unclear this is the case. Similarly it is resistant to thunder damage, yet fire-breathing dragons do not intuitively seem to be able to resist this. 
+
+Another issue with fairness is difficulty. On easy difficulty, the game is relatively easy, but on moderate the game is nearly impossible, and on hard it is actually impossible with current design parameter values. This is because every starting enemy on hard, has more health, and deals more damage, than the player. A design team could easily rectify this by modifying design parameter values. 
+
+Lastly, we find the game is more punishing to offensive play styles than defensive. Over 3 easy runs, we completed the game with an average of 3 deaths, prioritising resistance upgrades of abilities and damage upgrades. In contrast, on 3 easy runs where damage upgrades and attack abilities were prioritised we died 8 times on average. Furthermore we see the game rewards the spending of coins early, rather then hoarding of coins, as most shop upgrades are useful (especially defensive ones), and the upgrades are required to be able to progress due to the large amount of damage enemies deal, compared to the player's health. 
+
+However, the game is fair in several ways. Firstly, although the abilities used by enemies are randomised, the damage they deal is not, and neither are player-abilities. Additionally the amount of magic the player gains each turn is fixed, which allows the player to plan in advance, prioritising high damage, low health enemies over those with higher health. 
+
+Additionally there is fairness in the boss levels, as the bosses at each boss level are guaranteed, which allows the player to plan around them. For example, they must pick up a spell before level 6, as this level's boss is immune to physical damage. This however, doesn't overly reward players with game expertise, as the encounters on non-boss levels are randomised, along with shop items, meaning players are forced to adapt and cannot just memorise an optimal set of actions to complete the game. 
+
+\subsection{Consequences of Game Design}
+
+% levels 2, 5, 8 are easier than their previous level as you have 1 more upgrade, but same enemy pools
+% spammy combat until you get spells
+% level 1 is very hard compared to other levels due to limited upgrades
+% random enemy attacks make surviving a hard encounter totally dependant on if they use powerful attacks or not
+% pyromancer and ghost much stronger than other enemies
+
+Now to discuss the unintended consequences of the game's design. We will first discuss about the game's overall progression, then about its core gameplay, then about the use of randomness, and lastly the balance of its enemies. 
+
+The game consists of 10 levels, where the same encounter pool is used for levels 1 and 2, 5 and 6, and 7 and 8. While this progression does allow for levels to become increasingly hard between phases (pairs of levels), it does mean the second level of each phase is always easier than the first, as the player will have more upgrades for that level than the previous. This is most clear in level one, where some encounters can be almost impossible to survive, yet trivial in level two if certain upgrades are obtained. 
+
+To discuss the core gameplay loop more in depth, we find that in level one, gameplay is very boring, as no decisions can be made as to what enemy's can be targeted, or with what abilities to use as there is one enemy and one ability. This is mostly true until a second attack ability is purchased, or until level 4 is reached where multiple enemies can appear in an encounter. We find however, that once multiple attack abilities are purchased, and multiple enemies appear, the game becomes much more engaging as both of these are meaningful decisions. 
+
+Another area of consideration is the heavy use of randomness, resulting in encounter success being partly random. This is because the upgrades available to a player are not guaranteed, and neither is the ability the enemies will use nor the encounter the player will face. As the upgrades that appear in the shop are random, this can cause runs to hit dead-ends, where none of the available upgrades were helpful for the encounter the player is in, and they have to either get exceptionally luck to succeed, or the run ends. Another consequence of this randomness is with enemy attacks, as those are randomised rather than using a magic system like the player. This means if the player gets unlucky, enemies can deal large amounts of damage that a player with those same abilities could not have. 
+
+Lastly, due to the randomness in ability selection, some enemies are significantly more deadly than they are on paper, as certain ability configurations for the player can result in the player being exceptionally weak against that enemy. The first example of this is the pyromancer, which has a very high damage output, so if the player cannot kill them sufficiently fast, they can cause the player to die a disproportionally large amount of the time considering they can appear on level 1. Another example is the ghost boss, which is immune to physical damage. This immunity means if the player does not obtain a sufficiently broad range of non-physical damage dealing abilities by this level, this boss will kill them a lot, likely ending their run. 
+
 \subsection{Conclusion}
 
 This prototype can be considered successful. The product provides the
@@ -246,3 +283,4 @@ effectively fixed in the full build. As a prototype, this system
 provides the framework for elements of the system that are not yet fully
 implemented, so the majority of the issues present in the prototype
 simply exist as this is nothing more than a vertical slice.
+
