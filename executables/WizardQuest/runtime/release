@@ -1,2 +1,0 @@
-JAVA_VERSION="21.0.8"
-MODULES="java.base com.fasterxml.jackson.annotation com.fasterxml.jackson.core java.datatransfer java.xml java.prefs java.desktop java.logging com.fasterxml.jackson.databind com.fasterxml.jackson.datatype.jsr310 java.scripting javafx.base jdk.unsupported javafx.graphics javafx.controls javafx.fxml wizard.quest"
