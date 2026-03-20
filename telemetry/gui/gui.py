@@ -13,8 +13,10 @@ The GUI logic lives in the TelemetryAppGUI class.
 import csv
 import dataclasses
 
+from email.policy import default
 import tkinter as tk
 from tkinter import ttk, messagebox
+from tkinter import filedialog
 import seaborn as sns
 from pathlib import Path
 
@@ -424,13 +426,20 @@ class TelemetryAppGUI(tk.Tk):
         if not all_events:
             return
 
+        # Get users filepath from file explorer
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".csv",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            title="Save CSV file"
+        )
+
         # Get the field names for each event type.
         fieldnames = list(dict.fromkeys(
             key for event in all_events for key in event
         ))
 
         # Write the telemetry events to csv
-        with open("export.csv", 'w', newline='', encoding="utf-8") as f:
+        with open(file_path, 'w', newline='', encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(all_events)
