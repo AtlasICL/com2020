@@ -272,7 +272,7 @@ When authenticating a user the Python application reads the file to find the giv
 This log stores information related to authentication for the Python application, which is stored in \verb|telemetry/auth/logs.txt|.
 
 \subsection{Fields}
-Each event follows the syntax described below, where anything in <> varies from event to event.
+Each event follows the syntax described below, where anything in \verb|<>| varies from event to event.
 \begin{verbatim}
   <timestamp>
       [<Event Type>] <Description>
@@ -286,10 +286,10 @@ Lastly the description is one of the following:
 \begin{itemize}
   \item Sign-in prompted.
   \item Sign-in successful: user authenticated.
-  \item Existing user authenticated with role <Role>
+  \item Existing user authenticated with role \verb|<Role>|
   \item Sign-in failed: no authorization code received.
   \item Sign-in failed: state mismatch.
-  \item Sign-in failed: token exchange error (status = <Status Code>)
+  \item Sign-in failed: token exchange error (status = \verb|<Status Code>|)
 \end{itemize}
 
 Role is their role (player, designer, or developer), and Status Code is the error code returned by Google OAuth if it fails.

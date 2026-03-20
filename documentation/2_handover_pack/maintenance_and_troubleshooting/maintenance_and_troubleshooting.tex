@@ -76,7 +76,7 @@ The system does not feature explicit backup mechanisms, thus any backup mechanis
 
 \subsection{Naming Conventions}
 \label{sec:naming_conventions}
-The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention <Attack Ability Name>UnlockUpgrade. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
+The Java application uses pascal case for all classes, interfaces and enum names. It uses camel case for all fields and methods. It uses screaming snake case for constants. All interfaces have the word "Interface" appended to their name. All enums have the word "Enum" appended to their name. All singleton classes have "Singleton" appended to their name. All exceptions have "Exception" appended to their name. All upgrades have "Upgrade" appended to their name. All attack ability granting upgrades follow the convention \verb|<Attack Ability Name>UnlockUpgrade|. All telemetry events have "Event" appended to their name. Each java file is named after the class it holds.
 
 The Python application uses snake case for all methods and fields, and uses pascal case for classes. It uses screaming snake case for constants, and classes containing only constants are also named in screaming snake case. Files are named in snake case.
 \section{Troubleshooting}
@@ -125,7 +125,7 @@ The Java application launches with no errors.
   \item Python application displays something like \ref{fig:python_login_fail}.
   \item Error in terminal appears: \verb|Failed to resolve 'accounts.google.com'|
   \item Error in terminal appears:\\\verb|RuntimeError: Could not parse user roles file at logins_file.json- invalid json.|
-  \item Error in terminal appear: \\ \verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
+  \item Error in terminal appear: \\\verb|ValueError: Logins file at logins_file.jsoncontained an unknown role|
 \end{itemize}
 
 \begin{figure}[H]
@@ -315,7 +315,7 @@ This class provides singleton access to the game manager through a static method
 This defines the interface for a game run, containing methods for handling sessions, the shop system and upgrades, and run state including encounter state. 
 
 \paragraph{GameRun}
-This class implements GameRunterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
+This class implements GameRunInterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
 
 \paragraph{SimulatedGameRun}
 This class completes a simulated run of a given difficulty upon construction, and then stores the information about the simulated run for later use by other components. 
@@ -467,10 +467,10 @@ Adding a new telemetry event to Java:
   \item Create a new telemetry event class that extends TelemetryEvent or one of its abstract subclasses. 
   \item Create a constructor that takes in all the event's fields, and passes the relevant ones to the superclass. It should also pass its telemetry safe name to the superclass.
   \item Create a final field for each data item the telemetry event stores, that is not stored in a superclass. 
-  \item Create a get<Field> method for each of the above fields, that returns that field's value. 
-  \item In TelemetryListenerInterface create a method called on<New Event Name> that takes in the new event.
+  \item Create a \verb|get<Field>| method for each of the above fields, that returns that field's value. 
+  \item In TelemetryListenerInterface create a method called \verb|on<New Event Name>| that takes in the new event.
   \item In TelemetryListenerSingleton's implementation of TelemetryListenerInterface, implement the above method. It should first try validate the event by calling isCorrectSession(), isCorrectTimeStamp(), isCorrectUser() and lastly save() to save the event.
-  \item Lastly add a source of the event that constructs it, and passes it to TelemetryListenerSingleton.getInstance().on<Event name>()
+  \item Lastly add a source of the event that constructs it, and passes it to \\\verb|TelemetryListenerSingleton.getInstance().on<Event name>()|
 \end{enumerate}
 
 Adding a new telemetry event to Python:
@@ -496,7 +496,7 @@ This section describes adding a new telemetry view. This requires modification o
     \item One returning a dict of the main logic dictionary separated by CoinHold enum. 
     \item One returning a dict of the main logic dictionary separated by Speed enum.
   \end{enumerate}
-  \item Create a refresh method in TelemetryAppGUI for the view which first recategorises the events in the file using self.logic\_engine.categorise\_events, then with an if statement, determines which graph is plotted based on which comparison option is on (i.e. if self.compare\_by\_coin\_hold is true, draw graph using the respective backend method).
+  \item Create a refresh method in TelemetryAppGUI for the view which first recategorises the events in the file using self.logic\_engine.categorise\_events, then with an if statement, determines which graph is plotted based on which comparison option is on (i.e. \\if self.compare\_by\_coin\_hold is true, draw graph using the respective backend method).
   \item Add this refresh method to the refresh\_all method in TelemetryAppGUI.
 \end{enumerate}
 \end{document}
