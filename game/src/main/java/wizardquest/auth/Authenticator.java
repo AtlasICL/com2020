@@ -14,6 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Authenticator - handles user auth. by calling the python-side auth module, parses the output, and returns AuthecationResult
  */
 public class Authenticator implements AuthenticatorInterface {
+    private static final String OIDC_ISSUER = "https://accounts.google.com";
+    private static final String OIDC_CLIENT_ID = "ADD_OIDC_CLIENT_ID";
+    private static final String OIDC_CLIENT_SECRET = "ADD_OIDC_CLIENT_SECRET";
 
     @Override
     public AuthenticationResult login() throws AuthenticationException {
@@ -27,7 +30,13 @@ public class Authenticator implements AuthenticatorInterface {
         ProcessBuilder procBuilder = new ProcessBuilder(
                 "python3",
                 "-m",
-                "auth.auth_wrapper");
+                "auth.auth_wrapper",
+                "--oidc-issuer",
+                OIDC_ISSUER,
+                "--oidc-client-id",
+                OIDC_CLIENT_ID,
+                "--oidc-client-secret",
+                OIDC_CLIENT_SECRET);
         procBuilder.directory(new File("../telemetry"));
 
         // We only want stdout not stderror
