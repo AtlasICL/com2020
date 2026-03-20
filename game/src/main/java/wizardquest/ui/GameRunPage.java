@@ -165,6 +165,9 @@ private static final String DANGER_BUTTON_STYLE =
         title.setStyle(TITLE_STYLE);
         Button loginBtn = new Button("Login with SSO");
         loginBtn.setStyle(PRIMARY_BUTTON_STYLE);
+        String loginErrorMessage = "Login failed.\n\n"
+                + "Google sign-in could not be completed.\n"
+                + "Please try again and make sure the browser login flow can reach Google.";
 
         loginBtn.setOnAction(e -> {
             // loginBtn.setDisable(true);
@@ -184,12 +187,7 @@ private static final String DANGER_BUTTON_STYLE =
                     showMainMenu();
                 } catch (AuthenticationException ex){
                     // Display login error to the user
-                    Label error = new Label(
-                            "Login failed.\n\n" +
-                            "Your environment variables may not be configured correctly.\n" +
-                            "Please check the README file and make sure all required\n" +
-                            "authentication variables are set before launching the game."
-                    );
+                    Label error = new Label(loginErrorMessage);
                     error.setWrapText(true);
                     root.getChildren().add(error);
                     loginBtn.setDisable(false);
@@ -198,11 +196,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             authenticationTask.setOnFailed(event -> {
                 // Display login error to the user
-                Label error = new Label(
-                        "Login failed.\n\n" +
-                                "Your environment variables may not be configured correctly.\n" +
-                                "Please check the README file and make sure all required\n" +
-                                "authentication variables are set before launching the game.");
+                Label error = new Label(loginErrorMessage);
                 error.setWrapText(true);
                 root.getChildren().add(error);
                 loginBtn.setDisable(false);
