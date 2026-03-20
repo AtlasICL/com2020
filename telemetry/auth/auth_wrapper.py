@@ -6,9 +6,6 @@ telemetry.auth.auth
 
 The wrapper is called directly (entry point at main()), and prints the
 results of the login call into stdout in json form.
-
-Please note that, much like the core auth module, this module requires
-the shared OIDC config file at config/oidc.json.
 """
 
 import argparse
@@ -20,12 +17,28 @@ from auth.auth import google_login
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--oidc-config",
-        help="Path to the shared OIDC config file."
+        "--oidc-issuer",
+        help="OIDC issuer URL."
+    )
+    parser.add_argument(
+        "--oidc-client-id",
+        help="OIDC client ID."
+    )
+    parser.add_argument(
+        "--oidc-client-secret",
+        help="OIDC client secret."
     )
     args = parser.parse_args()
 
-    sub, name, role = google_login(config_path=args.oidc_config)
+    login_kwargs = {}
+    if args.oidc_issuer is not None:
+        login_kwargs["issuer"] = args.oidc_issuer
+    if args.oidc_client_id is not None:
+        login_kwargs["client_id"] = args.oidc_client_id
+    if args.oidc_client_secret is not None:
+        login_kwargs["client_secret"] = args.oidc_client_secret
+
+    sub, name, role = google_login(**login_kwargs)
     output = {
         "name": name,
         "sub": sub,
