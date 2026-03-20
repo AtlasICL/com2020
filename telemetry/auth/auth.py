@@ -60,8 +60,7 @@ def validate_env_vars() -> None:
     if not CLIENT_ID:
         raise KeyError("OIDC_CLIENT_ID environment variable is not set.")
     if not CLIENT_SECRET:
-        raise KeyError("OIDC_SECRET environment variable is not set.")
-    return
+        raise KeyError("OIDC_CLIENT_SECRET environment variable is not set.")
 
 
 def get_oauth_config():
@@ -74,13 +73,14 @@ def get_oauth_config():
 def open_browser(url: str) -> None:
     """
     Helper function to open the web browser.
-    TODO: Compatible with different OSs?
     """
     webbrowser.open(url)
 
 
 def b64url(data: bytes) -> str:
-    """Returns base 64 encoded url."""
+    """
+    Returns base 64 encoded url.
+    """
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
 
 
@@ -216,11 +216,8 @@ def google_login() -> tuple[str, str, Role]:
     )
     if not token_resp.ok:
         if LOGGING_ENABLED:
-            LOGGER.error("[SIE ] Sign-in failed: token exchange error" +
-                         "(status = {token_resp.status_code})")
-        print("---- AUTH ERROR OCCURRED ----")
-        print("|  Token status:", token_resp.status_code)
-        print("|  Token body:", token_resp.text)
+            LOGGER.error(f"[SIE ] Sign-in failed: token exchange error" +
+                          "(status = {token_resp.status_code})")
         token_resp.raise_for_status()
 
     tokens = token_resp.json()
@@ -238,13 +235,10 @@ def google_login() -> tuple[str, str, Role]:
                     f"user {userinfo.get('name')} authenticated.")
     
     sub = userinfo.get("sub")
-    return sub, userinfo.get("name"), get_role(
-        "logins_file.json", 
-        userID=sub
-    )
+    return sub, userinfo.get("name"), get_role("logins_file.json", user_id=sub)
 
 
-def get_role(filename: str, userID: str) -> Role:
+def get_role(filename: str, user_id: str) -> Role:
     """
     This function returns the role of the given user. It does so by
     checking the user roles json file at the provided filepath.
@@ -253,17 +247,17 @@ def get_role(filename: str, userID: str) -> Role:
 
     :param filename: File path for the user roles json file.
     :type filename: str
-    :param userID: The user ID of the user.
-    :type userID: int
+    :param user_id: The user ID of the user.
+    :type user_id: int
     :return: Returns the role of the user.
     :rtype: Role
     """
     try:
         with open(filename, 'r') as f:
             player_roles = json.load(f)
-            this_user = player_roles.get(str(userID))
+            this_user = player_roles.get(str(user_id))
             if this_user is None:
-                player_roles[str(userID)] = Role.PLAYER.value
+                player_roles[str(user_id)] = Role.PLAYER.value
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
                 if LOGGING_ENABLED:
@@ -277,14 +271,12 @@ def get_role(filename: str, userID: str) -> Role:
                                     f"with role {this_user}.")
                     return Role(this_user) 
                 except ValueError:
-                    raise ValueError(f"Logins file at {filename}" +
+                    raise ValueError(f"Logins file at {filename} " +
                                      f"contained an unknown role")
     except FileNotFoundError:
-        raise FileNotFoundError(
-            f"Could not find user roles file at {filename}"
-        )
+        raise FileNotFoundError(f"Could not find user roles file at {filename}")
     except json.JSONDecodeError:
         raise RuntimeError(
-            f"Could not parse user roles file at {filename}" + 
+            f"Could not parse user roles file at {filename} " + 
             f"- invalid json."
         )

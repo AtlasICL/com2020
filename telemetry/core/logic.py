@@ -134,9 +134,11 @@ class EventLogicEngine:
         """
         difficulty_output = {stage_number: 0 for stage_number in range(1,11)}
         for event in self.normal_encounter_fail_events:
-            difficulty_output[event.stage_number] += 1
+            if event.lives_left == 0:
+                difficulty_output[event.stage_number] += 1
         for event in self.boss_encounter_fail_events:
-            difficulty_output[event.stage_number] += 1
+            if event.lives_left == 0:
+                difficulty_output[event.stage_number] += 1
         return difficulty_output
 
 
@@ -155,13 +157,14 @@ class EventLogicEngine:
             session_ids = self.get_sessionIDs_of_difficulty(diff)
             spikes = {stage: 0 for stage in range(1, 11)}
             for event in self.normal_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             for event in self.boss_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             result[diff] = spikes
         return result
+
 
     def fail_difficulty_spikes_speed(
             self
@@ -178,14 +181,15 @@ class EventLogicEngine:
             session_ids = self.get_sessionIDs_of_speed(speed)
             spikes = {stage: 0 for stage in range(1, 11)}
             for event in self.normal_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             for event in self.boss_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             result[speed] = spikes
         return result
     
+
     def fail_difficulty_spikes_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
@@ -201,10 +205,10 @@ class EventLogicEngine:
             session_ids = self.get_sessionIDs_of_coin_hold(coin_hold)
             spikes = {stage: 0 for stage in range(1, 11)}
             for event in self.normal_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             for event in self.boss_encounter_fail_events:
-                if event.sessionID in session_ids:
+                if event.sessionID in session_ids and event.lives_left == 0:
                     spikes[event.stage_number] += 1
             result[coin_hold] = spikes
         return result
@@ -272,10 +276,12 @@ class EventLogicEngine:
         fail_count = 0
         if stage_number in [3, 6, 9, 10]:
             for fail_event in self.boss_encounter_fail_events:
-                fail_count += fail_event.stage_number == stage_number
+                if fail_event.lives_left == 0:
+                    fail_count += fail_event.stage_number == stage_number
             return fail_count
         for fail_event in self.normal_encounter_fail_events:
-            fail_count += fail_event.stage_number == stage_number
+            if fail_event.lives_left == 0:
+                fail_count += fail_event.stage_number == stage_number
         return fail_count
     
     
@@ -315,25 +321,28 @@ class EventLogicEngine:
                 if stage in [3, 6, 9, 10]:
                     for event in self.boss_encounter_start_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                        and event.stage_number == stage:
                             starts += 1
                     for event in self.boss_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                        and event.stage_number == stage \
+                        and event.lives_left == 0:
                             fails += 1
                 else:
                     for event in self.normal_encounter_start_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                        and event.stage_number == stage:
                             starts += 1
                     for event in self.normal_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                        and event.stage_number == stage \
+                        and event.lives_left == 0:
                             fails += 1
                 funnel[stage] = starts - fails
             result[diff] = funnel
         return result
     
+
     def funnel_view_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
@@ -359,7 +368,8 @@ class EventLogicEngine:
                             starts += 1
                     for event in self.boss_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                                and event.stage_number == stage \
+                                and event.lives_left == 0:
                             fails += 1
                 else:
                     for event in self.normal_encounter_start_events:
@@ -368,12 +378,14 @@ class EventLogicEngine:
                             starts += 1
                     for event in self.normal_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                                and event.stage_number == stage \
+                                and event.lives_left == 0:
                             fails += 1
                 funnel[stage] = starts - fails
             result[speed] = funnel
         return result
     
+
     def funnel_view_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
@@ -399,7 +411,8 @@ class EventLogicEngine:
                             starts += 1
                     for event in self.boss_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                                and event.stage_number == stage \
+                                and event.lives_left == 0:
                             fails += 1
                 else:
                     for event in self.normal_encounter_start_events:
@@ -408,12 +421,14 @@ class EventLogicEngine:
                             starts += 1
                     for event in self.normal_encounter_fail_events:
                         if event.sessionID in session_ids \
-                                and event.stage_number == stage:
+                                and event.stage_number == stage \
+                                and event.lives_left == 0:
                             fails += 1
                 funnel[stage] = starts - fails
             result[coin_hold] = funnel
         return result
     
+
     def health_per_stage(self, sessionID: int) -> dict[int, int]:
         """
         Output the health a session has per stage.
@@ -470,6 +485,7 @@ class EventLogicEngine:
                 difficulty_sessionIDs.add(start_event.sessionID)
         return difficulty_sessionIDs
     
+
     def get_sessionIDs_of_speed(self, speed: Speed) -> set[int]:
         """
         Get the set of all sessionIDs of a given play speed.
@@ -543,6 +559,7 @@ class EventLogicEngine:
                 result.add(sid)
         return result
     
+
     def get_sessionIDs_of_coin_hold(self, coin_hold: CoinHold) -> set[int]:
         """
         Get the set of all sessionIDs of a given coin holding type.
@@ -645,6 +662,7 @@ class EventLogicEngine:
         return {diff: self.get_health_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
     
+
     def compare_health_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
@@ -676,6 +694,7 @@ class EventLogicEngine:
             result[speed] = health_remaining_per_stage
         return result
     
+
     def compare_health_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
@@ -764,6 +783,7 @@ class EventLogicEngine:
         return {diff: self.get_coins_per_stage_by_difficulty(diff) 
                 for diff in Difficulty}
   
+
     def compare_coins_speed(
             self
     ) -> dict[Speed, dict[int, int]]:
@@ -787,6 +807,7 @@ class EventLogicEngine:
             result[speed] = coins_gained_per_stage
         return result
     
+
     def compare_coins_coin_hold(
             self
     ) -> dict[CoinHold, dict[int, int]]:
@@ -809,6 +830,7 @@ class EventLogicEngine:
                     coins_gained_per_stage[event.stage_number] += event.coins_gained
             result[coin_hold] = coins_gained_per_stage
         return result
+
 
     def get_settings_change_events(self) -> list[SettingsChange]:
         """
@@ -923,6 +945,7 @@ class EventLogicEngine:
             result[diff] = averages
         return result
 
+
     def average_time_to_complete_per_stage_speed(
         self
     ) -> dict[Speed, dict[int, float]]:
@@ -973,6 +996,7 @@ class EventLogicEngine:
                     (sum(times) / len(times)) if times else 0.0
             result[speed] = averages
         return result
+    
     
     def average_time_to_complete_per_stage_coin_hold(
             self

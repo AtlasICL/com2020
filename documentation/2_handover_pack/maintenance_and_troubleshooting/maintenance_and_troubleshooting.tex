@@ -319,11 +319,18 @@ This defines the interface for a game run, containing methods for handling sessi
 \paragraph{GameRun}
 This class implements GameRunterface storing all possible encounters, all upgrades that could appear in the shop, the current stage, the player, and the session ID. 
 
+\paragraph{SimulatedGameRun}
+This class completes a simulated run of a given difficulty upon construction, and then stores the information about the simulated run for later use by other components. 
+
 \paragraph{TimeManagerInterface}
-This defines the interface for the TimeManger, used for handling timestamping. 
+This defines the interface for the TimeManger, used for handling timestamping. It also contains methods for switching between real and simulated time passing, which is used by the simulation.
 
 \paragraph{TimeManagerSingleton}
 This singleton provides singleton access to the TimeManager for event timestamping. This is done to allow testability, as reflection can be used to switch out the TimeManger for a mock object. 
+
+
+\paragraph{Utils}
+This class contains several static methods and constants for general use, such as determining if a run or enemy is dead, and how many coins should be obtained upon run completions. 
 
 \subsubsection{settings}
 
@@ -474,5 +481,24 @@ Adding a new telemetry event to Python:
   \item Create a value for the event in the events.EventParameter class. The value should be the same as the event's name, and the variable name should be the event's in screaming snake case. 
   \item In parsing, add the dataclass made in step one to the ValidEvent type alias. 
   \item Then in the match statement, add a section checking for the new event. In this section construct the dataclass made in step one by obtaining and parsing the values stored in the event dictionary.
+\end{enumerate}
+
+\subsection{Adding a new Telemetry View}
+This section describes adding a new telemetry view. This requires modification of both the frontend (telemetry/gui/gui.py) and backend (telemetry/core/logic.py) of the python telemetry app.
+\begin{enumerate}
+  \item Define a new tkinter notebook for the view tab in gui.py's TelemetryAppGUI constructor in the form:
+  \begin{verbatim}
+    self.tab_view_name = ttk.Frame(self.notebook)
+  \end{verbatim}
+  \item Define a new PlotTab instance for the graph to be displayed, with parent as the previously defined tab.
+  \item Define the backend functions:
+  \begin{enumerate}
+    \item One returning a dict of x to y to plot, defining the main logic for this view. 
+    \item One returning a dict of the main logic dictionary separated by Difficulty enum.
+    \item One returning a dict of the main logic dictionary separated by CoinHold enum. 
+    \item One returning a dict of the main logic dictionary separated by Speed enum.
+  \end{enumerate}
+  \item Create a refresh method in TelemetryAppGUI for the view which first recategorises the events in the file using self.logic\_engine.categorise\_events, then with an if statement, determines which graph is plotted based on which comparison option is on (i.e. if self.compare\_by\_coin\_hold is true, draw graph using the respective backend method).
+  \item Add this refresh method to the refresh\_all method in TelemetryAppGUI.
 \end{enumerate}
 \end{document}

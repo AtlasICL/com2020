@@ -26,9 +26,10 @@ from auth.auth import google_login, Role
 
 
 ROOT_DIRECTORY: Path = Path.cwd().parent
-EVENT_LOGS_DIRECTORY: str = "event_logs"
-TELEMETRY_EVENTS_FILE: str = "telemetry_events.json"
+EVENT_LOGS_DIRECTORY: str   = "event_logs"
+TELEMETRY_EVENTS_FILE: str  = "telemetry_events.json"
 SIMULATION_EVENTS_FILE: str = "simulation_events.json"
+EXAMPLE_EVENTS_FILE: str    = "example_events.json"
 
 # Polling interval for refreshing data.
 POLLING_INTERVAL_MS = 4000
@@ -127,7 +128,7 @@ class TelemetryAppGUI(tk.Tk):
         self.sign_in_button = ttk.Button(
             self.tab_home,
             text="Sign in with Google",
-            command=self.handle_sign_in
+            command=self.on_toggle_google_sso
         )
         self.sign_in_button.pack(pady=(10, 20))
 
@@ -148,10 +149,10 @@ class TelemetryAppGUI(tk.Tk):
         self.decision_log_tree.heading("setting", text="Setting")
         self.decision_log_tree.heading("value", text="Value")
         self.decision_log_tree.heading("justification", text="Justification")
-        self.decision_log_tree.column("timestamp", width=200)
+        self.decision_log_tree.column("timestamp", width=120)
         self.decision_log_tree.column("setting", width=200)
-        self.decision_log_tree.column("value", width=100)
-        self.decision_log_tree.column("value", width=200)
+        self.decision_log_tree.column("value", width=10)
+        self.decision_log_tree.column("justification", width=300)
         scrollbar = ttk.Scrollbar(
             self.tab_decision_log,
             orient="vertical",
@@ -159,6 +160,36 @@ class TelemetryAppGUI(tk.Tk):
         )
         self.decision_log_tree.configure(yscrollcommand=scrollbar.set)
         self.decision_log_tree.grid(row=0, column=0, sticky="nsew")
+        scrollbar.grid(row=0, column=1, sticky="ns")
+
+
+    def set_up_suggestions(self) -> None:
+        """
+        Sets up the suggestions tab, with a scrollable view.
+        """
+        self.tab_suggestions.rowconfigure(0, weight=1)
+        self.tab_suggestions.columnconfigure(0, weight=1)
+        columns = ("problem", "difficulty", "stages", "suggestion")
+        self.suggestions_tree = ttk.Treeview(
+            self.tab_suggestions,
+            columns=columns,
+            show="headings"
+        )
+        self.suggestions_tree.heading("problem", text="Problem")
+        self.suggestions_tree.heading("difficulty", text="Difficulty")
+        self.suggestions_tree.heading("stages", text="Stages")
+        self.suggestions_tree.heading("suggestion", text="Suggestion")
+        self.suggestions_tree.column("problem", width=120)
+        self.suggestions_tree.column("difficulty", width=10)
+        self.suggestions_tree.column("stages", width=10)
+        self.suggestions_tree.column("suggestion", width=300)
+        scrollbar = ttk.Scrollbar(
+            self.tab_suggestions,
+            orient="vertical",
+            command=self.suggestions_tree.yview
+        )
+        self.suggestions_tree.configure(yscrollcommand=scrollbar.set)
+        self.suggestions_tree.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
 
 
@@ -214,7 +245,7 @@ class TelemetryAppGUI(tk.Tk):
         data_source_dropdown = ttk.Combobox(
             self.tab_home,
             textvariable=self.data_source,
-            values=["Telemetry data", "Simulation data"],
+            values=["Telemetry data", "Simulation data", "Example data"],
             state="readonly",
             font=(GUI_SETTINGS.FONT_FAMILY, GUI_SETTINGS.BUTTON_FONT_SIZE)
         )
@@ -265,7 +296,7 @@ class TelemetryAppGUI(tk.Tk):
         self.time_checkbox.pack(side="left")
         self.coin_hold_checkbox = ttk.Checkbutton(
             control_frame,
-            text="Compare by Coin Hold",
+            text="Compare by coin hold duration",
             variable=self.compare_by_coin_hold,
             command=self.on_toggle_coin_hold
         )
@@ -300,10 +331,7 @@ class TelemetryAppGUI(tk.Tk):
             xlabel="Stage",
             ylabel="Number of failures",
         )
-        self.spike_suggestion = ttk.Label(
-            self.tab_suggestions
-        )
-        self.spike_suggestion.pack(pady=(30, 15))
+        self.set_up_suggestions()
 
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
@@ -349,11 +377,12 @@ class TelemetryAppGUI(tk.Tk):
         data.
         """
         if self.data_source.get() == "Simulation data":
-            # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / SIMULATION_EVENTS_FILE
+        elif self.data_source.get() == "Example data":
+            self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
+                / EXAMPLE_EVENTS_FILE
         else:
-            # Switch the data source
             self.file_name = ROOT_DIRECTORY / EVENT_LOGS_DIRECTORY \
                 / TELEMETRY_EVENTS_FILE
         self.refresh_all()
@@ -439,6 +468,19 @@ class TelemetryAppGUI(tk.Tk):
             self.time_checkbox.state(["!disabled"])
         self.refresh_all()
 
+    def on_toggle_google_sso(self) -> None:
+        self.sign_in_button.state(["disabled"])
+        self.browser_label = ttk.Label(
+            self.tab_home,
+            text="Opening browser...",
+            justify="center"
+        )
+        self.browser_label.pack(pady=(30, 15))
+        self.update()
+        self.handle_sign_in()
+        self.browser_label.destroy()
+        self.sign_in_button.state(["!disabled"])
+
     def refresh_all(self) -> None:
         """
         Refreshes data from events source file.
@@ -521,10 +563,6 @@ class TelemetryAppGUI(tk.Tk):
                 spike_data.values(),
                 label="Difficulty spikes (by failure rate)"
             )
-        self.spike_suggestion.config(
-            text="Suggestion: " + \
-            self.suggestion_generator.generate_spike_suggestion()
-        )
 
 
     def get_average_dict_of_stage_dicts(
@@ -646,6 +684,8 @@ class TelemetryAppGUI(tk.Tk):
         """
         Refreshes the suggestions generated.
         """
+        self.logic_engine.categorise_events(self.file_name)
+
         suggestions = [
             self.suggestion_generator.generate_low_health_suggestion(),
             self.suggestion_generator.generate_high_health_suggestion(),
@@ -656,12 +696,22 @@ class TelemetryAppGUI(tk.Tk):
             self.suggestion_generator.generate_slow_average_time_suggestion(),
             self.suggestion_generator.generate_fast_average_time_suggestion(),
         ]
-        suggestion_text = "\n".join(s for s in suggestions if s)
-        # Refresh the content of the tk label
-        self.spike_suggestion.config(text="SUGGESTIONS:\n" + suggestion_text)
+
+        # Clear existing rows.
+        for item in self.suggestions_tree.get_children():
+            self.suggestions_tree.delete(item)
+        # Insert settings change events sorted by timestamp.
+        for suggestion_group in suggestions:
+            for suggestion in suggestion_group:
+                self.suggestions_tree.insert("", "end", values=(
+                    suggestion["problem"],
+                    suggestion["difficulty"],
+                    suggestion["stages"],
+                    suggestion["suggestion"]
+                ))
 
 
-    def _settingToSentenceCase(self, setting_name: SettingName) -> str:
+    def _setting_to_sentence_case(self, setting_name: SettingName) -> str:
         """
         Helper function which returns a sentence case mapping of 
         settings names.
@@ -697,7 +747,7 @@ class TelemetryAppGUI(tk.Tk):
         for event in self.logic_engine.get_settings_change_events():
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
-                self._settingToSentenceCase(event.setting),
+                self._setting_to_sentence_case(event.setting),
                 event.value,
                 event.justification
             ))
