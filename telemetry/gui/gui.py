@@ -23,6 +23,7 @@ from core.logic import EventLogicEngine
 from core.suggestions import SuggestionGenerator
 from gui.plotting import PlotTab
 from auth.auth import google_login, Role
+from auth.oidc_config import OIDCConfigError
 
 
 ROOT_DIRECTORY: Path = Path.cwd().parent
@@ -214,11 +215,12 @@ class TelemetryAppGUI(tk.Tk):
         """
         try:
             _, self.current_user_name, role = google_login()
-        except KeyError as _:
+        except OIDCConfigError as error:
             messagebox.showerror(
                 "Configuration Error",
-                "OIDC_CLIENT_ID and OIDC_CLIENT_SECRET environment " \
-                "variables are not set."
+                "Could not load shared OIDC configuration from "
+                "config/oidc.json.\n\n"
+                + str(error)
             )
             return
         self.authenticated = True
