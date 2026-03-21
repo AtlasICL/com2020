@@ -28,6 +28,7 @@ from core.events import (
     NormalEncounterFail,
     BossEncounterStart,
     Difficulty,
+    SettingName,
 )
 
 
@@ -214,7 +215,7 @@ def parse_event(event: dict) -> ValidEvent:
                 return SettingsChange(
                     event[EventParameter.USER_ID],
                     convert_time(event[EventParameter.TIMESTAMP]),
-                    event[EventParameter.SETTING],
+                    SettingName(event[EventParameter.SETTING]),
                     event[EventParameter.SETTING_VALUE],
                     event[EventParameter.JUSTIFICATION]
                 )
