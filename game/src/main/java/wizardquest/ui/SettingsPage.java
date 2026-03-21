@@ -302,10 +302,10 @@ public class SettingsPage {
 
         // Headers
         Label difficultyHeader = new Label("Difficulty");
-        Label hpHeader = new Label("HP");
+        Label hpHeader = new Label("Health");
         Label livesHeader = new Label("Lives");
         Label enemyDmgHeader = new Label("EnemyDmg");
-        Label enemyHpMultHeader = new Label("EnemyHp x");
+        Label enemyHpMultHeader = new Label("Enemy Health x");
         Label maxMagicHeader = new Label("MaxMagic");
         Label regenRateHeader = new Label("RegenRate");
         Label shopCountHeader = new Label("ShopCount");
