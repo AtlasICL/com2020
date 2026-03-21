@@ -16,13 +16,9 @@ import secrets
 import json
 from enum import Enum
 
-import logging
-
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
-
-from auth.auth_logger import setup_logger
 
 # From Google's API documentation: "The client ID and client secret
 # obtained from the API Console are embedded in the source code of
@@ -37,11 +33,6 @@ SCOPES: list[str] = ["profile", "email"]
 OIDC_ISSUER: str = "https://accounts.google.com"
 OIDC_CLIENT_ID: str = "ADD_OIDC_CLIENT_ID"
 OIDC_CLIENT_SECRET: str = "ADD_OIDC_CLIENT_ID"
-
-LOGGING_ENABLED: bool = True
-LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
-LOGGER: logging.Logger = setup_logger(output_file=LOGGING_OUTPUT_FILE)
-
 
 def get_oauth_config(issuer: str) -> dict:
     url = issuer + "/.well-known/openid-configuration"
@@ -166,22 +157,14 @@ def google_login(
     auth_url = f"{auth_endpoint}?{urlencode(params)}"
 
     open_browser(auth_url)
-    if LOGGING_ENABLED:
-        LOGGER.info("[SIE ] Sign-in prompted.")
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
-        if LOGGING_ENABLED:
-            LOGGER.warning(
-                "[SIE ] Sign-in failed: no authorization code received."
-            )
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
-        if LOGGING_ENABLED:
-            LOGGER.warning("[SIE ] Sign-in failed: state mismatch.")
         raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
@@ -197,9 +180,6 @@ def google_login(
         timeout=25,
     )
     if not token_resp.ok:
-        if LOGGING_ENABLED:
-            LOGGER.error(f"[SIE ] Sign-in failed: token exchange error" +
-                          "(status = {token_resp.status_code})")
         token_resp.raise_for_status()
 
     tokens = token_resp.json()
@@ -211,11 +191,6 @@ def google_login(
     )
     userinfo_resp.raise_for_status()
     userinfo = userinfo_resp.json()
-
-    if LOGGING_ENABLED:
-        LOGGER.info(f"[SIE ] Sign-in successful: " +
-                    f"user {userinfo.get('name')} authenticated.")
-    
     sub = userinfo.get("sub")
     return sub, userinfo.get("name"), get_role("logins_file.json", user_id=sub)
 
@@ -242,15 +217,9 @@ def get_role(filename: str, user_id: str) -> Role:
                 player_roles[str(user_id)] = Role.PLAYER.value
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
-                if LOGGING_ENABLED:
-                    LOGGER.info(f"[AE  ] New user authenticated " + 
-                                f"with role {Role.PLAYER.value}.")
                 return Role.PLAYER
             else:
                 try:
-                    if LOGGING_ENABLED:
-                        LOGGER.info(f"[AE  ] Existing user authenticated " + 
-                                    f"with role {this_user}.")
                     return Role(this_user) 
                 except ValueError:
                     raise ValueError(f"Logins file at {filename} " +
