@@ -397,7 +397,7 @@ private static final String DANGER_BUTTON_STYLE =
         );
         statsText.setStyle(TEXT_STYLE);
 
-        Label hpLabel = new Label("HP: " + player.getHealth() + "/" + player.getMaxHealth());
+        Label hpLabel = new Label("Health: " + player.getHealth() + "/" + player.getMaxHealth());
         hpLabel.setStyle(TEXT_STYLE);
         // HP bar styling
         hpBar.setPrefWidth(250);
@@ -448,7 +448,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             Label enemyLabel = new Label(
                     enemy.getType().getDisplayName()
-                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    + "  Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
             enemyLabel.setStyle(TEXT_STYLE);
 
@@ -606,7 +606,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             Button tb = new Button(
                     enemy.getType().getDisplayName()
-                    + "\nHP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    + "\nHealth: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
             targetBox.getChildren().add(tb);
