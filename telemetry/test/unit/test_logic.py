@@ -11,9 +11,13 @@ import unittest
 from pathlib import Path
 from datetime import datetime
 
+from numpy import long
+
 from core.events import (
+    CoinHold,
     Difficulty,
     EndSession,
+    Speed,
     StartSession,
 )
 from core.logic import EventLogicEngine
@@ -94,8 +98,8 @@ class TestLogic(unittest.TestCase):
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_logic.json"
         )
-        self.assertEqual(self.logic_engine.count_starts(1), 1)
-        self.assertEqual(self.logic_engine.count_starts(2), 1)
+        self.assertEqual(self.logic_engine.count_starts(1), 2)
+        self.assertEqual(self.logic_engine.count_starts(2), 2)
         self.assertEqual(self.logic_engine.count_starts(3), 1)
 
 
@@ -122,9 +126,48 @@ class TestLogic(unittest.TestCase):
         )
         self.assertEqual(
             self.logic_engine.funnel_view(), 
-            {1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
+            {1: 2, 2: 2, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
         )
 
+    def test_funnel_view_per_difficulty(self):
+        self.logic_engine.categorise_events(
+            self.resource_file_path / "test_events_logic.json"
+        )
+        self.assertEqual(self.logic_engine.funnel_view_per_difficulty(),
+                         {Difficulty.EASY: 
+                          {1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0},
+                          Difficulty.MEDIUM: 
+                          {1: 1, 2: 1, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0},
+                          Difficulty.HARD: 
+                          {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
+                          }
+                        )
+
+    def test_funnel_view_speed(self):
+        self.logic_engine.categorise_events(
+            self.resource_file_path / "test_events_logic.json"
+        )
+        self.assertEqual(self.logic_engine.funnel_view_speed(),
+                        {
+                        Speed.FAST:
+                        {1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0},
+                        Speed.SLOW:
+                        {1: 1, 2: 1, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
+                        } 
+                        )
+    
+    def test_funnel_view_coin_hold(self):
+        self.logic_engine.categorise_events(
+            self.resource_file_path / "test_events_logic.json"
+        )
+        self.assertEqual(self.logic_engine.funnel_view_coin_hold(),
+                         {
+                            CoinHold.SHORT: 
+                            {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0},
+                            CoinHold.LONG:
+                            {1: 2, 2: 2, 3: 1, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}
+                         }
+                        )
 
     def test_health_per_stage(self):
         """
@@ -207,7 +250,7 @@ class TestLogic(unittest.TestCase):
             self.logic_engine.compare_health_per_stage_per_difficulty(), 
             {
             Difficulty.EASY: [{1: 5, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}], 
-            Difficulty.MEDIUM: [], 
+            Difficulty.MEDIUM: [{1: 5, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}], 
             Difficulty.HARD: []
             }
         )
@@ -241,7 +284,7 @@ class TestLogic(unittest.TestCase):
         )
         self.assertEqual(
             self.logic_engine.get_coins_per_stage_by_difficulty(Difficulty.MEDIUM), 
-            []
+            [{1: 15, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0}]
         )
         self.assertEqual(
             self.logic_engine.get_coins_per_stage_by_difficulty(Difficulty.HARD), 
@@ -261,7 +304,7 @@ class TestLogic(unittest.TestCase):
             self.logic_engine.compare_coins_per_stage_per_difficulty(), 
             {
             Difficulty.EASY: [{1: 15, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7:0, 8:0, 9:0, 10:0}], 
-            Difficulty.MEDIUM: [], 
+            Difficulty.MEDIUM: [{1: 15, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7:0, 8:0, 9:0, 10:0}], 
             Difficulty.HARD: []
             }
         )
