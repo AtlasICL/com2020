@@ -1,4 +1,30 @@
 [
+  {
+  "userID" : "1",
+  "event" : "SettingsChange",
+  "setting" : "TELEMETRY_ENABLED",
+  "settingValue" : "true",
+  "settingsChangeJustification" : "",
+  "timestamp" : "2026/03/06/00/00/00"
+}
+,
+{
+  "userID" : "1",
+  "event" : "SettingsChange",
+  "setting" : "STARTING_LIVES",
+  "settingValue" : "MEDIUM: 1",
+  "settingsChangeJustification" : "No Justifications Made.",
+  "timestamp" : "2026/03/06/00/00/01"
+}
+,
+{
+  "userID" : "1",
+  "event" : "SettingsChange",
+  "setting" : "TELEMETRY_ENABLED",
+  "settingValue" : "false",
+  "settingsChangeJustification" : "",
+  "timestamp" : "2026/06/06/00/00/02"
+},
 {
   "userID" : "1",
   "event" : "StartSession",
@@ -55,22 +81,32 @@
   "lives_left": 2
 },
 {
+  "userID": "1",
+  "sessionID": 1,
+  "timestamp": "2026/03/07/00/00/10",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Easy",
+  "stage_number": 2,
+  "event": "NormalEncounterComplete",
+  "player_HP_remaining": 10
+},
+{
   "userID" : "1",
   "event" : "EndSession",
   "sessionID" : 1,
-  "timestamp" : "2026/03/07/00/00/06"
+  "timestamp" : "2026/03/07/00/00/11"
 },
 {
   "userID" : "1",
   "event" : "StartSession",
   "sessionID" : 1,
   "difficulty" : "Easy",
-  "timestamp" : "2026/03/07/00/00/07"
+  "timestamp" : "2026/03/07/00/00/12"
 },
 {
   "userID": "1",
   "sessionID": 1,
-  "timestamp": "2026/03/07/00/00/08",
+  "timestamp": "2026/03/07/00/00/13",
   "encounter_name": "FISHMAN_ENCOUNTER",
   "difficulty": "Easy",
   "stage_number": 3,
@@ -79,7 +115,7 @@
 {
   "userID": "1",
   "sessionID": 1,
-  "timestamp": "2026/03/07/00/00/08",
+  "timestamp": "2026/03/07/00/00/14",
   "encounter_name": "FISHMAN_ENCOUNTER",
   "difficulty": "Easy",
   "stage_number": 3,
@@ -90,19 +126,19 @@
   "userID" : "1",
   "event" : "EndSession",
   "sessionID" : 1,
-  "timestamp" : "2026/03/07/00/00/09"
+  "timestamp" : "2026/03/07/00/00/15"
 },
 {
   "userID" : "1",
   "event" : "StartSession",
   "sessionID" : 2,
   "difficulty" : "Medium",
-  "timestamp" : "2026/03/07/00/00/10"
+  "timestamp" : "2026/03/07/00/00/16"
 },
 {
   "userID": "1",
   "sessionID": 2,
-  "timestamp": "2026/03/07/00/00/11",
+  "timestamp": "2026/03/07/00/00/17",
   "encounter_name": "GOBLIN_ENCOUNTER",
   "difficulty": "Medium",
   "stage_number": 1,
@@ -148,9 +184,19 @@
   "lives_left": 2
 },
 {
+  "userID": "1",
+  "sessionID": 2,
+  "timestamp": "2026/03/07/00/00/52",
+  "encounter_name": "GOBLIN_ENCOUNTER",
+  "difficulty": "Medium",
+  "stage_number": 2,
+  "event": "NormalEncounterComplete",
+  "player_HP_remaining": 10
+},
+{
   "userID" : "1",
   "event" : "EndSession",
   "sessionID" : 2,
-  "timestamp" : "2026/03/07/00/00/43"
+  "timestamp" : "2026/03/07/00/00/53"
 }
 ]
