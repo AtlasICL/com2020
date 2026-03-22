@@ -184,7 +184,7 @@ When opening WizardQuest the game will prompt the user to sign in, they must cli
 \end{figure}
 
 \subsection{Main Menu}
-Once authenticated, the main menu allows the user to start a new run of the game by pressing the "Start New Game" button. The "Run Simulation" button will execute a simulated run. The "Settings" button opens up the game settings, design parameter, and role assignment screen. The "Quit" button closes the game.
+Once authenticated, the main menu allows the user to start a new run of the game by pressing the "Start New Game" button. The "Run Simulation" button will execute a simulated run. The "Settings" button opens up the game settings and design parameter editor. The "Manage Roles" button opens the role assignment screen. The "Quit" button closes the game.
 
 \begin{figure}[H]
 \centering
@@ -249,7 +249,6 @@ Once you beat the encounter with the dragon, on stage ten, or if you run out of 
 % TODO
 
 \subsection{Settings}
-% TODO role assignment 
 
 In settings, the top section contains the design parameter values, with the difficulty labeled on the Y-axis and the design parameter's name on the X-axis. Below this is the it will display whether the user has telemetry enabled, and a button to toggle for the setting. When telemetry is enabled, the game will record telemetry events, and otherwise wont. Underneath this is a scrollable text box, containing a detailed telemetry disclosure, stating what data is collected and why. Underneath that is an editable text box, where designers can provide an optional justification for their design parameter value changes. Underneath that is the "save" button, which saves all design parameter changes, and records the justification in the design log. Lastly, the "back" button at the bottom of the screen takes the user back to the main menu.
 
@@ -257,6 +256,15 @@ In settings, the top section contains the design parameter values, with the diff
 \centering
     \includegraphics[width=1\linewidth]{images/java/settings.png}
     \caption{Settings screen}
+\end{figure}
+
+\subsection{Role Assignment}
+In the role assignment screen, the text box labelled "User ID" takes a user's ID. This can obtained by looking the \verb|logins_file.json| in the telemetry folder. Underneath that are three buttons for assigning the role, labeled "Set PLAYER", "Set Designer" and "Set DEVELOPER", each of these when clicked assigns the relevant role to the user with the ID written in the above text box. At the bottom of the menu is the "Back" button, which takes the user back to the main menu. 
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/java/role_assignment.png}
+    \caption{Role assignment screen}
 \end{figure}
 
 \subsection{Python Application}
