@@ -388,3 +388,113 @@
     [SIE ] Sign-in successful: user Luca authenticated.
 2026-03-14 00:03:13
     [AE  ] Existing user authenticated with role player.
+2026-03-18 15:57:22
+    [SIE ] Sign-in prompted.
+2026-03-18 15:57:27
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-18 15:57:27
+    [AE  ] New user authenticated with role player.
+2026-03-20 14:10:18
+    [SIE ] Sign-in prompted.
+2026-03-20 14:12:30
+    [SIE ] Sign-in prompted.
+2026-03-20 14:12:36
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 14:12:36
+    [AE  ] Existing user authenticated with role player.
+2026-03-20 14:25:23
+    [SIE ] Sign-in prompted.
+2026-03-20 14:25:33
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 14:25:33
+    [AE  ] New user authenticated with role player.
+2026-03-20 14:35:57
+    [SIE ] Sign-in prompted.
+2026-03-20 14:36:03
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 14:36:03
+    [AE  ] Existing user authenticated with role developer.
+2026-03-20 14:38:56
+    [SIE ] Sign-in prompted.
+2026-03-20 14:39:02
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 14:39:02
+    [AE  ] Existing user authenticated with role developer.
+2026-03-20 14:43:53
+    [SIE ] Sign-in prompted.
+2026-03-20 14:43:57
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 14:43:57
+    [AE  ] New user authenticated with role player.
+2026-03-20 15:00:26
+    [SIE ] Sign-in prompted.
+2026-03-20 15:00:32
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-20 15:00:32
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 14:09:24
+    [SIE ] Sign-in prompted.
+2026-03-22 14:09:30
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 14:09:30
+    [AE  ] New user authenticated with role player.
+2026-03-22 14:20:23
+    [SIE ] Sign-in prompted.
+2026-03-22 14:20:29
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 14:20:29
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:20:01
+    [SIE ] Sign-in prompted.
+2026-03-22 17:20:08
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:20:08
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:22:59
+    [SIE ] Sign-in prompted.
+2026-03-22 17:23:08
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:23:08
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:27:09
+    [SIE ] Sign-in prompted.
+2026-03-22 17:27:19
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:27:19
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:30:16
+    [SIE ] Sign-in prompted.
+2026-03-22 17:30:26
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:30:26
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 17:32:17
+    [SIE ] Sign-in prompted.
+2026-03-22 17:32:26
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:32:26
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:34:22
+    [SIE ] Sign-in prompted.
+2026-03-22 17:34:32
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:34:32
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 17:36:31
+    [SIE ] Sign-in prompted.
+2026-03-22 17:36:40
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:36:40
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 17:38:06
+    [SIE ] Sign-in prompted.
+2026-03-22 17:38:15
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:38:15
+    [AE  ] Existing user authenticated with role designer.
+2026-03-22 17:52:40
+    [SIE ] Sign-in prompted.
+2026-03-22 17:52:50
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-22 17:52:50
+    [AE  ] Existing user authenticated with role developer.
