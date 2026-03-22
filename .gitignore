@@ -4,7 +4,9 @@
 
 # Java
 game/target
+.DS_Store
 
+build/
 # IDEs
 .vscode
 .idea
