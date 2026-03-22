@@ -67,7 +67,7 @@
 In this document we will outline first how to deploy both applications, and the test suite. We will then provide detailed operation instructions for both applications.
 
 \section{Deployment}
-\subsection{prerequisites}
+\subsection{Prerequisites}
 To be able to follow and complete deployment, as well as operate the applications, the following are required.
 \begin{itemize}
   \item Internet access
@@ -152,7 +152,7 @@ These steps are required for both applications.
 
 This section describes how to operate the Java game, called WizardQuest.
 
-\subsection{Logging In}
+\subsubsection{Logging In}
 When opening WizardQuest the game will prompt the user to sign in, they must click the "Login with SSO" button, \ref{fig:java_before_sign_in} then wait for the login screen to appear in your browser. From there you must select your google account \ref{fig:java_sign_in} and then click "continue" to log in \ref{fig:java_login_continue}. You can then close the tab \ref{fig:java_login_complete}. 
 
 \begin{figure}[H]
@@ -183,25 +183,25 @@ When opening WizardQuest the game will prompt the user to sign in, they must cli
     \label{fig:java_login_complete}
 \end{figure}
 
-\subsection{Main Menu}
-Once authenticated, the main menu allows the user to start a new run of the game by pressing the "Start New Game" button. The "Run Simulation" button will execute a simulated run. The "Settings" button opens up the game settings and design parameter editor. The "Manage Roles" button opens the role assignment screen. The "Quit" button closes the game.
+\subsubsection{Main Menu}
+Once authenticated, the main menu allows the user to start a new run of the game by pressing the "Start New Game" button. The "Run Simulation" button will execute three simulated runs, one on each difficult. It records the data from these runs in \\\verb|event_logs/simulation_events.json| which can be viewed in the telemetry app. The "Settings" button opens up the game settings and design parameter editor. The "Manage Roles" button opens the role assignment screen. The "Quit" button closes the game.
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{images/java/main_menu.png}
+    \includegraphics[width=0.75\linewidth]{images/java/main_menu.png}
     \caption{Main menu screen}
 \end{figure}
 
-\subsection{Difficulty Select}
+\subsubsection{Difficulty Select}
 Once you start a new game, you will be prompted to select the difficulty of the game run. This screen displays four buttons, one for each difficulty, and a "back" button. Each difficult button states the difficulty, then in brackets how many lives you have on said difficulty, and lastly the farthest level you've reached on that difficulty. Selecting a difficulty will bring you to the first encounter of the run. Selecting "back" will take you back to the main menu. 
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{images/java/difficulty_select.png}
+    \includegraphics[width=0.75\linewidth]{images/java/difficulty_select.png}
     \caption{Start run and difficulty select screen}
 \end{figure}
 
-\subsection{Encounter screen}
+\subsubsection{Encounter screen}
 Once you start a run, and after each shop, you will enter an encounter. At the top of the screen it displays which stage you're on, and the encounter's name. There are three horizontal sections. Underneath those can appear a status message, informing you of why you cannot perform certain actions (for example trying to use a spell without sufficient magic), and Underneath that is a "Quit Run" button, that will take you back to the main menu. 
 
 The left-most states your lives, and how many coins you have. Underneath this it states your health and then shows a bar representing how much health you have left, out of your maximum. Underneath that it states your magic, then how much magic you have out of your maximum. Underneath that it lists all attack abilities you've purchased throughout the run. 
@@ -219,12 +219,12 @@ In the right-most section, each enemy is shown. The menu shows each enemy in the
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{images/java/target_select.png}
+    \includegraphics[width=0.5\linewidth]{images/java/target_select.png}
     \caption{Target select encounter screen}
     \label{fig:java_target_select}
 \end{figure}
 
-\subsection{Shop}
+\subsubsection{Shop}
 In the shop menu, the title shows you how many coins you have in total. Underneath it shows each upgrade available in the shop, with each being their own button. It also shows that upgrade's cost in brackets next to it. At the bottom will be a status text box, stating when you lack coins to buy an upgrade, or how many coins you got from completing the previous encounter. Beneath that is a "leave shop" button which will take you to the next stage and its encounter.
 
 
@@ -235,7 +235,7 @@ In the shop menu, the title shows you how many coins you have in total. Undernea
 \end{figure}
 
 
-\subsection{Run Complete}
+\subsubsection{Run Complete}
 Once you beat the encounter with the dragon, on stage ten, or if you run out of lives in an encounter, the game will show the run complete screen. This screen shows the furthest stage you reached that run, how many times you died during the run, and how many coins you finished the run with. Underneath this will be a "Main Menu" button, which when clicked returns you to the main menu.
 
 \begin{figure}[H]
@@ -244,11 +244,7 @@ Once you beat the encounter with the dragon, on stage ten, or if you run out of 
     \caption{Shop screen}
 \end{figure}
 
-
-\subsection{Simulation}
-% TODO
-
-\subsection{Settings}
+\subsubsection{Settings}
 
 In settings, the top section contains the design parameter values, with the difficulty labeled on the Y-axis and the design parameter's name on the X-axis. Below this is the it will display whether the user has telemetry enabled, and a button to toggle for the setting. When telemetry is enabled, the game will record telemetry events, and otherwise wont. Underneath this is a scrollable text box, containing a detailed telemetry disclosure, stating what data is collected and why. Underneath that is an editable text box, where designers can provide an optional justification for their design parameter value changes. Underneath that is the "save" button, which saves all design parameter changes, and records the justification in the design log. Lastly, the "back" button at the bottom of the screen takes the user back to the main menu.
 
@@ -258,7 +254,7 @@ In settings, the top section contains the design parameter values, with the diff
     \caption{Settings screen}
 \end{figure}
 
-\subsection{Role Assignment}
+\subsubsection{Role Assignment}
 In the role assignment screen, the text box labelled "User ID" takes a user's ID. This can obtained by looking the \verb|logins_file.json| in the telemetry folder. Underneath that are three buttons for assigning the role, labeled "Set PLAYER", "Set Designer" and "Set DEVELOPER", each of these when clicked assigns the relevant role to the user with the ID written in the above text box. At the bottom of the menu is the "Back" button, which takes the user back to the main menu. 
 
 \begin{figure}[H]
@@ -267,7 +263,7 @@ In the role assignment screen, the text box labelled "User ID" takes a user's ID
     \caption{Role assignment screen}
 \end{figure}
 
-\subsection{Python Application}
+\subsection{Python Application (Telemetry App)}
 
 This section describes how to operate the Python telemetry app.
 
