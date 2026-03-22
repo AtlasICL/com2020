@@ -1,0 +1,456 @@
+2026-02-13 20:42:48
+    [SIE ] Sign-in prompted.
+2026-02-13 20:42:53
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-13 20:42:53
+    [AE  ] Existing user authenticated with role player
+2026-02-13 20:43:36
+    [SIE ] Sign-in prompted.
+2026-02-13 20:43:41
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-13 20:43:41
+    [AE  ] Existing user authenticated with role player
+2026-02-13 20:46:17
+    [SIE ] Sign-in prompted.
+2026-02-13 20:46:22
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-13 20:46:22
+    [AE  ] New user authenticated with role player.
+2026-02-14 23:56:36
+    [SIE ] Sign-in prompted.
+2026-02-14 23:56:41
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-14 23:56:41
+    [AE  ] New user authenticated with role player.
+2026-02-15 13:07:11
+    [SIE ] Sign-in prompted.
+2026-02-15 13:07:18
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 13:07:18
+    [AE  ] New user authenticated with role player.
+2026-02-15 14:05:02
+    [SIE ] Sign-in prompted.
+2026-02-15 14:05:09
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:05:09
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 14:30:30
+    [SIE ] Sign-in prompted.
+2026-02-15 14:30:38
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:30:38
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 14:51:25
+    [SIE ] Sign-in prompted.
+2026-02-15 14:51:32
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:51:32
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 14:55:19
+    [SIE ] Sign-in prompted.
+2026-02-15 14:55:27
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:55:27
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 14:56:18
+    [SIE ] Sign-in prompted.
+2026-02-15 14:56:25
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:56:25
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 14:58:36
+    [SIE ] Sign-in prompted.
+2026-02-15 14:58:44
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 14:58:44
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 15:00:11
+    [SIE ] Sign-in prompted.
+2026-02-15 15:00:19
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 15:00:19
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 15:48:06
+    [SIE ] Sign-in prompted.
+2026-02-15 15:48:12
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 15:48:12
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 15:56:18
+    [SIE ] Sign-in prompted.
+2026-02-15 15:56:24
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 15:56:24
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 15:57:45
+    [SIE ] Sign-in prompted.
+2026-02-15 15:57:51
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 15:57:51
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:01:43
+    [SIE ] Sign-in prompted.
+2026-02-15 16:01:50
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:01:50
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:03:37
+    [SIE ] Sign-in prompted.
+2026-02-15 16:03:43
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:03:43
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:08:45
+    [SIE ] Sign-in prompted.
+2026-02-15 16:08:51
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:08:51
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:10:31
+    [SIE ] Sign-in prompted.
+2026-02-15 16:10:37
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:10:37
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:13:38
+    [SIE ] Sign-in prompted.
+2026-02-15 16:13:44
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:13:44
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:15:35
+    [SIE ] Sign-in prompted.
+2026-02-15 16:15:42
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:15:42
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:17:39
+    [SIE ] Sign-in prompted.
+2026-02-15 16:17:45
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:17:45
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 16:21:46
+    [SIE ] Sign-in prompted.
+2026-02-15 16:21:52
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 16:21:52
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 17:10:44
+    [SIE ] Sign-in prompted.
+2026-02-15 17:10:54
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:10:54
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 17:12:16
+    [SIE ] Sign-in prompted.
+2026-02-15 17:12:22
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:12:22
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:18:21
+    [SIE ] Sign-in prompted.
+2026-02-15 17:18:33
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:18:33
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:19:11
+    [SIE ] Sign-in prompted.
+2026-02-15 17:19:21
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:19:21
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:20:48
+    [SIE ] Sign-in prompted.
+2026-02-15 17:20:55
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:20:55
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:22:50
+    [SIE ] Sign-in prompted.
+2026-02-15 17:22:57
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:22:57
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:39:31
+    [SIE ] Sign-in prompted.
+2026-02-15 17:39:38
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:39:38
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:40:41
+    [SIE ] Sign-in prompted.
+2026-02-15 17:41:01
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:41:01
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 17:57:07
+    [SIE ] Sign-in prompted.
+2026-02-15 17:57:20
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 17:57:20
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 18:59:16
+    [SIE ] Sign-in prompted.
+2026-02-15 18:59:26
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 18:59:26
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 19:04:02
+    [SIE ] Sign-in prompted.
+2026-02-15 19:04:10
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-15 19:04:10
+    [AE  ] Existing user authenticated with role developer.
+2026-02-15 19:31:59
+    [SIE ] Sign-in prompted.
+2026-02-15 19:32:04
+    [SIE ] Sign-in prompted.
+2026-02-15 19:32:05
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-15 19:32:05
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 19:32:08
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-15 19:32:08
+    [AE  ] Existing user authenticated with role player.
+2026-02-15 19:32:54
+    [SIE ] Sign-in prompted.
+2026-02-15 19:32:59
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-15 19:32:59
+    [AE  ] Existing user authenticated with role developer.
+2026-02-16 09:51:34
+    [SIE ] Sign-in prompted.
+2026-02-16 09:51:40
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-16 09:51:40
+    [AE  ] Existing user authenticated with role developer.
+2026-02-16 09:53:52
+    [SIE ] Sign-in prompted.
+2026-02-16 09:53:57
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-16 09:53:57
+    [AE  ] Existing user authenticated with role developer.
+2026-02-16 09:54:32
+    [SIE ] Sign-in prompted.
+2026-02-16 09:54:38
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-16 09:54:38
+    [AE  ] Existing user authenticated with role developer.
+2026-02-16 09:55:14
+    [SIE ] Sign-in prompted.
+2026-02-16 09:55:19
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-16 09:55:19
+    [AE  ] Existing user authenticated with role developer.
+2026-02-16 09:56:04
+    [SIE ] Sign-in prompted.
+2026-02-16 09:56:10
+    [SIE ] Sign-in successful: user Tom authenticated.
+2026-02-16 09:56:10
+    [AE  ] Existing user authenticated with role developer.
+2026-02-28 03:45:38
+    [SIE ] Sign-in prompted.
+2026-02-28 03:45:44
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-02-28 03:45:44
+    [AE  ] Existing user authenticated with role developer.
+2026-03-10 18:24:21
+    [SIE ] Sign-in prompted.
+2026-03-10 18:24:27
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-10 18:24:27
+    [AE  ] Existing user authenticated with role developer.
+2026-03-10 18:28:10
+    [SIE ] Sign-in prompted.
+2026-03-10 18:28:17
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-10 18:28:17
+    [AE  ] Existing user authenticated with role developer.
+2026-03-10 18:30:17
+    [SIE ] Sign-in prompted.
+2026-03-10 18:30:22
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-10 18:30:22
+    [AE  ] Existing user authenticated with role developer.
+2026-03-10 18:36:38
+    [SIE ] Sign-in prompted.
+2026-03-10 18:36:43
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-10 18:36:43
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 15:35:48
+    [SIE ] Sign-in prompted.
+2026-03-11 15:36:13
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 15:36:13
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 15:36:32
+    [SIE ] Sign-in prompted.
+2026-03-11 15:36:41
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 15:36:41
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 15:40:43
+    [SIE ] Sign-in prompted.
+2026-03-11 15:40:51
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 15:40:51
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 15:43:06
+    [SIE ] Sign-in prompted.
+2026-03-11 15:43:15
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 15:43:15
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:02:54
+    [SIE ] Sign-in prompted.
+2026-03-11 16:03:07
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:03:07
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:03:13
+    [SIE ] Sign-in prompted.
+2026-03-11 16:03:21
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:03:21
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:04:17
+    [SIE ] Sign-in prompted.
+2026-03-11 16:04:25
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:04:25
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:24:09
+    [SIE ] Sign-in prompted.
+2026-03-11 16:24:11
+    [SIE ] Sign-in prompted.
+2026-03-11 16:24:19
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:24:19
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:24:23
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:24:23
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:29:33
+    [SIE ] Sign-in prompted.
+2026-03-11 16:29:41
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:29:41
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:30:12
+    [SIE ] Sign-in prompted.
+2026-03-11 16:30:20
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:30:20
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:31:42
+    [SIE ] Sign-in prompted.
+2026-03-11 16:31:50
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:31:50
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:32:57
+    [SIE ] Sign-in prompted.
+2026-03-11 16:33:05
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:33:05
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 16:58:47
+    [SIE ] Sign-in prompted.
+2026-03-11 16:58:55
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 16:58:55
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 17:05:30
+    [SIE ] Sign-in prompted.
+2026-03-11 17:05:38
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 17:05:38
+    [AE  ] Existing user authenticated with role developer.
+2026-03-11 17:06:18
+    [SIE ] Sign-in prompted.
+2026-03-11 17:06:28
+    [SIE ] Sign-in successful: user Emre Acarsoy authenticated.
+2026-03-11 17:06:28
+    [AE  ] Existing user authenticated with role developer.
+2026-03-13 23:42:19
+    [SIE ] Sign-in prompted.
+2026-03-13 23:42:25
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-13 23:42:25
+    [AE  ] New user authenticated with role player.
+2026-03-14 00:03:08
+    [SIE ] Sign-in prompted.
+2026-03-14 00:03:13
+    [SIE ] Sign-in successful: user Luca authenticated.
+2026-03-14 00:03:13
+    [AE  ] Existing user authenticated with role player.
+2026-03-22 15:12:53
+    [SIE ] Sign-in prompted.
+2026-03-22 15:13:06
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:13:06
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:14:58
+    [SIE ] Sign-in prompted.
+2026-03-22 15:15:08
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:15:08
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:27:45
+    [SIE ] Sign-in prompted.
+2026-03-22 15:27:58
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:27:58
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:32:17
+    [SIE ] Sign-in prompted.
+2026-03-22 15:32:27
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:32:27
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:33:51
+    [SIE ] Sign-in prompted.
+2026-03-22 15:34:04
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:34:04
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:36:53
+    [SIE ] Sign-in prompted.
+2026-03-22 15:37:04
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:37:04
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:41:22
+    [SIE ] Sign-in prompted.
+2026-03-22 15:41:33
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:41:33
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:42:58
+    [SIE ] Sign-in prompted.
+2026-03-22 15:43:07
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:43:07
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:43:19
+    [SIE ] Sign-in prompted.
+2026-03-22 15:43:28
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:43:28
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:49:23
+    [SIE ] Sign-in prompted.
+2026-03-22 15:49:34
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:49:34
+    [AE  ] Existing user authenticated with role developer.
+2026-03-22 15:57:29
+    [SIE ] Sign-in prompted.
+2026-03-22 15:57:40
+    [SIE ] Sign-in successful: user Harry Taylor authenticated.
+2026-03-22 15:57:40
+    [AE  ] Existing user authenticated with role developer.

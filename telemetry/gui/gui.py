@@ -745,6 +745,8 @@ class TelemetryAppGUI(tk.Tk):
             self.decision_log_tree.delete(item)
         # Insert settings change events sorted by timestamp.
         for event in self.logic_engine.get_settings_change_events():
+            if event.setting == SettingName.TELEMETRY_ENABLED:
+                continue
             self.decision_log_tree.insert("", "end", values=(
                 event.timestamp.strftime("%Y/%m/%d %H:%M:%S"),
                 self._setting_to_sentence_case(event.setting),
