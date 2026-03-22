@@ -47,7 +47,7 @@
     "102232247054755865131" : {
       "telemetryEnabled" : true,
       "furthestLevel" : {
-        "EASY" : 0,
+        "EASY" : 10,
         "MEDIUM" : 0,
         "HARD" : 0
       }
@@ -488,7 +488,7 @@
     "enemyHealthMultiplier" : {
       "EASY" : 1.0,
       "MEDIUM" : 1.5,
-      "HARD" : 2.0
+      "HARD" : 1.0
     },
     "startingLives" : {
       "EASY" : 14,
