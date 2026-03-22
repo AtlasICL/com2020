@@ -16,7 +16,7 @@ object before and after each event respectively. This is due to dynamic assignme
 
 ### Recording
 
-The recording of these tests in execution can be found [here](https://www.youtube.com/watch?v=8MIbzLSoSo8).
+TO BE REDONE ONCE ALL AUTOMATED TESTS ARE COMPLETE.
 
 ## Manual End-to-End Test Suite
 
@@ -24,23 +24,148 @@ The recording of these tests in execution can be found [here](https://www.youtub
 
 #### Recording
 
-The recording of this test can be found [here](https://www.youtube.com/watch?v=J7zUf3znLJk).
+The recording of this test can be found [here]().
 
 #### Screenshots
 
-When the game is run, this is the startup screen that appears in the command line.
+<img src="images/name.png" alt="Description" width="600">
 
-<img src="images/startup_screen.png" alt="Startup Screen" width="600">
+### Test 2: Running game simulations in the GUI works correctly
 
-This opens a new tab in my default browser, as shown below:
+#### Recording
 
-<img src="images/google_sso.png" alt="Google OAuth" width="600">
-<img src="images/google_review_policies.png" alt="Google Review Policies" width="600">
+The recording of this test can be found [here]().
 
-After entering my credentials, I am then shown the following screen indicating login success:
+#### Screenshots
 
-<img src="images/login_complete_screen.png" alt="Login Complete Screen" width="600">
+<img src="images/name.png" alt="Description" width="600">
 
-This is reflected in the command line, where I am now clearly signed in.
+### Test 3: Players cannot change settings parameters in the GUI
 
-<img src="images/main_menu.png" alt="Main Menu" width="600">
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 4: Developers can change settings parameters in the GUI
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 5: Encounter is started and failed with lives remaining
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 6: Encounter is started and failed with no lives remaining
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 7: Encounter is completed
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 8: Only upgrades that are affordable may be purchased in the shop
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 9: Quit Run button ends the current session
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 10: Player authentication to telemetry app is blocked
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 11: Developer is authenticated to telemetry app by Google OAuth 2.0 OIDC
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 12: Designer is authenticated to telemetry app by Google OAuth 2.0 OIDC
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 13: All telemetry app views are functional
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 14: Telemetry data is exported to CSV
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
+
+### Test 15: Telemetry data reset wipes the relevant JSON file
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/name.png" alt="Description" width="600">
