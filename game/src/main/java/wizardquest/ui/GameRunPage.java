@@ -34,6 +34,7 @@ import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
 import wizardquest.gamemanager.LackingResourceException;
+import wizardquest.gamemanager.SimulatedGameRun;
 import wizardquest.gamemanager.Utils;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
@@ -239,9 +240,13 @@ private static final String DANGER_BUTTON_STYLE =
         Button settingsBtn = new Button("Settings");
         Button simBtn = new Button("Run Simulations");
         simBtn.setOnAction(e -> {
-
-            // Sim logic to be ran here ^^
-
+            for (DifficultyEnum d : DifficultyEnum.values()) {
+                gameManager.startNewGame(d);
+                new SimulatedGameRun(
+                        this.gameManager.getCurrentDifficulty(),
+                        "../event_logs/simulation_events.json");
+                gameManager.endGame();
+            }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Simulations");
             alert.setContentText("Simulations have been executed.");
