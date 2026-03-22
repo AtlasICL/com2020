@@ -20,7 +20,7 @@ TO BE REDONE ONCE ALL AUTOMATED TESTS ARE COMPLETE.
 
 ## Manual End-to-End Test Suite
 
-### Test 1: Player is authenticated by Google OAuth 2.0 OIDC
+### Test 1: Player is authenticated to game app by Google OAuth 2.0 OIDC
 
 #### Recording
 
@@ -30,7 +30,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 2: Running game simulations in the GUI works correctly
+### Test 2: Running game simulations in the game app works correctly
 
 #### Recording
 
@@ -40,7 +40,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 3: Players cannot change settings parameters in the GUI
+### Test 3: Players cannot change settings parameters in the game app
 
 #### Recording
 
@@ -50,7 +50,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 4: Developers can change settings parameters in the GUI
+### Test 4: Developers can change settings parameters in the game app
 
 #### Recording
 
@@ -70,7 +70,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 6: Encounter is started and failed with no lives remaining
+### Test 6: Encounter is failed with no lives remaining
 
 #### Recording
 
