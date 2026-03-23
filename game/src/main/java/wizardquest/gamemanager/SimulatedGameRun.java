@@ -193,7 +193,7 @@ public class SimulatedGameRun {
                         currentEncounter.getType(),
                         this.gameManager.getCurrentDifficulty(),
                         run.getStage(),
-                        Utils.COINS_GAINED));
+                        settings.getEncounterPayout(run.getDifficulty())));
 
                 if (Utils.isBossEncounter(run.getStage())) {
                     this.telemetryListener.onBossEncounterComplete(
@@ -217,7 +217,7 @@ public class SimulatedGameRun {
                                     player.getHealth()));
                 }
 
-                player.gainCoins(Utils.COINS_GAINED);
+                player.gainCoins(settings.getEncounterPayout(run.getDifficulty()));
                 this.gameManager.completeCurrentEncounter();
                 return true;
             }

@@ -132,6 +132,15 @@ public interface SettingsInterface {
     public int getShopItemCount(DifficultyEnum difficulty);
 
     /**
+     * Gets the value of the encounter payout design parameter for the
+     * specified difficulty.
+     * 
+     * @param difficulty the difficulty being queried.
+     * @return the value of the design parameter.
+     */
+    public int getEncounterPayout(DifficultyEnum difficulty);
+
+    /**
      * Attempts to set the user's preference for whether they have telemetry
      * enabled, writing this to their settings in the user database JSON. Will throw
      * an exception if no user is authenticated.
@@ -215,6 +224,15 @@ public interface SettingsInterface {
      * @param newShopItemCount the value it's being set to.
      */
     public void setShopItemCount(DifficultyEnum difficulty, int newShopItemCount) throws AuthenticationException;
+
+    /**
+     * Sets the value of the encounter payout design parameter for the
+     * specified difficulty.
+     * 
+     * @param difficulty       the difficulty it's being set for.
+     * @param newShopItemCount the value it's being set to.
+     */
+    public void setEncounterPayout(DifficultyEnum difficulty, int newEncounterPayout) throws AuthenticationException;
 
     /**
      * Allows JUnit tests to write to a temporary JSON file rather than
