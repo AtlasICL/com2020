@@ -128,7 +128,17 @@ has been written.
 
 <img src="images/settings_change_event.png" alt="Description" width="600">
 
-### Test 6: Encounter is started and failed with lives remaining
+### Test 6: Developers can change the roles of other users in the game app
+
+#### Recording
+
+The recording of this test can be found [here]().
+
+#### Screenshots
+
+<img src="images/img.png" alt="Description" width="600">
+
+### Test 7: Encounter is started and failed with lives remaining
 
 #### Recording
 
@@ -151,7 +161,7 @@ been written one after the other.
 
 <img src="images/encounter_fail_event.png" alt="Description" width="600">
 
-### Test 7: Encounter is failed with no lives remaining
+### Test 8: Encounter is failed with no lives remaining
 
 #### Recording
 
@@ -161,7 +171,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 8: Encounter is completed
+### Test 9: Encounter is completed
 
 #### Recording
 
@@ -171,7 +181,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 9: Only upgrades that are affordable may be purchased in the shop
+### Test 10: Only upgrades that are affordable may be purchased in the shop
 
 #### Recording
 
@@ -181,7 +191,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 10: Quit Run button ends the current session
+### Test 11: Quit Run button ends the current session
 
 #### Recording
 
@@ -191,7 +201,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 11: Player authentication to telemetry app is blocked
+### Test 12: Player authentication to telemetry app is blocked
 
 #### Recording
 
@@ -201,7 +211,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 12: Developer is authenticated to telemetry app by Google OAuth 2.0 OIDC
+### Test 13: Developer is authenticated to telemetry app by Google OAuth 2.0 OIDC
 
 #### Recording
 
@@ -211,7 +221,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 13: Designer is authenticated to telemetry app by Google OAuth 2.0 OIDC
+### Test 14: Designer is authenticated to telemetry app by Google OAuth 2.0 OIDC
 
 #### Recording
 
@@ -221,7 +231,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 14: All telemetry app views are functional
+### Test 15: All telemetry app views are functional
 
 #### Recording
 
@@ -231,7 +241,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 15: Telemetry data is exported to CSV
+### Test 16: Telemetry data is exported to CSV
 
 #### Recording
 
@@ -241,7 +251,7 @@ The recording of this test can be found [here]().
 
 <img src="images/name.png" alt="Description" width="600">
 
-### Test 16: Telemetry data reset wipes the relevant JSON file
+### Test 17: Telemetry data reset wipes the relevant JSON file
 
 #### Recording
 
