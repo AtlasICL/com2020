@@ -297,6 +297,7 @@ public class SimulatedGameRun {
                     settings.getUserID(), run.getSessionID(), this.time.getCurrentTime()));
         }
         this.gameManager.endGame();
+        this.telemetryListener.resetDestinationFile();
         TimeManagerSingleton.useActualTime();
     }
 }
