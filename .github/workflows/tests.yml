@@ -1,0 +1,49 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
+  OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
+
+jobs:
+  game-tests:
+    name: Game Tests (Java)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run tests
+        working-directory: game
+        run: xvfb-run mvn test
+
+  telemetry-tests:
+    name: Telemetry Tests (Python)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        working-directory: telemetry
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        working-directory: telemetry
+        run: python -m unittest

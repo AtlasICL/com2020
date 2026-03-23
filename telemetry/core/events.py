@@ -451,7 +451,7 @@ class SettingsChange:
     userID: str
     timestamp: datetime
     setting: SettingName
-    value: int
+    value: str
     justification: str
 
     

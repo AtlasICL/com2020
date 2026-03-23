@@ -467,11 +467,19 @@
         "MEDIUM" : 0,
         "HARD" : 0
       }
+    },
+    "115697956126888034818" : {
+      "telemetryEnabled" : true,
+      "furthestLevel" : {
+        "EASY" : 4,
+        "MEDIUM" : 0,
+        "HARD" : 0
+      }
     }
   },
   "designParameters" : {
     "playerMaxHealth" : {
-      "EASY" : 85,
+      "EASY" : 100,
       "MEDIUM" : 100,
       "HARD" : 75
     },
