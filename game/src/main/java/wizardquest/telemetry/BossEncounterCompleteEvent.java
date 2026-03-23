@@ -20,7 +20,7 @@ public class BossEncounterCompleteEvent extends EncounterCompleteEvent {
      * @param encounterName     the name of the encounter a player is fighting.
      * @param difficulty        the difficulty used for the player's session.
      * @param stageNumber       the stage player has completed.
-     * @param playerHPRemaining player HP remaining after completion.
+     * @param playerHPRemaining player health remaining after completion.
      */
     public BossEncounterCompleteEvent(String userID, int sessionID,
             Instant timeStamp, EncounterEnum encounterName, DifficultyEnum difficulty, int stageNumber,

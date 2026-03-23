@@ -69,7 +69,7 @@ class SuggestionGenerator:
                 # Calculate average health remaining per stage
                 averages[stage] = totals[stage] / counts[stage]
 
-            # Filter to only stages which aren't 0 hp (i.e. not played yet)
+            # Filter to only stages which aren't 0 health (i.e. not played yet)
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
@@ -164,7 +164,7 @@ class SuggestionGenerator:
                 # Calculate average health remaining per stage
                 averages[stage] = totals[stage] / counts[stage]
 
-            # Filter to only stages which aren't 0 hp
+            # Filter to only stages which aren't 0 health
             # (i.e. not played yet)
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
@@ -173,7 +173,7 @@ class SuggestionGenerator:
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
 
-            # Add stages less than mean until 0hp stage
+            # Add stages less than mean until 0 health stage
             stages_flagged = []
             for stage in averages.keys():
                 if averages[stage] == 0:
