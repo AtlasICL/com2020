@@ -6180,7 +6180,7 @@
   "userID" : "100009",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "Easy: 82",
+  "settingValue" : "EASY: 82",
   "settingsChangeJustification" : "Made easy player weaker, as they were too tanky",
   "timestamp" : "2026/02/23/21/05/03"
 }
