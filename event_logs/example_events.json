@@ -584,8 +584,8 @@
   "userID" : "100000",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "2.91",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 2.91",
+  "settingsChangeJustification" : "Game too easy on easy",
   "timestamp" : "2026/02/23/20/16/08"
 }
 ,
@@ -1152,8 +1152,8 @@
   "userID" : "100001",
   "event" : "SettingsChange",
   "setting" : "MAGIC_REGEN_RATE",
-  "settingValue" : "28",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 28",
+  "settingsChangeJustification" : "Medium spells feel too weak",
   "timestamp" : "2026/02/23/20/21/13"
 }
 ,
@@ -1731,8 +1731,8 @@
   "userID" : "100002",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "1",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 1",
+  "settingsChangeJustification" : "Less upgrades in shop as spells are buffed",
   "timestamp" : "2026/02/23/20/25/56"
 }
 ,
@@ -2178,8 +2178,8 @@
   "userID" : "100003",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "1.34",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.34",
+  "settingsChangeJustification" : "Hard enemies deal too much damage",
   "timestamp" : "2026/02/23/20/29/37"
 }
 ,
@@ -2801,8 +2801,8 @@
   "userID" : "100004",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "2.35",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 2.35",
+  "settingsChangeJustification" : "Making hard harder again",
   "timestamp" : "2026/02/23/20/34/24"
 }
 ,
@@ -3391,8 +3391,8 @@
   "userID" : "100005",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "2.07",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 2.07",
+  "settingsChangeJustification" : "Made hard enemies more tanky",
   "timestamp" : "2026/02/23/20/39/14"
 }
 ,
@@ -4113,8 +4113,8 @@
   "userID" : "100006",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "84",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 84",
+  "settingsChangeJustification" : "Fine tuning player health",
   "timestamp" : "2026/02/23/20/46/18"
 }
 ,
@@ -4956,8 +4956,8 @@
   "userID" : "100007",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "1.24",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.24",
+  "settingsChangeJustification" : "Enemy max health on hard too high",
   "timestamp" : "2026/02/23/20/54/06"
 }
 ,
@@ -5491,8 +5491,8 @@
   "userID" : "100008",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "173",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 173",
+  "settingsChangeJustification" : "Easy mode player too weak",
   "timestamp" : "2026/02/23/20/59/04"
 }
 ,
@@ -6180,8 +6180,8 @@
   "userID" : "100009",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "82",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "Easy: 82",
+  "settingsChangeJustification" : "Made easy player weaker, as they were too tanky",
   "timestamp" : "2026/02/23/21/05/03"
 }
 ,
@@ -6660,8 +6660,8 @@
   "userID" : "100010",
   "event" : "SettingsChange",
   "setting" : "MAGIC_REGEN_RATE",
-  "settingValue" : "22",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 22",
+  "settingsChangeJustification" : "Allowed more spell use on medium",
   "timestamp" : "2026/02/23/21/09/13"
 }
 ,
@@ -7272,8 +7272,8 @@
   "userID" : "100011",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "132",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 132",
+  "settingsChangeJustification" : "Allowed more magic to be stored up",
   "timestamp" : "2026/02/23/21/14/33"
 }
 ,
@@ -7796,8 +7796,8 @@
   "userID" : "100012",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "200",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 200",
+  "settingsChangeJustification" : "Player dies too fast on medium",
   "timestamp" : "2026/02/23/21/19/05"
 }
 ,
@@ -8540,8 +8540,8 @@
   "userID" : "100013",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "1",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1",
+  "settingsChangeJustification" : "Made hard much more high risk",
   "timestamp" : "2026/02/23/21/25/39"
 }
 ,
@@ -9295,8 +9295,8 @@
   "userID" : "100014",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "1.91",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 1.91",
+  "settingsChangeJustification" : "Made easy encounters last longer",
   "timestamp" : "2026/02/23/21/32/20"
 }
 ,
@@ -9907,8 +9907,8 @@
   "userID" : "100015",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "88",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 88",
+  "settingsChangeJustification" : "Player health on hard too low",
   "timestamp" : "2026/02/23/21/37/26"
 }
 ,
@@ -10475,8 +10475,8 @@
   "userID" : "100016",
   "event" : "SettingsChange",
   "setting" : "MAGIC_REGEN_RATE",
-  "settingValue" : "16",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 16",
+  "settingsChangeJustification" : "Spells too strong on hard",
   "timestamp" : "2026/02/23/21/42/01"
 }
 ,
@@ -11230,8 +11230,8 @@
   "userID" : "100017",
   "event" : "SettingsChange",
   "setting" : "MAGIC_REGEN_RATE",
-  "settingValue" : "10",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 10",
+  "settingsChangeJustification" : "Medium players use spells too much",
   "timestamp" : "2026/02/23/21/48/30"
 }
 ,
@@ -11677,8 +11677,8 @@
   "userID" : "100018",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "72",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 72",
+  "settingsChangeJustification" : "Incentivise medium players storing up magic",
   "timestamp" : "2026/02/23/21/53/05"
 }
 ,
@@ -12289,8 +12289,8 @@
   "userID" : "100019",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "2.33",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 2.33",
+  "settingsChangeJustification" : "Fine tuning enemy damage",
   "timestamp" : "2026/02/23/21/57/53"
 }
 ,
@@ -12857,8 +12857,8 @@
   "userID" : "100020",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "1.43",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.43",
+  "settingsChangeJustification" : "Fine tuning enemy health",
   "timestamp" : "2026/02/23/22/02/37"
 }
 ,
@@ -13491,8 +13491,8 @@
   "userID" : "100021",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "169",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 169",
+  "settingsChangeJustification" : "Let easy players store up lots of magic",
   "timestamp" : "2026/02/23/22/07/45"
 }
 ,
@@ -14004,8 +14004,8 @@
   "userID" : "100022",
   "event" : "SettingsChange",
   "setting" : "MAX_MAGIC",
-  "settingValue" : "193",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 193",
+  "settingsChangeJustification" : "Allowed even more easy magic storage",
   "timestamp" : "2026/02/23/22/11/48"
 }
 ,
@@ -14726,8 +14726,8 @@
   "userID" : "100023",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "3.61",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 3.61",
+  "settingsChangeJustification" : "Hard is not deadly enough",
   "timestamp" : "2026/02/23/22/17/41"
 }
 ,
@@ -15459,8 +15459,8 @@
   "userID" : "100024",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 3",
+  "settingsChangeJustification" : "Add options to make hard more strategical",
   "timestamp" : "2026/02/23/22/24/20"
 }
 ,
@@ -15994,8 +15994,8 @@
   "userID" : "100025",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "198",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 198",
+  "settingsChangeJustification" : "Hard is too deadly",
   "timestamp" : "2026/02/23/22/28/56"
 }
 ,
@@ -16496,8 +16496,8 @@
   "userID" : "100026",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "5",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 84",
+  "settingsChangeJustification" : "Made medium games last longer",
   "timestamp" : "2026/02/23/22/33/05"
 }
 ,
@@ -16998,8 +16998,8 @@
   "userID" : "100027",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "1.93",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.93",
+  "settingsChangeJustification" : "Enemies deal too much damage",
   "timestamp" : "2026/02/23/22/38/03"
 }
 ,
@@ -17445,8 +17445,8 @@
   "userID" : "100028",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 3",
+  "settingsChangeJustification" : "Reduced to not overwhelm easy players with too many options",
   "timestamp" : "2026/02/23/22/41/33"
 }
 ,
@@ -18123,8 +18123,8 @@
   "userID" : "100029",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "1.17",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 1.17",
+  "settingsChangeJustification" : "Medium was slightly too easy",
   "timestamp" : "2026/02/23/22/47/25"
 }
 ,
@@ -18746,8 +18746,8 @@
   "userID" : "100030",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 3",
+  "settingsChangeJustification" : "Medium had far too many starting lives",
   "timestamp" : "2026/02/23/22/52/30"
 }
 ,
@@ -19270,8 +19270,8 @@
   "userID" : "100031",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "2.01",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 2.01",
+  "settingsChangeJustification" : "Hard was only slightly harder than medium",
   "timestamp" : "2026/02/23/22/57/04"
 }
 ,
@@ -19772,8 +19772,8 @@
   "userID" : "100032",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "103",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 103",
+  "settingsChangeJustification" : "Fine tuning player health",
   "timestamp" : "2026/02/23/23/01/01"
 }
 ,
@@ -20219,8 +20219,8 @@
   "userID" : "100033",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "1",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 1",
+  "settingsChangeJustification" : "Experimenting with medium being high risk like hard",
   "timestamp" : "2026/02/23/23/05/09"
 }
 ,
@@ -20853,8 +20853,8 @@
   "userID" : "100034",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 3",
+  "settingsChangeJustification" : "Fine tune upgrade options for medium",
   "timestamp" : "2026/02/23/23/10/28"
 }
 ,
@@ -21311,8 +21311,8 @@
   "userID" : "100035",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 3",
+  "settingsChangeJustification" : "Experiment with high-risk medium made it too hard",
   "timestamp" : "2026/02/23/23/14/46"
 }
 ,
@@ -21923,8 +21923,8 @@
   "userID" : "100036",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "5",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 5",
+  "settingsChangeJustification" : "Medium still too hard",
   "timestamp" : "2026/02/23/23/20/50"
 }
 ,
@@ -22502,8 +22502,8 @@
   "userID" : "100037",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "101",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 101",
+  "settingsChangeJustification" : "Fine tuning health to adjust medium difficulty",
   "timestamp" : "2026/02/23/23/26/15"
 }
 ,
@@ -23455,8 +23455,8 @@
   "userID" : "100038",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "3.5",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 3.5",
+  "settingsChangeJustification" : "Made hard much harder",
   "timestamp" : "2026/02/23/23/34/45"
 }
 ,
@@ -24100,8 +24100,8 @@
   "userID" : "100039",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "1",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 1",
+  "settingsChangeJustification" : "Testing medium on one life again",
   "timestamp" : "2026/02/23/23/40/33"
 }
 ,
@@ -24811,8 +24811,8 @@
   "userID" : "100040",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "0.51",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 0.51",
+  "settingsChangeJustification" : "Reduced medium enemy damage to see if this helps difficulty",
   "timestamp" : "2026/02/23/23/47/03"
 }
 ,
@@ -25555,8 +25555,8 @@
   "userID" : "100041",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "103",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 103",
+  "settingsChangeJustification" : "Tweaked medium health to make easier",
   "timestamp" : "2026/02/23/23/53/23"
 }
 ,
@@ -26355,8 +26355,8 @@
   "userID" : "100042",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "3",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 5",
+  "settingsChangeJustification" : "GIve more interesting choices on hard",
   "timestamp" : "2026/02/23/23/59/53"
 }
 ,
@@ -27055,8 +27055,8 @@
   "userID" : "100043",
   "event" : "SettingsChange",
   "setting" : "STARTING_LIVES",
-  "settingValue" : "5",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "MEDIUM: 5",
+  "settingsChangeJustification" : "One life on medium is unbalanced",
   "timestamp" : "2026/02/24/00/05/50"
 }
 ,
@@ -27799,8 +27799,8 @@
   "userID" : "100044",
   "event" : "SettingsChange",
   "setting" : "PLAYER_MAX_HEALTH",
-  "settingValue" : "148",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 148",
+  "settingsChangeJustification" : "Mitigating high hard enemy damage",
   "timestamp" : "2026/02/24/00/12/13"
 }
 ,
@@ -28455,8 +28455,8 @@
   "userID" : "100045",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "3.22",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 3.22",
+  "settingsChangeJustification" : "Increasing player health made hard too easy, increasing damage",
   "timestamp" : "2026/02/24/00/18/11"
 }
 ,
@@ -29023,8 +29023,8 @@
   "userID" : "100046",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "1.74",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.74",
+  "settingsChangeJustification" : "Make hard encounters last longer",
   "timestamp" : "2026/02/24/00/22/47"
 }
 ,
@@ -29503,8 +29503,8 @@
   "userID" : "100047",
   "event" : "SettingsChange",
   "setting" : "ENEMY_DAMAGE_MULTIPLIER",
-  "settingValue" : "3.26",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 1.26",
+  "settingsChangeJustification" : "Reduced hard enemy damage, as encounters are longer",
   "timestamp" : "2026/02/24/00/27/28"
 }
 ,
@@ -30258,8 +30258,8 @@
   "userID" : "100048",
   "event" : "SettingsChange",
   "setting" : "ENEMY_MAX_HEALTH_MULTIPLIER",
-  "settingValue" : "3.85",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "HARD: 3.85",
+  "settingsChangeJustification" : "Made hard encounters longer still",
   "timestamp" : "2026/02/24/00/33/55"
 }
 ,
@@ -30859,8 +30859,8 @@
   "userID" : "100049",
   "event" : "SettingsChange",
   "setting" : "SHOP_ITEM_COUNT",
-  "settingValue" : "5",
-  "settingsChangeJustification" : "Seeded SettingsChangeEvent",
+  "settingValue" : "EASY: 5",
+  "settingsChangeJustification" : "Increase chance of good items in easy shop",
   "timestamp" : "2026/02/24/00/39/24"
 }
 ]
