@@ -96,9 +96,6 @@ public class TelemetryListenerSingleton {
             if (eventTime.isAfter(Instant.now())) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                         " " + e.getTimestamp() + " is in the future");
-            } else if (mostRecentTimeStamp != null && eventTime.isBefore(mostRecentTimeStamp)) {
-                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                        " " + e.getTimestamp() + " is not current");
             }
         }
 
@@ -112,9 +109,6 @@ public class TelemetryListenerSingleton {
             if (e.getTimestamp().isAfter(Instant.now())) {
                 throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
                         " " + e.getTimestamp() + " is in the future");
-            } else if (mostRecentTimeStamp != null && e.getTimestamp().isBefore(mostRecentTimeStamp)) {
-                throw new TimestampValidationException("Time stamp of event " + e.getEvent() +
-                        " " + e.getTimestamp() + " is not current");
             }
         }
 

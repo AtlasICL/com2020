@@ -7,6 +7,8 @@ module wizard.quest {
 
     opens wizardquest.ui to javafx.fxml;
     opens wizardquest.telemetry;
+    opens wizardquest.settings to com.fasterxml.jackson.databind;
+    opens wizardquest.entity to com.fasterxml.jackson.databind;
 
     exports wizardquest.ui;
 }
