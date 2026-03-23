@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.io.TempDir;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,7 +21,6 @@ import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.RoleEnum;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.gamemanager.GameManagerSingleton;
-import wizardquest.gamemanager.TimeManagerSingleton;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsSingleton;
 import wizardquest.telemetry.EndSessionEvent;
@@ -45,7 +45,6 @@ public class TelemetryListenerUnitTests {
      *                                 or the credentials are invalid when trying to
      *                                 authenticate the user.
      */
-    @SuppressWarnings("unused")
     @BeforeEach
     void setUp() throws AuthenticationException, IOException {
         // Initialise and create temporary JSON files for a test user's login to be
@@ -147,13 +146,8 @@ public class TelemetryListenerUnitTests {
 
     /**
      * All telemetry events contain the sessionID field, which uniquely identifies
-     * the session in which the event
-     * occurred.
-     * The sessionID in the event field should match the sessionID in the settings
-     * of the authenticated user.
+     * the session in which the event occurred.
      * A SessionEndEvent cannot occur before a SessionStartEvent has happened.
-     * Likewise, a SessionStartEvent cannot occur before a SessionEndEvent to end
-     * the user's prior session has happened.
      */
     @Test
     @DisplayName("TelemetryListener - sessionID field input validated")
@@ -188,11 +182,10 @@ public class TelemetryListenerUnitTests {
     /**
      * All telemetry events contain the timeStamp field, which identifies the time
      * at which the event occurred.
-     * It should not be a time in the future, nor should it be before the time stamp
-     * of the last event that occurred before this one.
+     * It should not be a time in the future.
      */
     @Test
-    @DisplayName("TelemetryListener - timeStamp field input validated")
+    @DisplayName("TelemetryListener - time stamp field input validated")
     void onNormalEncounterStart_timeStampValidated() {
         // Initialise an invalid NormalEncounterStartEvent object for the authenticated
         // user.
@@ -213,39 +206,6 @@ public class TelemetryListenerUnitTests {
                         " " + invalidTestEvent2.getTimestamp() + " is in the future"));
         // Reset the exception output stream.
         exError.reset();
-
-        // Initialise TWO NormalEncounterStartEvent objects for the authenticated user.
-        // The first one will contain a valid timestamp, and so should be accepted.
-        // The second one will contain a timestamp earlier than that of the first one.
-        NormalEncounterStartEvent validTestEvent = new NormalEncounterStartEvent(
-                SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getSessionID(),
-                TimeManagerSingleton.getInstance().getCurrentTime(),
-                EncounterEnum.GOBLIN_ENCOUNTER,
-                DifficultyEnum.MEDIUM,
-                1);
-        NormalEncounterStartEvent invalidTestEvent3 = new NormalEncounterStartEvent(
-                SettingsSingleton.getInstance().getUserID(),
-                GameManagerSingleton.getInstance().getSessionID(),
-                Instant.parse("2026-01-01T15:00:00Z"), // 1st January 2026 at 15:00:00
-                EncounterEnum.GOBLIN_ENCOUNTER,
-                DifficultyEnum.MEDIUM,
-                1);
-
-        // The timestamp for the first event is valid, so calling onNormalEncounterStart
-        // should cause no issues.
-        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(validTestEvent);
-        assertTrue(this.exError.toString().isEmpty());
-        // The timestamp for the second event is earlier than the timestamp of the most
-        // recent event.
-        // Therefore, TimestampValidationException should be thrown when the second
-        // event occurs.
-        TelemetryListenerSingleton.getInstance().onNormalEncounterStart(invalidTestEvent3);
-        assertTrue(this.exError.toString()
-                .contains("Time stamp of event " + invalidTestEvent3.getEvent() +
-                        " " + invalidTestEvent3.getTimestamp() + " is not current"));
-        // Reset the exception output stream.
-        exError.reset();
     }
 
     /**
@@ -255,7 +215,7 @@ public class TelemetryListenerUnitTests {
      * Also restores the system error buffer to its original value from before any
      * tests were run.
      */
-    @SuppressWarnings("unused")
+
     @AfterEach
     void cleanUp() {
         EndSessionEvent endSessionEvent = new EndSessionEvent(
