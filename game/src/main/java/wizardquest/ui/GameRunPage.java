@@ -137,6 +137,14 @@ private static final String DANGER_BUTTON_STYLE =
     @Override
     public void start(Stage stage) {
         FontLoader.loadFonts();
+        if (!isRunningAsAdmin()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Not Running as Administrator");
+            alert.setContentText("You are not running as admin, so some game features may not work correctly.");
+            alert.showAndWait();
+        }
+
         // Main container for swapping between different frames
         root = new VBox(8);
         root.setPadding(new Insets(12));
@@ -964,6 +972,17 @@ private static final String DANGER_BUTTON_STYLE =
         );
         timeline.play();
     }
+
+public static boolean isRunningAsAdmin() {
+    try {
+        Process process = Runtime.getRuntime().exec(
+            new String[]{"cmd", "/c", "net session"}
+        );
+        return process.waitFor() == 0;
+    } catch (Exception e) {
+        return false;
+    }
+}
 
     public static void main(String[] args) {
         launch(args);
