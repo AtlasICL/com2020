@@ -24,23 +24,66 @@ TO BE REDONE ONCE ALL AUTOMATED TESTS ARE COMPLETE.
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/W4eMjM-NVRY).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+From the title screen, click the 'Login with SSO' button.
+
+<img src="images/game_title.png" alt="Image" width="600">
+
+This opens a new tab in the user's web browser, prompting sign-in with a Google account.
+
+<img src="images/google_auth.png" alt="Image" width="600">
+
+Once signed in, this screen will appear, indicating successful authentication.
+
+<img src="images/login_complete.png" alt="Image" width="600">
+
+This is reflected in the game app, where the user is now in the game's main menu.
+
+<img src="images/game_menu.png" alt="Image" width="600">
 
 ### Test 2: Running game simulations in the game app works correctly
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/181G4iqBl24).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+Before invoking any simulated runs, we can see that the file 'simulation_events.json' is empty.
+
+<img src="images/empty_sim_events.png" alt="Image" width="600">
+
+From the main menu, click the 'Run Simulations' button, which produces this pop-up on success.
+
+<img src="images/simulations_executed.png" alt="Image" width="600">
+
+This is reflected in 'simulation_events.json', which is now populated with sequences of telemetry events.
+
+<img src="images/populated_sim_events.png" alt="Description" width="600">
 
 ### Test 3: Players cannot change settings parameters in the game app
+
+#### Recording
+
+The recording of this test can be found [here](https://youtu.be/mLBafPQSsVA).
+
+#### Screenshots
+
+From the main menu, click the 'Settings' button.
+
+<img src="images/game_menu.png" alt="Description" width="600">
+
+This opens the following screen, where you can see the user's role of Player displayed at the top.
+
+<img src="images/player_settings_screen.png" alt="Description" width="600">
+
+The table of values is greyed out - the user cannot modify these as Players do not have permissions to do so. The same
+policy applies to the justification text box.
+
+### Test 4: User can toggle telemetry on and off
 
 #### Recording
 
@@ -48,7 +91,7 @@ The recording of this test can be found [here]().
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+<img src="images/img.png" alt="Description" width="600">
 
 ### Test 4: Developers can change settings parameters in the game app
 
