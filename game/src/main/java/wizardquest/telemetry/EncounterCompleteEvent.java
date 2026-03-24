@@ -26,7 +26,7 @@ public abstract class EncounterCompleteEvent extends EncounterEvent {
      * @param encounterName     the name of the encounter a player is fighting.
      * @param difficulty        the difficulty used for the player's session.
      * @param stageNumber       the stage player has completed.
-     * @param playerHPRemaining player HP remaining after completion.
+     * @param playerHPRemaining player health remaining after completion.
      */
     public EncounterCompleteEvent(String userID, int sessionID,
             Instant timeStamp, String telemetryName, EncounterEnum encounterName, DifficultyEnum difficulty,
@@ -36,9 +36,9 @@ public abstract class EncounterCompleteEvent extends EncounterEvent {
     }
 
     /**
-     * Gets stored player HP.
+     * Gets stored player health.
      *
-     * @return player HP remaining after encounter complete.
+     * @return player health remaining after encounter complete.
      */
     public int getPlayer_HP_remaining() {
         return this.player_HP_remaining;

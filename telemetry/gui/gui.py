@@ -336,9 +336,9 @@ class TelemetryAppGUI(tk.Tk):
 
         self.curves_plot = PlotTab(
             parent=self.tab_curves,
-            title="HP remaining by stage",
+            title="Health remaining by stage",
             xlabel="Stage",
-            ylabel="Average HP Remaining",
+            ylabel="Average Health Remaining",
         )
         self.fairness_plot = PlotTab(
             parent=self.tab_fairness,
@@ -579,7 +579,7 @@ class TelemetryAppGUI(tk.Tk):
     ) -> dict[int, float]:
         """
         Helper function to get the average of a list of dictionaries
-        which map stage numbers to values like HP remaining or coins
+        which map stage numbers to values like health remaining or coins
         gained.
         Example: Given a list of dictionaries of health per stage data,
         this function would return a dictionary which maps the stage
@@ -602,7 +602,7 @@ class TelemetryAppGUI(tk.Tk):
 
     def refresh_health_plots(self) -> None:
         """
-        Refreshes the plots of HP remaining per stage.
+        Refreshes the plots of health remaining per stage.
         Shows aggregate average by default, per difficulty, per speed or
         per coin hold when the compare toggles are enabled.
         """
@@ -640,7 +640,7 @@ class TelemetryAppGUI(tk.Tk):
             self.curves_plot.plot_line(
                 averages.keys(),
                 averages.values(),
-                label="Avg HP Remaining"
+                label="Avg Health Remaining"
             )
 
 

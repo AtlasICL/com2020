@@ -188,8 +188,8 @@ class NormalEncounterComplete:
     :type difficulty: Difficulty
     :param stage_number: Current stage player has completed.
     :type stage_number: int
-    :param player_HP_remaining: Number of HP points users 
-    character has remaining.
+    :param player_HP_remaining: Amount of health the player
+    has remaining.
     :type player_HP_remaining: int
     """
     userID: int
@@ -309,7 +309,7 @@ class BossEncounterComplete:
     :type difficulty: Difficulty
     :param stage_number: Current stage player has completed.
     :type stage_number: int
-    :param player_HP_remaining: Player HP remaining once 
+    :param player_HP_remaining: Player health remaining once 
     boss encounter is complete.
     :type player_HP_remaining: int
     """
