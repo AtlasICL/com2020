@@ -10,14 +10,14 @@ from tkinter import messagebox
 import ctypes
 from gui.gui import TelemetryAppGUI
 
-def isAdmin():
+def isAdmin() -> bool:
     try:
         is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
     except Exception as e:
         is_admin = False
     return is_admin
 
-def main():
+def main() -> None:
     if not isAdmin():
         root = tk.Tk()
         root.withdraw()
