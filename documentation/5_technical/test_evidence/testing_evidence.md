@@ -3,16 +3,16 @@
 ## Automated Test Suite
 
 ### Description
-The automated test suite for our prototype contains three unit tests and two integration tests. These have been
-implemented using JUnit (v5.10.1), and can be executed using a single Maven command - this can be found in our
-deployment guide.
+The automated test suite for our prototype contains 41 tests. These have been implemented using JUnit (v5.10.1),
+and can be executed using a single Maven command - this can be found in our deployment guide.
 
-These five tests validate the logic of our TelemetryListener class - which is fundamental to the core objective of
-what our system aims to achieve. The test suite utilises JUnit's `@TempDir` feature which causes the tests to interact
-with temporary JSON files where necessary - this prevents any risk of corruption to the JSON files to be used for
-production. The concrete `TelemetryEvent` class primarily used for testing is `NormalEncounterStartEvent` - however, we
-have also utilised JUnit's `@BeforeEach` and `@AfterEach` features to invoke a `StartSessionEvent` and `EndSessionEvent`
-object before and after each event respectively. This is due to dynamic assignment of the SessionID field.
+The suite contains both unit and integration tests. Unit tests are used to validate the logic of different methods
+across different modules of our code. These are isolated and do not write to any files. Integration tests are used to
+validate relevant behaviours that involve manually calling multiple methods, as well as reading to and writing from
+files. By utilising JUnit's `@TempDir` feature, this allows I/O with temporary JSON files instead of those used for
+production, which prevents any risk of corruption to the production files during testing. Furthermore, the use of
+JUnit's `@BeforeEach` and `@AfterEach` features for setup and cleanup respectively ensure that each test is independent,
+fair and responsible.
 
 ### Recording
 
