@@ -973,7 +973,7 @@ private static final String DANGER_BUTTON_STYLE =
         timeline.play();
     }
 
-public static boolean isRunningAsAdmin() {
+private static boolean isRunningAsAdmin() {
     try {
         Process process = Runtime.getRuntime().exec(
             new String[]{"cmd", "/c", "net session"}
