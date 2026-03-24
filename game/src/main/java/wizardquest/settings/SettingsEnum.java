@@ -11,7 +11,8 @@ public enum SettingsEnum {
     STARTING_LIVES("StartingLives"),
     MAX_MAGIC("MaxMagic"),
     MAGIC_REGEN_RATE("MagicRegenRate"),
-    SHOP_ITEM_COUNT("ShopItemCount");
+    SHOP_ITEM_COUNT("ShopItemCount"),
+    ENCOUNTER_PAYOUT("EncounterPayout");
 
     private final String telemetryName;
 
