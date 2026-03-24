@@ -8,11 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import wizardquest.abilities.DamageEnum;
+import wizardquest.abilities.ImprovedThunderDamageUpgrade;
 import wizardquest.abilities.UpgradeEnum;
-import wizardquest.gamemanager.Encounter;
+import wizardquest.abilities.WaterJetUnlockUpgrade;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.gamemanager.EncounterInterface;
-import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRun;
 import wizardquest.gamemanager.GameRunInterface;
 import wizardquest.gamemanager.LackingResourceException;
@@ -182,4 +183,68 @@ public class GameRunUnitTests {
 
     }
 
-}
+
+    /**
+     * Checks purchased upgrades are applied to the player, and removed from the
+     * shop.
+     */
+    @Test
+    @DisplayName("GameRun - Purchasing an upgrade applies it and removes it from the shop")
+    void upgradePurchased_appliedToPlayerAndRemovedFromShop() {
+        run.getPlayer().gainCoins(10);
+        try {
+            run.purchaseUpgrade(UpgradeEnum.IMPROVED_THUNDER_DAMAGE);
+        } catch (LackingResourceException e) {
+            fail("Threw exception: " + e.getMessage());
+        }
+        // Check player loses correct amount of coins
+        assertEquals(0, run.getPlayer().getCoins());
+
+        // Check upgrade is applied correctly
+        assertIterableEquals(Arrays.asList(new UpgradeEnum[] { UpgradeEnum.IMPROVED_THUNDER_DAMAGE }),
+                run.getPlayer().getUpgrades());
+        assertTrue(run.getPlayer() instanceof ImprovedThunderDamageUpgrade);
+
+        // Check multiple upgrades
+        run.getPlayer().gainCoins(40);
+        try {
+            run.purchaseUpgrade(UpgradeEnum.FIRE_DAMAGE_RESISTANCE);
+            run.purchaseUpgrade(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK);
+            run.purchaseUpgrade(UpgradeEnum.WATER_JET_UNLOCK);
+        } catch (LackingResourceException e) {
+            fail("Threw exception: " + e.getMessage());
+        }
+
+        assertIterableEquals(Arrays.asList(new UpgradeEnum[] {
+                UpgradeEnum.IMPROVED_THUNDER_DAMAGE,
+                UpgradeEnum.FIRE_DAMAGE_RESISTANCE,
+                UpgradeEnum.ABSOLUTE_PULSE_UNLOCK,
+                UpgradeEnum.WATER_JET_UNLOCK }),
+                run.getPlayer().getUpgrades());
+
+        assertTrue(run.getPlayer() instanceof WaterJetUnlockUpgrade);
+    }
+
+    /**
+     * Checks that when the player dies, their health is reset and they lose a life.
+     */
+    @Test
+    @DisplayName("GameRun - Player death resets health and reduces lives")
+    void playerDeath_resetsHealthAndLosesOneLife() {
+        int l = run.getPlayer().getLives();
+
+        run.getPlayer().loseHealth(10, DamageEnum.ABSOLUTE);
+
+        // Check player has the correct amount of health
+        assertEquals(SettingsSingleton.getInstance().getPlayerMaxHealth(DifficultyEnum.MEDIUM) - 10,
+                run.getPlayer().getHealth());
+
+        // Check once the player dies the health is reset, lives are decremented, and
+        // deaths are incremented
+        run.incrementDeathCount();
+        assertEquals(l - 1, run.getPlayer().getLives());
+        assertEquals(1, run.getDeathCount());
+        assertEquals(SettingsSingleton.getInstance().getPlayerMaxHealth(DifficultyEnum.MEDIUM),
+                run.getPlayer().getHealth());
+    }
+}   
