@@ -136,6 +136,24 @@ class TestParsing(unittest.TestCase):
         )
 
 
+    def test_parse_missing_field_event(self):
+        """
+        Tests whether an event with a missing field is rejected.
+        """
+        event_dict = {
+                    "userID" : "1",
+                    "sessionID" : 1,
+                    "difficulty" : "Easy",
+                    "timestamp" : "2026/03/07/00/00/00"
+                    }
+        with self.assertRaises(RuntimeError) as error:
+            parse_event(event_dict)
+        self.assertEqual(
+            str(error.exception),
+            "Event must have an \"event\" field"
+        )
+
+
     def test_parse_missing_event(self):
         """
         Tests whether a json object with missing parameters is rejected.
