@@ -122,6 +122,7 @@ class SettingName(str, Enum):
     MAX_MAGIC = "MAX_MAGIC"
     MAGIC_REGEN_RATE = "MAGIC_REGEN_RATE"
     SHOP_ITEM_COUNT = "SHOP_ITEM_COUNT"
+    ENCOUNTER_PAYOUT = "ENCOUNTER_PAYOUT"
 
 
 class Difficulty(str, Enum):
