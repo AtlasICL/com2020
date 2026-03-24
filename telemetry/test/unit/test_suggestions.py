@@ -57,7 +57,7 @@ class TestLogic(unittest.TestCase):
                         'suggestion': 'Increase max health.'},
                         {'difficulty': 'Medium',
                         'problem': 'High health loss.',
-                        'stages': '4, 5, 6',
+                        'stages': '4, 5',
                         'suggestion': 'Increase max health.'}]
                         )
     
@@ -82,7 +82,7 @@ class TestLogic(unittest.TestCase):
                            'suggestion': 'Decrease starting lives.'},
                           {'difficulty': 'Medium',
                            'problem': 'High pass rate.',
-                           'stages': '4, 5, 6',
+                           'stages': '4, 5',
                            'suggestion': 'Decrease starting lives.'}]
                          )
 
@@ -133,7 +133,7 @@ class TestLogic(unittest.TestCase):
                            'suggestion': 'Increase coins gained per level.'},
                           {'difficulty': 'Medium',
                            'problem': 'Low coin gain.',
-                           'stages': '4, 5, 6',
+                           'stages': '4, 5',
                            'suggestion': 'Increase coins gained per level.'}]
                          )
 
@@ -182,11 +182,11 @@ class TestLogic(unittest.TestCase):
                          [{'difficulty': 'Easy',
                            'problem': 'Fast average completion time.',
                            'stages': '1, 2, 3, 8, 9, 10',
-                           'suggestion': 'Increase number of enemies per stage.'},
+                           'suggestion': 'Increase enemy health.'},
                           {'difficulty': 'Medium',
                            'problem': 'Fast average completion time.',
-                           'stages': '2, 6',
-                           'suggestion': 'Increase number of enemies per stage.'}]
+                           'stages': '2',
+                           'suggestion': 'Increase enemy health.'}]
                          )
 
     def test_generate_fast_average_time_suggestion_empty(self):
@@ -208,11 +208,11 @@ class TestLogic(unittest.TestCase):
                          [{'difficulty': 'Easy',
                            'problem': 'Slow average completion time.',
                            'stages': '4, 5, 7',
-                           'suggestion': 'Decrease number of enemies per stage.'},
+                           'suggestion': 'Decrease enemy health.'},
                           {'difficulty': 'Medium',
                            'problem': 'Slow average completion time.',
                            'stages': '5',
-                           'suggestion': 'Decrease number of enemies per stage.'}]
+                           'suggestion': 'Decrease enemy health.'}]
                          )
 
     def test_generate_slow_average_time_suggestion_empty(self):
