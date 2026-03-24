@@ -302,10 +302,10 @@ public class SettingsPage {
 
         // Headers
         Label difficultyHeader = new Label("Difficulty");
-        Label hpHeader = new Label("HP");
+        Label hpHeader = new Label("Health");
         Label livesHeader = new Label("Lives");
-        Label enemyDmgHeader = new Label("EnemyDmg");
-        Label enemyHpMultHeader = new Label("EnemyHp x");
+        Label enemyDmgHeader = new Label("EnemyDamage");
+        Label enemyHpMultHeader = new Label("EnemyHealth x");
         Label maxMagicHeader = new Label("MaxMagic");
         Label regenRateHeader = new Label("RegenRate");
         Label shopCountHeader = new Label("ShopCount");
@@ -431,13 +431,9 @@ public class SettingsPage {
                 int mediumShopItemCount = Integer.parseInt(mediumShopItemCountField.getText());
                 int hardShopItemCount = Integer.parseInt(hardShopItemCountField.getText());
 
-                // Update Max Health with new values from text fields
-                settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
-                settings.setPlayerMaxHealth(DifficultyEnum.MEDIUM, mediumHp);
-                settings.setPlayerMaxHealth(DifficultyEnum.HARD, hardHp);
                 String userID = settings.getUserID();
 
-                // Update Max Health - only emit telemetry if value changed
+                // Update Max Health
                 if (easyHp != settings.getPlayerMaxHealth(DifficultyEnum.EASY)) {
                     settings.setPlayerMaxHealth(DifficultyEnum.EASY, easyHp);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
@@ -457,7 +453,7 @@ public class SettingsPage {
                             "HARD: " + hardHp, justification));
                 }
 
-                // Update Starting Lives - only emit telemetry if value changed
+                // Update Starting Lives
                 if (easyLives != settings.getStartingLives(DifficultyEnum.EASY)) {
                     settings.setStartingLives(DifficultyEnum.EASY, easyLives);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
@@ -477,7 +473,7 @@ public class SettingsPage {
                             "HARD: " + hardLives, justification));
                 }
 
-                // Update Enemy Damage Multiplier - only emit telemetry if value changed
+                // Update Enemy Damage Multiplier
                 if (Float.compare(easyEnemyDmg, settings.getEnemyDamageMultiplier(DifficultyEnum.EASY)) != 0) {
                     settings.setEnemyDamageMultiplier(DifficultyEnum.EASY, easyEnemyDmg);
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
@@ -497,21 +493,85 @@ public class SettingsPage {
                             "HARD: " + hardEnemyDmg, justification));
                 }
 
-                settings.setEnemyMaxHealthMultiplier(DifficultyEnum.EASY, easyEnemyHpMult);
-                settings.setEnemyMaxHealthMultiplier(DifficultyEnum.MEDIUM, mediumEnemyHpMult);
-                settings.setEnemyMaxHealthMultiplier(DifficultyEnum.HARD, hardEnemyHpMult);
+                // Update Enemy Max Health Multiplier
+                if (Float.compare(easyEnemyHpMult, settings.getEnemyMaxHealthMultiplier(DifficultyEnum.EASY)) != 0) {
+                    settings.setEnemyMaxHealthMultiplier(DifficultyEnum.EASY, easyEnemyHpMult);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENEMY_MAX_HEALTH_MULTIPLIER,
+                            "EASY: " + easyEnemyHpMult, justification));
+                }
+                if (Float.compare(mediumEnemyHpMult, settings.getEnemyMaxHealthMultiplier(DifficultyEnum.MEDIUM)) != 0) {
+                    settings.setEnemyMaxHealthMultiplier(DifficultyEnum.MEDIUM, mediumEnemyHpMult);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENEMY_MAX_HEALTH_MULTIPLIER,
+                            "MEDIUM: " + mediumEnemyHpMult, justification));
+                }
+                if (Float.compare(hardEnemyHpMult, settings.getEnemyMaxHealthMultiplier(DifficultyEnum.HARD)) != 0) {
+                    settings.setEnemyMaxHealthMultiplier(DifficultyEnum.HARD, hardEnemyHpMult);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENEMY_MAX_HEALTH_MULTIPLIER,
+                            "HARD: " + hardEnemyHpMult, justification));
+                }
 
-                settings.setMaxMagic(DifficultyEnum.EASY, easyMaxMagic);
-                settings.setMaxMagic(DifficultyEnum.MEDIUM, mediumMaxMagic);
-                settings.setMaxMagic(DifficultyEnum.HARD, hardMaxMagic);
+                // Update Max Magic
+                if (easyMaxMagic != settings.getMaxMagic(DifficultyEnum.EASY)) {
+                    settings.setMaxMagic(DifficultyEnum.EASY, easyMaxMagic);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAX_MAGIC,
+                            "EASY: " + easyMaxMagic, justification));
+                }
+                if (mediumMaxMagic != settings.getMaxMagic(DifficultyEnum.MEDIUM)) {
+                    settings.setMaxMagic(DifficultyEnum.MEDIUM, mediumMaxMagic);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAX_MAGIC,
+                            "MEDIUM: " + mediumMaxMagic, justification));
+                }
+                if (hardMaxMagic != settings.getMaxMagic(DifficultyEnum.HARD)) {
+                    settings.setMaxMagic(DifficultyEnum.HARD, hardMaxMagic);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAX_MAGIC,
+                            "HARD: " + hardMaxMagic, justification));
+                }
 
-                settings.setMagicRegenRate(DifficultyEnum.EASY, easyRegenRate);
-                settings.setMagicRegenRate(DifficultyEnum.MEDIUM, mediumRegenRate);
-                settings.setMagicRegenRate(DifficultyEnum.HARD, hardRegenRate);
+                // Update Magic Regen Rate
+                if (easyRegenRate != settings.getMagicRegenRate(DifficultyEnum.EASY)) {
+                    settings.setMagicRegenRate(DifficultyEnum.EASY, easyRegenRate);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAGIC_REGEN_RATE,
+                            "EASY: " + easyRegenRate, justification));
+                }
+                if (mediumRegenRate != settings.getMagicRegenRate(DifficultyEnum.MEDIUM)) {
+                    settings.setMagicRegenRate(DifficultyEnum.MEDIUM, mediumRegenRate);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAGIC_REGEN_RATE,
+                            "MEDIUM: " + mediumRegenRate, justification));
+                }
+                if (hardRegenRate != settings.getMagicRegenRate(DifficultyEnum.HARD)) {
+                    settings.setMagicRegenRate(DifficultyEnum.HARD, hardRegenRate);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.MAGIC_REGEN_RATE,
+                            "HARD: " + hardRegenRate, justification));
+                }
 
-                settings.setShopItemCount(DifficultyEnum.EASY, easyShopItemCount);
-                settings.setShopItemCount(DifficultyEnum.MEDIUM, mediumShopItemCount);
-                settings.setShopItemCount(DifficultyEnum.HARD, hardShopItemCount);
+                // Update Shop Item Count
+                if (easyShopItemCount != settings.getShopItemCount(DifficultyEnum.EASY)) {
+                    settings.setShopItemCount(DifficultyEnum.EASY, easyShopItemCount);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.SHOP_ITEM_COUNT,
+                            "EASY: " + easyShopItemCount, justification));
+                }
+                if (mediumShopItemCount != settings.getShopItemCount(DifficultyEnum.MEDIUM)) {
+                    settings.setShopItemCount(DifficultyEnum.MEDIUM, mediumShopItemCount);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.SHOP_ITEM_COUNT,
+                            "MEDIUM: " + mediumShopItemCount, justification));
+                }
+                if (hardShopItemCount != settings.getShopItemCount(DifficultyEnum.HARD)) {
+                    settings.setShopItemCount(DifficultyEnum.HARD, hardShopItemCount);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.SHOP_ITEM_COUNT,
+                            "HARD: " + hardShopItemCount, justification));
+                }
 
                 output.setText("Settings updated.");
                 output.setStyle(SECONDARY_TEXT_STYLE);
@@ -569,7 +629,7 @@ public class SettingsPage {
     }
 
     // Restricts a text field to only allow positive integers (1 and above), used
-    // for HP and Lives fields
+    // for Health and Lives fields
     private void makeIntegerOnly(TextField field) {
         field.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();

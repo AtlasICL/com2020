@@ -4,11 +4,12 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import wizardquest.gamemanager.Utils;
 
-public class RandomEntityAIUnitTests {
+public class UtilsUnitTests {
 
     /**
      * The entity AI is tasked with randomly selecting targets to attack, abilities
@@ -20,7 +21,7 @@ public class RandomEntityAIUnitTests {
      * the shuffled arrays are different from one another.
      */
     @Test
-    @DisplayName("RandomEntityAI - Array shuffling algorithm functions")
+    @DisplayName("Utils - Array shuffling algorithm functions")
     void shuffleArray_works() {
         // Create an Integer array of all ordered values 1-10.
         // The original will be immutable. Two mutable copies are made of this array,

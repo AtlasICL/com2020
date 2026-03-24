@@ -23,6 +23,7 @@ import wizardquest.abilities.AbilityEnum;
 import wizardquest.auth.AuthenticationException;
 import wizardquest.auth.AuthenticationResult;
 import wizardquest.auth.Authenticator;
+import wizardquest.auth.RoleEnum;
 import wizardquest.entity.EntityAIInterface;
 import wizardquest.entity.EntityAISingleton;
 import wizardquest.entity.EntityInterface;
@@ -33,6 +34,7 @@ import wizardquest.gamemanager.GameManagerInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRunInterface;
 import wizardquest.gamemanager.LackingResourceException;
+import wizardquest.gamemanager.SimulatedGameRun;
 import wizardquest.gamemanager.Utils;
 import wizardquest.settings.DifficultyEnum;
 import wizardquest.settings.SettingsInterface;
@@ -229,6 +231,8 @@ private static final String DANGER_BUTTON_STYLE =
         log.setText("");
         Label title = new Label("WIZARD QUEST");
         title.setStyle(TITLE_STYLE);
+        Label telemetryNote = new Label("To view the telemetry disclosure, please open Settings.");
+        telemetryNote.setStyle(SECONDARY_TEXT_STYLE);
         // Opens the select difficulty page in same root container
         Button startBtn = new Button("Start New Game");
         // Opens the select difficulty page in same root container
@@ -236,14 +240,40 @@ private static final String DANGER_BUTTON_STYLE =
         Button settingsBtn = new Button("Settings");
         Button simBtn = new Button("Run Simulations");
         simBtn.setOnAction(e -> {
-
-            // Sim logic to be ran here ^^
-
+            for (DifficultyEnum d : DifficultyEnum.values()) {
+                gameManager.startNewGame(d);
+                new SimulatedGameRun(
+                        this.gameManager.getCurrentDifficulty(),
+                        "../event_logs/simulation_events.json");
+                gameManager.endGame();
+            }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Simulations");
             alert.setContentText("Simulations have been executed.");
             alert.showAndWait();
         });
+
+        Button quitBtn = new Button("Quit");
+        quitBtn.setStyle(DANGER_BUTTON_STYLE);
+        quitBtn.setOnAction(e -> System.exit(0));
+
+        try {
+            RoleEnum role = settings.getUserRole();
+
+            if (role == RoleEnum.DEVELOPER) {
+                Button rolesBtn = new Button("Manage Roles");
+                rolesBtn.setStyle(PRIMARY_BUTTON_STYLE);
+                rolesBtn.setOnAction(e -> showRoleManagementPage());
+
+                root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, rolesBtn, quitBtn, telemetryNote);
+            } else {
+                root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, quitBtn, telemetryNote);
+            }
+        } catch (AuthenticationException e) {
+            root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, quitBtn, telemetryNote);
+        }
+
+        
 
         startBtn.setStyle(PRIMARY_BUTTON_STYLE);
         simBtn.setStyle(PRIMARY_BUTTON_STYLE);
@@ -259,11 +289,17 @@ private static final String DANGER_BUTTON_STYLE =
             root.getChildren().add(settingsView);
         });
 
-        Button quitBtn = new Button("Quit");
-        quitBtn.setStyle(DANGER_BUTTON_STYLE);
-        quitBtn.setOnAction(e -> System.exit(0));
-        // Adds the title and buttons to the root layout so they appear in the UI
-        root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, quitBtn);
+    }
+
+    private void showRoleManagementPage() {
+        root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #1e1f22;");
+
+        RoleManagementPage rolePage = new RoleManagementPage();
+        VBox roleView = rolePage.createView(this::showMainMenu);
+
+        root.getChildren().add(roleView);
     }
 
     // Player selects game difficulty
@@ -334,7 +370,7 @@ private static final String DANGER_BUTTON_STYLE =
         EntityInterface[] enemies = currentEncounter.getEnemies();
         enemyHpBars = new ProgressBar[enemies.length];
 
-        // Loops through each enemy HP bar
+        // Loops through each enemy health bar
         for (int i = 0; i < enemies.length; i++) {
             EntityInterface enemy = enemies[i];
             if (enemy != null) {
@@ -385,7 +421,13 @@ private static final String DANGER_BUTTON_STYLE =
         // Determines current stage
         int stage = run != null ? run.getStage() : 1;
 
-        Label heading = new Label("STAGE " + stage + " = " + currentEncounter.getType().getDisplayName());
+        String encounterName = currentEncounter.getType().getDisplayName();
+        // Checks for boss encounter
+        if (isBossEncounter(currentEncounter.getType())) {
+            encounterName = "BOSS ENCOUNTER - " + encounterName;
+        }
+
+        Label heading = new Label("STAGE " + stage + " = " + encounterName);
         heading.setStyle(HEADING_STYLE);
         heading.setMaxWidth(Double.MAX_VALUE);
         heading.setAlignment(Pos.CENTER);
@@ -397,9 +439,9 @@ private static final String DANGER_BUTTON_STYLE =
         );
         statsText.setStyle(TEXT_STYLE);
 
-        Label hpLabel = new Label("HP: " + player.getHealth() + "/" + player.getMaxHealth());
+        Label hpLabel = new Label("Health: " + player.getHealth() + "/" + player.getMaxHealth());
         hpLabel.setStyle(TEXT_STYLE);
-        // HP bar styling
+        // Health bar styling
         hpBar.setPrefWidth(250);
         hpBar.setStyle("-fx-accent: green;"+
             "-fx-control-inner-background: #1e1f22;" +
@@ -448,7 +490,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             Label enemyLabel = new Label(
                     enemy.getType().getDisplayName()
-                    + "  HP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    + "  Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
             enemyLabel.setStyle(TEXT_STYLE);
 
@@ -545,7 +587,7 @@ private static final String DANGER_BUTTON_STYLE =
         for (AbilityEnum ability : player.getAbilities()) {
             Button ab = new Button(
                     ability.getDisplayName() + "\n" +
-                    "DMG: " + ability.getBaseDamage() + "   COST: " + ability.getMagicCost()
+                    "Damage: " + ability.getBaseDamage() + "   Cost: " + ability.getMagicCost()
                 );
             ab.setOnAction(e -> showTargetSelection(ability));
             abilityBox.getChildren().add(ab);
@@ -587,8 +629,8 @@ private static final String DANGER_BUTTON_STYLE =
 
         Label usingLabel = new Label(
                 "Using: " + ability.getDisplayName()
-                + " (dmg:" + ability.getBaseDamage()
-                + " cost:" + ability.getMagicCost() + ")"
+                + " (Damage:" + ability.getBaseDamage()
+                + " Cost:" + ability.getMagicCost() + ")"
         );
 
         usingLabel.setStyle(SECONDARY_TEXT_STYLE);
@@ -606,7 +648,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             Button tb = new Button(
                     enemy.getType().getDisplayName()
-                    + "\nHP: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
+                    + "\nHealth: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
             );
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
             targetBox.getChildren().add(tb);
@@ -656,7 +698,7 @@ private static final String DANGER_BUTTON_STYLE =
         StringBuilder msg = new StringBuilder();
         msg.append("You used ").append(ability.getDisplayName())
                 .append(" on ").append(target.getType().getDisplayName())
-                .append(" for ").append(dmg).append(" dmg.\n");
+                .append(" for ").append(dmg).append(" Damage.\n");
 
         EntityInterface[] enemies = currentEncounter.getEnemies();
 
@@ -693,7 +735,7 @@ private static final String DANGER_BUTTON_STYLE =
             } catch (LackingResourceException ignored) {
             }
             int taken = pBefore - player.getHealth();
-            msg.append(enemy.getType().getDisplayName()).append(" hit you for ").append(taken).append(" dmg.\n");
+            msg.append(enemy.getType().getDisplayName()).append(" hit you for ").append(taken).append(" Damage.\n");
         }
 
         if (player.getHealth() <= 0) {
@@ -846,7 +888,7 @@ private static final String DANGER_BUTTON_STYLE =
         back.setPrefWidth(180);
     }
 
-    // Return true if every enemy is null or has 0 HP
+    // Return true if every enemy is null or has 0 health
     private boolean allDead(EntityInterface[] enemies) {
         for (EntityInterface e : enemies) {
             if (e != null && e.getHealth() > 0) {

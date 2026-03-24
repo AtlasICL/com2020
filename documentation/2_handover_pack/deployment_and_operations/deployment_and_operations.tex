@@ -67,7 +67,7 @@
 In this document we will outline first how to deploy both applications, and the test suite. We will then provide detailed operation instructions for both applications.
 
 \section{Deployment}
-\subsection{prerequisites}
+\subsection{Prerequisites}
 To be able to follow and complete deployment, as well as operate the applications, the following are required.
 \begin{itemize}
   \item Internet access
@@ -150,7 +150,120 @@ These steps are required for both applications.
 
 \subsection{Java Game (WizardQuest)}
 
-\subsection{Python Application}
+This section describes how to operate the Java game, called WizardQuest.
+
+\subsubsection{Logging In}
+When opening WizardQuest the game will prompt the user to sign in, they must click the "Login with SSO" button, \ref{fig:java_before_sign_in} then wait for the login screen to appear in your browser. From there you must select your google account \ref{fig:java_sign_in} and then click "continue" to log in \ref{fig:java_login_continue}. You can then close the tab \ref{fig:java_login_complete}. 
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/java/before_sign_in.png}
+    \caption{WizardQuest before signing in.}
+    \label{fig:java_before_sign_in}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/common/sign_in.png}
+    \caption{Sign in screen}
+    \label{fig:java_sign_in}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/common/sign_in_continue.png}
+    \caption{Sign in screen after selecting account}
+    \label{fig:java_login_continue}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/common/login_complete.png}
+    \caption{Login complete screen}
+    \label{fig:java_login_complete}
+\end{figure}
+
+\subsubsection{Main Menu}
+Once authenticated, the main menu allows the user to start a new run of the game by pressing the "Start New Game" button. The "Run Simulation" button will execute three simulated runs, one on each difficult. It records the data from these runs in \\\verb|event_logs/simulation_events.json| which can be viewed in the telemetry app. The "Settings" button opens up the game settings and design parameter editor. The "Manage Roles" button opens the role assignment screen. The "Quit" button closes the game.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.75\linewidth]{images/java/main_menu.png}
+    \caption{Main menu screen}
+\end{figure}
+
+\subsubsection{Difficulty Select}
+Once you start a new game, you will be prompted to select the difficulty of the game run. This screen displays four buttons, one for each difficulty, and a "back" button. Each difficult button states the difficulty, then in brackets how many lives you have on said difficulty, and lastly the farthest level you've reached on that difficulty. Selecting a difficulty will bring you to the first encounter of the run. Selecting "back" will take you back to the main menu. 
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.75\linewidth]{images/java/difficulty_select.png}
+    \caption{Start run and difficulty select screen}
+\end{figure}
+
+\subsubsection{Encounter screen}
+Once you start a run, and after each shop, you will enter an encounter. At the top of the screen it displays which stage you're on, and the encounter's name. There are three horizontal sections. Underneath those can appear a status message, informing you of why you cannot perform certain actions (for example trying to use a spell without sufficient magic), and Underneath that is a "Quit Run" button, that will take you back to the main menu. 
+
+The left-most states your lives, and how many coins you have. Underneath this it states your health and then shows a bar representing how much health you have left, out of your maximum. Underneath that it states your magic, then how much magic you have out of your maximum. Underneath that it lists all attack abilities you've purchased throughout the run. 
+
+In the middle section it will first show an ability select menu \ref{fig:java_encounter_screen}, where each button is the name of one of your purchased abilities, stating its damage and magic cost underneath the ability name. Once you select which ability to use by clicking its button, a target select menu will appear \ref{fig:java_target_select}. At the top this states what ability you are using, along with how much damage it deals, and how much magic it costs to use. Underneath this will be several buttons, where each button represents one enemy in the encounter, stating their name and how much health they have left, out of their maximum. Once clicked, the ability will be used on the enemy.
+
+In the right-most section, each enemy is shown. The menu shows each enemy in the encounter, first stating their name, then how much health the have otu of their maximum, and underneath this showing their health bar. 
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/java/encounter.png}
+    \caption{Main encounter screen}
+    \label{fig:java_encounter_screen}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.5\linewidth]{images/java/target_select.png}
+    \caption{Target select encounter screen}
+    \label{fig:java_target_select}
+\end{figure}
+
+\subsubsection{Shop}
+In the shop menu, the title shows you how many coins you have in total. Underneath it shows each upgrade available in the shop, with each being their own button. It also shows that upgrade's cost in brackets next to it. At the bottom will be a status text box, stating when you lack coins to buy an upgrade, or how many coins you got from completing the previous encounter. Beneath that is a "leave shop" button which will take you to the next stage and its encounter.
+
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/java/shop_screen.png}
+    \caption{Shop screen}
+\end{figure}
+
+
+\subsubsection{Run Complete}
+Once you beat the encounter with the dragon, on stage ten, or if you run out of lives in an encounter, the game will show the run complete screen. This screen shows the furthest stage you reached that run, how many times you died during the run, and how many coins you finished the run with. Underneath this will be a "Main Menu" button, which when clicked returns you to the main menu.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.5\linewidth]{images/java/run_complete.png}
+    \caption{Shop screen}
+\end{figure}
+
+\subsubsection{Settings}
+
+In settings, the top section contains the design parameter values, with the difficulty labeled on the Y-axis and the design parameter's name on the X-axis. Below this is the it will display whether the user has telemetry enabled, and a button to toggle for the setting. When telemetry is enabled, the game will record telemetry events, and otherwise wont. Underneath this is a scrollable text box, containing a detailed telemetry disclosure, stating what data is collected and why. Underneath that is an editable text box, where designers can provide an optional justification for their design parameter value changes. Underneath that is the "save" button, which saves all design parameter changes, and records the justification in the design log. Lastly, the "back" button at the bottom of the screen takes the user back to the main menu.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/java/settings.png}
+    \caption{Settings screen}
+\end{figure}
+
+\subsubsection{Role Assignment}
+In the role assignment screen, there will be a menu of each user in the system's ID, and next to them a role drop down. Beneath this it displays what user had their role updated most recently, and beneath that the "Refresh" and "Back" buttons. The drop down has the options of "DEVELOPER" "DESIGNER" and "PLAYER", and the drop down for your user ID will be greyed out. The refresh button re-reads the roles from the logins file, updating the roles in the menu. The back button takes you back to the main menu. 
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.75\linewidth]{images/java/role_assignment.png}
+    \caption{Role assignment screen}
+\end{figure}
+
+\subsection{Python Application (Telemetry App)}
 
 This section describes how to operate the Python telemetry app.
 
@@ -160,15 +273,15 @@ When opening the application, a browser window will open, prompting the user to 
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{BeforeSignIn.png‎}
+    \includegraphics[width=1\linewidth]{images/python/before_sign_in.png}
 \end{figure}
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{SignIn.png‎}
+    \includegraphics[width=1\linewidth]{images/common/sign_in.png}
 \end{figure}
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{Login Complete.png‎}
+    \includegraphics[width=1\linewidth]{images/common/login_complete.png}
 \end{figure}
 
 \subsubsection{Navigation}
@@ -177,7 +290,7 @@ The navigation bar contains eight options: "Home", "Funnel", "Difficulty Spike",
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{Navigation.png‎}
+    \includegraphics[width=1\linewidth]{images/python/navigation.png}
 \end{figure}
 
 \subsubsection{Home}
@@ -192,7 +305,7 @@ The final option is to reset the data. Pressing this will open a confirmation di
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{home.png‎}
+    \includegraphics[width=1\linewidth]{images/python/home.png}
 \end{figure}
 
 \subsubsection{Telemetry Views}
@@ -201,28 +314,64 @@ At the top of the display, there are three checkboxes, which correspond to three
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{Views.png‎}
+    \includegraphics[width=1\linewidth]{images/python/views.png}
+\end{figure}
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/funnel_view_difficulty.png}
+\end{figure}
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/funnel_view_time.png}
+\end{figure}
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/funnel_view_coin.png}
 \end{figure}
 
 \paragraph{Funnel View}
 
 This section allows users to see how many or how few players reached each level in the game.
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/funnel_view_normal.png}
+\end{figure}
 
 \paragraph{Difficulty Spike View}
 
 This section allows users to see how many players failed on each individual level, allowing difficulty spikes to be identified.
 
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/difficulty_spike.png}
+\end{figure}
+
 \paragraph{Health View}
 
-This section allows users to see the average remaining HP of players at the end of each level, allowing users to identify levels where players may lose too much, or too little HP.
+This section allows users to see the average remaining health of players at the end of each level, allowing users to identify levels where players may lose too much, or too little health.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/health.png}
+\end{figure}
 
 \paragraph{Coins View}
 
 This section allows users to see the average number of coins gained after every stage, allowing users to identify levels where players may be gaining too many or too few coins.
 
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/coins.png}
+\end{figure}
+
 \paragraph{Time View}
 
 This section allows users to see the average time (in seconds) that it takes for a player complete each level, allowing users to identify levels where players may be progressing too slowly, or too quickly for that point in the game.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=1\linewidth]{images/python/time.png}
+\end{figure}
 
 \subsubsection{Suggestions}
 
@@ -230,7 +379,7 @@ In this section, a user can see balancing suggestions for the WizardQuest game. 
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{suggestions.png‎}
+    \includegraphics[width=1\linewidth]{images/python/suggestions.png}
 \end{figure}
 
 \subsubsection{Decision Log}
@@ -239,7 +388,7 @@ In this section, users can view a historical log of all balancing decisions made
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=1\linewidth]{DecisionLog.png‎}
+    \includegraphics[width=1\linewidth]{images/python/decision_log.png}
 \end{figure}
 
 \end{document}

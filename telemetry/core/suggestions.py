@@ -28,11 +28,11 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean * 1.15:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
-
+                if averages[stage] > mean * 1.15:
+                    stages_flagged.append(str(stage))
+                
             # Create list of difficulties to stages string
             if stages_flagged:
                 suggestion_list.append({
@@ -69,7 +69,7 @@ class SuggestionGenerator:
                 # Calculate average health remaining per stage
                 averages[stage] = totals[stage] / counts[stage]
 
-            # Filter to only stages which aren't 0 hp (i.e. not played yet)
+            # Filter to only stages which aren't 0 health (i.e. not played yet)
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
                 continue
@@ -80,10 +80,10 @@ class SuggestionGenerator:
             # Add stages less than mean until 0hp stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean * 0.85:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] < mean * 0.85:
+                    stages_flagged.append(str(stage))
 
             if stages_flagged:
                 suggestion_list.append({
@@ -122,10 +122,10 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean * 0.85:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] < mean * 0.85:
+                    stages_flagged.append(str(stage))
 
             # Create list of difficulties to stages string
             if stages_flagged:
@@ -164,7 +164,7 @@ class SuggestionGenerator:
                 # Calculate average health remaining per stage
                 averages[stage] = totals[stage] / counts[stage]
 
-            # Filter to only stages which aren't 0 hp
+            # Filter to only stages which aren't 0 health
             # (i.e. not played yet)
             active_hp_values = [hp for hp in averages.values() if hp > 0]
             if not active_hp_values:
@@ -173,13 +173,13 @@ class SuggestionGenerator:
             # Calculate average based on filtered values
             mean = sum(active_hp_values) / len(active_hp_values)
 
-            # Add stages less than mean until 0hp stage
+            # Add stages less than mean until 0 health stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean * 1.15:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] > mean * 1.15:
+                    stages_flagged.append(str(stage))
 
             # Create list of difficulties to stages string
             if stages_flagged:
@@ -229,10 +229,10 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean * 0.85:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] < mean * 0.85:
+                    stages_flagged.append(str(stage))
 
             # Create list of difficulties to stages string
             if stages_flagged:
@@ -282,10 +282,10 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 coins stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean * 1.15:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] > mean * 1.15:
+                    stages_flagged.append(str(stage))
 
             # Create list of difficulties to stages string
             if stages_flagged:
@@ -326,10 +326,10 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] < mean * 0.85:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
+                if averages[stage] < mean * 0.85:
+                    stages_flagged.append(str(stage))
 
             # Create list of difficulties to stages string
             if stages_flagged:
@@ -337,7 +337,7 @@ class SuggestionGenerator:
                     "problem": "Fast average completion time.",
                     "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
-                    "suggestion": "Increase number of enemies per stage."
+                    "suggestion": "Increase enemy health."
                 })
 
         # Return list of suggestions
@@ -369,18 +369,18 @@ class SuggestionGenerator:
             # Add stages less than mean until 0 spikes stage
             stages_flagged = []
             for stage in averages.keys():
-                if averages[stage] > mean * 1.15:
-                    stages_flagged.append(str(stage))
                 if averages[stage] == 0:
                     break
-
+                if averages[stage] > mean * 1.15:
+                    stages_flagged.append(str(stage))
+            
             # Create list of difficulties to stages string
             if stages_flagged:
                 suggestion_list.append({
                     "problem": "Slow average completion time.",
                     "stages": ", ".join(stages_flagged),
                     "difficulty": str(difficulty.value),
-                    "suggestion": "Decrease number of enemies per stage."
+                    "suggestion": "Decrease enemy health."
                 })
 
         # Return list of suggestions

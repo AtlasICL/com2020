@@ -435,8 +435,8 @@ class EventLogicEngine:
         
         :param sessionID: session stage to check.
         :type sessionID: int
-        :return: dictionary of key stage number and value player HP
-        remaining.
+        :return: dictionary of key stage number and value player 
+        health remaining.
         :rtype: dict[int, int]
         """
         health_remaining_per_stage = {stage_number: 0 
