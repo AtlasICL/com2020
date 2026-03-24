@@ -1,4 +1,4 @@
-package wizardquest.integration.entity;
+package wizardquest.unit.entity;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import wizardquest.entity.EntityEnum;
 import wizardquest.entity.EntityInterface;
 import wizardquest.settings.DifficultyEnum;
 
-public class EntityEnumIntegrationTests {
+public class EntityEnumUnitTests {
 
     /**
      * Create a new instance of an Enemy using reflection. Upon creation, their starting
@@ -21,3 +21,4 @@ public class EntityEnumIntegrationTests {
         assertEquals(enemy.getHealth(), enemy.getMaxHealth());
     }
 }
+

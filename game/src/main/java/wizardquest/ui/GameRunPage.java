@@ -364,7 +364,7 @@ private static final String DANGER_BUTTON_STYLE =
         EntityInterface[] enemies = currentEncounter.getEnemies();
         enemyHpBars = new ProgressBar[enemies.length];
 
-        // Loops through each enemy HP bar
+        // Loops through each enemy health bar
         for (int i = 0; i < enemies.length; i++) {
             EntityInterface enemy = enemies[i];
             if (enemy != null) {
@@ -435,7 +435,7 @@ private static final String DANGER_BUTTON_STYLE =
 
         Label hpLabel = new Label("Health: " + player.getHealth() + "/" + player.getMaxHealth());
         hpLabel.setStyle(TEXT_STYLE);
-        // HP bar styling
+        // Health bar styling
         hpBar.setPrefWidth(250);
         hpBar.setStyle("-fx-accent: green;"+
             "-fx-control-inner-background: #1e1f22;" +
@@ -882,7 +882,7 @@ private static final String DANGER_BUTTON_STYLE =
         back.setPrefWidth(180);
     }
 
-    // Return true if every enemy is null or has 0 HP
+    // Return true if every enemy is null or has 0 health
     private boolean allDead(EntityInterface[] enemies) {
         for (EntityInterface e : enemies) {
             if (e != null && e.getHealth() > 0) {
