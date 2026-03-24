@@ -79,7 +79,7 @@ Internet access is assumed, most supported operating systems contain a web brows
 \subsection{From Executable}
 
 \subsubsection{Build Process}
-To compile the code into executable form, run the following commands from the root of the \texttt{com2020} directory:
+To compile the code into an executable form, first, assure you've replaced the placeholder strings in \texttt{game\src\main\java\wizardquest\auth\Authenticator.java} and \texttt{telemetry\auth\auth.py} with their equivalent secrets, then run the following commands from the root of the \texttt{com2020} directory:
 
 \paragraph{Python Application}
 \begin{verbatim}
@@ -109,7 +109,7 @@ cd telemetry
 \end{verbatim}
 
 \subsubsection{Installer Creation}
-To create an installer for the executables, execute the following:
+To create an installer for Windows, first, assure you're in the route of \texttt{com2020}, from the \texttt{Windows-Installer} branch. Then, execute the following using inno (more info at: https://jrsoftware.org/isdl.php/Inno-Setup-Downloads):
 
 \begin{verbatim}
 installer/WizardQuestInstall.iss
