@@ -74,12 +74,53 @@ To be able to follow and complete deployment, as well as operate the application
   \item A web browser
 \end{itemize}
 
-Internat access is assumed, most supported operating systems contain a web browser, however if one is not installed, firefox can be installed by following the steps \href{https://www.firefox.com/en-US/download}{here}.
+Internet access is assumed, most supported operating systems contain a web browser, however if one is not installed, firefox can be installed by following the steps \href{https://www.firefox.com/en-US/download}{here}.
 
 \subsection{From Executable}
-%TODO once KK packaged the apps
-\subsubsection{Python Application}
-\subsubsection{Java Application}
+
+\subsubsection{Build Process}
+To compile the code into executable form, run the following commands from the root of the \texttt{com2020} directory:
+
+\paragraph{Python Application}
+\begin{verbatim}
+cd telemetry
+py -m PyInstaller --noconsole --onefile --name telemetry_app --distpath . telemetry_app.py
+\end{verbatim}
+
+\paragraph{Java Application}
+\begin{verbatim}
+cd game
+mvn clean compile -DskipTests
+mvn javafx:jlink
+\end{verbatim}
+
+\subsubsection{Running the Applications}
+
+\paragraph{Java Application}
+\begin{verbatim}
+cd game
+target/image/bin/java -m wizard.quest/wizardquest.ui.GameRunPage
+\end{verbatim}
+
+\paragraph{Python Application}
+\begin{verbatim}
+cd telemetry
+.\telemetry_app.exe
+\end{verbatim}
+
+\subsubsection{Installer Creation}
+To create an installer for the executables, execute the following:
+
+\begin{verbatim}
+installer/WizardQuestInstall.iss
+\end{verbatim}
+
+The resulting installer will be generated at:
+
+\begin{verbatim}
+installer/output/WizardQuestInstaller.exe
+\end{verbatim}
+
 
 \subsection{From Source}
 \subsubsection{Common}
