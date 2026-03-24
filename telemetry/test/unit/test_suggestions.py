@@ -21,6 +21,10 @@ class TestLogic(unittest.TestCase):
         self.suggestion_generator = SuggestionGenerator(self.logic_engine)
     
     def test_generate_spike_suggestion(self):
+        """
+        Tests the correct suggestions relating to difficulty spikes are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_spike_suggestion(),
                         [{'difficulty': 'Easy',
                         'problem': 'Low pass rate.',
@@ -33,14 +37,21 @@ class TestLogic(unittest.TestCase):
                         )
     
     def test_generate_empty_spike_suggestion(self):
+        """
+        Tests no spike suggestions are generated for empty data
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_spike_suggestion(), [])
 
     def test_generate_low_health_suggestion(self):
+        """
+        Tests the correct suggestions relating to low health are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_low_health_suggestion(), 
-                         [{'difficulty': 'Easy',
+                        [{'difficulty': 'Easy',
                         'problem': 'High health loss.',
                         'stages': '4, 5, 6, 7, 8, 9, 10',
                         'suggestion': 'Increase max health.'},
@@ -51,12 +62,19 @@ class TestLogic(unittest.TestCase):
                         )
     
     def test_generate_low_health_suggestion_empty(self):
+        """
+        Tests no low health suggestions are generated for empty data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_low_health_suggestion(), [])
 
     def test_generate_high_pass_rate_suggestion(self):
+        """
+        Tests the correct suggestions relating to high pass rate are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_high_pass_rate_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'High pass rate.',
@@ -69,12 +87,19 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_high_pass_rate_suggestion_empty(self):
+        """
+        Tests no high pass suggestions are generated for empty data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_high_pass_rate_suggestion(), [])
 
     def test_generate_high_health_suggestion(self):
+        """
+        Tests the correct suggestions relating to high health are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_high_health_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'Low health loss.',
@@ -87,12 +112,20 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_high_health_suggestion_empty(self):
+        """
+        Tests that no high health suggestions are generated for empty
+        data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_high_health_suggestion(), [])
 
     def test_generate_low_coin_gain_suggestion(self):
+        """
+        Tests the correct suggestions relating to low coin gain are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_low_coin_gain_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'Low coin gain.',
@@ -105,12 +138,20 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_low_coin_gain_suggestion_empty(self):
+        """
+        Tests that no low coin gain suggestions are generated for empty
+        data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_low_coin_gain_suggestion(), [])
 
     def test_generate_high_coin_gain_suggestion(self):
+        """
+        Tests the correct suggestions relating to high coin gain are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_high_coin_gain_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'High coin gain.',
@@ -123,12 +164,20 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_high_coin_gain_suggestion_empty(self):
+        """
+        Tests that no high coin gain suggestions are generated for empty
+        data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_high_coin_gain_suggestion(), [])
 
     def test_generate_fast_average_time_suggestion(self):
+        """
+        Tests the correct suggestions relating to fast average time are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_fast_average_time_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'Fast average completion time.',
@@ -141,12 +190,20 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_fast_average_time_suggestion_empty(self):
+        """
+        Tests that no fast average time suggestions are generated for 
+        empty data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
         self.assertEqual(self.suggestion_generator.generate_fast_average_time_suggestion(), [])
 
     def test_generate_slow_average_time_suggestion(self):
+        """
+        Tests the correct suggestions relating to slow average time are
+        generated.
+        """
         self.assertEqual(self.suggestion_generator.generate_slow_average_time_suggestion(),
                          [{'difficulty': 'Easy',
                            'problem': 'Slow average completion time.',
@@ -159,6 +216,10 @@ class TestLogic(unittest.TestCase):
                          )
 
     def test_generate_slow_average_time_suggestion_empty(self):
+        """
+        Tests that no slow average time suggestions are generated for 
+        empty data.
+        """
         self.logic_engine.categorise_events(
             self.resource_file_path / "test_events_empty.json"
         )
