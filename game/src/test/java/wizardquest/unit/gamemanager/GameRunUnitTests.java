@@ -8,13 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import wizardquest.abilities.UpgradeEnum;
 import wizardquest.gamemanager.Encounter;
 import wizardquest.gamemanager.EncounterEnum;
 import wizardquest.gamemanager.EncounterInterface;
 import wizardquest.gamemanager.GameManagerSingleton;
 import wizardquest.gamemanager.GameRun;
 import wizardquest.gamemanager.GameRunInterface;
+import wizardquest.gamemanager.LackingResourceException;
 import wizardquest.settings.DifficultyEnum;
+import wizardquest.settings.SettingsSingleton;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,7 +61,7 @@ public class GameRunUnitTests {
 
         for (int i = 0; i < 3; i++) {
             phase1Encounters.add(run.pickEncounter());
-            phase1Encounters.get(phase1Encounters.size() -1).markComplete();
+            phase1Encounters.get(phase1Encounters.size() - 1).markComplete();
         }
 
         // Check that trying to access another encounter causes the system to throw an
@@ -77,7 +80,7 @@ public class GameRunUnitTests {
 
         for (int i = 0; i < 4; i++) {
             phase2Encounters.add(run.pickEncounter());
-            phase2Encounters.get(phase2Encounters.size() -1).markComplete();
+            phase2Encounters.get(phase2Encounters.size() - 1).markComplete();
         }
 
         // Advance from stage 4 to 6
@@ -92,7 +95,7 @@ public class GameRunUnitTests {
 
         for (int i = 0; i < 2; i++) {
             phase3Encounters.add(run.pickEncounter());
-            phase3Encounters.get(phase3Encounters.size() -1).markComplete();
+            phase3Encounters.get(phase3Encounters.size() - 1).markComplete();
         }
 
         // Advance from stage 7 to 9
@@ -122,29 +125,60 @@ public class GameRunUnitTests {
     }
 
     /**
-     * TODO
+     * Checks the number of upgrades in the shop is correct
      */
     @Test
-    @DisplayName("GameRun - TODO")
-    void shopItemCount_isCorrectAmount(){
-
+    @DisplayName("GameRun - Number of items in the shop is correct")
+    void shopItemCount_isCorrectAmount() {
+        for (int i = 0; i < 10; i++) {
+            assertEquals(SettingsSingleton.getInstance().getShopItemCount(DifficultyEnum.MEDIUM),
+                    run.viewShop().length);
+        }
     }
 
     /**
-     * TODO
+     * Checks that purchasing an upgrade from the shop reduces the number of coins
+     * the player has by its price
      */
     @Test
-    @DisplayName("GameRun - TODO")
-    void upgradePurchased_reducedPlayerCoins(){
+    @DisplayName("GameRun - Player's coins are reduced by the upgrade prices")
+    void upgradePurchased_reducedPlayerCoins() {
+        run.getPlayer().gainCoins(100);
+        try {
+            run.purchaseUpgrade(UpgradeEnum.ABSOLUTE_PULSE_UNLOCK);
+        } catch (LackingResourceException e) {
+            fail("Threw exception" + e.getMessage());
+        }
+        // Check purchasing one upgrade has the correct price
+        assertEquals(90, run.getPlayer().getCoins());
 
+        try {
+            run.purchaseUpgrade(UpgradeEnum.PHYSICAL_DAMAGE_RESISTANCE);
+            run.purchaseUpgrade(UpgradeEnum.IMPROVED_FIRE_DAMAGE);
+            run.purchaseUpgrade(UpgradeEnum.FIRE_BALL_UNLOCK);
+        } catch (LackingResourceException e) {
+            fail("Threw exception" + e.getMessage());
+        }
+
+        // Check purchasing multiple upgrades has the correct price
+        assertEquals(25, run.getPlayer().getCoins());
     }
 
     /**
-     * TODO
+     * Checks that if a player cant afford an upgrade, the game throws an exception.
      */
     @Test
-    @DisplayName("GameRun - TODO")
-    void unaffordableUpgradePurchased_thorwsException(){
+    @DisplayName("GameRun - The player attempting to buy unaffordable upgrade throws exception")
+    void unaffordableUpgradePurchased_thorwsException() {
+        // check player starts with 0 coins
+        assertEquals(0, run.getPlayer().getCoins());
+
+        // Check player cant afford an upgrade with 0 coins
+        assertThrows(LackingResourceException.class, () -> run.purchaseUpgrade(UpgradeEnum.THUNDER_STORM_UNLOCK));
+
+        // Check player cant afford 15 coin upgrade with 14 coins
+        run.getPlayer().gainCoins(14);
+        assertThrows(LackingResourceException.class, () -> run.purchaseUpgrade(UpgradeEnum.SLASH_UNLOCK));
 
     }
 
