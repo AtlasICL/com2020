@@ -119,28 +119,28 @@ From the main menu, click the 'Settings' button.
 
 <img src="images/1_menu.png" alt="Description" width="600">
 
-This opens the following screen, where you can see the user's role of Developer displayed at the top.
+This opens the Settings screen, where you can see the user's role of Developer displayed at the top.
 
-<img src="images/3_settings_screen.png" alt="Description" width="600">
+<img src="images/5_developer_shown.png" alt="Description" width="600">
 
 Unlike the Player, the table of values and justification box are editable thanks to the user's role of Developer.
 
 Before changing any settings, we can see that the file 'telemetry_events.json' is empty.
 
-<img src="images/empty_telemetry_events.png" alt="Description" width="600">
+<img src="images/5_file_initial.png" alt="Description" width="600">
 
 Change the starting lives for the Easy difficulty to 10, and give a placeholder justification.
 
-<img src="images/change_setting.png" alt="Description" width="600">
+<img src="images/5_settings_change.png" alt="Description" width="600">
 
 Clicking the 'Save' button displays the text 'Settings updated', indicating success.
 
-<img src="images/change_setting_complete.png" alt="Description" width="600">
+<img src="images/5_settings_updated_with_change.png" alt="Description" width="600">
 
 This is reflected in 'telemetry.events.json', where a SettingsChangeEvent with the input setting and justification
 has been written.
 
-<img src="images/settings_change_event.png" alt="Description" width="600">
+<img src="images/5_file_outcome.png" alt="Description" width="600">
 
 ### Test 6: Developers can change the roles of other users in the game app
 
@@ -152,29 +152,29 @@ The recording of this test can be found [here](https://youtu.be/Kq1uDihGg4w).
 
 From the authenticated user's settings page, it is clearly displayed that they have the role Developer.
 
-<img src="images/settings_shows_developer.png" alt="Description" width="600">
+<img src="images/5_developer_shown.png" alt="Description" width="600">
 
 In 'logins_file.json', we can initially see that this user has the role of Player.
 
-<img src="images/settings_user_initially_player.png" alt="Description" width="600">
+<img src="images/6_file_initial.png" alt="Description" width="600">
 
 From the main menu, click the 'Manage Roles' button.
 
-<img src="images/menu_manage_roles_hover.png" alt="Description" width="600">
+<img src="images/6_menu.png" alt="Description" width="600">
 
 This opens the following screen, where you can see a list of all users with their corresponding roles.
 
 Using the drop-down menu, change the aforementioned user's role to Developer.
 
-<img src="images/roles_user_initially_player.png" alt="Description" width="600">
+<img src="images/6_roles_screen_dropdown.png" alt="Description" width="600">
 
 A message 'Role Updated' will appear below the list, indicating success.
 
-<img src="images/roles_user_set_to_developer.png" alt="Description" width="600">
+<img src="images/6_roles_screen_updated.png" alt="Description" width="600">
 
 This is reflected in 'logins_file.json', where this user now has the role of Developer.
 
-<img src="images/settings_user_set_to_developer.png" alt="Description" width="600">
+<img src="images/6_file_outcome.png" alt="Description" width="600">
 
 ### Test 7: Encounter is started and failed with lives remaining
 
@@ -186,18 +186,18 @@ The recording of this test can be found [here](https://youtu.be/ZI6MhQegde0).
 
 In this encounter, the user currently has three lives.
 
-<img src="images/mid_battle_screen.png" alt="Description" width="600">
+<img src="images/7_mid_battle.png" alt="Description" width="600">
 
 After attacking one another, the user has been defeated by the enemy.
 
 They now have two lives. Their health and magic points, as well as the enemy's health, are also reset.
 
-<img src="images/new_life.png" alt="Description" width="600">
+<img src="images/7_new_life.png" alt="Description" width="600">
 
 This is reflected in 'telemetry.events.json', where a NormalEncounterStartEvent and a NormalEncounterFailEvent have
 been written one after the other.
 
-<img src="images/encounter_fail_event.png" alt="Description" width="600">
+<img src="images/7_file_outcome.png" alt="Description" width="600">
 
 ### Test 8: Encounter is failed with no lives remaining
 
@@ -209,105 +209,259 @@ The recording of this test can be found [here](https://youtu.be/vrwo8pT0Jz8).
 
 In this encounter, the user currently has one life remaining.
 
-<img src="images/7_mid_battle.png" alt="Description" width="600">
+<img src="images/8_mid_battle.png" alt="Description" width="600">
 
 After attacking one another, the user has been defeated by the enemy.
 
 They now have zero lives left, and their run is over.
 
-<img src="images/7_run_complete.png" alt="Description" width="600">
+<img src="images/8_run_complete.png" alt="Description" width="600">
 
 This is reflected in 'telemetry.events.json', where a NormalEncounterFailEvent and EndSessionEvent have
 been written one after the other to show death and the end of a run.
 
-<img src="images/7_file_outcome.png" alt="Description" width="600">
+<img src="images/8_file_outcome.png" alt="Description" width="600">
 
 ### Test 9: Encounter is completed
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/W-RsZ1wqqzE).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In 'telemetry_events.json', we can see that no events have yet been written to file.
+
+<img src="images/9_file_initial.png" alt="Description" width="600">
+
+From the main menu, start a new game and select a difficulty which takes us to the battle screen.
+
+<img src="images/9_battle_screen.png" alt="Description" width="600">
+
+In 'telemetry_events.json', we can now see that a StartSessionEvent and a NormalEncounterStartEvent have been
+written to file to indicate this.
+
+<img src="images/9_file_outcome_1.png" alt="Description" width="600">
+
+After a few attack exchanges, the enemy has died and the encounter has been won, redirecting us to the shop.
+
+<img src="images/9_shop.png" alt="Description" width="600">
+
+In 'telemetry_events.json', we can now see that a NormalEncounterCompleteEvent and GainCoinEvent have been written
+to file to indicate this.
+
+<img src="images/9_file_outcome_2.png" alt="Description" width="600">
 
 ### Test 10: Only upgrades that are affordable may be purchased in the shop
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/IrsAIoJWbFs).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In the Shop screen, it is clearly displayed that the user has 25 coins.
+
+<img src="images/10_shop.png" alt="Description" width="600">
+
+Purchase an upgrade for 20 coins. This succeeds and reduces the user's coins by the relevant amount.
+
+<img src="images/10_purchase_success.png" alt="Description" width="600">
+
+This is reflected in 'telemetry_events.json', where a BuyUpgradeEvent has been written to indicate this.
+
+<img src="images/10_file_outcome_1.png" alt="Description" width="600">
+
+Now, we attempt to purchase an upgrade that is unaffordable. This fails with an error message output to screen.
+
+<img src="images/10_purchase_fail.png" alt="Description" width="600">
+
+Since the purchase failed, no update is made to 'telemetry_events.json'.
+
+<img src="images/10_file_outcome_1.png" alt="Description" width="600">
+
+Leave the shop, starting a new encounter.
+
+<img src="images/10_new_encounter.png" alt="Description" width="600">
+
+In 'telemetry_events.json', we can now see that a NormalEncounterStartEvent has been written to file to indicate the
+start of the next level.
+
+<img src="images/10_file_outcome_2.png" alt="Description" width="600">
 
 ### Test 11: Quit Run button ends the current session
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/cLIT9aTcVUg).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+Start a new session, which opens the battle screen.
+
+<img src="images/11_new_encounter.png" alt="Description" width="600">
+
+In 'telemetry_events.json', we can now see that a StartSessionEvent and a NormalEncounterStartEvent have been written
+to file to indicate the start of a new run.
+
+<img src="images/11_file_outcome_1.png" alt="Description" width="600">
+
+In the battle screen, click the 'Quit Run' button to end the run. This opens the 'Run Complete' screen.
+
+<img src="images/11_run_complete.png" alt="Description" width="600">
+
+In 'telemetry_events.json', we can now see that a EndSessionEvent has been written
+to file to indicate the start of a new run.
+
+<img src="images/11_file_outcome_2.png" alt="Description" width="600">
 
 ### Test 12: Player authentication to telemetry app is blocked
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/KvNQhScbSKM).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In 'logins_file.json', we can see that the user has the role of Player.
+
+<img src="images/12_file.png" alt="Image" width="600">
+
+From the title screen, click the 'Sign in with Google' button.
+
+<img src="images/12_title.png" alt="Image" width="600">
+
+This opens a new tab in the user's web browser, prompting sign-in with a Google account.
+
+<img src="images/12_google_auth.png" alt="Image" width="600">
+
+Once signed in, this pop-up will appear, indicating failed authentication.
+
+<img src="images/12_auth_blocked.png" alt="Image" width="600">
 
 ### Test 13: Developer is authenticated to telemetry app by Google OAuth 2.0 OIDC
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/JypFc2JmUEU).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In 'logins_file.json', we can see that the user has the role of Developer.
+
+<img src="images/13_file.png" alt="Image" width="600">
+
+From the title screen, click the 'Sign in with Google' button.
+
+<img src="images/12_title.png" alt="Image" width="600">
+
+This opens a new tab in the user's web browser, prompting sign-in with a Google account.
+
+<img src="images/12_google_auth.png" alt="Image" width="600">
+
+Once signed in, the main menu of the telemetry app will appear, indicating successful authentication.
+
+<img src="images/13_authenticated.png" alt="Image" width="600">
 
 ### Test 14: Designer is authenticated to telemetry app by Google OAuth 2.0 OIDC
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/f8TxcP28hsQ).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In 'logins_file.json', we can see that the user has the role of Designer.
+
+<img src="images/14_file.png" alt="Image" width="600">
+
+From the title screen, click the 'Sign in with Google' button.
+
+<img src="images/12_title.png" alt="Image" width="600">
+
+This opens a new tab in the user's web browser, prompting sign-in with a Google account.
+
+<img src="images/12_google_auth.png" alt="Image" width="600">
+
+Once signed in, the main menu of the telemetry app will appear, indicating successful authentication.
+
+<img src="images/13_authenticated.png" alt="Image" width="600">
 
 ### Test 15: All telemetry app views are functional
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/BMOg9SCdnvM).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+Our seeded telemetry dataset, stored under 'Example data' in the telemetry app, will be used for these tests.
+
+<img src="images/15_dropdown.png" alt="Image" width="600">
+
+All standard views show a graph of this style.
+
+<img src="images/15_view_standard.png" alt="Image" width="600">
+
+Suggestions shows a table of parameter balancing suggestions for the users, with issues highlighted by level and
+difficulty.
+
+<img src="images/15_suggestions.png" alt="Image" width="600">
+
+Decision log keeps record of all SettingsChangeEvents that impact design parameters.
+
+<img src="images/15_decision_log.png" alt="Image" width="600">
+
+All compare by difficulty views show a graph of this style.
+
+<img src="images/15_view_difficulty.png" alt="Image" width="600">
+
+All compare by time views show a graph of this style.
+
+<img src="images/15_view_time.png" alt="Image" width="600">
+
+All compare by coin hold duration views show a graph of this style.
+
+<img src="images/15_view_coin.png" alt="Image" width="600">
 
 ### Test 16: Telemetry data is exported to CSV
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/hIFxVSJ2lVc).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+From the main menu, with Example Data selected in the drop-down, click the 'Export data to CSV' button. This will
+open the following window.
+
+<img src="images/16_save.png" alt="Image" width="600">
+
+Opening this new .csv file reflects all telemetry data stored in the JSON file, ordered by event type.
+
+<img src="images/16_csv.png" alt="Image" width="600">
 
 ### Test 17: Telemetry data reset wipes the relevant JSON file
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/Dwqo5ilQ3wU).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+From looking at each view in our telemetry app, we can see that example data is populated.
+
+<img src="images/17_before_reset.png" alt="Image" width="600">
+
+From the main menu, with Example Data selected in the drop-down, click the 'Reset data' button. This will
+open the following confirmation window.
+
+<img src="images/17_reset.png" alt="Image" width="600">
+
+Now, looking at each view in our telemetry app, we can see that example data has been wiped completely.
+
+<img src="images/17_after_reset.png" alt="Image" width="600">
+
+This is reflected in 'example_data.json', which is now empty.
+
+<img src="images/17_file_outcome.png" alt="Image" width="600">
