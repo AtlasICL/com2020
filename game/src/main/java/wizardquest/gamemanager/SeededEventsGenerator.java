@@ -1,5 +1,6 @@
 package wizardquest.gamemanager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,6 +21,7 @@ public class SeededEventsGenerator {
     private final SettingsInterface settings;
     private final TelemetryListenerInterface telemetryListener;
     private final TimeManagerInterface timeManager;
+    private static final File DESTINATION_FILE = new File("../event_logs/example_events.json");
 
     /**
      * Event generator for the seeded telemetry dataset.
@@ -64,6 +66,19 @@ public class SeededEventsGenerator {
             index = new Random().nextInt(SettingsEnum.values().length);
         }
         return SettingsEnum.values()[index];
+    }
+
+    /**
+     * Select a random difficulty to be used in a SettingsChangeEvent.
+     * This value only needs to be a string, as its purpose is for display
+     * in the decision log of the telemetry app.
+     *
+     * @return a difficulty at random.
+     */
+    private String selectDifficultyString() {
+        String[] difficulties = {"EASY", "MEDIUM", "HARD"};
+        Random r = new Random();
+        return difficulties[r.nextInt(difficulties.length)];
     }
 
     /**
@@ -131,16 +146,22 @@ public class SeededEventsGenerator {
                 "../event_logs/example_events.json");
 
             // After a user has completed three sessions, invoke a random settings change.
+            // Ending a simulation resets the telemetry listener's destination file,
+            // so we must set it again before invoking this event.
+            g.telemetryListener.setDestinationFile(DESTINATION_FILE);
             SettingsEnum settingToChange = g.selectSetting();
             g.telemetryListener.onSettingsChange(
                     new SettingsChangeEvent(
                             g.settings.getUserID(),
                             g.timeManager.getCurrentTime(),
                             settingToChange,
-                            g.selectSettingValue(settingToChange).toString(),
+                            g.selectDifficultyString() + ": "
+                                    + g.selectSettingValue(settingToChange).toString(),
                             "Seeded SettingsChangeEvent"
                     )
             );
         }
+        // Reset the telemetry listener's destination file once seeding is complete.
+        g.telemetryListener.resetDestinationFile();
     }
 }
