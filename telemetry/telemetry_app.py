@@ -6,6 +6,7 @@ The main() function instantiates the GUI, and runs th main loop.
 """
 
 import tkinter as tk
+import sys
 from tkinter import messagebox
 import ctypes
 from gui.gui import TelemetryAppGUI
@@ -24,7 +25,9 @@ def main() -> None:
         messagebox.showwarning(
             title="Warning",
             message="Not Running as Administrator\n\n"
-                    "You are not running as admin, so telemetry features will not work correctly.")
+                    "This application requires administrator privileges to function correctly.")
+        root.destroy()
+        sys.exit(1)
         root.destroy()
     app = TelemetryAppGUI()
     app.mainloop()

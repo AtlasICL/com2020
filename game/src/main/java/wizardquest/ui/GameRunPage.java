@@ -141,8 +141,9 @@ private static final String DANGER_BUTTON_STYLE =
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Not Running as Administrator");
-            alert.setContentText("You are not running as admin, so some game features may not work correctly.");
+            alert.setContentText("This game requires administrator privileges to function correctly.");
             alert.showAndWait();
+            System.exit(1);
         }
 
         // Main container for swapping between different frames
