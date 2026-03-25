@@ -3,7 +3,7 @@
 ## Automated Test Suite
 
 ### Java Description
-The automated java test suite for our final solution contains 41 tests. These have been implemented using JUnit (v5.10.1),
+The automated Java test suite for our final solution contains 41 tests. These have been implemented using JUnit (v5.10.1),
 and can be executed using a single Maven command - this can be found in our deployment guide.
 
 The suite contains both unit and integration tests. Unit tests are used to validate the logic of different methods
@@ -13,19 +13,19 @@ files. By utilising JUnit's `@TempDir` feature, this allows I/O with temporary J
 production, which prevents any risk of corruption to the production files during testing. Furthermore, the use of
 JUnit's `@BeforeEach` and `@AfterEach` features for setup and cleanup respectively ensure that each test is independent,
 fair and responsible.
-### Recording
 
+### Recording
 The execution of the whole automated test suite can be found [here](https://youtu.be/g6tMS7hZfqw).
 
 ### Python Description
-The automated python test suite for our final solution contains 52 tests. These have been implemented using unittest,
-and can be executed using a single python command - this can be found in our deployment guide.
+The automated Python test suite for our final solution contains 52 tests. These have been implemented using unittest,
+and can be executed using a single Python command - this can be found in our deployment guide.
 
 The suite contains unit tests, used to validate the logic of different methods across all backend sections of our code.
-These are isolated, utilising only json scripts written for the purpose of testing. By utilising unittests `setUp` functionality,
-data from these files can be categorised from the beginning for each test file.
-### Recording
+These are isolated, utilising only json scripts written for the purpose of testing. By utilising unittest's `setUp`
+functionality, data from these files can be categorised from the beginning for each test file.
 
+### Recording
 The execution of the whole automated test suite can be found [here]().
 
 ## Manual End-to-End Test Suite
