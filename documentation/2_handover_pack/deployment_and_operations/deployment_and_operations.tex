@@ -121,6 +121,32 @@ The resulting installer will be generated at:
 installer/output/WizardQuestInstaller.exe
 \end{verbatim}
 
+\subsection{MacOS}
+A  \verb|.pkg| installer is provided that bundles both the Java game and the python telemetry viewer as a macOS native \verb|.app| bundles.
+
+\paragraph{Installation}
+\begin{enumerate}
+    \item Double-click \verb|WizardQuestInstaller.pkg| and follow the on-screen instructions.
+    \item Both applications are installed to \verb|/Applications/WizardQuest/|.
+\end{enumerate}
+
+\paragraph{Uninstall}
+\begin{enumerate}
+    \item |sudo rm -rf /Applications/WizardQuest|
+    \item \verb|sudo rm -rf /Applications/WizardQuest|
+    \item \verb|sudo pkgutil --forget com.thespecialcharacters.wizardquest|
+\end{enumerate}
+
+\paragraph{Building the Installer from Source}
+Run the following commands on your terminal
+\begin{verbatim}
+    brew install openjdk17 maven python@3.13
+\end{verbatim}
+Then run the build script from the repository root:
+\begin{verbatim}
+./build_macos_installer.sh
+\end{verbatim}
+The output installer will be located at \verb|build/macos/WizardQuestInstaller.pkg|
 
 \subsection{From Source}
 \subsubsection{Common}
