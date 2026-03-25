@@ -195,28 +195,38 @@ To verify the problem is resolved, first place the JSON store in an online \href
 The project is split into two applications, one written in Python and the other written in Java. The Python application is in charge of reading telemetry data, interpreting this information, and displaying this to the user. The Java application is in charge of managing user roles, settings, and achievements, design parameters, telemetry generation, and gameplay.
 
 Both applications communicate via several data stores detailed in the data management guide. Individual methods and fields are not listed, as those are available in the documentation either via pydoc or javadoc. The testing sections only outline the testing architecture as each test file is clear on what it tests, so describing such information serves no purpose. 
+
 \subsection{Python Application}
+
 \subsubsection{Overview}
 The Python application is split into 3 sub-modules. Auth handles user authentication through Google OAuth, and provides a wrapper for interfacing with the Java application. Core handles data ingestion, and interpretation. GUI handles the display and refreshing of telemetry data.
 
 The app entry point is \verb|telemetry_app.py| which instantiates the GUI and starts the main loop within it.
 \subsubsection{auth}
+
 \paragraph{auth\_logger}
 This component writes authentication events to the authentication log. This event writing is called by auth.
+
 \paragraph{auth}
 This component handles authenticating the user, creating a new user account for new users, and getting user roles.
+
 \subsubsection{core}
 \paragraph{events}
 This component contains all enums for each enumerated field within telemetry events. It also contains a dataclass for each telemetry event, containing all their fields.
+
 \paragraph{logic}
 This component interprets data passed into it, providing metrics used by the GUI for display, getters for obtaining all events of a given type, and methods to classify ingested data.
 \paragraph{parsing}
 This component ingests data from the telemetry stores, and returns the event as a dataclass described in events.
+
 \subsubsection{gui}
+
 \paragraph{gui}
 GUI creates the majority of the user interface, creating the window tabs, the decision log, suggestions, and the home page. It also handles button presses and propagates those to the backend. It also refreshes the graphs every three seconds.
+
 \paragraph{plotting}
 Plotting is in charge of generating and displaying all dashboard views of the telemetry, it calls the logic to interpret the telemetry data, and displays this data using matplotlib.
+
 \subsection{Python Tests}
 The testing architecture consists of a unit testing folder, and a resources folder for testing data. Each unit tests is named after which component of the python application it provides unit tests for, and as a result they are not explicitly named here. 
 
