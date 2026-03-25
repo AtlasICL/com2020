@@ -55,6 +55,7 @@
 \usepackage{tabularx}
 \usepackage{wrapfig}
 
+
 \title{Deployment and Operations\\[0.3em]
 \large COM2020 - Project 7}
 \author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, Luca Pacitti, \\ Harry Taylor}
@@ -79,12 +80,13 @@ Internet access is assumed, most supported operating systems contain a web brows
 \subsection{From Executable}
 
 \subsubsection{Build Process}
-To compile the code into an executable form, first, assure you've replaced the placeholder strings in \texttt{game\src\main\java\wizardquest\auth\Authenticator.java} and \texttt{telemetry\auth\auth.py} with their equivalent secrets, then run the following commands from the root of the \texttt{com2020} directory:
+To compile the code into an executable form, first, assure you've replaced the placeholder strings in \verb|game\src\main\java\wizardquest\auth\Authenticator.java|\\ and \verb|telemetry\auth\auth.py| with their equivalent secrets, then run the following commands from the root of the \verb|com2020| directory:
 
 \paragraph{Python Application}
 \begin{verbatim}
 cd telemetry
-py -m PyInstaller --noconsole --onefile --name telemetry_app --distpath . telemetry_app.py
+py -m PyInstaller --noconsole --onefile --name telemetry_app 
+    --distpath . telemetry_app.py
 \end{verbatim}
 
 \paragraph{Java Application}
@@ -109,7 +111,7 @@ cd telemetry
 \end{verbatim}
 
 \subsubsection{Installer Creation}
-To create an installer for Windows, first, assure you're in the route of \texttt{com2020}, from the \texttt{Windows-Installer} branch. Then, execute the following using inno (more info at: https://jrsoftware.org/isdl.php/Inno-Setup-Downloads):
+To create an installer for Windows, first, assure you're in the route of \texttt{com2020}, from the \texttt{Windows-Installer} branch. Then, execute the following using inno \\(more info at: https://jrsoftware.org/isdl.php/Inno-Setup-Downloads):
 
 \begin{verbatim}
 installer/WizardQuestInstall.iss
@@ -137,7 +139,7 @@ These steps are required for both applications.
             \item \verb|$env:OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
             \item \verb|$env:OIDC_CLIENT_SECRET="<ENVIRONMENT VARIABLE VALUE>"|
         \end{enumerate}
-      \item On macOS or Linux run:
+      \item On macOS run:
         \begin{enumerate}
             \item \verb|export OIDC_ISSUER="<ENVIRONMENT VARIABLE VALUE>"|
             \item \verb|export OIDC_CLIENT_ID="<ENVIRONMENT VARIABLE VALUE>"|
@@ -154,13 +156,13 @@ These steps are required for both applications.
   \item Activate the virtual environment:
     \begin{itemize}
         \item On windows: \verb|./venv/Scripts/Activate|
-        \item On macOS or Linux: \verb|source venv/bin/activate|
+        \item On macOS: \verb|source venv/bin/activate|
     \end{itemize}
     \item Install packages: \verb|pip install -r requirements.txt|
   \item Run the program:
     \begin{itemize}
         \item On windows: \verb|python telemetry_app.py|
-        \item On macOS or Linux: \verb|python3 telemetry_app.py|
+        \item On macOS: \verb|python3 telemetry_app.py|
     \end{itemize}
     \item To exit the venv run: \verb|deactivate|
 \end{enumerate}
