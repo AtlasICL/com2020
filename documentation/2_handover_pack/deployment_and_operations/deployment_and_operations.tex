@@ -148,6 +148,35 @@ Then run the build script from the repository root:
 \end{verbatim}
 The output installer will be located at \verb|build/macos/WizardQuestInstaller.pkg|
 
+The installer script (build_macos_installer.sh)
+\begin{verbatim}
+# From the repository root:
+cd game
+mvn clean package dependency:copy-dependencies \
+    -DoutputDirectory=target/lib -DincludeScope=runtime -DskipTests -q
+
+jpackage --type app-image --input target \
+    --main-jar wizard-quest-0.1.1.jar \
+    --main-class wizardquest.ui.GameRunPage \
+    --name WizardQuest --app-version 1.0 \
+    --dest ../build/macos
+
+cd ../telemetry
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt pyinstaller -q
+pyinstaller --onedir --windowed --name TelemetryViewer \
+    --add-data "auth:auth" --add-data "logins_file.json:." \
+    --add-data "core:core" --add-data "gui:gui" telemetry_app.py
+deactivate
+
+cd ..
+pkgbuild --root build/macos/staging \
+    --identifier com.thespecialcharacters.wizardquest \
+    --version 1.0 \
+    --install-location "/Applications/WizardQuest" \
+    build/macos/WizardQuestInstaller.pkg
+\end{verbatim}
+
 \subsection{From Source}
 \subsubsection{Common}
 These steps are required for both applications.
