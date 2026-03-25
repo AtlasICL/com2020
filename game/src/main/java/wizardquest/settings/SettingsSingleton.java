@@ -65,6 +65,7 @@ public class SettingsSingleton {
             maxMagic = new EnumMap<>(DifficultyEnum.class);
             magicRegenRate = new EnumMap<>(DifficultyEnum.class);
             shopItemCount = new EnumMap<>(DifficultyEnum.class);
+            encounterPayout = new EnumMap<>(DifficultyEnum.class);
 
             maxStageReached.put(DifficultyEnum.EASY, 0);
             maxStageReached.put(DifficultyEnum.MEDIUM, 0);
