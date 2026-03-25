@@ -195,6 +195,9 @@ public class SettingsPage {
         TextField mediumShopItemCountField = new TextField(String.valueOf(settings.getShopItemCount(DifficultyEnum.MEDIUM)));
         TextField hardShopItemCountField = new TextField(String.valueOf(settings.getShopItemCount(DifficultyEnum.HARD)));
 
+        TextField easyEncounterPayoutField = new TextField(String.valueOf(settings.getEncounterPayout(DifficultyEnum.EASY)));
+        TextField mediumEncounterPayoutField = new TextField(String.valueOf(settings.getEncounterPayout(DifficultyEnum.MEDIUM)));
+        TextField hardEncounterPayoutField = new TextField(String.valueOf(settings.getEncounterPayout(DifficultyEnum.HARD)));
 
         // Input validation to ensure only valid values can be entered
         makeIntegerOnly(easyLivesField);
@@ -204,6 +207,10 @@ public class SettingsPage {
         makeIntegerOnly(easyHpField);
         makeIntegerOnly(mediumHpField);
         makeIntegerOnly(hardHpField);
+
+        makeIntegerOnly(easyEncounterPayoutField);
+        makeIntegerOnly(mediumEncounterPayoutField);
+        makeIntegerOnly(hardEncounterPayoutField);
 
         makeDecimalOnly(easyEnemyDmgField);
         makeDecimalOnly(mediumEnemyDmgField);
@@ -238,6 +245,10 @@ public class SettingsPage {
         mediumShopItemCountField.setPrefWidth(70);
         hardShopItemCountField.setPrefWidth(70);
 
+        easyEncounterPayoutField.setPrefWidth(80);
+        mediumEncounterPayoutField.setPrefWidth(80);
+        hardEncounterPayoutField.setPrefWidth(80);
+
         // Setting styling for each field
         easyHpField.setStyle(fieldStyle);
         easyLivesField.setStyle(fieldStyle);
@@ -266,6 +277,10 @@ public class SettingsPage {
         easyShopItemCountField.setStyle(fieldStyle);
         mediumShopItemCountField.setStyle(fieldStyle);
         hardShopItemCountField.setStyle(fieldStyle);
+
+        easyEncounterPayoutField.setStyle(fieldStyle);
+        mediumEncounterPayoutField.setStyle(fieldStyle);
+        hardEncounterPayoutField.setStyle(fieldStyle);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -296,8 +311,11 @@ public class SettingsPage {
         ColumnConstraints col7 = new ColumnConstraints();
         col7.setMinWidth(90);
 
+        ColumnConstraints col8 = new ColumnConstraints();
+        col8.setMinWidth(110);
+
         grid.getColumnConstraints().addAll(
-            col0, col1, col2, col3, col4, col5, col6, col7
+            col0, col1, col2, col3, col4, col5, col6, col7, col8
         );
 
         // Headers
@@ -309,6 +327,8 @@ public class SettingsPage {
         Label maxMagicHeader = new Label("MaxMagic");
         Label regenRateHeader = new Label("RegenRate");
         Label shopCountHeader = new Label("ShopCount");
+        Label encounterPayoutHeader = new Label("PayoutPerRound");
+        
 
         // Grid heading styling
         difficultyHeader.setStyle(HEADING_STYLE);
@@ -319,6 +339,8 @@ public class SettingsPage {
         maxMagicHeader.setStyle(HEADING_STYLE);
         regenRateHeader.setStyle(HEADING_STYLE);
         shopCountHeader.setStyle(HEADING_STYLE);
+        encounterPayoutHeader.setStyle(HEADING_STYLE);
+
 
         // Grid layout
         grid.add(difficultyHeader, 0, 0);
@@ -329,6 +351,7 @@ public class SettingsPage {
         grid.add(maxMagicHeader, 5, 0);
         grid.add(regenRateHeader, 6, 0);
         grid.add(shopCountHeader, 7, 0);
+        grid.add(encounterPayoutHeader, 8, 0);
 
         // Row labels
         Label easyLabel = new Label("EASY");
@@ -348,6 +371,7 @@ public class SettingsPage {
         grid.add(easyMaxMagicField, 5, 1);
         grid.add(easyRegenRateField, 6, 1);
         grid.add(easyShopItemCountField, 7, 1);
+        grid.add(easyEncounterPayoutField, 8, 1);
 
         // Medium difficulty parameters
         grid.add(mediumLabel, 0, 2);
@@ -358,6 +382,7 @@ public class SettingsPage {
         grid.add(mediumMaxMagicField, 5, 2);
         grid.add(mediumRegenRateField, 6, 2);
         grid.add(mediumShopItemCountField, 7, 2);
+        grid.add(mediumEncounterPayoutField, 8, 2);
 
         // Hard difficulty parameters
         grid.add(hardLabel, 0, 3);
@@ -368,6 +393,7 @@ public class SettingsPage {
         grid.add(hardMaxMagicField, 5, 3);
         grid.add(hardRegenRateField, 6, 3);
         grid.add(hardShopItemCountField, 7, 3);
+        grid.add(hardEncounterPayoutField, 8, 3);
 
         grid.setAlignment(Pos.CENTER);
 
@@ -431,6 +457,9 @@ public class SettingsPage {
                 int mediumShopItemCount = Integer.parseInt(mediumShopItemCountField.getText());
                 int hardShopItemCount = Integer.parseInt(hardShopItemCountField.getText());
 
+                int easyEncounterPayout = Integer.parseInt(easyEncounterPayoutField.getText());
+                int mediumEncounterPayout = Integer.parseInt(mediumEncounterPayoutField.getText());
+                int hardEncounterPayout = Integer.parseInt(hardEncounterPayoutField.getText());
                 String userID = settings.getUserID();
 
                 // Update Max Health
@@ -571,6 +600,26 @@ public class SettingsPage {
                     telemetryListener.onSettingsChange(new SettingsChangeEvent(
                             userID, Instant.now(), SettingsEnum.SHOP_ITEM_COUNT,
                             "HARD: " + hardShopItemCount, justification));
+                }
+
+                // Update Encounter Payout
+                if (easyEncounterPayout != settings.getEncounterPayout(DifficultyEnum.EASY)) {
+                    settings.setEncounterPayout(DifficultyEnum.EASY, easyEncounterPayout);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENCOUNTER_PAYOUT,
+                            "EASY: " + easyEncounterPayout, justification));
+                }
+                if (mediumEncounterPayout != settings.getEncounterPayout(DifficultyEnum.MEDIUM)) {
+                    settings.setEncounterPayout(DifficultyEnum.MEDIUM, mediumEncounterPayout);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENCOUNTER_PAYOUT,
+                            "MEDIUM: " + mediumEncounterPayout, justification));
+                }
+                if (hardEncounterPayout != settings.getEncounterPayout(DifficultyEnum.HARD)) {
+                    settings.setEncounterPayout(DifficultyEnum.HARD, hardEncounterPayout);
+                    telemetryListener.onSettingsChange(new SettingsChangeEvent(
+                            userID, Instant.now(), SettingsEnum.ENCOUNTER_PAYOUT,
+                            "HARD: " + hardEncounterPayout, justification));
                 }
 
                 output.setText("Settings updated.");

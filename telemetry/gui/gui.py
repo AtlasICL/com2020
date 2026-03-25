@@ -732,7 +732,8 @@ class TelemetryAppGUI(tk.Tk):
             SettingName.STARTING_LIVES: "Lives",
             SettingName.MAX_MAGIC: "Magic cap",
             SettingName.MAGIC_REGEN_RATE: "Magic generation rate",
-            SettingName.SHOP_ITEM_COUNT: "Shop item count"
+            SettingName.SHOP_ITEM_COUNT: "Shop item count",
+            SettingName.ENCOUNTER_PAYOUT: "Encounter payout"
         }
         try:
             return mapping[setting_name]

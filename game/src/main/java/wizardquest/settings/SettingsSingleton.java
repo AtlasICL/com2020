@@ -38,6 +38,7 @@ public class SettingsSingleton {
         private EnumMap<DifficultyEnum, Integer> maxMagic;
         private EnumMap<DifficultyEnum, Integer> magicRegenRate;
         private EnumMap<DifficultyEnum, Integer> shopItemCount;
+        private EnumMap<DifficultyEnum, Integer> encounterPayout;
 
         private static File SETTINGS_FILE = new File("settings_file.json");
         private static final ObjectMapper jsonMapper = new ObjectMapper();
@@ -64,6 +65,7 @@ public class SettingsSingleton {
             maxMagic = new EnumMap<>(DifficultyEnum.class);
             magicRegenRate = new EnumMap<>(DifficultyEnum.class);
             shopItemCount = new EnumMap<>(DifficultyEnum.class);
+            encounterPayout = new EnumMap<>(DifficultyEnum.class);
 
             maxStageReached.put(DifficultyEnum.EASY, 0);
             maxStageReached.put(DifficultyEnum.MEDIUM, 0);
@@ -96,6 +98,10 @@ public class SettingsSingleton {
             shopItemCount.put(DifficultyEnum.EASY, 3);
             shopItemCount.put(DifficultyEnum.MEDIUM, 2);
             shopItemCount.put(DifficultyEnum.HARD, 1);
+
+            encounterPayout.put(DifficultyEnum.EASY, 25);
+            encounterPayout.put(DifficultyEnum.MEDIUM, 20);
+            encounterPayout.put(DifficultyEnum.HARD, 15);
         }
 
         /**
@@ -128,6 +134,7 @@ public class SettingsSingleton {
                     loadIntNode(designParams, "startingLives", startingLives);
                     loadIntNode(designParams, "maxMagic", maxMagic);
                     loadIntNode(designParams, "magicGenerationRate", magicRegenRate);
+                    loadIntNode(designParams, "encounterPayout", encounterPayout);
                 }
 
                 // Load per-user data.
@@ -191,6 +198,7 @@ public class SettingsSingleton {
             node.set("startingLives", createIntNode(startingLives));
             node.set("maxMagic", createIntNode(maxMagic));
             node.set("magicGenerationRate", createIntNode(magicRegenRate));
+            node.set("encounterPayout", createIntNode(encounterPayout));
             return node;
         }
 
@@ -348,6 +356,11 @@ public class SettingsSingleton {
         }
 
         @Override
+        public int getEncounterPayout(DifficultyEnum difficulty) {
+            return encounterPayout.get(difficulty);
+        }
+
+        @Override
         public void setTelemetryEnabled(boolean telemetryEnabled) {
             this.telemetryEnabled = telemetryEnabled;
             saveProfile();
@@ -426,6 +439,15 @@ public class SettingsSingleton {
                 throw new AuthenticationException();
             }
             this.shopItemCount.put(difficulty, newShopItemCount);
+            saveDesignParameters();
+        }
+
+        @Override
+        public void setEncounterPayout(DifficultyEnum difficulty, int newEncounterPayout) throws AuthenticationException {
+            if (!(currentUserIsDesigner() || currentUserIsDeveloper())) {
+                throw new AuthenticationException();
+            }
+            this.encounterPayout.put(difficulty, newEncounterPayout);
             saveDesignParameters();
         }
 
