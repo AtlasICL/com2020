@@ -1,9 +1,9 @@
 | Team Member       | Roles (sprint 1)                       | Roles (sprint 2)                                           |
 | ----------------- | -------------------------------------- | ---------------------------------------------------------- |
-| Emre Acarsoy      | Java Developer, Python Lead            | Project Lead, Scrum Master, Java Developer                 |
-| Luca Croci        | Java Developer (User Interface)        | Java Developer (User Interface)                            |
+| Emre Acarsoy      | Java Developer, Python Lead            | Project Lead / Scrum Master, Python developer              |
+| Luca Croci        | Java Developer (User Interface)        | UI/UX Lead, Java developer                                 |
 | Tom Croft         | Project Lead, Scrum Master, Java Lead  | Java Lead                                                  |
 | Will Finney       | Game Design Lead, Ethics/Accessability | Game Design Lead, Ethics/Accessability, Project Evaluation |
-| Kazybek Khairulla | Java Developer                         | Java Developer (User Interface), Python Developer          |
-| Luca Pacitti      | Testing Lead, Java Developer           | Testing Lead, Java Developer                               |
-| Harry Taylor      | Python Developer                       | Python Lead, Java Developer                                |
+| Kazybek Khairulla | Java Developer                         | Java Developer (UI/UX), Java developer                     |
+| Luca Pacitti      | Testing Lead, Java Developer           | Testing Lead, Java developer                               |
+| Harry Taylor      | Python Developer                       | Python Lead, Telemetry designer                            |
