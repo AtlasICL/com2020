@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\usepackage[shortlabels]{enumitem}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=blue}
+\usepackage[nameinlink,noabbrev,capitalize]{cleveref}
+\usepackage{colortbl}
+\usepackage[section]{placeins}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section} {0pt}{3ex}{2ex}
+\titlespacing*{\subsection} {0pt}{3ex}{2ex}
+\titlespacing*{\subsubsection} {0pt}{3ex}{2ex}
+\usepackage{pdfpages}
+\setlist{nolistsep,leftmargin=*}
+
+\usepackage{tocloft}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{1.2em}
+\setlength{\cftsecnumwidth}{2.2em}
+\setlength{\cftsubsecnumwidth}{3.0em}
+\setcounter{tocdepth}{2}
+
+
+%settings paragraph to allow heading 4
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}
+  {}
+  {1em}
+  {}
+
+\titlespacing*{\paragraph}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\title{Security Checklist\\[0.3em]
+\large COM2020 - Project 7}
+\author{Emre Acarsoy, Luca Croci, Tom Croft, Will Finney, Kazybek Khairulla, \\ Harry Taylor, Luca Pacitti}
+\date{25/03/2026}
+\begin{document}
+\maketitle
+
+\paragraph{Authentication}
+This project requires authentication for two purposes. Firstly, user-specific data must be able to be stored and retrieved, both of which must happen for the correct user. Secondly, the project must ensure that only \textit{authorised} users may access specific functionality within the project: namely, only "designers" and "developers" may view telemetry data and change settings, and only "developers" may change the roles of other users. \\
+This project handles authentication through the Google OIDC 2.0 service. This choice of Google OIDC for authentication comes with considerable benefits. Firstly, all password validation, storage, and reset functionality is handled by Google. This means that this project is exempted from the burdensome task of storing, hashing, and verifying passwords, and of providing secure password reset functionality. An added benefit is that users do not need to create a new account (including, at the least, a username and password pair) to use the services provided by our project - they can instead simply log in with their pre-existing Google account, thereby avoiding the friction of creating a new password and saving/remembering it. Additionally, Google already provides two-factor-authentication services, making our app much more secure. A reasonable amount of trust may be put in the security of Google's OIDC authentication functionality, as it is one of the biggest providers in the industry, and any vulnerability would be patched extremely quickly. Any vulnerability in this area would not require any additional input from us, the developers and maintainers of this project, as the changes would be done remotely, and we merely interface with the public API.  
+
+\paragraph{Secrets and credential management}
+The aforementioned Google OIDC 2.0 authentication API requires three variables to be set in the code, namely the OIDC issuer, client ID, and client secret. These variables are stored as local environment variables in our project, and never pushed onto the remote repository on GitHub. \\
+Sensitive files are included in \textit{.gitignore}, ensuring they will not be included in any pushes to remote.
+
+\newpage
+\paragraph{Input validation}
+The program performs all necessary input validation. All text input from users is sanitised.
+
+\paragraph{Supply chain security}
+The list of dependencies for our project is clearly outlined in the appropriate files, namely \textit{pom.xml} for Java, and \textit{requirements.txt} for Python. These dependencies may be automatically checked for vulnerabilities using the appropriate tools provided by Maven and pip.
+
+\paragraph{Potential improvements}
+Although we deem our project to be fully secure in its current state for its intended use-cases, there are nevertheless improvements which could make the project's security profile more robust. \\
+Firstly, rate-limiting could be implemented in the sign-in logic to prevent spam/repeated requests to the Google OIDC API. \\
+Additionally, automated tests could be implemented, to periodically check for any security vulnerabilities in the dependencies of our project (e.g. Dependabot).
+
+\end{document}
