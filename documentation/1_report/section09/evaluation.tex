@@ -1,3 +1,5 @@
+\section{Evaluation - Sprint 1}
+
 \subsection{Evaluation}
 
 To assure the most comprehensive evaluation, the code project produced
@@ -283,4 +285,270 @@ effectively fixed in the full build. As a prototype, this system
 provides the framework for elements of the system that are not yet fully
 implemented, so the majority of the issues present in the prototype
 simply exist as this is nothing more than a vertical slice.
+
+\section{Evaluation - Sprint 2}
+
+\subsection{Evaluation}
+
+To assure the most comprehensive evaluation, the code project produced
+has been compared to both quantitative and qualitative baselines. In
+this subsection the seven areas of evaluation will be explored.
+
+\subsection{Gameplay Strategy Analysis}
+
+The first measure of success is a measure of the engagingness of the
+gameplay. As the legendary game designer Sid Miers once said, "A game is
+a series of interesting decisions" - we can derive from this, the
+baseline we use to test for this metric is that each decision the player
+gets to make must feel as impactful as possible.
+
+The first interesting decision that the player gets to make is when they
+first access the shop after encounter 1. The player can decide whether
+they wish to spend their limited coins on zero, one or multiple upgrades
+for their character. The player has to decide on this carefully, as
+there is no guarantee of what encounter they will have following the
+shop, so must make decisions that account for all possibilities.
+
+\includegraphics[scale=0.9]{section09/media/image9.png}
+
+If the player chooses to purchase an upgrade that provides them with an
+attack, there are more interesting decisions to be made, for instance,
+if a player has an encounter with a Fish Man, and has access to the
+Thunder Storm ability, the player must carefully decide (once sufficient
+magic has been accumulated) to conserve magic for a later turn, or to
+immediately use the Thunder Storm ability to deal a large amount of
+damage immediately.
+
+\includegraphics[scale=0.45]{section09/media/image10.png}
+
+The first level does not have particularly many interesting choices,
+this is intentional. The purpose of this first level is to simply teach
+players the basic rules of the game in a non obtrusive way
+(understanding how health, attacks and magic attrition works). Giving
+the player too many decisions so early on would only serve to make the
+game more confusing - hence why this trade-off was made.
+
+The full game developed in sprint 2 allows for more abilities,
+10 levels and 8 shops and allows for an exponentially greater number of
+engaging gameplay moments compared to sprint 1's 2 levels.
+
+To conclude, the final solution meets the baseline, as it contains a 
+wide array of different choices, allowing for many branching playthroughs
+
+\subsection{Client Runability}
+
+The next measure of success we have decided on is the user's ability to
+run the game on all hardware, new or old. Our next baseline is that the
+game and the telemetry can both run on 1GB of RAM.
+
+For the Java game, it meets this baseline.
+
+\includegraphics[scale=0.8]{section09/media/image11.png}
+
+For the Python Telemetry app, the baseline is also met.
+
+\includegraphics[scale=0.8]{section09/media/image12.png}
+
+Not only are both baselines met, but running both simultaneously still
+meets the baseline.
+
+To summarise, the program is incredibly successful here.
+
+\subsection{Detection validity}
+
+Another measure of success we feel is necessary for a quality end
+product is the programs ability to detect spikes in
+difficulty in areas of gameplay. The baseline that must be met here is
+that an area of the game that is logically expected to be difficult will
+be represented as a spike in the telemetry interface.
+
+The logical expectation is that players will fail more in earlier levels,
+as whilst the difficulties are similar, the player holds less upgrades to
+defend themselves, which is particularly important in the higher difficulties,
+(medium, hard).
+
+After simulating the game 300 times on easy, medium and hard modes, the
+``difficulty spike'' view on the telemetry interface reads as follows:
+
+\includegraphics[scale=0.5]{section09/media/image13.png}
+
+
+The disparity in the number of failures on level four and the other levels
+is clear. This may be due to the introduction of multiple enemies, with the
+player being unprepared for this encounter with regards to their upgrades.
+It is evident that this trend is reflected in the data as a difficulty 
+``spike''. Hence this meets the baseline.
+
+In summary, the program is able to validly detect an area of difficulty
+and represent it as a difficulty spike, this feature's potential is showcased 
+well within the final solution.
+
+\subsection{Design Usability}
+
+One of the most important aspects of any piece of software is that it is
+designed in a useful, intuitive and responsive way. The baseline that
+must be met to assure this is that, in both the game and telemetry
+aspects, every subsection of the game is accessible in 3 or less inputs, in
+accordance with the unofficial, yet nonetheless valuable
+``3-click-rule'' user experience heuristic.
+
+For the Java game this is measured from the main menu:
+
+\begin{longtable}{p{0.5\textwidth} p{0.45\textwidth}}
+\toprule
+\textbf{Feature} & \textbf{Minimum inputs to access} \\
+\midrule
+\endhead
+Easy player game & 2 \\
+Medium player game & 2 \\
+Hard player game & 2 \\
+Easy simulated game & 1 \\
+Medium simulated game & 1 \\
+Hard simulated game & 1 \\
+Toggle telemetry sharing & 2 \\
+View telemetry disclosure & 1 \\
+Change starting lives as a design parameter & 3 \\
+Exit Game & 1 \\
+\bottomrule
+\end{longtable}
+
+For the Python interface this is measured from the ``Home'' page whilst
+viewing telemetry data:
+
+\newpage
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5001}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule()
+\endhead
+\textbf{Feature} & \textbf{Minimum inputs to access} \\
+Clear telemetry data & 1 \\
+View the ``Funnel View'' graph with telemetry data & 1 \\
+View the ``Difficulty Spike'' graph with telemetry data & 1 \\
+View the ``Health'' graph with telemetry data & 1 \\
+View the ``Coins'' graph with telemetry data & 1 \\
+View the ``Time'' graph with telemetry data & 1 \\
+View the ``Suggestions'' subsection with telemetry data & 1 \\
+View the ``Decisions log '' subsection with telemetry data & 1 \\
+View the ``Funnel View'' graph with simulated data & 2 \\
+View the ``Difficulty Spike'' graph with simulated data & 2 \\
+View the ``Health'' graph with simulated data & 2 \\
+View the ``Coins'' graph with simulated data & 2 \\
+View the ``Time'' graph with simulated data & 1 \\
+View the ``Suggestions'' subsection with simulated data & 2 \\
+View the ``Decisions log '' subsection with telemetry data & 2 \\
+Enable ``Compare by difficulty'' fairness indicator & 1 \\
+Enable ``Compare by time'' fairness indicator & 1 \\
+Enable ``Compare by coin hold duration'' fairness indicator & 1 \\
+
+\bottomrule()
+\end{longtable}
+
+Both the game and telemetry interfaces use the same Google
+authentication that involves a far more substantial number of user
+inputs, takes noticeably longer to load and involves the opening of an
+additional tab. While this is at odds with our philosophy of fast and
+simple accessibility, we accept this trade off in this specific case as
+the security provided by Google's authentication is significant enough
+for us to accept this small loss in the user's experience.
+
+Ultimately, where relevant, the game and telemetry interface are
+designed in ways that are fitting with good user experience principles,
+and always meet the baseline, except in the one scenario
+(authentication) where we have a reasonable cause to go below what would
+otherwise be the baseline.
+
+\subsection{Suggestion Effectiveness}
+
+The final telemetry metric which we have chosen to measure the
+effectiveness of our product is the ability of the telemetry code to
+provide useful balancing information in the ``suggestions'' subsection. The
+baseline is that, given a large amount of gameplay data, the telemetry
+interface will be able to provide useful feedback that, when applied,
+change the gameplay experience in the intended way.
+
+To generate the most fitting suggestion, 300 simulated games where run
+(100 across each difficulty setting) where ``Easy'' had 10 starting
+lives. ``Medium'' had 3 and ``Hard'' had 1.
+
+By assessing the funnel view, we can tell that \textasciitilde70\% of
+players are failing the first three levels, within stage 4, this level drops
+dramatically. it can be seen the difficulty of stages past 4 is too high and
+should be adjusted.
+
+\includegraphics[scale=0.45]{section09/media/image14.png}
+
+In response, the interface suggested the following:
+
+\includegraphics[scale=0.6]{section09/media/image15.png}
+
+Once implementing the suggestion, increasing the health at easy by 50, and simulating 300 more attempts,
+the following view was produced.
+
+\includegraphics[scale=0.45]{section09/media/image16.png}
+
+From this, it can be deduced that by increasing the health of players in the
+suggested difficulty, the fail rate is more linear, the suggestions view
+also generates other suggestions, implementing more than one of these may
+drastically increase the overall rate, since this alteration was only made
+on the easy difficulty.
+
+The following is the total suggestions view for the initial result. \\
+\includegraphics[scale=0.45]{section09/media/image17.png}
+
+It is also valuable to note that the simulated player behaviour uses
+inherently far simpler logic than any human player. Here, a simulated
+player will not use the failure of an attempt at this game as a learning
+opportunity on how to take a different approach, unlike most human
+players. As a result, we may infer that the simulated data isn't as
+representative of the usefulness of the suggestion as it could be.
+
+To summarise, each suggestion provided by the full solution are
+useful in whole to improve game balance
+
+\subsection{Fairness}
+
+% some enemy vulnerabilities aren't clear (like dragon being vulnerable to absolute)
+% 2, 1, 7 deaths: defensive
+% 5, 5, 13 deaths: offensive 
+% hard is impossible, as all enemies have more health than you, and you deal less damage than them
+
+Next, we discuss how fair to the game is, including a discussion of difficulty and different play styles. 
+
+Firstly, we find that some enemy vulnerabilities are hard to work out or unclear, this gives people who know them an unfair advantage against those who do not. A key example of this is the game's final boss, the dragon. This boss is vulnerable to absolute damage, however it is very unclear this is the case. Similarly it is resistant to thunder damage, yet fire-breathing dragons do not intuitively seem to be able to resist this. 
+
+Another issue with fairness is difficulty. On easy difficulty, the game is relatively easy, but on moderate the game is nearly impossible, and on hard it is actually impossible with current design parameter values. This is because every starting enemy on hard, has more health, and deals more damage, than the player. A design team could easily rectify this by modifying design parameter values. 
+
+Lastly, we find the game is more punishing to offensive play styles than defensive. Over 3 easy runs, we completed the game with an average of 3 deaths, prioritising resistance upgrades of abilities and damage upgrades. In contrast, on 3 easy runs where damage upgrades and attack abilities were prioritised we died 8 times on average. Furthermore we see the game rewards the spending of coins early, rather then hoarding of coins, as most shop upgrades are useful (especially defensive ones), and the upgrades are required to be able to progress due to the large amount of damage enemies deal, compared to the player's health. 
+
+However, the game is fair in several ways. Firstly, although the abilities used by enemies are randomised, the damage they deal is not, and neither are player-abilities. Additionally the amount of magic the player gains each turn is fixed, which allows the player to plan in advance, prioritising high damage, low health enemies over those with higher health. 
+
+Additionally there is fairness in the boss levels, as the bosses at each boss level are guaranteed, which allows the player to plan around them. For example, they must pick up a spell before level 6, as this level's boss is immune to physical damage. This however, doesn't overly reward players with game expertise, as the encounters on non-boss levels are randomised, along with shop items, meaning players are forced to adapt and cannot just memorise an optimal set of actions to complete the game. 
+
+\subsection{Consequences of Game Design}
+
+% levels 2, 5, 8 are easier than their previous level as you have 1 more upgrade, but same enemy pools
+% spammy combat until you get spells
+% level 1 is very hard compared to other levels due to limited upgrades
+% random enemy attacks make surviving a hard encounter totally dependant on if they use powerful attacks or not
+% pyromancer and ghost much stronger than other enemies
+
+Now to discuss the unintended consequences of the game's design. We will first discuss about the game's overall progression, then about its core gameplay, then about the use of randomness, and lastly the balance of its enemies. 
+
+The game consists of 10 levels, where the same encounter pool is used for levels 1 and 2, 5 and 6, and 7 and 8. While this progression does allow for levels to become increasingly hard between phases (pairs of levels), it does mean the second level of each phase is always easier than the first, as the player will have more upgrades for that level than the previous. This is most clear in level one, where some encounters can be almost impossible to survive, yet trivial in level two if certain upgrades are obtained. 
+
+To discuss the core gameplay loop more in depth, we find that in level one, gameplay is very boring, as no decisions can be made as to what enemy's can be targeted, or with what abilities to use as there is one enemy and one ability. This is mostly true until a second attack ability is purchased, or until level 4 is reached where multiple enemies can appear in an encounter. We find however, that once multiple attack abilities are purchased, and multiple enemies appear, the game becomes much more engaging as both of these are meaningful decisions. 
+
+Another area of consideration is the heavy use of randomness, resulting in encounter success being partly random. This is because the upgrades available to a player are not guaranteed, and neither is the ability the enemies will use nor the encounter the player will face. As the upgrades that appear in the shop are random, this can cause runs to hit dead-ends, where none of the available upgrades were helpful for the encounter the player is in, and they have to either get exceptionally luck to succeed, or the run ends. Another consequence of this randomness is with enemy attacks, as those are randomised rather than using a magic system like the player. This means if the player gets unlucky, enemies can deal large amounts of damage that a player with those same abilities could not have. 
+
+Lastly, due to the randomness in ability selection, some enemies are significantly more deadly than they are on paper, as certain ability configurations for the player can result in the player being exceptionally weak against that enemy. The first example of this is the pyromancer, which has a very high damage output, so if the player cannot kill them sufficiently fast, they can cause the player to die a disproportionally large amount of the time considering they can appear on level 1. Another example is the ghost boss, which is immune to physical damage. This immunity means if the player does not obtain a sufficiently broad range of non-physical damage dealing abilities by this level, this boss will kill them a lot, likely ending their run. 
+
+\subsection{Conclusion}
+
+The final solution can be considered successful. The product provides
+a competent framework for telemetry and engaging gameplay, rewarding
+multiple playthroughs. It can be run on a reasonable
+amount of RAM, it detects spikes in difficulty effectively and it can be
+navigated easily and it can provide suggestions that help balance game
+difficulty.
 
