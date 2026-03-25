@@ -137,7 +137,6 @@ public class TelemetryListenerIntegrationTests {
      * Create and invoke an EndSessionEvent, to ensure that sessionIDs are kept clean between each test.
      * Resets the telemetry listener's filepath to the filepath used for production.
      */
-    @SuppressWarnings("unused")
     @AfterEach
     void cleanUp() {
         EndSessionEvent endSessionEvent = new EndSessionEvent(
