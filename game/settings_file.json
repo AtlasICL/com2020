@@ -55,7 +55,7 @@
     "110319945316649337329" : {
       "telemetryEnabled" : true,
       "furthestLevel" : {
-        "EASY" : 0,
+        "EASY" : 2,
         "MEDIUM" : 0,
         "HARD" : 0
       }
@@ -479,7 +479,7 @@
   },
   "designParameters" : {
     "playerMaxHealth" : {
-      "EASY" : 100,
+      "EASY" : 250,
       "MEDIUM" : 100,
       "HARD" : 75
     },
@@ -499,7 +499,7 @@
       "HARD" : 1.0
     },
     "startingLives" : {
-      "EASY" : 14,
+      "EASY" : 10,
       "MEDIUM" : 3,
       "HARD" : 1
     },
@@ -512,6 +512,11 @@
       "EASY" : 15,
       "MEDIUM" : 15,
       "HARD" : 15
+    },
+    "encounterPayout" : {
+      "EASY" : 30,
+      "MEDIUM" : 25,
+      "HARD" : 20
     }
   }
 }
