@@ -9,7 +9,6 @@ import wizardquest.entity.EntityInterface;
 /* Utils class, providing utility constants and functions
  */
 public class Utils {
-    public static final int COINS_GAINED = 25;
     private static final Random RANDOM = new Random();
 
     /**

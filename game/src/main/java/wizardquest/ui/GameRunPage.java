@@ -62,68 +62,60 @@ public class GameRunPage extends Application {
 
     // Styling
 
-    private static final String PANEL_STYLE =
-        "-fx-background-color: #2b2d31;" +
-        "-fx-background-radius: 10;" +
-        "-fx-border-color: #5865F2;" +
-        "-fx-border-radius: 10;";
+    private static final String PANEL_STYLE = "-fx-background-color: #2b2d31;" +
+            "-fx-background-radius: 10;" +
+            "-fx-border-color: #5865F2;" +
+            "-fx-border-radius: 10;";
 
-    private static final String TITLE_STYLE =
-        "-fx-font-family: 'JetBrains Mono';" +
-        "-fx-font-size: 26px;" +
-        "-fx-text-fill: #9a7cff;" +
-        "-fx-font-weight: bold;";
+    private static final String TITLE_STYLE = "-fx-font-family: 'JetBrains Mono';" +
+            "-fx-font-size: 26px;" +
+            "-fx-text-fill: #9a7cff;" +
+            "-fx-font-weight: bold;";
 
-    private static final String HEADING_STYLE =
-            "-fx-font-family: 'JetBrains Mono';" +
+    private static final String HEADING_STYLE = "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 18px;" +
             "-fx-text-fill: #5865F2;" +
             "-fx-font-weight: bold;";
 
-    private static final String TEXT_STYLE =
-            "-fx-font-family: 'JetBrains Mono';" +
+    private static final String TEXT_STYLE = "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 14px;" +
             "-fx-text-fill: #f2f3f5;";
 
-    private static final String SECONDARY_TEXT_STYLE =
-            "-fx-font-family: 'JetBrains Mono';" +
+    private static final String SECONDARY_TEXT_STYLE = "-fx-font-family: 'JetBrains Mono';" +
             "-fx-font-size: 13px;" +
             "-fx-text-fill: #b5bac1;";
 
-    private static final String PRIMARY_BUTTON_STYLE =
-        "-fx-background-color: #5865F2;" +
-        "-fx-text-fill: #f2f3f5;" +
-        "-fx-font-family: 'JetBrains Mono';" +
-        "-fx-font-size: 14px;" +
-        "-fx-font-weight: bold;" +
-        "-fx-background-radius: 8;" +
-        "-fx-border-radius: 8;" +
-        "-fx-border-color: #7c84f7;" +
-        "-fx-padding: 8 16 8 16;" +
-        "-fx-cursor: hand;";
+    private static final String PRIMARY_BUTTON_STYLE = "-fx-background-color: #5865F2;" +
+            "-fx-text-fill: #f2f3f5;" +
+            "-fx-font-family: 'JetBrains Mono';" +
+            "-fx-font-size: 14px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-background-radius: 8;" +
+            "-fx-border-radius: 8;" +
+            "-fx-border-color: #7c84f7;" +
+            "-fx-padding: 8 16 8 16;" +
+            "-fx-cursor: hand;";
 
-private static final String SECONDARY_BUTTON_STYLE =
-        "-fx-background-color: #404249;" +
-        "-fx-text-fill: #f2f3f5;" +
-        "-fx-font-family: 'JetBrains Mono';" +
-        "-fx-font-size: 14px;" +
-        "-fx-background-radius: 8;" +
-        "-fx-border-radius: 8;" +
-        "-fx-border-color: #5865F2;" +
-        "-fx-padding: 8 16 8 16;" +
-        "-fx-cursor: hand;";
+    private static final String SECONDARY_BUTTON_STYLE = "-fx-background-color: #404249;" +
+            "-fx-text-fill: #f2f3f5;" +
+            "-fx-font-family: 'JetBrains Mono';" +
+            "-fx-font-size: 14px;" +
+            "-fx-background-radius: 8;" +
+            "-fx-border-radius: 8;" +
+            "-fx-border-color: #5865F2;" +
+            "-fx-padding: 8 16 8 16;" +
+            "-fx-cursor: hand;";
 
-private static final String DANGER_BUTTON_STYLE =
-        "-fx-background-color: #ed4245;" +
-        "-fx-text-fill: #f2f3f5;" +
-        "-fx-font-family: 'JetBrains Mono';" +
-        "-fx-font-size: 14px;" +
-        "-fx-font-weight: bold;" +
-        "-fx-background-radius: 8;" +
-        "-fx-border-radius: 8;" +
-        "-fx-border-color: #ff6b6b;" +
-        "-fx-padding: 8 16 8 16;" +
-        "-fx-cursor: hand;";
+    private static final String DANGER_BUTTON_STYLE = "-fx-background-color: #ed4245;" +
+            "-fx-text-fill: #f2f3f5;" +
+            "-fx-font-family: 'JetBrains Mono';" +
+            "-fx-font-size: 14px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-background-radius: 8;" +
+            "-fx-border-radius: 8;" +
+            "-fx-border-color: #ff6b6b;" +
+            "-fx-padding: 8 16 8 16;" +
+            "-fx-cursor: hand;";
 
     private VBox root;
     private final Label log = new Label("");
@@ -143,7 +135,7 @@ private static final String DANGER_BUTTON_STYLE =
         root.setStyle("-fx-background-color: #1e1f22;");
         // First screen shown when the game launches
         showLoginPage();
-        
+
         stage.setScene(new Scene(root, 1600, 900));
         stage.setMinWidth(1280);
         stage.setMinHeight(720);
@@ -174,24 +166,23 @@ private static final String DANGER_BUTTON_STYLE =
             status.setStyle(SECONDARY_TEXT_STYLE);
             Task<AuthenticationResult> authenticationTask = new Task<>() {
                 @Override
-                protected AuthenticationResult call() throws AuthenticationException{
+                protected AuthenticationResult call() throws AuthenticationException {
                     Authenticator auth = new Authenticator();
                     return auth.login();
                 }
             };
 
-            authenticationTask.setOnSucceeded(event ->{
-                try{
+            authenticationTask.setOnSucceeded(event -> {
+                try {
                     settings.loginWithResult(authenticationTask.getValue());
                     showMainMenu();
-                } catch (AuthenticationException ex){
+                } catch (AuthenticationException ex) {
                     // Display login error to the user
                     Label error = new Label(
                             "Login failed.\n\n" +
-                            "Your environment variables may not be configured correctly.\n" +
-                            "Please check the README file and make sure all required\n" +
-                            "authentication variables are set before launching the game."
-                    );
+                                    "Your environment variables may not be configured correctly.\n" +
+                                    "Please check the README file and make sure all required\n" +
+                                    "authentication variables are set before launching the game.");
                     error.setWrapText(true);
                     root.getChildren().add(error);
                     loginBtn.setDisable(false);
@@ -273,8 +264,6 @@ private static final String DANGER_BUTTON_STYLE =
             root.getChildren().addAll(title, startBtn, simBtn, settingsBtn, quitBtn, telemetryNote);
         }
 
-        
-
         startBtn.setStyle(PRIMARY_BUTTON_STYLE);
         simBtn.setStyle(PRIMARY_BUTTON_STYLE);
         settingsBtn.setStyle(PRIMARY_BUTTON_STYLE);
@@ -309,7 +298,6 @@ private static final String DANGER_BUTTON_STYLE =
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: #1e1f22;");
 
-
         Label heading = new Label("SELECT DIFFICULTY");
         heading.setStyle(HEADING_STYLE);
 
@@ -327,9 +315,8 @@ private static final String DANGER_BUTTON_STYLE =
             // Displays lives available and best stage reached by the current user
             Button b = new Button(
                     d +
-                    "  (Lives: " + settings.getStartingLives(d) + ")" +
-                    "  [Best Stage: " + bestStage + "]"
-            );
+                            "  (Lives: " + settings.getStartingLives(d) + ")" +
+                            "  [Best Stage: " + bestStage + "]");
             b.setOnAction(e -> {
                 // Initialise a new game run
                 gameManager.startNewGame(d);
@@ -404,7 +391,7 @@ private static final String DANGER_BUTTON_STYLE =
         abilitiesHeading.setStyle(HEADING_STYLE);
         abilityList.getChildren().add(abilitiesHeading);
 
-        //Returns display name for each abilitiy (excluding resistance)
+        // Returns display name for each abilitiy (excluding resistance)
         for (AbilityEnum ability : player.getAbilities()) {
             Label abilityLabel = new Label(ability.getDisplayName());
             abilityLabel.setStyle(TEXT_STYLE);
@@ -435,21 +422,19 @@ private static final String DANGER_BUTTON_STYLE =
         // Displays player stats
         Label statsText = new Label(
                 "Lives: " + player.getLives()
-                + "  Coins: " + player.getCoins()
-        );
+                        + "  Coins: " + player.getCoins());
         statsText.setStyle(TEXT_STYLE);
 
         Label hpLabel = new Label("Health: " + player.getHealth() + "/" + player.getMaxHealth());
         hpLabel.setStyle(TEXT_STYLE);
         // Health bar styling
         hpBar.setPrefWidth(250);
-        hpBar.setStyle("-fx-accent: green;"+
-            "-fx-control-inner-background: #1e1f22;" +
-            "-fx-background-color: #1e1f22;" +
-            "-fx-background-radius: 6;" +
-            "-fx-border-radius: 6;" +
-            "-fx-border-color: #5865F2;"
-        );
+        hpBar.setStyle("-fx-accent: green;" +
+                "-fx-control-inner-background: #1e1f22;" +
+                "-fx-background-color: #1e1f22;" +
+                "-fx-background-radius: 6;" +
+                "-fx-border-radius: 6;" +
+                "-fx-border-color: #5865F2;");
         animateProgressBar(hpBar, (double) player.getHealth() / player.getMaxHealth());
 
         Label magicLabel = new Label("Magic: " + player.getMagic() + "/" + player.getMaxMagic());
@@ -457,13 +442,12 @@ private static final String DANGER_BUTTON_STYLE =
 
         // Magic bar stylings
         magicBar.setPrefWidth(250);
-        magicBar.setStyle("-fx-accent: lightblue;"+
-            "-fx-control-inner-background: #1e1f22;" +
-            "-fx-background-color: #1e1f22;" +
-            "-fx-background-radius: 6;" +
-            "-fx-border-radius: 6;" +
-            "-fx-border-color: #5865F2;"
-        );
+        magicBar.setStyle("-fx-accent: lightblue;" +
+                "-fx-control-inner-background: #1e1f22;" +
+                "-fx-background-color: #1e1f22;" +
+                "-fx-background-radius: 6;" +
+                "-fx-border-radius: 6;" +
+                "-fx-border-color: #5865F2;");
         animateProgressBar(magicBar, (double) player.getMagic() / player.getMaxMagic());
 
         VBox playerStats = new VBox(4, statsText, hpLabel, hpBar, magicLabel, magicBar, abilityList);
@@ -490,19 +474,17 @@ private static final String DANGER_BUTTON_STYLE =
 
             Label enemyLabel = new Label(
                     enemy.getType().getDisplayName()
-                    + "  Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
-            );
+                            + "  Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
             enemyLabel.setStyle(TEXT_STYLE);
 
             ProgressBar enemyHpBar = enemyHpBars[i];
             enemyHpBar.setPrefWidth(250);
             enemyHpBar.setStyle(
-            "-fx-accent: red;" +
-            "-fx-control-inner-background: #1e1f22;" +
-            "-fx-background-color: #1e1f22;" +
-            "-fx-background-radius: 6;" +
-            "-fx-border-radius: 6;"
-        );
+                    "-fx-accent: red;" +
+                            "-fx-control-inner-background: #1e1f22;" +
+                            "-fx-background-color: #1e1f22;" +
+                            "-fx-background-radius: 6;" +
+                            "-fx-border-radius: 6;");
             animateProgressBar(enemyHpBar, (double) enemy.getHealth() / enemy.getMaxHealth());
 
             enemyList.getChildren().addAll(enemyLabel, enemyHpBar);
@@ -587,8 +569,7 @@ private static final String DANGER_BUTTON_STYLE =
         for (AbilityEnum ability : player.getAbilities()) {
             Button ab = new Button(
                     ability.getDisplayName() + "\n" +
-                    "Damage: " + ability.getBaseDamage() + "   Cost: " + ability.getMagicCost()
-                );
+                            "Damage: " + ability.getBaseDamage() + "   Cost: " + ability.getMagicCost());
             ab.setOnAction(e -> showTargetSelection(ability));
             abilityBox.getChildren().add(ab);
             ab.setStyle(PRIMARY_BUTTON_STYLE);
@@ -598,11 +579,10 @@ private static final String DANGER_BUTTON_STYLE =
             ab.setPrefWidth(300);
             ab.setMinHeight(70);
             ab.setStyle(PRIMARY_BUTTON_STYLE +
-            "-fx-line-spacing: 4px;");
-            
+                    "-fx-line-spacing: 4px;");
+
         }
-        
-        
+
         showBattleScreen(abilityBox);
     }
 
@@ -629,16 +609,14 @@ private static final String DANGER_BUTTON_STYLE =
 
         Label usingLabel = new Label(
                 "Using: " + ability.getDisplayName()
-                + " (Damage:" + ability.getBaseDamage()
-                + " Cost:" + ability.getMagicCost() + ")"
-        );
+                        + " (Damage:" + ability.getBaseDamage()
+                        + " Cost:" + ability.getMagicCost() + ")");
 
         usingLabel.setStyle(SECONDARY_TEXT_STYLE);
 
         targetBox.getChildren().addAll(
                 chooseTargetLabel,
-                usingLabel
-        );
+                usingLabel);
 
         EntityInterface[] enemies = currentEncounter.getEnemies();
         for (EntityInterface enemy : enemies) {
@@ -648,8 +626,7 @@ private static final String DANGER_BUTTON_STYLE =
 
             Button tb = new Button(
                     enemy.getType().getDisplayName()
-                    + "\nHealth: " + enemy.getHealth() + "/" + enemy.getMaxHealth()
-            );
+                            + "\nHealth: " + enemy.getHealth() + "/" + enemy.getMaxHealth());
             tb.setOnAction(e -> doPlayerTurn(ability, enemy));
             targetBox.getChildren().add(tb);
             tb.setStyle(PRIMARY_BUTTON_STYLE);
@@ -707,15 +684,16 @@ private static final String DANGER_BUTTON_STYLE =
         if (allDead(enemies)) {
             gameManager.completeCurrentEncounter();
             emitEncounterCompleteEvent(player.getHealth());
-            player.gainCoins(Utils.COINS_GAINED);
             GameRunInterface coinRun = gameManager.getCurrentRun();
+
             if (coinRun != null) {
+                player.gainCoins(settings.getEncounterPayout(coinRun.getDifficulty()));
                 telemetryListener.onGainCoin(new GainCoinEvent(
                         settings.getUserID(), coinRun.getSessionID(), Instant.now(),
                         currentEncounter.getType(), coinRun.getDifficulty(),
-                        coinRun.getStage(), Utils.COINS_GAINED));
+                        coinRun.getStage(), settings.getEncounterPayout(coinRun.getDifficulty())));
             }
-            msg.append("Encounter won! +").append(Utils.COINS_GAINED).append(" coins.\n");
+            msg.append("Encounter won! +").append(settings.getEncounterPayout(coinRun.getDifficulty())).append(" coins.\n");
             log.setText(msg.toString());
             onEncounterWon();
             return;
@@ -854,14 +832,13 @@ private static final String DANGER_BUTTON_STYLE =
         if (run != null) {
             info.append("Stage reached: ").append(run.getStage())
                     .append("  Deaths: ").append(run.getDeathCount());
-            
+
         }
         if (player != null) {
             info.append("  Coins: ").append(player.getCoins());
         }
         Label stats = new Label(info.toString());
         stats.setStyle(SECONDARY_TEXT_STYLE);
-
 
         if (run != null) {
             try {
@@ -965,9 +942,7 @@ private static final String DANGER_BUTTON_STYLE =
         Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(300),
-                        new KeyValue(bar.progressProperty(), targetProgress)
-                )
-        );
+                        new KeyValue(bar.progressProperty(), targetProgress)));
         timeline.play();
     }
 
