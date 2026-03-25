@@ -82,15 +82,13 @@ Internet access is assumed, most supported operating systems contain a web brows
 \subsubsection{Build Process}
 To compile the code into an executable form, first, assure you've replaced the placeholder strings in \verb|game\src\main\java\wizardquest\auth\Authenticator.java|\\ and \verb|telemetry\auth\auth.py| with their equivalent secrets, then run the following commands from the root of the \verb|com2020| directory:
 
-\paragraph{Python Application (Windows PowerShell)}
+\paragraph{Python Application}
 \begin{verbatim}
 cd telemetry
-py -m PyInstaller --noconsole --onefile `--name telemetry_app --distpath .`
---hidden-import=seaborn `--hidden-import=matplotlib`
---hidden-import=matplotlib.backends.backend_tkagg `--hidden-import=numpy`
---hidden-import=pandas `--hidden-import=requests`
-telemetry_app.py
+py -m PyInstaller --noconsole --onefile `
+--name telemetry_app --distpath . telemetry_app.py
 \end{verbatim}
+
 
 
 \paragraph{Java Application}
