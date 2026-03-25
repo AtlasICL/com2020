@@ -1,6 +1,16 @@
+\section{Executive Summary}
+
+\subsection{Sprint 1}
 The project prototype delivers an interactive turn-based game via a CLI (Command-Line Interface), integrated with a telemetry dashboard to support game balancing. During gameplay, players progress through staged encounters against enemies and must manage lives, health, magic, and hit points. Between stages, players are able to purchase upgrades in a shop. The system records structured gameplay events across multiple difficulty configurations to support analytical evaluation.
 
 The program matters because it enables game designers to identify points of extreme difficulty, player drop-off, and progression curves, allowing balancing decisions to be based on structured gameplay data rather than intuition.
 
 Several risks were considered during development. A major risk was misimplementing Google OAuth for authentication, which introduced external dependency and security risks, including misconfigured credentials and login failures across different environments. This was mitigated by using environment variables for client credentials and testing authentication on multiple machines. With this being a multi-developer project (7 in total), one delivery risk was poor coordination of code development. This was mitigated through structured branching and pull requests.
 
+\subsection{Sprint 2}
+
+The final system delivers an interactive turn-based game via a graphical user interface (GUI), integrated with a telemetry dashboard and authentication system to support game balancing and user management. During gameplay, players progress through staged encounters against enemies and must manage lives, health, magic, and hit points. Between stages, players are able to purchase upgrades in a shop through the graphical interface. The system records structured gameplay events across multiple difficulty configurations to support analytical evaluation, with telemetry fully integrated across gameplay events.
+
+The program matters because it enables game designers to identify points of extreme difficulty, player drop-off, and progression curves, allowing balancing decisions to be based on structured gameplay data rather than intuition. The graphical interface and authentication system allow the system to be used by multiple users with different roles, improving usability and the reliability of the data collected.
+
+Several risks were considered during development. A major risk was integrating Google OAuth authentication into the graphical system, which introduced external dependency and configuration risks, including misconfigured credentials and login failures across different environments. This was mitigated by using environment variables for client credentials and testing authentication on multiple machines. With this being a multi-developer project (7 in total), one delivery risk was final system integration and ensuring compatibility between components developed by different team members. This was mitigated through structured branching, pull requests, and integration testing.
