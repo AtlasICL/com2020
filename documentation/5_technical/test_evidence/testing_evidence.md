@@ -16,7 +16,7 @@ fair and responsible.
 
 ### Recording
 
-TO BE REDONE ONCE ALL AUTOMATED TESTS ARE COMPLETE.
+The execution of the whole automated test suite can be found [here](https://youtu.be/g6tMS7hZfqw).
 
 ## Manual End-to-End Test Suite
 
@@ -30,19 +30,19 @@ The recording of this test can be found [here](https://youtu.be/W4eMjM-NVRY).
 
 From the title screen, click the 'Login with SSO' button.
 
-<img src="images/game_title.png" alt="Image" width="600">
+<img src="images/1_title.png" alt="Image" width="600">
 
 This opens a new tab in the user's web browser, prompting sign-in with a Google account.
 
-<img src="images/google_auth.png" alt="Image" width="600">
+<img src="images/1_google_auth.png" alt="Image" width="600">
 
 Once signed in, this screen will appear, indicating successful authentication.
 
-<img src="images/login_complete.png" alt="Image" width="600">
+<img src="images/1_login_complete.png" alt="Image" width="600">
 
 This is reflected in the game app, where the user is now in the game's main menu.
 
-<img src="images/game_menu.png" alt="Image" width="600">
+<img src="images/1_menu.png" alt="Image" width="600">
 
 ### Test 2: Running game simulations in the game app works correctly
 
@@ -54,15 +54,15 @@ The recording of this test can be found [here](https://youtu.be/181G4iqBl24).
 
 Before invoking any simulated runs, we can see that the file 'simulation_events.json' is empty.
 
-<img src="images/empty_sim_events.png" alt="Image" width="600">
+<img src="images/2_file_initial.png" alt="Image" width="600">
 
 From the main menu, click the 'Run Simulations' button, which produces this pop-up on success.
 
-<img src="images/simulations_executed.png" alt="Image" width="600">
+<img src="images/2_simulations_executed.png" alt="Image" width="600">
 
 This is reflected in 'simulation_events.json', which is now populated with sequences of telemetry events.
 
-<img src="images/populated_sim_events.png" alt="Description" width="600">
+<img src="images/2_file_outcome.png" alt="Description" width="600">
 
 ### Test 3: Players cannot change settings parameters in the game app
 
@@ -74,11 +74,11 @@ The recording of this test can be found [here](https://youtu.be/mLBafPQSsVA).
 
 From the main menu, click the 'Settings' button.
 
-<img src="images/game_menu.png" alt="Description" width="600">
+<img src="images/1_menu.png" alt="Description" width="600">
 
 This opens the following screen, where you can see the user's role of Player displayed at the top.
 
-<img src="images/player_settings_screen.png" alt="Description" width="600">
+<img src="images/3_settings_screen.png" alt="Description" width="600">
 
 The table of values is greyed out - the user cannot modify these as Players do not have permissions to do so. The same
 policy applies to the justification text box.
@@ -87,11 +87,25 @@ policy applies to the justification text box.
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/MtjofZ5Zi88).
 
 #### Screenshots
 
-<img src="images/img.png" alt="Description" width="600">
+From the Settings screen, we can see that telemetry is toggled to 'ON'.
+
+<img src="images/4_settings_screen_telemetry_enabled.png" alt="Description" width="600">
+
+This is reflected in 'logins_file.json', where the authenticated user has the associated Boolean value as true.
+
+<img src="images/4_file_initial.png" alt="Description" width="600">
+
+Click the 'Toggle Telemetry' button to turn it off.
+
+<img src="images/4_settings_screen_telemetry_disabled.png" alt="Description" width="600">
+
+This is reflected in 'logins_file.json', where the authenticated user now has the associated Boolean value as false.
+
+<img src="images/4_file_outcome.png" alt="Description" width="600">
 
 ### Test 5: Developers can change settings parameters in the game app
 
@@ -103,11 +117,11 @@ The recording of this test can be found [here](https://youtu.be/RoZk-zCm7o8).
 
 From the main menu, click the 'Settings' button.
 
-<img src="images/game_menu.png" alt="Description" width="600">
+<img src="images/1_menu.png" alt="Description" width="600">
 
 This opens the following screen, where you can see the user's role of Developer displayed at the top.
 
-<img src="images/player_settings_screen.png" alt="Description" width="600">
+<img src="images/3_settings_screen.png" alt="Description" width="600">
 
 Unlike the Player, the table of values and justification box are editable thanks to the user's role of Developer.
 
@@ -132,11 +146,35 @@ has been written.
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/Kq1uDihGg4w).
 
 #### Screenshots
 
-<img src="images/img.png" alt="Description" width="600">
+From the authenticated user's settings page, it is clearly displayed that they have the role Developer.
+
+<img src="images/settings_shows_developer.png" alt="Description" width="600">
+
+In 'logins_file.json', we can initially see that this user has the role of Player.
+
+<img src="images/settings_user_initially_player.png" alt="Description" width="600">
+
+From the main menu, click the 'Manage Roles' button.
+
+<img src="images/menu_manage_roles_hover.png" alt="Description" width="600">
+
+This opens the following screen, where you can see a list of all users with their corresponding roles.
+
+Using the drop-down menu, change the aforementioned user's role to Developer.
+
+<img src="images/roles_user_initially_player.png" alt="Description" width="600">
+
+A message 'Role Updated' will appear below the list, indicating success.
+
+<img src="images/roles_user_set_to_developer.png" alt="Description" width="600">
+
+This is reflected in 'logins_file.json', where this user now has the role of Developer.
+
+<img src="images/settings_user_set_to_developer.png" alt="Description" width="600">
 
 ### Test 7: Encounter is started and failed with lives remaining
 
@@ -165,11 +203,24 @@ been written one after the other.
 
 #### Recording
 
-The recording of this test can be found [here]().
+The recording of this test can be found [here](https://youtu.be/vrwo8pT0Jz8).
 
 #### Screenshots
 
-<img src="images/name.png" alt="Description" width="600">
+In this encounter, the user currently has one life remaining.
+
+<img src="images/7_mid_battle.png" alt="Description" width="600">
+
+After attacking one another, the user has been defeated by the enemy.
+
+They now have zero lives left, and their run is over.
+
+<img src="images/7_run_complete.png" alt="Description" width="600">
+
+This is reflected in 'telemetry.events.json', where a NormalEncounterFailEvent and EndSessionEvent have
+been written one after the other to show death and the end of a run.
+
+<img src="images/7_file_outcome.png" alt="Description" width="600">
 
 ### Test 9: Encounter is completed
 
