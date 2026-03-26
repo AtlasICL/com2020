@@ -86,7 +86,18 @@ In the `/telemetry` directory, run:
 coverage run -m unittest
 coverage report -m
 ```
+## Running the Installer
 
+### MacOS
+When you download the `WizardQuestInstaller.pkg` file from the releases, macOS may block it from opening initially. To run the installer:
+1. Attempt to open the `.pkg` file.
+2. Navigate to **System Settings** -> **Privacy & Security**.
+3. Scroll down to the **Security** section.
+4. Locate the message regarding `WizardQuestInstaller.pkg` and click **Open Anyway**.
+
+### Windows
+When you download the `WizardQuestInstaller.exe` file, please ensure you run it with elevated permissions:
+* Right-click the file and select **Run as Administrator**.
 
 ## Style guide
 - Python: [PEP8 style guide](https://peps.python.org/pep-0008/)
