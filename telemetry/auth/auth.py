@@ -45,7 +45,7 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 
 SCOPES: list[str] = ["profile", "email"]
 
-LOGGING_ENABLED: bool = True
+LOGGING_ENABLED: bool = False
 LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
 LOGGER: logging.Logger = setup_logger(output_file=LOGGING_OUTPUT_FILE)
 
