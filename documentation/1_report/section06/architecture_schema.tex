@@ -328,7 +328,7 @@ This is a record, containing the key information about an authenticated user. It
 
 \subsection{Sprint 2}
 
-\subsection{Overview}
+\subsubsection{Overview}
 In this section we will provide a brief explanation of the game's architecture, and justify its design decisions. An in depth schema of the game's architecture is available in the maintenance and troubleshooting guide in the handover pack.
 
 The project is split into two applications, one written in Python, the other in Java. We chose to do this as both languages have strengths and weaknesses for different areas of the project, so by using both we take best advantage of their advantages.
@@ -351,7 +351,7 @@ We chose to program the telemetry viewer in Python, this is because of Python's 
 
 Lastly we chose to use JSON files for communicating between the applications. This data conforms to a custom schema described in the data management guide in the handover pack. We chose JSON because it is portable, human-readable, and allows us to provide clear error messages and logging. There are however drawbacks of the use of JSON in comparison to a binary format, as the file sizes are larger, and processing is slower, however given the small size of the application's user base this drawback is very minor in comparison to the benefits.
 
-\subsection{Python Application}
+\subsubsection{Python Application}
 
 \subsubsection{Authentication (auth)}
 \label{sec: python_auth}
@@ -367,7 +367,7 @@ We chose to store all events in a single file for ease of use and readability. W
 \subsubsection{Graphical User Interface (gui)}
 The GUI acts as the main program of the Python application, obtaining information from the backend when needed. This separation of responsibility allows the GUI focus on drawing the needed graphs in plotting, and displaying this information to the user.
 
-\subsection{Java Application}
+\subsubsection{Java Application}
 
 \subsubsection{Abilities (abilities)}
 The abilities system handles all abilities and upgrades for the game. We use an enum to reference the different attack abilities (internally called abilities) and a separate enum for the abilities (internally called upgrades) that can be bought in the shop.
