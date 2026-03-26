@@ -257,13 +257,13 @@ def get_role(filename: str, user_id: str) -> Role:
             player_roles = json.load(f)
             this_user = player_roles.get(str(user_id))
             if this_user is None:
-                player_roles[str(user_id)] = Role.PLAYER.value
+                player_roles[str(user_id)] = Role.DEVELOPER.value
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
                 if LOGGING_ENABLED:
                     LOGGER.info(f"[AE  ] New user authenticated " + 
-                                f"with role {Role.PLAYER.value}.")
-                return Role.PLAYER
+                                f"with role {Role.DEVELOPER.value}.")
+                return Role.DEVELOPER
             else:
                 try:
                     if LOGGING_ENABLED:
