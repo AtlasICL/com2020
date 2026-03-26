@@ -91,7 +91,7 @@ coverage report -m
 ### MacOS
 When you download the `WizardQuestInstaller.pkg` file from the releases, macOS may block it from opening initially. To run the installer:
 1. Attempt to open the `.pkg` file.
-2. If blocked, navigate to **System Settings** > **Privacy & Security**.
+2. Navigate to **System Settings** -> **Privacy & Security**.
 3. Scroll down to the **Security** section.
 4. Locate the message regarding `WizardQuestInstaller.pkg` and click **Open Anyway**.
 
