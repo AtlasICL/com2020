@@ -1,7 +1,9 @@
 package wizardquest.auth;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -13,17 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Struct;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -45,8 +43,8 @@ public class Authenticator implements AuthenticatorInterface {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public Authenticator(){
-        this.clientId = System.getProperty("OIDC_CLIENT_ID", System.getenv("OIDC_CLIENT_ID"));
-        this.clientSecret = System.getProperty("OIDC_CLIENT_SECRET", System.getenv("OIDC_CLIENT_SECRET"));
+        String id = System.getProperty("OIDC_CLIENT_ID", System.getenv("OIDC_CLIENT_ID"));
+        String secret = System.getProperty("OIDC_CLIENT_SECRET", System.getenv("OIDC_CLIENT_SECRET"));
     }
     public static void main(String[] args) {
         Authenticator auth = new Authenticator();
