@@ -4,13 +4,8 @@ Docstring for telemetry.auth.auth
 This module is responsible for Google OAuth OIDC authentication.
 This allows users of this module to get the name, unique stable 
 identifier, and role of the authenticating user.
-
-Please note that use of this module requires the relevant environment
-variables to be set, i.e. OIDC_ISSUER, OIDC_CLIENT_ID, and 
-OIDC_CLIENT_SECRET.
 """
 
-import os
 import requests
 import threading
 
@@ -21,18 +16,9 @@ import secrets
 import json
 from enum import Enum
 
-import logging
-
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlencode, urlparse, parse_qs
-
-from auth.auth_logger import setup_logger
-
-
-ISSUER = "https://accounts.google.com"
-CLIENT_ID = os.environ.get("OIDC_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 
 # From Google's API documentation: "The client ID and client secret
 # obtained from the API Console are embedded in the source code of
@@ -44,27 +30,12 @@ CLIENT_SECRET = os.environ.get("OIDC_CLIENT_SECRET")
 # obviously not treated as a secret.)". This quote is from "https://developers.google.com/identity/protocols/oauth2".
 
 SCOPES: list[str] = ["profile", "email"]
+OIDC_ISSUER: str = "https://accounts.google.com"
+OIDC_CLIENT_ID: str = "ADD_OIDC_CLIENT_ID"
+OIDC_CLIENT_SECRET: str = "ADD_OIDC_CLIENT_ID"
 
-LOGGING_ENABLED: bool = True
-LOGGING_OUTPUT_FILE: str = "auth/logs.txt"
-LOGGER: logging.Logger = setup_logger(output_file=LOGGING_OUTPUT_FILE)
-
-
-def validate_env_vars() -> None:
-    """
-    Helper function which verifies all necessary environment
-    variables are set.
-    """
-    if not ISSUER:
-        raise KeyError("OIDC_ISSUER environment variable is not set.")
-    if not CLIENT_ID:
-        raise KeyError("OIDC_CLIENT_ID environment variable is not set.")
-    if not CLIENT_SECRET:
-        raise KeyError("OIDC_CLIENT_SECRET environment variable is not set.")
-
-
-def get_oauth_config():
-    url = str(ISSUER) + "/.well-known/openid-configuration"
+def get_oauth_config(issuer: str) -> dict:
+    url = issuer + "/.well-known/openid-configuration"
     req = requests.get(url=url, timeout=10)
     req.raise_for_status()
     return req.json()
@@ -148,7 +119,11 @@ class Role(str, Enum):
     DEVELOPER = "developer"
 
 
-def google_login() -> tuple[str, str, Role]:
+def google_login(
+    issuer: str = OIDC_ISSUER,
+    client_id: str = OIDC_CLIENT_ID,
+    client_secret: str = OIDC_CLIENT_SECRET,
+) -> tuple[str, str, Role]:
     """
     Prompts the user to log in via Google.
     Opens browser to Google accounts log in page.
@@ -156,12 +131,10 @@ def google_login() -> tuple[str, str, Role]:
 
     :return: User unique identifier, user name.
     :rtype: tuple[str, str, Role]
-    :raises HTTPError: If an HTTP error occurs. 
-    :raises KeyError: If the required environment variables are not set.
+    :raises HTTPError: If an HTTP error occurs.
     """
-    validate_env_vars()
-
-    oauth_config = get_oauth_config()
+    issuer = issuer.rstrip("/")
+    oauth_config = get_oauth_config(issuer)
     auth_endpoint = oauth_config["authorization_endpoint"]
     token_endpoint = oauth_config["token_endpoint"]
     userinfo_endpoint = oauth_config["userinfo_endpoint"]
@@ -174,7 +147,7 @@ def google_login() -> tuple[str, str, Role]:
 
     params = {
         "response_type": "code",
-        "client_id": CLIENT_ID,
+        "client_id": client_id,
         "redirect_uri": redirect_uri,
         "scope": " ".join(SCOPES),
         "state": state,
@@ -184,22 +157,14 @@ def google_login() -> tuple[str, str, Role]:
     auth_url = f"{auth_endpoint}?{urlencode(params)}"
 
     open_browser(auth_url)
-    if LOGGING_ENABLED:
-        LOGGER.info("[SIE ] Sign-in prompted.")
 
     thread.join() # Callback complete
     server.server_close()
 
     if not getattr(server, "auth_code", None):
-        if LOGGING_ENABLED:
-            LOGGER.warning(
-                "[SIE ] Sign-in failed: no authorization code received."
-            )
         raise RuntimeError("No authorization code received.")
 
     if server.auth_state != state: # type: ignore
-        if LOGGING_ENABLED:
-            LOGGER.warning("[SIE ] Sign-in failed: state mismatch.")
         raise RuntimeError("AUTH ERROR - State mismatch.")
 
     token_resp = requests.post(
@@ -208,16 +173,13 @@ def google_login() -> tuple[str, str, Role]:
             "grant_type": "authorization_code",
             "code": server.auth_code, # type: ignore
             "redirect_uri": redirect_uri,
-            "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
+            "client_id": client_id,
+            "client_secret": client_secret,
             "code_verifier": code_verifier
         },
         timeout=25,
     )
     if not token_resp.ok:
-        if LOGGING_ENABLED:
-            LOGGER.error(f"[SIE ] Sign-in failed: token exchange error" +
-                          "(status = {token_resp.status_code})")
         token_resp.raise_for_status()
 
     tokens = token_resp.json()
@@ -229,11 +191,6 @@ def google_login() -> tuple[str, str, Role]:
     )
     userinfo_resp.raise_for_status()
     userinfo = userinfo_resp.json()
-
-    if LOGGING_ENABLED:
-        LOGGER.info(f"[SIE ] Sign-in successful: " +
-                    f"user {userinfo.get('name')} authenticated.")
-    
     sub = userinfo.get("sub")
     return sub, userinfo.get("name"), get_role("logins_file.json", user_id=sub)
 
@@ -260,15 +217,9 @@ def get_role(filename: str, user_id: str) -> Role:
                 player_roles[str(user_id)] = Role.PLAYER.value
                 with open(filename, 'w') as outfile:
                     json.dump(player_roles, outfile, indent=4)
-                if LOGGING_ENABLED:
-                    LOGGER.info(f"[AE  ] New user authenticated " + 
-                                f"with role {Role.PLAYER.value}.")
                 return Role.PLAYER
             else:
                 try:
-                    if LOGGING_ENABLED:
-                        LOGGER.info(f"[AE  ] Existing user authenticated " + 
-                                    f"with role {this_user}.")
                     return Role(this_user) 
                 except ValueError:
                     raise ValueError(f"Logins file at {filename} " +
