@@ -37,6 +37,9 @@ public class Authenticator implements AuthenticatorInterface {
     private static final String SCOPES = "profile email";
     private static final String LOGINS_FILE = "../telemetry/logins_file.json";
 
+    private static final String DEFAULT_CLIENT_ID = "";
+    private static final String DEFAULT_CLIENT_SECRET = "";
+
     private final String clientId;
     private final String clientSecret;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -45,6 +48,8 @@ public class Authenticator implements AuthenticatorInterface {
     public Authenticator(){
         String id = System.getProperty("OIDC_CLIENT_ID", System.getenv("OIDC_CLIENT_ID"));
         String secret = System.getProperty("OIDC_CLIENT_SECRET", System.getenv("OIDC_CLIENT_SECRET"));
+        this.clientId = (id != null && !id.isEmpty()) ? id : DEFAULT_CLIENT_ID;
+        this.clientSecret = (secret != null && !secret.isEmpty()) ? secret : DEFAULT_CLIENT_SECRET;
     }
     public static void main(String[] args) {
         Authenticator auth = new Authenticator();
